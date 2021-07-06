@@ -39,5 +39,5 @@ SystemUI is a system app preinstalled in OpenHarmony. It provides users with int
 
 System apps
 
-**applications\_standard\_systemui**
+**applications\_systemui**
 
