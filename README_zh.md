@@ -39,5 +39,5 @@ SystemUI应用是OpenHarmony中预置的系统应用，为用户提供系统相�
 
 系统应用
 
-**applications\_standard\_systemui**
+**applications\_systemui**
 
