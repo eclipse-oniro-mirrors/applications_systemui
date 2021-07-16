@@ -15,4 +15,4 @@
  */
  -->
 
-<button class="back" icon="/common/image_xxhdpi/ic_navigation_back.png" @click="backClick"></button>
+<button class="back" icon="/common/image_xxhdpi/ic_navigation_back.png" @touchstart="backTouchStart" @touchend="backTouchEnd"></button>
