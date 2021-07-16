@@ -13,40 +13,28 @@
  * limitations under the License.
  */
 
-import feature_ability from '@ohos.feature_ability';
+import FeatureAbility from '@ohos.ability.featureability';
+import mLog from '../../common/utils/Log.js';
 
-const BUNDLE_NAME = "com.ohos.launcher";
-const ABILITY_NAME = "com.ohos.launcher.MainAbility";
-const REQUEST_CODE = 1;
-const ABILITY_TYPE = "PageAbility";
-const ACTION = "action1";
-const ENTITIES = ["entity1"];
-const FLAGS = 2;
-const DEVICE_ID = "deviceId";
-const SYNC_OPTION = 1;
+const TAG = 'homeKey';
+const LAUNCHER_BUNDLE_NAME = 'com.ohos.launcher';
+const LAUNCHER_ABILITY_NAME = 'com.ohos.launcher.MainAbility';
 
 export default {
+    /**
+     * User clicks the home button
+     * Trigger "Home" event
+     */
     homeClick() {
-        console.info('homeChange');
-        var result = feature_ability.startAbility({
-            bundleName: BUNDLE_NAME,
-            abilityName: ABILITY_NAME,
-            requestCode: REQUEST_CODE,
-            abilityType: ABILITY_TYPE,
+        mLog.showInfo(TAG, `home click and start ability launcher`);
+        let result = FeatureAbility.startAbility({
             want: {
-                action: ACTION,
-                entities: ENTITIES,
-                type: ABILITY_TYPE,
-                flags: FLAGS,
-                elementName: {
-                    deviceId: DEVICE_ID,
-                    bundleName: BUNDLE_NAME,
-                    abilityName: ABILITY_NAME,
-                },
+                bundleName: LAUNCHER_BUNDLE_NAME,
+                abilityName: LAUNCHER_ABILITY_NAME,
             },
-            syncOption: SYNC_OPTION,
         }).then(data =>
-        console.log('promise::then : ' + data)).catch(error =>
-        console.log('promise::catch : ' + error));
-    },
+        mLog.showInfo(TAG, `promise then: ${JSON.stringify(data)}`)).catch(error =>
+        mLog.showError(TAG, `promise catch: ${JSON.stringify(error)}`));
+        mLog.showInfo(TAG, `start ability ${result}`);
+    }
 }

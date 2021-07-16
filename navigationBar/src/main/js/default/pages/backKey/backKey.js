@@ -14,29 +14,35 @@
  */
 
 import input from '@ohos.injectEventHandler';
+import mLog from '../../common/utils/Log.js';
 
-var mDelayTime = 100;
-
-const KEYCODE = 2;
-const KEY_DOWN_DURATION = 1;
+const TAG = 'backKey';
+var res;
 
 export default {
-    backClick() {
-        console.info('=====================test_inject_event back');
-        var res;
+    /**
+     * User start touching the back button
+     */
+    backTouchStart() {
+        mLog.showInfo(TAG, `back touch start`);
         res = input.injectEventSync({
             isPressed: true,
-            keyCode: KEYCODE,
-            keyDownDuration: KEY_DOWN_DURATION
+            keyCode: 2,
+            keyDownDuration: 1
         });
-        console.info('=====================test_inject_event down res = ' + res);
-        setTimeout(function () {
-            res = input.injectEventSync({
-                isPressed: false,
-                keyCode: KEYCODE,
-                keyDownDuration: KEY_DOWN_DURATION
-            });
-            console.info('=====================test_inject_event up res = ' + res);
-        }, mDelayTime);
+        mLog.showInfo(TAG, `injectEventHandler injectEventSync down res: ${res}`);
     },
+    /**
+     * User stop touching the back button
+     * Trigger "Back" event
+     */
+    backTouchEnd() {
+        mLog.showInfo(TAG, `back touch end and injectEventHandler injectEventSync`);
+        res = input.injectEventSync({
+            isPressed: false,
+            keyCode: 2,
+            keyDownDuration: 1
+        });
+        mLog.showInfo(TAG, `injectEventHandler injectEventSync up res: ${res}`);
+    }
 }

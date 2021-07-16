@@ -13,14 +13,7 @@
  * limitations under the License.
  */
 
-import device from '@system.device';
-
 export default {
     onInit() {
-        device.getInfo({
-            success: (data) => {
-                console.log(`Resolution: ${this.width}*${this.height}`);
-            }
-        });
-    },
+    }
 }
