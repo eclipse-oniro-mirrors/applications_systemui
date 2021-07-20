@@ -12,4 +12,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-include ':entry', ':navigationBar', ':systemDialog'
+
+import mLog from '../default/common/utils/Log.js';
+
+const TAG = 'app';
+
+export default {
+    onCreate() {
+        mLog.showInfo(TAG, ` AceApplication onCreate`);
+    },
+    onDestroy() {
+        mLog.showInfo(TAG, ` AceApplication onDestroy`);
+    }
+};
