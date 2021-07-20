@@ -13,46 +13,64 @@
  * limitations under the License.
  */
 
-import StatusManager from '../statuscenter/manager/IconManager.js';
+/**
+ * Handle all data needed by status bar and prepare the content for pages to show
+ */
+
 import BatteryStatus from '../../center/battery/batteryStatus.js';
+import SignalStatus from '../../center/signal/signalStatus.js';
+import DateManager from '../../center/statuscenter/manager/DateManager.js'
+import mLog from '../../common/utils/Log.js';
 
-var mStatusManager = new StatusManager;
-var mBatteryStatus = new BatteryStatus;
-
-var time;
-var mStatusList = [];
-var mResultStatusList = [];
-
+const TAG = 'StatusCenter';
 const LOOP_TIME = 1000;
+var mSignalStatus = new SignalStatus();
+var mBatteryStatus = new BatteryStatus();
+var mDateManager = new DateManager();
+var time;
 
 export default class StatusCenter {
     constructor() {
     }
 
-    // Method of getting the battery status
+    /**
+     * Get the images of cellular and wifi need to be showed on status bar
+     *
+     * @return {string} the image of wifi and cellular
+     */
+    setOnSignalListener() {
+        let signalStatus = mSignalStatus.getStatusImage();
+        mLog.showInfo(TAG, `signal image: ${signalStatus}`);
+        return signalStatus;
+    }
+
+    /**
+     * Return the progress width and background color for the battery
+     *
+     * @return {string} battery progress width and background color
+     */
     setOnBatteryListener() {
         let batteryStatus = mBatteryStatus.getStatusImage();
-        console.info('battery status = ' + batteryStatus);
+        mLog.showInfo(TAG, `battery status: ${batteryStatus}`);
         return batteryStatus;
     }
 
-    // Method of setting the time to current
+    /**
+     * Get current time
+     *
+     * @param {object} callback - Callback function
+     */
     setOnTimeListener(callback) {
-        time = setInterval(function () {
-            let date = new Date();
-            // Get the hours and minutes by substring.
-            callback(date.toTimeString().substring(0,5));
+        time = setInterval(() => {
+            let currentDate = mDateManager.getCurrentDate();
+            callback(currentDate);
         }, LOOP_TIME);
     }
 
+    /**
+     * Stop the loop of getting current time
+     */
     stopUpdateTime() {
         clearInterval(time);
-    }
-
-    // Status Icon
-    setOnStatusListener(callback) {
-        mStatusManager.setStatusList(mStatusList);
-        mResultStatusList = mStatusManager.getStatusList();
-        callback(mResultStatusList);
     }
 }

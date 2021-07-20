@@ -15,9 +15,10 @@
  */
  -->
 
-<element src="../StatusBar/statusBar.hml" name="statusBar"></element>
+<element src="../StatusBar/statusBar.hml" name="statusbar"></element>
 
-<div class="bk">
-    <statusbar @click="clickFunc">
+<div class="bk" ontouchstart="onTouchStartListener" ontouchmove="onTouchMoveListener">
+    <statusbar status-height="{{statusHeight}}" status-width="{{statusWidth}}" background-color="{{backgroundColor}}"
+               show-clock="{{showClock}}">
     </statusbar>
 </div>

@@ -14,7 +14,6 @@
  */
 
 .status_bar_page {
-    background-color: #66000000;
     flex-direction: row;
     display: flex;
     flex-wrap: nowrap;
@@ -32,10 +31,27 @@ text {
     width: 100%;
 }
 
+.signal {
+    align-items: center;
+    margin-left: 10px;
+    height: 60px;
+    width: 200px;
+}
+
+.signal_text {
+    margin-top: 12px;
+    font-size: 36px;
+    width: 120px;
+}
+
+.signal_icon {
+    object-fit: contain;
+}
+
 .icon_list {
     margin-left: 6px;
-    width: 100%;
-    height: 30px;
+    width: 120px;
+    height: 60px;
     display: flex;
     flex-direction: row;
 }
@@ -49,8 +65,8 @@ text {
     position: relative;
     margin-top: 16px;
     align-items: center;
-    width: 80px;
-    height: 40px;
+    width: 120px;
+    height: 60px;
     background-image: url("common/image_xxhdpi/ic_status_battery.png");
     background-repeat: no-repeat;
     padding: 1px;
@@ -58,10 +74,9 @@ text {
 }
 
 .battery_progress {
-    margin-top: -7px;
+    margin-bottom: 13px;
     margin-left: 6px;
-    height: 32px;
-    stroke-width: 32px;
-    stroke-linecap: "round";
+    height: 25px;
+    stroke-width: 25px;
 }
 

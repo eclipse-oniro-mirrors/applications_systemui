@@ -14,22 +14,24 @@
  */
 
 import StatusCenter from '../../../center/statuscenter/StatusCenter.js';
+import mLog from '../../../common/utils/Log.js';
 
+const TAG = 'clock';
 var mStatusCenter = new StatusCenter();
 
 export default {
     data: {
         mTime: ''
     },
-
     onInit() {
-        mStatusCenter.setOnTimeListener((time) => {
-            console.info('ClockModel  mStatusManager time:' + time);
-            this.mTime = time;
+        mLog.showInfo(TAG, `clock onInit`);
+        // get currentDate
+        mStatusCenter.setOnTimeListener((currentDate) => {
+            this.mTime = JSON.parse(currentDate).time;
         });
     },
-
     onDestroy() {
+        mLog.showInfo(TAG, `clock onDestroy`);
         mStatusCenter.stopUpdateTime();
     }
 }

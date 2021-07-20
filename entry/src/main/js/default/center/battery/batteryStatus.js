@@ -13,53 +13,66 @@
  * limitations under the License.
  */
 
-import batteryInfo from '@ohos.batteryInfo';
-import statusImage from '../statuscenter/manager/StatusImage.js';
+/**
+ * Get the status of battery
+ */
 
+import BatteryInfo from '@ohos.batteryInfo'
+import StatusImage from '../statuscenter/manager/StatusImage.js'
+import mLog from '../../common/utils/Log.js';
+
+const TAG = 'batteryStatus';
 const NONE = 0;
 const ENABLE = 1;
 const DISABLE = 2;
 const FULL = 3;
-const loopTime = 1000;
-const percentNum = 100;
-
-var mBackgroundColor = '#00ff21';
-var mBatteryChargingColor = '#00ff21';
-var mBatteryHighColor = '#ffffff';
-var mBatteryMediumColor = '#ffd800';
-var mBatteryLowColor = '#ff0000';
-var mHighBatteryLevel = 50;
-var mLowBatteryLevel = 10;
+const LOOP_TIME = 1000;
+const PERCENT_NUMBER = 100;
+const BATTERY_CHARGING_COLOR = '#00ff21';
+const BATTERY_HIGH_COLOR = '#ffffff';
+const BATTERY_MEDIUM_COLOR = '#ffd800';
+const BATTERY_LOW_COLOR = '#ff0000';
+const BATTERY_LEVEL_HIGH = 50;
+const BATTERY_LEVEL_LOW = 10;
 var mProgressWidth = 51;
 var mProgress = 100;
+var mBackgroundColor = '#00ff21';
 
-export default class batteryStatus extends statusImage {
+export default class batteryStatus extends StatusImage {
     constructor() {
-        super();
+        super()
     }
 
+    /**
+     * Return the progress width and background color for the battery
+     *
+     * @return {string} battery progress width and background color
+     */
     getStatusImage() {
-        let BatteryValue = {};
-        BatteryValue.mBackgroundColor = mBackgroundColor;
-        BatteryValue.mProgressWidth = mProgressWidth;
-        console.info('color = ' + BatteryValue.mBackgroundColor + ' width = ' + BatteryValue.mProgressWidth);
-        return JSON.stringify(BatteryValue);
+        let batteryValue = {};
+        batteryValue.mBackgroundColor = mBackgroundColor;
+        batteryValue.mProgressWidth = mProgressWidth;
+        mLog.showInfo(TAG, `color: ${batteryValue.mBackgroundColor} width: ${batteryValue.mProgressWidth}`);
+        return JSON.stringify(batteryValue);
     }
 
-    startGettingStatus() {
-        this.setOnBatteryListener();
+    /**
+     * Init the parameters for the battery
+     */
+    init() {
+        this.setOnBatteryListener()
     }
 
-    // Method of getting the battery status
+    /**
+    * Method of getting the battery status by looping
+    */
     setOnBatteryListener() {
         let that = this;
         let batterySOC;
         let batteryCharging;
         setInterval(function () {
-            batterySOC = batteryInfo.batterySOC;
-            console.info('batterySOC = ' + batterySOC);
-            batteryCharging = batteryInfo.chargingStatus;
-            console.info('batteryCharging = ' + batteryCharging);
+            batterySOC = BatteryInfo.batterySOC;
+            batteryCharging = BatteryInfo.chargingStatus;
             if (null == batterySOC) {
                 // Set the battery SOC as full when there is no battery hardware
                 batterySOC = 1;
@@ -70,29 +83,41 @@ export default class batteryStatus extends statusImage {
             }
             // Set the battery status as charging when there is no battery hardware
             let batteryStatus = that.checkBatteryStatus(batteryCharging);
-            that.updateBattery(batterySOC * percentNum, batteryStatus);
-        }, loopTime);
+            that.updateBattery(batterySOC * PERCENT_NUMBER, batteryStatus);
+        }, LOOP_TIME);
     }
 
+    /**
+     * Update the battery progress width and background color
+     *
+     * param {number} val - battery SOC number
+     * param {boolean} charging - battery charging status
+     */
     updateBattery(val, charging) {
-        console.info('Battery updateBattery:' + val + ' charging:' + charging);
+        mLog.showInfo(TAG, `Battery updateBattery: ${val} charging: ${charging}`);
         mProgress = val;
         if (charging) {
-            mBackgroundColor = mBatteryChargingColor;
-        } else if (val <= mLowBatteryLevel) {
-            mBackgroundColor = mBatteryLowColor;
-        } else if (val > mLowBatteryLevel && val <= mHighBatteryLevel) {
-            mBackgroundColor = mBatteryMediumColor;
-        } else if (val > mHighBatteryLevel) {
-            mBackgroundColor = mBatteryHighColor;
+            mBackgroundColor = BATTERY_CHARGING_COLOR;
+        } else if (val <= BATTERY_LEVEL_LOW) {
+            mBackgroundColor = BATTERY_LOW_COLOR;
+        } else if (val > BATTERY_LEVEL_LOW && val <= BATTERY_LEVEL_HIGH) {
+            mBackgroundColor = BATTERY_MEDIUM_COLOR;
+        } else if (val > BATTERY_LEVEL_HIGH) {
+            mBackgroundColor = BATTERY_HIGH_COLOR;
         }
-        mProgressWidth = mProgressWidth * mProgress / percentNum;
-        console.info('Battery updateBattery  mBackgroundColor:' + mBackgroundColor);
+        mProgressWidth = mProgressWidth * mProgress / PERCENT_NUMBER;
+        mLog.showInfo(TAG, `Battery updateBattery mBackgroundColor: ${mBackgroundColor}`);
     }
 
+    /**
+     * Check the battery charging status
+     *
+     * @param {number} charging - the battery charging status
+     * @return {boolean} whether the battery is charging or not
+     */
     checkBatteryStatus(charging) {
-        console.info('Battery updateBattery checkBatteryStatus:' + charging);
-        let batteryStatus;
+        mLog.showInfo(TAG, `Battery updateBattery checkBatteryStatus: ${charging}`);
+        let batteryStatus
         switch (charging) {
             case DISABLE:
                 batteryStatus = false;
