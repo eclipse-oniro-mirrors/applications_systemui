@@ -13,21 +13,36 @@
  * limitations under the License.
  */
 
-import batteryStatus from '../../center/battery/batteryStatus.js';
+import BatteryStatus from '../../center/battery/batteryStatus.js';
+import SignalStatus from '../../center/signal/signalStatus.js';
+import mLog from '../../common/utils/Log.js';
 
-var mBatteryStatus = new batteryStatus;
+const MAX_HEIGHT = "100%";
+const MAX_WIDTH = "100%";
+const TAG = 'index';
+var mBatteryStatus = new BatteryStatus();
+var mSignalStatus = new SignalStatus();
+
+globalThis.$globalT;
 
 export default {
     data: {
-        isShow: false,
-        showMask: '',
+        statusHeight: MAX_HEIGHT,
+        statusWidth: MAX_WIDTH,
+        backgroundColor: "",
+        showClock: true
     },
-
     onInit() {
-        mBatteryStatus.startGettingStatus();
+        mLog.showInfo(TAG, `onInit start`);
+        // add resources file bind
+        globalThis.$globalT = this.$t.bind(this);
+        this.backgroundColor = this.$t('colors.statusBackground');
+        mSignalStatus.init();
+        mBatteryStatus.init();
+        mLog.showInfo(TAG, `onInit end`);
     },
 
-    clickFunc() {
-        console.info('statusBarClicked');
-    }
+    onDestroy() {
+        mLog.showInfo(TAG, `onDestroy`);
+    },
 }

@@ -13,23 +13,34 @@
  * limitations under the License.
  */
 
-/**
- * Get the elements to be showed on status bar
- */
-
-export default class StatusImage {
-    constructor() {
+export default class CheckEmptyUtils {
+    /**
+     * Check obj is empty.
+     *
+     * @param {object} obj
+     * @return {boolean} true(empty)
+     */
+    static isEmpty(obj) {
+        return (typeof obj === 'undefined' || obj === null || obj === '' || Object.keys(obj).length === 0);
     }
 
     /**
-     * Get the images need to be showed
+     * Check str is empty.
+     *
+     * @param {string} str
+     * @return {boolean} true(empty)
      */
-    getStatusImage() {
+    static checkStrIsEmpty(str) {
+        return str.trim().length == 0;
     }
 
     /**
-     * Init the parameters needed when getting the images
+     * Check array is empty.
+     *
+     * @param {Array}arr
+     * @return {boolean} true(empty)
      */
-    init() {
+    static isEmptyArr(arr) {
+        return arr.length == 0;
     }
 }

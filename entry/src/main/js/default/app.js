@@ -13,12 +13,15 @@
  * limitations under the License.
  */
 
+import mLog from '../default/common/utils/Log.js';
+
+const TAG = 'app';
+
 export default {
     onCreate() {
-        console.info('AceApplication onCreate');
+        mLog.showInfo(TAG, `Application onCreate`);
     },
-
     onDestroy() {
-        console.info('AceApplication onDestroy');
+        mLog.showInfo(TAG, `Application onDestroy`);
     }
 };

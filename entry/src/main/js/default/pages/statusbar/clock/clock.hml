@@ -16,5 +16,5 @@
  -->
 
 <div class="clock_text">
-    <text>{{ mTime }}</text>
+    <text>{{mTime}}</text>
 </div>
