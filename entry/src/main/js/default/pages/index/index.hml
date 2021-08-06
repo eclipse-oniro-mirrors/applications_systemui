@@ -16,9 +16,11 @@
  -->
 
 <element src="../StatusBar/statusBar.hml" name="statusbar"></element>
-
+<element src="../largeStatusBar/largeStatusBar.hml" name="largestatusbar"></element>
 <div class="bk" ontouchstart="onTouchStartListener" ontouchmove="onTouchMoveListener">
     <statusbar status-height="{{statusHeight}}" status-width="{{statusWidth}}" background-color="{{backgroundColor}}"
                show-clock="{{showClock}}">
     </statusbar>
+    <largestatusbar window-height="{{largeStatusBarHeight}}" window-width="{{largeStatusBarWidth}}" @setting-click="settingClick">
+    </largestatusbar>
 </div>

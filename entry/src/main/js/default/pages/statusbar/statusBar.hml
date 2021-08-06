@@ -23,7 +23,7 @@
             <div class="signal">
                 <text class="signal_text" show="{{ mTypeShow }}">{{ mCellularType }}</text>
                 <image class="signal_icon" src="{{ mCellularImage }}"></image>
-                <image class="signal_icon" src="{{ mWifiImage }}" show="{{ mWifiStatus }}"></image>
+                <image class="signal_icon" ></image>
             </div>
         </div>
         <div class="battery">
