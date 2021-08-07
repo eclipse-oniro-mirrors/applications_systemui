@@ -20,6 +20,7 @@
 import BatteryStatus from '../../center/battery/batteryStatus.js';
 import SignalStatus from '../../center/signal/signalStatus.js';
 import DateManager from '../../center/statuscenter/manager/DateManager.js'
+import WindowManager from '../../center/statuscenter/manager/WindowManager.js'
 import mLog from '../../common/utils/Log.js';
 
 const TAG = 'StatusCenter';
@@ -27,7 +28,10 @@ const LOOP_TIME = 1000;
 var mSignalStatus = new SignalStatus();
 var mBatteryStatus = new BatteryStatus();
 var mDateManager = new DateManager();
+var mWindowManager = new WindowManager();
 var time;
+var mIconList = [];
+var mResultIconList = [];
 
 export default class StatusCenter {
     constructor() {
@@ -72,5 +76,27 @@ export default class StatusCenter {
      */
     stopUpdateTime() {
         clearInterval(time);
+    }
+
+    /**
+     * Set the status bar window to maximum size
+     *
+     * @param {object} callback - Callback function
+     */
+    setWindowMax(callback) {
+        mWindowManager.setWindowMax((result) => {
+            callback(result);
+        });
+    }
+
+    /**
+     * Set the status bar window to minimum size
+     *
+     * @param {object} callback - Callback function
+     */
+    setWindowMin(callback) {
+        mWindowManager.setWindowMin((result) => {
+            callback(result);
+        });
     }
 }
