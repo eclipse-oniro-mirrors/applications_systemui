@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-const TAG = "SystemUI_StatusBar";
+const TAG = 'SystemUI_StatusBar';
 
 /**
  * Basic log class

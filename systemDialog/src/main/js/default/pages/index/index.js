@@ -82,6 +82,7 @@ export default {
         }
         mLog.showInfo(TAG, ` changeSwitch End`);
     },
+
     /**
      * User confirmation
      */
@@ -108,6 +109,7 @@ export default {
 
         mSystemDialogCenter.finishResult(AbilityResult);
     },
+
     /**
      * User canceled
      */

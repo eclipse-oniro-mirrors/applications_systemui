@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-var TAG = "SystemUI_Dialog";
+var TAG = 'SystemUI_Dialog';
 
 /**
  * Basic log class
