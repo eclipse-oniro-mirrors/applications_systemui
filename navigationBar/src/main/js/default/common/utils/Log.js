@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-var TAG = "SystemUI_NavigationBar";
+var TAG = 'SystemUI_NavigationBar';
 
 /**
  * Basic log class

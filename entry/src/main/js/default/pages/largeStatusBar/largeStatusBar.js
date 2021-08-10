@@ -15,20 +15,22 @@
 
 import mLog from '../../common/utils/Log.js';
 
-const MAX_HEIGHT = "100px";
-const MAX_WIDTH = "100%";
+const MAX_HEIGHT = '110px';
+const MAX_WIDTH = '100%';
 const TAG = 'LargeStatusBar';
 
 export default {
-    props: ['windowHeight', 'windowWidth'],
+    props: ['cellularType', 'typeShow', 'cellularImage', 'backColor', 'progressWidth', 'mTime', 'mDate'],
+
     data: {
         statusHeight: MAX_HEIGHT,
         statusWidth: MAX_WIDTH,
-        backgroundColor: "",
+        backgroundColor: '',
         showClock: false
     },
+
     onInit() {
-        mLog.showInfo(TAG, `largeStatusBar onInit`);
+        mLog.showInfo(TAG, 'largeStatusBar onInit');
     },
 
     /**
@@ -37,7 +39,7 @@ export default {
      */
     settingClick(event) {
         mLog.showInfo(TAG, `largeStatusBar settingClick event: ${JSON.stringify(event)}`);
-        this.$emit('settingClick', {
+        this.$emit('eventSet', {
             statusHeight: event.detail.statusHeight,
             statusWidth: event.detail.statusWidth,
             notificationHeight: event.detail.notificationHeight,

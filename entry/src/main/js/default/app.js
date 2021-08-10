@@ -14,14 +14,20 @@
  */
 
 import mLog from '../default/common/utils/Log.js';
+import StatusCenter from '../default/center/statuscenter/StatusCenter.js';
 
 const TAG = 'app';
 
 export default {
-    onCreate() {
-        mLog.showInfo(TAG, `Application onCreate`);
+    data: {
+        StatusCenter:new StatusCenter
     },
+
+    onCreate() {
+        mLog.showInfo(TAG, 'Application onCreate');
+    },
+
     onDestroy() {
-        mLog.showInfo(TAG, `Application onDestroy`);
+        mLog.showInfo(TAG, 'Application onDestroy');
     }
 };

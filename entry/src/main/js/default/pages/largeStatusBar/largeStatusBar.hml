@@ -18,9 +18,10 @@
 <element src="../statusbar/statusBar.hml" name="statusbar"></element>
 <element src="../quicklySetting/quicklySetting.hml" name="quicklysetting"></element>
 <element src="../notification/notification.hml" name="notification"></element>
-<div class="container" style="height : {{ windowHeight }}; width : {{ windowWidth }}" >
+<div class="container" style="height : 100%; width : 100%" >
     <statusbar status-height="{{statusHeight}}" status-width="{{statusWidth}}" background-color="{{backgroundColor}}"
-            show-clock="{{showClock}}"></statusbar>
-    <quicklysetting @setting-click="settingClick"></quicklysetting>
+            show-clock="{{showClock}}" cellular-type="{{cellularType}}" type-show="{{typeShow}}" cellular-image="{{cellularImage}}"
+               back-color="{{backColor}}" progress-width="{{progressWidth}}"></statusbar>
+    <quicklysetting @event-set="settingClick" m-time="{{mTime}}" m-date="{{mDate}}"  ></quicklysetting>
     <notification></notification>
 </div>

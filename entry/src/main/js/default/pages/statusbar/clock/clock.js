@@ -13,25 +13,21 @@
  * limitations under the License.
  */
 
-import StatusCenter from '../../../center/statuscenter/StatusCenter.js';
 import mLog from '../../../common/utils/Log.js';
 
 const TAG = 'clock';
-var mStatusCenter = new StatusCenter();
 
 export default {
+    props:['mTime', 'mDate'],
+
     data: {
-        mTime: ''
     },
+
     onInit() {
-        mLog.showInfo(TAG, `clock onInit`);
-        // get currentDate
-        mStatusCenter.setOnTimeListener((currentDate) => {
-            this.mTime = JSON.parse(currentDate).time;
-        });
+        mLog.showInfo(TAG, 'clock onInit');
     },
+
     onDestroy() {
-        mLog.showInfo(TAG, `clock onDestroy`);
-        mStatusCenter.stopUpdateTime();
+        mLog.showInfo(TAG, 'clock onDestroy');
     }
 }

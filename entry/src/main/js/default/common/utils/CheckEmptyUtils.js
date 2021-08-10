@@ -14,6 +14,7 @@
  */
 
 export default class CheckEmptyUtils {
+
     /**
      * Check obj is empty.
      *

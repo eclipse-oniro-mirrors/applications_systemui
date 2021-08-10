@@ -16,16 +16,15 @@
 /**
  * Get the cellular and wifi status
  */
-import StatusImage from '../statuscenter/manager/StatusImage.js';
-import Radio from "@ohos.telephony_radio";
+
+import Radio from '@ohos.telephony_radio';
 import mLog from '../../common/utils/Log.js';
-import mCheckEmpty from '../../common/utils/CheckEmptyUtils.js'
+import mCheckEmpty from '../../common/utils/CheckEmptyUtils.js';
 
 const TAG = 'signalStatus';
-const LOOP_TIME = 20000;
 const EMPTY_LEVEL = 0;
 const CELLULAR_NONE_IMAGE = 'common/image_xxhdpi/ic_statusbar_signal_null.png';
-const CELLULAR_EMPTY_IMAGE = 'common/image_xxhdpi/ic_statusbar_signal_no.png'
+const CELLULAR_EMPTY_IMAGE = 'common/image_xxhdpi/ic_statusbar_signal_no.png';
 const CELLULAR_MIN_IMAGE = 'common/image_xxhdpi/ic_cellular_signal_min.png';
 const CELLULAR_LOW_IMAGE = 'common/image_xxhdpi/ic_cellular_signal_low.png';
 const CELLULAR_HALF_IMAGE = 'common/image_xxhdpi/ic_statusbar_signal_half.png';
@@ -36,42 +35,22 @@ var mCellularStatus;
 var mCellularImage;
 var SignalListenerInterval;
 
-export default class signalStatus extends StatusImage {
+export default class signalStatus {
     constructor() {
-        super()
     }
 
     /**
      * Get the images of cellular and wifi need to be showed on status bar
      *
-     * @return {string} the image of wifi and cellular
+     * @param {Object} callback - Callback function
      */
-    getStatusImage() {
+    getStatusImage(callback) {
         let signalValue = {};
+        this.getSignalMessage();
         signalValue.cellularImage = mCellularImage.image;
         signalValue.cellularType = mCellularImage.type;
         mLog.showInfo(TAG, `cellular type = ${signalValue.cellularType}, image = ${signalValue.cellularImage}`);
-        return JSON.stringify(signalValue);
-    }
-
-    /**
-     * Init the parameters for the wifi and cellular signal
-     */
-    init() {
-        this.setOnSignalListener();
-    }
-
-    /**
-     * Method of getting the cellular status parameters
-     */
-    setOnSignalListener() {
-        this.getSignalMessage();
-        SignalListenerInterval = setInterval( () => {
-            this.checkCellularStatus((result)=>{
-                mCellularStatus = result;
-                mCellularImage = this.updateCellularImage();
-            });
-        }, LOOP_TIME);
+        callback(JSON.stringify(signalValue));
     }
 
     /**
@@ -167,10 +146,10 @@ export default class signalStatus extends StatusImage {
                 // Failed to call the interface，error is not null
                 mLog.showError(TAG, `failed to getSimState because ${err.message}`);
                 // When failed to call the interface, set the result as no signal
-                let value = {}
-                value.signalType = EMPTY_LEVEL;
-                value.signalLevel = EMPTY_LEVEL;
-                cellularStatus = value;
+                let defaultValue = {}
+                defaultValue.signalType = EMPTY_LEVEL;
+                defaultValue.signalLevel = EMPTY_LEVEL;
+                cellularStatus = defaultValue;
             } else {
                 // Call interface succeed，error is null
                 mLog.showInfo(TAG, `success to getSimState: ${value}`);
@@ -184,8 +163,5 @@ export default class signalStatus extends StatusImage {
             }
             callback(cellularStatus);
         });
-    }
-    stopSignalListener() {
-        clearInterval(SignalListenerInterval);
     }
 }

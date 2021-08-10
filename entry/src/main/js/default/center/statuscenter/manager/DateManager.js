@@ -14,13 +14,6 @@
  */
 
 const SHORT_LENGTH = 1;
-const MARK_MONDAY = 1;
-const MARK_TUESDAY = 2;
-const MARK_WEDNESDAY = 3;
-const MARK_THURSDAY = 4;
-const MARK_FRIDAY = 5;
-const MARK_SATURDAY = 6;
-const MARK_SUNDAY = 0;
 
 /**
  * Manage methods related to time.
@@ -28,11 +21,11 @@ const MARK_SUNDAY = 0;
 export default class DateManager {
 
     /**
-     * Get current date and time.
+     * Obtain current date and time.
      *
-     * @return {string} current date and time.
+     * @param {Object} callback - Callback function.
      */
-    getCurrentDate() {
+    getCurrentDate(callback) {
         let result = {};
         let date = new Date();
         let month = this.getMonth(date);
@@ -40,71 +33,49 @@ export default class DateManager {
         let time = date.toTimeString().substring(0, 5);
         let weekDay = this.getWeekDay(date);
         result.time = time;
-        result.date = month + globalThis.$globalT('strings.month') + day + globalThis.$globalT('strings.day') + weekDay;
-        return JSON.stringify(result);
+        result.date = {};
+        result.date.month = month;
+        result.date.day = day;
+        result.date.weekDay = weekDay;
+        callback(JSON.stringify(result));
     }
 
     /**
-     * Get Month.
+     * Obtain Month.
      *
-     * @param {object} date - Object of Date.
+     * @param {Object} date - Object of Date.
      * @return {string} The month of date.
      */
     getMonth(date) {
         let month = (date.getMonth() + 1).toString();
-        if (month.length == SHORT_LENGTH) {
-            month = "0" + month;
+        if (month.length === SHORT_LENGTH) {
+            month = '0' + month;
         }
         return month;
     }
 
     /**
-     * Get Day.
+     * Obtain Day.
      *
-     * @param {object} date - Object of Date.
+     * @param {Object} date - Object of Date.
      * @return {string} The day of date.
      */
     getDay(date) {
         let day = (date.getDate()).toString();
-        if (day.length == SHORT_LENGTH) {
-            day = "0" + day;
+        if (day.length === SHORT_LENGTH) {
+            day = '0' + day;
         }
         return day;
     }
 
     /**
-     * Get WeekDay.
+     * Obtain WeekDay.
      *
-     * @param {object} date - Object of Date.
+     * @param {Object} date - Object of Date.
      * @return {string} The weekday of date.
      */
     getWeekDay(date) {
         let weekDay = date.getDay();
-        switch (weekDay) {
-            case MARK_MONDAY:
-                weekDay = globalThis.$globalT('strings.monday');
-                break;
-            case MARK_TUESDAY:
-                weekDay = globalThis.$globalT('strings.tuesday');
-                break;
-            case MARK_WEDNESDAY:
-                weekDay = globalThis.$globalT('strings.wednesday');
-                break;
-            case MARK_THURSDAY:
-                weekDay = globalThis.$globalT('strings.thursday');
-                break;
-            case MARK_FRIDAY:
-                weekDay = globalThis.$globalT('strings.friday');
-                break;
-            case MARK_SATURDAY:
-                weekDay = globalThis.$globalT('strings.saturday');
-                break;
-            case MARK_SUNDAY:
-                weekDay = globalThis.$globalT('strings.sunday');
-                break;
-            default:
-                break;
-        }
-        return weekDay
+        return weekDay;
     }
 }

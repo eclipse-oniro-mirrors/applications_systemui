@@ -21,20 +21,20 @@
     <div class="status_bar_page" style="height:{{statusHeight}};width:{{statusWidth}}; background-color : {{backgroundColor}}">
         <div class="main_body">
             <div class="signal">
-                <text class="signal_text" show="{{ mTypeShow }}">{{ mCellularType }}</text>
-                <image class="signal_icon" src="{{ mCellularImage }}"></image>
+                <text class="signal_text" show="{{ typeShow }}">{{ cellularType }}</text>
+                <image class="signal_icon" src="{{ cellularImage }}"></image>
                 <image class="signal_icon" ></image>
             </div>
         </div>
         <div class="battery">
             <div class="battery_body">
                 <div id="batteryIconProgress" class="battery_progress"
-                     style="width : {{ mProgressWidth }}; background-color : {{ mBackgroundColor }};">
+                     style="width : {{ progressWidth }}; background-color : {{ backColor }};">
                 </div>
             </div>
         </div>
         <block if="{{showClock}}">
-            <clock id="clock"></clock>
+            <clock id="clock" m-time="{{mTime}}" m-date="{{mDate}}"  ></clock>
         </block>
     </div>
 </div>
