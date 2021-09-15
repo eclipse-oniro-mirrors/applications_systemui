@@ -1,0 +1,7 @@
+{
+  "groupNumber" : 2,
+  "twoGroups": {
+    "leftGroupOrder": ["signal","wifi"],
+    "rightGroupOrder": ["battery","clock"]
+  }
+}
