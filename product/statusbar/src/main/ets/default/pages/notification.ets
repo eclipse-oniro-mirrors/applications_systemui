@@ -1,0 +1,247 @@
+/*
+ * Copyright (c) 2021 Huawei Device Co., Ltd.
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+import Log from '../../../../../../../common/src/main/ets/default/Log.ets'
+import Constants from './common/constants.ets'
+import FeatureAbility from '@ohos.ability.featureAbility';
+import BatteryIcon from '../../../../../../../features/batterycomponent/src/main/ets/default/pages/batteryIcon.ets'
+import ClockIcon from '../../../../../../../features/clockcomponent/src/main/ets/default/pages/clockIcon.ets'
+import WifiIcon from '../../../../../../../features/wificomponent/src/main/ets/default/pages/wifiIcon.ets'
+import SignalIcon from '../../../../../../../features/signalcomponent/src/main/ets/default/pages/signalIcon.ets'
+import notificationItem from '../../../../../../../features/noticeitem/src/main/ets/com/ohos/noticeItem/item/notificationItem.ets'
+import WindowManager from '../../../../../../../common/src/main/ets/default/WindowManager.ets'
+import mNotificationService from '../../../../../../../features/notificationService/src/main/ets/com/ohos/notificationservice/NotificationService.ets'
+
+const TAG = 'StatusBar=====notification'
+
+@Component
+export default
+struct Index {
+  @Link showStatusBar: boolean
+  startX: number = 0
+  startY: number = 0
+  @State moveX: number = 0
+  @State moveY: number = 0
+
+  aboutToAppear() {
+    Log.showInfo(TAG, `aboutToAppear2, showStatusBar: ${this.showStatusBar}`)
+  }
+
+  build() {
+    Flex({ direction: FlexDirection.Column, alignItems: ItemAlign.Start, justifyContent: FlexAlign.Start }) {
+      statusBar()
+      quicklySetting({ showStatusBar: $showStatusBar})
+      notificationItems({ showStatusBar: $showStatusBar})
+    }
+    .width('100%')
+    .height('100%')
+    .backgroundColor($r('app.color.default_background'))
+    .onTouch(this.touchEvent.bind(this))
+  }
+
+  touchEvent(event: TouchEvent) {
+//    Log.showInfo(TAG, 'touchEvent================' + event.touches)
+    if (event.type == Constants.TOUCHTYPE_DOWN) {
+      this.startX = event.touches[0].screenX
+      this.startY = event.touches[0].screenY
+      Log.showInfo(TAG, `touchStart2=======startX: ${this.startX}, startY: ${this.startY}`)
+    } else if (event.type == Constants.TOUCHTYPE_MOVE) {
+      this.moveX = event.touches[0].screenX - this.startX
+      this.moveY = event.touches[0].screenY - this.startY
+    } else if (event.type == Constants.TOUCHTYPE_UP) {
+      Log.showInfo(TAG, `touchEnd2, moveX: ${this.moveX}, moveY: ${this.moveY}`)
+      if (this.moveY < -30) {
+        this.showStatusBar = true;
+        WindowManager.setWindowMin()
+      }
+    }
+  }
+}
+
+@Component
+struct statusBar {
+  build() {
+    Flex({ direction: FlexDirection.Row, alignItems: ItemAlign.Center, justifyContent: FlexAlign.Center }) {
+      Flex({ direction: FlexDirection.Row, alignItems: ItemAlign.Center, justifyContent: FlexAlign.Start }) {
+        SignalIcon()
+        WifiIcon()
+      }
+
+      Flex({ direction: FlexDirection.Row, alignItems: ItemAlign.Center, justifyContent: FlexAlign.End }) {
+        BatteryIcon()
+        ClockIcon()
+      }
+    }
+    .width('100%')
+    .height($r('app.float.statusbar_height'))
+    .backgroundColor($r('app.color.statusbar_background'))
+  }
+}
+
+@Component
+struct quicklySetting {
+  @Link showStatusBar: boolean
+  @StorageLink('time') mTime: string = '01:01'
+  @StorageLink('month') mMonth: number = 1
+  @StorageLink('day') mDay: number = 1
+  @StorageLink('weekDay') mWeekDay: number = 1
+  @State showDay: string = 'day'
+  @State showMonth: string = 'month'
+  @State showWeekDay: any = 'weekday'
+
+  aboutToAppear() {
+    Log.showInfo(TAG, `quicklySetting, aboutToAppear`)
+    //show month
+    if (this.mMonth < Constants.DIGITS) {
+      this.showMonth = '0' + this.mMonth;
+    } else {
+      this.showMonth = '' + this.mMonth;
+    }
+    //show day
+    if (this.mDay < Constants.DIGITS) {
+      this.showDay = '0' + this.mDay;
+    } else {
+      this.showDay = '' + this.mDay;
+    }
+    //show weekDay
+    switch (this.mWeekDay) {
+      case Constants.WEEKDAY_MONDAY:
+        this.showWeekDay = $r('app.string.monday');
+        break;
+      case Constants.WEEKDAY_TUESDAY:
+        this.showWeekDay = $r('app.string.tuesday');
+        break;
+      case Constants.WEEKDAY_WEDNESDAY:
+        this.showWeekDay = $r('app.string.wednesday');
+        break;
+      case Constants.WEEKDAY_THURSDAY:
+        this.showWeekDay = $r('app.string.thursday');
+        break;
+      case Constants.WEEKDAY_FRIDAY:
+        this.showWeekDay = $r('app.string.friday');
+        break;
+      case Constants.WEEKDAY_SATURDAY:
+        this.showWeekDay = $r('app.string.saturday');
+        break;
+      case Constants.WEEKDAY_SUNDAY:
+        this.showWeekDay = $r('app.string.sunday');
+        break;
+      default:
+        break;
+    }
+  }
+
+  build() {
+    Flex({ direction: FlexDirection.Row, justifyContent: FlexAlign.SpaceBetween, alignItems: ItemAlign.Center }) {
+      Flex({ direction: FlexDirection.Column, justifyContent: FlexAlign.Center, alignItems: ItemAlign.Start }) {
+        Text(this.mTime)
+          .fontColor($r('app.color.quicklysetting_time_fontcolor'))
+          .fontSize($r('app.float.quicklysetting_time_fontsize'))
+        Flex({direction: FlexDirection.Row, justifyContent: FlexAlign.Start, alignItems: ItemAlign.Center}){
+          Text(this.showMonth)
+            .fontColor($r('app.color.quicklysetting_date_fontcolor'))
+            .fontSize($r('app.float.quicklysetting_date_fontsize'))
+          Text($r('app.string.month'))
+            .fontColor($r('app.color.quicklysetting_date_fontcolor'))
+            .fontSize($r('app.float.quicklysetting_date_fontsize'))
+          Text(this.showDay)
+            .fontColor($r('app.color.quicklysetting_date_fontcolor'))
+            .fontSize($r('app.float.quicklysetting_date_fontsize'))
+          Text($r('app.string.day'))
+            .fontColor($r('app.color.quicklysetting_date_fontcolor'))
+            .fontSize($r('app.float.quicklysetting_date_fontsize'))
+          Text(this.showWeekDay)
+            .fontColor($r('app.color.quicklysetting_date_fontcolor'))
+            .fontSize($r('app.float.quicklysetting_date_fontsize'))
+        }
+      }
+      .width('50%')
+      .height('100%')
+      .margin({ left: $r('app.float.quicklysetting_textflex_marginleft') })
+
+      Flex({ direction: FlexDirection.Row, justifyContent: FlexAlign.End }) {
+        Image($r('app.media.ic_settings'))
+          .objectFit(ImageFit.Contain)
+        .onClick(this.settingClick.bind(this))
+      }
+      .width($r('app.float.quicklysetting_image_width'))
+      .height($r('app.float.quicklysetting_image_height'))
+      .margin({ right: $r('app.float.quicklysetting_image_marginright') })
+
+    }
+    .width('100%')
+    .height($r('app.float.quicklysetting_height'))
+    .borderRadius($r('app.float.quicklysetting_borderradius'))
+    .margin({ left: $r('app.float.quicklysetting_marginleft'), right: $r('app.float.quicklysetting_marginright') })
+  }
+
+  settingClick() {
+    this.showStatusBar = true;
+    WindowManager.setWindowMin();
+    let result = FeatureAbility.startAbility({
+      want: {
+        bundleName: 'com.ohos.settings',
+        abilityName: 'com.ohos.settings.MainAbility',
+      },
+    }).then(data =>
+    Log.showInfo(TAG, `promise then: ${JSON.stringify(data)}`)).catch(error =>
+    Log.showError(TAG, `promise catch: ${JSON.stringify(error)}`));
+    Log.showInfo(TAG, `start ability ${result}`);
+  }
+}
+
+@Component
+struct notificationItems {
+  @StorageLink('notificationList') notificationList: any[] = []
+  @Link showStatusBar: boolean
+
+  build() {
+    Flex({ direction: FlexDirection.Column, justifyContent: FlexAlign.Start, alignItems: ItemAlign.Center }) {
+      if (this.notificationList.length == 0) {
+        //text: no notification
+        Flex({ direction: FlexDirection.Column, justifyContent: FlexAlign.Center, alignItems: ItemAlign.Center }) {
+          Text($r('app.string.nonotification_text'))
+            .fontColor($r('app.color.nonotification_text_color'))
+        }
+      } else {
+        Stack({alignContent: Alignment.TopStart}) {
+          List() {
+            ForEach(this.notificationList, (item: any) => { //notificationItems
+              ListItem() {
+                notificationItem({ itemObject: item, showStatusBar: $showStatusBar })
+              }
+            }, (item: any) => item.id.toString())
+          }
+            Image($r('app.media.delete_all')) //icon: remove all notifications
+            .objectFit(ImageFit.Contain)
+              .width($r('app.float.deleteall_image_width'))
+              .height($r('app.float.deleteall_image_height'))
+              .borderRadius($r('app.float.deleteall_image_borderradius'))
+              .opacity($r('app.float.deleteall_image_opacity'))
+              .onClick(this.removeAllNotification.bind(this))
+              .position({ x: '44.5%', y: '85%' })
+        }
+        .width('100%')
+        .height('100%')
+      }
+    }
+    .width('100%')
+    .height('100%')
+  }
+
+  removeAllNotification() {
+    mNotificationService.removeAllNotifications();
+  }
+}
