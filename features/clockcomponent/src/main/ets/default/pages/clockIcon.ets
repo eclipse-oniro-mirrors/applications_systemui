@@ -15,7 +15,7 @@
 
 import timeModel from '../timeModel.ets'
 import Log from '../../../../../../../common/src/main/ets/default/Log.ets'
-const TAG = 'clockIcon';
+const TAG = 'ClockComponent-clockIcon';
 
 @Component
 export default struct ClockIcon {
@@ -23,12 +23,12 @@ export default struct ClockIcon {
   @StorageLink('time') mTime: string = '16:01'
 
   aboutToAppear() {
-    Log.showInfo(TAG, `aboutToAppear`);
+    Log.showInfo(TAG, 'aboutToAppear');
     timeModel.initTimeModel();
   }
 
   aboutToDisappear() {
-    Log.showInfo(TAG, `aboutToDisappear`);
+    Log.showInfo(TAG, 'aboutToDisappear');
     timeModel.unInitTimeModel();
   }
 

@@ -13,27 +13,26 @@
  * limitations under the License.
  */
 
-import Log from "../../../../../../common/src/main/ets/default/Log.ets";
+import Log from '../../../../../../common/src/main/ets/default/Log.ets';
 import Constants from './common/constants.ets';
 import BatteryInfo from '@ohos.batteryInfo';
-import BatterySubscriber from '@ohos.commonevent';
+import BatterySubscriber from '@ohos.commonEvent';
 
-const TAG = 'batteryStatus';
+const TAG = 'BatteryComponent-batteryModel';
 
 let mProgress = Constants.DEFAULT_PROGRESS;
 let mBatteryEventSubscriber = null;
 let mBatteryEventSubscribeInfo = {
   events: ['usual.event.BATTERY_CHANGED']
 }
-var mAppStorage = AppStorage.GetOrCreate();
 var mBatterySoc;
 var mBatteryCharging;
 
 export class BatteryModel {
   initBatteryModel() {
     Log.showInfo(TAG, 'initBatteryModel');
-    mBatterySoc = mAppStorage.setAndLink("batterySoc", 0);
-    mBatteryCharging = mAppStorage.setAndLink("batteryCharging", false);
+    mBatterySoc = AppStorage.SetAndLink('batterySoc', 0);
+    mBatteryCharging = AppStorage.SetAndLink('batteryCharging', false);
     if (mBatteryEventSubscriber == null) {
       this.registerBatteryListener();
     }
@@ -41,6 +40,7 @@ export class BatteryModel {
   }
 
   uninitBatteryModel() {
+    Log.showInfo(TAG, 'uninitBatteryModel');
     this.unregisterBatteryListener();
   }
 
@@ -60,6 +60,7 @@ export class BatteryModel {
    *
    */
   private unregisterBatteryListener() {
+    Log.showInfo(TAG, 'unregisterBatteryListener');
     BatterySubscriber.unsubscribe(mBatteryEventSubscriber, () => {
       Log.showInfo(TAG, `unregister Battery Status Listener ===============`);
     });
@@ -73,7 +74,7 @@ export class BatteryModel {
      */
 
   private createBatterySubscriberCallBack(err, data) {
-    Log.showInfo(TAG, `Subscriberregister createBatterySubscriberCallBack ${JSON.stringify(err)} ${JSON.stringify(data)}`);
+    Log.showInfo(TAG, `Subscriberregister createBatterySubscriberCallBack err: ${JSON.stringify(err)} data: ${JSON.stringify(data)}`);
     mBatteryEventSubscriber = data;
     BatterySubscriber.subscribe(mBatteryEventSubscriber, this.batterySubscriberCallBack.bind(this));
   }
@@ -87,7 +88,7 @@ export class BatteryModel {
      */
 
   private batterySubscriberCallBack(err, data) {
-    Log.showInfo(TAG, `Subscriberregister data == ${JSON.stringify(data)}`);
+    Log.showInfo(TAG, `batterySubscriberCallBack err: ${JSON.stringify(err)} data: ${JSON.stringify(data)}`);
     if (err.code == 0) {
       if (data.event == 'usual.event.BATTERY_CHANGED') {
         this.getBatteryStatus();
@@ -102,6 +103,7 @@ export class BatteryModel {
      * Get battery status and remaining power
      */
   private getBatteryStatus() {
+    Log.showInfo(TAG,'getBatteryStatus')
     let batterySoc = BatteryInfo.batterySOC;
     let batteryCharging = BatteryInfo.chargingStatus;
     if (null == batterySoc) {
@@ -127,7 +129,7 @@ export class BatteryModel {
      * @param {object} callback - Function callback
      */
   private checkBatteryStatus(charging, callback) {
-    Log.showInfo(TAG, `Battery updateBattery checkBatteryStatus: ${charging}`);
+    Log.showInfo(TAG, `checkBatteryStatus charging: ${charging}`);
     let batteryStatus;
     switch (charging) {
       case Constants.NONE:
@@ -147,5 +149,4 @@ export class BatteryModel {
 }
 
 let mBatteryModel = new BatteryModel();
-export default mBatteryModel as BatteryModel
-;
+export default mBatteryModel as BatteryModel;

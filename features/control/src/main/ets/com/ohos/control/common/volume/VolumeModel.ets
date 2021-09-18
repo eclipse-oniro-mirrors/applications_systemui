@@ -16,22 +16,24 @@
 import audio from '@ohos.multimedia.audio';
 import Log from '../../../../../../../../../../common/src/main/ets/default/Log.ets';
 
-let TAG = "VolumeModel";
+let TAG = 'Control-VolumeModel';
 
 export default class VolumeModel {
     constructor() {
     }
 
-    setVolume(volumeValue, volumeTpye){
-        Log.showInfo(TAG, `setvolume = ` + volumeValue + "volumeTpye = " + volumeTpye);
+    setVolume(volumeValue, volumeType){
+        Log.showInfo(TAG, `setVolume volumeValue: ${JSON.stringify(volumeValue)} volumeType：${JSON.stringify(volumeType)} `);
 
-        audio.getAudioManager().setVolume(volumeTpye, volumeValue).then(() => {
-            console.info('Promise returned to indicate a successful volume setting.')
+        audio.getAudioManager().setVolume(volumeType, volumeValue).then(() => {
+            Log.showInfo(TAG,'Promise returned to indicate a successful volume setting.')
         });
     }
 
     getVolume(callback, volumeType) {
+        Log.showInfo(TAG, `getVolume volumeType：${volumeType} `);
         audio.getAudioManager().getVolume(volumeType, (err, value) => {
+
             if (err) {
                 Log.showInfo(TAG, `Failed to obtain the volume. ${err.message}`);
                 return;
@@ -42,7 +44,8 @@ export default class VolumeModel {
     }
 
     getMaxVolume(callback, volumeType) {
-        audio.getAudioManager().getVolume(volumeType, (err, value) => {
+        Log.showInfo(TAG, `getMaxVolume volumeType：${volumeType} `);
+        audio.getAudioManager().getMaxVolume(volumeType, (err, value) => {
             if (err) {
                 Log.showInfo(TAG, `Failed to obtain the volume. ${err.message}`);
                 return;
@@ -53,7 +56,8 @@ export default class VolumeModel {
     }
 
     getMinVolume(callback, volumeType) {
-        audio.getAudioManager().getVolume(volumeType, (err, value) => {
+        Log.showInfo(TAG, `getMaxVolume volumeType：${volumeType} `);
+        audio.getAudioManager().getMinVolume(volumeType, (err, value) => {
             if (err) {
                 Log.showInfo(TAG, `Failed to obtain the volume. ${err.message}`);
                 return;

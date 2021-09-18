@@ -18,14 +18,21 @@ import BatteryIcon from '../../../../../../../features/batterycomponent/src/main
 import ClockIcon from '../../../../../../../features/clockcomponent/src/main/ets/default/pages/clockIcon.ets'
 import WifiIcon from '../../../../../../../features/wificomponent/src/main/ets/default/pages/wifiIcon.ets'
 import SignalIcon from '../../../../../../../features/signalcomponent/src/main/ets/default/pages/signalIcon.ets'
+import Log from '../../../../../../../common/src/main/ets/default/Log.ets'
 import Constants from './common/constants.ets'
 
+const TAG = 'StatusBar-DefaultLayout'
 @Component
 export default struct Index {
   private notificationList : any
   private ListLength : number
   @StorageLink('wifiStatus') wifiStatus : boolean = false
-
+  aboutToAppear() {
+    Log.showInfo(TAG, `aboutToAppear Start`)
+  }
+  aboutToDisappear(){
+    Log.showInfo(TAG, `aboutToDisAppear`)
+  }
   build() {
     Flex({ direction: FlexDirection.Row, alignItems: ItemAlign.Center, justifyContent: FlexAlign.SpaceBetween }) {
       Column() {

@@ -14,13 +14,23 @@
  */
 
 import {IconComponent} from './IconComponent.ets'
+import Log from '../../../../../../../../../common/src/main/ets/default/Log.ets';
 
+const TAG= 'Control-wifiComponent'
 @Component
 export
 struct ElseWifiComponent {
-  @StorageLink("flyModelStatus") flyModelStatus: boolean = false
-  @StorageLink("wifiName") title: string = 'WLAN'
-  @StorageLink("wifiOpenStatus") wifiOpenStatus: boolean = false
+  @StorageLink('flyModelStatus') flyModelStatus: boolean = false
+  @StorageLink('wifiName') title: string = 'WLAN'
+  @StorageLink('wifiOpenStatus') wifiOpenStatus: boolean = false
+  aboutToAppear() {
+    Log.showInfo(TAG,'aboutToAppear')
+  }
+
+  aboutToDisappear () {
+    Log.showInfo(TAG,'aboutToDisappear')
+  }
+  
   private IconInfo: any[] = [
     'common/png/ic_notification_switch_off_bg.svg',
     $r('app.media.wifi_d'),

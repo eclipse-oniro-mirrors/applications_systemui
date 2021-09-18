@@ -12,7 +12,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-include ':entry', ':product:navigationBar', ':systemDialog', ':common', ':product:statusbar',
+include ':entry', ':product:navigationBar', ':common', ':product:statusbar', ':product:systemDialog',
         ':features:control', ':features:batterycomponent', ':features:clockcomponent',
         ':features:signalcomponent', ':features:wificomponent', ':features:navigationservice',
         ':features:noticeitem', ':features:notificationservice'

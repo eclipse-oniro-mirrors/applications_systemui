@@ -20,10 +20,13 @@ import WindowManager from '../../../../../../../common/src/main/ets/default/Wind
 import mNotificationService from '../../../../../../../features/notificationService/src/main/ets/com/ohos/notificationservice/NotificationService.ets'
 import ControlCenterComponent from './control.ets'
 import Constants from './common/constants.ets'
+import mBrightnessManager from '../../../../../../../features/control/src/main/ets/com/ohos/control/common/brightness/brightnessManager.ets';
 
-const TAG = 'StatusBar====='
+const TAG = 'StatusBar-Index'
 
-let mConfigReader
+let mConfigReader;
+
+let mWindowManager;
 
 @Entry
 @Component
@@ -39,11 +42,14 @@ struct Index {
 
   aboutToAppear() {
     Log.showInfo(TAG, `aboutToAppear, showStatusBar: ${this.showStatusBar}`)
-    mNotificationService.initNotificationService()
+    mWindowManager = new WindowManager();
+    mNotificationService.initNotificationService();
+    mBrightnessManager.registerBrightnessListener();
   }
 
   aboutToDisappear() {
-    Log.showInfo(TAG, `aboutToDisappear, showStatusBar: ${this.showStatusBar}`)
+    Log.showInfo(TAG, `aboutToDisappear, showStatusBar: ${this.showStatusBar}`);
+    mBrightnessManager.unRegisterBrightnessListener();
   }
 
   build() {
@@ -85,7 +91,7 @@ struct Index {
       Log.showInfo(TAG, `touchEnd, moveX: ${this.moveX}, moveY: ${this.moveY}`)
       if (this.moveY > 10) {
         this.showStatusBar = false;
-        WindowManager.setWindowMax()
+        mWindowManager.setWindowMax((result)=>{});
       }
     }
   }

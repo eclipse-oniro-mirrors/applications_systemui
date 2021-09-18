@@ -15,11 +15,10 @@
 
 import Constants from './common/constants.ets'
 import WifiInfo from '@ohos.wifi_native_js';
-import Subscriber from '@ohos.commonevent';
+import Subscriber from '@ohos.commonEvent';
 import Log from "../../../../../../common/src/main/ets/default/Log.ets";
 
-const TAG = 'wifiStatus';
-var mAppStroage = AppStorage.GetOrCreate();
+const TAG = 'WifiComponent-WifiModel';
 
 var mCommonEventSubscribeInfo = {
   events: [Constants.EVENT_CONN_STATE, Constants.EVENT_RSSI_VALUE,
@@ -34,16 +33,19 @@ var mWifiName;
 export class WifiModel {
 
   initWifiModel() {
-    mWifiInfo = mAppStroage.setAndLink("wifiInfo",0);
-    mWifiStatus = mAppStroage.setAndLink("wifiStatus",false);
-    mWifiName = mAppStroage.setAndLink("wifiName",'WLAN')
-    mWifiOpenStatus =  mAppStroage.setAndLink("wifiOpenStatus",false);
+    Log.showInfo(TAG, `initWifiModel`)
+    mWifiInfo = AppStorage.SetAndLink("wifiInfo", 0);
+    mWifiStatus = AppStorage.SetAndLink("wifiStatus", false);
+    mWifiName = AppStorage.SetAndLink("wifiName", 'WLAN')
+    mWifiOpenStatus = AppStorage.SetAndLink("wifiOpenStatus", false);
     if(mCommonEventSubscriber == null){
       this.registerWiFiStatusListener();
     }
+    //    this.getWifiMessage();
   }
 
   uninitWifiModel() {
+    Log.showInfo(TAG, `uninitWifiModel`)
     this.unregisterWiFiStatusListener()
   }
 
@@ -76,7 +78,7 @@ export class WifiModel {
    * @param {Object} data - data returns from the caller
    */
   createWifiStatusSubscriberCallBack(err, data) {
-    Log.showInfo(TAG, `createWifiStatusSubscriberCallBack start`);
+    Log.showInfo(TAG, `createWifiStatusSubscriberCallBack start err: ${JSON.stringify(err)} data: ${JSON.stringify(data)}`);
     mCommonEventSubscriber = data;
     Subscriber.subscribe(mCommonEventSubscriber, this.wifiStatusSubscriberCallBack.bind(this));
   }
@@ -88,6 +90,7 @@ export class WifiModel {
    * @param {Object} data - data returns from the caller
    */
   private wifiStatusSubscriberCallBack(err, data) {
+    Log.showInfo(TAG, `createWifiStatusSubscriberCallBack start err:${ JSON.stringify(err)} data: ${ JSON.stringify(data) }`);
     if (err.code == Constants.DEFAULT_ERR_CODE) {
       Log.showInfo(TAG, `wifi data == ${JSON.stringify(data)}`);
       if (data.event == Constants.EVENT_CONN_STATE && data.code ==Constants.WIFI_STATE_AP_CONNECTING) {
@@ -144,7 +147,7 @@ export class WifiModel {
     mWifiStatus.set(status)
   }
 
-  private updateWifiInfo(rssi=Constants.UPDATE_WIFIINFO_DEFAULT_PARAM,band=Constants.SIGNALEVEL) {
+  private updateWifiInfo(rssi=Constants.UPDATE_WIFI_INFO_DEFAULT_PARAM,band=Constants.SIGN_LEVEL) {
     Log.showInfo(TAG, `enter changeWifiInfos ================ ${rssi}+${band}`);
     mWifiInfo.set(this.getWifiInfo(rssi,band))
   }

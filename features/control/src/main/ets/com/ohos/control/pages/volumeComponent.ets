@@ -14,42 +14,47 @@
  */
 
 import audio from '@ohos.multimedia.audio';
-import VolumeModel from '../common/volume/VolumeModel.ets'
+import VolumeModel from '../common/volume/VolumeModel.ets';
 import Log from '../../../../../../../../../common/src/main/ets/default/Log.ets';
 
-const TAG = 'ControlCenter'
-const volumeTpye = 'audio.AudioVolumeType.MEDIA'
+const TAG = 'Control-volumeComponent'
+const volumeType = audio.AudioVolumeType.MEDIA;
 
 let volumeModel = new VolumeModel();
 let volume = {
   value: 7,
   minValue: 0,
   maxValue: 10,
-}
+};
 
 @Component
 export
 struct MyVol {
   private audioManager = audio.getAudioManager();
 
-  initVolume() {
-    volumeModel.getMaxVolume(volume, volumeTpye);
-    volumeModel.getMinVolume(volume, volumeTpye);
-    volumeModel.getVolume(volume, volumeTpye);
-    Log.showInfo(TAG, `initVolume ${volume.value} ${volume.minValue} ${volume.maxValue} `)
+  aboutToDisappear () {
+    Log.showInfo(TAG,'aboutToDisappear')
   }
 
-  setVolume(volumeValue, volumeTpye) {
-    Log.showInfo(TAG, `setVolume = ${volume.value} Type = ${volumeTpye}`)
-    audio.getAudioManager().setVolume(volumeTpye, volumeValue).then(() => {
-      console.info("Promise returned to indicate a successful volume setting")
+  initVolume() {
+    volumeModel.getMaxVolume(volume, volumeType);
+    volumeModel.getMinVolume(volume, volumeType);
+    volumeModel.getVolume(volume, volumeType);
+    Log.showInfo(TAG, `initVolume ${volume.value} ${volume.minValue} ${volume.maxValue} `);
+  }
+
+
+  setVolume(volumeValue, volumeType) {
+    Log.showInfo(TAG, `setVolume = ${volume.value} Type = ${volumeType}`)
+    audio.getAudioManager().setVolume(volumeType, volume.value).then(() => {
+      Log.showInfo(TAG,'Promise returned to indicate a successful volume setting')
     })
   }
 
   aboutToAppear() {
-    console.log("Start init Volume!")
+    Log.showInfo(TAG,'Start init Volume!')
     this.initVolume()
-    console.log("Finished init Volume!")
+    Log.showInfo(TAG,'Finished init Volume!')
   }
 
   build() {
@@ -76,7 +81,7 @@ struct MyVol {
           .selectedColor(Color.Blue)
           .onChange((value: number) => {
           volume.value = value
-          this.setVolume(volume, volumeTpye)
+          this.setVolume(volume, volumeType)
         })
       }
       .width('85%')

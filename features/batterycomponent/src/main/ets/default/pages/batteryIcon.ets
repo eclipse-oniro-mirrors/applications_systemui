@@ -17,7 +17,9 @@ import mBatteryModel from '../batteryModel.ets';
 import BatteryPic from './batteryPic.ets'
 import BatterySoc from './batterySoc'
 import Constants from '../common/constants.ets'
+import Log from '../../../../../../../common/src/main/ets/default/Log.ets'
 
+const TAG = 'BatteryComponent-batteryIcon'
 @Component
 export default
 struct BatteryIcon {
@@ -25,10 +27,12 @@ struct BatteryIcon {
 
   aboutToAppear() {
     mBatteryModel.initBatteryModel();
+    Log.showInfo(TAG,'aboutToAppear');
   }
 
   aboutToDisappear() {
     mBatteryModel.uninitBatteryModel();
+    Log.showInfo(TAG,'aboutToDisappear');
   }
 
   build() {

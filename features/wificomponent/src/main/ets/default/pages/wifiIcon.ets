@@ -15,18 +15,22 @@
 
 import Constants from '../common/constants.ets'
 import mWifiModel from '../WifiModel.ets'
+import Log from '../../../../../../../common/src/main/ets/default/Log.ets'
+const TAG = 'WifiComponent-WifiIcon'
 
 @Component
 export default struct WifiIcon {
-  @StorageLink('wifiInfo') wifiInfo : number = Constants.DEFAULT_WIFIINFO
-  @StorageLink('wifiStatus') wifiStatus : boolean = Constants.DEFAULT_WIFISTATUS
+  @StorageLink('wifiInfo') wifiInfo : number = Constants.DEFAULT_WIFI_INFO
+  @StorageLink('wifiStatus') wifiStatus : boolean = Constants.DEFAULT_WIFI_STATUS
 
   aboutToAppear() {
+    Log.showInfo(TAG, `aboutToAppear`)
     mWifiModel.initWifiModel()
   }
 
   aboutToDisappear() {
-//    mWifiModel.uninitWifiModel()
+    Log.showInfo(TAG, `aboutToDisappear`)
+    //    mWifiModel.uninitWifiModel()
   }
 
   build() {
@@ -40,6 +44,7 @@ export default struct WifiIcon {
   }
 
   private getImage(wifiInfo: number) {
+    Log.showInfo(TAG, `getImage, wifiInfo: ${ JSON.stringify(wifiInfo) }`)
     let wifiImage ;
     switch (wifiInfo) {
       case Constants.WIFI_SIGNAL_NO:

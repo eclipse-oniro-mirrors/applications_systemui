@@ -14,12 +14,23 @@
  */
 
 import {IconFlyComponent} from './IconComponent.ets'
+import Log from '../../../../../../../../../common/src/main/ets/default/Log.ets';
 
+const TAG = 'Control-airPlaneComponent'
 @Component
 export
 struct AirPlaneComponent {
   @State flyModel: boolean = false
-  @StorageLink("flyModelStatus") flyModelStatus: boolean = this.flyModel
+  @StorageLink('flyModelStatus') flyModelStatus: boolean = this.flyModel
+
+  aboutToAppear(){
+    Log.showInfo(TAG,'aboutToAppear')
+  }
+
+  aboutToDisappear (){
+    Log.showInfo(TAG,'aboutToDisappear ')
+  }
+
   private IconInfo: any[] = [
     '',
     $r('app.media.airplane_d'),

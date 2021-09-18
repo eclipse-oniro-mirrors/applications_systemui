@@ -14,18 +14,24 @@
  */
 
 import Constants from '../common/constants.ets'
-//import featureAbility from '@ohos.ability.featureability';
+import Log from '../../../../../../../common/src/main/ets/default/Log.ets'
 import BatteryIcon from '../../../../../../../features/batterycomponent/src/main/ets/default/pages/batteryIcon.ets'
 import ClockIcon from '../../../../../../../features/clockcomponent/src/main/ets/default/pages/clockIcon.ets'
 import WifiIcon from '../../../../../../../features/wificomponent/src/main/ets/default/pages/wifiIcon.ets'
 import SignalIcon from '../../../../../../../features/signalcomponent/src/main/ets/default/pages/signalIcon.ets'
+const TAG = 'StatusBar-TwoGroupLayout'
 
 @Component
 export default struct Index {
   private leftGroupOrder : any
   private rightGroupOrder : any
   private notificationList : any
-
+  aboutToAppear() {
+    Log.showInfo(TAG, `aboutToAppear Start`)
+  }
+  aboutToDisappear(){
+    Log.showInfo(TAG, `aboutToDisAppear`)
+  }
   build() {
     Flex({ direction: FlexDirection.Row, alignItems: ItemAlign.Center, justifyContent: FlexAlign.Center }) {
       Flex({ direction: FlexDirection.Row, alignItems: ItemAlign.Center, justifyContent: FlexAlign.Start }) {

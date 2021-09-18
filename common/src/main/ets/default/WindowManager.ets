@@ -31,11 +31,12 @@ export default class WindowManager {
      *
      * @param {Object} callback - Callback function.
      */
-  static setWindowMax() {
+  setWindowMax(callback) {
     Log.showInfo(TAG, 'enter setWindowMax =================');
     Window.getTopWindow().then((windowData)=> {
       windowData.resetSize(MAX_WIDTH, MAX_HEIGHT).then((result)=> {
         Log.showInfo(TAG, result);
+        callback(result);
       });
     });
   }
@@ -45,11 +46,12 @@ export default class WindowManager {
      *
      * @param {Object} callback - Callback function.
      */
-  static setWindowMin() {
+  setWindowMin(callback) {
     Log.showInfo(TAG, 'enter setWindowMin =================');
     Window.getTopWindow().then((windowData)=> {
       windowData.resetSize(MAX_WIDTH, MIN_HEIGHT).then((result)=> {
         Log.showInfo(TAG, result);
+        callback(result);
       });
     });
   }
