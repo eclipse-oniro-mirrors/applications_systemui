@@ -20,10 +20,9 @@ import Log from "../../../../../../common/src/main/ets/default/Log.ets";
 import CheckEmpty from '../../../../../../common/src/main/ets/default/CheckEmptyUtils.ets';
 import Constants from './common/constants.ets'
 
-const TAG = 'signalStatus';
+const TAG = 'SignalStatus-SignalModel';
 const EMPTY_LEVEL = 0;
 
-var mAppStorage = AppStorage.GetOrCreate();
 let mSignalCallback;
 let signalValue = {
   cellularLevel: '',
@@ -31,23 +30,25 @@ let signalValue = {
   networkState: ''
 };
 
-var mLevelLink
-var mTypeLink
-var mStateLink
+var mLevelLink;
+var mTypeLink;
+var mStateLink;
 
 export class SignalModel
 
 {
 
   initSignalModel() {
-    mLevelLink = mAppStorage.setAndLink('cellularLevel', '');
-    mTypeLink = mAppStorage.setAndLink('cellularType', '');
-    mStateLink = mAppStorage.setAndLink('networkState', '');
+    Log.showInfo(TAG, 'initSignalModel');
+    mLevelLink = AppStorage.SetAndLink("cellularLevel", '');
+    mTypeLink = AppStorage.SetAndLink("cellularType", '');
+    mStateLink = AppStorage.SetAndLink("networkState", '');
     this.initObserver();
     this.checkCellularStatus();
   }
 
   uninitSignalModel() {
+    Log.showInfo(TAG, 'uninitSignalModel');
     this.unInitObserver();
   }
 
@@ -117,29 +118,31 @@ export class SignalModel
     /**
      * init the observer of the cellular and signal
      */
-    initObserver() {
-      Observer.on('signalInfoChange', { slotId: 0 }, (err, value) => {
-        if (err.code != 0) {
-          this.checkCellularStatus();
-        } else {
-          Log.showError(TAG, `failed, because ${JSON.stringify(err)}`);
-        }
-      });
-    }
+  initObserver() {
+    Log.showInfo(TAG, 'initObserver');
+    Observer.on('signalInfoChange', { slotId: 0 }, (err, value) => {
+      if (err.code != 0) {
+        this.checkCellularStatus();
+      } else {
+        Log.showError(TAG, `failed, because ${JSON.stringify(err)}`);
+      }
+    });
+  }
 
     /**
      * Uninit the observer of the cellular and signal
      */
-    unInitObserver() {
-      Observer.off('signalInfoChange', (err, value) => {
-        if (err.code != 0) {
-          Log.showInfo(TAG, `success: ${JSON.stringify(value)}`);
-        } else {
-          Log.showError(TAG, `failed, because ${JSON.stringify(err)}`);
-        }
-      });
-    }
+  unInitObserver() {
+    Log.showInfo(TAG, 'unInitObserver');
+    Observer.off('signalInfoChange', (err, value) => {
+      if (err.code != 0) {
+        Log.showInfo(TAG, `success: ${JSON.stringify(value)}`);
+      } else {
+        Log.showError(TAG, `failed, because ${JSON.stringify(err)}`);
+      }
+    });
   }
+}
 
   let mSignalModel = new SignalModel();
   export default mSignalModel as SignalModel;

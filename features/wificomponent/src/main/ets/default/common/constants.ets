@@ -14,11 +14,11 @@
  */
 
 export default class constants {
-  static DEFAULT_WIFIINFO: number = 0
-  static DEFAULT_WIFISTATUS: boolean = false
-  static WIFISTATUS_DISPLAY_HEIGHT: string = '50%'
-  static WIFISTATUS_HIDDEN_HEIGHT: number = 0
-  static WIFISTATUS_MAXWIDTH: string = '50'
+  static DEFAULT_WIFI_INFO: number = 0
+  static DEFAULT_WIFI_STATUS: boolean = false
+  static WIFI_STATUS_DISPLAY_HEIGHT: string = '50%'
+  static WIFI_STATUS_HIDDEN_HEIGHT: number = 0
+  static WIFI_STATUS_MAX_WIDTH: string = '50'
   static EVENT_CONN_STATE: string = 'usual.event.wifi.CONN_STATE'
   static EVENT_RSSI_VALUE: string = 'usual.event.wifi.RSSI_VALUE'
   static EVENT_POWER_STATE: string = 'usual.event.wifi.POWER_STATE'
@@ -34,8 +34,8 @@ export default class constants {
   static WIFI_STATE_AP_CONNECTING: number = 3
   static WIFI_Disconnected: number = 9
   static DEFAULT_ERR_CODE: number = 0
-  static UPDATE_WIFIINFO_DEFAULT_PARAM: number = -60
+  static UPDATE_WIFI_INFO_DEFAULT_PARAM: number = -60
   static WIFI_SIGNAL_DEFAULT: number = -1
-  static SIGNALEVEL: number = 2
+  static SIGN_LEVEL: number = 2
 
 }

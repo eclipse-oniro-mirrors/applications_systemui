@@ -15,6 +15,8 @@
 
 import keyButton from './keyButton.ets';
 import Constants from '../common/constants.ets'
+import Log from '../../../../../../../common/src/main/ets/default/Log.ets';
+const TAG = 'NavigationBar-OneLayout';
 
 let KeyCodeArr: any[] = [
   {
@@ -24,6 +26,14 @@ let KeyCodeArr: any[] = [
 
 @Component
 export default struct oneLayout {
+
+  aboutToAppear() {
+    Log.showInfo(TAG, `aboutToAppear Start`)
+  }
+  aboutToDisappear(){
+    Log.showInfo(TAG, `aboutToDisAppear`)
+  }
+
   build() {
     Grid() {
       ForEach(KeyCodeArr, (item: any) => {

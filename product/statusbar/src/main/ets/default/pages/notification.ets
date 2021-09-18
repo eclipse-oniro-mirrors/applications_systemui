@@ -15,7 +15,7 @@
 
 import Log from '../../../../../../../common/src/main/ets/default/Log.ets'
 import Constants from './common/constants.ets'
-import FeatureAbility from '@ohos.ability.featureAbility';
+import FeatureAbilityManager from '../../../../../../../common/src/main/ets/default/abilitymanager/featureAbilityManager.ets'
 import BatteryIcon from '../../../../../../../features/batterycomponent/src/main/ets/default/pages/batteryIcon.ets'
 import ClockIcon from '../../../../../../../features/clockcomponent/src/main/ets/default/pages/clockIcon.ets'
 import WifiIcon from '../../../../../../../features/wificomponent/src/main/ets/default/pages/wifiIcon.ets'
@@ -24,7 +24,10 @@ import notificationItem from '../../../../../../../features/noticeitem/src/main/
 import WindowManager from '../../../../../../../common/src/main/ets/default/WindowManager.ets'
 import mNotificationService from '../../../../../../../features/notificationService/src/main/ets/com/ohos/notificationservice/NotificationService.ets'
 
-const TAG = 'StatusBar=====notification'
+const TAG = 'StatusBar-notification'
+
+let mWindowManager;
+let mFeatureAbilityManager;
 
 @Component
 export default
@@ -36,7 +39,9 @@ struct Index {
   @State moveY: number = 0
 
   aboutToAppear() {
-    Log.showInfo(TAG, `aboutToAppear2, showStatusBar: ${this.showStatusBar}`)
+    mWindowManager = new WindowManager();
+    mFeatureAbilityManager = new FeatureAbilityManager();
+    Log.showInfo(TAG, `aboutToAppear Start`)
   }
 
   build() {
@@ -52,7 +57,7 @@ struct Index {
   }
 
   touchEvent(event: TouchEvent) {
-//    Log.showInfo(TAG, 'touchEvent================' + event.touches)
+    //    Log.showInfo(TAG, 'touchEvent================' + event.touches)
     if (event.type == Constants.TOUCHTYPE_DOWN) {
       this.startX = event.touches[0].screenX
       this.startY = event.touches[0].screenY
@@ -64,7 +69,9 @@ struct Index {
       Log.showInfo(TAG, `touchEnd2, moveX: ${this.moveX}, moveY: ${this.moveY}`)
       if (this.moveY < -30) {
         this.showStatusBar = true;
-        WindowManager.setWindowMin()
+        mWindowManager.setWindowMin((result)=>{
+
+        })
       }
     }
   }
@@ -142,6 +149,9 @@ struct quicklySetting {
         break;
     }
   }
+  aboutToDisappear() {
+    Log.showInfo(TAG, `aboutToDisappear, showStatusBar: ${this.showStatusBar}`)
+  }
 
   build() {
     Flex({ direction: FlexDirection.Row, justifyContent: FlexAlign.SpaceBetween, alignItems: ItemAlign.Center }) {
@@ -174,7 +184,7 @@ struct quicklySetting {
       Flex({ direction: FlexDirection.Row, justifyContent: FlexAlign.End }) {
         Image($r('app.media.ic_settings'))
           .objectFit(ImageFit.Contain)
-        .onClick(this.settingClick.bind(this))
+          .onClick(this.settingClick.bind(this))
       }
       .width($r('app.float.quicklysetting_image_width'))
       .height($r('app.float.quicklysetting_image_height'))
@@ -188,17 +198,17 @@ struct quicklySetting {
   }
 
   settingClick() {
+    Log.showInfo(TAG,` settingClick `)
     this.showStatusBar = true;
-    WindowManager.setWindowMin();
-    let result = FeatureAbility.startAbility({
-      want: {
-        bundleName: 'com.ohos.settings',
-        abilityName: 'com.ohos.settings.MainAbility',
-      },
-    }).then(data =>
-    Log.showInfo(TAG, `promise then: ${JSON.stringify(data)}`)).catch(error =>
-    Log.showError(TAG, `promise catch: ${JSON.stringify(error)}`));
-    Log.showInfo(TAG, `start ability ${result}`);
+    mWindowManager.setWindowMin((result)=>{
+      mFeatureAbilityManager.openAbility(TAG, {
+        want: {
+          bundleName: 'com.ohos.settings',
+          abilityName: 'com.ohos.settings.MainAbility'
+        }
+      });
+    });
+
   }
 }
 
@@ -222,16 +232,16 @@ struct notificationItems {
               ListItem() {
                 notificationItem({ itemObject: item, showStatusBar: $showStatusBar })
               }
-            }, (item: any) => item.id.toString())
+            }, (item: any) => item.hashcode.toString())
           }
-            Image($r('app.media.delete_all')) //icon: remove all notifications
-            .objectFit(ImageFit.Contain)
-              .width($r('app.float.deleteall_image_width'))
-              .height($r('app.float.deleteall_image_height'))
-              .borderRadius($r('app.float.deleteall_image_borderradius'))
-              .opacity($r('app.float.deleteall_image_opacity'))
-              .onClick(this.removeAllNotification.bind(this))
-              .position({ x: '44.5%', y: '85%' })
+          Image($r('app.media.delete_all')) //icon: remove all notifications
+          .objectFit(ImageFit.Contain)
+            .width($r('app.float.deleteall_image_width'))
+            .height($r('app.float.deleteall_image_height'))
+            .borderRadius($r('app.float.deleteall_image_borderradius'))
+            .opacity($r('app.float.deleteall_image_opacity'))
+            .onClick(this.removeAllNotification.bind(this))
+            .position({ x: '44.5%', y: '85%' })
         }
         .width('100%')
         .height('100%')
@@ -242,6 +252,7 @@ struct notificationItems {
   }
 
   removeAllNotification() {
+    Log.showInfo(TAG,` removeAllNotification `)
     mNotificationService.removeAllNotifications();
   }
 }

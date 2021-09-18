@@ -16,15 +16,14 @@ import Log from '../../../../../../common/src/main/ets/default/Log.ets'
 
 const SHORT_LENGTH = 1;
 const LOOP_TIME = 3000;
-const TAG = 'timeModel';
+const TAG = 'ClockComponent-timeModel';
 
-var mAppStorage = AppStorage.GetOrCreate();
 var timeInterval = null;
 
-var mTimeLink
-var mDayLink
-var mWeekDayLink
-var mMonthLink
+var mTimeLink;
+var mDayLink;
+var mWeekDayLink;
+var mMonthLink;
 
 
 export class TimeModel {
@@ -34,20 +33,20 @@ export class TimeModel {
    *
    */
   initTimeModel() {
-    Log.showInfo(TAG, `initTimeModel`);
+    Log.showInfo(TAG, 'initTimeModel');
     Log.showInfo(TAG, `timeInterval : ${timeInterval} type: ${typeof timeInterval}`);
     if (timeInterval === null || timeInterval === undefined) {
-      Log.showInfo(TAG, `first initTimeModel`);
-      mTimeLink = mAppStorage.setAndLink('time', '');
-      mDayLink = mAppStorage.setAndLink('day', '');
-      mWeekDayLink = mAppStorage.setAndLink('weekDay', '');
-      mMonthLink = mAppStorage.setAndLink('month', '');
+      Log.showInfo(TAG, 'first initTimeModel');
+      mTimeLink = AppStorage.SetAndLink('time', '');
+      mDayLink = AppStorage.SetAndLink('day', '');
+      mWeekDayLink = AppStorage.SetAndLink('weekDay', '');
+      mMonthLink = AppStorage.SetAndLink('month', '');
       this.getCurrentDate();
     }
   }
 
   unInitTimeModel() {
-    Log.showInfo(TAG, `unInitTimeModel`);
+    Log.showInfo(TAG, 'unInitTimeModel');
   }
 
   /**
@@ -55,7 +54,7 @@ export class TimeModel {
    *
    */
   private getCurrentDate() {
-    Log.showInfo(TAG, `getCurrentDate`);
+    Log.showInfo(TAG, 'getCurrentDate');
     this.getDate();
     timeInterval = setInterval(() => {
       this.getDate();
@@ -63,6 +62,7 @@ export class TimeModel {
   }
 
   private getDate(){
+    Log.showInfo(TAG, 'getDate');
     let date = new Date();
     Log.showInfo(TAG, `getCurrentDate ${date.toTimeString()}`);
     this.updateTime(date);
@@ -81,6 +81,7 @@ export class TimeModel {
    * @param {Object} date - Object of Date.
    */
   private updateTime(date) {
+    Log.showInfo(TAG,`updateDay, date：${JSON.stringify(date)}`)
     let time = date.toTimeString().substring(0, 5);
     mTimeLink.set(time);
   }
@@ -91,6 +92,7 @@ export class TimeModel {
    * @param {Object} date - Object of Date.
    */
   private updateDay(date) {
+    Log.showInfo(TAG,`updateDay, date：${JSON.stringify(date)}`)
     let day = date.getDate();
     mDayLink.set(day);
   }
@@ -101,6 +103,7 @@ export class TimeModel {
    * @param {Object} date - Object of Date.
    */
   private updateWeekDay(date) {
+    Log.showInfo(TAG,`updateWeekDay, date：${JSON.stringify(date)}`)
     let weekDay = date.getDay();
     mWeekDayLink.set(weekDay);
   }
@@ -111,6 +114,7 @@ export class TimeModel {
    * @param {Object} date - Object of Date.
    */
   private updateMonth(date) {
+    Log.showInfo(TAG,`updateMonth, date：${JSON.stringify(date)}`)
     let month = (date.getMonth() + 1);
     mMonthLink.set(month);
   }

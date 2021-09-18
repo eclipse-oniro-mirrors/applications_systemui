@@ -18,15 +18,14 @@ import Log from '../../../../../../../../common/src/main/ets/default/Log.ets'
 const DEFAULT_LAYOUT_INFO_FILE_PATH = "/data/accounts/account_0/applications/com.ohos.systemui/" +
   "com.ohos.systemui.navigationbar/assets/navigationBar/resources/rawfile/navigationBarLayoutConfig.json";
 const READ_DATA_SIZE = 4096;
-const TAG = "ConfigReader"
+const TAG = "ConfigReader";
 
 export default class ConfigReader {
 
   public readLayoutConfig() {
     Log.showInfo(TAG, "navigationbar ConfigReader readLayoutConfig start");
-    var configObj = this.readFileToJson(DEFAULT_LAYOUT_INFO_FILE_PATH)
-    var mAppStorage = AppStorage.GetOrCreate();
-    var mLayoutConfig = mAppStorage.link("navigationLayoutConfig");
+    var mLayoutConfig = AppStorage.SetAndLink("navigationLayoutConfig", {});
+    var configObj = this.readFileToJson(DEFAULT_LAYOUT_INFO_FILE_PATH);
     mLayoutConfig.set(configObj)
   }
 

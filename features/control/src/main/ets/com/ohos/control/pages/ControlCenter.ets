@@ -19,6 +19,8 @@ import {ElseWifiComponent} from './wifiComponent.ets'
 import {MyBrightness} from './brightnessComponent.ets'
 import {MyVol} from './volumeComponent.ets'
 
+import Log from '../../../../../../../../../common/src/main/ets/default/Log.ets';
+const TAG='Control-ControlCenter'
 
 @Component
 export default
@@ -26,7 +28,11 @@ struct ControlCenterComponent {
   @Link showStatusBar: boolean
 
   aboutToAppear() {
-    console.log("Control Center aboutToAppear")
+    Log.showInfo(TAG,'aboutToAppear')
+  }
+
+  aboutToDisappear () {
+    Log.showInfo(TAG,'aboutToDisappear ')
   }
 
   build() {

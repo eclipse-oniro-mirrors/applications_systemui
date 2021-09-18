@@ -14,39 +14,40 @@
  */
 
 import Log from '../../../../../../../../common/src/main/ets/default/Log.ets';
-import Strings from './common/strings.ets';
-import FeatureAbility from '@ohos.ability.featureability';
+import Constants from './common/constants.ets';
+import FeatureAbilityManager from '../../../../../../../../common/src/main/ets/default/abilitymanager/featureAbilityManager.ets';
 import Input from '@ohos.injectEventHandler';
 
 const TAG = 'KeyCodeEvent'
 
 let res;
+let mFeatureAbilityManager = new FeatureAbilityManager();
 
 export class KeyCodeEvent{
 
   public sendKeyEvent(keyCode: number, eventType: number) {
     Log.showInfo(TAG, `sendKeyEvent keycode: ${keyCode} type: ${eventType}`);
     switch (keyCode) {
-      case Strings.KEYCODE_BACK:
+      case Constants.KEYCODE_BACK:
         Log.showInfo(TAG, `sendKeyEvent case back type: ${eventType}`);
-        if (eventType === Strings.KEY_DOWN) {
+        if (eventType === Constants.KEY_DOWN) {
           Log.showInfo(TAG, 'sendKeyEvent, if');
           this.sendBackKeyEventStart();//down
-        } else if (eventType === Strings.KEY_UP) {
+        } else if (eventType === Constants.KEY_UP) {
           Log.showInfo(TAG, `sendKeyEvent, else type: ${eventType}`);
           this.sendBackKeyEventEnd();//up
         }
         break;
-      case Strings.KEYCODE_HOME:
+      case Constants.KEYCODE_HOME:
         Log.showInfo(TAG, `sendKeyEvent case home type: ${eventType}`);
-        if (eventType === Strings.KEY_UP) {
+        if (eventType === Constants.KEY_UP) {
           Log.showInfo(TAG, 'sendKeyEvent, if');
           this.sendHomeKeyEvent();
         }
         break;
-      case Strings.KEYCODE_RECENT:
+      case Constants.KEYCODE_RECENT:
         Log.showInfo(TAG, `sendKeyEvent case recent type: ${eventType}`);
-        if (eventType === Strings.KEY_UP) {
+        if (eventType === Constants.KEY_UP) {
           Log.showInfo(TAG, 'sendKeyEvent, if');
           this.sendRecentKeyEvent();
         }
@@ -80,28 +81,22 @@ export class KeyCodeEvent{
   private sendHomeKeyEvent() {
     Log.showInfo(TAG, 'sendHomeKeyEvent');
     Log.showInfo(TAG, 'home click and start ability launcher');
-    let result = FeatureAbility.startAbility({
+    mFeatureAbilityManager.openAbility(TAG, {
       want: {
-        bundleName: Strings.LAUNCHER_BUNDLE_NAME,
-        abilityName: Strings.LAUNCHER_ABILITY_NAME,
-      },
-    }).then(data =>
-    console.log("data " + JSON.stringify(data))).catch(error =>
-    console.log("error " + JSON.stringify(error)));
-    console.log("result " + result));
+        bundleName: Constants.LAUNCHER_BUNDLE_NAME,
+        abilityName: Constants.LAUNCHER_ABILITY_NAME
+      }
+    });
   }
 
   private sendRecentKeyEvent() {
     Log.showInfo(TAG, 'sendRecentKeyEvent');
-    let result = FeatureAbility.startAbility({
+    mFeatureAbilityManager.openAbility(TAG, {
       want: {
-        bundleName: Strings.RECENT_BUNDLE_NAME,
-        abilityName: Strings.RECENT_ABILITY_NAME,
-      },
-    }).then(data =>
-    Log.showInfo(TAG, `promise then: ${JSON.stringify(data)}`)).catch(error =>
-    Log.showError(TAG, `promise catch: ${JSON.stringify(error)}`));
-    Log.showInfo(TAG, `start ability ${result}`);
+        bundleName: Constants.RECENT_BUNDLE_NAME,
+        abilityName: Constants.RECENT_ABILITY_NAME
+      }
+    });
   }
 }
 

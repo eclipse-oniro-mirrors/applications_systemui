@@ -15,17 +15,16 @@
 
 import brightness from '@ohos.brightness';
 import Log from '../../../../../../../../../../common/src/main/ets/default/Log.ets';
-import commonEvent from '@ohos.commonevent';
+import commonEvent from '@ohos.commonEvent';
 
-const TAG = 'BrightnessManager';
+const TAG = 'Control-brightnessManager';
 const EVENT = 'BRIGHTNESS_VALUE_SYSTEM_UI';
 let mCommonEventSubscribeInfo = {
   events: ['BRIGHTNESS_VALUE']
 };
 let curValue = 10;
 let mCommonEventSubscriber =null;
-var mAppStorage = AppStorage.GetOrCreate();
-var mBrightnessValue = mAppStorage.setAndLink("BrightnessValue",0);
+var mBrightnessValue = AppStorage.SetAndLink('BrightnessValue', 0);
 
 export class brightnessManager{
 
@@ -40,32 +39,35 @@ export class brightnessManager{
   }
 
   createBrightnessSubscriberCallBack(err, data) {
-    Log.showInfo(TAG, `Subscriberregister createBrightnessSubscriberCallBack ${JSON.stringify(err)} ${JSON.stringify(data)}`);
+    Log.showInfo(TAG, `createBrightnessSubscriberCallBack err: ${JSON.stringify(err)} data: ${JSON.stringify(data)}`);
     mCommonEventSubscriber = data;
     commonEvent.subscribe(mCommonEventSubscriber, this.BrightnessSubscriberCallBack.bind(this));
   }
 
   BrightnessSubscriberCallBack(err, data) {
-    Log.showInfo(TAG,`Subscriberregister data == ${JSON.stringify(data)}`);
-    Log.showInfo(TAG, `Subscriberregister err == ${JSON.stringify(err)}`);
+    Log.showInfo(TAG,`BrightnessSubscriberCallBack, err: ${JSON.stringify(err)} data: ${JSON.stringify(data)}`);
     if (err.code == 0) {
       if(data.data == '-1'){
         this.sendEvent(mBrightnessValue.get());
       }else{
-        mBrightnessValue.set(data.data);
+        Log.showInfo(TAG, `BrightnessSubscriberCallBack set${parseInt(data.data)}`);
+        mBrightnessValue.set(parseInt(data.data));
+        Log.showInfo(TAG, `BrightnessSubscriberCallBack set${mBrightnessValue.get()}`);
       }
     }else{
       Log.showInfo(TAG,'Subscriberregister error when subscribing ========');
     }
   }
 
-  unregisterWiFiStatusListener() {
+  unRegisterBrightnessListener() {
+    Log.showInfo(TAG,'unRegisterBrightnessListener')
     commonEvent.unsubscribe(mCommonEventSubscriber, () => {
-      Log.showInfo(TAG, `Subscriberregister unregister Wifi Status Listener ===============`);
+      Log.showInfo(TAG, 'Subscriberregister unregister Brightness Status Listener ===============');
     });
   }
 
   setValue(callback) {
+    Log.showInfo(TAG, 'setValue');
     let value = parseInt(callback.value);
     Log.showInfo(TAG, `setValue ${ value }`);
     mBrightnessValue.set(value);
@@ -75,6 +77,7 @@ export class brightnessManager{
   }
 
   sendEvent(value){
+    Log.showInfo(TAG, `sendEvent value: ${ value }`);
     Log.showInfo(TAG, `sendEvent ${ value }`);
     let commonEventPublishData = {
       bundleName: 'com.ohos.systemui',

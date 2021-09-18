@@ -18,7 +18,7 @@ import Log from '../../../../../../../common/src/main/ets/default/Log.ets';
 import Constants from '../common/constants.ets'
 
 
-const TAG = 'keyButton';
+const TAG = 'NavigationBar-KeyButton';
 
 @Component
 export default struct keyButton {
@@ -28,7 +28,10 @@ export default struct keyButton {
   @State backGroundColor: any = $r('app.color.button_default_background');
 
   aboutToAppear() {
-    Log.showInfo(TAG, `aboutToAppear uri: ${this.uri} type: ${typeof this.uri}`)
+    Log.showInfo(TAG, `aboutToAppear Start`)
+  }
+  aboutToDisappear(){
+    Log.showInfo(TAG, `aboutToDisAppear`)
   }
 
   build() {
@@ -46,8 +49,7 @@ export default struct keyButton {
   }
 
   private onKeyTouch(event:TouchEvent) {
-    Log.showInfo(TAG, 'onKeyTouch')
-    Log.showInfo(TAG, `onKeyTouch eventType: ${event.type}`)
+    Log.showInfo(TAG, `onKeyTouch event: ${ event }`)
     let eventType = event.type;
     switch(eventType) {
       case Constants.KEY_DOWN:

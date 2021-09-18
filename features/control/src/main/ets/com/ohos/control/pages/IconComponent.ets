@@ -16,22 +16,28 @@
 import {IconWidth, IconHeight} from './Uniform.ets';
 import mWifiManger from '../../../../../../../../wificomponent/src/main/ets/default/WifiModel.ets';
 
+import Log from '../../../../../../../../../common/src/main/ets/default/Log.ets';
 
+const TAG='Control-IconComponent'
 @Component
 export
 struct IconComponent {
   @State iconOnBG: any = $r('app.color.icon_on_bg')
-  private iconOn: string = ""
+  private iconOn: string = ''
   @State iconOffBG: any = $r('app.color.icon_off_bg')
-  private iconOff: string = ""
+  private iconOff: string = ''
   @Link OnOrOff: boolean
   @State OnOrOffShow: boolean = false
-  @StorageLink("flyModelStatus") flyModelStatus: boolean = false
-  @StorageLink("wifiOpenStatus") wifiOpenStatus: boolean = false
+  @StorageLink('flyModelStatus') flyModelStatus: boolean = false
+  @StorageLink('wifiOpenStatus') wifiOpenStatus: boolean = false
 
 
   aboutToAppear() {
+    Log.showInfo(TAG,'aboutToAppear')
     mWifiManger.initWifiModel();
+  }
+  aboutToDisappear () {
+    Log.showInfo(TAG,'aboutToDisappear')
   }
 
   build() {
@@ -79,14 +85,18 @@ struct IconComponent {
 export
 struct IconFlyComponent {
   @State iconOnBG: any = $r('app.color.icon_on_bg')
-  private iconOn: string = ""
+  private iconOn: string = ''
   @State iconOffBG: any = $r('app.color.icon_off_bg')
-  private iconOff: string = ""
-  @StorageLink("flyModelStatus") flyModelStatus: boolean = false
-  @StorageLink("wifiOpenStatus") wifiOpenStatus: boolean = false
+  private iconOff: string = ''
+  @StorageLink('flyModelStatus') flyModelStatus: boolean = false
+  @StorageLink('wifiOpenStatus') wifiOpenStatus: boolean = false
 
   aboutToAppear() {
-    console.log('IconFlyComponent, aboutToAppear')
+    Log.showInfo(TAG,'aboutToAppear')
+  }
+
+  aboutToDisappear () {
+    Log.showInfo(TAG,'aboutToDisappear')
   }
 
   build() {
