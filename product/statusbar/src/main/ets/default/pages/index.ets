@@ -34,6 +34,7 @@ struct Index {
   @State moveX: number = 0
   @State moveY: number = 0
   @State showStatusBar: boolean = true
+  @StorageLink('wifiStatus') wifiStatus : boolean = false
   @StorageLink('notificationList') notificationList : any = []
 
   aboutToAppear() {
@@ -50,7 +51,10 @@ struct Index {
       if (this.showStatusBar) {
         Flex({ direction: FlexDirection.Row, alignItems: ItemAlign.Center, justifyContent: FlexAlign.Center }) {
             DefaultLayout({
-              notificationList: this.notificationList.length > 2 ? this.notificationList.slice(0,3) : this.notificationList })
+              ListLength : this.notificationList.length,
+              notificationList: this.notificationList.length > (this.wifiStatus ? 2 : 3) ?
+                this.notificationList.slice(0,(this.wifiStatus ? 3 : 4)) :
+                  this.notificationList })
         }
         .width('100%')
         .height('100%')

@@ -23,24 +23,39 @@ import Constants from './common/constants.ets'
 @Component
 export default struct Index {
   private notificationList : any
+  private ListLength : number
   @StorageLink('wifiStatus') wifiStatus : boolean = false
 
   build() {
-    Flex({ direction: FlexDirection.Row, alignItems: ItemAlign.Center, justifyContent: FlexAlign.Center }) {
-      Flex({ direction: FlexDirection.Row, alignItems: ItemAlign.Center, justifyContent: FlexAlign.Start }) {
-        SignalIcon()
-        WifiIcon()
-      }.width(this.wifiStatus ? $r('app.float.default_left_width_large') : $r('app.float.default_left_width_small'))
-      .margin({ left: 10 })
-      Flex({ direction: FlexDirection.Row, alignItems: ItemAlign.Center, justifyContent: FlexAlign.Start }) {
-        ForEach(this.notificationList, (item: any) => {
-          Image(item.icon).objectFit(ImageFit.ScaleDown).height('50%')
-        })
-      }.width(this.notificationList.length * Constants.DEFAULT_MIDDLE_PART_WIDTH)
+    Flex({ direction: FlexDirection.Row, alignItems: ItemAlign.Center, justifyContent: FlexAlign.SpaceBetween }) {
+      Column() {
+        Flex({ direction: FlexDirection.Row, alignItems: ItemAlign.Center, justifyContent: FlexAlign.Start }) {
+          SignalIcon()
+          WifiIcon()
+          Flex({ direction: FlexDirection.Row, alignItems: ItemAlign.Center, justifyContent: FlexAlign.Start }) {
+            ForEach(this.notificationList, (item: any) => {
+              Column() {
+                Image(item.icon).objectFit(ImageFit.ScaleDown).height('50%')
+              }
+              .width(45)
+            })
+            if(this.ListLength > (this.wifiStatus ? 3 : 4)) {
+              Row() {
+                Text('...')
+                  .fontSize(20)
+              }
+            }
+          }
+          .width(this.wifiStatus ? 4*45+20-50 : 4*45+20)
+        }
+      }
+      .width('65%')
+
       Flex({ direction: FlexDirection.Row, alignItems: ItemAlign.Center, justifyContent: FlexAlign.End }) {
         BatteryIcon()
         ClockIcon()
       }
+      .width('35%')
     }
     .width('100%')
     .height('100%')
