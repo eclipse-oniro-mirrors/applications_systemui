@@ -14,6 +14,8 @@
  */
 
 import Constants from '../common/constants.ets'
+import Log from '../../../../../../../../../common/src/main/ets/default/Log.ets'
+const TAG = 'NoticeItem-TitleItem'
 
 @Component
 export default
@@ -25,7 +27,12 @@ struct titleItem {
   @Link isExpand: boolean
   @Prop needExpand: boolean
   @State rowSpace: any = $r('app.float.titleitem_row_space')
-
+  aboutToAppear() {
+    Log.showInfo(TAG, `aboutToDisAppear Start`)
+  }
+  aboutToDisappear(){
+    Log.showInfo(TAG, `aboutToDisAppear`)
+  }
   build() {
     Row() {
       Row({ space: this.rowSpace }) {

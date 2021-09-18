@@ -21,7 +21,9 @@ import SignalIcon from '../../../../../../../features/signalcomponent/src/main/e
 import Log from '../../../../../../../common/src/main/ets/default/Log.ets'
 import Constants from './common/constants.ets'
 
-const TAG = 'Control====='
+const TAG = 'StatusBar-Control';
+
+let mWindowManager;
 
 @Component
 export default struct Control {
@@ -30,7 +32,13 @@ export default struct Control {
   startY: number = 0
   @State moveX: number = 0
   @State moveY: number = 0
-
+  aboutToAppear() {
+    Log.showInfo(TAG, `aboutToAppear Start`)
+    mWindowManager = new WindowManager();
+  }
+  aboutToDisappear(){
+    Log.showInfo(TAG, `aboutToDisAppear`)
+  }
   build() {
     Flex({ direction: FlexDirection.Column, alignItems: ItemAlign.Start, justifyContent: FlexAlign.Start }) {
       statusBar()
@@ -43,7 +51,7 @@ export default struct Control {
   }
 
   controlTouch(event: TouchEvent) {
-    Log.showInfo(TAG, 'controlTouch================')
+    Log.showInfo(TAG, `controlTouch================ event: ${ event }`)
     if (event.type == Constants.TOUCHTYPE_DOWN) {
       this.startX = event.touches[0].screenX
       this.startY = event.touches[0].screenY
@@ -55,7 +63,7 @@ export default struct Control {
       Log.showInfo(TAG, `controlTouch, moveX: ${this.moveX}, moveY: ${this.moveY}`)
       if (this.moveY < -30) {
         this.showStatusBar = true;
-        WindowManager.setWindowMin()
+        mWindowManager.setWindowMin((result)=>{});
       }
     }
   }

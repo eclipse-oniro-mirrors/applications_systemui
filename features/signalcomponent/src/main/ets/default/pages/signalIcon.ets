@@ -15,19 +15,23 @@
 
 import Constants from '../common/constants.ets';
 import mSignalModel from '../SignalModel.ets';
+import Log from '../../../../../../../common/src/main/ets/default/Log.ets'
+const TAG = 'SignalComponent-SignalIcon'
 
 @Component
 export default
 struct SignalIcon {
-  @StorageLink('cellularLevel') cellularLevel : number = 0
-  @StorageLink('cellularType') cellularType : number = 0
+  @StorageLink('cellularLevel') cellularLevel : number = Constants.CELLULAR_NO_SIM_CARD
+  @StorageLink('cellularType') cellularType : number = Constants.NETWORK_TYPE_UNKNOWN
   @StorageLink('networkState') networkState : string = Constants.NET_NULL
 
   aboutToAppear() {
+    Log.showInfo(TAG, 'aboutToAppear');
     mSignalModel.initSignalModel();
   }
 
   aboutToDisappear() {
+    Log.showInfo(TAG, 'aboutToDisappear');
     mSignalModel.uninitSignalModel();
   }
 
@@ -59,6 +63,7 @@ struct SignalIcon {
      * @return {string} typeString type of cellular type
      */
   private updateCellularType(signalType) : string {
+    Log.showInfo(TAG, `updateCellularType, signalType: ${ signalType }`);
     let typeString;
     switch (signalType) {
       case Constants.NETWORK_TYPE_UNKNOWN:
@@ -68,8 +73,8 @@ struct SignalIcon {
       case Constants.NETWORK_TYPE_CDMA:
         typeString = $r('app.string.2G');
         break;
-      case Constants.NETWORK_TYPE_WCDMA:
-      case Constants.NETWORK_TYPE_TDSCDMA:
+      case Constants.NETWORK_TYPE_W_CDMA:
+      case Constants.NETWORK_TYPE_TDS_CDMA:
         typeString = $r('app.string.3G');
         break;
       case Constants.NETWORK_TYPE_LTE:
@@ -90,6 +95,7 @@ struct SignalIcon {
      * @return {string} cellularImage image of cellular signal
      */
   private updateCellularImage(level) {
+    Log.showInfo(TAG, `updateCellularImage, level: ${level}`);
     console.info('systemui updateCellularImage = ' + level);
     let cellularImage;
     switch (level) {
@@ -126,6 +132,7 @@ struct SignalIcon {
      * @param {number} level - signal level from status center
      */
   private updateNetworkState(netWorkState) {
+    Log.showInfo(TAG, `updateNetworkState, netWorkState: ${netWorkState}`);
     let netWorkStateName;
     switch (netWorkState) {
       case Constants.NET_CHINA_MOBILE:
@@ -134,7 +141,7 @@ struct SignalIcon {
       case Constants.NET_CHINA_TELECOM:
         netWorkStateName = $r('app.string.china_telecom');
         break;
-      case Constants.NET_CHN_UNICOM:
+      case Constants.NET_CHN_UN_ICON:
         netWorkStateName = $r('app.string.china_unicom');
         break;
       case Constants.NET_NULL:

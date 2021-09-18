@@ -22,12 +22,12 @@ export default class Constants {
   static NOTIFICATION_TYPE_MEDIA: string = '5'
   static TEXT_MAX_LENGTH: number = 21
   static TEXT_EXPANDED_MAX_LENGTH: number = 13
-  static TOUCHTYPE_DOWN: number = 0;
-  static TOUCHTYPE_UP: number = 1;
-  static TOUCHTYPE_MOVE: number = 2;
-  static HIDDEN_TRANSLATEX: number = 150;
-  static DISPLAY_TRANSLATEX: number = -150;
-  static REMOVE_TRANSLATEX: number = 150;
+  static TOUCH_TYPE_DOWN: number = 0;
+  static TOUCH_TYPE_UP: number = 1;
+  static TOUCH_TYPE_MOVE: number = 2;
+  static HIDDEN_TRANSLATE_X: number = 150;
+  static DISPLAY_TRANSLATE_X: number = -150;
+  static REMOVE_TRANSLATE_X: number = 150;
   static DEFAULT_MAX_LINES: number= 1;
   static CONTENT_LINE_HEIGHT: number = 20;
 }

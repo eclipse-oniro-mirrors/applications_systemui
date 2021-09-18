@@ -20,7 +20,9 @@ import mNotificationService from '../../../../../../../../../features/notificati
 import WantAgent from '@ohos.wantAgent'
 import WindowManager from '../../../../../../../../../common/src/main/ets/default/WindowManager.ets'
 
-const TAG = 'multiItem'
+const TAG = 'NoticeItem-multiItem';
+
+let mWindowManager;
 
 @Component
 export default
@@ -46,13 +48,16 @@ struct multiItem {
   @State moveY: number = 0
 
   aboutToAppear() {
+    mWindowManager = new WindowManager();
     if (this.notificationContent.length > 1) {
       this.needExpand = true;
     } else {
       this.needExpand = false;
     }
   }
-
+  aboutToDisappear(){
+    Log.showInfo(TAG, `aboutToDisAppear id: ${this.notificationId}`)
+  }
   build() {
     Row() {
       Column() {
@@ -126,28 +131,28 @@ struct multiItem {
   }
 
   touchNotificationItem(event: TouchEvent) {
-    if (event.type == Constants.TOUCHTYPE_DOWN) { //down
+    if (event.type == Constants.TOUCH_TYPE_DOWN) { //down
       this.startX = event.touches[0].x
       this.startY = event.touches[0].y
       Log.showInfo(TAG, `touchStart=======startX: ${this.startX}, startY: ${this.startY}`)
-    } else if (event.type == Constants.TOUCHTYPE_MOVE) { //move
+    } else if (event.type == Constants.TOUCH_TYPE_MOVE) { //move
       this.moveX = event.touches[0].x - this.startX
       this.moveY = event.touches[0].y - this.startY
-    } else if (event.type == Constants.TOUCHTYPE_UP) { //up
+    } else if (event.type == Constants.TOUCH_TYPE_UP) { //up
       Log.showInfo(TAG, `touchEnd, moveX: ${this.moveX}, moveY: ${this.moveY}`)
       if (this.iconDisplay) {
-        if (this.moveX > Constants.HIDDEN_TRANSLATEX) {
+        if (this.moveX > Constants.HIDDEN_TRANSLATE_X) {
           //hidden
           this.iconDisplay = false;
           this.itemWidth = '100%'
           Log.showInfo(TAG, 'hidden');
         }
       } else {
-        if (this.moveX < Constants.DISPLAY_TRANSLATEX) {
+        if (this.moveX < Constants.DISPLAY_TRANSLATE_X) {
           this.iconDisplay = true;
           this.itemWidth = '70%'
           Log.showInfo(TAG, 'display');
-        } else if (this.moveX > Constants.REMOVE_TRANSLATEX) {
+        } else if (this.moveX > Constants.REMOVE_TRANSLATE_X) {
           this.removeNotificationItem(this.notificationHashCode)
         }
       }
@@ -163,7 +168,7 @@ struct multiItem {
     //remove notification
     this.removeNotificationItem(this.notificationHashCode)
     //close window
-    WindowManager.setWindowMin()
+    mWindowManager.setWindowMin((result)=>{});
     this.showStatusBar = true
     //open app
     Log.showInfo(TAG, `longitemClick  wantAgent ${JSON.stringify(this.notificationWant)}`);

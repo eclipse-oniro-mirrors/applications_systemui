@@ -15,17 +15,15 @@
 
 const  STORAGE_NAVIGATION_TYPE = 'navigationType';
 
-var mAppStorage;
-
 export class ConfigManager{
 
   constructor() {
   }
 
   initConfig() {
-    mAppStorage = AppStorage.GetOrCreate();
+    var mLayoutConfig = AppStorage.SetAndLink("navigationType", 0);
 //    mAppStorage.setOrCreate(STORAGE_NAVIGATION_TYPE,TYPE_THREE);
-    mAppStorage.setOrCreate('navigationType', 3);
+    mLayoutConfig.set(3);
   }
 
 }

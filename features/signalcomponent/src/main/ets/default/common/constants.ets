@@ -18,8 +18,8 @@ export default class Constants {
   static NETWORK_TYPE_UNKNOWN = 0;
   static NETWORK_TYPE_GSM = 1;
   static NETWORK_TYPE_CDMA = 2;
-  static NETWORK_TYPE_WCDMA = 3;
-  static NETWORK_TYPE_TDSCDMA = 4;
+  static NETWORK_TYPE_W_CDMA = 3;
+  static NETWORK_TYPE_TDS_CDMA = 4;
   static NETWORK_TYPE_LTE = 5;
   static NETWORK_TYPE_NR = 6;
 
@@ -33,6 +33,6 @@ export default class Constants {
 
   static NET_CHINA_MOBILE = 'CHINA MOBILE';
   static NET_CHINA_TELECOM = 'China Telecom';
-  static NET_CHN_UNICOM = 'CHN-UNICOM';
+  static NET_CHN_UN_ICON = 'CHN-UN_ICON';
   static NET_NULL = '';
 }

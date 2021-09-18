@@ -13,10 +13,20 @@
  * limitations under the License.
  */
 
+import Log from '../../../../../../../common/src/main/ets/default/Log.ets'
+const TAG = 'BatteryComponent-batterySoc'
 @Component
 export default
 struct BatterySoc {
   @StorageLink('batterySoc') batterySoc: number = 100
+
+  aboutToAppear(){
+    Log.showInfo(TAG,'aboutToAppear Start');
+  }
+
+  aboutToDisappear(){
+    Log.showInfo(TAG,'aboutToDisappear');
+  }
 
   build() {
     Flex({ direction: FlexDirection.Row, alignItems: ItemAlign.Center, justifyContent: FlexAlign.Center }) {

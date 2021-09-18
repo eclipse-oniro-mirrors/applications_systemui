@@ -17,7 +17,7 @@ import brightness from '@ohos.brightness';
 import mBrightnessManager from '../common/brightness/brightnessManager.ets';
 import Log from '../../../../../../../../../common/src/main/ets/default/Log.ets';
 
-const TAG = 'MyBrightness'
+const TAG = 'Control-brightnessComponent'
 
 
 @Component
@@ -31,9 +31,11 @@ struct MyBrightness {
   };
 
   aboutToAppear() {
-    mBrightnessManager.registerBrightnessListener();
-    this.brightnessItem.value = this.brightnessValue;
     Log.showInfo(TAG, `Brightness  aboutToAppear ${JSON.stringify(this.brightnessItem)}`);
+  }
+
+  aboutToDisappear (){
+    Log.showInfo(TAG,'aboutToDisappear')
   }
 
   setBrightness(value) {

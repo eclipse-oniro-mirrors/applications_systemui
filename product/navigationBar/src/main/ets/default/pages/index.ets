@@ -15,23 +15,28 @@
 
 import Three from './threeLayout.ets'
 import One from './oneLayout.ets'
+import Log from '../../../../../../../common/src/main/ets/default/Log.ets';
 import ConfigReader from '../common/utils/configReader.ets'
 import Constants from '../common/constants.ets'
 
 const STORAGE_NAVIGATION_TYPE = 'navigationType'
 
 let mConfigReader
-
+const TAG = 'NavigationBar-Index';
 @Entry
 @Component
 struct Index {
   @StorageLink('navigationLayoutConfig') mConfig: any = {}
 
   aboutToAppear() {
+    Log.showInfo(TAG, `aboutToAppear Start`)
     if (mConfigReader == null || mConfigReader == undefined) {
       mConfigReader = new ConfigReader()
       mConfigReader.readLayoutConfig()
     }
+  }
+  aboutToDisappear(){
+    Log.showInfo(TAG, `aboutToDisAppear`)
   }
 
   build() {

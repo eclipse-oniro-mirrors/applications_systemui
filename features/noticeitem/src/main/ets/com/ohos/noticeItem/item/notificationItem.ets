@@ -16,6 +16,8 @@
 import Constants from '../common/constants.ets'
 import longItem from './longItem.ets'
 import multiItem from './multiItem.ets'
+import Log from '../../../../../../../../../common/src/main/ets/default/Log.ets'
+const TAG = 'NoticeItem-NotificationItem'
 
 @Component
 export default
@@ -27,6 +29,7 @@ struct notificationItem {
   private multi: boolean = false;
 
   aboutToAppear() {
+    Log.showInfo(TAG, `aboutToDisAppear Start`)
     switch (this.itemObject.type) {
       case Constants.NOTIFICATION_TYPE_NORMAL:
         this.normal = true;
@@ -40,6 +43,9 @@ struct notificationItem {
       default:
         break;
     }
+  }
+  aboutToDisappear(){
+    Log.showInfo(TAG, `aboutToDisAppear`)
   }
 
   build() {

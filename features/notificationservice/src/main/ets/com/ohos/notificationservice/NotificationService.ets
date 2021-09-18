@@ -13,14 +13,12 @@
  * limitations under the License.
  */
 
-import Notification from '@ohos.notification';
-import BundleMgr from '@ohos.bundle';
-import Resmgr from '@ohos.resourcemanager';
-import Log from '../../../../../../../../common/src/main/ets/default/Log.ets'
+import NotificationManager from '../../../../../../../../common/src/main/ets/default/abilitymanager/notificationManager.ets';
+import BundleManager from '../../../../../../../../common/src/main/ets/default/abilitymanager/bundleManager.ets';
+import Log from '../../../../../../../../common/src/main/ets/default/Log.ets';
 
 const TAG = 'NotificationService'
 
-let mAppStorage = AppStorage.GetOrCreate()
 let mNotificationList
 let mSubscriber;
 let mDate;
@@ -33,8 +31,7 @@ let mEmptyArray;
 export class NotificationService {
 
   constructor() {
-    mAppStorage = AppStorage.GetOrCreate()
-    let tempLink = mAppStorage.setAndLink('notificationList', [])
+    let tempLink = AppStorage.SetAndLink('notificationList', [])
     mNotificationList = tempLink.get()
     Log.showInfo(TAG, `NotificationService constructor ${JSON.stringify(mNotificationList)}`)
   }
@@ -53,8 +50,9 @@ export class NotificationService {
   updateNotification() {
     Log.showInfo(TAG, `updateNotification  list: ${JSON.stringify(mNotificationList)}`);
     Log.showInfo(TAG, `updateNotification  len: ${mNotificationList.length}`);
-    let listLink = mAppStorage.link('notificationList')
-    listLink.set(mNotificationList)
+    let listLink = AppStorage.Link('notificationList');
+    listLink.set(mNotificationList);
+    Log.showInfo(TAG, `updateNotification  list: ${JSON.stringify(listLink.get())}`);
   }
 
   /**
@@ -63,13 +61,13 @@ export class NotificationService {
   createNotificationCallback() {
     Log.showInfo(TAG, 'createNotificationCallback enter ====================');
     mSubscriber = {
-      onConsumed: this.consumeCallback.bind(this),
-      onCanceled: this.OnCancelCallback.bind(this)
+      onConsume: this.consumeCallback.bind(this),
+      onCancel: this.OnCancelCallback.bind(this)
     }
     Log.showInfo(TAG, `createNotificationCallback, ${JSON.stringify(mSubscriber)}`);
-    Log.showInfo(TAG, `createNotificationCallback, ${JSON.stringify(mSubscriber.onConsumed)}`);
-    Log.showInfo(TAG, `createNotificationCallback, ${JSON.stringify(mSubscriber.onCanceled)}`);
-    Notification.subscribe(mSubscriber, this.subscribeCallback.bind(this));
+    Log.showInfo(TAG, `createNotificationCallback, ${JSON.stringify(mSubscriber.onConsume)}`);
+    Log.showInfo(TAG, `createNotificationCallback, ${JSON.stringify(mSubscriber.onCancel)}`);
+    NotificationManager.subscribeNotification(TAG, mSubscriber, this.subscribeCallback.bind(this));
     Log.showInfo(TAG, 'createNotificationCallback end ====================');
   }
 
@@ -78,12 +76,12 @@ export class NotificationService {
      */
   async unRegisterNotificationSubscriber() {
     if (mSubscriber != undefined && mSubscriber != null) {
-      await Notification.unsubscribe(mSubscriber);
+      NotificationManager.unsubscribeNotification(TAG, mSubscriber);
     }
   }
 
   /**
-   * The callback method that will be called after receiving a notification.
+   * The callback method that will be called after receiving a notification
    *
    * @param {Object} err - Error may occur.
    * @param {Object} data - Callback data.
@@ -123,20 +121,19 @@ export class NotificationService {
       };
       Log.showInfo(TAG, `notificationItem = ${JSON.stringify(notificationItem)}`);
       switch (contentType) {
-        case Notification.ContentType.NOTIFICATION_CONTENT_BASIC_TEXT:
-
+        case NotificationManager.TYPE_BASIC:
           Log.showInfo(TAG, `contentType NOTIFICATION_CONTENT_BASIC_TEXT ====================`);
           notificationItem['title'] = request.content.normal?.title ?? '';
           notificationItem['content'] = request.content.normal?.text ?? '';
           notificationItem['additionalText'] = request.content.normal?.additionalText ?? '';
           break;
-        case Notification.ContentType.NOTIFICATION_CONTENT_LONG_TEXT:
+        case NotificationManager.TYPE_LONG:
           Log.showInfo(TAG, `contentType NOTIFICATION_CONTENT_LONG_TEXT ====================`);
           notificationItem['title'] = request.content.longText?.expandedTitle ?? '';
           notificationItem['content'] = request.content.longText?.longText ?? '';
           notificationItem['additionalText'] = request.content.longText?.briefText ?? '';
           break;
-        case Notification.ContentType.NOTIFICATION_CONTENT_MULTILINE:
+        case NotificationManager.TYPE_MULTI:
           Log.showInfo(TAG, `contentType NOTIFICATION_CONTENT_MULTILINE ====================`);
           notificationItem['title'] = request.content.multiLine?.longTitle ?? '';
           notificationItem['content'] = request.content.multiLine?.lines ?? mEmptyArray;
@@ -149,6 +146,7 @@ export class NotificationService {
       Log.showInfo(TAG, `notificationItem = ${JSON.stringify(notificationItem)}`);
       this.removeNotificationItem(notificationItem['hashcode'],false);
       mNotificationList.unshift(notificationItem);
+//      mNotificationList.sort(this.compare('timestamp'));
       this.updateNotification();
       Log.showInfo(TAG, 'consumeCallback finished ====================');
     });
@@ -165,15 +163,13 @@ export class NotificationService {
       callback(mAppName.get(bundleName));
       Log.showInfo(TAG, 'HAS BUNDLENAME');
     } else {
-      BundleMgr.getBundleInfo(bundleName, 0)
-        .then((data) => {
+      BundleManager.getBundleInfo(TAG, bundleName, 0, (data) => {
         Log.showInfo(TAG, `getBundleInfo` + JSON.stringify(data));
         let labelId = data.appInfo.labelId;
         let iconId = data.appInfo.iconId;
         let appName = '';
-        Resmgr.getResourceManager(bundleName)
-          .then((item) => {
-          Log.showInfo(TAG, `Resmgr.getResourceManager ${Resmgr.getResourceManager}`);
+        BundleManager.getResourceManager(TAG, bundleName, (item) => {
+          Log.showInfo(TAG, `BundleManager.getResourceManager ${BundleManager.getResourceManager}`);
           item.getString(labelId, (error, value) => {
             Log.showInfo(TAG, `getString` + JSON.stringify(value));
             if (value != null && value != undefined) {
@@ -215,7 +211,6 @@ export class NotificationService {
     Log.showInfo(TAG, `onUpdateCallback = ${JSON.stringify(data.request)}`);
   }
 
-
   /**
    * The callback will be called after registered callback.
    *
@@ -251,11 +246,11 @@ export class NotificationService {
    *
    * @param {string} property - Property in the object will be sorted.
    */
-  compare(property) {
-    return function (a, b) {
-      var value1 = a[property];
-      var value2 = b[property];
-      return value1 - value2;
+  compare(params) {
+    return function (item1, item2) {
+      var itemTime1 = item1[params];
+      var itemTime2 = item2[params];
+      return itemTime2 - itemTime1;
     }
   }
 
@@ -265,7 +260,7 @@ export class NotificationService {
   removeAllNotifications() {
     mNotificationList = []
     this.updateNotification()
-    Notification.removeAll((err, data) => {
+    NotificationManager.removeAll(TAG, (err, data) => {
       Log.showInfo(TAG, `removeAll , err: ${JSON.stringify(err)}`);
       Log.showInfo(TAG, `removeAll , data: ${JSON.stringify(data)}`);
     });
@@ -277,6 +272,7 @@ export class NotificationService {
       if (mNotificationList[i].hashcode == hashCode) {
         Log.showInfo(TAG, `removeNotificationItem i = ${i}`);
         mNotificationList.splice(i, 1);
+//        mNotificationList.pop(i);
         break;
       }
     }
@@ -286,7 +282,7 @@ export class NotificationService {
     }
   }
   removeSysNotificationItem(hashCode){
-    Notification.remove(hashCode, (err, data) => {
+    NotificationManager.remove(TAG, hashCode, (err, data) => {
       Log.showInfo(TAG, `removeNotificationItem, err: ${JSON.stringify(err)}`);
       Log.showInfo(TAG, `removeNotificationItem, data: ${JSON.stringify(data)}`);
     })

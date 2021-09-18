@@ -13,15 +13,27 @@
  * limitations under the License.
  */
 
-import FeatureAbility from '@ohos.ability.featureability';
-import WindowManager from '../../../../../../../../../common/src/main/ets/default/WindowManager.ets'
+import FeatureAbilityManager from '../../../../../../../../../common/src/main/ets/default/abilitymanager/featureAbilityManager.ets';
+import WindowManager from '../../../../../../../../../common/src/main/ets/default/WindowManager.ets';
 import Log from '../../../../../../../../../common/src/main/ets/default/Log.ets';
-var TAG = 'UpTitle'
+const TAG = 'Control-UpTitle'
+
+let mWindowManager;
+let mFeatureAbilityManager;
 
 @Component
 export
 struct UpTitle {
   @Link showStatusBar: boolean
+
+  aboutToAppear() {
+    Log.showInfo(TAG,'aboutToAppear');
+    mWindowManager = new WindowManager();
+    mFeatureAbilityManager = new FeatureAbilityManager();
+  }
+  aboutToDisappear () {
+    Log.showInfo(TAG,'aboutToDisappear')
+  }
 
   build() {
     Flex({ direction: FlexDirection.Row, alignItems: ItemAlign.End, justifyContent: FlexAlign.SpaceBetween }) {
@@ -46,17 +58,13 @@ struct UpTitle {
 
   settingClick() {
     this.showStatusBar = true;
-    WindowManager.setWindowMin();
-    let result = FeatureAbility.startAbility({
-      want: {
-        bundleName: 'com.ohos.settings',
-        abilityName: 'com.ohos.settings.MainAbility',
-      },
-    })
-      .then(data =>
-    Log.showInfo(TAG, `promise then: ${JSON.stringify(data)}`))
-      .catch(error =>
-    Log.showError(TAG, `promise catch: ${JSON.stringify(error)}`));
-    Log.showInfo(TAG, `start ability ${result}`);
+    mWindowManager.setWindowMin((result)=>{
+      mFeatureAbilityManager.openAbility(TAG, {
+        want: {
+          bundleName: 'com.ohos.settings',
+          abilityName: 'com.ohos.settings.MainAbility',
+        }
+      });
+    });
   }
 }

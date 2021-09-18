@@ -15,13 +15,20 @@
 
 import Constants from '../common/constants.ets'
 import Log from '../../../../../../../common/src/main/ets/default/Log.ets'
-const TAG = 'battery'
+const TAG = 'BatteryComponent-batteryPic'
 
 @Component
 export default
 struct BatteryPic {
   @StorageLink('batterySoc') batterySoc: number = 100
   @StorageLink('batteryCharging') batteryCharging : boolean = false
+  aboutToAppear(){
+    Log.showInfo(TAG,'aboutToAppear Start');
+  }
+
+  aboutToDisappear(){
+    Log.showInfo(TAG,'aboutToDisappear');
+  }
 
   build() {
 
@@ -57,8 +64,7 @@ struct BatteryPic {
   }
 
   private getBatteryColor(val, charging) {
-    Log.showInfo(TAG, `charging ${ charging }`);
-    Log.showInfo(TAG, `val ${ val }`);
+    Log.showInfo(TAG, `getBatteryColor, val: ${ val }  charging: ${ charging } `);
     if (charging) {
       return $r('app.color.battery_charging_color');
     } else if (val <= Constants.BATTERY_LEVEL_LOW) {
