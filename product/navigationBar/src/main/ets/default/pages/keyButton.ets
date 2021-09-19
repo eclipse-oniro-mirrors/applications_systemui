@@ -30,6 +30,7 @@ export default struct keyButton {
   aboutToAppear() {
     Log.showInfo(TAG, `aboutToAppear Start`)
   }
+
   aboutToDisappear(){
     Log.showInfo(TAG, `aboutToDisAppear`)
   }

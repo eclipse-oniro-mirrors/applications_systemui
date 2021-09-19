@@ -30,6 +30,7 @@ export default struct oneLayout {
   aboutToAppear() {
     Log.showInfo(TAG, `aboutToAppear Start`)
   }
+
   aboutToDisappear(){
     Log.showInfo(TAG, `aboutToDisAppear`)
   }
