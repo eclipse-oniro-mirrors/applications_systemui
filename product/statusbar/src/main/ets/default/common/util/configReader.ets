@@ -52,8 +52,7 @@ export default class ConfigReader {
   public readLayoutConfig() {
     Log.showInfo(TAG, "SystemUI ConfigReader readLayoutConfig start");
     var configObj = this.readFileToJson(DEFAULT_LAYOUT_INFO_FILE_PATH)
-    var mAppStorage = AppStorage.GetOrCreate();
-    var mLayoutConfig = mAppStorage.link("layoutConfig");
+    var mLayoutConfig = AppStorage.SetAndLink("layoutConfig", {});
     mLayoutConfig.set(configObj)
   }
 }

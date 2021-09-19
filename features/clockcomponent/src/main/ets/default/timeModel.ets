@@ -81,7 +81,6 @@ export class TimeModel {
    * @param {Object} date - Object of Date.
    */
   private updateTime(date) {
-    Log.showInfo(TAG,`updateDay, date：${JSON.stringify(date)}`)
     let time = date.toTimeString().substring(0, 5);
     mTimeLink.set(time);
   }
@@ -92,7 +91,6 @@ export class TimeModel {
    * @param {Object} date - Object of Date.
    */
   private updateDay(date) {
-    Log.showInfo(TAG,`updateDay, date：${JSON.stringify(date)}`)
     let day = date.getDate();
     mDayLink.set(day);
   }
@@ -103,7 +101,6 @@ export class TimeModel {
    * @param {Object} date - Object of Date.
    */
   private updateWeekDay(date) {
-    Log.showInfo(TAG,`updateWeekDay, date：${JSON.stringify(date)}`)
     let weekDay = date.getDay();
     mWeekDayLink.set(weekDay);
   }
@@ -114,7 +111,6 @@ export class TimeModel {
    * @param {Object} date - Object of Date.
    */
   private updateMonth(date) {
-    Log.showInfo(TAG,`updateMonth, date：${JSON.stringify(date)}`)
     let month = (date.getMonth() + 1);
     mMonthLink.set(month);
   }

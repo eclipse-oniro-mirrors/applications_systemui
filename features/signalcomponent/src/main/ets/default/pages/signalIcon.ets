@@ -52,6 +52,7 @@ struct SignalIcon {
           .objectFit(ImageFit.ScaleDown)
       }.flexShrink(1)
     }
+    .margin({ left: 5})
     .width($r('app.float.signalicon_width'))
     .height('50%')
   }

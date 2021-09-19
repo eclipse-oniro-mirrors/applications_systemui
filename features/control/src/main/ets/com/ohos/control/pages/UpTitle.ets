@@ -31,6 +31,7 @@ struct UpTitle {
     mWindowManager = new WindowManager();
     mFeatureAbilityManager = new FeatureAbilityManager();
   }
+
   aboutToDisappear () {
     Log.showInfo(TAG,'aboutToDisappear')
   }

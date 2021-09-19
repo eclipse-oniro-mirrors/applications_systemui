@@ -44,6 +44,7 @@ struct notificationItem {
         break;
     }
   }
+
   aboutToDisappear(){
     Log.showInfo(TAG, `aboutToDisAppear`)
   }

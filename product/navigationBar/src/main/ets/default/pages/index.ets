@@ -14,9 +14,7 @@
  */
 
 import Three from './threeLayout.ets'
-import One from './oneLayout.ets'
 import Log from '../../../../../../../common/src/main/ets/default/Log.ets';
-import ConfigReader from '../common/utils/configReader.ets'
 import Constants from '../common/constants.ets'
 
 const STORAGE_NAVIGATION_TYPE = 'navigationType'
@@ -30,10 +28,6 @@ struct Index {
 
   aboutToAppear() {
     Log.showInfo(TAG, `aboutToAppear Start`)
-    if (mConfigReader == null || mConfigReader == undefined) {
-      mConfigReader = new ConfigReader()
-      mConfigReader.readLayoutConfig()
-    }
   }
   aboutToDisappear(){
     Log.showInfo(TAG, `aboutToDisAppear`)
@@ -41,11 +35,7 @@ struct Index {
 
   build() {
     Flex({ direction: FlexDirection.Column, alignItems: ItemAlign.Center, justifyContent: FlexAlign.Center }) {
-      if (this.mConfig.type === Constants.THREE_ICON_LAYOUT) {
-        Three();
-      } else if (this.mConfig.type === Constants.ONE_ICON_LAYOUT) {
-        One();
-      }
+      Three();
     }
     .width('100%')
     .height('100%')
