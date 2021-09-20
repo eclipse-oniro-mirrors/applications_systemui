@@ -57,7 +57,6 @@ struct Index {
   }
 
   touchEvent(event: TouchEvent) {
-    //    Log.showInfo(TAG, 'touchEvent================' + event.touches)
     if (event.type == Constants.TOUCHTYPE_DOWN) {
       this.startX = event.touches[0].screenX
       this.startY = event.touches[0].screenY
@@ -111,44 +110,13 @@ struct quicklySetting {
   aboutToAppear() {
     Log.showInfo(TAG, `quicklySetting, aboutToAppear`)
     //show month
-    if (this.mMonth < Constants.DIGITS) {
-      this.showMonth = '0' + this.mMonth;
-    } else {
-      this.showMonth = '' + this.mMonth;
-    }
+    this.showMonth = this.alignmentNumber(this.mMonth);
     //show day
-    if (this.mDay < Constants.DIGITS) {
-      this.showDay = '0' + this.mDay;
-    } else {
-      this.showDay = '' + this.mDay;
-    }
+    this.showDay = this.alignmentNumber(this.mDay);
     //show weekDay
-    switch (this.mWeekDay) {
-      case Constants.WEEKDAY_MONDAY:
-        this.showWeekDay = $r('app.string.monday');
-        break;
-      case Constants.WEEKDAY_TUESDAY:
-        this.showWeekDay = $r('app.string.tuesday');
-        break;
-      case Constants.WEEKDAY_WEDNESDAY:
-        this.showWeekDay = $r('app.string.wednesday');
-        break;
-      case Constants.WEEKDAY_THURSDAY:
-        this.showWeekDay = $r('app.string.thursday');
-        break;
-      case Constants.WEEKDAY_FRIDAY:
-        this.showWeekDay = $r('app.string.friday');
-        break;
-      case Constants.WEEKDAY_SATURDAY:
-        this.showWeekDay = $r('app.string.saturday');
-        break;
-      case Constants.WEEKDAY_SUNDAY:
-        this.showWeekDay = $r('app.string.sunday');
-        break;
-      default:
-        break;
-    }
+    this.showWeekDay = Constants.WEEKDAY_LIST[this.mWeekDay-1];
   }
+
   aboutToDisappear() {
     Log.showInfo(TAG, `aboutToDisappear, showStatusBar: ${this.showStatusBar}`)
   }
@@ -160,18 +128,8 @@ struct quicklySetting {
           .fontColor($r('app.color.quicklysetting_time_fontcolor'))
           .fontSize($r('app.float.quicklysetting_time_fontsize'))
         Flex({direction: FlexDirection.Row, justifyContent: FlexAlign.Start, alignItems: ItemAlign.Center}){
-          Text(this.showMonth)
-            .fontColor($r('app.color.quicklysetting_date_fontcolor'))
-            .fontSize($r('app.float.quicklysetting_date_fontsize'))
-          Text($r('app.string.month'))
-            .fontColor($r('app.color.quicklysetting_date_fontcolor'))
-            .fontSize($r('app.float.quicklysetting_date_fontsize'))
-          Text(this.showDay)
-            .fontColor($r('app.color.quicklysetting_date_fontcolor'))
-            .fontSize($r('app.float.quicklysetting_date_fontsize'))
-          Text($r('app.string.day'))
-            .fontColor($r('app.color.quicklysetting_date_fontcolor'))
-            .fontSize($r('app.float.quicklysetting_date_fontsize'))
+          dateItem({number: this.showMonth, unit: Constants.MARK_MONTH})
+          dateItem({number: this.showDay, unit: Constants.MARK_DAY})
           Text(this.showWeekDay)
             .fontColor($r('app.color.quicklysetting_date_fontcolor'))
             .fontSize($r('app.float.quicklysetting_date_fontsize'))
@@ -208,7 +166,38 @@ struct quicklySetting {
         }
       });
     });
+  }
+  alignmentNumber(timeOrDate){
+    if(timeOrDate < Constants.DIGITS){
+      return '0' + timeOrDate
+    }else{
+      return '' + timeOrDate
+    }
+  }
+}
 
+@Component
+struct dateItem {
+
+  @Prop number: string
+  @Prop unit: number
+
+  build() {
+    Row() {
+      Text(this.number)
+        .fontColor($r('app.color.quicklysetting_date_fontcolor'))
+        .fontSize($r('app.float.quicklysetting_date_fontsize'))
+      if (this.unit == Constants.MARK_MONTH) {
+        Text($r('app.string.month'))
+          .fontColor($r('app.color.quicklysetting_date_fontcolor'))
+          .fontSize($r('app.float.quicklysetting_date_fontsize'))
+      }
+      if (this.unit == Constants.MARK_DAY) {
+        Text($r('app.string.day'))
+          .fontColor($r('app.color.quicklysetting_date_fontcolor'))
+          .fontSize($r('app.float.quicklysetting_date_fontsize'))
+      }
+    }
   }
 }
 

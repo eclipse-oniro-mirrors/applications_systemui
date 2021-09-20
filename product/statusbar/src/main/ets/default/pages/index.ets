@@ -14,9 +14,10 @@
  */
 
 import Log from '../../../../../../../common/src/main/ets/default/Log.ets'
-import DefaultLayout from './defaultLayout.ets'
+import ConfigurableLayout from './ConfigurableLayout.ets'
 import Notification from './notification.ets'
 import WindowManager from '../../../../../../../common/src/main/ets/default/WindowManager.ets'
+import ConfigReader from '../common/util/configReader.ets'
 import mNotificationService from '../../../../../../../features/notificationService/src/main/ets/com/ohos/notificationservice/NotificationService.ets'
 import ControlCenterComponent from './control.ets'
 import Constants from './common/constants.ets'
@@ -24,24 +25,20 @@ import mBrightnessManager from '../../../../../../../features/control/src/main/e
 
 const TAG = 'StatusBar-Index'
 
-let mConfigReader;
-
 let mWindowManager;
 
 @Entry
 @Component
 struct Index {
-  @StorageLink('layoutConfig') layoutConfig: any = {}
   startX: number = 0
   startY: number = 0
   @State moveX: number = 0
   @State moveY: number = 0
   @State showStatusBar: boolean = true
-  @StorageLink('wifiStatus') wifiStatus : boolean = false
-  @StorageLink('notificationList') notificationList : any = []
 
   aboutToAppear() {
     Log.showInfo(TAG, `aboutToAppear, showStatusBar: ${this.showStatusBar}`)
+
     mWindowManager = new WindowManager();
     mNotificationService.initNotificationService();
     mBrightnessManager.registerBrightnessListener();
@@ -56,11 +53,7 @@ struct Index {
     Flex({ direction: FlexDirection.Column, alignItems: ItemAlign.Center, justifyContent: FlexAlign.Center }) {
       if (this.showStatusBar) {
         Flex({ direction: FlexDirection.Row, alignItems: ItemAlign.Center, justifyContent: FlexAlign.Center }) {
-            DefaultLayout({
-              ListLength : this.notificationList.length,
-              notificationList: this.notificationList.length > (this.wifiStatus ? 2 : 3) ?
-                this.notificationList.slice(0,(this.wifiStatus ? 3 : 4)) :
-                  this.notificationList })
+          ConfigurableLayout()
         }
         .width('100%')
         .height('100%')

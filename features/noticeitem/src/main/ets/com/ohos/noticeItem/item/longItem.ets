@@ -38,7 +38,7 @@ struct longItem {
   @Prop notificationIconDisplay: string
   private notificationWant: any
   @State isExpand: boolean = false
-  @State srcIconDisplay: any = $r('app.media.down')
+  @State srcIconDisplay: any = $r('app.media.ic_notification_down')
   @State needExpand: boolean = false
   @State iconDisplay: boolean = false;
   @State itemWidth: string = '100%'
@@ -65,6 +65,7 @@ struct longItem {
 
     Log.showInfo(TAG, `aboutToAppear showMaxLines: ${this.showMaxLines} ${typeof this.showMaxLines}`)
   }
+
   aboutToDisappear(){
     Log.showInfo(TAG, `aboutToDisAppear id: ${this.notificationId}`)
   }
@@ -96,6 +97,7 @@ struct longItem {
         }
         .width('100%')
         .margin({ top: $r('app.float.body_margin_top') })
+        .onClick(this.clickNotificationItem.bind(this))
       }
       .backgroundColor($r('app.color.notificationitem_background'))
       .opacity($r('app.float.item_opicaty'))
@@ -112,7 +114,7 @@ struct longItem {
       })
       .onTouch(this.touchNotificationItem.bind(this))
       .width(this.itemWidth)
-      .onClick(this.clickNotificationItem.bind(this))
+
 
       if (this.iconDisplay) {
         Flex({ direction: FlexDirection.Row, justifyContent: FlexAlign.SpaceAround, alignItems: ItemAlign.Center }) {

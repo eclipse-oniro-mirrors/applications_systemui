@@ -30,9 +30,11 @@ struct titleItem {
   aboutToAppear() {
     Log.showInfo(TAG, `aboutToDisAppear Start`)
   }
+
   aboutToDisappear(){
     Log.showInfo(TAG, `aboutToDisAppear`)
   }
+
   build() {
     Row() {
       Row({ space: this.rowSpace }) {
@@ -53,21 +55,20 @@ struct titleItem {
             .objectFit(ImageFit.Contain)
             .width($r('app.float.displayicon_width'))
             .height($r('app.float.displayicon_height'))
-            .onClick(() => {
-            if (this.isExpand) {
-              this.isExpand = false
-              this.srcIconDisplay = $r('app.media.down')
-            } else {
-              this.isExpand = true
-              this.srcIconDisplay = $r('app.media.up')
-            }
-          })
         }
       }
       .width('20%')
     }
     .height($r('app.float.titleitem_height'))
     .width('100%')
-
+    .onClick(() => {
+      if (this.isExpand) {
+        this.isExpand = false
+        this.srcIconDisplay = $r('app.media.ic_notification_down')
+      } else {
+        this.isExpand = true
+        this.srcIconDisplay = $r('app.media.ic_notification_up')
+      }
+    })
   }
 }
