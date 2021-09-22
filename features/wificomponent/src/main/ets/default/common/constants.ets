@@ -31,7 +31,7 @@ export default class constants {
   static WIFI_SIGNAL_FULL: number = 4
   static WIFI_POWER_OFF: number = 1
   static WIFI_POWER_ON: number = 3
-  static WIFI_STATE_AP_CONNECTING: number = 3
+  static WIFI_STATE_AP_CONNECTING: number = 1
   static WIFI_Disconnected: number = 9
   static DEFAULT_ERR_CODE: number = 0
   static UPDATE_WIFI_INFO_DEFAULT_PARAM: number = -60

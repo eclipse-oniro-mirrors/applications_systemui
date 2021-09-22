@@ -93,7 +93,7 @@ export class WifiModel {
     Log.showInfo(TAG, `createWifiStatusSubscriberCallBack start err:${ JSON.stringify(err)} data: ${ JSON.stringify(data) }`);
     if (err.code == Constants.DEFAULT_ERR_CODE) {
       Log.showInfo(TAG, `wifi data == ${JSON.stringify(data)}`);
-      if (data.event == Constants.EVENT_CONN_STATE && data.code ==Constants.WIFI_STATE_AP_CONNECTING) {
+      if (data.event == Constants.EVENT_CONN_STATE && data.code == Constants.WIFI_STATE_AP_CONNECTING) {
         this.updateWifiInfo();
         this.changeWifiStatus(true);
       }
@@ -150,6 +150,7 @@ export class WifiModel {
   private updateWifiInfo(rssi=Constants.UPDATE_WIFI_INFO_DEFAULT_PARAM,band=Constants.SIGN_LEVEL) {
     Log.showInfo(TAG, `enter changeWifiInfos ================ ${rssi}+${band}`);
     mWifiInfo.set(this.getWifiInfo(rssi,band))
+    Log.showInfo(TAG, `mWifiInfo wifiInfo ${mWifiInfo.get()}`);
   }
 
   private updateWifiName(name) {
@@ -169,7 +170,7 @@ export class WifiModel {
     Log.showInfo(TAG, `getWifiImage enter =========`);
     //Fake number of band and rssi for wifi signal level temporarily
     let level = WifiInfo.getSignalLevel(rssi, band);
-    Log.showInfo(TAG, `signal level = ${level}`);
+    Log.showInfo(TAG, `wifi level = ${level}`);
     return level;
   }
 
