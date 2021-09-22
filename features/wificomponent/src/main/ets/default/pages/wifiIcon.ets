@@ -36,7 +36,7 @@ export default struct WifiIcon {
   build() {
     Flex({ alignItems: ItemAlign.Center, justifyContent: FlexAlign.Center }) {
       if (this.wifiStatus) {
-        Image(this.getImage(this.wifiInfo)).objectFit(ImageFit.ScaleDown)
+        Image(this.getImage(this.wifiInfo)).objectFit(ImageFit.Contain)
       }
     }
     .width(this.wifiStatus ? $r('app.float.WIFISTATUS_MAXWIDTH') : 0)
