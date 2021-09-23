@@ -28,6 +28,7 @@ let mWindowManager;
 @Component
 export default struct Control {
   @Link showStatusBar: boolean
+  private minHeight: number
   startX: number = 0
   startY: number = 0
   @State moveX: number = 0
@@ -41,7 +42,7 @@ export default struct Control {
   }
   build() {
     Flex({ direction: FlexDirection.Column, alignItems: ItemAlign.Start, justifyContent: FlexAlign.Start }) {
-      statusBar()
+      statusBar({minHeight: this.minHeight})
       ControlCenterComponent({showStatusBar: $showStatusBar});
     }
     .width('100%')
@@ -71,6 +72,7 @@ export default struct Control {
 
 @Component
 struct statusBar {
+  private minHeight: number
   build() {
     Flex({ direction: FlexDirection.Row, alignItems: ItemAlign.Center, justifyContent: FlexAlign.Center }) {
       Flex({ direction: FlexDirection.Row, alignItems: ItemAlign.Center, justifyContent: FlexAlign.Start }) {
@@ -85,7 +87,7 @@ struct statusBar {
       }
     }
     .width('100%')
-    .height($r('app.float.statusbar_height'))
+    .height(this.minHeight)
     .backgroundColor($r('app.color.statusbar_background'))
   }
 }

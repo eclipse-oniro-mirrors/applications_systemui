@@ -60,7 +60,7 @@ struct ControlCenterComponent {
         .height('100%')
       }
       .width('100%')
-      .height('15%')
+      .height($r('app.float.wifi_and_air_height'))
       .margin({ top: $r('app.float.center_item_margin_top'),
         left: $r('app.float.center_item_margin_left'),
         right: $r('app.float.center_item_margin_right') })

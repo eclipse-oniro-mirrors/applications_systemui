@@ -14,17 +14,41 @@
  */
 
 import Window from '@ohos.window';
+import display from '@ohos.display'
 import Log from './Log.ets';
 
 const TAG = 'WindowManager';
-const MAX_WIDTH = 480;
-const MAX_HEIGHT = 893;
-const MIN_HEIGHT = 67;
+const STATUS_BAR_H = 0.07;
+
+var maxWidth;
+var maxHeight;
+var minHeight;
+var quicklySettingH;
+var notificationH;
 
 /**
  * Manage window size changes.
  */
 export default class WindowManager {
+
+  initWindowManager(){
+    Log.showInfo(TAG, 'initWindowManager ');
+    maxWidth = AppStorage.SetAndLink("maxWidth", 0);
+    maxHeight = AppStorage.SetAndLink("maxHeight", 0);
+    minHeight = AppStorage.SetAndLink("minHeight", 0);
+    quicklySettingH = AppStorage.SetAndLink("quicklySettingH", 0);
+    notificationH = AppStorage.SetAndLink("notificationH", 0);
+
+    display.getDefaultDisplay().then(dis => {
+      maxWidth.set(dis.width);
+      maxHeight.set(dis.height);
+      minHeight.set(parseInt((dis.height*STATUS_BAR_H).toString()));
+      quicklySettingH.set((dis.height-(minHeight.get()*2))*0.15);
+      notificationH.set(dis.height-(minHeight.get()*2)-quicklySettingH.get());
+
+      Log.showInfo(TAG, `initWindowManager maxWidth ${maxWidth.get()} maxHeight ${maxHeight.get()} minHeight ${minHeight.get()}`);
+    })
+  }
 
   /**
      * Set the window to the maximum size.
@@ -34,7 +58,7 @@ export default class WindowManager {
   setWindowMax(callback) {
     Log.showInfo(TAG, 'enter setWindowMax =================');
     Window.getTopWindow().then((windowData)=> {
-      windowData.resetSize(MAX_WIDTH, MAX_HEIGHT).then((result)=> {
+      windowData.resetSize(maxWidth.get(), maxHeight.get()).then((result)=> {
         Log.showInfo(TAG, result);
         callback(result);
       });
@@ -49,7 +73,7 @@ export default class WindowManager {
   setWindowMin(callback) {
     Log.showInfo(TAG, 'enter setWindowMin =================');
     Window.getTopWindow().then((windowData)=> {
-      windowData.resetSize(MAX_WIDTH, MIN_HEIGHT).then((result)=> {
+      windowData.resetSize(maxWidth.get(), minHeight.get()).then((result)=> {
         Log.showInfo(TAG, result);
         callback(result);
       });

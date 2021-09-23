@@ -64,6 +64,7 @@ struct MyBrightness {
           .blockColor(Color.Blue)
           .trackColor(Color.Grey)
           .selectedColor(Color.Blue)
+          .width('100%')
           .onChange((value: number) => {
           this.brightnessItem.value = value;
           this.setBrightness(this.brightnessItem);
