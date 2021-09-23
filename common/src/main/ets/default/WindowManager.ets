@@ -23,6 +23,8 @@ const STATUS_BAR_H = 0.07;
 var maxWidth;
 var maxHeight;
 var minHeight;
+var quicklySettingH;
+var notificationH;
 
 /**
  * Manage window size changes.
@@ -34,11 +36,15 @@ export default class WindowManager {
     maxWidth = AppStorage.SetAndLink("maxWidth", 0);
     maxHeight = AppStorage.SetAndLink("maxHeight", 0);
     minHeight = AppStorage.SetAndLink("minHeight", 0);
+    quicklySettingH = AppStorage.SetAndLink("quicklySettingH", 0);
+    notificationH = AppStorage.SetAndLink("notificationH", 0);
 
     display.getDefaultDisplay().then(dis => {
       maxWidth.set(dis.width);
       maxHeight.set(dis.height);
       minHeight.set(parseInt((dis.height*STATUS_BAR_H).toString()));
+      quicklySettingH.set((dis.height-(minHeight.get()*2))*0.15);
+      notificationH.set(dis.height-(minHeight.get()*2)-quicklySettingH.get());
 
       Log.showInfo(TAG, `initWindowManager maxWidth ${maxWidth.get()} maxHeight ${maxHeight.get()} minHeight ${minHeight.get()}`);
     })

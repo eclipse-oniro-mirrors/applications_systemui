@@ -39,19 +39,19 @@
     },
     {
       "name": "uniform_icon_width",
-      "value": "50px"
+      "value": "50"
     },
     {
       "name": "uniform_icon_height",
-      "value": "50px"
+      "value": "50"
     },
     {
       "name": "uniform_icon_bg_height",
-      "value": "80px"
+      "value": "80"
     },
     {
       "name": "uniform_icon_bg_width",
-      "value": "80px"
+      "value": "80"
     },
     {
       "name": "icon_stack_common_margin",
@@ -79,6 +79,9 @@
     },{
       "name": "slider_text_padding_left",
       "value": "5"
+    },{
+      "name": "wifi_and_air_height",
+      "value": "120"
     }
   ]
 }
