@@ -3,7 +3,7 @@ import java.nio.file.Paths
 
 apply plugin: 'com.huawei.ohos.library'
 ohos {
-    compileSdkVersion 6
+    compileSdkVersion 7
     defaultConfig {
         compatibleSdkVersion 4
     }

@@ -35,11 +35,13 @@ struct Index {
   @State moveX: number = 0
   @State moveY: number = 0
   @State showStatusBar: boolean = true
-
+  @StorageLink('minHeight') minHeight:number = 0
+  @StorageLink('maxWidth') maxWidth:number = 0
   aboutToAppear() {
     Log.showInfo(TAG, `aboutToAppear, showStatusBar: ${this.showStatusBar}`)
 
     mWindowManager = new WindowManager();
+    mWindowManager.initWindowManager();
     mNotificationService.initNotificationService();
     mBrightnessManager.registerBrightnessListener();
   }
@@ -59,10 +61,10 @@ struct Index {
         .height('100%')
         .onTouch(this.touchEvent.bind(this))
       } else {
-        if( this.startX <= 230) {
-          Notification({ showStatusBar: $showStatusBar })
+        if( this.startX <= parseInt((this.maxWidth/2).toString()) ) {
+          Notification({ showStatusBar: $showStatusBar,minHeight:this.minHeight })
         } else {
-          ControlCenterComponent({ showStatusBar: $showStatusBar })
+          ControlCenterComponent({ showStatusBar: $showStatusBar,minHeight:this.minHeight })
         }
       }
     }

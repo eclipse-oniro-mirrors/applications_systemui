@@ -33,6 +33,7 @@ let mFeatureAbilityManager;
 export default
 struct Index {
   @Link showStatusBar: boolean
+  private minHeight: number
   startX: number = 0
   startY: number = 0
   @State moveX: number = 0
@@ -46,7 +47,7 @@ struct Index {
 
   build() {
     Flex({ direction: FlexDirection.Column, alignItems: ItemAlign.Start, justifyContent: FlexAlign.Start }) {
-      statusBar()
+      statusBar({minHeight:this.minHeight})
       quicklySetting({ showStatusBar: $showStatusBar})
       notificationItems({ showStatusBar: $showStatusBar})
     }
@@ -78,6 +79,8 @@ struct Index {
 
 @Component
 struct statusBar {
+  private minHeight: number
+
   build() {
     Flex({ direction: FlexDirection.Row, alignItems: ItemAlign.Center, justifyContent: FlexAlign.Center }) {
       Flex({ direction: FlexDirection.Row, alignItems: ItemAlign.Center, justifyContent: FlexAlign.Start }) {
@@ -91,7 +94,7 @@ struct statusBar {
       }
     }
     .width('100%')
-    .height($r('app.float.statusbar_height'))
+    .height(this.minHeight)
     .backgroundColor($r('app.color.statusbar_background'))
   }
 }
@@ -106,6 +109,7 @@ struct quicklySetting {
   @State showDay: string = 'day'
   @State showMonth: string = 'month'
   @State showWeekDay: any = 'weekday'
+  @StorageLink('quicklySettingH') quicklySettingH:number = 0
 
   aboutToAppear() {
     Log.showInfo(TAG, `quicklySetting, aboutToAppear`)
@@ -150,7 +154,7 @@ struct quicklySetting {
 
     }
     .width('100%')
-    .height($r('app.float.quicklysetting_height'))
+    .height(this.quicklySettingH)
     .borderRadius($r('app.float.quicklysetting_borderradius'))
     .margin({ left: $r('app.float.quicklysetting_marginleft'), right: $r('app.float.quicklysetting_marginright') })
   }
@@ -204,6 +208,7 @@ struct dateItem {
 @Component
 struct notificationItems {
   @StorageLink('notificationList') notificationList: any[] = []
+  @StorageLink('notificationH') notificationH:number = 0
   @Link showStatusBar: boolean
 
   build() {
@@ -237,7 +242,7 @@ struct notificationItems {
       }
     }
     .width('100%')
-    .height('100%')
+    .height(this.notificationH)
   }
 
   removeAllNotification() {
