@@ -76,6 +76,7 @@ struct MyVol {
           style: SliderStyle.INSET
         })
           .size({ width: 300 })
+          .width('100%')
           .blockColor(Color.Blue)
           .trackColor(Color.Grey)
           .selectedColor(Color.Blue)

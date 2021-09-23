@@ -109,6 +109,7 @@ struct quicklySetting {
   @State showDay: string = 'day'
   @State showMonth: string = 'month'
   @State showWeekDay: any = 'weekday'
+  @StorageLink('quicklySettingH') quicklySettingH:number = 0
 
   aboutToAppear() {
     Log.showInfo(TAG, `quicklySetting, aboutToAppear`)
@@ -153,7 +154,7 @@ struct quicklySetting {
 
     }
     .width('100%')
-    .height($r('app.float.quicklysetting_height'))
+    .height(this.quicklySettingH)
     .borderRadius($r('app.float.quicklysetting_borderradius'))
     .margin({ left: $r('app.float.quicklysetting_marginleft'), right: $r('app.float.quicklysetting_marginright') })
   }
@@ -207,6 +208,7 @@ struct dateItem {
 @Component
 struct notificationItems {
   @StorageLink('notificationList') notificationList: any[] = []
+  @StorageLink('notificationH') notificationH:number = 0
   @Link showStatusBar: boolean
 
   build() {
@@ -240,7 +242,7 @@ struct notificationItems {
       }
     }
     .width('100%')
-    .height('100%')
+    .height(this.notificationH)
   }
 
   removeAllNotification() {

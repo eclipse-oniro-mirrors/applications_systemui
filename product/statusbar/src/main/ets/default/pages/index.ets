@@ -36,6 +36,7 @@ struct Index {
   @State moveY: number = 0
   @State showStatusBar: boolean = true
   @StorageLink('minHeight') minHeight:number = 0
+  @StorageLink('maxWidth') maxWidth:number = 0
   aboutToAppear() {
     Log.showInfo(TAG, `aboutToAppear, showStatusBar: ${this.showStatusBar}`)
 
@@ -60,7 +61,7 @@ struct Index {
         .height('100%')
         .onTouch(this.touchEvent.bind(this))
       } else {
-        if( this.startX <= 230) {
+        if( this.startX <= parseInt((this.maxWidth/2).toString()) ) {
           Notification({ showStatusBar: $showStatusBar,minHeight:this.minHeight })
         } else {
           ControlCenterComponent({ showStatusBar: $showStatusBar,minHeight:this.minHeight })
