@@ -33,6 +33,7 @@ let mFeatureAbilityManager;
 export default
 struct Index {
   @Link showStatusBar: boolean
+  private minHeight: number
   startX: number = 0
   startY: number = 0
   @State moveX: number = 0
@@ -46,7 +47,7 @@ struct Index {
 
   build() {
     Flex({ direction: FlexDirection.Column, alignItems: ItemAlign.Start, justifyContent: FlexAlign.Start }) {
-      statusBar()
+      statusBar({minHeight:this.minHeight})
       quicklySetting({ showStatusBar: $showStatusBar})
       notificationItems({ showStatusBar: $showStatusBar})
     }
@@ -78,6 +79,8 @@ struct Index {
 
 @Component
 struct statusBar {
+  private minHeight: number
+
   build() {
     Flex({ direction: FlexDirection.Row, alignItems: ItemAlign.Center, justifyContent: FlexAlign.Center }) {
       Flex({ direction: FlexDirection.Row, alignItems: ItemAlign.Center, justifyContent: FlexAlign.Start }) {
@@ -91,7 +94,7 @@ struct statusBar {
       }
     }
     .width('100%')
-    .height($r('app.float.statusbar_height'))
+    .height(this.minHeight)
     .backgroundColor($r('app.color.statusbar_background'))
   }
 }
