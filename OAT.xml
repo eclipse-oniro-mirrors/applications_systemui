@@ -55,12 +55,83 @@
         </policylist>
 		<filefilterlist>
 			<filefilter name="binaryFileTypePolicyFilter" desc="Filters for binary file policies">
-               <filteritem type="filepath" name="entry/src/main/js/default/common/.*.png" desc="self developed image"/>
-               <filteritem type="filepath" name="navigationBar/src/main/js/default/common/.*.png" desc="self developed image"/>
-			   <filteritem type="filepath" name="navigationBar/src/main/resources/base/media/.*.png" desc="self developed image"/>
-			   <filteritem type="filepath" name="entry/src/main/resources/base/media/.*.png" desc="self developed image"/>
-			   <filteritem type="filepath" name="systemDialog/src/main/resources/base/media/.*.png" desc="self developed image"/>
-			   <filteritem type="filepath" name="figures/.*.png" desc="self developed image"/>
+				<filteritem type="filename" name="entry/src/main/resources/base/media/icon.png" desc="self developed image"/>
+				<filteritem type="filename" name="features/batterycomponent/src/main/resources/base/media/icon.png" desc="self developed image"/>
+				<filteritem type="filename" name="features/clockcomponent/src/main/resources/base/media/icon.png" desc="self developed image"/>
+				<filteritem type="filename" name="features/control/src/main/ets/com/ohos/control/common/png/ic_notification_settings.png" desc="self developed image"/>
+				<filteritem type="filename" name="features/control/src/main/resources/base/media/ic_notification_settings.png" desc="self developed image"/>
+				<filteritem type="filename" name="features/noticeitem/src/main/resources/base/media/delete.png" desc="self developed image"/>
+				<filteritem type="filename" name="features/noticeitem/src/main/resources/base/media/ic_notification_down.png" desc="self developed image"/>
+				<filteritem type="filename" name="features/noticeitem/src/main/resources/base/media/ic_notification_up.png" desc="self developed image"/>
+				<filteritem type="filename" name="features/signalcomponent/src/main/resources/base/media/ic_statusbar_signal_1.png" desc="self developed image"/>
+				<filteritem type="filename" name="features/signalcomponent/src/main/resources/base/media/ic_statusbar_signal_2.png" desc="self developed image"/>
+				<filteritem type="filename" name="features/signalcomponent/src/main/resources/base/media/ic_statusbar_signal_3.png" desc="self developed image"/>
+				<filteritem type="filename" name="features/signalcomponent/src/main/resources/base/media/ic_statusbar_signal_4.png" desc="self developed image"/>
+				<filteritem type="filename" name="features/signalcomponent/src/main/resources/base/media/ic_statusbar_signal_full.png" desc="self developed image"/>
+				<filteritem type="filename" name="features/signalcomponent/src/main/resources/base/media/ic_statusbar_signal_no.png" desc="self developed image"/>
+				<filteritem type="filename" name="features/signalcomponent/src/main/resources/base/media/ic_statusbar_signal_null.png" desc="self developed image"/>
+				<filteritem type="filename" name="features/signalcomponent/src/main/resources/base/media/ic_statusbar_signal_roaming.png" desc="self developed image"/>
+				<filteritem type="filename" name="features/signalcomponent/src/main/resources/base/media/ic_statusbar_signal_wait.png" desc="self developed image"/>
+				<filteritem type="filename" name="features/signalcomponent/src/main/resources/base/media/ic_statusbar_wifi_connect.png" desc="self developed image"/>
+				<filteritem type="filename" name="features/signalcomponent/src/main/resources/base/media/icon.png" desc="self developed image"/>
+
+				<filteritem type="filename" name="features/wificomponent/src/main/resources/base/media/ic_statusbar_wifi_1.png" desc="self developed image"/>
+				<filteritem type="filename" name="features/wificomponent/src/main/resources/base/media/ic_statusbar_wifi_2.png" desc="self developed image"/>
+				<filteritem type="filename" name="features/wificomponent/src/main/resources/base/media/ic_statusbar_wifi_3.png" desc="self developed image"/>
+				<filteritem type="filename" name="features/wificomponent/src/main/resources/base/media/ic_statusbar_wifi_connect.png" desc="self developed image"/>
+				<filteritem type="filename" name="features/wificomponent/src/main/resources/base/media/ic_statusbar_wifi_full.png" desc="self developed image"/>
+				<filteritem type="filename" name="features/wificomponent/src/main/resources/base/media/ic_statusbar_wifi_no.png" desc="self developed image"/>
+				<filteritem type="filename" name="features/wificomponent/src/main/resources/base/media/icon.png" desc="self developed image"/>
+				<filteritem type="filename" name="product/navigationBar/src/main/resources/base/media/ic_navigation_back.png" desc="self developed image"/>
+				<filteritem type="filename" name="product/navigationBar/src/main/resources/base/media/ic_navigation_home.png" desc="self developed image"/>
+				<filteritem type="filename" name="product/navigationBar/src/main/resources/base/media/ic_navigation_recent.png" desc="self developed image"/>
+				<filteritem type="filename" name="product/navigationBar/src/main/resources/base/media/icon.png" desc="self developed image"/>
+				<filteritem type="filename" name="product/statusbar/src/main/resources/base/media/delete_all.png" desc="self developed image"/>
+				<filteritem type="filename" name="product/statusbar/src/main/resources/base/media/ic_settings.png" desc="self developed image"/>
+				<filteritem type="filename" name="product/statusbar/src/main/resources/base/media/ic_statusbar_wifi_full.png" desc="self developed image"/>
+				<filteritem type="filename" name="product/statusbar/src/main/resources/base/media/icon.png" desc="self developed image"/>
+				<filteritem type="filename" name="product/systemDialog/src/main/resources/base/media/icon.png" desc="self developed image"/>
+
+				<filteritem type="filename" name="figures/TS_01.png" desc="self developed image"/>
+				<filteritem type="filename" name="figures/downLoad_01.png" desc="self developed image"/>
+				<filteritem type="filename" name="figures/importProject.png" desc="self developed image"/>
+				<filteritem type="filename" name="figures/TS_02.png" desc="self developed image"/>
+				<filteritem type="filename" name="figures/downLoad_02.png" desc="self developed image"/>
+				<filteritem type="filename" name="figures/screenshot-20210521-105407.png" desc="self developed image"/>
+				<filteritem type="filename" name="figures/cmd1.png" desc="self developed image"/>
+				<filteritem type="filename" name="figures/downLoad_03.png" desc="self developed image"/>
+				<filteritem type="filename" name="figures/screenshot-20210521-110433.png" desc="self developed image"/>
+				<filteritem type="filename" name="figures/cmd2.png" desc="self developed image"/>
+				<filteritem type="filename" name="figures/downLoad_04.png" desc="self developed image"/>
+				<filteritem type="filename" name="figures/screenshot-20210521-111223.png" desc="self developed image"/>
+				<filteritem type="filename" name="figures/cmd3.png" desc="self developed image"/>
+				<filteritem type="filename" name="figures/downLoad_05.png" desc="self developed image"/>
+				<filteritem type="filename" name="figures/signature_1.png" desc="self developed image"/>
+				<filteritem type="filename" name="figures/commit_source_clone_page.png" desc="self developed image"/>
+				<filteritem type="filename" name="figures/downLoad_06.png" desc="self developed image"/>
+				<filteritem type="filename" name="figures/signature_2.png" desc="self developed image"/>
+				<filteritem type="filename" name="figures/commit_source_fork_button.png" desc="self developed image"/>
+				<filteritem type="filename" name="figures/ds_build_haps.png" desc="self developed image"/>
+				<filteritem type="filename" name="figures/signature_3.png" desc="self developed image"/>
+				<filteritem type="filename" name="figures/commit_source_fork_confirm.png" desc="self developed image"/>
+				<filteritem type="filename" name="figures/ds_hilog_window.png" desc="self developed image"/>
+				<filteritem type="filename" name="figures/zh-cn_image_0000001103686480.png" desc="self developed image"/>
+				<filteritem type="filename" name="figures/commit_source_forked_repo.jpg" desc="self developed image"/>
+				<filteritem type="filename" name="figures/ds_ohosbuild_output_dir_debug.png" desc="self developed image"/>
+				<filteritem type="filename" name="figures/commit_source_new_pr_done copy.png" desc="self developed image"/>
+				<filteritem type="filename" name="figures/ds_ohosbuild_output_dir_release.png" desc="self developed image"/>
+				<filteritem type="filename" name="figures/commit_source_new_pr_done.png" desc="self developed image"/>
+				<filteritem type="filename" name="figures/ds_ohosbuild_variants.png" desc="self developed image"/>
+				<filteritem type="filename" name="figures/commit_source_new_pull_request copy.png" desc="self developed image"/>
+				<filteritem type="filename" name="figures/ds_ohosbuild_variants_debug.png" desc="self developed image"/>
+				<filteritem type="filename" name="figures/commit_source_new_pull_request.png" desc="self developed image"/>
+				<filteritem type="filename" name="figures/ds_ohosbuild_variants_release.png" desc="self developed image"/>
+				<filteritem type="filename" name="figures/commit_source_new_pull_request_confirm copy.png" desc="self developed image"/>
+				<filteritem type="filename" name="figures/en-us_image_0000001103686480.png" desc="self developed image"/>
+				<filteritem type="filename" name="figures/commit_source_new_pull_request_confirm.png" desc="self developed image"/>
+				<filteritem type="filename" name="figures/gitee_01.png" desc="self developed image"/>
+				<filteritem type="filename" name="figures/downLoadSDK_01.png" desc="self developed image"/>
+				<filteritem type="filename" name="figures/hap_repo.png" desc="self developed image"/>
 			</filefilter>
 		</filefilterlist>
     </oatconfig>
