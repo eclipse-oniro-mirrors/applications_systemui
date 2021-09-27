@@ -66,11 +66,11 @@
     },
     {
       "name": "item_delete_image_width",
-      "value": "30"
+      "value": "40"
     },
     {
       "name": "item_delete_image_height",
-      "value": "30"
+      "value": "40"
     },
     {
       "name": "titleitem_row_space",
