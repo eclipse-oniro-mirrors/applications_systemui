@@ -59,7 +59,7 @@ struct MyVol {
 
   build() {
     Flex({ direction: FlexDirection.Row, justifyContent: FlexAlign.Start, alignItems: ItemAlign.Center }) {
-      Column() {
+      Column({useAlign:HorizontalAlign.Center}) {
         Text($r('app.string.volume_control'))
           .fontSize($r('app.float.control_common_font_size')).alignSelf(ItemAlign.Center)
 
@@ -67,7 +67,7 @@ struct MyVol {
       .width('15%')
       .padding({ left: $r('app.float.slider_text_padding_left') })
 
-      Column() {
+      Flex({ direction: FlexDirection.Row, justifyContent: FlexAlign.Center, alignItems: ItemAlign.Center }) {
         Slider({
           value: volume.value,
           min: volume.minValue,

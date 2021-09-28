@@ -52,7 +52,7 @@ struct MyBrightness {
       .width('15%')
       .padding({ left: $r('app.float.slider_text_padding_left') })
 
-      Column() {
+      Flex({ direction: FlexDirection.Row, justifyContent: FlexAlign.Center, alignItems: ItemAlign.Center }) {
         Slider({
           value: this.brightnessValue,
           min: this.brightnessItem.min,
