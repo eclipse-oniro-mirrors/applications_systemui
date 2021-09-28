@@ -40,9 +40,9 @@ export class SignalModel
 
   initSignalModel() {
     Log.showInfo(TAG, 'initSignalModel');
-    mLevelLink = AppStorage.SetAndLink("cellularLevel", '');
-    mTypeLink = AppStorage.SetAndLink("cellularType", '');
-    mStateLink = AppStorage.SetAndLink("networkState", '');
+    mLevelLink = AppStorage.SetAndLink("cellularLevel", Constants.CELLULAR_NO_SIM_CARD);
+    mTypeLink = AppStorage.SetAndLink("cellularType", Constants.NETWORK_TYPE_UNKNOWN);
+    mStateLink = AppStorage.SetAndLink("networkState", Constants.NET_NULL);
     this.initObserver();
     this.checkCellularStatus();
   }

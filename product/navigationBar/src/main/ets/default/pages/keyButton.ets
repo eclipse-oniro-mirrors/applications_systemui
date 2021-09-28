@@ -44,7 +44,7 @@ export default struct keyButton {
     }
     .borderRadius($r('app.float.button_radius'))
     .width($r('app.float.button_width'))
-    .height($r('app.float.button_height'))
+    .height('100%')
     .backgroundColor(this.backGroundColor)
     .onTouch(this.onKeyTouch.bind(this))
   }

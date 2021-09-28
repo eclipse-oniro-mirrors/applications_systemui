@@ -33,6 +33,6 @@ export default class Constants {
 
   static NET_CHINA_MOBILE = 'CHINA MOBILE';
   static NET_CHINA_TELECOM = 'China Telecom';
-  static NET_CHN_UN_ICON = 'CHN-UN_ICON';
+  static NET_CHN_UNICOM = 'CHN-UNICOM';
   static NET_NULL = '';
 }

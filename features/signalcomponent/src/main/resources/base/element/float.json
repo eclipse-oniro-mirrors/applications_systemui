@@ -31,6 +31,10 @@
     {
       "name":"signalicon_height",
       "value":"50%"
+    },
+    {
+      "name":"signalicon_default_width",
+      "value":"120"
     }
   ]
 }
