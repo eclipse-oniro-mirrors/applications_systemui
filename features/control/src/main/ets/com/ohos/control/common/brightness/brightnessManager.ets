@@ -24,7 +24,7 @@ let mCommonEventSubscribeInfo = {
 };
 let curValue = 10;
 let mCommonEventSubscriber =null;
-var mBrightnessValue = AppStorage.SetAndLink('BrightnessValue', 0);
+var mBrightnessValue = AppStorage.SetAndLink('BrightnessValue', 255);
 
 export class brightnessManager{
 
