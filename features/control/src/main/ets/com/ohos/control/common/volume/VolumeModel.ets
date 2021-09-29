@@ -38,7 +38,7 @@ export default class VolumeModel {
                 Log.showInfo(TAG, `Failed to obtain the volume. ${err.message}`);
                 return;
             }
-            Log.showInfo(TAG, 'Callback invoked to indicate that the volume is obtained.' + value);
+            Log.showInfo(TAG, 'getVolume Callback invoked to indicate that the volume is obtained.' + value);
             callback.value = value;
         })
     }
@@ -50,7 +50,7 @@ export default class VolumeModel {
                 Log.showInfo(TAG, `Failed to obtain the volume. ${err.message}`);
                 return;
             }
-            Log.showInfo(TAG, 'Callback invoked to indicate that the volume is obtained.' + value);
+            Log.showInfo(TAG, 'getMaxVolume Callback invoked to indicate that the volume is obtained.' + value);
             callback.maxValue = value;
         })
     }
@@ -62,7 +62,7 @@ export default class VolumeModel {
                 Log.showInfo(TAG, `Failed to obtain the volume. ${err.message}`);
                 return;
             }
-            Log.showInfo(TAG, 'Callback invoked to indicate that the volume is obtained.' + value);
+            Log.showInfo(TAG, 'getMinVolume Callback invoked to indicate that the volume is obtained.' + value);
             callback.minValue = value;
         })
     }

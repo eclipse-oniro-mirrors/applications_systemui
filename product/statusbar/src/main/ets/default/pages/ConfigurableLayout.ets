@@ -68,7 +68,8 @@ struct Index {
                     Image(item.icon)
                       .objectFit(ImageFit.ScaleDown)
                       .height('50%')
-                      .width(45)
+                      .width(30)
+                      .margin({right:2})
                   })
                   Row() {
                     Text('...')
@@ -79,11 +80,12 @@ struct Index {
                     Image(item.icon)
                       .objectFit(ImageFit.ScaleDown)
                       .height('50%')
-                      .width(45)
+                      .width(30)
+                      .margin({right:2})
                   })
                 }
               }
-              .width(this.notificationList.length > 3 ? 45 * 4 : 45 * this.notificationList.length)
+              .width(this.notificationList.length > 3 ? 34 * 4 : 34 * this.notificationList.length)
             }
           })
         }.constraintSize({ maxWidth: 200 })
