@@ -31,8 +31,5 @@ export default class Constants {
   static CELLULAR_SIGNAL_FULL = 5;
   static CELLULAR_NO_SIM_CARD = -1;
 
-  static NET_CHINA_MOBILE = 'CHINA MOBILE';
-  static NET_CHINA_TELECOM = 'China Telecom';
-  static NET_CHN_UNICOM = 'CHN-UNICOM';
-  static NET_NULL = '';
+  static NET_NULL = 'NULL';
 }
