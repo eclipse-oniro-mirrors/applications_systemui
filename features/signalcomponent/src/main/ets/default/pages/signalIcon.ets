@@ -24,7 +24,6 @@ struct SignalIcon {
   @StorageLink('cellularLevel') cellularLevel : number = Constants.CELLULAR_NO_SIM_CARD
   @StorageLink('cellularType') cellularType : number = Constants.NETWORK_TYPE_UNKNOWN
   @StorageLink('networkState') networkState : string = Constants.NET_NULL
-
   aboutToAppear() {
     Log.showInfo(TAG, 'aboutToAppear');
     mSignalModel.initSignalModel();
@@ -36,12 +35,15 @@ struct SignalIcon {
   }
 
   build() {
-    Flex({ alignItems: ItemAlign.Center, justifyContent: FlexAlign.Center }) {
+    Row() {
       Text(this.updateNetworkState(this.networkState))
         .fontSize($r('app.float.fontSize_network_state'))
         .fontColor($r('app.color.font_color_white'))
+        .textOverflow({overflow: TextOverflow.Ellipsis})
+        .constraintSize({ maxWidth: $r('app.float.signalicon_netstatus_width')})
         .flexShrink(0)
         .maxLines(1)
+        .textAlign(TextAlign.Center)
 
       Stack({ alignContent: Alignment.TopStart }) {
         Text(this.updateCellularType(this.cellularType))
@@ -50,10 +52,9 @@ struct SignalIcon {
           .margin({ top: $r('app.float.margin_cellular_type') })
         Image(this.updateCellularImage(this.cellularLevel))
           .objectFit(ImageFit.ScaleDown)
-      }.flexShrink(1)
+      }.flexShrink(1).width(42)
     }
     .margin({ left: 5})
-    .width(this.getWidth(this.networkState))
     .height('50%')
   }
 
@@ -135,39 +136,11 @@ struct SignalIcon {
   private updateNetworkState(netWorkState) {
     Log.showInfo(TAG, `updateNetworkState, netWorkState: ${netWorkState}`);
     let networkStateName;
-    switch (netWorkState) {
-      case Constants.NET_CHINA_MOBILE:
-      case Constants.NET_CHINA_TELECOM:
-      case Constants.NET_CHN_UNICOM:
-        networkStateName = netWorkState;
-        break;
-      case Constants.NET_NULL:
-      default:
-        networkStateName = $r('app.string.net_null');
-        break;
+    if(netWorkState == Constants.NET_NULL){
+      networkStateName = $r('app.string.net_null');
+    }else {
+      networkStateName = netWorkState;
     }
     return networkStateName;
-  }
-
-  /**
-     * Get total width
-     *
-     * @param {string} netWorkState - network state from signal model
-     * @return {number} total width of signal component
-     */
-  private getWidth(netWorkState) {
-    Log.showInfo(TAG, `updateNetworkState, netWorkState: ${netWorkState}`);
-    switch (netWorkState) {
-      case Constants.NET_CHINA_MOBILE:
-      case Constants.NET_CHINA_TELECOM:
-      case Constants.NET_CHN_UNICOM:
-      // Dynamic width
-        return netWorkState?.length * 10 + 48;
-        break;
-      case Constants.NET_NULL:
-      default:
-        return $r('app.float.signalicon_default_width');
-        break;
-    }
   }
 }

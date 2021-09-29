@@ -220,14 +220,20 @@ struct notificationItems {
             .fontColor($r('app.color.nonotification_text_color'))
         }
       } else {
-        Stack({alignContent: Alignment.TopStart}) {
+        Stack({ alignContent: Alignment.TopStart }) {
           List() {
             ForEach(this.notificationList, (item: any) => { //notificationItems
               ListItem() {
                 notificationItem({ itemObject: item, showStatusBar: $showStatusBar })
               }
+
             }, (item: any) => item.hashcode.toString())
           }
+          .onTouch((event: TouchEvent) => {
+            Log.showInfo(TAG, `Touch Event ${event.type} at Point ${event.touches[0].x}, ${event.touches[0].y}`)
+            event.stopPropagation();
+          })
+
           Image($r('app.media.delete_all')) //icon: remove all notifications
           .objectFit(ImageFit.Contain)
             .width($r('app.float.deleteall_image_width'))
@@ -236,6 +242,11 @@ struct notificationItems {
             .opacity($r('app.float.deleteall_image_opacity'))
             .onClick(this.removeAllNotification.bind(this))
             .position({ x: '44.5%', y: '85%' })
+
+          Flex() { //bottom Line
+          }.width('100%').height('7%')
+          .opacity($r('app.float.deleteall_image_opacity'))
+          .position({ x: 0, y: '93%' })
         }
         .width('100%')
         .height('100%')
