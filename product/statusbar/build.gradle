@@ -5,7 +5,7 @@ ohos {
         compatibleSdkVersion 4
     }
     entryModules "entry"
-    supportSystem "standard"
+    arkEnabled false
 }
 
 dependencies {
