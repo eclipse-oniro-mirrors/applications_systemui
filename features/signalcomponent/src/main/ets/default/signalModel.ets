@@ -13,9 +13,9 @@
  * limitations under the License.
  */
 
-import Radio from '@ohos.telephony_radio';
-import Sim from '@ohos.telephony_sim'
-import Observer from '@ohos.telephony_observer';
+import Radio from '@ohos.telephony.radio';
+import Sim from '@ohos.telephony.sim'
+import Observer from '@ohos.telephony.observer';
 import Log from "../../../../../../common/src/main/ets/default/Log.ets";
 import CheckEmpty from '../../../../../../common/src/main/ets/default/CheckEmptyUtils.ets';
 import Constants from './common/constants.ets'
@@ -86,7 +86,7 @@ export class SignalModel
 
           Log.showInfo(TAG, 'enter checknetworkState ============');
           //The interface of getting the cellular signal status is unavailable temporarily
-          Radio.getnetworkState(slotId,(err, value) => {
+          Radio.getNetworkState((err, value) => {
             if (err) {
               // Failed to call the interface，error is not null
               Log.showError(TAG, `failed to getnetworkState because ${err.message}`);
@@ -111,8 +111,6 @@ export class SignalModel
         mStateLink.set(Constants.NET_NULL);
       }
     });
-
-
   }
 
     /**
