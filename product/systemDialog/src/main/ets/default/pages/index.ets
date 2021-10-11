@@ -62,7 +62,7 @@ struct Index {
                 .fontColor(Color.Black)
                 .width(250)
 
-              Toggle({ type: ToggleType.Button, isOn: false })
+              Toggle({ type: ToggleType.Switch, isOn: false })
                 .width(60)
                 .height(40)
                 .onChange((isOn) => {
