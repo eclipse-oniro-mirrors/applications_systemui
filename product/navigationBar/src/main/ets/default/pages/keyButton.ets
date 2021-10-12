@@ -36,17 +36,20 @@ export default struct keyButton {
   }
 
   build() {
-    Flex({ direction: FlexDirection.Row, alignItems: ItemAlign.Center, justifyContent: FlexAlign.Center }) {
+    Stack({ alignContent: Alignment.Center }) {
+      Flex() {}
+      .borderRadius($r('app.float.button_radius'))
+      .width($r('app.float.button_width'))
+      .height('100%')
+      .backgroundColor(this.backGroundColor)
       Image(this.uri)
         .objectFit(ImageFit.Contain)
         .size({ width: $r('app.float.image_width'), height: $r('app.float.image_height') })
-
     }
-    .borderRadius($r('app.float.button_radius'))
+    .onTouch(this.onKeyTouch.bind(this))
     .width($r('app.float.button_width'))
     .height('100%')
-    .backgroundColor(this.backGroundColor)
-    .onTouch(this.onKeyTouch.bind(this))
+
   }
 
   private onKeyTouch(event:TouchEvent) {
