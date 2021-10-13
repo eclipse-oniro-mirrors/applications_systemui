@@ -39,6 +39,5 @@ export default struct ClockIcon {
         .fontSize($r('app.float.clock_fontsize'))
     }
     .width($r('app.float.clock_maxwidth'))
-    .height('50%')
   }
 }

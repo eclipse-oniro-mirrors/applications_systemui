@@ -73,14 +73,13 @@ export default struct Control {
 @Component
 struct statusBar {
   private minHeight: number
+  @StorageLink('StatusCoefficient') StatusCoefficient:number = 1.0
   build() {
     Flex({ direction: FlexDirection.Row, alignItems: ItemAlign.Center, justifyContent: FlexAlign.Center }) {
       Flex({ direction: FlexDirection.Row, alignItems: ItemAlign.Center, justifyContent: FlexAlign.Start }) {
         SignalIcon()
         WifiIcon()
       }
-      .margin({ left: 10 })
-
       Flex({ direction: FlexDirection.Row, alignItems: ItemAlign.Center, justifyContent: FlexAlign.End }) {
         BatteryIcon()
         ClockIcon()
@@ -88,6 +87,5 @@ struct statusBar {
     }
     .width('100%')
     .height(this.minHeight)
-    .backgroundColor($r('app.color.statusbar_background'))
   }
 }

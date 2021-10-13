@@ -35,6 +35,7 @@ let KeyCodeArr: any[] = [
 @Component
 export default
 struct threeLayout {
+  @StorageLink('NavMinH') NavMinH:number = 32
 
   aboutToAppear() {
     Log.showInfo(TAG, `aboutToAppear Start`)
@@ -51,6 +52,7 @@ struct threeLayout {
           keyButton({ uri: item.uri, keyCode: item.keyCode })
         }
         .height('100%')
+        .constraintSize({ minHeight: this.NavMinH })
         .align(Alignment.Center)
       })
     }

@@ -41,7 +41,7 @@ struct ControlCenterComponent {
         UpTitle({ showStatusBar: $showStatusBar })
       }
       .width('100%')
-      .height('10%')
+      .height($r('app.float.up_title_height'))
       .margin({ top: $r('app.float.center_item_margin_top'),
         left: $r('app.float.center_item_margin_left'),
         right: $r('app.float.center_item_margin_right') })
@@ -69,7 +69,7 @@ struct ControlCenterComponent {
         MyBrightness()
       }
       .width('100%')
-      .height('8%')
+      .height($r('app.float.vol_height'))
       .margin({ top: $r('app.float.center_item_margin_top'),
         left: $r('app.float.center_item_margin_left'),
         right: $r('app.float.center_item_margin_right') })
@@ -78,13 +78,11 @@ struct ControlCenterComponent {
         MyVol()
       }
       .width('100%')
-      .height('8%')
+      .height($r('app.float.vol_height'))
       .margin({ top: $r('app.float.center_item_margin_top'),
         left: $r('app.float.center_item_margin_left'),
         right: $r('app.float.center_item_margin_right') })
     }
-    .backgroundColor($r('app.color.control_center_bg_color'))
     .width('100%')
-    .height('100%')
   }
 }

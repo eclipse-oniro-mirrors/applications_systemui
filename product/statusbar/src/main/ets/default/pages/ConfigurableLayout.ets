@@ -31,6 +31,7 @@ struct Index {
   @StorageLink('notificationList') notificationList: any = []
   @StorageLink('layoutConfig') layoutConfig: any = {}
   @StorageLink('wifiStatus') wifiStatus: boolean = false
+  @StorageLink('StatusCoefficient') StatusCoefficient:number = 1.0
 
   aboutToAppear() {
     if (mConfigReader == null || mConfigReader == undefined) {
@@ -67,9 +68,9 @@ struct Index {
                   ForEach(this.notificationList.slice(0, 3), (item: any) => {
                     Image(item.icon)
                       .objectFit(ImageFit.ScaleDown)
-                      .height('50%')
-                      .width(30)
-                      .margin({right:2})
+                      .height(Constants.STATIC_BAR_ICON_HEIGHT*this.StatusCoefficient)
+                      .width(Constants.STATIC_BAR_ICON_WIDTH*this.StatusCoefficient)
+                      .margin({right:Constants.STATIC_BAR_ICON_MARGIN})
                   })
                   Row() {
                     Text('...')
@@ -79,13 +80,15 @@ struct Index {
                   ForEach(this.notificationList, (item: any) => {
                     Image(item.icon)
                       .objectFit(ImageFit.ScaleDown)
-                      .height('50%')
-                      .width(30)
-                      .margin({right:2})
+                      .height(Constants.STATIC_BAR_ICON_HEIGHT*this.StatusCoefficient)
+                      .width(Constants.STATIC_BAR_ICON_WIDTH*this.StatusCoefficient)
+                      .margin({right:Constants.STATIC_BAR_ICON_MARGIN})
                   })
                 }
               }
-              .width(this.notificationList.length > 3 ? 34 * 4 : 34 * this.notificationList.length)
+              .width(this.notificationList.length > 3 ?
+                (Constants.STATIC_BAR_ICON_WIDTH+Constants.STATIC_BAR_ICON_MARGIN) * 4 :
+                (Constants.STATIC_BAR_ICON_WIDTH+Constants.STATIC_BAR_ICON_MARGIN)  * this.notificationList.length)
             }
           })
         }.constraintSize({ maxWidth: 200 })
@@ -98,6 +101,5 @@ struct Index {
     }
     .width('100%')
     .height('100%')
-    .backgroundColor($r("app.color.twogroup_layout_background"))
   }
 }

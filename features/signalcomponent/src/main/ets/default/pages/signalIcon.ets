@@ -24,6 +24,7 @@ struct SignalIcon {
   @StorageLink('cellularLevel') cellularLevel : number = Constants.CELLULAR_NO_SIM_CARD
   @StorageLink('cellularType') cellularType : number = Constants.NETWORK_TYPE_UNKNOWN
   @StorageLink('networkState') networkState : string = Constants.NET_NULL
+  @StorageLink('StatusCoefficient') StatusCoefficient:number = 1.0
   aboutToAppear() {
     Log.showInfo(TAG, 'aboutToAppear');
     mSignalModel.initSignalModel();
@@ -52,10 +53,13 @@ struct SignalIcon {
           .margin({ top: $r('app.float.margin_cellular_type') })
         Image(this.updateCellularImage(this.cellularLevel))
           .objectFit(ImageFit.ScaleDown)
-      }.flexShrink(1).width(42)
+          .width(Constants.STATIC_BAR_ICON_WIDTH * this.StatusCoefficient)
+          .height(Constants.STATIC_BAR_ICON_HEIGHT * this.StatusCoefficient)
+      }.flexShrink(1)
+      .width(Constants.STATIC_BAR_ICON_WIDTH * this.StatusCoefficient)
     }
     .margin({ left: 5})
-    .height('50%')
+    .height(Constants.STATIC_BAR_ICON_HEIGHT*this.StatusCoefficient)
   }
 
 /**

@@ -19,20 +19,22 @@ import BatterySoc from './batterySoc'
 import Constants from '../common/constants.ets'
 import Log from '../../../../../../../common/src/main/ets/default/Log.ets'
 
+
 const TAG = 'BatteryComponent-batteryIcon'
+
 @Component
-export default
-struct BatteryIcon {
+export default struct BatteryIcon {
   @StorageLink('batterySoc') batterySoc: number = 100
+  @StorageLink('StatusCoefficient') StatusCoefficient: number = 1.0
 
   aboutToAppear() {
     mBatteryModel.initBatteryModel();
-    Log.showInfo(TAG,'aboutToAppear');
+    Log.showInfo(TAG, 'aboutToAppear');
   }
 
   aboutToDisappear() {
     mBatteryModel.uninitBatteryModel();
-    Log.showInfo(TAG,'aboutToDisappear');
+    Log.showInfo(TAG, 'aboutToDisappear');
   }
 
   build() {
@@ -40,14 +42,15 @@ struct BatteryIcon {
       Flex({ direction: FlexDirection.Row, alignItems: ItemAlign.Center, justifyContent: FlexAlign.Center }) {
         BatterySoc()
       }
+
       Flex({ direction: FlexDirection.Row, alignItems: ItemAlign.Center, justifyContent: FlexAlign.Center }) {
         BatteryPic()
       }
       .width('70%')
-      .height('85%')
+      .height('100%')
     }
-    .width($r('app.float.whole_container_width'))
-    .height('50%')
+    .width(Constants.WHOLE_CONTAINER_WIDTH * this.StatusCoefficient)
+    .height(Constants.WHOLE_CONTAINER_HEIGHT * this.StatusCoefficient)
     .margin($r('app.float.whole_container_margin'))
   }
 }

@@ -30,21 +30,17 @@ var notificationH;
  * Manage window size changes.
  */
 export default class WindowManager {
-
-  initWindowManager(){
+  initWindowManager() {
     Log.showInfo(TAG, 'initWindowManager ');
     maxWidth = AppStorage.SetAndLink("maxWidth", 0);
     maxHeight = AppStorage.SetAndLink("maxHeight", 0);
     minHeight = AppStorage.SetAndLink("minHeight", 0);
-    quicklySettingH = AppStorage.SetAndLink("quicklySettingH", 0);
-    notificationH = AppStorage.SetAndLink("notificationH", 0);
 
-    display.getDefaultDisplay().then(dis => {
+    display.getDefaultDisplay()
+      .then(dis => {
       maxWidth.set(dis.width);
       maxHeight.set(dis.height);
-      minHeight.set(parseInt((dis.height*STATUS_BAR_H).toString()));
-      quicklySettingH.set((dis.height-(minHeight.get()*2))*0.15);
-      notificationH.set(dis.height-(minHeight.get()*2)-quicklySettingH.get());
+      minHeight.set(this.getStatusBarDefaultHeight(dis.height));
 
       Log.showInfo(TAG, `initWindowManager maxWidth ${maxWidth.get()} maxHeight ${maxHeight.get()} minHeight ${minHeight.get()}`);
     })
@@ -57,8 +53,10 @@ export default class WindowManager {
      */
   setWindowMax(callback) {
     Log.showInfo(TAG, 'enter setWindowMax =================');
-    Window.getTopWindow().then((windowData)=> {
-      windowData.resetSize(maxWidth.get(), maxHeight.get()).then((result)=> {
+    Window.getTopWindow()
+      .then((windowData) => {
+      windowData.resetSize(maxWidth.get(), maxHeight.get())
+        .then((result) => {
         Log.showInfo(TAG, result);
         callback(result);
       });
@@ -72,11 +70,17 @@ export default class WindowManager {
      */
   setWindowMin(callback) {
     Log.showInfo(TAG, 'enter setWindowMin =================');
-    Window.getTopWindow().then((windowData)=> {
-      windowData.resetSize(maxWidth.get(), minHeight.get()).then((result)=> {
+    Window.getTopWindow()
+      .then((windowData) => {
+      windowData.resetSize(maxWidth.get(), minHeight.get())
+        .then((result) => {
         Log.showInfo(TAG, result);
         callback(result);
       });
     });
+  }
+
+  getStatusBarDefaultHeight(maxheight) {
+    return parseInt((maxheight * STATUS_BAR_H).toString())
   }
 }
