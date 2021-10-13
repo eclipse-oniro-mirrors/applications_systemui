@@ -23,6 +23,7 @@ import SignalIcon from '../../../../../../../features/signalcomponent/src/main/e
 import notificationItem from '../../../../../../../features/noticeitem/src/main/ets/com/ohos/noticeItem/item/notificationItem.ets'
 import WindowManager from '../../../../../../../common/src/main/ets/default/WindowManager.ets'
 import mNotificationService from '../../../../../../../features/notificationService/src/main/ets/com/ohos/notificationservice/NotificationService.ets'
+import ConfigurableLayout from './ConfigurableLayout.ets';
 
 const TAG = 'StatusBar-notification'
 
@@ -38,6 +39,7 @@ struct Index {
   startY: number = 0
   @State moveX: number = 0
   @State moveY: number = 0
+
 
   aboutToAppear() {
     mWindowManager = new WindowManager();
@@ -80,6 +82,7 @@ struct Index {
 @Component
 struct statusBar {
   private minHeight: number
+  @StorageLink('StatusCoefficient') StatusCoefficient:number = 1.0
 
   build() {
     Flex({ direction: FlexDirection.Row, alignItems: ItemAlign.Center, justifyContent: FlexAlign.Center }) {
@@ -95,7 +98,6 @@ struct statusBar {
     }
     .width('100%')
     .height(this.minHeight)
-    .backgroundColor($r('app.color.statusbar_background'))
   }
 }
 
@@ -109,7 +111,6 @@ struct quicklySetting {
   @State showDay: string = 'day'
   @State showMonth: string = 'month'
   @State showWeekDay: any = 'weekday'
-  @StorageLink('quicklySettingH') quicklySettingH:number = 0
 
   aboutToAppear() {
     Log.showInfo(TAG, `quicklySetting, aboutToAppear`)
@@ -154,7 +155,7 @@ struct quicklySetting {
 
     }
     .width('100%')
-    .height(this.quicklySettingH)
+    .height(Constants.QUICKLY_SETTING_H)
     .borderRadius($r('app.float.quicklysetting_borderradius'))
     .margin({ left: $r('app.float.quicklysetting_marginleft'), right: $r('app.float.quicklysetting_marginright') })
   }
@@ -208,8 +209,15 @@ struct dateItem {
 @Component
 struct notificationItems {
   @StorageLink('notificationList') notificationList: any[] = []
-  @StorageLink('notificationH') notificationH:number = 0
+  @StorageLink('maxHeight') maxHeight:number = 0
+  @StorageLink('minHeight') minHeight:number = 0
+  @State notificationH :number = 0
   @Link showStatusBar: boolean
+
+  aboutToAppear() {
+    Log.showInfo(TAG, `notificationItems, aboutToAppear`)
+    this.notificationH = this.maxHeight - (this.minHeight*2) - Constants.QUICKLY_SETTING_H;
+  }
 
   build() {
     Flex({ direction: FlexDirection.Column, justifyContent: FlexAlign.Start, alignItems: ItemAlign.Center }) {
@@ -226,7 +234,6 @@ struct notificationItems {
               ListItem() {
                 notificationItem({ itemObject: item, showStatusBar: $showStatusBar })
               }
-
             }, (item: any) => item.hashcode.toString())
           }
           .onTouch((event: TouchEvent) => {

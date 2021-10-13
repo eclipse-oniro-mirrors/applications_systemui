@@ -15,19 +15,27 @@
 
 import Three from './threeLayout.ets'
 import Log from '../../../../../../../common/src/main/ets/default/Log.ets';
+import HeightConfigUtils from '../../../../../../../common/src/main/ets/default/heightcofigUtils/HeightConfigUtils.ets';
 import Constants from '../common/constants.ets'
 
 const STORAGE_NAVIGATION_TYPE = 'navigationType'
 
-let mConfigReader
+let mConfigReader;
+let mHeightConfigUtils;
 const TAG = 'NavigationBar-Index';
 @Entry
 @Component
 struct Index {
   @StorageLink('navigationLayoutConfig') mConfig: any = {}
+  @StorageLink('NavMinH') NavMinH:number = 32
 
   aboutToAppear() {
     Log.showInfo(TAG, `aboutToAppear Start`)
+    mHeightConfigUtils = new HeightConfigUtils();
+    let NavMinH = AppStorage.SetAndLink("NavMinH", 32);
+    let NavCoefficient = AppStorage.SetAndLink("NavCoefficient", 1.0);
+    NavMinH.set(mHeightConfigUtils.getNavMinH());
+    NavCoefficient.set(mHeightConfigUtils.getNavHCoefficient());
   }
   aboutToDisappear(){
     Log.showInfo(TAG, `aboutToDisAppear`)
@@ -39,7 +47,8 @@ struct Index {
     }
     .width('100%')
     .height('100%')
+    .constraintSize({ minHeight: this.NavMinH })
     .backgroundColor($r('app.color.index_background'))
-    .padding({ left: $r('app.float.index_padding_left'), right: $r('app.float.index_padding_right') })
+    .padding({ left: '18%', right: '18%' })
   }
 }

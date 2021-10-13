@@ -40,4 +40,8 @@ export default class Constants {
   static CLOCK = 'clock'
   static BATTERY = 'battery'
   static NOTIFICATION = 'notification'
+  static STATIC_BAR_ICON_WIDTH = 24;
+  static STATIC_BAR_ICON_MARGIN = 2;
+  static STATIC_BAR_ICON_HEIGHT = 24;
+  static QUICKLY_SETTING_H = 124;
 }

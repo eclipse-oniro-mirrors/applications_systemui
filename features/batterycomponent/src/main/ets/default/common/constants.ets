@@ -18,7 +18,7 @@ export default class Constants {
   //layout params - Icon
   static WHOLE_CONTAINER_MARGIN = 2
   static WHOLE_CONTAINER_WIDTH = 100
-  static WHOLE_CONTAINER_HEIGHT = '50%'
+  static WHOLE_CONTAINER_HEIGHT = 24
   static PIC_CONTAINER_WIDTH = '70%'
   static PIC_CONTAINER_HEIGHT = '85%'
   //layout params - Pic

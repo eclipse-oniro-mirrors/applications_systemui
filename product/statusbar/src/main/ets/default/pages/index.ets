@@ -22,10 +22,12 @@ import mNotificationService from '../../../../../../../features/notificationServ
 import ControlCenterComponent from './control.ets'
 import Constants from './common/constants.ets'
 import mBrightnessManager from '../../../../../../../features/control/src/main/ets/com/ohos/control/common/brightness/brightnessManager.ets';
+import HeightConfigUtils from '../../../../../../../common/src/main/ets/default/heightcofigUtils/HeightConfigUtils.ets';
 
 const TAG = 'StatusBar-Index'
 
 let mWindowManager;
+let mHeightConfigUtils;
 
 @Entry
 @Component
@@ -37,8 +39,19 @@ struct Index {
   @State showStatusBar: boolean = true
   @StorageLink('minHeight') minHeight:number = 0
   @StorageLink('maxWidth') maxWidth:number = 0
+  @StorageLink('StatusMinH') StatusMinH:number = 24
+  @StorageLink('StatusCoefficient') StatusCoefficient:number = 1.0
   aboutToAppear() {
-    Log.showInfo(TAG, `aboutToAppear, showStatusBar: ${this.showStatusBar}`)
+    Log.showInfo(TAG, `aboutToAppear, showStatusBar: ${this.showStatusBar}`);
+
+    mHeightConfigUtils = new HeightConfigUtils();
+    let StatusMinH;
+    let StatusCoefficient;
+
+    StatusMinH = AppStorage.SetAndLink("StatusMinH", 24);
+    StatusCoefficient = AppStorage.SetAndLink("StatusCoefficient", 1.0);
+    StatusMinH.set(mHeightConfigUtils.getStatusMinH());
+    StatusCoefficient.set(mHeightConfigUtils.getStatusCoefficient());
 
     mWindowManager = new WindowManager();
     mWindowManager.initWindowManager();
@@ -59,6 +72,7 @@ struct Index {
         }
         .width('100%')
         .height('100%')
+        .backgroundColor($r("app.color.statusbar_background"))
         .onTouch(this.touchEvent.bind(this))
       } else {
         if( this.startX <= parseInt((this.maxWidth/2).toString()) ) {
@@ -70,6 +84,7 @@ struct Index {
     }
     .width('100%')
     .height('100%')
+    .constraintSize({ minHeight: this.StatusMinH })
   }
 
   touchEvent(event: TouchEvent) {

@@ -31,5 +31,8 @@ export default class Constants {
   static CELLULAR_SIGNAL_FULL = 5;
   static CELLULAR_NO_SIM_CARD = -1;
 
+  static STATIC_BAR_ICON_WIDTH = 24;
+  static STATIC_BAR_ICON_HEIGHT = 24 ;
+
   static NET_NULL = 'NULL';
 }

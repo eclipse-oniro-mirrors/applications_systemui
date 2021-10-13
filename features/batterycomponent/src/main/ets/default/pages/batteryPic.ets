@@ -42,7 +42,7 @@ struct BatteryPic {
         .backgroundColor(this.getBatteryColor(this.batterySoc, this.batteryCharging))
       }
       .width('88%')
-      .height('80%')
+      .height('100%')
       .backgroundColor($r('app.color.battery_background'))
       .border({ width: $r('app.float.battery_border_width'),
         color: $r('app.color.battery_border'),

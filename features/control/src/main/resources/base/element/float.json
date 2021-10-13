@@ -82,6 +82,12 @@
     },{
       "name": "wifi_and_air_height",
       "value": "120"
+    },{
+      "name": "up_title_height",
+      "value": "83"
+    },{
+      "name": "vol_height",
+      "value": "66"
     }
   ]
 }

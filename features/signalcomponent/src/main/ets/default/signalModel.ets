@@ -141,6 +141,5 @@ export class SignalModel
     });
   }
 }
-
-  let mSignalModel = new SignalModel();
-  export default mSignalModel as SignalModel;
+let mSignalModel = new SignalModel();
+export default mSignalModel as SignalModel;
