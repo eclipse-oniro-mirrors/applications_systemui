@@ -12,23 +12,29 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-import BundleMgr from '@ohos.bundle';
-import Resmgr from '@ohos.resourceManager';
 import Log from '../Log.ets';
 
-const TAG = 'BRManager';
+const STATUS_BAR_MIN_HEIGHT = 24
+const STATUS_BAR_COEFFICIENT = 1.0
+const NAV_BAR_MIN_HEIGHT = 32
+const NAV_BAR_COEFFICIENT = 1.0
 
-export default class BundleManager {
+export default class HeightConfigUtils {
 
-  static getResourceManager(tag, bundleName, then) {
-    Log.showInfo(TAG, `getResourceManager from: ${tag}`);
-    Resmgr.getResourceManager(bundleName).then(then);
+  getStatusMinH(){
+    return STATUS_BAR_MIN_HEIGHT;
   }
 
-  static getBundleInfo(tag, bundleName, getInfo, then) {
-    Log.showInfo(TAG, `getBundleInfo from: ${tag}`);
-    BundleMgr.getBundleInfo(bundleName, getInfo).then(then);
+  getNavMinH(){
+    return NAV_BAR_MIN_HEIGHT;
   }
 
+  getStatusCoefficient(){
+    return STATUS_BAR_COEFFICIENT;
+  }
+
+  getNavHCoefficient(){
+    return NAV_BAR_COEFFICIENT;
+  }
 }
+

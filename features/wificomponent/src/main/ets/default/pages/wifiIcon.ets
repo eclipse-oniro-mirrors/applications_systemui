@@ -16,12 +16,14 @@
 import Constants from '../common/constants.ets'
 import mWifiModel from '../WifiModel.ets'
 import Log from '../../../../../../../common/src/main/ets/default/Log.ets'
+
 const TAG = 'WifiComponent-WifiIcon'
 
 @Component
 export default struct WifiIcon {
-  @StorageLink('wifiInfo') wifiInfo : number = Constants.DEFAULT_WIFI_INFO
-  @StorageLink('wifiStatus') wifiStatus : boolean = Constants.DEFAULT_WIFI_STATUS
+  @StorageLink('wifiInfo') wifiInfo: number = Constants.DEFAULT_WIFI_INFO
+  @StorageLink('wifiStatus') wifiStatus: boolean = Constants.DEFAULT_WIFI_STATUS
+  @StorageLink('StatusCoefficient') StatusCoefficient: number = 1.0
 
   aboutToAppear() {
     Log.showInfo(TAG, `aboutToAppear`)
@@ -39,13 +41,13 @@ export default struct WifiIcon {
         Image(this.getImage(this.wifiInfo)).objectFit(ImageFit.Contain)
       }
     }
-    .width(this.wifiStatus ? $r('app.float.WIFISTATUS_MAXWIDTH') : 0)
-    .height(this.wifiStatus ? '50%' : $r('app.float.WIFISTATUS_HIDDEN_HEIGHT'))
+    .width(this.wifiStatus ? Constants.STATIC_BAR_ICON_WIDTH * this.StatusCoefficient : 0)
+    .height(this.wifiStatus ? Constants.STATIC_BAR_ICON_HEIGHT * this.StatusCoefficient : 0)
   }
 
   private getImage(wifiInfo: number) {
-    Log.showInfo(TAG, `getImage, wifiInfo: ${ JSON.stringify(wifiInfo) }`)
-    let wifiImage ;
+    Log.showInfo(TAG, `getImage, wifiInfo: ${JSON.stringify(wifiInfo)}`)
+    let wifiImage;
     switch (wifiInfo) {
       case Constants.WIFI_SIGNAL_NO:
         wifiImage = $r('app.media.ic_statusbar_wifi_no');
@@ -60,7 +62,7 @@ export default struct WifiIcon {
         wifiImage = $r('app.media.ic_statusbar_wifi_3');
         break;
       case Constants.WIFI_SIGNAL_FULL:
-        wifiImage =$r('app.media.ic_statusbar_wifi_full');
+        wifiImage = $r('app.media.ic_statusbar_wifi_full');
         break;
       default:
         wifiImage = $r('app.media.ic_statusbar_wifi_no');

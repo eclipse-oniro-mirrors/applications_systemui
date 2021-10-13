@@ -24,4 +24,7 @@ class Constants{
   static THREE_TEMPLATE: string = '1fr 1fr 1fr';
   static ONE_ICON_LAYOUT: number = 1;
   static THREE_ICON_LAYOUT: number = 3;
+  static IMAGE_WIDTH: number = 32;
+  static IMAGE_HEIGHT: number = 32;
+  static BUTTON_WIDTH: number = 100;
 }
