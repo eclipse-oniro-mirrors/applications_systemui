@@ -27,15 +27,6 @@
     {
       "name": "button_radius",
       "value": "30"
-    },
-    {
-      "name": "image_width",
-      "value": "35"
-    },
-    {
-      "name": "image_height",
-      "value": "35"
     }
-
   ]
 }

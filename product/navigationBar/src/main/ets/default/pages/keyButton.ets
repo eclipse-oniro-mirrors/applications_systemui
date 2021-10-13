@@ -26,6 +26,7 @@ export default struct keyButton {
   private uri: any;
   @Prop keyCode: number;
   @State backGroundColor: any = $r('app.color.button_default_background');
+  @StorageLink('NavCoefficient') NavCoefficient:number = 1.0
 
   aboutToAppear() {
     Log.showInfo(TAG, `aboutToAppear Start`)
@@ -39,17 +40,16 @@ export default struct keyButton {
     Stack({ alignContent: Alignment.Center }) {
       Flex() {}
       .borderRadius($r('app.float.button_radius'))
-      .width($r('app.float.button_width'))
+      .width('100%')
       .height('100%')
       .backgroundColor(this.backGroundColor)
       Image(this.uri)
         .objectFit(ImageFit.Contain)
-        .size({ width: $r('app.float.image_width'), height: $r('app.float.image_height') })
+        .size({ width: Constants.IMAGE_WIDTH*this.NavCoefficient, height:Constants.IMAGE_HEIGHT*this.NavCoefficient  })
     }
     .onTouch(this.onKeyTouch.bind(this))
-    .width($r('app.float.button_width'))
+    .width(Constants.BUTTON_WIDTH*this.NavCoefficient)
     .height('100%')
-
   }
 
   private onKeyTouch(event:TouchEvent) {
