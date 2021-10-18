@@ -21,7 +21,7 @@ import Log from "../../../../../../common/src/main/ets/default/Log.ets";
 const TAG = 'WifiComponent-WifiModel';
 
 var mCommonEventSubscribeInfo = {
-  events: [Constants.EVENT_CONN_STATE, Constants.EVENT_RSSI_VALUE,
+  events: [Constants.EVENT_CONN_STATE,
   Constants.EVENT_POWER_STATE, Constants.Event_CONN_NAME]
 };
 var mCommonEventSubscriber = null;
@@ -41,7 +41,7 @@ export class WifiModel {
     if(mCommonEventSubscriber == null){
       this.registerWiFiStatusListener();
     }
-    //    this.getWifiMessage();
+    this.getWifiMessage();
   }
 
   uninitWifiModel() {
@@ -55,8 +55,19 @@ export class WifiModel {
    */
   getWifiMessage() {
     Log.showInfo(TAG, `wifiModel getWifiMessage ===========`);
-    this.changeWifiStatus(WifiInfo.isWifiActive());
-
+    mWifiOpenStatus.set(WifiInfo.isWifiActive());
+    try{
+      WifiInfo.getLinkedInfo(data => {
+        Log.showInfo(TAG, `getWifiMessage getLinkedInfo ${JSON.stringify(data)}`);
+        if(data.ssid != ''){
+          mWifiName.set(data.ssid);
+          mWifiStatus.set(true);
+          this.updateWifiInfo();
+        }
+      });
+    }catch(err){
+      Log.showInfo(TAG, `getWifiMessage getLinkedInfo err ${JSON.stringify(err)}`);
+    }
   }
 
   /**
@@ -90,29 +101,30 @@ export class WifiModel {
    * @param {Object} data - data returns from the caller
    */
   private wifiStatusSubscriberCallBack(err, data) {
-    Log.showInfo(TAG, `createWifiStatusSubscriberCallBack start err:${ JSON.stringify(err)} data: ${ JSON.stringify(data) }`);
+    Log.showInfo(TAG, `wifiStatusSubscriberCallBack start err:${ JSON.stringify(err)} data: ${ JSON.stringify(data) }`);
     if (err.code == Constants.DEFAULT_ERR_CODE) {
       Log.showInfo(TAG, `wifi data == ${JSON.stringify(data)}`);
-      if (data.event == Constants.EVENT_CONN_STATE && data.code == Constants.WIFI_STATE_AP_CONNECTING) {
-        this.updateWifiInfo();
-        this.changeWifiStatus(true);
+      if (data.event == Constants.EVENT_CONN_STATE) {
+        if(data.code == Constants.WIFI_STATE_AP_CONNECTING ||
+        data.code == Constants.WIFI_STATE_NETWORK_ENABLED ||
+        data.code == Constants.WIFI_STATE_NO_NETWORK){
+          this.updateWifiInfo();
+          this.changeWifiStatus(true);
+        }else {
+          this.updateWifiInfo();
+          this.changeWifiStatus(false);
+          mWifiName.set('WLAN');
+        }
       }
-      if (data.event == Constants.EVENT_POWER_STATE && data.code == Constants.WIFI_POWER_OFF) {
-        this.updateWifiInfo();
-        this.changeWifiStatus(false);
-        mWifiOpenStatus.set(false);
-        mWifiName.set('WLAN');
-      }
-      if (data.event == Constants.EVENT_POWER_STATE && data.code == Constants.WIFI_POWER_ON) {
-        mWifiOpenStatus.set(true);
-      }
-      if(data.event == Constants.EVENT_CONN_STATE && data.code == Constants.WIFI_Disconnected){
-        this.updateWifiInfo();
-        this.changeWifiStatus(false);
-        mWifiName.set('WLAN');
-      }
-      if (data.event == Constants.EVENT_RSSI_VALUE) {
-        this.updateWifiInfo();
+      if (data.event == Constants.EVENT_POWER_STATE) {
+        if( data.code == Constants.WIFI_POWER_OFF){
+          this.updateWifiInfo();
+          this.changeWifiStatus(false);
+          mWifiOpenStatus.set(false);
+          mWifiName.set('WLAN');
+        }else if(data.code == Constants.WIFI_POWER_ON){
+          mWifiOpenStatus.set(true);
+        }
       }
       if(data.event == 'WIFI_CONNECT_NAME'){
         this.updateWifiName(JSON.parse(data.data).name)
