@@ -53,6 +53,9 @@ struct Index {
     StatusMinH.set(mHeightConfigUtils.getStatusMinH());
     StatusCoefficient.set(mHeightConfigUtils.getStatusCoefficient());
 
+    let signalObserved = AppStorage.SetAndLink("signalObserved", false);
+    signalObserved.set(false);
+
     mWindowManager = new WindowManager();
     mWindowManager.initWindowManager();
     mNotificationService.initNotificationService();

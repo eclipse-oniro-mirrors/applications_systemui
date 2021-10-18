@@ -25,14 +25,18 @@ struct SignalIcon {
   @StorageLink('cellularType') cellularType : number = Constants.NETWORK_TYPE_UNKNOWN
   @StorageLink('networkState') networkState : string = Constants.NET_NULL
   @StorageLink('StatusCoefficient') StatusCoefficient:number = 1.0
+  @StorageLink('signalObserved') signalObserved:boolean = false
   aboutToAppear() {
     Log.showInfo(TAG, 'aboutToAppear');
-    mSignalModel.initSignalModel();
+    if (!this.signalObserved) {
+      mSignalModel.initSignalModel();
+      this.signalObserved = true;
+    }
   }
 
   aboutToDisappear() {
     Log.showInfo(TAG, 'aboutToDisappear');
-    mSignalModel.uninitSignalModel();
+//     mSignalModel.uninitSignalModel();
   }
 
   build() {
