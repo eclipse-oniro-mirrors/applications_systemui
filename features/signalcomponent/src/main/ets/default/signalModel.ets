@@ -29,6 +29,7 @@ let signalValue = {
   cellularType: '',
   networkState: ''
 };
+let isInitObserver = false
 
 var mLevelLink;
 var mTypeLink;
@@ -43,7 +44,6 @@ export class SignalModel
     mLevelLink = AppStorage.SetAndLink("cellularLevel", Constants.CELLULAR_NO_SIM_CARD);
     mTypeLink = AppStorage.SetAndLink("cellularType", Constants.NETWORK_TYPE_UNKNOWN);
     mStateLink = AppStorage.SetAndLink("networkState", Constants.NET_NULL);
-    this.initObserver();
     this.checkCellularStatus();
   }
 
@@ -105,10 +105,17 @@ export class SignalModel
             }
           });
         });
+        if(!isInitObserver){
+          this.initObserver();
+        }
       } else {
+        Log.showError(TAG, `hasSimCard failed to hasSimCard because`);
         mLevelLink.set(Constants.CELLULAR_NO_SIM_CARD);
         mTypeLink.set(Constants.NETWORK_TYPE_UNKNOWN);
         mStateLink.set(Constants.NET_NULL);
+        if(!isInitObserver){
+          this.initObserver();
+        }
       }
     });
   }
@@ -118,12 +125,18 @@ export class SignalModel
      */
   initObserver() {
     Log.showInfo(TAG, 'initObserver');
-    Observer.on('signalInfoChange', { slotId: 0 }, (err, value) => {
-      if (err.code != 0) {
-        this.checkCellularStatus();
-      } else {
-        Log.showError(TAG, `failed, because ${JSON.stringify(err)}`);
-      }
+    isInitObserver = true;
+    Observer.on('signalInfoChange', (signalInfoChange) => {
+      Log.showInfo(TAG, `signalInfoChange ${JSON.stringify(signalInfoChange)}`);
+      this.checkCellularStatus();
+    });
+    Observer.on('networkStateChange', (networkState) => {
+      Log.showInfo(TAG, `networkStateChange ${JSON.stringify(networkState)}`);
+      this.checkCellularStatus();
+    });
+    Observer.on('simStateChange', (simStateInfo) => {
+      Log.showInfo(TAG, `simStateChange ${JSON.stringify(simStateInfo)}`);
+      this.checkCellularStatus();
     });
   }
 
@@ -132,13 +145,10 @@ export class SignalModel
      */
   unInitObserver() {
     Log.showInfo(TAG, 'unInitObserver');
-    Observer.off('signalInfoChange', (err, value) => {
-      if (err.code != 0) {
-        Log.showInfo(TAG, `success: ${JSON.stringify(value)}`);
-      } else {
-        Log.showError(TAG, `failed, because ${JSON.stringify(err)}`);
-      }
-    });
+    Observer.off('signalInfoChange');
+    Observer.off('networkStateChange');
+    Observer.off('simStateChange');
+    isInitObserver = false;
   }
 }
 let mSignalModel = new SignalModel();
