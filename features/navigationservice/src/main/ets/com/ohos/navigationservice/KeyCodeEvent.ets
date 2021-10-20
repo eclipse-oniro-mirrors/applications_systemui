@@ -16,7 +16,7 @@
 import Log from '../../../../../../../../common/src/main/ets/default/Log.ets';
 import Constants from './common/constants.ets';
 import FeatureAbilityManager from '../../../../../../../../common/src/main/ets/default/abilitymanager/featureAbilityManager.ets';
-import Input from '@ohos.injectEventHandler';
+import Input from '@ohos.multimodalInput.inputEventClient';
 
 const TAG = 'KeyCodeEvent'
 
@@ -60,22 +60,36 @@ export class KeyCodeEvent{
 
   private sendBackKeyEventStart() {
     Log.showInfo(TAG, 'sendBackKeyEventStart');
-    res = Input.injectEventSync({
+
+    let keyEvent = {
       isPressed: true,
+      // back keycode
       keyCode: 2,
-      keyDownDuration: 1
+      // After consulting the multi-mode subsystem, this parameter proved meaningless and remained unchanged
+      keyDownDuration: 1,
+      // This parameter changes with the version, and is currently 10008
+      maxKeyCode: 10008
+    }
+    res = Input.injectEvent({
+      KeyEvent:keyEvent
     });
     Log.showInfo(TAG, `injectEventHandler injectEventSync down res: ${res}`);
   }
 
   private sendBackKeyEventEnd() {
     Log.showInfo(TAG, 'sendBackKeyEventEnd');
-    res = Input.injectEventSync({
+    let keyEvent = {
       isPressed: false,
+      // back keycode
       keyCode: 2,
-      keyDownDuration: 1
+      // After consulting the multi-mode subsystem, this parameter proved meaningless and remained unchanged
+      keyDownDuration: 1,
+      // This parameter changes with the version, and is currently 10008
+      maxKeyCode: 10008
+    }
+    res = Input.injectEvent({
+      KeyEvent:keyEvent
     });
-    Log.showInfo(TAG, `injectEventHandler injectEventSync up res: ${res}`);
   }
 
   private sendHomeKeyEvent() {
