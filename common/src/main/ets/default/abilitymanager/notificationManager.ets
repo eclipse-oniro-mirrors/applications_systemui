@@ -25,6 +25,7 @@ export default class NotificationManager {
   static TYPE_BASIC: number = Notification.ContentType.NOTIFICATION_CONTENT_BASIC_TEXT;
   static TYPE_LONG: number = Notification.ContentType.NOTIFICATION_CONTENT_LONG_TEXT;
   static TYPE_MULTI: number = Notification.ContentType.NOTIFICATION_CONTENT_MULTILINE;
+  static TYPE_IMAGE: number = Notification.ContentType.NOTIFICATION_CONTENT_PICTURE;
 
   static subscribeNotification(tag, subscriber, asyncCallback) {
     Log.showInfo(TAG, `subscribeNotification from: ${tag}`));
@@ -46,5 +47,9 @@ export default class NotificationManager {
     Notification.remove(hashCode, callback)
   }
 
+  static getAllActiveNotifications(tag, callback) {
+    Log.showInfo(TAG, `getAllActiveNotifications from: ${tag}`));
+    Notification.getAllActiveNotifications(callback);
+  }
 
 }

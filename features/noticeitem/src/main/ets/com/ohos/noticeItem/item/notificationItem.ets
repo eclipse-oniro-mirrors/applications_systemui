@@ -13,29 +13,36 @@
  * limitations under the License.
  */
 
-import Constants from '../common/constants.ets'
-import longItem from './longItem.ets'
-import multiItem from './multiItem.ets'
-import Log from '../../../../../../../../../common/src/main/ets/default/Log.ets'
-const TAG = 'NoticeItem-NotificationItem'
+import Constants from '../common/constants.ets';
+import basicItem from './basicItem.ets';
+import longItem from './longItem.ets';
+import imageItem from './imageItem.ets';
+import multiItem from './multiItem.ets';
+import Log from '../../../../../../../../../common/src/main/ets/default/Log.ets';
+
+const TAG = 'NoticeItem-NotificationItem';
 
 @Component
 export default
-struct notificationItem {
+struct NotificationItem {
   @Link showStatusBar: boolean
   private itemObject: any
-  private normal: boolean = false;
+  private basic: boolean = false;
   private long: boolean = false;
+  private image: boolean = false;
   private multi: boolean = false;
 
   aboutToAppear() {
     Log.showInfo(TAG, `aboutToDisAppear Start`)
     switch (this.itemObject.type) {
-      case Constants.NOTIFICATION_TYPE_NORMAL:
-        this.normal = true;
+      case Constants.NOTIFICATION_TYPE_BASIC:
+        this.basic = true;
         break;
       case Constants.NOTIFICATION_TYPE_LONG:
         this.long = true;
+        break;
+      case Constants.NOTIFICATION_TYPE_IMAGE:
+        this.image = true;
         break;
       case Constants.NOTIFICATION_TYPE_MULTILINE:
         this.multi = true;
@@ -46,21 +53,23 @@ struct notificationItem {
   }
 
   aboutToDisappear(){
-    Log.showInfo(TAG, `aboutToDisAppear`)
+    Log.showInfo(TAG, `aboutToDisAppear`);
   }
 
   build() {
     Flex({ direction: FlexDirection.Column, justifyContent: FlexAlign.Start, alignItems: ItemAlign.Center }) {
-      if (this.normal) {
-        longItem({
+      if (this.basic) {
+        basicItem({
           notificationId: this.itemObject.id,
-          notificationIcon: this.itemObject.icon,
+          notificationType: this.itemObject.type,
+          notificationSmallIcon: this.itemObject.smallIcon,
+          notificationLargeIcon: this.itemObject.largeIcon,
+          notificationActionButtons: this.itemObject.actionButtons,
           notificationHashCode: this.itemObject.hashcode,
-          notificationContent: this.itemObject.content,
+          notificationText: this.itemObject.text,
           notificationName: this.itemObject.name,
           notificationTime: this.itemObject.time,
           notificationTitle: this.itemObject.title,
-          notificationIconDisplay: this.itemObject.iconDisplay,
           notificationWant: this.itemObject.want,
           showStatusBar: $showStatusBar
         });
@@ -68,13 +77,37 @@ struct notificationItem {
       if (this.long) {
         longItem({
           notificationId: this.itemObject.id,
-          notificationIcon: this.itemObject.icon,
+          notificationType: this.itemObject.type,
+          notificationSmallIcon: this.itemObject.smallIcon,
+          notificationLargeIcon: this.itemObject.largeIcon,
+          notificationActionButtons: this.itemObject.actionButtons,
           notificationHashCode: this.itemObject.hashcode,
-          notificationContent: this.itemObject.content,
+          notificationText: this.itemObject.text,
+          notificationBriefText: this.itemObject.briefText,
+          notificationExpandedTitle: this.itemObject.expandedTitle,
+          notificationLongText: this.itemObject.longText,
           notificationName: this.itemObject.name,
           notificationTime: this.itemObject.time,
           notificationTitle: this.itemObject.title,
-          notificationIconDisplay: this.itemObject.iconDisplay,
+          notificationWant: this.itemObject.want,
+          showStatusBar: $showStatusBar
+        });
+      }
+      if (this.image) {
+        imageItem({
+          notificationId: this.itemObject.id,
+          notificationType: this.itemObject.type,
+          notificationSmallIcon: this.itemObject.smallIcon,
+          notificationLargeIcon: this.itemObject.largeIcon,
+          notificationActionButtons: this.itemObject.actionButtons,
+          notificationHashCode: this.itemObject.hashcode,
+          notificationText: this.itemObject.text,
+          notificationBriefText: this.itemObject.briefText,
+          notificationExpandedTitle: this.itemObject.expandedTitle,
+          notificationBigPicture: this.itemObject.bigPicture,
+          notificationName: this.itemObject.name,
+          notificationTime: this.itemObject.time,
+          notificationTitle: this.itemObject.title,
           notificationWant: this.itemObject.want,
           showStatusBar: $showStatusBar
         });
@@ -82,13 +115,19 @@ struct notificationItem {
       if (this.multi) {
         multiItem({
           notificationId: this.itemObject.id,
-          notificationIcon: this.itemObject.icon,
+
+          notificationSmallIcon: this.itemObject.smallIcon,
+          notificationLargeIcon: this.itemObject.largeIcon,
+          notificationActionButtons: this.itemObject.actionButtons,
+
           notificationHashCode: this.itemObject.hashcode,
-          notificationContent: this.itemObject.content,
+          notificationText: this.itemObject.text,
+          notificationBriefText: this.itemObject.briefText,
+          notificationLongTitle: this.itemObject.longTitle,
+          notificationLines: this.itemObject.lines,
           notificationName: this.itemObject.name,
           notificationTime: this.itemObject.time,
           notificationTitle: this.itemObject.title,
-          notificationIconDisplay: this.itemObject.iconDisplay,
           notificationWant: this.itemObject.want,
           showStatusBar: $showStatusBar
         });

@@ -5,6 +5,10 @@
       "value": "20"
     },
     {
+      "name": "notification_expanded_text_maxheight",
+      "value": "295"
+    },
+    {
       "name": "notification_content_fontsize",
       "value": "20"
     },
@@ -66,11 +70,11 @@
     },
     {
       "name": "item_delete_image_width",
-      "value": "40"
+      "value": "30"
     },
     {
       "name": "item_delete_image_height",
-      "value": "40"
+      "value": "30"
     },
     {
       "name": "titleitem_row_space",

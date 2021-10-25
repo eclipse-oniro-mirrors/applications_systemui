@@ -16,10 +16,14 @@
 import NotificationManager from '../../../../../../../../common/src/main/ets/default/abilitymanager/notificationManager.ets';
 import BundleManager from '../../../../../../../../common/src/main/ets/default/abilitymanager/bundleManager.ets';
 import Log from '../../../../../../../../common/src/main/ets/default/Log.ets';
+import CheckEmptyUtils from '../../../../../../../../common/src/main/ets/default/CheckEmptyUtils.ets';
+import Constants from './common/constants.ets';
+import {SlotLevel} from '@ohos.notification'
+import Media from '@ohos.multimedia.media'
 
-const TAG = 'NotificationService'
+const TAG = 'NotificationService';
 
-let mNotificationList
+let mNotificationList;
 let mSubscriber;
 let mDate;
 let mAppName;
@@ -29,11 +33,13 @@ let mEmptyArray;
  * Responsible for notification binding and interaction between View and Model.
  */
 export class NotificationService {
-
+  media:any
   constructor() {
     let tempLink = AppStorage.SetAndLink('notificationList', [])
     mNotificationList = tempLink.get()
     Log.showInfo(TAG, `NotificationService constructor ${JSON.stringify(mNotificationList)}`)
+    this.media=Media.createAudioPlayer()
+    this.media.src='file://system/etc/Light.ogg'
   }
 
   initNotificationService() {
@@ -45,6 +51,7 @@ export class NotificationService {
       this.createNotificationCallback();
       Log.showInfo(TAG, `initNotificationCenter, if: ${JSON.stringify(mSubscriber)}`);
     }
+    this.getAllActiveNotifications();
   }
 
   updateNotification() {
@@ -87,27 +94,54 @@ export class NotificationService {
    * @param {Object} data - Callback data.
    */
   consumeCallback(err, data) {
-    Log.showInfo(TAG, 'consumeCallback started ====================');
+    Log.showInfo(TAG, 'consumeCallback started');
     Log.showInfo(TAG, JSON.stringify(data.request?.wantAgent));
+    Log.showInfo(TAG, 'sortingMap' + JSON.stringify(data.sortingMap||{}))
     Log.showInfo(TAG, JSON.stringify(data));
-
-    let contentType = data?.request?.content?.contentType;
-    if (contentType == null || contentType == undefined) {
-      Log.showInfo(TAG, 'consumeCallback contentType is empty');
+    let request = data?.request;
+    if (request == null || request == undefined) {
+      Log.showInfo(TAG, 'consumeCallback request is empty');
       return;
     }
-    Log.showInfo(TAG, `contentType is : ${contentType}`);
-    let request = data.request;
-    let want = data.request.wantAgent;
+    let sortingMap = data?.sortingMap;
+    if (sortingMap == null || sortingMap == undefined) {
+      Log.showInfo(TAG, 'consumeCallback sortingMap is empty');
+      return;
+    }
+    this.parseRequest(request,sortingMap,Constants.GET_NEW_NOTIFICATION);
+  }
+
+  parseRequest(request,sortingMap, processType) {
+    Log.showInfo(TAG, `request : ${JSON.stringify(request)}`)
+    Log.showInfo(TAG, `processType : ${processType}`)
+    let contentType = request?.content?.contentType;
+    if (contentType == null || contentType == undefined) {
+      Log.showInfo(TAG, 'parseRequest contentType is empty');
+      return;
+    }
+    let want = request.wantAgent;
     let standardTime = this.getStandardTime(request.deliveryTime);
-    let bundleName = request.creatorBundleName
+    let bundleName = request.creatorBundleName;
+    let actionButtons = request.actionButtons;
+    Log.showInfo(TAG, `actionButtons = ${JSON.stringify(actionButtons)}`);
+    //let smallIcon = request.smallIcon;
+    //Log.showInfo(TAG, `smallIcon = ${smallIcon}`);
+    let largeIcon = request.largeIcon;
+    Log.showInfo(TAG, `largeIcon = ${largeIcon}`);
+    let slotLevel;
+    try{
+      slotLevel=sortingMap?.sortings[request.hashCode]?.slot.level;
+    }catch(e){
+      Log.showInfo(TAG, `slot level get error:  ${e.toString()}`);
+    }
+    Log.showInfo(TAG, `slotLevel = ${slotLevel}`);
     this.getAppName(bundleName, (AppName) => {
       Log.showInfo(TAG, `notificationItem = ${want}`);
       Log.showInfo(TAG, `notificationItem = ${AppName}`);
       let appName = AppName.appName;
-      let icon = AppName.icon;
       Log.showInfo(TAG, `appName = ${appName}`);
-      Log.showInfo(TAG, `icon = ${icon}`);
+      let icon = AppName.icon;
+      Log.showInfo(TAG, `smallIcon = ${icon}`);
       let notificationItem = {
         'id': request.id,
         'hashcode': request.hashCode,
@@ -116,39 +150,75 @@ export class NotificationService {
         'time': standardTime,
         'name': appName,
         'want': want,
-        'icon': icon,
-        'bundleName': bundleName
+        'bundleName': bundleName,
+        'actionButtons': actionButtons,
+        'smallIcon': icon,
+        'largeIcon': largeIcon,
       };
       Log.showInfo(TAG, `notificationItem = ${JSON.stringify(notificationItem)}`);
       switch (contentType) {
         case NotificationManager.TYPE_BASIC:
           Log.showInfo(TAG, `contentType NOTIFICATION_CONTENT_BASIC_TEXT ====================`);
           notificationItem['title'] = request.content.normal?.title ?? '';
-          notificationItem['content'] = request.content.normal?.text ?? '';
+          notificationItem['text'] = request.content.normal?.text ?? '';
           notificationItem['additionalText'] = request.content.normal?.additionalText ?? '';
           break;
         case NotificationManager.TYPE_LONG:
           Log.showInfo(TAG, `contentType NOTIFICATION_CONTENT_LONG_TEXT ====================`);
-          notificationItem['title'] = request.content.longText?.expandedTitle ?? '';
-          notificationItem['content'] = request.content.longText?.longText ?? '';
-          notificationItem['additionalText'] = request.content.longText?.briefText ?? '';
+          notificationItem['title'] = request.content.longText?.title ?? '';
+          notificationItem['text'] = request.content.longText?.text ?? '';
+          notificationItem['additionalText'] = request.content.longText?.additionalText ?? '';
+          notificationItem['briefText'] = request.content.longText?.briefText ?? '';
+          notificationItem['expandedTitle'] = request.content.longText?.expandedTitle ?? '';
+          notificationItem['longText'] = request.content.longText?.longText ?? '';
+          break;
+        case NotificationManager.TYPE_IMAGE:
+          Log.showInfo(TAG, `contentType NOTIFICATION_CONTENT_LONG_TEXT ====================`);
+          notificationItem['title'] = request.content.picture?.title ?? '';
+          notificationItem['text'] = request.content.picture?.text ?? '';
+          notificationItem['additionalText'] = request.content.picture?.additionalText ?? '';
+          notificationItem['briefText'] = request.content.picture?.briefText ?? '';
+          notificationItem['expandedTitle'] = request.content.picture?.expandedTitle ?? '';
+          notificationItem['bigPicture'] = request.content.picture?.bigPicture ?? '';
           break;
         case NotificationManager.TYPE_MULTI:
           Log.showInfo(TAG, `contentType NOTIFICATION_CONTENT_MULTILINE ====================`);
-          notificationItem['title'] = request.content.multiLine?.longTitle ?? '';
-          notificationItem['content'] = request.content.multiLine?.lines ?? mEmptyArray;
-          notificationItem['additionalText'] = request.content.multiLine?.briefText ?? '';
+          notificationItem['title'] = request.content.multiLine?.title ?? '';
+          notificationItem['text'] = request.content.multiLine?.text ?? '';
+          notificationItem['additionalText'] = request.content.multiLine?.additionalText ?? '';
+          notificationItem['briefText'] = request.content.multiLine?.briefText ?? '';
+          notificationItem['longTitle'] = request.content.multiLine?.longTitle ?? '';
+          notificationItem['lines'] = request.content.multiLine?.lines ?? mEmptyArray;
+          Log.showInfo(TAG, `multilines: ${JSON.stringify(request.content.multiLine?.lines)}`)
           break;
         default:
-          Log.showInfo(TAG, 'no contentType match ====================');
+          Log.showInfo(TAG, 'no match content type');
           break;
       }
       Log.showInfo(TAG, `notificationItem = ${JSON.stringify(notificationItem)}`);
-      this.removeNotificationItem(notificationItem['hashcode'],false);
-      mNotificationList.unshift(notificationItem);
-//      mNotificationList.sort(this.compare('timestamp'));
-      this.updateNotification();
-      Log.showInfo(TAG, 'consumeCallback finished ====================');
+      Log.showInfo(TAG, `notificationItem get id ========================== ${JSON.stringify(notificationItem.id)}`);
+      if(slotLevel===SlotLevel.LEVEL_HIGH){
+        try{
+          this.media.play()
+        }catch(e){
+          Log.showInfo(TAG, `notificationItem id：${notificationItem.id} alert error: ${e.toString()}`);
+        }
+      }
+      switch (processType) {
+        case Constants.GET_NEW_NOTIFICATION:
+          this.removeNotificationItem(notificationItem['hashcode'], false);
+          mNotificationList.unshift(notificationItem);
+//          mNotificationList.sort(this.compare('timestamp'));
+          this.updateNotification();
+          break;
+        case Constants.GET_EXIST_NOTIFICATION:
+          mNotificationList.unshift(notificationItem);
+          this.updateNotification();
+          break;
+        default:
+          Log.showInfo(TAG, 'no match process type');
+          break;
+      }
     });
   }
 
@@ -204,7 +274,7 @@ export class NotificationService {
   OnCancelCallback(err, data) {
     console.info("================>OnCancelCallback err : =======================> " + JSON.stringify(err));
     console.info("================>OnCancelCallback data : =======================> " + JSON.stringify(data));
-    this.removeNotificationItem(data.request.hashCode,false);
+    this.removeNotificationItem(data.request.hashCode, false);
   }
 
   onUpdateCallback(err, data) {
@@ -218,9 +288,9 @@ export class NotificationService {
    * @param {Object} data - Callback data.
    */
   subscribeCallback(err, data) {
-        Log.showInfo(TAG, 'subscribeCallback finished ====================');
-        Log.showInfo(TAG, `subscribeCallback err: ${JSON.stringify(err)}`)
-        Log.showInfo(TAG, `subscribeCallback data: ${JSON.stringify(data)}`)
+    Log.showInfo(TAG, 'subscribeCallback finished ====================');
+    Log.showInfo(TAG, `subscribeCallback err: ${JSON.stringify(err)}`)
+    Log.showInfo(TAG, `subscribeCallback data: ${JSON.stringify(data)}`)
   }
 
   /**
@@ -266,27 +336,45 @@ export class NotificationService {
     });
   }
 
-  removeNotificationItem(hashCode,isDelSysConent) {
+  removeNotificationItem(hashCode, isDelSysConent) {
     Log.showInfo(TAG, `removeNotificationItem start, hashCode: ${hashCode}`);
     for (let i = 0, len = mNotificationList.length; i < len; i++) {
       if (mNotificationList[i].hashcode == hashCode) {
         Log.showInfo(TAG, `removeNotificationItem i = ${i}`);
         mNotificationList.splice(i, 1);
-//        mNotificationList.pop(i);
+        //        mNotificationList.pop(i);
         break;
       }
     }
     this.updateNotification()
-    if(isDelSysConent){
+    if (isDelSysConent) {
       this.removeSysNotificationItem(hashCode);
     }
   }
-  removeSysNotificationItem(hashCode){
+
+  removeSysNotificationItem(hashCode) {
     NotificationManager.remove(TAG, hashCode, (err, data) => {
       Log.showInfo(TAG, `removeNotificationItem, err: ${JSON.stringify(err)}`);
       Log.showInfo(TAG, `removeNotificationItem, data: ${JSON.stringify(data)}`);
     })
     Log.showInfo(TAG, `removeNotificationItem end, length: ${mNotificationList.length}`);
+  }
+
+  getAllActiveNotifications() {
+    Log.showInfo(TAG, `getAllActiveNotifications`);
+    NotificationManager.getAllActiveNotifications(TAG, (err, requestsArr) => {
+      Log.showInfo(TAG, `getAllActiveNotifications err: ${err}`);
+      Log.showInfo(TAG, `getAllActiveNotifications err: ${JSON.stringify(err)}`);
+      Log.showInfo(TAG, `getAllActiveNotifications requestsArr: ${requestsArr}`);
+      Log.showInfo(TAG, `getAllActiveNotifications requestsArr: ${JSON.stringify(requestsArr)}`);
+      if (Array.isArray(requestsArr)) {
+        for(let i = 0,len = requestsArr.length; i< len; i++) {
+          this.parseRequest(requestsArr[i],null, Constants.GET_EXIST_NOTIFICATION);
+        }
+      } else {
+        mNotificationList = [];
+      }
+    })
   }
 }
 
