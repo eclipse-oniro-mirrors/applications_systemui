@@ -172,15 +172,6 @@ export class NotificationService {
           notificationItem['expandedTitle'] = request.content.longText?.expandedTitle ?? '';
           notificationItem['longText'] = request.content.longText?.longText ?? '';
           break;
-        case NotificationManager.TYPE_IMAGE:
-          Log.showInfo(TAG, `contentType NOTIFICATION_CONTENT_LONG_TEXT ====================`);
-          notificationItem['title'] = request.content.picture?.title ?? '';
-          notificationItem['text'] = request.content.picture?.text ?? '';
-          notificationItem['additionalText'] = request.content.picture?.additionalText ?? '';
-          notificationItem['briefText'] = request.content.picture?.briefText ?? '';
-          notificationItem['expandedTitle'] = request.content.picture?.expandedTitle ?? '';
-          notificationItem['bigPicture'] = request.content.picture?.bigPicture ?? '';
-          break;
         case NotificationManager.TYPE_MULTI:
           Log.showInfo(TAG, `contentType NOTIFICATION_CONTENT_MULTILINE ====================`);
           notificationItem['title'] = request.content.multiLine?.title ?? '';

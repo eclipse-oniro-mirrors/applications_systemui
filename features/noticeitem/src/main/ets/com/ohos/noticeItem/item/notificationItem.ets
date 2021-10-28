@@ -16,7 +16,6 @@
 import Constants from '../common/constants.ets';
 import basicItem from './basicItem.ets';
 import longItem from './longItem.ets';
-import imageItem from './imageItem.ets';
 import multiItem from './multiItem.ets';
 import Log from '../../../../../../../../../common/src/main/ets/default/Log.ets';
 
@@ -29,7 +28,6 @@ struct NotificationItem {
   private itemObject: any
   private basic: boolean = false;
   private long: boolean = false;
-  private image: boolean = false;
   private multi: boolean = false;
 
   aboutToAppear() {
@@ -40,9 +38,6 @@ struct NotificationItem {
         break;
       case Constants.NOTIFICATION_TYPE_LONG:
         this.long = true;
-        break;
-      case Constants.NOTIFICATION_TYPE_IMAGE:
-        this.image = true;
         break;
       case Constants.NOTIFICATION_TYPE_MULTILINE:
         this.multi = true;
@@ -86,25 +81,6 @@ struct NotificationItem {
           notificationBriefText: this.itemObject.briefText,
           notificationExpandedTitle: this.itemObject.expandedTitle,
           notificationLongText: this.itemObject.longText,
-          notificationName: this.itemObject.name,
-          notificationTime: this.itemObject.time,
-          notificationTitle: this.itemObject.title,
-          notificationWant: this.itemObject.want,
-          showStatusBar: $showStatusBar
-        });
-      }
-      if (this.image) {
-        imageItem({
-          notificationId: this.itemObject.id,
-          notificationType: this.itemObject.type,
-          notificationSmallIcon: this.itemObject.smallIcon,
-          notificationLargeIcon: this.itemObject.largeIcon,
-          notificationActionButtons: this.itemObject.actionButtons,
-          notificationHashCode: this.itemObject.hashcode,
-          notificationText: this.itemObject.text,
-          notificationBriefText: this.itemObject.briefText,
-          notificationExpandedTitle: this.itemObject.expandedTitle,
-          notificationBigPicture: this.itemObject.bigPicture,
           notificationName: this.itemObject.name,
           notificationTime: this.itemObject.time,
           notificationTitle: this.itemObject.title,
