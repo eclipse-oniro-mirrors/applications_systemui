@@ -14,78 +14,23 @@
  */
 
 import Constants from '../common/constants.ets';
-import titleItem from './titleItem';
-import Log from '../../../../../../../../../common/src/main/ets/default/Log.ets';
-import CheckEmptyUtils from '../../../../../../../../../common/src/main/ets/default/CheckEmptyUtils.ets';
-import mNotificationService from '../../../../../../../../../features/notificationService/src/main/ets/com/ohos/notificationservice/NotificationService.ets'
-import WantAgent from '@ohos.wantAgent';
-import WindowManager from '../../../../../../../../../common/src/main/ets/default/WindowManager.ets';
-
-const TAG = 'NoticeItem-BasicItem';
-
-let mWindowManager;
+import {NotificationItemData} from '../../../../../../../../notificationService/src/main/ets/com/ohos/notificationservice/common/constants.ets';
 
 @Component
-export default
-struct BasicItem {
-  @Link showStatusBar: boolean
-  @Prop notificationId: string
-  @Prop notificationType: string
-  private notificationSmallIcon: PixelMap
-  private notificationLargeIcon: PixelMap
-  private notificationActionButtons: any
+export default struct BasicItem {
   @State hasPicture: boolean = false
-  @Prop notificationHashCode: string
-  @Prop notificationText: string
-  @Prop notificationName: string
-  @Prop notificationTime: string
-  @Prop notificationTitle: string
-  private notificationWant: any
-  @State isExpand: boolean = false
-  @State needExpand: boolean = false
-  @State iconDisplay: boolean = false;
-  @State itemWidth: string = '100%'
-  startX: number = 0
-  startY: number = 0
-  @State moveX: number = 0
-  @State moveY: number = 0
-
-  aboutToAppear() {
-    Log.showInfo(TAG, `aboutToAppear id: ${this.notificationId}`)
-    mWindowManager = new WindowManager();
-    if (CheckEmptyUtils.isEmpty(this.notificationLargeIcon)) {
-      this.hasPicture = false;
-    } else {
-      this.hasPicture = true;
-    }
-  }
-
-  aboutToDisappear() {
-    Log.showInfo(TAG, `aboutToDisAppear id: ${this.notificationId}`);
-  }
+  @State itemData: NotificationItemData= undefined
 
   build() {
-    Row() {
-      Column() {
-        Column() {
-          titleItem({
-            notificationSmallIcon: this.notificationSmallIcon,
-            notificationName: this.notificationName,
-            notificationTime: this.notificationTime,
-            isExpand: $isExpand,
-            needExpand: this.needExpand
-          })
-
-          Flex({ direction: FlexDirection.Row, justifyContent: FlexAlign.Start, alignItems: ItemAlign.Start }) {
-            Flex({ direction: FlexDirection.Column, justifyContent: FlexAlign.Start, alignItems: ItemAlign.Start }) {
-              Text(this.notificationTitle)
-                .maxLines(Constants.DEFAULT_MAX_LINES)
-                .textOverflow({ overflow: TextOverflow.Ellipsis })
-                .fontSize($r('app.float.notification_title_fontsize'))
-                .fontColor($r('app.color.title_text_color'))
-                .fontWeight(FontWeight.Bold)
-                .lineHeight(Constants.CONTENT_LINE_HEIGHT)
-              Text(this.notificationText)
+    Flex({ direction: FlexDirection.Column, justifyContent: FlexAlign.Start, alignItems: ItemAlign.Start }) {
+      Text(this.itemData.title)
+        .maxLines(Constants.DEFAULT_MAX_LINES)
+        .textOverflow({ overflow: TextOverflow.Ellipsis })
+        .fontSize($r('app.float.notification_title_fontsize'))
+        .fontColor($r('app.color.title_text_color'))
+        .fontWeight(FontWeight.Bold)
+        .lineHeight(Constants.CONTENT_LINE_HEIGHT)
+      Text(this.itemData.text)
                 .maxLines(Constants.DEFAULT_MAX_LINES)
                 .textOverflow({ overflow: TextOverflow.Clip })
                 .fontSize($r('app.float.notification_content_fontsize'))
@@ -96,130 +41,6 @@ struct BasicItem {
             .width(this.hasPicture ? '85%' : '100%')
             .margin({ top: $r('app.float.body_margin_top') })
 
-            if (this.hasPicture) {
-              Column() {
-                Image(this.notificationLargeIcon)
-                .objectFit(ImageFit.Contain)
-                  .width(50)
-                  .height(50)
-              }
-              .alignItems(HorizontalAlign.End)
-              .width('15%')
-            }
-          }
-        }
-        .onTouch(this.touchNotificationItem.bind(this))
 
-        Flex({ direction: FlexDirection.Row, justifyContent: FlexAlign.Start, alignItems: ItemAlign.Start }) {
-          ForEach(this.notificationActionButtons, (item: any) => {
-            Text(item.title)
-              .fontSize(20)
-              .height(30)
-              .fontColor(Color.Blue)
-              .margin({ right: 20 })
-              .onClick(() => {
-              Log.showInfo(TAG, `clickbuttonEvent: ${JSON.stringify(item.wantAgent)}`)
-              this.startTargetAbility(item.wantAgent)
-            })
-          }
-        }
-        .margin({ top: 10 })
-
-      }
-      .backgroundColor($r('app.color.notificationitem_background'))
-      .opacity($r('app.float.item_opicaty'))
-      .borderRadius($r('app.float.item_borderradius'))
-      .margin({
-        left: $r('app.float.item_marginleft'),
-        right: $r('app.float.item_marginright'),
-        top: $r('app.float.item_margintop')
-      })
-      .padding({
-        left: $r('app.float.item_paddingleft'),
-        right: $r('app.float.item_paddingright'),
-        bottom: $r('app.float.item_paddingbottom')
-      })
-      //      .onTouch(this.touchNotificationItem.bind(this))
-      .width(this.itemWidth)
-
-      if (this.iconDisplay) {
-        Flex({ direction: FlexDirection.Row, justifyContent: FlexAlign.SpaceAround, alignItems: ItemAlign.Center }) {
-          Image($r('app.media.delete')) //delete
-          .objectFit(ImageFit.Contain)
-            .width($r('app.float.item_delete_image_width'))
-            .height($r('app.float.item_delete_image_height'))
-            .onClick(() => {
-           this.removeNotificationItem(this.notificationHashCode);
-          })
-        }
-        .width('30%')
-      }
-    }
-  }
-
-  touchNotificationItem(event: TouchEvent) {
-    if (event.type == Constants.TOUCH_TYPE_DOWN) { //down
-      this.startX = event.touches[0].x;
-      this.startY = event.touches[0].y;
-      Log.showInfo(TAG, `touchStart=======startX: ${this.startX}, startY: ${this.startY}`);
-    } else if (event.type == Constants.TOUCH_TYPE_MOVE) { //move
-      this.moveX = event.touches[0].x - this.startX;
-      this.moveY = event.touches[0].y - this.startY;
-    } else if (event.type == Constants.TOUCH_TYPE_UP) { //up
-      Log.showInfo(TAG, `touchEnd, moveX: ${this.moveX}, moveY: ${this.moveY}`);
-      if (this.moveX == 0 && this.moveY == 0) {
-        this.clickBasicItem();
-        return;
-      }
-      if (this.iconDisplay) {
-        if (this.moveX > Constants.HIDDEN_TRANSLATE_X) {
-          //hidden
-          this.iconDisplay = false;
-          this.itemWidth = '100%';
-          Log.showInfo(TAG, 'hidden');
-        }
-      } else {
-        if (this.moveX < Constants.DISPLAY_TRANSLATE_X) {
-          this.iconDisplay = true;
-          this.itemWidth = '70%';
-          Log.showInfo(TAG, 'display');
-        } else if (this.moveX > Constants.REMOVE_TRANSLATE_X) {
-          this.removeNotificationItem(this.notificationHashCode);
-        }
-      }
-    }
-  }
-
-  removeNotificationItem(hashCode: string) {
-    Log.showInfo(TAG, 'removeNotificationItem');
-    mNotificationService.removeNotificationItem(hashCode, true);
-  }
-
-  clickBasicItem() {
-    Log.showInfo(TAG, 'clickBasicItem');
-    this.startTargetAbility(this.notificationWant);
-  }
-
-  startTargetAbility(want) {
-    Log.showInfo(TAG, 'startTargetAbility');
-    //close window
-    this.showStatusBar = true;
-    mWindowManager.setWindowMin((result) => {
-      Log.showInfo(TAG, `setWindowMin ${result}`);
-    });
-    //open app
-    Log.showInfo(TAG, `longitemClick  wantAgent ${JSON.stringify(this.notificationWant)} id: ${this.notificationId}`);
-    let TriggerInfo = {
-      code: 0,
-      want: '',
-      permission: '',
-      extraInfo: {}
-    };
-    WantAgent.trigger(want, TriggerInfo, ((err, data) => {
-      Log.showInfo(TAG, `longitemClick  wantAgent trigger err ${JSON.stringify(err)}`);
-      Log.showInfo(TAG, `longitemClick  wantAgent trigger data ${JSON.stringify(data)}`);
-    }));
-    //remove notification
-    this.removeNotificationItem(this.notificationHashCode);
   }
 }

@@ -232,7 +232,7 @@ struct notificationItems {
           List() {
             ForEach(this.notificationList, (item: any) => { //notificationItems
               ListItem() {
-                notificationItem({ itemObject: item, showStatusBar: $showStatusBar })
+                notificationItem({ itemData: item, showStatusBar: $showStatusBar })
               }
             }, (item: any) => item.hashcode.toString())
           }
