@@ -12,7 +12,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import ControlCenterComponent from '../../../../../../../features/control/src/main/ets/com/ohos/control/pages/ControlCenter.ets'
+import ControlCenterComponent from './ControlCenter.ets'
 import WindowManager from '../../../../../../../common/src/main/ets/default/WindowManager.ets'
 import BatteryIcon from '../../../../../../../features/batterycomponent/src/main/ets/default/pages/batteryIcon.ets'
 import ClockIcon from '../../../../../../../features/clockcomponent/src/main/ets/default/pages/clockIcon.ets'

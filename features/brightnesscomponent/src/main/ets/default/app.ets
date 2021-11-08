@@ -12,8 +12,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-include ':entry', ':product:navigationBar', ':common', ':product:statusbar', ':product:systemDialog',
-        ':features:batterycomponent', ':features:clockcomponent',':features:signalcomponent',
-        ':features:wificomponent', ':features:navigationservice',':features:noticeitem',
-        ':features:notificationservice',':features:airplanecomponent',':features:brightnesscomponent',
-        ':features:volumecomponent'
+
+export default {
+  onCreate() {
+    console.info('Application onCreate')
+  },
+  onDestroy() {
+    console.info('Application onDestroy')
+  },
+}

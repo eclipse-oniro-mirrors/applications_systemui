@@ -30,6 +30,9 @@
     },{
       "name": "twogroup_layout_background",
       "value": "#66000000"
+    },{
+      "name": "title_font_color",
+      "value": "#FFF"
     }
   ]
 }

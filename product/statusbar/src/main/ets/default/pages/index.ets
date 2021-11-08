@@ -21,7 +21,7 @@ import ConfigReader from '../common/util/configReader.ets'
 import mNotificationService from '../../../../../../../features/notificationService/src/main/ets/com/ohos/notificationservice/NotificationService.ets'
 import ControlCenterComponent from './control.ets'
 import Constants from './common/constants.ets'
-import mBrightnessManager from '../../../../../../../features/control/src/main/ets/com/ohos/control/common/brightness/brightnessManager.ets';
+import mBrightnessManager from '../../../../../../../features/brightnesscomponent/src/main/ets/default/brightnessManager.ets';
 import HeightConfigUtils from '../../../../../../../common/src/main/ets/default/heightcofigUtils/HeightConfigUtils.ets';
 
 const TAG = 'StatusBar-Index'

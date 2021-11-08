@@ -23,7 +23,7 @@ import SignalIcon from '../../../../../../../features/signalcomponent/src/main/e
 import notificationItem from '../../../../../../../features/noticeitem/src/main/ets/com/ohos/noticeItem/item/notificationItem.ets'
 import WindowManager from '../../../../../../../common/src/main/ets/default/WindowManager.ets'
 import mNotificationService from '../../../../../../../features/notificationService/src/main/ets/com/ohos/notificationservice/NotificationService.ets'
-import ConfigurableLayout from './ConfigurableLayout.ets';
+
 
 const TAG = 'StatusBar-notification'
 

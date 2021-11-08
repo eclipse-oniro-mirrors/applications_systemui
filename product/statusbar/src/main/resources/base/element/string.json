@@ -46,6 +46,12 @@
     },{
       "name": "nonotification_text",
       "value": "无通知"
+    },{
+      "name": "control_library",
+      "value": "control_library"
+    },{
+      "name": "control_center",
+      "value": "控制中心"
     }
   ]
 }
