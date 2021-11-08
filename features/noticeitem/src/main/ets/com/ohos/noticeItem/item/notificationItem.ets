@@ -32,13 +32,10 @@ let mWindowManager;
 export default struct NotificationItem {
   @Link showStatusBar: boolean
   private itemData: NotificationItemData
-  private basic: boolean = false;
-  private long: boolean = false;
-  private multi: boolean = false;
   @State hasPicture: boolean = false
   @State isExpand: boolean = false
   @State needExpand: boolean = true
-  @State iconDisplay: boolean = false;
+  @State deleteIconDisplay: boolean = false;
   @State itemWidth: string = '100%'
   startX: number = 0
   startY: number = 0
@@ -53,19 +50,14 @@ export default struct NotificationItem {
     } else {
       this.hasPicture = true;
     }
-    switch (this.itemData.contentType) {
-      case Constants.NOTIFICATION_TYPE_BASIC:
-        this.basic = true;
-        this.needExpand=false;
-        break;
-      case Constants.NOTIFICATION_TYPE_LONG:
-        this.long = true;
-        break;
-      case Constants.NOTIFICATION_TYPE_MULTILINE:
-        this.multi = true;
-        break;
-      default:
-        break;
+    this.needExpand=this.checkItemNeedExpand()
+  }
+
+  checkItemNeedExpand(){
+    if(this.itemData.contentType===Constants.NOTIFICATION_TYPE_BASIC&&(!(this.itemData.actionButtons?.length>0))){
+      return false;
+    }else{
+      return true;
     }
   }
 
@@ -87,20 +79,20 @@ export default struct NotificationItem {
           })
 
           Flex({ direction: FlexDirection.Row, justifyContent: FlexAlign.Start, alignItems: ItemAlign.Start }) {
-              if (this.basic) {
+              if (this.itemData.contentType===Constants.NOTIFICATION_TYPE_BASIC) {
                 basicItem({
                   itemData: this.itemData,
                   hasPicture:this.hasPicture
                 });
               }
-              if (this.long) {
+              if (this.itemData.contentType===Constants.NOTIFICATION_TYPE_LONG) {
                 longItem({
                   itemData: this.itemData,
                   hasPicture:this.hasPicture,
                   isExpand:this.isExpand
                 });
               }
-              if (this.multi) {
+              if (this.itemData.contentType===Constants.NOTIFICATION_TYPE_MULTILINE) {
                 multiItem({
                   itemData: this.itemData,
                   hasPicture:this.hasPicture,
@@ -120,7 +112,7 @@ export default struct NotificationItem {
             }
           }.onClick(this.clickItem.bind(this))
 
-          if(this.basic||this.isExpand){
+          if(this.isExpand){
           Flex({ direction: FlexDirection.Row, justifyContent: FlexAlign.Start, alignItems: ItemAlign.Start }) {
             ForEach(this.itemData.actionButtons, (item: any) => {
               Text(item.title)
@@ -154,7 +146,7 @@ export default struct NotificationItem {
         .onTouch(this.touchNotificationItem.bind(this))
         .width(this.itemWidth)
 
-        if (this.iconDisplay) {
+        if (this.deleteIconDisplay) {
           Flex({ direction: FlexDirection.Row, justifyContent: FlexAlign.SpaceAround, alignItems: ItemAlign.Center }) {
             Image($r('app.media.delete')) //delete
             .objectFit(ImageFit.Contain)
@@ -180,16 +172,16 @@ export default struct NotificationItem {
       this.moveY = event.touches[0].y - this.startY;
     } else if (event.type == Constants.TOUCH_TYPE_UP) { //up
       Log.showInfo(TAG, `touchEnd, moveX: ${this.moveX}, moveY: ${this.moveY}`);
-      if (this.iconDisplay) {
+      if (this.deleteIconDisplay) {
         if (this.moveX > Constants.HIDDEN_TRANSLATE_X) {
           //hidden
-          this.iconDisplay = false;
+          this.deleteIconDisplay = false;
           this.itemWidth = '100%';
           Log.showInfo(TAG, 'hidden');
         }
       } else {
         if (this.moveX < Constants.DISPLAY_TRANSLATE_X) {
-          this.iconDisplay = true;
+          this.deleteIconDisplay = true;
           this.itemWidth = '70%';
           Log.showInfo(TAG, 'display');
         } else if (this.moveX > Constants.REMOVE_TRANSLATE_X) {
