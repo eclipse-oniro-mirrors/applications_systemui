@@ -18,11 +18,8 @@ import {NotificationItemData} from '../../../../../../../../notificationService/
 
 @Component
 export default struct MultiItem {
-
   @State itemData: NotificationItemData= undefined
-  @Prop hasPicture: boolean
   @Prop isExpand: boolean
-
 
   build() {
     Flex({ direction: FlexDirection.Column, justifyContent: FlexAlign.Start, alignItems: ItemAlign.Start }) {
@@ -50,9 +47,6 @@ export default struct MultiItem {
           .fontColor($r('app.color.content_text_color'))
           .margin({ top: $r('app.float.content_margin_top') })
       }
-    }
-    .width(this.hasPicture ? '85%' : '100%')
-    .margin({ top: $r('app.float.body_margin_top') })
-
+    }.width('100%')
   }
 }

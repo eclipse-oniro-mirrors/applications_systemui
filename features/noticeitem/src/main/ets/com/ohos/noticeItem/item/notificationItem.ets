@@ -67,7 +67,6 @@ export default struct NotificationItem {
 
   build() {
     Flex({ direction: FlexDirection.Column, justifyContent: FlexAlign.Start, alignItems: ItemAlign.Center }) {
-
       Row() {
         Column() {
           titleItem({
@@ -79,26 +78,27 @@ export default struct NotificationItem {
           })
 
           Flex({ direction: FlexDirection.Row, justifyContent: FlexAlign.Start, alignItems: ItemAlign.Start }) {
-              if (this.itemData.contentType===Constants.NOTIFICATION_TYPE_BASIC) {
+            Flex({ direction: FlexDirection.Column, justifyContent: FlexAlign.Start, alignItems: ItemAlign.Start }) {
+              if (this.itemData.contentType === Constants.NOTIFICATION_TYPE_BASIC) {
                 basicItem({
-                  itemData: this.itemData,
-                  hasPicture:this.hasPicture
+                  itemData: this.itemData
                 });
               }
-              if (this.itemData.contentType===Constants.NOTIFICATION_TYPE_LONG) {
+              if (this.itemData.contentType === Constants.NOTIFICATION_TYPE_LONG) {
                 longItem({
                   itemData: this.itemData,
-                  hasPicture:this.hasPicture,
-                  isExpand:this.isExpand
+                  isExpand: this.isExpand
                 });
               }
-              if (this.itemData.contentType===Constants.NOTIFICATION_TYPE_MULTILINE) {
+              if (this.itemData.contentType === Constants.NOTIFICATION_TYPE_MULTILINE) {
                 multiItem({
                   itemData: this.itemData,
-                  hasPicture:this.hasPicture,
-                  isExpand:this.isExpand
+                  isExpand: this.isExpand
                 });
               }
+            }
+            .width(this.hasPicture ? '85%' : '100%')
+            .margin({ top: $r('app.float.body_margin_top') })
 
             if (this.hasPicture) {
               Column() {
@@ -128,7 +128,6 @@ export default struct NotificationItem {
           }
           .margin({ top: 10 })
           }
-
         }
         .backgroundColor($r('app.color.notificationitem_background'))
         .opacity($r('app.float.item_opicaty'))
@@ -222,5 +221,4 @@ export default struct NotificationItem {
     //remove notification
     this.removeNotificationItem(this.itemData.hashcode);
   }
-
 }

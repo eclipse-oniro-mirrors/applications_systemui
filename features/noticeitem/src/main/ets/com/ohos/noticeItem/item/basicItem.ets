@@ -18,7 +18,6 @@ import {NotificationItemData} from '../../../../../../../../notificationService/
 
 @Component
 export default struct BasicItem {
-  @State hasPicture: boolean = false
   @State itemData: NotificationItemData= undefined
 
   build() {
@@ -31,16 +30,12 @@ export default struct BasicItem {
         .fontWeight(FontWeight.Bold)
         .lineHeight(Constants.CONTENT_LINE_HEIGHT)
       Text(this.itemData.text)
-                .maxLines(Constants.DEFAULT_MAX_LINES)
-                .textOverflow({ overflow: TextOverflow.Clip })
-                .fontSize($r('app.float.notification_content_fontsize'))
-                .fontColor($r('app.color.content_text_color'))
-                .lineHeight(Constants.CONTENT_LINE_HEIGHT)
-                .margin({ top: $r('app.float.content_margin_top') })
-            }
-            .width(this.hasPicture ? '85%' : '100%')
-            .margin({ top: $r('app.float.body_margin_top') })
-
-
+        .maxLines(Constants.DEFAULT_MAX_LINES)
+        .textOverflow({ overflow: TextOverflow.Clip })
+        .fontSize($r('app.float.notification_content_fontsize'))
+        .fontColor($r('app.color.content_text_color'))
+        .lineHeight(Constants.CONTENT_LINE_HEIGHT)
+        .margin({ top: $r('app.float.content_margin_top') })
+    }.width('100%')
   }
 }

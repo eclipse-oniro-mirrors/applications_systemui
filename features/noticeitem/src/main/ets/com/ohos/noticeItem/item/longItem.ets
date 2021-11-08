@@ -20,31 +20,25 @@ import {NotificationItemData} from '../../../../../../../../notificationService/
 export default
 struct LongItem {
   @State itemData: NotificationItemData= undefined
-  @Prop hasPicture: boolean
   @Prop isExpand: boolean
 
-
   build() {
-          Flex({ direction: FlexDirection.Column, justifyContent: FlexAlign.Start, alignItems: ItemAlign.Start }) {
-            Text(this.isExpand ? this.itemData.expandedTitle : this.itemData.title)
-              .maxLines(Constants.DEFAULT_MAX_LINES)
-              .textOverflow({ overflow: TextOverflow.Ellipsis })
-              .fontSize($r('app.float.notification_title_fontsize'))
-              .fontColor($r('app.color.title_text_color'))
-              .fontWeight(FontWeight.Bold)
-              .lineHeight(Constants.CONTENT_LINE_HEIGHT) //not support Resource type
-            Text(this.isExpand ? this.itemData.longText : this.itemData.text)
-              .maxLines(this.isExpand ? Constants.EXPENDED_MAX_LINES : Constants.DEFAULT_MAX_LINES)
-              .textOverflow({ overflow: TextOverflow.Ellipsis })
-              .constraintSize({maxHeight: $r('app.float.notification_expanded_text_maxheight')})
-              .fontSize($r('app.float.notification_content_fontsize'))
-              .fontColor($r('app.color.content_text_color'))
-              .lineHeight(Constants.CONTENT_LINE_HEIGHT)
-              .margin({ top: $r('app.float.content_margin_top') })
-          }
-          .width(this.hasPicture ? '85%' : '100%')
-          .margin({ top: $r('app.float.body_margin_top') })
+    Flex({ direction: FlexDirection.Column, justifyContent: FlexAlign.Start, alignItems: ItemAlign.Start }) {
+      Text(this.isExpand ? this.itemData.expandedTitle : this.itemData.title)
+        .maxLines(Constants.DEFAULT_MAX_LINES)
+        .textOverflow({ overflow: TextOverflow.Ellipsis })
+        .fontSize($r('app.float.notification_title_fontsize'))
+        .fontColor($r('app.color.title_text_color'))
+        .fontWeight(FontWeight.Bold)
+        .lineHeight(Constants.CONTENT_LINE_HEIGHT) //not support Resource type
+      Text(this.isExpand ? this.itemData.longText : this.itemData.text)
+        .maxLines(this.isExpand ? Constants.EXPENDED_MAX_LINES : Constants.DEFAULT_MAX_LINES)
+        .textOverflow({ overflow: TextOverflow.Ellipsis })
+        .constraintSize({ maxHeight: $r('app.float.notification_expanded_text_maxheight') })
+        .fontSize($r('app.float.notification_content_fontsize'))
+        .fontColor($r('app.color.content_text_color'))
+        .lineHeight(Constants.CONTENT_LINE_HEIGHT)
+        .margin({ top: $r('app.float.content_margin_top') })
+    }.width('100%')
   }
-
-
 }
