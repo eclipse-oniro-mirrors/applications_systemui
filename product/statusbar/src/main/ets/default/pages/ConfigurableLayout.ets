@@ -66,7 +66,7 @@ struct Index {
               Row() {
                 if (this.notificationList.length > 3) {
                   ForEach(this.notificationList.slice(0, 3), (item: any) => {
-                    Image(item.icon)
+                    Image(item.smallIcon)
                       .objectFit(ImageFit.ScaleDown)
                       .height(Constants.STATIC_BAR_ICON_HEIGHT*this.StatusCoefficient)
                       .width(Constants.STATIC_BAR_ICON_WIDTH*this.StatusCoefficient)
@@ -78,7 +78,7 @@ struct Index {
                   }
                 } else {
                   ForEach(this.notificationList, (item: any) => {
-                    Image(item.icon)
+                    Image(item.smallIcon)
                       .objectFit(ImageFit.ScaleDown)
                       .height(Constants.STATIC_BAR_ICON_HEIGHT*this.StatusCoefficient)
                       .width(Constants.STATIC_BAR_ICON_WIDTH*this.StatusCoefficient)

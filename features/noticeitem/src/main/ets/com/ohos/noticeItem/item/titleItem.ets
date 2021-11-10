@@ -13,62 +13,77 @@
  * limitations under the License.
  */
 
-import Constants from '../common/constants.ets'
-import Log from '../../../../../../../../../common/src/main/ets/default/Log.ets'
-const TAG = 'NoticeItem-TitleItem'
+import Constants from '../common/constants.ets';
+import Log from '../../../../../../../../../common/src/main/ets/default/Log.ets';
+import CheckEmptyUtils from '../../../../../../../../../common/src/main/ets/default/CheckEmptyUtils.ets';
+
+const TAG = 'NoticeItem-TitleItem';
 
 @Component
 export default
-struct titleItem {
-  @Prop notificationIcon: string
+struct TitleItem {
+  private notificationSmallIcon: PixelMap
   @Prop notificationName: string
   @Prop notificationTime: string
-  @Link srcIconDisplay: any
+  @State srcIconDisplay: any = $r('app.media.ic_notification_down')
   @Link isExpand: boolean
   @Prop needExpand: boolean
   @State rowSpace: any = $r('app.float.titleitem_row_space')
+
   aboutToAppear() {
-    Log.showInfo(TAG, `aboutToDisAppear Start`)
+    Log.showInfo(TAG, `aboutToAppear Start`);
   }
 
-  aboutToDisappear(){
-    Log.showInfo(TAG, `aboutToDisAppear`)
+  aboutToDisappear() {
+    Log.showInfo(TAG, `aboutToDisAppear`);
   }
 
   build() {
     Row() {
       Row({ space: this.rowSpace }) {
-        Image(this.notificationIcon)
-          .objectFit(ImageFit.Contain)
-          .width($r('app.float.title_image_width'))
-          .height($r('app.float.title_image_height'))
+        if (!CheckEmptyUtils.isEmpty(this.notificationSmallIcon)) {
+          Image(this.notificationSmallIcon)
+            .objectFit(ImageFit.Contain)
+            .width($r('app.float.title_image_width'))
+            .height($r('app.float.title_image_height'))
+            .flexShrink(0)
+        }
         Text(this.notificationName)
+          .maxLines(Constants.DEFAULT_MAX_LINES)
+          .textOverflow({ overflow: TextOverflow.Ellipsis })
           .fontSize($r('app.float.title_name_fontsize'))
+          .flexShrink(1)
         Text(this.notificationTime)
           .fontSize($r('app.float.title_time_fontsize'))
+          .flexShrink(0)
       }
-      .width('80%')
+      .width(this.needExpand ? '80%' : '100%')
 
-      Flex({ direction: FlexDirection.Row, justifyContent: FlexAlign.End, alignItems: ItemAlign.Center }) {
-        if (this.needExpand) {
+      if (this.needExpand) {
+        Flex({ direction: FlexDirection.Row, justifyContent: FlexAlign.End, alignItems: ItemAlign.Center }) {
           Image(this.srcIconDisplay)
             .objectFit(ImageFit.Contain)
             .width($r('app.float.displayicon_width'))
             .height($r('app.float.displayicon_height'))
         }
+        .width('20%')
       }
-      .width('20%')
     }
     .height($r('app.float.titleitem_height'))
     .width('100%')
-    .onClick(() => {
+    .onClick(this.clickTitleItem.bind(this))
+  }
+
+  clickTitleItem() {
+    Log.showInfo(TAG, 'clickTitleItem');
+    if (this.needExpand) {
       if (this.isExpand) {
-        this.isExpand = false
-        this.srcIconDisplay = $r('app.media.ic_notification_down')
+        this.isExpand = false;
+        this.srcIconDisplay = $r('app.media.ic_notification_down');
       } else {
-        this.isExpand = true
-        this.srcIconDisplay = $r('app.media.ic_notification_up')
+        this.isExpand = true;
+        this.srcIconDisplay = $r('app.media.ic_notification_up');
       }
-    })
+    }
   }
 }

@@ -46,5 +46,9 @@ export default class NotificationManager {
     Notification.remove(hashCode, callback)
   }
 
+  static getAllActiveNotifications(tag, callback) {
+    Log.showInfo(TAG, `getAllActiveNotifications from: ${tag}`));
+    Notification.getAllActiveNotifications(callback);
+  }
 
 }

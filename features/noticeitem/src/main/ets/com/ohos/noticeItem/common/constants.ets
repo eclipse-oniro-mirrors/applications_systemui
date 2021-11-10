@@ -14,14 +14,14 @@
  */
 
 export default class Constants {
-  static NOTIFICATION_TYPE_NORMAL: string = '0'
-  static NOTIFICATION_TYPE_LONG: string = '1'
-  static NOTIFICATION_TYPE_IMAGE: string = '2'
-  static NOTIFICATION_TYPE_MULTILINE: string = '4'
-  static NOTIFICATION_TYPE_SOCIAL: string = '3'
-  static NOTIFICATION_TYPE_MEDIA: string = '5'
-  static TEXT_MAX_LENGTH: number = 21
-  static TEXT_EXPANDED_MAX_LENGTH: number = 13
+  static NOTIFICATION_TYPE_BASIC: string = '0';
+  static NOTIFICATION_TYPE_LONG: string = '1';
+  static NOTIFICATION_TYPE_IMAGE: string = '2';
+  static NOTIFICATION_TYPE_MULTILINE: string = '4';
+  static NOTIFICATION_TYPE_SOCIAL: string = '3';
+  static NOTIFICATION_TYPE_MEDIA: string = '5';
+  static TEXT_MAX_LENGTH: number = 21;
+  static TEXT_EXPANDED_MAX_LENGTH: number = 13;
   static TOUCH_TYPE_DOWN: number = 0;
   static TOUCH_TYPE_UP: number = 1;
   static TOUCH_TYPE_MOVE: number = 2;
@@ -29,5 +29,6 @@ export default class Constants {
   static DISPLAY_TRANSLATE_X: number = -150;
   static REMOVE_TRANSLATE_X: number = 150;
   static DEFAULT_MAX_LINES: number= 1;
+  static EXPENDED_MAX_LINES: number= 8;
   static CONTENT_LINE_HEIGHT: number = 20;
 }
