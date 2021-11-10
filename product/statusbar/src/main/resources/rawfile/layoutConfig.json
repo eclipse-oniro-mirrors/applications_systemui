@@ -1,10 +1,14 @@
 {
   "Groups": [
     { "id": 1,
-    "Components": ["signal", "wifi", "notification"]
+      "Components": ["signal", "wifi", "notification"]
     },
     {
       "id": 2,
+      "Components": ["empty"]
+    },
+    {
+      "id": 3,
       "Components": ["battery", "clock"]
     }
   ]

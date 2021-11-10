@@ -30,6 +30,7 @@ var mWifiStatus;
 var mWifiOpenStatus;
 var mWifiName;
 
+
 export class WifiModel {
 
   initWifiModel() {
