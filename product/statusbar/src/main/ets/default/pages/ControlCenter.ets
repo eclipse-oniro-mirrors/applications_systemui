@@ -18,7 +18,6 @@ import AirPlaneComponent from "../../../../../../../features/airplanecomponent/s
 import WifiComponent from '../../../../../../../features/wificomponent/src/main/ets/default/pages/wifiComponent.ets'
 import {MyBrightness} from '../../../../../../../features/brightnesscomponent/src/main/ets/default/pages/brightnessComponent.ets'
 import {MyVol} from '../../../../../../../features/volumecomponent/src/main/ets/default/pages/volumeComponent.ets'
-import mWifiManger from "../../../../../../../features/wificomponent/src/main/ets/default//WifiModel.ets"
 import Log from '../../../../../../../common/src/main/ets/default/Log.ets';
 import UniformConfig from '../../../../../../../common/src/main/ets/template/UniformConfig.ets'
 
@@ -29,9 +28,6 @@ var mUniform;
 export default
 struct ControlCenterComponent {
   @Link showStatusBar: boolean
-  @StorageLink('flyModelStatus') flyModelStatus: boolean = false
-  @StorageLink('wifiOpenStatus') wifiOpenStatus: boolean = false
-  @StorageLink("mWifiOriginalStatus") mWifiOriginalStatus: boolean = false
 
   componentUniform = {
     iconOnBG: "#0A59F7",
