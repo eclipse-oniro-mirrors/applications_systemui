@@ -41,5 +41,6 @@ struct iconComponent {
           .objectFit(ImageFit.Contain)
       }.margin({ left: 10 })
     }
+    .flexShrink(0)
   }
 }

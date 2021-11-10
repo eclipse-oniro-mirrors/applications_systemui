@@ -47,6 +47,7 @@ struct iconBaseComponent {
           changeSwitch: $changeSwitch,
         })
       }
+      .flexShrink(0)
       .height('100%')
       .onClick(() => {
         console.log(`start clickEvent ${this.changeSwitch}`)
