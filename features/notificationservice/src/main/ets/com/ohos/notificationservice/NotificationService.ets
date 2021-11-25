@@ -263,10 +263,11 @@ export class NotificationService {
   /**
    * The callback will be called after registered callback.
    *
+   * @param {Object} err - Error may occur.
    * @param {Object} data - Callback data.
    */
-  subscribeCallback(data) {
-    Log.showInfo(TAG, `subscribeCallback finished data: ${JSON.stringify(data)}`)
+  subscribeCallback(err, data) {
+    Log.showInfo(TAG, `subscribeCallback finished err: ${JSON.stringify(err)} data: ${JSON.stringify(data)}`)
   }
 
   /**
