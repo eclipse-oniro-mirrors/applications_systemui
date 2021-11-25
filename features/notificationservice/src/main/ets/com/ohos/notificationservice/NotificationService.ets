@@ -90,10 +90,9 @@ export class NotificationService {
   /**
    * The callback method that will be called after receiving a notification
    *
-   * @param {Object} err - Error may occur.
    * @param {Object} data - Callback data.
    */
-  consumeCallback(err, data) {
+  consumeCallback(data) {
     Log.showInfo(TAG, 'consumeCallback started');
     Log.showInfo(TAG, 'sortingMap' + JSON.stringify(data.sortingMap||{}))
     Log.showInfo(TAG, JSON.stringify(data));
@@ -190,7 +189,7 @@ export class NotificationService {
         case Constants.GET_NEW_NOTIFICATION:
           this.removeNotificationItem(notificationItem['hashcode'], false);
           mNotificationList.unshift(notificationItem);
-//          mNotificationList.sort(this.compare('timestamp'));
+        //mNotificationList.sort(this.compare('timestamp'));
           this.updateNotification();
           break;
         case Constants.GET_EXIST_NOTIFICATION:
@@ -250,26 +249,24 @@ export class NotificationService {
   /**
    * notification CancelCallback
    *
-   * @param {Object} err - return err Message.
    * @param {Object} data - return data Message.
    */
-  OnCancelCallback(err, data) {
-    console.info("===>OnCancelCallback data : ==> " + ` err:${JSON.stringify(err)} data:${JSON.stringify(data)}`);
+  OnCancelCallback(data) {
+    console.info("===>OnCancelCallback data : ==> " + `data:${JSON.stringify(data)}`);
     this.removeNotificationItem(data.request.hashCode, false);
   }
 
-  onUpdateCallback(err, data) {
+  onUpdateCallback(data) {
     Log.showInfo(TAG, `onUpdateCallback = ${JSON.stringify(data.request)}`);
   }
 
   /**
    * The callback will be called after registered callback.
    *
-   * @param {Object} err - Error may occur.
    * @param {Object} data - Callback data.
    */
-  subscribeCallback(err, data) {
-    Log.showInfo(TAG, `subscribeCallback finished err: ${JSON.stringify(err)} data: ${JSON.stringify(data)}`)
+  subscribeCallback(data) {
+    Log.showInfo(TAG, `subscribeCallback finished data: ${JSON.stringify(data)}`)
   }
 
   /**
