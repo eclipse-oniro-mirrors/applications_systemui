@@ -307,8 +307,8 @@ export class NotificationService {
   removeAllNotifications() {
     mNotificationList = []
     this.updateNotification()
-    NotificationManager.removeAll(TAG, (err, data) => {
-      Log.showInfo(TAG, `removeAll , err: ${JSON.stringify(err)} data: ${JSON.stringify(data)}`);
+    NotificationManager.removeAll(TAG, (data) => {
+      Log.showInfo(TAG, `removeAll , data: ${JSON.stringify(data)}`);
     });
   }
 
@@ -329,8 +329,8 @@ export class NotificationService {
   }
 
   removeSysNotificationItem(hashCode) {
-    NotificationManager.remove(TAG, hashCode, (err, data) => {
-      Log.showInfo(TAG, `removeNotificationItem, err: ${JSON.stringify(err)} data: ${JSON.stringify(data)}`);
+    NotificationManager.remove(TAG, hashCode, (data) => {
+      Log.showInfo(TAG, `removeNotificationItem, data: ${JSON.stringify(data)}`);
     })
     Log.showInfo(TAG, `removeNotificationItem end, length: ${mNotificationList.length}`);
   }
