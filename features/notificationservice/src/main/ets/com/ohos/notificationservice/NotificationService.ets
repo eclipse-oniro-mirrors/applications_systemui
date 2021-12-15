@@ -86,7 +86,7 @@ export class NotificationService {
    * @param {Object} err - Error may occur.
    * @param {Object} data - Callback data.
    */
-  consumeCallback(err, data) {
+  consumeCallback(data) {
     Log.showInfo(TAG, 'consumeCallback started ====================');
     Log.showInfo(TAG, JSON.stringify(data.request?.wantAgent));
     Log.showInfo(TAG, JSON.stringify(data));
@@ -201,13 +201,12 @@ export class NotificationService {
    * @param {Object} err - return err Message.
    * @param {Object} data - return data Message.
    */
-  OnCancelCallback(err, data) {
-    console.info("================>OnCancelCallback err : =======================> " + JSON.stringify(err));
+  OnCancelCallback(data) {
     console.info("================>OnCancelCallback data : =======================> " + JSON.stringify(data));
     this.removeNotificationItem(data.request.hashCode,false);
   }
 
-  onUpdateCallback(err, data) {
+  onUpdateCallback(data) {
     Log.showInfo(TAG, `onUpdateCallback = ${JSON.stringify(data.request)}`);
   }
 
@@ -217,7 +216,7 @@ export class NotificationService {
    * @param {Object} err - Error may occur.
    * @param {Object} data - Callback data.
    */
-  subscribeCallback(err, data) {
+  subscribeCallback(err,data) {
         Log.showInfo(TAG, 'subscribeCallback finished ====================');
         Log.showInfo(TAG, `subscribeCallback err: ${JSON.stringify(err)}`)
         Log.showInfo(TAG, `subscribeCallback data: ${JSON.stringify(data)}`)
@@ -260,8 +259,7 @@ export class NotificationService {
   removeAllNotifications() {
     mNotificationList = []
     this.updateNotification()
-    NotificationManager.removeAll(TAG, (err, data) => {
-      Log.showInfo(TAG, `removeAll , err: ${JSON.stringify(err)}`);
+    NotificationManager.removeAll(TAG, (data) => {
       Log.showInfo(TAG, `removeAll , data: ${JSON.stringify(data)}`);
     });
   }
@@ -282,8 +280,7 @@ export class NotificationService {
     }
   }
   removeSysNotificationItem(hashCode){
-    NotificationManager.remove(TAG, hashCode, (err, data) => {
-      Log.showInfo(TAG, `removeNotificationItem, err: ${JSON.stringify(err)}`);
+    NotificationManager.remove(TAG, hashCode, (data) => {
       Log.showInfo(TAG, `removeNotificationItem, data: ${JSON.stringify(data)}`);
     })
     Log.showInfo(TAG, `removeNotificationItem end, length: ${mNotificationList.length}`);
