@@ -43,15 +43,6 @@
     {
       "name": "month",
       "value": "month"
-    },{
-      "name": "nonotification_text",
-      "value": "no notification"
-    },{
-      "name": "control_library",
-      "value": "control_library"
-    },{
-      "name": "control_center",
-      "value": "控制中心"
     }
   ]
 }

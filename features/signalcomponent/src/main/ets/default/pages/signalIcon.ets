@@ -36,7 +36,6 @@ struct SignalIcon {
 
   aboutToDisappear() {
     Log.showInfo(TAG, 'aboutToDisappear');
-//     mSignalModel.uninitSignalModel();
   }
 
   build() {
@@ -57,13 +56,13 @@ struct SignalIcon {
           .margin({ top: $r('app.float.margin_cellular_type') })
         Image(this.updateCellularImage(this.cellularLevel))
           .objectFit(ImageFit.ScaleDown)
-          .width(Constants.STATIC_BAR_ICON_WIDTH * this.StatusCoefficient)
-          .height(Constants.STATIC_BAR_ICON_HEIGHT * this.StatusCoefficient)
+          .width(`${Constants.STATIC_BAR_ICON_WIDTH * this.StatusCoefficient}px`)
+          .height(`${Constants.STATIC_BAR_ICON_HEIGHT * this.StatusCoefficient}px`)
       }.flexShrink(1)
-      .width(Constants.STATIC_BAR_ICON_WIDTH * this.StatusCoefficient)
+      .width(`${Constants.STATIC_BAR_ICON_WIDTH * this.StatusCoefficient}px`)
     }
     .margin({ left: 5})
-    .height(Constants.STATIC_BAR_ICON_HEIGHT*this.StatusCoefficient)
+    .height(`${Constants.STATIC_BAR_ICON_HEIGHT * this.StatusCoefficient}px`)
   }
 
 /**

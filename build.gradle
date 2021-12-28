@@ -1,10 +1,11 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 apply plugin: 'com.huawei.ohos.app'
+apply from: "./infra/config_exts.gradle"
 
 ohos {
-    compileSdkVersion 7
+    compileSdkVersion rootProject.ext.version.compileSdk
     defaultConfig {
-        compatibleSdkVersion 6
+        compatibleSdkVersion rootProject.ext.version.compatibleSdk
     }
     supportSystem "standard"
 }

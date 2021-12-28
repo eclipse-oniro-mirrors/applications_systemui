@@ -5,6 +5,10 @@
       "value": "#66000000"
     },
     {
+      "name": "default_font_color",
+      "value": "#ffffffff"
+    },
+    {
       "name": "index_background",
       "value": "#66000000"
     },
@@ -25,14 +29,8 @@
       "value": "#292830"
     },
     {
-      "name": "nonotification_text_color",
-      "value": "#ffffffff"
-    },{
       "name": "twogroup_layout_background",
       "value": "#66000000"
-    },{
-      "name": "title_font_color",
-      "value": "#FFF"
     }
   ]
 }

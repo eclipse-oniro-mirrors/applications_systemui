@@ -14,15 +14,21 @@
  */
 
 import Log from '../../../../../../../common/src/main/ets/default/Log.ets'
-import ConfigurableLayout from './ConfigurableLayout.ets'
+import ReadConfigUtil from '../../../../../../../common/src/main/ets/default/ReadConfigUtil.ets'
 import Notification from './notification.ets'
 import WindowManager from '../../../../../../../common/src/main/ets/default/WindowManager.ets'
-import ConfigReader from '../common/util/configReader.ets'
-import mNotificationService from '../../../../../../../features/notificationService/src/main/ets/com/ohos/notificationservice/NotificationService.ets'
 import ControlCenterComponent from './control.ets'
 import Constants from './common/constants.ets'
+import NavigationEvent from './common/navigationEvent.ets'
 import mBrightnessManager from '../../../../../../../features/brightnesscomponent/src/main/ets/default/brightnessManager.ets';
 import HeightConfigUtils from '../../../../../../../common/src/main/ets/default/heightcofigUtils/HeightConfigUtils.ets';
+import StatusBarComponent from '../../../../../../../features/statusbarcomponent/src/main/ets/com/ohos/pages/StatusBarComponent.ets';
+
+const STATUS_BAR_COMPONENT_CONFIG_FILE_PATH = "/data/accounts/account_0/applications/com.ohos.systemui/" +
+"com.ohos.systemui.statusbar/assets/statusbar/resources/rawfile/statusbarcomponentConfig.json";
+
+const CONTROL_CENTER_COMPONENT_CONFIG_FILE_PATH = "/data/accounts/account_0/applications/com.ohos.systemui/" +
+"com.ohos.systemui.statusbar/assets/statusbar/resources/rawfile/controlcentercomponentConfig.json";
 
 const TAG = 'StatusBar-Index'
 
@@ -36,11 +42,19 @@ struct Index {
   startY: number = 0
   @State moveX: number = 0
   @State moveY: number = 0
-  @State showStatusBar: boolean = true
-  @StorageLink('minHeight') minHeight:number = 0
-  @StorageLink('maxWidth') maxWidth:number = 0
-  @StorageLink('StatusMinH') StatusMinH:number = 24
-  @StorageLink('StatusCoefficient') StatusCoefficient:number = 1.0
+  @StorageLink("showStatusBar") showStatusBar: boolean = true
+  @StorageLink('minHeight') minHeight: number = 0
+  @StorageLink('maxWidth') maxWidth: number = 0
+  @StorageLink('StatusMinH') StatusMinH: number = 24
+  @StorageLink('StatusCoefficient') StatusCoefficient: number = 1.0
+  @State statusBarComponentConfig: any = {};
+  @State controlCenterComponentConfig: any = {};
+  mCallback: any;
+
+  onBackPress(): boolean {
+    return true;
+  }
+
   aboutToAppear() {
     Log.showInfo(TAG, `aboutToAppear, showStatusBar: ${this.showStatusBar}`);
 
@@ -53,35 +67,63 @@ struct Index {
     StatusMinH.set(mHeightConfigUtils.getStatusMinH());
     StatusCoefficient.set(mHeightConfigUtils.getStatusCoefficient());
 
+    {
+      let configData = ReadConfigUtil.ReadConfigFile(STATUS_BAR_COMPONENT_CONFIG_FILE_PATH);
+      for (let key in configData) {
+        this.statusBarComponentConfig[key] = configData[key];
+      }
+    }
+    {
+      let controlCenterConfigData = ReadConfigUtil.ReadConfigFile(CONTROL_CENTER_COMPONENT_CONFIG_FILE_PATH);
+      for (let key in controlCenterConfigData) {
+        this.controlCenterComponentConfig[key] = controlCenterConfigData[key];
+      }
+    }
+
     let signalObserved = AppStorage.SetAndLink("signalObserved", false);
     signalObserved.set(false);
 
     mWindowManager = new WindowManager();
     mWindowManager.initWindowManager();
-    mNotificationService.initNotificationService();
-    mBrightnessManager.registerBrightnessListener();
+
+    this.mCallback = {
+      "onStateChange": this.onStateChange.bind(this)
+    }
+    NavigationEvent.registerCallback(this.mCallback);
+  }
+
+  onStateChange(data) {
+    this.showStatusBar = true;
+    mWindowManager.setWindowMin((result) => {
+    })
   }
 
   aboutToDisappear() {
     Log.showInfo(TAG, `aboutToDisappear, showStatusBar: ${this.showStatusBar}`);
-    mBrightnessManager.unRegisterBrightnessListener();
   }
 
   build() {
     Flex({ direction: FlexDirection.Column, alignItems: ItemAlign.Center, justifyContent: FlexAlign.Center }) {
       if (this.showStatusBar) {
         Flex({ direction: FlexDirection.Row, alignItems: ItemAlign.Center, justifyContent: FlexAlign.Center }) {
-          ConfigurableLayout()
+          StatusBarComponent({
+            mStatusBarComponentConfig: this.statusBarComponentConfig,
+            mStatusBarColor: '#ffffffff'
+          })
         }
         .width('100%')
         .height('100%')
         .backgroundColor($r("app.color.statusbar_background"))
         .onTouch(this.touchEvent.bind(this))
       } else {
-        if( this.startX <= parseInt((this.maxWidth/2).toString()) ) {
-          Notification({ showStatusBar: $showStatusBar,minHeight:this.minHeight })
+        if (vp2px(this.startX) <= parseInt((this.maxWidth / 2).toString())) {
+          Notification({ showStatusBar: $showStatusBar, minHeight: this.minHeight })
         } else {
-          ControlCenterComponent({ showStatusBar: $showStatusBar,minHeight:this.minHeight })
+          ControlCenterComponent({
+            showStatusBar: $showStatusBar,
+            minHeight: this.minHeight,
+            mControlCenterComponentConfig: this.controlCenterComponentConfig
+          })
         }
       }
     }
@@ -104,7 +146,8 @@ struct Index {
       Log.showInfo(TAG, `touchEnd, moveX: ${this.moveX}, moveY: ${this.moveY}`)
       if (this.moveY > 10) {
         this.showStatusBar = false;
-        mWindowManager.setWindowMax((result)=>{});
+        mWindowManager.setWindowMax((result) => {
+        });
       }
     }
   }

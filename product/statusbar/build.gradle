@@ -1,8 +1,8 @@
 apply plugin: 'com.huawei.ohos.hap'
 ohos {
-    compileSdkVersion 7
+    compileSdkVersion rootProject.ext.version.compileSdk
     defaultConfig {
-        compatibleSdkVersion 4
+        compatibleSdkVersion rootProject.ext.version.compatibleSdk
     }
     entryModules "entry"
 }
@@ -11,7 +11,10 @@ dependencies {
     entryImplementation project(':entry')
     implementation fileTree(dir: 'libs', include: ['*.jar', '*.har'])
     testCompile 'junit:junit:4.12'
+    implementation project(':features:statusbarcomponent')
+    implementation project(':features:controlcentercomponent')
     implementation project(':features:signalcomponent')
+    implementation project(':features:capsulecomponent')
     implementation project(':features:airplanecomponent')
     implementation project(':features:brightnesscomponent')
     implementation project(':features:wificomponent')
@@ -19,5 +22,4 @@ dependencies {
     implementation project(':features:batterycomponent')
     implementation project(':features:clockcomponent')
     implementation project(':features:noticeitem')
-    implementation project(':features:notificationservice')
 }

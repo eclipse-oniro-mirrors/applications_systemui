@@ -16,7 +16,7 @@
 export default class Constants {
   static NOTIFICATION_TYPE_BASIC: string = '0';
   static NOTIFICATION_TYPE_LONG: string = '1';
-  static NOTIFICATION_TYPE_IMAGE: string = '2';
+  static NOTIFICATION_TYPE_PICTURE: string = '2';
   static NOTIFICATION_TYPE_MULTILINE: string = '4';
   static NOTIFICATION_TYPE_SOCIAL: string = '3';
   static NOTIFICATION_TYPE_MEDIA: string = '5';
@@ -31,4 +31,53 @@ export default class Constants {
   static DEFAULT_MAX_LINES: number= 1;
   static EXPENDED_MAX_LINES: number= 8;
   static CONTENT_LINE_HEIGHT: number = 20;
+  static SETTING_CONT_HEIGHT = '50';
+  static SETTING_DIALOG_WITH = '80%';
+  static SETTING_CONTENT_WITH = '100%'
+  static SETTING_DIALOG_HEIGHT = '380';
+  static CONFIRM_DIALOG_HEIGHT = '250'
+  static CONFIRM_DIALOG_WITH = '80%'
+  static CONFIRM_BUTTON_WITH = '50%'
+  static QUICKLY_SETTING_H = 83;
+  static ERROR_CALLBACK: number = 0;
+  static SUCCESS_CALLBACK: number = 1;
+  static KEY_INPUT: string = 'inputAction';
 }
+
+export class InputActionButtonData {
+  isSending: boolean = false;
+  content: string = '';
+}
+
+export interface NotificationItemData {
+  id: string;
+  hashcode: string;
+  contentType: string;
+  timestamp: number;
+  time: string;
+  appName: string;
+  want: any;
+  actionButtons: any[];
+  bundleName: string;
+  smallIcon?: PixelMap | string;
+  largeIcon?: PixelMap | string;
+  picture?: PixelMap;
+  title?: string;
+  text?: string;
+  additionalText?: string;
+  briefText?: string;
+  expandedTitle?: string;
+  longText?: string;
+  lines?: any[];
+  longTitle?: string;
+  slotLevel?: any;
+  source?: number;
+  versionName?: string;
+}
+
+export interface NotificationServiceListener {
+  onNotificationConsume?: (data: NotificationItemData) => void;
+  onNotificationLoad?: (data: NotificationItemData) => void;
+  onNotificationCancel?: (data: NotificationItemData) => void;
+}
+

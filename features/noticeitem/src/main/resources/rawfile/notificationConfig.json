@@ -1,0 +1,8 @@
+{
+  "limitTotal":6,
+  "app":
+  [
+    { "bundleName": "com.example.actsanspublishsoundtest","canShow":true, "limit": 5  },
+    { "bundleName": "com.ohos.app2","canShow":true, "limit": 3  }
+  ]
+}

@@ -1,0 +1,6 @@
+ext {
+    version = [
+            compileSdk: 7,
+            compatibleSdk: 4
+    ]
+}

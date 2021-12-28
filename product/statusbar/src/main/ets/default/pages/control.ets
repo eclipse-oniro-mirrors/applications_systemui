@@ -12,7 +12,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import ControlCenterComponent from './ControlCenter.ets'
+import ControlCenterComponent from '../../../../../../../features/controlcentercomponent/src/main/ets/com/ohos/pages/ControlCenterComponent.ets'
 import WindowManager from '../../../../../../../common/src/main/ets/default/WindowManager.ets'
 import BatteryIcon from '../../../../../../../features/batterycomponent/src/main/ets/default/pages/batteryIcon.ets'
 import ClockIcon from '../../../../../../../features/clockcomponent/src/main/ets/default/pages/clockIcon.ets'
@@ -27,6 +27,7 @@ let mWindowManager;
 
 @Component
 export default struct Control {
+  @State mControlCenterComponentConfig: any = {}
   @Link showStatusBar: boolean
   private minHeight: number
   startX: number = 0
@@ -43,7 +44,10 @@ export default struct Control {
   build() {
     Flex({ direction: FlexDirection.Column, alignItems: ItemAlign.Start, justifyContent: FlexAlign.Start }) {
       statusBar({minHeight: this.minHeight})
-      ControlCenterComponent({showStatusBar: $showStatusBar});
+      ControlCenterComponent({
+        showStatusBar: $showStatusBar,
+        mControlCenterComponentConfig: this.mControlCenterComponentConfig
+      });
     }
     .width('100%')
     .height('100%')

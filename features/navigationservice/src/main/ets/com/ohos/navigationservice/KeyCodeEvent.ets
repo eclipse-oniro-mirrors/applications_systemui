@@ -14,17 +14,18 @@
  */
 
 import Log from '../../../../../../../../common/src/main/ets/default/Log.ets';
+import commonevent from '@ohos.commonevent';
 import Constants from './common/constants.ets';
 import FeatureAbilityManager from '../../../../../../../../common/src/main/ets/default/abilitymanager/featureAbilityManager.ets';
 import Input from '@ohos.multimodalInput.inputEventClient';
-
+import settings from '@ohos.settingsnapi';
+import featureAbility from '@ohos.ability.featureAbility';
 const TAG = 'KeyCodeEvent'
 
 let res;
 let mFeatureAbilityManager = new FeatureAbilityManager();
 
-export class KeyCodeEvent{
-
+export class KeyCodeEvent {
   public sendKeyEvent(keyCode: number, eventType: number) {
     Log.showInfo(TAG, `sendKeyEvent keycode: ${keyCode} type: ${eventType}`);
     switch (keyCode) {
@@ -32,16 +33,18 @@ export class KeyCodeEvent{
         Log.showInfo(TAG, `sendKeyEvent case back type: ${eventType}`);
         if (eventType === Constants.KEY_DOWN) {
           Log.showInfo(TAG, 'sendKeyEvent, if');
-          this.sendBackKeyEventStart();//down
+          this.sendBackKeyEventStart(); //down
         } else if (eventType === Constants.KEY_UP) {
           Log.showInfo(TAG, `sendKeyEvent, else type: ${eventType}`);
-          this.sendBackKeyEventEnd();//up
+          this.sentEvnt();
+          this.sendBackKeyEventEnd(); //up
         }
         break;
       case Constants.KEYCODE_HOME:
         Log.showInfo(TAG, `sendKeyEvent case home type: ${eventType}`);
         if (eventType === Constants.KEY_UP) {
           Log.showInfo(TAG, 'sendKeyEvent, if');
+          this.sentEvnt();
           this.sendHomeKeyEvent();
         }
         break;
@@ -49,6 +52,7 @@ export class KeyCodeEvent{
         Log.showInfo(TAG, `sendKeyEvent case recent type: ${eventType}`);
         if (eventType === Constants.KEY_UP) {
           Log.showInfo(TAG, 'sendKeyEvent, if');
+          this.sentEvnt();
           this.sendRecentKeyEvent();
         }
         break;
@@ -71,7 +75,7 @@ export class KeyCodeEvent{
       maxKeyCode: 10008
     }
     res = Input.injectEvent({
-      KeyEvent:keyEvent
+      KeyEvent: keyEvent
     });
     Log.showInfo(TAG, `injectEventHandler injectEventSync down res: ${res}`);
   }
@@ -88,7 +92,7 @@ export class KeyCodeEvent{
       maxKeyCode: 10008
     }
     res = Input.injectEvent({
-      KeyEvent:keyEvent
+      KeyEvent: keyEvent
     });
   }
 
@@ -112,7 +116,22 @@ export class KeyCodeEvent{
       }
     });
   }
+
+  private sentEvnt() {
+    let commonEventPublishData = {
+      code: 1,
+      data: JSON.stringify({
+        callType: 1
+      })
+    }
+
+    commonevent.publish('SET_STATUSBAR_MIN_EVENT', commonEventPublishData, (err, data) => {
+      console.log(`sendEvent err ${JSON.stringify(err)}`);
+      console.log(`sendEvent data ${JSON.stringify(data)}`);
+    });
+  }
 }
 
 let keyCodeEvent = new KeyCodeEvent();
+
 export default keyCodeEvent as KeyCodeEvent;

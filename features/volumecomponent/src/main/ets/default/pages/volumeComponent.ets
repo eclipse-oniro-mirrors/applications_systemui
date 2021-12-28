@@ -20,48 +20,46 @@ import Log from '../../../../../../../common/src/main/ets/default/Log.ets';
 const TAG = 'Control-volumeComponent'
 const volumeType = audio.AudioVolumeType.MEDIA;
 
-let volumeModel = new VolumeModel();
-let volume = {
-  value: 7,
-  minValue: 0,
-  maxValue: 10,
-};
-
 @Component
-export
-struct MyVol {
-  private audioManager = audio.getAudioManager();
+export struct MyVol {
+  @StorageLink('VolumeValue') volumeValue: number = 0;
+  @State volume : any = {
+  minValue: 0,
+  maxValue: 15,
+  value: 7
+  };
+
+  aboutToAppear() {
+    Log.showInfo(TAG, 'aboutToAppear')
+    Log.showInfo(TAG,'Start init Volume!')
+    this.initVolume()
+    Log.showInfo(TAG,'Finished init Volume!')
+    VolumeModel.init();
+    VolumeModel.registerVolume();
+    VolumeModel.unRegisterVolume();
+  }
 
   aboutToDisappear () {
     Log.showInfo(TAG,'aboutToDisappear')
   }
 
   initVolume() {
-    volumeModel.getMaxVolume(volume, volumeType);
-    volumeModel.getMinVolume(volume, volumeType);
-    volumeModel.getVolume(volume, volumeType);
-    Log.showInfo(TAG, `initVolume ${volume.value} ${volume.minValue} ${volume.maxValue} `);
+    VolumeModel.getMaxVolume(this.volume, volumeType);
+    VolumeModel.getMinVolume(this.volume, volumeType);
+    Log.showInfo(TAG, `initVolume ${this.volume.minValue} ${this.volume.maxValue} `);
   }
 
-  setVolume(volumeValue, volumeType) {
-    Log.showInfo(TAG, `setVolume = ${volume.value} Type = ${volumeType}`)
-    audio.getAudioManager().setVolume(volumeType, volume.value).then(() => {
-      Log.showInfo(TAG,'Promise returned to indicate a successful volume setting')
-    })
+  setVolume(value) {
+    Log.showInfo(TAG, `setVolume = ${value}`);
+    VolumeModel.setVolume(value);
   }
 
-  aboutToAppear() {
-    Log.showInfo(TAG,'Start init Volume!')
-    this.initVolume()
-    Log.showInfo(TAG,'Finished init Volume!')
-  }
 
   build() {
     Flex({ direction: FlexDirection.Row, justifyContent: FlexAlign.Start, alignItems: ItemAlign.Center }) {
-      Column({useAlign:HorizontalAlign.Center}) {
+      Column() {
         Text($r('app.string.volume_control'))
-          .fontSize($r('app.float.control_common_font_size'))
-          .alignSelf(ItemAlign.Center)
+          .fontSize($r('app.float.control_common_font_size')).alignSelf(ItemAlign.Center)
 
       }
       .width('15%')
@@ -70,9 +68,9 @@ struct MyVol {
 
       Flex({ direction: FlexDirection.Row, justifyContent: FlexAlign.Center, alignItems: ItemAlign.Center }) {
         Slider({
-          value: volume.value,
-          min: volume.minValue,
-          max: volume.maxValue,
+          value: this.volumeValue,
+          min: this.volume.minValue,
+          max: this.volume.maxValue,
           step: 1,
           style: SliderStyle.INSET
         })
@@ -81,8 +79,8 @@ struct MyVol {
           .trackColor(Color.Grey)
           .selectedColor(Color.Blue)
           .onChange((value: number) => {
-          volume.value = value
-          this.setVolume(volume, volumeType)
+            this.volume.value = value
+            this.setVolume(this.volume)
         })
       }
       .width('85%')

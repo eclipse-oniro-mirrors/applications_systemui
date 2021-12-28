@@ -57,43 +57,12 @@
       "value": "25"
     },
     {
-      "name": "deleteall_image_opacity",
-      "value": "0.9"
-    },
-    {
       "name": "default_left_width_small",
       "value": "230"
     },
     {
       "name": "default_left_width_large",
       "value": "300"
-    },{
-      "name": "up_title_height",
-      "value": "83"
-    },{
-      "name": "center_item_margin_top",
-      "value": "20"
-    },{
-      "name": "center_item_margin_left",
-      "value": "10"
-    },{
-      "name": "center_item_margin_right",
-      "value": "10"
-    },{
-      "name": "wifi_and_air_height",
-      "value": "120"
-    },{
-      "name": "vol_height",
-      "value": "66"
-    },{
-      "name": "title_font_size",
-      "value": "35"
-    },{
-      "name": "notification_settings_width",
-      "value": "60"
-    },{
-      "name": "notification_settings_height",
-      "value": "60"
     }
   ]
 }
