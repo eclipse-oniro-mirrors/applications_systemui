@@ -19,7 +19,6 @@ import BatterySoc from './batterySoc'
 import Constants from '../common/constants.ets'
 import Log from '../../../../../../../common/src/main/ets/default/Log.ets'
 
-
 const TAG = 'BatteryComponent-batteryIcon'
 
 @Component
@@ -33,7 +32,6 @@ export default struct BatteryIcon {
   }
 
   aboutToDisappear() {
-    mBatteryModel.uninitBatteryModel();
     Log.showInfo(TAG, 'aboutToDisappear');
   }
 
@@ -49,8 +47,8 @@ export default struct BatteryIcon {
       .width('70%')
       .height('100%')
     }
-    .width(Constants.WHOLE_CONTAINER_WIDTH * this.StatusCoefficient)
-    .height(Constants.WHOLE_CONTAINER_HEIGHT * this.StatusCoefficient)
+    .width(`${Constants.WHOLE_CONTAINER_WIDTH * this.StatusCoefficient}px`)
+    .height(`${Constants.WHOLE_CONTAINER_HEIGHT * this.StatusCoefficient}px`)
     .margin($r('app.float.whole_container_margin'))
   }
 }

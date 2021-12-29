@@ -25,18 +25,24 @@ SystemUI应用是OpenHarmony中预置的系统应用，为用户提供系统相�
     ├── entry                           # entry模块目录
     ├── signature                       # 证书文件目录
     ├── features                        # 子组件目录
+    │   ├── airplanecomponent           # 飞行模式组件   
     │   ├── batterycomponent            # 电池组件
+    │   ├── brightnesscomponent         # 亮度组件
+    │   ├── capsulecomponent            # 通知胶囊组件
     │   ├── clockcomponent              # 时间组件
-    │   ├── control                     # 控制中心组件
+    │   ├── controlcentercomponent      # 控制中心组件
+    │   ├── managementcomponent         # 通知管理组件
     │   ├── navigationservice           # 导航栏服务组件
     │   ├── noticeitem                  # 通知子组件
     │   ├── notificationservice         # 通知服务组件
     │   ├── signalcomponent             # sim卡信号组件
+    │   ├── statusbarcomponent          # 状态栏组件
+    │   ├── volumecomponent             # 音量组件
     │   ├── wificomponent               # wifi组件
     ├── product                         # SystemUI总体功能目录
         ├── navigationBar               # 导航栏模块目录
         ├── statusbar                   # 状态栏模块目录
-        ├── systemDialog                # 系统弹框模块目录
+        ├── notificationmanagement      # 通知管理模块目录
 ```
 ## 使用说明<a name="section123459000"></a>
 

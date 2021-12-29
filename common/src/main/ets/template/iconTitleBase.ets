@@ -25,9 +25,13 @@ struct iconBaseComponent {
 
   private iconOn: any
   private iconOff: any
-  private mTitle: string = "None"
+  @State iconOffStr: string = ""
+  @State iconOnStr: string = ""
+  @State mTitle: string = "None"
+  private useIconStr = false
   private mConfig = UniformConfig.config;
   private mClickEvent: Function
+  private mLongClickEvent: Function
 
   @Link changeSwitch: boolean
   aboutToAppear() {
@@ -42,8 +46,11 @@ struct iconBaseComponent {
     Flex({ direction: FlexDirection.Row, alignItems: ItemAlign.Center, justifyContent: FlexAlign.Start }) {
       Flex({ direction: FlexDirection.Column, alignItems: ItemAlign.Center, justifyContent: FlexAlign.Center }) {
         iconComponent({
+          useIconStr: this.useIconStr,
           iconOff: this.iconOff,
           iconOn: this.iconOn,
+          iconOffStr: this.iconOffStr,
+          iconOnStr: this.iconOnStr,
           changeSwitch: $changeSwitch,
         })
       }
@@ -51,9 +58,18 @@ struct iconBaseComponent {
       .height('100%')
       .onClick(() => {
         console.log(`start clickEvent ${this.changeSwitch}`)
-        this.mClickEvent()
+        if(this.mClickEvent){
+          this.mClickEvent()
+        }
         console.log(`end clickEvent ${this.changeSwitch}`)
       })
+      .gesture(LongPressGesture({ repeat: false }).onAction(()=>{
+        console.log(`start longClickEvent ${this.changeSwitch}`)
+        if(this.mLongClickEvent){
+          this.mLongClickEvent()
+        }
+        console.log(`end longClickEvent ${this.changeSwitch}`)
+      }))
       Flex({ direction: FlexDirection.Column, alignItems: ItemAlign.Start, justifyContent: FlexAlign.Center }) {
         Text(this.mTitle)
           .fontSize(this.mConfig.titleSize)

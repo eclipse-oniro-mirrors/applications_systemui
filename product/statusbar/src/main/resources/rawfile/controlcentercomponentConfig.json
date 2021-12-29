@@ -1,0 +1,19 @@
+{
+  "ComplexToggleLayout": [
+    "wifi",
+    "air_plane"
+  ],
+  "TempDBSimpleToggleLayout": [
+    "testid"
+  ],
+  "LocalToggles": [
+    "wifi",
+    "air_plane"
+  ],
+  "MetaToggles": [
+    {
+      "id": "testid",
+      "abilityName": ""
+    }
+  ]
+}

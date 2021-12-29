@@ -29,6 +29,10 @@ struct Index {
   @StorageLink('navigationLayoutConfig') mConfig: any = {}
   @StorageLink('NavMinH') NavMinH:number = 32
 
+  onBackPress(): boolean {
+    return true;
+  }
+
   aboutToAppear() {
     Log.showInfo(TAG, `aboutToAppear Start`)
     mHeightConfigUtils = new HeightConfigUtils();

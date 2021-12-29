@@ -13,6 +13,8 @@
  * limitations under the License.
  */
 import Log from '../../../../../../common/src/main/ets/default/Log.ets'
+import featureAbility from '@ohos.ability.featureAbility'
+import settings from '@ohos.settingsnapi';
 
 const SHORT_LENGTH = 1;
 const LOOP_TIME = 3000;
@@ -24,7 +26,7 @@ var mTimeLink;
 var mDayLink;
 var mWeekDayLink;
 var mMonthLink;
-
+var misUsing24hFormat: boolean;
 
 export class TimeModel {
 
@@ -32,9 +34,16 @@ export class TimeModel {
    * Init Time Model
    *
    */
-  initTimeModel() {
-    Log.showInfo(TAG, 'initTimeModel');
+  initTimeModel(isUsing24hFormat: boolean) {
+    Log.showInfo(TAG, 'initTimeModel' + isUsing24hFormat);
+    var reFresh: boolean = (misUsing24hFormat === isUsing24hFormat);
+    misUsing24hFormat = isUsing24hFormat;
     Log.showInfo(TAG, `timeInterval : ${timeInterval} type: ${typeof timeInterval}`);
+    if (!reFresh) {
+      let date = new Date();
+      Log.showInfo(TAG, `getCurrentDate ${date.toTimeString()}`);
+      this.updateTime(date);
+    }
     if (timeInterval === null || timeInterval === undefined) {
       Log.showInfo(TAG, 'first initTimeModel');
       mTimeLink = AppStorage.SetAndLink('time', '');
@@ -61,7 +70,7 @@ export class TimeModel {
     }, LOOP_TIME);
   }
 
-  private getDate(){
+  private getDate() {
     Log.showInfo(TAG, 'getDate');
     let date = new Date();
     Log.showInfo(TAG, `getCurrentDate ${date.toTimeString()}`);
@@ -80,9 +89,18 @@ export class TimeModel {
    *
    * @param {Object} date - Object of Date.
    */
-  private updateTime(date) {
-    let time = date.toTimeString().substring(0, 5);
-    mTimeLink.set(time);
+  private updateTime(dateTime) {
+    let hours = dateTime.getHours();
+    Log.showInfo(TAG, 'updateTime' + misUsing24hFormat);
+    if (!misUsing24hFormat && hours > 12) {
+      hours = hours % 12;
+    }
+    let minutes = dateTime.getMinutes();
+    mTimeLink.set(`${this.fill(hours)}:${this.fill(minutes)}`);
+  }
+
+  fill(value) {
+    return (value > 9 ? "" : "0") + value;
   }
 
   /**
@@ -117,4 +135,5 @@ export class TimeModel {
 }
 
 let timeModel = new TimeModel();
+
 export default timeModel as TimeModel;

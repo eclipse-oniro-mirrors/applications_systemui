@@ -12,8 +12,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-include ':entry', ':product:navigationBar', ':common', ':product:statusbar', ':product:systemDialog',
-        ':features:batterycomponent', ':features:clockcomponent',':features:signalcomponent',
-        ':features:wificomponent', ':features:navigationservice',':features:noticeitem',
-        ':features:notificationservice',':features:airplanecomponent',':features:brightnesscomponent',
-        ':features:volumecomponent'
+
+include ':entry', ':product:navigationBar', ':common', ':product:statusbar', ':product:notificationmanagement',
+        ':features:capsulecomponent', ':features:batterycomponent', ':features:clockcomponent',
+        ':features:signalcomponent', ':features:wificomponent', ':features:navigationservice', ':features:noticeitem',
+        ':features:airplanecomponent', ':features:brightnesscomponent', ':features:volumecomponent', ':features:managementcomponent',
+        ':features:statusbarcomponent', ':features:controlcentercomponent'

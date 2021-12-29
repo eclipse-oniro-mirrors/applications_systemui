@@ -33,7 +33,8 @@ export class BatteryModel {
     Log.showInfo(TAG, 'initBatteryModel');
     mBatterySoc = AppStorage.SetAndLink('batterySoc', 0);
     mBatteryCharging = AppStorage.SetAndLink('batteryCharging', false);
-    if (mBatteryEventSubscriber == null) {
+    Log.showInfo(TAG, 'mBatteryEventSubscriber' + mBatteryEventSubscriber);
+    if (mBatteryEventSubscriber == null || mBatteryEventSubscriber == undefined) {
       this.registerBatteryListener();
     }
     this.getBatteryStatus();
@@ -51,7 +52,7 @@ export class BatteryModel {
     Log.showInfo(TAG, 'registerBatteryListener start');
     BatterySubscriber.createSubscriber(
       mBatteryEventSubscribeInfo,
-      this.createBatterySubscriberCallBack.bind(this)
+    this.createBatterySubscriberCallBack.bind(this)
     );
   }
 
@@ -79,14 +80,12 @@ export class BatteryModel {
     BatterySubscriber.subscribe(mBatteryEventSubscriber, this.batterySubscriberCallBack.bind(this));
   }
 
-
   /**
      * Callback of the events
      *
      * @param {Object} err - error returns from the caller
      * @param {Object} data - data returns from the caller
      */
-
   private batterySubscriberCallBack(err, data) {
     Log.showInfo(TAG, `batterySubscriberCallBack err: ${JSON.stringify(err)} data: ${JSON.stringify(data)}`);
     if (err.code == 0) {
@@ -103,7 +102,7 @@ export class BatteryModel {
      * Get battery status and remaining power
      */
   private getBatteryStatus() {
-    Log.showInfo(TAG,'getBatteryStatus')
+    Log.showInfo(TAG, 'getBatteryStatus')
     let batterySoc = BatteryInfo.batterySOC;
     let batteryCharging = BatteryInfo.chargingStatus;
     if (null == batterySoc) {
@@ -114,6 +113,9 @@ export class BatteryModel {
       // If the result is a negative number, set it as positive number.
       batterySoc = Math.abs(batterySoc) * Constants.PERCENT_NUMBER;
     }
+
+    Log.showInfo(TAG, 'batterySoc = ' + batterySoc)
+
     // Set the battery status as charging when there is no battery hardware
     this.checkBatteryStatus(batteryCharging, (result) => {
       let batteryStatus = result;
@@ -149,4 +151,5 @@ export class BatteryModel {
 }
 
 let mBatteryModel = new BatteryModel();
+
 export default mBatteryModel as BatteryModel;

@@ -1,0 +1,91 @@
+// @ts-nocheck
+/**
+ * Copyright (c) 2021 Huawei Device Co., Ltd.
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+import ConfigData from '../../common/constants.ets';
+import AppItemComponent from './appItemComponent.ets';
+import Router from '@system.router';
+import Log from '../../../../../../../../../common/src/main/ets/default/Log.ets';
+import ViewModel from '../../vm/appLstComponentViewModel.ets'
+
+const TAG = 'ManagementComponent-AppLstComponent';
+
+@Component
+export default struct AppLstComponent {
+  @StorageLink('appManagementList') appList: any[]= [];
+
+  aboutToAppear(): void{
+    Log.showInfo(TAG, `aboutToAppear`)
+    ViewModel.ViewModelInit()
+  }
+
+  aboutToDisappear(): void{
+    Log.showInfo(TAG, `aboutToDisappear`)
+  }
+
+  onPageShow(): void{
+    Log.showInfo(TAG, `onPageShow`)
+  }
+
+  onBackPress() {
+    Log.showInfo(TAG, `onBackPress`)
+  }
+
+  build() {
+    Column() {
+      List() {
+        ForEach(this.appList, (item) => {
+          ListItem() {
+            AppItemComponent({
+              appIcon: item.appIcon,
+              appTitle: item.appTitle,
+              appSummary: item.appSummary,
+              appValue: item.appValue,
+              appArrow: item.appArrow,
+              appArrowStyle: '',
+              appUri: item.appUri,
+              appBundleName: item.appBundleName,
+              appUid: item.appUid,
+              appSwitch: 0
+            })
+          }
+          .onClick(() => {
+            Log.showInfo(TAG, `onClick`)
+            Router.push({ uri: item.appUri, params: item });
+          })
+          .height($r('app.float.appitem_item_height'));
+        });
+      }
+      .divider({
+        strokeWidth: 1,
+        color: $r('app.color.divider_color'),
+        startMargin: $r('app.float.divider_margin_l'),
+        endMargin: $r('app.float.divider_margin_r')
+      })
+      .width(ConfigData.WH_100_100)
+      .height(ConfigData.WH_100_100)
+      .visibility(Visibility.Visible)
+      .zIndex(0)
+      .border({ width: $r('app.float.border_width'), color: Color.White,
+        radius: $r('app.float.border_radius') })
+      .backgroundColor(Color.White)
+    }
+    .margin({ left: $r('app.float.page_margin_l'),
+      right: $r('app.float.page_margin_r') })
+    .backgroundColor($r('app.color.background_color'))
+    .align(Alignment.Center)
+    .width(ConfigData.WH_100_100)
+    .height(ConfigData.WH_100_100);
+  }
+}

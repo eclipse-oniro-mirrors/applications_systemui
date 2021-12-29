@@ -107,6 +107,58 @@
     {
       "name": "displayicon_height",
       "value": "20"
+    },
+    {
+      "name": "deleteall_image_opacity",
+      "value": "0.9"
+    },
+    {
+      "name": "setting_title_fontsize",
+      "value": "28"
+    },
+    {
+      "name": "setting_cont_fontsize",
+      "value": "26"
+    },
+    {
+      "name": "setting_border_width",
+      "value": "1"
+    },
+    {
+      "name": "setting_border_radius",
+      "value": "30"
+    },
+    {
+      "name": "action_button_height",
+      "value": "48"
+    },
+    {
+      "name": "action_button_padding",
+      "value": "12"
+    },
+    {
+      "name": "picture_default_height",
+      "value": "100"
+    },
+    {
+      "name": "confirm_title_fontsize",
+      "value": "28"
+    },
+    {
+      "name": "confirm_cont_fontsize",
+      "value": "26"
+    },
+    {
+      "name": "confirm_divider_height",
+      "value": "20"
+    },
+    {
+      "name": "confirm_button_height",
+      "value": "60"
+    },
+    {
+      "name": "icon_item_fontsize",
+      "value": "18"
     }
   ]
 }

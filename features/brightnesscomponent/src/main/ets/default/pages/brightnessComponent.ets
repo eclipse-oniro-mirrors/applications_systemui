@@ -20,8 +20,7 @@ import Log from '../../../../../../../common/src/main/ets/default/Log.ets';
 const TAG = 'Control-brightnessComponent'
 
 @Component
-export
-struct MyBrightness {
+export struct MyBrightness {
   @StorageLink('BrightnessValue') brightnessValue: number = 0;
   @State brightnessItem: any = {
     min: 0,
@@ -31,10 +30,13 @@ struct MyBrightness {
 
   aboutToAppear() {
     Log.showInfo(TAG, `Brightness  aboutToAppear ${JSON.stringify(this.brightnessItem)}`);
+    mBrightnessManager.init();
+    mBrightnessManager.registerBrightness();
   }
 
-  aboutToDisappear (){
-    Log.showInfo(TAG,'aboutToDisappear')
+  aboutToDisappear() {
+    Log.showInfo(TAG, 'aboutToDisappear')
+    mBrightnessManager.unRegisterBrightness();
   }
 
   setBrightness(value) {
@@ -44,7 +46,7 @@ struct MyBrightness {
 
   build() {
     Flex({ direction: FlexDirection.Row, justifyContent: FlexAlign.Start, alignItems: ItemAlign.Center }) {
-      Column({useAlign:HorizontalAlign.Center}) {
+      Column() {
         Text($r('app.string.brightness_text'))
           .fontSize($r('app.float.control_common_font_size'))
           .alignSelf(ItemAlign.Center)
@@ -60,15 +62,16 @@ struct MyBrightness {
           max: this.brightnessItem.max,
           step: 1,
           style: SliderStyle.INSET
+
         })
           .width('100%')
           .blockColor(Color.Blue)
           .trackColor(Color.Grey)
           .selectedColor(Color.Blue)
           .onChange((value: number) => {
-          this.brightnessItem.value = value;
-          this.setBrightness(this.brightnessItem);
-        })
+            this.brightnessItem.value = value;
+            this.setBrightness(this.brightnessItem);
+          })
       }
       .width('85%')
     }
