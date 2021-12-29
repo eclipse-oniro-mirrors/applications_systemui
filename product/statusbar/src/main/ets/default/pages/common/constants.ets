@@ -14,11 +14,9 @@
  */
 
 export default class Constants {
-
   static TOUCHTYPE_DOWN = 0;
   static TOUCHTYPE_UP = 1;
   static TOUCHTYPE_MOVE = 2;
-
   static WEEKDAY_LIST = [
     $r('app.string.monday'),
     $r('app.string.tuesday'),
@@ -28,17 +26,16 @@ export default class Constants {
     $r('app.string.saturday'),
     $r('app.string.sunday')
   ]
-
   static DIGITS = 10;
   static DEFAULT_MIDDLE_PART_WIDTH = 70;
-
   static MARK_MONTH = 0;
   static MARK_DAY = 1;
-
+  static EMPTY  = 'empty'
   static WIFI  = 'wifi'
   static SIGNAL = 'signal'
   static CLOCK = 'clock'
   static BATTERY = 'battery'
+  static CAPSULE = 'capsule'
   static NOTIFICATION = 'notification'
   static STATIC_BAR_ICON_WIDTH = 24;
   static STATIC_BAR_ICON_MARGIN = 2;

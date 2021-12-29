@@ -1,0 +1,32 @@
+{
+  "app": {
+    "bundleName": "com.ohos.systemui",
+    "vendor": "ohos",
+    "version": {
+      "code": 1000000,
+      "name": "1.0.0"
+    }
+  },
+  "deviceConfig": {},
+  "module": {
+    "package": "com.ohos.systemui.capsulecomponent",
+    "deviceType": [
+      "phone"
+    ],
+    "reqPermissions": [{
+      "name": "ohos.permission.COMMONEVENT_STICKY",
+      "reason": "Obtain the required permission",
+      "usedScene": {
+        "ability": [
+          ".MainAbility"
+        ],
+        "when": "inuse"
+      }
+    }],
+    "distro": {
+      "deliveryWithInstall": true,
+      "moduleName": "capsulecomponent",
+      "moduleType": "har"
+    }
+  }
+}

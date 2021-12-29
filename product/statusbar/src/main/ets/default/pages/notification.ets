@@ -20,10 +20,9 @@ import BatteryIcon from '../../../../../../../features/batterycomponent/src/main
 import ClockIcon from '../../../../../../../features/clockcomponent/src/main/ets/default/pages/clockIcon.ets'
 import WifiIcon from '../../../../../../../features/wificomponent/src/main/ets/default/pages/wifiIcon.ets'
 import SignalIcon from '../../../../../../../features/signalcomponent/src/main/ets/default/pages/signalIcon.ets'
-import notificationItem from '../../../../../../../features/noticeitem/src/main/ets/com/ohos/noticeItem/item/notificationItem.ets'
+import NotificationListComponent from '../../../../../../../features/noticeitem/src/main/ets/com/ohos/noticeItem/view/NotificationListComponent.ets'
 import WindowManager from '../../../../../../../common/src/main/ets/default/WindowManager.ets'
-import mNotificationService from '../../../../../../../features/notificationService/src/main/ets/com/ohos/notificationservice/NotificationService.ets'
-
+import ViewModel from '../../../../../../../features/noticeitem/src/main/ets/com/ohos/noticeItem/viewmodel/ViewModel.ets'
 
 const TAG = 'StatusBar-notification'
 
@@ -32,13 +31,14 @@ let mFeatureAbilityManager;
 
 @Component
 export default
-struct Index {
+struct Notification {
   @Link showStatusBar: boolean
   private minHeight: number
   startX: number = 0
   startY: number = 0
   @State moveX: number = 0
   @State moveY: number = 0
+  @StorageLink('notificationList') notificationList: any[] = []
 
 
   aboutToAppear() {
@@ -51,7 +51,21 @@ struct Index {
     Flex({ direction: FlexDirection.Column, alignItems: ItemAlign.Start, justifyContent: FlexAlign.Start }) {
       statusBar({minHeight:this.minHeight})
       quicklySetting({ showStatusBar: $showStatusBar})
-      notificationItems({ showStatusBar: $showStatusBar})
+      Stack({ alignContent: Alignment.TopStart }) {
+        NotificationListComponent()
+        if (this.notificationList.length > 0) {
+          Image($r('app.media.delete_all')) //icon: remove all notifications
+            .objectFit(ImageFit.Contain)
+            .width($r('app.float.deleteall_image_width'))
+            .height($r('app.float.deleteall_image_height'))
+            .borderRadius($r('app.float.deleteall_image_borderradius'))
+            .opacity($r('app.float.deleteall_image_opacity'))
+            .onClick(() => {
+              ViewModel.removeAllNotifications();
+            })
+            .position({ x: '44.5%', y: '85%' })
+        }
+      }
     }
     .width('100%')
     .height('100%')
@@ -123,7 +137,7 @@ struct quicklySetting {
   }
 
   aboutToDisappear() {
-    Log.showInfo(TAG, `aboutToDisappear, showStatusBar: ${this.showStatusBar}`)
+    Log.showInfo(TAG, `quicklySetting, aboutToDisappear, showStatusBar: ${this.showStatusBar}`)
   }
 
   build() {
@@ -203,68 +217,5 @@ struct dateItem {
           .fontSize($r('app.float.quicklysetting_date_fontsize'))
       }
     }
-  }
-}
-
-@Component
-struct notificationItems {
-  @StorageLink('notificationList') notificationList: any[] = []
-  @StorageLink('maxHeight') maxHeight:number = 0
-  @StorageLink('minHeight') minHeight:number = 0
-  @State notificationH :number = 0
-  @Link showStatusBar: boolean
-
-  aboutToAppear() {
-    Log.showInfo(TAG, `notificationItems, aboutToAppear`)
-    this.notificationH = this.maxHeight - (this.minHeight*2) - Constants.QUICKLY_SETTING_H;
-  }
-
-  build() {
-    Flex({ direction: FlexDirection.Column, justifyContent: FlexAlign.Start, alignItems: ItemAlign.Center }) {
-      if (this.notificationList.length == 0) {
-        //text: no notification
-        Flex({ direction: FlexDirection.Column, justifyContent: FlexAlign.Center, alignItems: ItemAlign.Center }) {
-          Text($r('app.string.nonotification_text'))
-            .fontColor($r('app.color.nonotification_text_color'))
-        }
-      } else {
-        Stack({ alignContent: Alignment.TopStart }) {
-          List() {
-            ForEach(this.notificationList, (item: any) => { //notificationItems
-              ListItem() {
-                notificationItem({ itemData: item, showStatusBar: $showStatusBar })
-              }
-            }, (item: any) => item.hashcode.toString())
-          }
-          .onTouch((event: TouchEvent) => {
-            Log.showInfo(TAG, `Touch Event ${event.type} at Point ${event.touches[0].x}, ${event.touches[0].y}`)
-            event.stopPropagation();
-          })
-
-          Image($r('app.media.delete_all')) //icon: remove all notifications
-          .objectFit(ImageFit.Contain)
-            .width($r('app.float.deleteall_image_width'))
-            .height($r('app.float.deleteall_image_height'))
-            .borderRadius($r('app.float.deleteall_image_borderradius'))
-            .opacity($r('app.float.deleteall_image_opacity'))
-            .onClick(this.removeAllNotification.bind(this))
-            .position({ x: '44.5%', y: '85%' })
-
-          Flex() { //bottom Line
-          }.width('100%').height('7%')
-          .opacity($r('app.float.deleteall_image_opacity'))
-          .position({ x: 0, y: '93%' })
-        }
-        .width('100%')
-        .height('100%')
-      }
-    }
-    .width('100%')
-    .height(this.notificationH)
-  }
-
-  removeAllNotification() {
-    Log.showInfo(TAG,` removeAllNotification `)
-    mNotificationService.removeAllNotifications();
   }
 }

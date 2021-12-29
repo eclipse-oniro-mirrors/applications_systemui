@@ -1,0 +1,40 @@
+{
+  "LayoutGroups": [
+    {
+      "id": 1,
+      "Components": [
+        "signal",
+        "wifi",
+        "capsule",
+        "notification"
+      ]
+    },
+    {
+      "id": 2,
+      "Components": []
+    },
+    {
+      "id": 3,
+      "Components": [
+        "battery",
+        "clock"
+      ]
+    }
+  ],
+  "metaIconKeys": [
+  ],
+  "LocalSlots": [
+    "clock",
+    "battery",
+    "signal",
+    "wifi",
+    "capsule",
+    "notification"
+  ],
+  "emptyPosition": {
+    "x1": 0,
+    "y1": 0,
+    "x2": 0,
+    "y2": 0
+  }
+}

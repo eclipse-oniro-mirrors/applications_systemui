@@ -15,32 +15,54 @@
 
 import audio from '@ohos.multimedia.audio';
 import Log from '../../../../../../common/src/main/ets/default/Log.ets';
+import settings from '@ohos.settingsnapi';
+import featureAbility from '@ohos.ability.featureAbility';
 
+const SYSTEMUI_AUDIOVOLUMETYPE_MEDIA = 'Audio.AudioVolumeType.MEDIA'
 let TAG = 'Control-VolumeModel';
+var mVolumeValue = AppStorage.SetAndLink('VolumeValue', 10);
 
-export default class VolumeModel {
-    constructor() {
+export class VolumeModel {
+    helper: any
+    uri: string
+
+    init(): void{
+        Log.showInfo(TAG, 'init');
+        this.uri = settings.getUri(SYSTEMUI_AUDIOVOLUMETYPE_MEDIA);
+        Log.showInfo(TAG, 'settings geturi of audio.AudioVolumeType.MEDIA is ' + this.uri);
+        this.helper = featureAbility.acquireDataAbilityHelper(this.uri);
+        this.getVolume();
     }
 
-    setVolume(volumeValue, volumeType){
-        Log.showInfo(TAG, `setVolume volumeValue: ${JSON.stringify(volumeValue)} volumeType：${JSON.stringify(volumeType)} `);
-
-        audio.getAudioManager().setVolume(volumeType, volumeValue).then(() => {
-            Log.showInfo(TAG,'Promise returned to indicate a successful volume setting.')
-        });
-    }
-
-    getVolume(callback, volumeType) {
-        Log.showInfo(TAG, `getVolume volumeType：${volumeType} `);
-        audio.getAudioManager().getVolume(volumeType, (err, value) => {
-
-            if (err) {
-                Log.showInfo(TAG, `Failed to obtain the volume. ${err.message}`);
-                return;
-            }
-            Log.showInfo(TAG, 'getVolume Callback invoked to indicate that the volume is obtained.' + value);
-            callback.value = value;
+    registerVolume() {
+        this.helper.on("dataChange", this.uri, (err) => {
+            let data = settings.getValue(this.helper, SYSTEMUI_AUDIOVOLUMETYPE_MEDIA, '5')
+            Log.showInfo(TAG, `after audio.AudioVolumeType.MEDIA datachange settings getValue ${parseInt(data)}`);
+            mVolumeValue.set(parseInt(data));
         })
+    }
+
+    unRegisterVolume() {
+        this.helper.off("dataChange", this.uri, (err) => {
+            Log.showInfo(TAG, `unregister audio.AudioVolumeType.MEDIA helper`);
+        })
+    }
+
+    setVolume(callback){
+        Log.showInfo(TAG, 'setVolume');
+        let value = parseInt(callback.value);
+        Log.showInfo(TAG, `setVolume ${value}`);
+        mVolumeValue.set(value);
+        Log.showInfo(TAG, `mVolumeValue setVolume ${value} end`);
+        settings.setValue(this.helper, SYSTEMUI_AUDIOVOLUMETYPE_MEDIA, callback.value.toString());
+        Log.showInfo(TAG, `settings setVolume ${callback.value} end`);
+    }
+
+    getVolume() {
+        Log.showInfo(TAG, 'getVolume');
+        let data = settings.getValue(this.helper, SYSTEMUI_AUDIOVOLUMETYPE_MEDIA, '5');
+        Log.showInfo(TAG, `settings getVolume ${parseInt(data)}`);
+        mVolumeValue.set(parseInt(data));
     }
 
     getMaxVolume(callback, volumeType) {
@@ -67,3 +89,7 @@ export default class VolumeModel {
         })
     }
 }
+
+let mVolumeModel = new VolumeModel();
+
+export default mVolumeModel as VolumeModel;

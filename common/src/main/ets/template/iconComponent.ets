@@ -13,7 +13,10 @@
  * limitations under the License.
  */
 
+import Log from '../default/Log.ets';
 import UniformConfig from './UniformConfig.ets'
+
+const TAG= 'iconComponent.ets'
 
 @Component
 export default
@@ -22,21 +25,30 @@ struct iconComponent {
   private mConfig = UniformConfig.config;
   @State iconOff: any = ""
   @State iconOn: any = ""
+  @Prop iconOffStr: string
+  @Prop iconOnStr: string
+  private useIconStr = false
 
   @Link changeSwitch: boolean
 
   aboutToAppear() {
-    console.log(`------iconTitleBaseComponent  ${this.changeSwitch} ${JSON.stringify(this.iconOff)}  ${JSON.stringify(this.iconOn) }`)
+    Log.showInfo(TAG,`aboutToAppear, ${this.changeSwitch} ${JSON.stringify(this.iconOff)} ${JSON.stringify(this.iconOn)}`)
+    Log.showInfo(TAG,`aboutToAppear, useIconStr: ${this.useIconStr}`)
   }
+
+  aboutToDisappear () {
+    Log.showInfo(TAG,'aboutToDisappear')
+  }
+
   build() {
     Column() {
       Stack() {
         Flex()
           .backgroundColor(this.changeSwitch == false? this.mConfig.iconOffBG : this.mConfig.iconOnBG)
-          .clip(new Circle({ width: this.mConfig.circleWidth, height: this.mConfig.circleHeight }))
+          .clip(Circle({ width: this.mConfig.circleWidth, height: this.mConfig.circleHeight }))
           .width(this.mConfig.circleWidth)
           .height(this.mConfig.circleHeight)
-        Image(this.changeSwitch == false? this.iconOff: this.iconOn)
+        Image(this.changeSwitch == false? (this.useIconStr ? this.iconOffStr : this.iconOff): (this.useIconStr ? this.iconOnStr : this.iconOn))
           .size({ width: this.mConfig.iconWidth, height: this.mConfig.iconHeight })
           .objectFit(ImageFit.Contain)
       }.margin({ left: 10 })

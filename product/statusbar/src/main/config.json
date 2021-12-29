@@ -21,16 +21,6 @@
     },
     "abilities": [
       {
-        "skills": [
-          {
-            "entities": [
-              "entity.system.home"
-            ],
-            "actions": [
-              "action.system.home"
-            ]
-          }
-        ],
         "name": "com.ohos.systemui.statusbar.MainAbility",
         "icon": "$media:icon",
         "description": "$string:mainability_description",

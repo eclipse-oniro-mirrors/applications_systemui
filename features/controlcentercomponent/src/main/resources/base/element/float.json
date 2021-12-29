@@ -1,0 +1,35 @@
+{
+  "float": [
+    {
+      "name": "icon_item_fontsize",
+      "value": "18"
+    },{
+      "name": "up_title_height",
+      "value": "83"
+    },{
+      "name": "center_item_margin_top",
+      "value": "20"
+    },{
+      "name": "center_item_margin_left",
+      "value": "10"
+    },{
+      "name": "center_item_margin_right",
+      "value": "10"
+    },{
+      "name": "complex_toggle_height",
+      "value": "120"
+    },{
+      "name": "vol_height",
+      "value": "66"
+    },{
+      "name": "title_font_size",
+      "value": "35"
+    },{
+      "name": "notification_settings_width",
+      "value": "60"
+    },{
+      "name": "notification_settings_height",
+      "value": "60"
+    }
+  ]
+}

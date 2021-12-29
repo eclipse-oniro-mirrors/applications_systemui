@@ -16,7 +16,7 @@
     ],
     "distro": {
       "deliveryWithInstall": true,
-      "moduleName": "commonutil",
+      "moduleName": "common",
       "moduleType": "har"
     }
   }

@@ -13,83 +13,60 @@
  * limitations under the License.
  */
 
-import brightness from '@ohos.brightness';
 import Log from '../../../../../../common/src/main/ets/default/Log.ets';
 import commonEvent from '@ohos.commonEvent';
+import settings from '@ohos.settingsnapi';
+import featureAbility from '@ohos.ability.featureAbility';
 
+const SYSTEMUI_BRIGHTNESS = 'brightness';
 const TAG = 'Control-brightnessManager';
-const EVENT = 'BRIGHTNESS_VALUE_SYSTEM_UI';
-let mCommonEventSubscribeInfo = {
-  events: ['BRIGHTNESS_VALUE']
-};
-let curValue = 10;
-let mCommonEventSubscriber =null;
 var mBrightnessValue = AppStorage.SetAndLink('BrightnessValue', 255);
 
-export class brightnessManager{
+export class brightnessManager {
+  helper: any
+  uri: string
 
-  registerBrightnessListener() {
-    Log.showInfo(TAG, 'registerBrightnessListener status listener ===========');
-    if(mCommonEventSubscriber == null){
-      commonEvent.createSubscriber(
-        mCommonEventSubscribeInfo,
-        this.createBrightnessSubscriberCallBack.bind(this)
-      );
-    }
+  init(): void{
+    Log.showInfo(TAG, 'init');
+    this.uri = settings.getUri(SYSTEMUI_BRIGHTNESS);
+    Log.showInfo(TAG, 'settings geturi of brightness is ' + this.uri);
+    this.helper = featureAbility.acquireDataAbilityHelper(this.uri);
+    this.getValue();
   }
 
-  createBrightnessSubscriberCallBack(err, data) {
-    Log.showInfo(TAG, `createBrightnessSubscriberCallBack err: ${JSON.stringify(err)} data: ${JSON.stringify(data)}`);
-    mCommonEventSubscriber = data;
-    commonEvent.subscribe(mCommonEventSubscriber, this.BrightnessSubscriberCallBack.bind(this));
+  registerBrightness() {
+    this.helper.on("dataChange", this.uri, (err) => {
+      let data = settings.getValue(this.helper, SYSTEMUI_BRIGHTNESS, '100')
+      Log.showInfo(TAG, `after brightness datachange settings getValue ${parseInt(data)}`);
+      mBrightnessValue.set(parseInt(data));
+    })
   }
 
-  BrightnessSubscriberCallBack(err, data) {
-    Log.showInfo(TAG,`BrightnessSubscriberCallBack, err: ${JSON.stringify(err)} data: ${JSON.stringify(data)}`);
-    if (err.code == 0) {
-      if(data.data == '-1'){
-        this.sendEvent(mBrightnessValue.get());
-      }else{
-        Log.showInfo(TAG, `BrightnessSubscriberCallBack set${parseInt(data.data)}`);
-        mBrightnessValue.set(parseInt(data.data));
-        Log.showInfo(TAG, `BrightnessSubscriberCallBack set${mBrightnessValue.get()}`);
-      }
-    }else{
-      Log.showInfo(TAG,'Subscriberregister error when subscribing ========');
-    }
+  unRegisterBrightness() {
+    this.helper.off("dataChange", this.uri, (err) => {
+      Log.showInfo(TAG, `unregister brightness helper`);
+    })
   }
 
-  unRegisterBrightnessListener() {
-    Log.showInfo(TAG,'unRegisterBrightnessListener')
-    commonEvent.unsubscribe(mCommonEventSubscriber, () => {
-      Log.showInfo(TAG, 'Subscriberregister unregister Brightness Status Listener ===============');
-    });
+  getValue() {
+    Log.showInfo(TAG, 'getValue');
+    let data = settings.getValue(this.helper, SYSTEMUI_BRIGHTNESS, '100');
+    Log.showInfo(TAG, `settings getValue ${parseInt(data)}`);
+    mBrightnessValue.set(parseInt(data));
   }
 
   setValue(callback) {
     Log.showInfo(TAG, 'setValue');
     let value = parseInt(callback.value);
-    Log.showInfo(TAG, `setValue ${ value }`);
+    Log.showInfo(TAG, `setValue ${value}`);
     mBrightnessValue.set(value);
-    this.sendEvent(mBrightnessValue.get().toString());
-    brightness.setValue(value);
-    Log.showInfo(TAG, `setValue ${ value } end`);
-  }
-
-  sendEvent(value){
-    Log.showInfo(TAG, `sendEvent value: ${ value }`);
-    Log.showInfo(TAG, `sendEvent ${ value }`);
-    let commonEventPublishData = {
-      bundleName: 'com.ohos.systemui',
-      code:1,
-      data: value
-    }
-    commonEvent.publish(EVENT,commonEventPublishData,(err,data)=> {
-      console.log(`sendEvent err ${JSON.stringify(err)}`);
-      console.log(`sendEvent data ${JSON.stringify(data)}`);
-    });
+    Log.showInfo(TAG, `brightness setValue ${value} end`);
+    settings.setValue(this.helper, SYSTEMUI_BRIGHTNESS, callback.value.toString());
+    Log.showInfo(TAG, `settings setValue ${callback.value} end`);
   }
 }
 
+
 let mBrightnessManager = new brightnessManager();
+
 export default mBrightnessManager as brightnessManager;
