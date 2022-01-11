@@ -15,6 +15,7 @@
 
 import Log from '../../../../../../../../../common/src/main/ets/default/Log.ets';
 import media from '@ohos.multimedia.media';
+import vibrator from '@ohos.vibrator';
 import wantAgent from '@ohos.wantAgent';
 import SourceType from '@ohos.notification'
 import NotificationService from '../model/NotificationService.ets'
@@ -30,20 +31,20 @@ const GROUP_THRESHOLD = 10;
  * Notification ViewModel class.
  */
 export class ViewModel {
-  audioPlayer: any
+  audioPlayer: any;
   mNotificationList: any[];
   mAppNotificationCount: any;
   mCallback: any;
-  mNotificationCtrl: any = {}
+  mNotificationCtrl: any = {};
 
   constructor() {
     let tempLink = AppStorage.SetAndLink('notificationList', []);
     this.mNotificationList = tempLink.get();
     this.mAppNotificationCount = new Map();
     this.audioPlayer = media.createAudioPlayer();
-    this.audioPlayer.src = 'file://system/etc/Light.ogg';
+    this.audioPlayer.src = 'file://system/etc/capture.ogg';
     this.registerCallback();
-    this.loadFlowControlInfos()
+    this.loadFlowControlInfos();
   }
 
   registerCallback() {
@@ -59,13 +60,17 @@ export class ViewModel {
     NotificationService.unRegister(this.mCallback);
   }
 
-
   /**
    * notification CancelCallback
    *
    * @param {Object} data - return notificationItemData.
    */
   onNotificationConsume(notificationItemData) {
+    if (notificationItemData === undefined) {
+      Log.showInfo(TAG, `onNotificationConsume notificationItemData is undefined`);
+      return;
+    }
+    this.onNotificationCancel(notificationItemData)
     Log.showInfo(TAG, `onNotificationConsume  ${JSON.stringify(notificationItemData)}`);
     //Verify the notifications can be displayed
     if (!this.isCanShow(notificationItemData.bundleName)) {
@@ -79,12 +84,18 @@ export class ViewModel {
     if (this.mAppNotificationCount[notificationItemData.appName] >= GROUP_THRESHOLD) {
       this.groupNotification(notificationItemData, this.mAppNotificationCount[notificationItemData.appName]);
     } else {
-      // Todo Sort Insert
-      this.mNotificationList.unshift(notificationItemData);
-      this.updateFlowControlInfos(notificationItemData.bundleName, true)
+      if (notificationItemData.ruleData.isAllowStatusBarShow) {
+        //TODO statusbar show
+      }
+      if (notificationItemData.ruleData.isAllowNotificationListShow) {
+        this.mNotificationList.unshift(notificationItemData);
+        Log.showInfo(TAG, `reminder start `);
+        this.reminderWay(notificationItemData);
+        Log.showInfo(TAG, `reminder end `);
+        this.updateFlowControlInfos(notificationItemData.bundleName, true)
+      }
       this.updateNotification();
     }
-    // Todo doAction(notificationItemData);
   }
 
   /**
@@ -130,12 +141,12 @@ export class ViewModel {
   }
 
   updateNotification() {
-    Log.showInfo(TAG, `updateNotification  list: ${JSON.stringify(this.mNotificationList)}`);
-    Log.showInfo(TAG, `updateNotification  len: ${this.mNotificationList.length}`);
+    Log.showInfo(TAG, `updateNotification list: ${JSON.stringify(this.mNotificationList)}`);
+    Log.showInfo(TAG, `updateNotification length: ${this.mNotificationList.length}`);
     this.sortNotification()
     let listLink = AppStorage.Link('notificationList');
     listLink.set(this.mNotificationList);
-    Log.showInfo(TAG, `updateNotification  list: ${JSON.stringify(listLink.get())}`);
+    Log.showInfo(TAG, `updateNotification list: ${JSON.stringify(listLink.get())}`);
   }
 
   /**
@@ -170,12 +181,12 @@ export class ViewModel {
     if (this.mNotificationList == undefined || this.mNotificationList == null || this.mNotificationList.length < 1) {
       this.mNotificationList = []
     } else {
-
       let index = this.mNotificationList.length
       while (index--) {
         Log.showInfo(TAG, `mNotificationList[${index}].source: ${this.mNotificationList[index].source}`);
         //Except the Long term notifications
-        if (this.mNotificationList[index].source != SourceType.TYPE_CONTINUOUS) {
+        if (this.mNotificationList[index].isRemoveAllowed &&
+        !this.mNotificationList[index].isOngoing && !this.mNotificationList[index].isUnremovable) {
           Log.showInfo(TAG, `mNotificationList[${index}].hashcode: ${this.mNotificationList[index].hashcode}`);
           let hashCode = this.mNotificationList[index].hashcode
           this.removeSysNotificationItem(hashCode)
@@ -302,6 +313,39 @@ export class ViewModel {
     Log.showInfo(TAG, `updateFlowControlInfos:${JSON.stringify(this.mNotificationCtrl)}`);
   }
 
+  reminderWay(itemData) {
+    if (itemData.ruleData.isAllowBanner) {
+      //TODO banner notification
+    }
+    if (itemData.ruleData.isAllowSound) {
+      try {
+        this.audioPlayer.src = itemData.sound;
+        Log.showInfo(TAG, `sound start `);
+        this.audioPlayer.play();
+        Log.showInfo(TAG, `sound end `);
+      } catch (e) {
+        Log.showInfo(TAG, `sound notificationItem id：${itemData.id} alert error: ${e.toString()}`);
+      }
+    }
+    if (itemData.ruleData.isAllowVibrationValues) {
+      Log.showInfo(TAG, `vibrate start`);
+      for (let i = 0, len = itemData.vibrationValues.length; i < len; i++) {
+        vibrator.vibrate(itemData.vibrationValues[i], function(error){
+          Log.showInfo(TAG, `vibrate id：${i}`);
+          if (error) {
+            Log.showInfo(TAG, "error.code" + error.code + "error.message" + error.message);
+          } else {
+            Log.showInfo(TAG, "Callback returned to indicate a successful vibration.");
+          }
+        })
+      }
+    }
+  }
+
+  getPluginTempLate(templateName) {
+    Log.showInfo(TAG, 'getPluginTempLate: ' + templateName);
+    return NotificationService.getPluginTempLate(templateName)
+  }
 }
 
 let viewModel = new ViewModel();

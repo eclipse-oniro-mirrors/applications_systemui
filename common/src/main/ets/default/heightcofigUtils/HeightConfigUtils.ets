@@ -25,7 +25,7 @@ export default class HeightConfigUtils {
     return STATUS_BAR_MIN_HEIGHT;
   }
 
-  getNavMinH(){
+  getminHeight(){
     return NAV_BAR_MIN_HEIGHT;
   }
 

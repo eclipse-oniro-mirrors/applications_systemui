@@ -17,6 +17,7 @@
       "deliveryWithInstall": true,
       "moduleName": "signalcomponent",
       "moduleType": "har"
-    }
+    },
+    "srcPath": "default"
   }
 }

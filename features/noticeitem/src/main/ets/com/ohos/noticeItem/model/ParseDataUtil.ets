@@ -46,6 +46,18 @@ export default class ParseDataUtil {
     } catch (e) {
       Log.showInfo(TAG, `slot level get error:  ${e.toString()}`);
     }
+    let sound = '';
+    try {
+      sound = data?.sortingMap?.sortings[request.hashCode]?.slot.sound;
+    } catch (e) {
+      Log.showInfo(TAG, `sound  get error:  ${e.toString()}`);
+    }
+    let vibrationValues = [];
+    try {
+      vibrationValues = data?.sortingMap?.sortings[request.hashCode]?.slot.vibrationValues;
+    } catch (e) {
+      Log.showInfo(TAG, `vibrationValues get error:  ${e.toString()}`);
+    }
     Log.showInfo(TAG, `want = ${JSON.stringify(request.wantAgent)}`);
     Log.showInfo(TAG, `actionButtons = ${JSON.stringify(request.actionButtons)}`);
     Log.showInfo(TAG, `largeIcon = ${request.largeIcon}`);
@@ -63,7 +75,13 @@ export default class ParseDataUtil {
         smallIcon: NotificationConfig.USE_NOTIFICATION_ICON ? (request?.smallIcon ?? appMessage.icon) : appMessage.icon,
         largeIcon: request.largeIcon,
         slotLevel: slotLevel,
-        source: request.source
+        source: request.source,
+        sound: sound? sound : '',
+        vibrationValues: vibrationValues? vibrationValues : [],
+        template: request?.template,
+        isOngoing: request.isOngoing,
+        isUnremovable: request.isUnremovable,
+        isRemoveAllowed: request.isRemoveAllowed
       };
       Log.showInfo(TAG, `notificationItem construct over ====================`);
       switch (request?.content?.contentType) {

@@ -17,8 +17,8 @@
  ``` 
 
 ### 环境搭建
-打开DevEco Studio链接下载安装，安装步骤及安装说明详见下载地址开发者网站
-
+打开DevEco Studio链接下载安装，安装步骤及安装说明详见下载地址（[下载地址](https://developer.harmonyos.com/cn/develop/deveco-studio#download)）  
+    
 ## 基础开发说明
 ### 系统接口调用
 #### NAPI接口集成

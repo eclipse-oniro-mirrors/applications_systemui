@@ -18,7 +18,6 @@ import commonevent from '@ohos.commonevent';
 import Constants from './common/constants.ets';
 import FeatureAbilityManager from '../../../../../../../../common/src/main/ets/default/abilitymanager/featureAbilityManager.ets';
 import Input from '@ohos.multimodalInput.inputEventClient';
-import settings from '@ohos.settingsnapi';
 import featureAbility from '@ohos.ability.featureAbility';
 const TAG = 'KeyCodeEvent'
 
@@ -72,7 +71,7 @@ export class KeyCodeEvent {
       // After consulting the multi-mode subsystem, this parameter proved meaningless and remained unchanged
       keyDownDuration: 1,
       // This parameter changes with the version, and is currently 10008
-      maxKeyCode: 10008
+      isIntercepted: false
     }
     res = Input.injectEvent({
       KeyEvent: keyEvent
@@ -89,7 +88,7 @@ export class KeyCodeEvent {
       // After consulting the multi-mode subsystem, this parameter proved meaningless and remained unchanged
       keyDownDuration: 1,
       // This parameter changes with the version, and is currently 10008
-      maxKeyCode: 10008
+      isIntercepted: false
     }
     res = Input.injectEvent({
       KeyEvent: keyEvent

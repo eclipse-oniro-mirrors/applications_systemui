@@ -49,6 +49,14 @@ export class InputActionButtonData {
   content: string = '';
 }
 
+interface RuleData {
+  isAllowBanner?: boolean;
+  isAllowSound?: boolean;
+  isAllowVibrationValues?: boolean;
+  isAllowStatusBarShow?: boolean;
+  isAllowNotificationListShow?: boolean;
+}
+
 export interface NotificationItemData {
   id: string;
   hashcode: string;
@@ -73,6 +81,13 @@ export interface NotificationItemData {
   slotLevel?: any;
   source?: number;
   versionName?: string;
+  sound?: string;
+  vibrationValues?: Array<number>;
+  ruleData?:RuleData;
+  template?: any;
+  isOngoing?: boolean;
+  isUnremovable?: boolean;
+  isRemoveAllowed?: boolean;
 }
 
 export interface NotificationServiceListener {

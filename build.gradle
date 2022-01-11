@@ -3,6 +3,17 @@ apply plugin: 'com.huawei.ohos.app'
 apply from: "./infra/config_exts.gradle"
 
 ohos {
+    signingConfigs {
+        release {
+            storeFile file('D:\\xu\\OpenHarmony.p12')
+            storePassword '00000016F2017A40C8B50DAD39A176E1D19A0BE947D48AC71C90F0DEB0CD251285923218A84F'
+            keyAlias = 'OpenHarmony Application Release'
+            keyPassword '00000016E8775BE9B2A7B5239556EDAE1A9000261023E5C8202C19A43936B6989FA617A094F7'
+            signAlg = 'SHA256withECDSA'
+            profile file('D:\\xu\\systemui.p7b')
+            certpath file('D:\\xu\\OpenHarmonyApplication.cer')
+        }
+    }
     compileSdkVersion rootProject.ext.version.compileSdk
     defaultConfig {
         compatibleSdkVersion rootProject.ext.version.compatibleSdk
@@ -14,17 +25,19 @@ buildscript {
     repositories {
         maven {
             url 'http://repo.ark.tools.huawei.com/artifactory/maven-public/'
+            allowInsecureProtocol = true
         }
         maven {
             url 'https://mirrors.huaweicloud.com/repository/maven/'
+            allowInsecureProtocol = true
         }
         maven {
             url 'https://developer.huawei.com/repo/'
+            allowInsecureProtocol = true
         }
-        jcenter()
     }
     dependencies {
-        classpath 'com.huawei.ohos:hap:3.0.3.2'
+        classpath 'com.huawei.ohos:hap:3.0.5.2'
     }
 }
 
@@ -32,13 +45,15 @@ allprojects {
     repositories {
         maven {
             url 'http://repo.ark.tools.huawei.com/artifactory/maven-public/'
+            allowInsecureProtocol = true
         }
         maven {
             url 'https://mirrors.huaweicloud.com/repository/maven/'
+            allowInsecureProtocol = true
         }
         maven {
             url 'https://developer.huawei.com/repo/'
+            allowInsecureProtocol = true
         }
-        jcenter()
     }
 }

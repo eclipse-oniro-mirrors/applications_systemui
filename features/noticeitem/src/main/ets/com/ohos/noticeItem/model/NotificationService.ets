@@ -18,6 +18,7 @@ import NotificationSubscriber from '@ohos.notificationSubscriber';
 import Log from '../../../../../../../../../common/src/main/ets/default/Log.ets';
 import NotificationManager from './NotificationManager.ets';
 import ParseDataUtil from './ParseDataUtil.ets';
+import RuleController from './rule/RuleController.ets';
 
 const TAG = 'NotificationService';
 
@@ -36,6 +37,7 @@ export class NotificationService {
   init() {
     this.loadAllNotifications();
     this.subscribeNotification(this.getSubscriber());
+    this.loadNotificationTemplate()
   }
 
   public register(listener) {
@@ -54,17 +56,15 @@ export class NotificationService {
     Log.showInfo(TAG, "unRegister listener success");
   }
 
-
-  public removeAll(){
+  public removeAll() {
     Log.showInfo(TAG, 'removeAll start');
     NotificationManager.removeAll(TAG, (data) => {
       Log.showInfo(TAG, `removeAll => data: ${JSON.stringify(data)}`);
     });
   }
 
-
   public remove(code: string) {
-    NotificationManager.remove(TAG, code,(data) => {
+    NotificationManager.remove(TAG, code, (data) => {
       Log.showInfo(TAG, `removeNotificationItem ==> data: ${JSON.stringify(data)}`);
     })
   }
@@ -74,7 +74,7 @@ export class NotificationService {
       Log.showInfo(TAG, `getAllActiveNotifications err: ${JSON.stringify(err)}`);
       Log.showInfo(TAG, `getAllActiveNotifications requestsArr: ${JSON.stringify(requestsArr)}`);
       if (Array.isArray(requestsArr)) {
-        for(let i = 0,len = requestsArr.length; i< len; i++) {
+        for (let i = 0, len = requestsArr.length; i < len; i++) {
           this.handleNotificationLoad(requestsArr[i]);
         }
       }
@@ -93,22 +93,25 @@ export class NotificationService {
 
   handleNotificationAdd(data) {
     Log.showInfo(TAG, 'handleNotificationAdd started');
-    Log.showInfo(TAG, 'sortingMap' + JSON.stringify(data.sortingMap||{}));
+    Log.showInfo(TAG, 'sortingMap' + JSON.stringify(data.sortingMap || {}));
     Log.showInfo(TAG, JSON.stringify(data));
-    ParseDataUtil.parseData(data, (err, record) => {
-      Log.showInfo(TAG, `parseData after = ${JSON.stringify(record)}`);
-      Log.showInfo(TAG, `listeners.length = ${JSON.stringify(data)}`);
-      for(let i = 0,len = listeners.length; i< len; i++) {
-        Log.showInfo(TAG, `notify listener ` + i);
-        listeners[i].onNotificationConsume(record);
-      }
+    ParseDataUtil.parseData(data, (err, intermediateData) => {
+      Log.showInfo(TAG, `parseData after = ${JSON.stringify(intermediateData)}`);
+      RuleController.getNotificationData(intermediateData, (finalItemData) => {
+        Log.showInfo(TAG, `RuleController.getNotificationData after = ${JSON.stringify(finalItemData)}`);
+        Log.showInfo(TAG, `listeners.length = ${JSON.stringify(data)}`);
+        for (let i = 0, len = listeners.length; i < len; i++) {
+          Log.showInfo(TAG, `notify listener ` + i);
+          listeners[i].onNotificationConsume(finalItemData);
+        }
+      });
     });
   }
 
   handleNotificationCancel(data) {
     console.info("===>handleNotificationCancel data : ==> " + `data:${JSON.stringify(data)}`);
     ParseDataUtil.parseData(data, (err, record) => {
-      for(let i = 0,len = listeners.length; i< len; i++) {
+      for (let i = 0, len = listeners.length; i < len; i++) {
         listeners[i].onNotificationCancel(record);
       }
     });
@@ -117,19 +120,35 @@ export class NotificationService {
   handleNotificationLoad(data) {
     console.info("===>handleNotificationLoad data : ==> " + `data:${JSON.stringify(data)}`);
     ParseDataUtil.parseData(data, (err, record) => {
-      for(let i = 0,len = listeners.length; i< len; i++) {
+      for (let i = 0, len = listeners.length; i < len; i++) {
         listeners[i].onNotificationLoad(record);
       }
     });
   }
 
   subscribeNotification(subscriber) {
-    let callback = (err,data) => {
+    let callback = (err, data) => {
       Log.showInfo(TAG, `subscribeCallback finished err: ${JSON.stringify(err)} data: ${JSON.stringify(data)}`)
     };
     NotificationManager.subscribeNotification(TAG, subscriber, callback);
   }
+
+  loadNotificationTemplate() {
+    Log.showInfo(TAG, 'loadNotificationTemplate start');
+    NotificationManager.initNotificationTemplateMap(TAG);
+  }
+
+  getPluginTempLate(templateName) {
+    Log.showInfo(TAG, `getPluginTempLate param:${templateName}`);
+    let pluginTempLate = null;
+    if (NotificationManager.NotificationTemplateMap !== null) {
+      pluginTempLate = NotificationManager.NotificationTemplateMap.get(templateName);
+    }
+    Log.showInfo(TAG, `getPluginTempLate pluginTempLate:${JSON.stringify(pluginTempLate)}`);
+    return pluginTempLate;
+  }
 }
 
 let notificationService = new NotificationService();
+
 export default notificationService as NotificationService;

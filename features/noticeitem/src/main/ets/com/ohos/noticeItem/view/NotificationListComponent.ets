@@ -27,7 +27,6 @@ export default struct NotificationListComponent {
   @StorageProp('minHeight') minHeight: number = 0
   @State notificationH: number = 0
 
-
   aboutToAppear() {
     Log.showInfo(TAG, `notificationList, aboutToAppear`)
     this.notificationH = this.maxHeight - (this.minHeight * 2) - Constants.QUICKLY_SETTING_H;

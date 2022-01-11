@@ -14,12 +14,18 @@
  */
 
 import configManager from '../../../../../../features/navigationservice/src/main/ets/com/ohos/navigationservice/ConfigManager.ets'
+import WindowManager from '../../../../../../common/src/main/ets/default/WindowManager.ets'
+import NavBarConfiguration from './common/NavBarConfiguration.ets'
 
 let mConfigMangager = configManager;
 
 export default {
-  onCreate() {
+  async onCreate() {
     console.info('Application onCreate')
+    let val = await NavBarConfiguration.getConfiguration();
+    let mWindowManager = new WindowManager();
+    await mWindowManager.initWindowManager();
+    await mWindowManager.initWindowMin(val.realWidth, val.realHeight, val.xCoordinate, val.yCoordinate)
     mConfigMangager.initConfig();
   },
   onDestroy() {

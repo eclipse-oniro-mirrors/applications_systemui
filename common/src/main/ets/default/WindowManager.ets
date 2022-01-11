@@ -16,34 +16,30 @@
 import Window from '@ohos.window';
 import display from '@ohos.display'
 import Log from './Log.ets';
+import ResourceUtil from './ResourceUtil.ets';
 
 const TAG = 'WindowManager';
-const STATUS_BAR_H = 0.07;
 
 var maxWidth;
 var maxHeight;
 var minHeight;
-var quicklySettingH;
-var notificationH;
 
 /**
  * Manage window size changes.
  */
 export default class WindowManager {
-  initWindowManager() {
-    Log.showInfo(TAG, 'initWindowManager ');
+  async initWindowManager() {
+    Log.showInfo(TAG, 'initWindowManager');
     maxWidth = AppStorage.SetAndLink("maxWidth", 0);
     maxHeight = AppStorage.SetAndLink("maxHeight", 0);
     minHeight = AppStorage.SetAndLink("minHeight", 0);
 
-    display.getDefaultDisplay()
+    await display.getDefaultDisplay()
       .then(dis => {
-      maxWidth.set(dis.width);
-      maxHeight.set(dis.height);
-      minHeight.set(this.getStatusBarDefaultHeight(dis.height));
-
-      Log.showInfo(TAG, `initWindowManager maxWidth ${maxWidth.get()} maxHeight ${maxHeight.get()} minHeight ${minHeight.get()}`);
-    })
+        maxWidth.set(dis.width);
+        maxHeight.set(dis.height);
+        Log.showInfo(TAG, `initWindowManager maxWidth ${maxWidth.get()} maxHeight ${maxHeight.get()} minHeight ${minHeight.get()}`);
+      })
   }
 
   /**
@@ -55,12 +51,18 @@ export default class WindowManager {
     Log.showInfo(TAG, 'enter setWindowMax =================');
     Window.getTopWindow()
       .then((windowData) => {
-      windowData.resetSize(maxWidth.get(), maxHeight.get())
-        .then((result) => {
-        Log.showInfo(TAG, result);
-        callback(result);
+        Log.showInfo(TAG, 'enter setWindowMin maxWidth =================' + maxWidth.get() + " minHeight " + minHeight.get());
+        windowData.resetSize(parseInt(maxWidth.get()), parseInt(maxHeight.get()))
+          .then((result) => {
+            Log.showInfo(TAG, result);
+            callback(result);
+          });
+
+        windowData.moveTo(0, 0)
+          .then((result) => {
+            Log.showInfo(TAG, result);
+          });
       });
-    });
   }
 
   /**
@@ -72,15 +74,26 @@ export default class WindowManager {
     Log.showInfo(TAG, 'enter setWindowMin =================');
     Window.getTopWindow()
       .then((windowData) => {
-      windowData.resetSize(maxWidth.get(), minHeight.get())
-        .then((result) => {
-        Log.showInfo(TAG, result);
-        callback(result);
+        Log.showInfo(TAG, 'enter setWindowMin maxWidth =================' + maxWidth.get() + " minHeight " + minHeight.get());
+        windowData.resetSize(parseInt(maxWidth.get()), parseInt(minHeight.get()))
+          .then((result) => {
+            Log.showInfo(TAG, result);
+            callback(result);
+          });
       });
-    });
   }
 
-  getStatusBarDefaultHeight(maxheight) {
-    return parseInt((maxheight * STATUS_BAR_H).toString())
+  /**
+     * Set the window to the minimum size.
+     *
+     * @param {Object} callback - Callback function.
+     */
+  async initWindowMin(width, height, x, y) {
+    AppStorage.Set("showStatusBar", true);
+    Log.showInfo(TAG, 'enter initWindowMin =================');
+    Log.showInfo(TAG, 'width:' + width + '   height:' + height + '   x:' + x + '   y:' + y);
+    let abilityWindow = await Window.getTopWindow();
+    await abilityWindow.moveTo(parseInt(x), parseInt(y));
+    await abilityWindow.resetSize(parseInt(width), parseInt(height));
   }
 }

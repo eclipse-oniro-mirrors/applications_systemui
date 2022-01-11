@@ -1,8 +1,40 @@
 {
   "string": [
     {
+      "name": "nav_bar_size_portrait",
+      "value": "52"
+    },
+    {
+      "name": "nav_bar_size_landscape",
+      "value": "52"
+    },
+    {
+      "name": "nav_bar_position_portrait",
+      "value": "1"
+    },
+    {
+      "name": "nav_bar_position_landscape",
+      "value": "4"
+    },
+    {
       "name": "app_name",
-      "value": "navigationBar"
+      "value": "NavigationBar"
+    },
+    {
+      "name": "status_bar_size_portrait",
+      "value": "52"
+    },
+    {
+      "name": "status_bar_size_landscape",
+      "value": "52"
+    },
+    {
+      "name": "status_bar_position_portrait",
+      "value": "1"
+    },
+    {
+      "name": "status_bar_position_landscape",
+      "value": "2"
     },
     {
       "name": "mainability_description",

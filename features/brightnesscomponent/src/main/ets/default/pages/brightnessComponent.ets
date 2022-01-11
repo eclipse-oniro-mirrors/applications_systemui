@@ -61,7 +61,7 @@ export struct MyBrightness {
           min: this.brightnessItem.min,
           max: this.brightnessItem.max,
           step: 1,
-          style: SliderStyle.INSET
+          style: SliderStyle.InSet
 
         })
           .width('100%')

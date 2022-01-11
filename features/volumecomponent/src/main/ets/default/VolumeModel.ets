@@ -15,12 +15,12 @@
 
 import audio from '@ohos.multimedia.audio';
 import Log from '../../../../../../common/src/main/ets/default/Log.ets';
-import settings from '@ohos.settingsnapi';
+import settings from '@ohos.settings';
 import featureAbility from '@ohos.ability.featureAbility';
 
-const SYSTEMUI_AUDIOVOLUMETYPE_MEDIA = 'Audio.AudioVolumeType.MEDIA'
+const SYSTEMUI_AUDIOVOLUMETYPE_MEDIA = 'settings.audio.media'
 let TAG = 'Control-VolumeModel';
-var mVolumeValue = AppStorage.SetAndLink('VolumeValue', 10);
+var mVolumeValue = AppStorage.SetAndLink('VolumeValue', 5);
 
 export class VolumeModel {
     helper: any

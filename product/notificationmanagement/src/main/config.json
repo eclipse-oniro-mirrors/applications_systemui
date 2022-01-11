@@ -50,6 +50,7 @@
           "pages/setEnable"
         ]
       }
-    ]
+    ],
+    "srcPath": "default"
   }
 }

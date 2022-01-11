@@ -44,6 +44,7 @@
         },
         "pages": ["pages/index"]
       }
-    ]
+    ],
+    "srcPath": "default"
   }
 }

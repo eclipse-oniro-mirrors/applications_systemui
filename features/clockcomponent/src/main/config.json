@@ -17,6 +17,7 @@
       "deliveryWithInstall": true,
       "moduleName": "clockcomponent",
       "moduleType": "har"
-    }
+    },
+    "srcPath": "default"
   }
 }
