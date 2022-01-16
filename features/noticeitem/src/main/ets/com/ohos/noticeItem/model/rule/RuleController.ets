@@ -13,49 +13,37 @@
  * limitations under the License.
  */
 
-import {NotificationItemData} from '../../common/constants.ets'
-import Log from '../../../../../../../../../common/src/main/ets/default/Log.ets';
+import {NotificationItemData} from '../../common/constants.ets';
+import Log from '../../../../../../../../../../common/src/main/ets/default/Log.ets';
+import {SlotLevel} from '@ohos.notification';
+import Notification from '@ohos.notification';
+import CheckEmptyUtils from '../../../../../../../../../../common/src/main/ets/default/CheckEmptyUtils.ets';
+import Bundle from '@ohos.bundle';
 
-const TAG = 'RuleController';
+const TAG = 'NotificationRuleController';
 
-export default class RuleController {
-
-
+export class RuleController {
   /**
      * Check if this notification is allow show or not
      *
      * @param {notificationItemData} Data of the notification
      * @param {callback} Data of the type to show the notification
      */
-  static getNotificationData(notificationItemData, callback) {
-    if (typeof notificationItemData !== NotificationItemData) {
-      Log.showInfo(TAG, "type is not NotificationItemData")
-      callback(undefined)
-      return
-    }
+  getNotificationData(notificationItemData: NotificationItemData, callback) {
+    Log.showInfo(TAG, "getNotificationData start")
+    Log.showInfo(TAG, `notificationItemData = ${JSON.stringify(notificationItemData)}`);
 
-    this.this.isAllowSendNotification(notificationItemData.name, 0, "", (isSuccess) => {
+    this.isAllowSendNotification(notificationItemData, (isSuccess) => {
       if (!isSuccess) {
-        Log.showInfo(TAG, "user is not allow this to send notification")
-        callback(undefined)
-        return
+        Log.showInfo(TAG, "user is not allow this to send notification");
+        callback(undefined);
+        return;
       }
-      this.isTooMuchNotification((isSuccess) => {
-        if (!isSuccess) {
-          Log.showInfo(TAG, "There are too much notification")
-          callback(undefined)
-          return
-        }
-        this.isAppTooMuchNotification(notificationItemData.name, 0, (isSuccess) => {
-          if (!isSuccess) {
-            Log.showInfo(TAG, "There are too much notification")
-            callback(undefined)
-          }
-          this.getNotificationDataByApp(notificationItemData.name, 0, "", (originData) => {
-            this.updateNotificationDataBySense(originData, (finialData) => {
-              callback(finalData)
-            });
-          });
+      this.getNotificationDataByApp(notificationItemData, (originalData) => {
+        Log.showInfo(TAG, `originalData = ${JSON.stringify(originalData)}`);
+        this.updateNotificationDataBySense(originalData, (finalData) => {
+          Log.showInfo(TAG, `finalData = ${JSON.stringify(finalData)}`);
+          callback(finalData);
         });
       });
     });
@@ -64,56 +52,106 @@ export default class RuleController {
   /**
      * Check if user allow the app send notification or not
      *
-     * @param {name} Package name of the app
-     * @param {uid} Uid of the app to distinguish twin app
-     * @param {channelId} The channel id of the app which is used to send notification
+     * @param {notificationItemData} The origin notification data
      * @param {callback} The user allow the app send notification or not
      */
-  private static isAllowSendNotification(name, uid, channelId, callback) {
-    // TODO 权限管理
+  isAllowSendNotification(notificationItemData, callback) {
+    Log.showInfo(TAG, "isAllowSendNotification start");
+    Bundle.getBundleInfo(notificationItemData.bundleName, 0)
+      .then((data) => {
+        Log.showInfo(TAG, `getBundleInfo : ${JSON.stringify(data)}`)
+        Notification.isNotificationEnabled({ bundle: notificationItemData.bundleName, uid: data.uid })
+          .then((flag) => {
+            Log.showInfo(TAG, `Notification.isNotificationEnabled:` + flag)
+            callback(flag);
+          });
+      });
+
   }
 
   /**
-   * Check there have been too much notification that there is no need to show another
+   * Check whether sound or vibration is allowed
    *
-   *
-   * @param {callback} Send too much notification or not
+   * @param {notificationItemData} The origin notification data
+   * @param {callback} whether sound or vibration is allowed
    */
-  private static isTooMuchNotification(callback) {
-    // TODO 通知总条数显示限制
+
+  SoundOrVibrate(notificationItemData, callback) {
+    Log.showInfo(TAG, "SoundOrVibrate start")
+    let sound = false;
+    let vibrationValues = false;
+    if (!CheckEmptyUtils.checkStrIsEmpty(notificationItemData.sound)) {
+      sound = true;
+      Log.showInfo(TAG, `notificationItemData.sound is allowed = ${sound}`);
+    }
+    if (!CheckEmptyUtils.isEmptyArr(notificationItemData.vibrationValues)) {
+      vibrationValues = true;
+      Log.showInfo(TAG, `notificationItemData.vibrationValues is allowed = ${vibrationValues}`);
+    }
+    callback(sound, vibrationValues);
   }
 
-  /**
-   * Check if the app send too much notification to can not show another from this app
-   *
-   *
-   * @param {name} Package name of the app
-   * @param {uid} Uid of the app to distinguish twin app
-   * @param {callback} Send too much notification or not
-   */
-  private static isAppTooMuchNotification(name, uid, callback) {
-    // TODO 单应用通知显示限制
-  }
 
   /**
-     * Get notification data of the notification channel
+     * Get notification data of the notification
      *
-     * @param {name} Package name of the app which send notification
-     * @param {uid} Uid of the app which send notification to distinguish twin app
-     * @param {channelId} The channel id of the app which is used to send notification
+     * @param {notificationItemData} The origin notification data
      * @param {callback} The type to show notification
      */
-  private static getNotificationDataByApp(name, uid, channelId, callback) {
-    // TODO 提醒方式
+  getNotificationDataByApp(notificationItemData, callback) {
+    Log.showInfo(TAG, "getNotificationDataByApp start")
+    let mNotificationItemData : NotificationItemData = notificationItemData;
+    mNotificationItemData.ruleData = {
+      isAllowBanner: false,
+      isAllowSound: false,
+      isAllowVibrationValues: false,
+      isAllowStatusBarShow : false,
+      isAllowNotificationListShow : false
+    };
+    Log.showInfo(TAG, `notificationItemData.slotLevel = ${notificationItemData.slotLevel}`);
+    if (notificationItemData.slotLevel === SlotLevel.LEVEL_HIGH) {
+      mNotificationItemData.ruleData.isAllowBanner = true;
+      this.SoundOrVibrate(notificationItemData, (sound, vibrationValues) => {
+        mNotificationItemData.ruleData.isAllowSound = sound;
+        mNotificationItemData.ruleData.isAllowVibrationValues = vibrationValues;
+      });
+      mNotificationItemData.ruleData.isAllowStatusBarShow = true;
+      mNotificationItemData.ruleData.isAllowNotificationListShow = true;
+
+    } else if (notificationItemData.slotLevel === SlotLevel.LEVEL_DEFAULT) {
+      this.SoundOrVibrate(notificationItemData, (sound, vibrationValues) => {
+        mNotificationItemData.ruleData.isAllowSound = sound;
+        mNotificationItemData.ruleData.isAllowVibrationValues = vibrationValues;
+      });
+      mNotificationItemData.ruleData.isAllowStatusBarShow = true;
+      mNotificationItemData.ruleData.isAllowNotificationListShow = true;
+    } else if (notificationItemData.slotLevel === SlotLevel.LEVEL_LOW ||
+      notificationItemData.slotLevel === SlotLevel.LEVEL_MIN) {
+      mNotificationItemData.ruleData.isAllowNotificationListShow = true;
+    } else {
+      mNotificationItemData.ruleData.isAllowNotificationListShow = false;
+    }
+    Log.showInfo(TAG, `mNotificationItemData.ruleData = ${JSON.stringify(mNotificationItemData.ruleData)}`);
+    callback(mNotificationItemData);
   }
+
+
 
   /**
    * Check the sense of the phone to update the show type
    *
-   * @param {notificationData} The origin notification data
-   * @param {callback} The finial notification data
+   * @param {notificationItemData} The origin notification data
+   * @param {callback} The final notification data
    */
-  private static updateNotificationDataBySense(notificationData, callback) {
-    // TODO 场景管理
+  updateNotificationDataBySense(notificationItemData, callback) {
+    Log.showInfo(TAG, "updateNotificationDataBySense start")
+    let mNotificationItemData = notificationItemData;
+    // TODO Scenario Management
+    callback(mNotificationItemData);
   }
+
 }
+
+let ruleController = new RuleController();
+
+export default ruleController as RuleController;

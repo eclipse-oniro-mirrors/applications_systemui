@@ -14,7 +14,7 @@
  */
 import Log from '../../../../../../common/src/main/ets/default/Log.ets'
 import featureAbility from '@ohos.ability.featureAbility'
-import settings from '@ohos.settingsnapi';
+import settings from '@ohos.settings';
 
 const SHORT_LENGTH = 1;
 const LOOP_TIME = 3000;
@@ -26,24 +26,15 @@ var mTimeLink;
 var mDayLink;
 var mWeekDayLink;
 var mMonthLink;
-var misUsing24hFormat: boolean;
+var misUsing24hFormat: boolean = true;
 
 export class TimeModel {
-
   /**
    * Init Time Model
    *
    */
-  initTimeModel(isUsing24hFormat: boolean) {
-    Log.showInfo(TAG, 'initTimeModel' + isUsing24hFormat);
-    var reFresh: boolean = (misUsing24hFormat === isUsing24hFormat);
-    misUsing24hFormat = isUsing24hFormat;
-    Log.showInfo(TAG, `timeInterval : ${timeInterval} type: ${typeof timeInterval}`);
-    if (!reFresh) {
-      let date = new Date();
-      Log.showInfo(TAG, `getCurrentDate ${date.toTimeString()}`);
-      this.updateTime(date);
-    }
+  initTimeModel() {
+    Log.showInfo(TAG, 'initTimeModel');
     if (timeInterval === null || timeInterval === undefined) {
       Log.showInfo(TAG, 'first initTimeModel');
       mTimeLink = AppStorage.SetAndLink('time', '');
@@ -52,6 +43,36 @@ export class TimeModel {
       mMonthLink = AppStorage.SetAndLink('month', '');
       this.getCurrentDate();
     }
+    this.listenTimeFormat();
+  }
+
+  listenTimeFormat() {
+    Log.showInfo(TAG, 'listenTimeFormat')
+    let urivar  = null;
+    let helper  = null;
+    try {
+      urivar = settings.getUri('settings.time.format')
+      helper = featureAbility.acquireDataAbilityHelper(urivar);
+    } catch (e) {
+      Log.showInfo(TAG, `settings getValue error:  ${e.toString()}`);
+    }
+
+    helper.on("dataChange", urivar, (err) => {
+      if (err.code !== 0) {
+        Log.showError(TAG, `failed to getAbilityWant because ${err.message}`);
+        return;
+      } else {
+        let getRetValue = settings.getValue(helper, 'settings.time.format', '24')
+        Log.showInfo(TAG, 'observer reveive notifychange on success format = ' + getRetValue)
+        if (getRetValue === '12') {
+          misUsing24hFormat = false;
+        } else if (getRetValue === '24') {
+          misUsing24hFormat = true;
+        }
+        this.updateTime(new Date());
+      }
+      Log.showInfo(TAG, 'observer reveive notifychange on success data : ' + JSON.stringify(err))
+    })
   }
 
   unInitTimeModel() {
@@ -97,6 +118,7 @@ export class TimeModel {
     }
     let minutes = dateTime.getMinutes();
     mTimeLink.set(`${this.fill(hours)}:${this.fill(minutes)}`);
+    Log.showInfo(TAG, 'updateTime set' + `${this.fill(hours)}:${this.fill(minutes)}`);
   }
 
   fill(value) {

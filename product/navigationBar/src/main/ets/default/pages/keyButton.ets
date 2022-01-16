@@ -27,6 +27,7 @@ export default struct keyButton {
   @Prop keyCode: number;
   @State backGroundColor: any = $r('app.color.button_default_background');
   @StorageLink('NavCoefficient') NavCoefficient:number = 1.0
+  @StorageLink("showNavHorizontal") showNavHorizontal: boolean = AppStorage.SetAndLink("showNavHorizontal", true).get();
 
   aboutToAppear() {
     Log.showInfo(TAG, `aboutToAppear Start`)
@@ -48,8 +49,8 @@ export default struct keyButton {
         .size({ width: Constants.IMAGE_WIDTH*this.NavCoefficient, height:Constants.IMAGE_HEIGHT*this.NavCoefficient  })
     }
     .onTouch(this.onKeyTouch.bind(this))
-    .width(Constants.BUTTON_WIDTH*this.NavCoefficient)
-    .height('100%')
+    .width(this.showNavHorizontal ? Constants.BUTTON_WIDTH*this.NavCoefficient : '100%')
+    .height(this.showNavHorizontal ?  '100%' : Constants.BUTTON_WIDTH*this.NavCoefficient )
   }
 
   private onKeyTouch(event:TouchEvent) {

@@ -16,32 +16,31 @@
 import Three from './threeLayout.ets'
 import Log from '../../../../../../../common/src/main/ets/default/Log.ets';
 import HeightConfigUtils from '../../../../../../../common/src/main/ets/default/heightcofigUtils/HeightConfigUtils.ets';
-import Constants from '../common/constants.ets'
 
 const STORAGE_NAVIGATION_TYPE = 'navigationType'
 
-let mConfigReader;
 let mHeightConfigUtils;
 const TAG = 'NavigationBar-Index';
+
 @Entry
 @Component
 struct Index {
   @StorageLink('navigationLayoutConfig') mConfig: any = {}
-  @StorageLink('NavMinH') NavMinH:number = 32
+  @StorageLink('minNavHeight') minNavHeight: number = 32
+  @StorageLink("showNavHorizontal") showNavHorizontal: boolean = true
 
   onBackPress(): boolean {
+
     return true;
   }
 
   aboutToAppear() {
     Log.showInfo(TAG, `aboutToAppear Start`)
-    mHeightConfigUtils = new HeightConfigUtils();
-    let NavMinH = AppStorage.SetAndLink("NavMinH", 32);
     let NavCoefficient = AppStorage.SetAndLink("NavCoefficient", 1.0);
-    NavMinH.set(mHeightConfigUtils.getNavMinH());
     NavCoefficient.set(mHeightConfigUtils.getNavHCoefficient());
   }
-  aboutToDisappear(){
+
+  aboutToDisappear() {
     Log.showInfo(TAG, `aboutToDisAppear`)
   }
 
@@ -51,8 +50,8 @@ struct Index {
     }
     .width('100%')
     .height('100%')
-    .constraintSize({ minHeight: this.NavMinH })
+    .constraintSize({ minHeight: this.minNavHeight })
     .backgroundColor($r('app.color.index_background'))
-    .padding({ left: '18%', right: '18%' })
+    .padding(this.showNavHorizontal ? { left: '18%', right: '18%' } : { top: '18%', bottom: '18%' })
   }
 }

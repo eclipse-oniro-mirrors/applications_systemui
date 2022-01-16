@@ -26,7 +26,7 @@ let KeyCodeArr: any[] = [
 
 @Component
 export default struct oneLayout {
-  @StorageLink('NavMinH') NavMinH:number = 32
+  @StorageLink('minNavHeight') minNavHeight:number = 32
 
   aboutToAppear() {
     Log.showInfo(TAG, `aboutToAppear Start`)
@@ -46,7 +46,7 @@ export default struct oneLayout {
           })
         }
         .height('100%')
-        .constraintSize({ minHeight: this.NavMinH })
+        .constraintSize({ minHeight: this.minNavHeight })
         .align(Alignment.Center)
       })
     }

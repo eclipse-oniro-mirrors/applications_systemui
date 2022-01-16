@@ -37,6 +37,7 @@ export default struct StatusBarComponent {
   @StorageLink('maxHeight') @Watch('onSizeUpdated') maxHeight: number = 0
   @StorageLink('minHeight') @Watch('onSizeUpdated') minHeight: number = 0
   @StorageLink('StatusBarComponentIsStart') mIsStart: boolean = false
+  @StorageLink("showHorizontal") showHorizontal: boolean = AppStorage.SetAndLink("showHorizontal", true).get();
 
   aboutToAppear() {
     Log.showInfo(TAG, `aboutToAppear Start, mStatusBarComponentConfig: ${JSON.stringify(this.mStatusBarComponentConfig)}`)
@@ -72,28 +73,53 @@ export default struct StatusBarComponent {
   }
 
   build() {
-    Row() {
-      StatusBarGroup({
-        mColor: this.mStatusBarColor,
-        mComponents: this.mStatusBarLayout[0],
-        mLayoutWeight: 1,
-        mAlignItems: HorizontalAlign.Start
-      })
-      StatusBarGroup({
-        mColor: this.mStatusBarColor,
-        mComponents: this.mStatusBarLayout[1],
-        mLayoutWeight: 0,
-        mAlignItems: HorizontalAlign.Center
-      })
-      StatusBarGroup({
-        mColor: this.mStatusBarColor,
-        mComponents: this.mStatusBarLayout[2],
-        mLayoutWeight: 1,
-        mAlignItems: HorizontalAlign.End
-      })
+    if (this.showHorizontal) {
+      Row() {
+        StatusBarGroup({
+          mColor: this.mStatusBarColor,
+          mComponents: this.mStatusBarLayout[0],
+          mLayoutWeight: 1,
+          mAlignItems: HorizontalAlign.Start
+        })
+        StatusBarGroup({
+          mColor: this.mStatusBarColor,
+          mComponents: this.mStatusBarLayout[1],
+          mLayoutWeight: 0,
+          mAlignItems: HorizontalAlign.Center
+        })
+        StatusBarGroup({
+          mColor: this.mStatusBarColor,
+          mComponents: this.mStatusBarLayout[2],
+          mLayoutWeight: 1,
+          mAlignItems: HorizontalAlign.End
+        })
+      }
+      .width('100%')
+      .height('100%')
+    } else {
+      Column() {
+        StatusBarGroup({
+          mColor: this.mStatusBarColor,
+          mComponents: this.mStatusBarLayout[0],
+          mLayoutWeight: 1,
+          mAlignItems: VerticalAlign.Center
+        })
+        StatusBarGroup({
+          mColor: this.mStatusBarColor,
+          mComponents: this.mStatusBarLayout[1],
+          mLayoutWeight: 0,
+          mAlignItems: VerticalAlign.Center
+        })
+        StatusBarGroup({
+          mColor: this.mStatusBarColor,
+          mComponents: this.mStatusBarLayout[2],
+          mLayoutWeight: 1,
+          mAlignItems: VerticalAlign.Center
+        })
+      }
+      .width('100%')
+      .height('100%')
     }
-    .width('100%')
-    .height('100%')
   }
 }
 
@@ -104,6 +130,7 @@ struct StatusBarGroup {
   @State mLayoutWeight: number = 1
   @State mAlignItems: HorizontalAlign = HorizontalAlign.Center;
   @StorageLink('StatusBarEmptyWidth') mStatusBarEmptyWidth: any = 0
+  @StorageLink("showHorizontal") showHorizontal: boolean = AppStorage.SetAndLink("showHorizontal", true).get();
 
   aboutToAppear() {
     Log.showInfo(TAG_StatusBarGroup, `aboutToAppear Start`)
@@ -115,37 +142,75 @@ struct StatusBarGroup {
   }
 
   build() {
-    Column() {
-      Row() {
-        ForEach(this.mComponents, (componentName: string) => {
-          Row() {
-            if (componentName == Constants.EMPTY) {
-              StatusBarEmptyIcon()
-            } else if (componentName == Constants.WIFI) {
-              WifiIcon()
-            } else if (componentName == Constants.SIGNAL) {
-              SignalIcon()
-            } else if (componentName == Constants.CLOCK) {
-              ClockIcon()
-            } else if (componentName == Constants.BATTERY) {
-              BatteryIcon()
-            } else if (componentName == Constants.CAPSULE) {
-              CapsuleIcon()
-            } else if (componentName == Constants.NOTIFICATION) {
-              StatusBarNotificationIcon()
-            } else {
-              IconItemComponent({
-                keyId: componentName,
-                color: this.mColor
-              })
+    if (this.showHorizontal) {
+      Column() {
+        Row() {
+          ForEach(this.mComponents, (componentName: string) => {
+            Row() {
+              if (componentName == Constants.EMPTY) {
+                StatusBarEmptyIcon()
+              } else if (componentName == Constants.WIFI) {
+                WifiIcon()
+              } else if (componentName == Constants.SIGNAL) {
+                SignalIcon()
+              } else if (componentName == Constants.CLOCK) {
+                ClockIcon()
+              } else if (componentName == Constants.BATTERY) {
+                BatteryIcon()
+              } else if (componentName == Constants.CAPSULE) {
+                CapsuleIcon()
+              } else if (componentName == Constants.NOTIFICATION) {
+                StatusBarNotificationIcon()
+              } else {
+                IconItemComponent({
+                  keyId: componentName,
+                  color: this.mColor
+                })
+              }
             }
-          }
-          .height('100%')
-        }, (componentName: string) => componentName)
+            .height('100%')
+          }, (componentName: string) => componentName)
+        }
       }
+      .alignItems(this.mAlignItems)
+      .layoutWeight(this.mLayoutWeight)
+    } else {
+      Row() {
+        Column() {
+          ForEach(this.mComponents, (componentName: string) => {
+            Row() {
+              if (componentName == Constants.EMPTY) {
+                StatusBarEmptyIcon()
+              } else if (componentName == Constants.WIFI) {
+                WifiIcon()
+              } else if (componentName == Constants.SIGNAL) {
+                SignalIcon()
+              } else if (componentName == Constants.CLOCK) {
+                ClockIcon()
+              } else if (componentName == Constants.BATTERY) {
+                BatteryIcon()
+              } else if (componentName == Constants.CAPSULE) {
+                CapsuleIcon()
+              } else if (componentName == Constants.NOTIFICATION) {
+                StatusBarNotificationIcon()
+              } else {
+                IconItemComponent({
+                  keyId: componentName,
+                  color: this.mColor
+                })
+              }
+            }
+            .width('100%')
+            .margin({
+              top: $r("app.float.status_bar_vertical_margin"),
+              bottom: $r("app.float.status_bar_vertical_margin")
+            })
+          }, (componentName: string) => componentName)
+        }
+      }
+      .alignItems(this.mAlignItems)
+      .layoutWeight(this.mLayoutWeight)
     }
-    .alignItems(this.mAlignItems)
-    .layoutWeight(this.mLayoutWeight)
   }
 }
 

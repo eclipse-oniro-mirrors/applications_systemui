@@ -16,13 +16,14 @@
 import Log from '../../../../../../../common/src/main/ets/default/Log.ets'
 import ReadConfigUtil from '../../../../../../../common/src/main/ets/default/ReadConfigUtil.ets'
 import Notification from './notification.ets'
-import WindowManager from '../../../../../../../common/src/main/ets/default/WindowManager.ets'
 import ControlCenterComponent from './control.ets'
 import Constants from './common/constants.ets'
 import NavigationEvent from './common/navigationEvent.ets'
 import mBrightnessManager from '../../../../../../../features/brightnesscomponent/src/main/ets/default/brightnessManager.ets';
 import HeightConfigUtils from '../../../../../../../common/src/main/ets/default/heightcofigUtils/HeightConfigUtils.ets';
 import StatusBarComponent from '../../../../../../../features/statusbarcomponent/src/main/ets/com/ohos/pages/StatusBarComponent.ets';
+import WindowManager from '../../../../../../../common/src/main/ets/default/WindowManager.ets';
+import Window from '@ohos.window';
 
 const STATUS_BAR_COMPONENT_CONFIG_FILE_PATH = "/data/accounts/account_0/applications/com.ohos.systemui/" +
 "com.ohos.systemui.statusbar/assets/statusbar/resources/rawfile/statusbarcomponentConfig.json";
@@ -43,6 +44,8 @@ struct Index {
   @State moveX: number = 0
   @State moveY: number = 0
   @StorageLink("showStatusBar") showStatusBar: boolean = true
+  @StorageLink("showHorizontal") showHorizontal: boolean = true
+  @StorageLink("ableToMaximize") ableToMaximize: boolean = true
   @StorageLink('minHeight') minHeight: number = 0
   @StorageLink('maxWidth') maxWidth: number = 0
   @StorageLink('StatusMinH') StatusMinH: number = 24
@@ -56,8 +59,7 @@ struct Index {
   }
 
   aboutToAppear() {
-    Log.showInfo(TAG, `aboutToAppear, showStatusBar: ${this.showStatusBar}`);
-
+    Log.showInfo(TAG, `aboutToAppear, start showStatusBar: ${this.showStatusBar}`);
     mHeightConfigUtils = new HeightConfigUtils();
     let StatusMinH;
     let StatusCoefficient;
@@ -85,17 +87,19 @@ struct Index {
 
     mWindowManager = new WindowManager();
     mWindowManager.initWindowManager();
-
     this.mCallback = {
       "onStateChange": this.onStateChange.bind(this)
     }
     NavigationEvent.registerCallback(this.mCallback);
+    Log.showInfo(TAG, `aboutToAppear, end showStatusBar: ${this.showStatusBar}`);
   }
 
   onStateChange(data) {
-    this.showStatusBar = true;
-    mWindowManager.setWindowMin((result) => {
-    })
+    if (this.ableToMaximize) {
+      this.showStatusBar = true;
+      mWindowManager.setWindowMin((result) => {
+      })
+    }
   }
 
   aboutToDisappear() {
@@ -115,7 +119,7 @@ struct Index {
         .height('100%')
         .backgroundColor($r("app.color.statusbar_background"))
         .onTouch(this.touchEvent.bind(this))
-      } else {
+      } else if (this.showHorizontal && this.ableToMaximize) {
         if (vp2px(this.startX) <= parseInt((this.maxWidth / 2).toString())) {
           Notification({ showStatusBar: $showStatusBar, minHeight: this.minHeight })
         } else {
@@ -134,7 +138,9 @@ struct Index {
 
   touchEvent(event: TouchEvent) {
     Log.showInfo(TAG, 'touchEvent================' + event.touches)
-    Log.showInfo(TAG, 'touchEvent================ stringfy' + JSON.stringify(event.touches))
+    if (!this.showHorizontal && !this.ableToMaximize) {
+      return;
+    }
     if (event.type == Constants.TOUCHTYPE_DOWN) { //down
       this.startX = event.touches[0].screenX
       this.startY = event.touches[0].screenY

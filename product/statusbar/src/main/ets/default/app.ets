@@ -12,12 +12,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+import WindowManager from '../../../../../../common/src/main/ets/default/WindowManager.ets'
+import StatusBarConfiguration from '../../../../../../features/statusbarcomponent/src/main/ets/com/ohos/common/StatusBarConfiguration.ets';
 
 export default {
-    onCreate() {
-        console.info('SystemUI statusBar Application onCreate')
-    },
-    onDestroy() {
-        console.info('SystemUI statusBar Application onDestroy')
-    },
+  async onCreate() {
+    console.info('SystemUI statusBar Application onCreate')
+    let val = await StatusBarConfiguration.getConfiguration();
+    let mWindowManager = new WindowManager();
+    await mWindowManager.initWindowManager();
+    await mWindowManager.initWindowMin(val.realWidth, val.realHeight, val.xCoordinate, val.yCoordinate)
+
+  },
+  onDestroy() {
+    console.info('SystemUI statusBar Application onDestroy')
+  },
 }

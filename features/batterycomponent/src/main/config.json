@@ -17,6 +17,7 @@
       "deliveryWithInstall": true,
       "moduleName": "batterycomponent",
       "moduleType": "har"
-    }
+    },
+    "srcPath": "default"
   }
 }

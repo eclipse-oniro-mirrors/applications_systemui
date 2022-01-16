@@ -72,7 +72,7 @@ export struct MyVol {
           min: this.volume.minValue,
           max: this.volume.maxValue,
           step: 1,
-          style: SliderStyle.INSET
+          style: SliderStyle.InSet
         })
           .width('100%')
           .blockColor(Color.Blue)

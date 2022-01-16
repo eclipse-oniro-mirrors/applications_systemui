@@ -13,34 +13,26 @@
  * limitations under the License.
  */
 
-import Constants, {NotificationItemData} from '../../common/constants.ets';
-import basicItem from './basicItem.ets';
-import longItem from './longItem.ets';
-import multiItem from './multiItem.ets';
-import pictureItem from './pictureItem.ets';
-import titleItem from './titleItem.ets';
+import Constants  from '../../common/constants.ets';
+import GeneralItem from './generalItem.ets';
+import CustomItem from './customItem.ets';
 import Log from '../../../../../../../../../../common/src/main/ets/default/Log.ets';
 import CheckEmptyUtils from '../../../../../../../../../../common/src/main/ets/default/CheckEmptyUtils.ets';
 import ViewModel from '../../viewmodel/ViewModel.ets';
 import SettingDialog from './settingDialog.ets';
-import ConfirmDialog from './confirmDialog.ets';
-import ActionComponent from './actionComponent.ets';
+import ConfirmDialog from './confirmDialog.ets'
 
 const TAG = 'NoticeItem-NotificationItem';
 
 @Component
 export default struct NotificationItem {
   private itemData: any = {}
-  @State hasPicture: boolean = false
-  @State isExpand: boolean = false
-  @State needExpand: boolean = true
   @State deleteIconDisplay: boolean = false;
   @State itemWidth: string = '100%'
   startX: number = 0
   startY: number = 0
   @State moveX: number = 0
   @State moveY: number = 0
-
   settingDialogController: CustomDialogController = new CustomDialogController({
     builder: SettingDialog({
       itemData: this.itemData,
@@ -49,12 +41,11 @@ export default struct NotificationItem {
     autoCancel: false,
     offset: { dx: 0, dy: 200 }
   });
-
   confirmDialogController: CustomDialogController = new CustomDialogController({
     builder: ConfirmDialog({
       title: $r('app.string.closeNovice'),
       bundleName: this.itemData.name,
-      action:  ViewModel.removeNotificationItem.bind(ViewModel,this.itemData,true)
+      action: ViewModel.removeNotificationItem.bind(ViewModel, this.itemData, true)
     }),
     autoCancel: false,
     offset: { dx: 0, dy: 250 }
@@ -62,20 +53,6 @@ export default struct NotificationItem {
 
   aboutToAppear() {
     Log.showInfo(TAG, `aboutToAppear Start`)
-    if (CheckEmptyUtils.isEmpty(this.itemData.largeIcon)) {
-      this.hasPicture = false;
-    } else {
-      this.hasPicture = true;
-    }
-    this.needExpand = this.checkItemNeedExpand()
-  }
-
-  checkItemNeedExpand() {
-    if (this.itemData.contentType === Constants.NOTIFICATION_TYPE_BASIC && (!(this.itemData.actionButtons?.length > 0))) {
-      return false;
-    } else {
-      return true;
-    }
   }
 
   aboutToDisappear() {
@@ -86,76 +63,12 @@ export default struct NotificationItem {
     Flex({ direction: FlexDirection.Column, justifyContent: FlexAlign.Start, alignItems: ItemAlign.Center }) {
       Row() {
         Column() {
-          titleItem({
-            notificationSmallIcon: this.itemData.smallIcon,
-            notificationName: this.itemData.appName,
-            notificationTime: this.itemData.time,
-            isExpand: $isExpand,
-            needExpand: this.needExpand
-          })
-
-          Flex({ direction: FlexDirection.Row, justifyContent: FlexAlign.Start, alignItems: ItemAlign.Start }) {
-            Flex({ direction: FlexDirection.Column, justifyContent: FlexAlign.Start, alignItems: ItemAlign.Start }) {
-              if (this.itemData.contentType === Constants.NOTIFICATION_TYPE_BASIC) {
-                basicItem({
-                  itemData: this.itemData
-                });
-              }
-              if (this.itemData.contentType === Constants.NOTIFICATION_TYPE_LONG) {
-                longItem({
-                  itemData: this.itemData,
-                  isExpand: this.isExpand
-                });
-              }
-              if (this.itemData.contentType === Constants.NOTIFICATION_TYPE_MULTILINE) {
-                multiItem({
-                  itemData: this.itemData,
-                  isExpand: this.isExpand
-                });
-              }
-              if (this.itemData.contentType === Constants.NOTIFICATION_TYPE_PICTURE) {
-                pictureItem({
-                  itemData: this.itemData,
-                  isExpand: this.isExpand
-                });
-              }
-            }
-            .width(this.hasPicture ? '85%' : '100%')
-            .margin({ top: $r('app.float.body_margin_top') })
-
-            if (this.hasPicture) {
-              Column() {
-                Image(this.itemData.largeIcon)
-                  .objectFit(ImageFit.Contain)
-                  .width(50)
-                  .height(50)
-              }
-              .alignItems(HorizontalAlign.End)
-              .margin({ top: $r('app.float.body_margin_top') })
-              .width('15%')
-            }
-          }
-          .onClick(() => {
-            ViewModel.clickItem(this.itemData);
-          })
-
-          if (this.isExpand) {
-            ActionComponent({ itemData: this.itemData })
+          if (CheckEmptyUtils.isEmpty(this.itemData.template)) {
+            GeneralItem({ generalItemData: this.itemData })
+          } else {
+            CustomItem({ customItemData: this.itemData })
           }
         }
-        .backgroundColor($r('app.color.notificationitem_background'))
-        .opacity($r('app.float.item_opicaty'))
-        .borderRadius($r('app.float.item_borderradius'))
-        .margin({
-          left: $r('app.float.item_marginleft'),
-          right: $r('app.float.item_marginright'),
-          top: $r('app.float.item_margintop')
-        })
-        .padding({
-          left: $r('app.float.item_paddingleft'),
-          right: $r('app.float.item_paddingright'),
-          bottom: this.isExpand ? 0 : $r('app.float.item_paddingbottom')
-        })
         .onTouch(this.touchNotificationItem.bind(this))
         .width(this.itemWidth)
 
@@ -167,13 +80,15 @@ export default struct NotificationItem {
                 .width($r('app.float.item_delete_image_width'))
                 .height($r('app.float.item_delete_image_height'))
                 .onClick(this.showSettingDialog.bind(this))
-              Image($r('app.media.delete')) //delete
-                .objectFit(ImageFit.Contain)
-                .width($r('app.float.item_delete_image_width'))
-                .height($r('app.float.item_delete_image_height'))
-                .onClick(() => {
-                  ViewModel.removeNotificationItem(this.itemData, true);
-                })
+              if (this.itemData.isRemoveAllowed) {
+                Image($r('app.media.delete')) //delete
+                  .objectFit(ImageFit.Contain)
+                  .width($r('app.float.item_delete_image_width'))
+                  .height($r('app.float.item_delete_image_height'))
+                  .onClick(() => {
+                    ViewModel.removeNotificationItem(this.itemData, true);
+                  })
+              }
             }
           }
           .width('30%')

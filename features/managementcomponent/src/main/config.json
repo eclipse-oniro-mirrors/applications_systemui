@@ -18,6 +18,7 @@
       "deliveryWithInstall": true,
       "moduleName": "managementcomponent",
       "moduleType": "har"
-    }
+    },
+    "srcPath": "default"
   }
 }

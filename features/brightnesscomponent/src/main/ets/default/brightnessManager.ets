@@ -15,12 +15,12 @@
 
 import Log from '../../../../../../common/src/main/ets/default/Log.ets';
 import commonEvent from '@ohos.commonEvent';
-import settings from '@ohos.settingsnapi';
+import settings from '@ohos.settings';
 import featureAbility from '@ohos.ability.featureAbility';
 
-const SYSTEMUI_BRIGHTNESS = 'brightness';
+const SYSTEMUI_BRIGHTNESS = 'settings.screen.brightness';
 const TAG = 'Control-brightnessManager';
-var mBrightnessValue = AppStorage.SetAndLink('BrightnessValue', 255);
+var mBrightnessValue = AppStorage.SetAndLink('BrightnessValue', 150);
 
 export class brightnessManager {
   helper: any
@@ -36,7 +36,7 @@ export class brightnessManager {
 
   registerBrightness() {
     this.helper.on("dataChange", this.uri, (err) => {
-      let data = settings.getValue(this.helper, SYSTEMUI_BRIGHTNESS, '100')
+      let data = settings.getValue(this.helper, SYSTEMUI_BRIGHTNESS, '150')
       Log.showInfo(TAG, `after brightness datachange settings getValue ${parseInt(data)}`);
       mBrightnessValue.set(parseInt(data));
     })
@@ -50,7 +50,7 @@ export class brightnessManager {
 
   getValue() {
     Log.showInfo(TAG, 'getValue');
-    let data = settings.getValue(this.helper, SYSTEMUI_BRIGHTNESS, '100');
+    let data = settings.getValue(this.helper, SYSTEMUI_BRIGHTNESS, '150');
     Log.showInfo(TAG, `settings getValue ${parseInt(data)}`);
     mBrightnessValue.set(parseInt(data));
   }

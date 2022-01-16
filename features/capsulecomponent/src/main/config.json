@@ -27,6 +27,7 @@
       "deliveryWithInstall": true,
       "moduleName": "capsulecomponent",
       "moduleType": "har"
-    }
+    },
+    "srcPath": "default"
   }
 }

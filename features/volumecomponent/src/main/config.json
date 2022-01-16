@@ -18,6 +18,7 @@
       "deliveryWithInstall": true,
       "moduleName": "volumecomponent",
       "moduleType": "har"
-    }
+    },
+    "srcPath": "default"
   }
 }

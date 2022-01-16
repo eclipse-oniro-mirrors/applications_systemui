@@ -15,50 +15,16 @@
 
 import timeModel from '../timeModel.ets'
 import Log from '../../../../../../../common/src/main/ets/default/Log.ets'
-import featureAbility from '@ohos.ability.featureAbility'
-import settings from '@ohos.settingsnapi';
 
 const TAG = 'ClockComponent-clockIcon';
-
-const LOOP_TIME = 20000;
 
 @Component
 export default struct ClockIcon {
   @StorageLink('time') mTime: string = '16:01'
-  isUsing24hFormat: boolean
 
   aboutToAppear() {
     Log.showInfo(TAG, 'aboutToAppear');
-    timeModel.initTimeModel(this.isUsing24hFormat);
-    var isOnChange: boolean = false;
-    var timeInterval = setInterval(() => {
-      if (isOnChange) {
-        return;
-      }
-      Log.showInfo(TAG, 'setInterval')
-      let urivar = settings.getUri('settings.time.format')
-      Log.showInfo(TAG, 'urivar = ' + urivar)
-      let helper = featureAbility.acquireDataAbilityHelper(urivar);
-      Log.showInfo(TAG, ' helper = ' + helper)
-      helper.on("dataChange", urivar, (err) => {
-        if (err.code !== 0) {
-          Log.showError(TAG, `failed to getAbilityWant because ${err.message}`);
-          return;
-        } else {
-          let getRetValue = settings.getValue(helper, 'settings.time.format', '24')
-          Log.showInfo(TAG, 'observer reveive notifychange on success format = ' + getRetValue)
-          if (getRetValue === '12') {
-            isOnChange = true;
-            this.isUsing24hFormat = false;
-          } else if (getRetValue === '24') {
-            isOnChange = true;
-            this.isUsing24hFormat = true;
-          }
-          timeModel.initTimeModel(this.isUsing24hFormat);
-        }
-        Log.showInfo(TAG, 'observer reveive notifychange on success data : ' + JSON.stringify(err))
-      })
-    }, LOOP_TIME);
+    timeModel.initTimeModel();
   }
 
   aboutToDisappear() {

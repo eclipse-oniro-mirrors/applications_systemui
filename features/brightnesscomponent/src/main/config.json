@@ -18,6 +18,7 @@
       "deliveryWithInstall": true,
       "moduleName": "brightnesscomponent",
       "moduleType": "har"
-    }
+    },
+    "srcPath": "default"
   }
 }

@@ -1,6 +1,6 @@
 ext {
     version = [
-            compileSdk: 7,
+            compileSdk: 8,
             compatibleSdk: 4
     ]
 }

@@ -35,8 +35,8 @@ let KeyCodeArr: any[] = [
 @Component
 export default
 struct threeLayout {
-  @StorageLink('NavMinH') NavMinH:number = 32
-
+  @StorageLink('minNavHeight') minNavHeight:number = 32
+  @StorageLink("showNavHorizontal") showNavHorizontal: boolean = AppStorage.SetAndLink("showNavHorizontal", false).get();
   aboutToAppear() {
     Log.showInfo(TAG, `aboutToAppear Start`)
   }
@@ -46,18 +46,34 @@ struct threeLayout {
   }
 
   build() {
-    Grid() {
-      ForEach(KeyCodeArr, (item: any) => {
-        GridItem() {
-          keyButton({ uri: item.uri, keyCode: item.keyCode })
-        }
-        .height('100%')
-        .constraintSize({ minHeight: this.NavMinH })
-        .align(Alignment.Center)
-      })
+    if (this.showNavHorizontal) {
+      Grid() {
+        ForEach(KeyCodeArr, (item: any) => {
+          GridItem() {
+            keyButton({ uri: item.uri, keyCode: item.keyCode })
+          }
+          .height('100%')
+          .constraintSize({ minHeight: this.minNavHeight })
+          .align(Alignment.Center)
+        })
+      }
+      .columnsTemplate(Constants.THREE_TEMPLATE)
+      .height('100%')
+      .align(Alignment.Center);
+    } else {
+      Grid() {
+        ForEach(KeyCodeArr, (item: any) => {
+          GridItem() {
+            keyButton({ uri: item.uri, keyCode: item.keyCode })
+          }
+          .width('100%')
+          .constraintSize({ minHeight: this.minNavHeight })
+          .align(Alignment.Center)
+        })
+      }
+      .rowsTemplate(Constants.THREE_TEMPLATE)
+      .width('100%')
+      .align(Alignment.Center);
     }
-    .columnsTemplate(Constants.THREE_TEMPLATE)
-    .height('100%')
-    .align(Alignment.Center);
   }
 }
