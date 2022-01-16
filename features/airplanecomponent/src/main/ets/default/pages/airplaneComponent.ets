@@ -26,7 +26,7 @@ struct airplaneComponent {
     $r('app.media.airplane_d'),
     $r('app.media.airplane'),
   ]
-  private flyModelTitle: any = $r("app.string.airplane_mode")
+  @State flyModelTitle: any = $r("app.string.airplane_mode")
   @StorageLink('flyModelStatus') flyModelStatus: boolean = false
   private mWifiOriginalStatus: boolean = false
 
@@ -68,10 +68,11 @@ struct airplaneComponent {
       iconTitleBase({
         iconOff: this.IconInfo[0],
         iconOn: this.IconInfo[1],
-        mTitle: this.flyModelTitle,
+        mTitle: $flyModelTitle,
         changeSwitch: $flyModelStatus,
         mClickEvent: this.mClickEvent.bind(this)
       })
-    }
+    }.width('100%')
+    .height('100%')
   }
 }

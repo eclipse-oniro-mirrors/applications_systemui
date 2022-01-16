@@ -19,7 +19,10 @@ import FeatureAbilityManager from '../../../../../../../common/src/main/ets/defa
 import BatteryIcon from '../../../../../../../features/batterycomponent/src/main/ets/default/pages/batteryIcon.ets'
 import ClockIcon from '../../../../../../../features/clockcomponent/src/main/ets/default/pages/clockIcon.ets'
 import WifiIcon from '../../../../../../../features/wificomponent/src/main/ets/default/pages/wifiIcon.ets'
+import BluetoothIcon from '../../../../../../../features/bluetoothcomponent/src/main/ets/com/ohos/pages/StatusBarIconItemBluetoothComponent.ets'
 import SignalIcon from '../../../../../../../features/signalcomponent/src/main/ets/default/pages/signalIcon.ets'
+import LocationIcon from '../../../../../../../features/locationcomponent/src/main/ets/com/ohos/pages/StatusBarIconItemLocationComponent.ets'
+import RingModeIcon from '../../../../../../../features/ringmodecomponent/src/main/ets/com/ohos/pages/StatusBarIconItemRingModeComponent.ets'
 import NotificationListComponent from '../../../../../../../features/noticeitem/src/main/ets/com/ohos/noticeItem/view/NotificationListComponent.ets'
 import WindowManager from '../../../../../../../common/src/main/ets/default/WindowManager.ets'
 import ViewModel from '../../../../../../../features/noticeitem/src/main/ets/com/ohos/noticeItem/viewmodel/ViewModel.ets'
@@ -106,12 +109,15 @@ struct statusBar {
       }
 
       Flex({ direction: FlexDirection.Row, alignItems: ItemAlign.Center, justifyContent: FlexAlign.End }) {
+        LocationIcon()
+        BluetoothIcon()
+        RingModeIcon()
         BatteryIcon()
         ClockIcon()
       }
     }
     .width('100%')
-    .height(this.minHeight)
+    .height(this.minHeight + 'px')
   }
 }
 

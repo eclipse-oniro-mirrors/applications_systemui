@@ -77,8 +77,8 @@ class NavBarConfiguration {
       statusShortSideLength = await ResourceUtil.getString($r("app.string.status_bar_size_portrait"));
       navShortSideLength = await ResourceUtil.getString($r("app.string.nav_bar_size_portrait"));
     }
-    statusShortSideLength = vp2px(parseInt(statusShortSideLength)) + '';
-    navShortSideLength = vp2px(parseInt(navShortSideLength)) + '';
+    statusShortSideLength = parseInt(statusShortSideLength) + '';
+    navShortSideLength = parseInt(navShortSideLength) + '';
     Log.showInfo(TAG, 'statusShortSideLength = ' + statusShortSideLength);
     Log.showInfo(TAG, 'navShortSideLength = ' + navShortSideLength);
     Log.showInfo(TAG, 'directionnav = ' + directionNav.direction);

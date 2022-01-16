@@ -14,20 +14,18 @@
  */
 
 import {UpTitle} from './UpTitle.ets'
-import AirPlaneComponent from "../../../../../../../airplanecomponent/src/main/ets/default/pages/airplaneComponent.ets"
-import WifiComponent from '../../../../../../../wificomponent/src/main/ets/default/pages/wifiComponent.ets'
 import {MyBrightness} from '../../../../../../../brightnesscomponent/src/main/ets/default/pages/brightnessComponent.ets'
 import {MyVol} from '../../../../../../../volumecomponent/src/main/ets/default/pages/volumeComponent.ets'
 import Log from '../../../../../../../../common/src/main/ets/default/Log.ets'
 import UniformConfig from '../../../../../../../../common/src/main/ets/template/UniformConfig.ets'
 import Constants from '../common/Constants.ets'
 import ViewModel from '../viewmodel/ControlCenterVM.ets'
-import ComplexToggleComponent from './ComplexToggleComponent.ets'
-import SimpleToggleComponent from './SimpleToggleComponent.ets'
+import ComplexToggleLoadComponent from './ComplexToggleLoadComponent.ets'
+import SimpleToggleLoadComponent from './SimpleToggleLoadComponent.ets'
 
 const TAG = 'Control-ControlCenter'
 const TAG_ControlCenterComplexToggleLayout = 'Control-ControlCenterComplexToggleLayout'
-const TAG_ControlCenterSimpleToggleLayout = 'Control-TAG_ControlCenterSimpleToggleLayout'
+const TAG_ControlCenterSimpleToggleLayout = 'Control-ControlCenterSimpleToggleLayout'
 
 var mUniform;
 
@@ -38,14 +36,17 @@ export default struct ControlCenterComponent {
   componentUniform = {
     iconOnBG: "#0A59F7",
     iconOffBG: "#F5F5F5",
+    iconOnColor: "#FFFFFF",
+    iconOffColor: "#404345",
     baseColor: "#CCFFFFFF",
-    circleWidth: 80,
-    circleHeight: 80,
-    iconWidth: 50,
-    iconHeight: 50,
-    titleSize: 20,
+    circleWidth: '80px',
+    circleHeight: '80px',
+    iconWidth: '50px',
+    iconHeight: '50px',
+    titleSize: '20px',
     iconTitleMargin: 10,
     baseBorderRadius: 15,
+    simpleToggleTitleSize: '18px'
   }
 
   aboutToAppear() {
@@ -74,8 +75,8 @@ export default struct ControlCenterComponent {
         left: $r('app.float.center_item_margin_left'),
         right: $r('app.float.center_item_margin_right') })
 
-      ControlCenterComplexToggleLayout({ showStatusBar: $showStatusBar })
-      ControlCenterSimpleToggleLayout({ showStatusBar: $showStatusBar })
+      ControlCenterComplexToggleLayout()
+      ControlCenterSimpleToggleLayout()
       Column() {
         MyBrightness()
       }
@@ -101,7 +102,6 @@ export default struct ControlCenterComponent {
 @Component
 struct ControlCenterComplexToggleLayout {
   @StorageLink('ControlCenterComplexToggleLayout') mComplexToggleLayout: string[] = []
-  @Link showStatusBar: boolean
 
   aboutToAppear() {
     Log.showInfo(TAG_ControlCenterComplexToggleLayout, `aboutToAppear Start`)
@@ -122,19 +122,12 @@ struct ControlCenterComplexToggleLayout {
     }) {
       ForEach(this.mComplexToggleLayout, (componentName: string) => {
         Row() {
-          if (componentName == Constants.WIFI) {
-            WifiComponent()
-          } else if (componentName == Constants.AIR_PLANE) {
-            AirPlaneComponent()
-          } else {
-            ComplexToggleComponent({
-              keyId: componentName,
-              showStatusBar: $showStatusBar
-            })
-          }
+          ComplexToggleLoadComponent({
+            keyId: componentName
+          })
         }
         .width('48%')
-        .height(Constants.COMPLEX_TOGGLE_HEIGHT)
+        .height(Constants.COMPLEX_TOGGLE_HEIGHT + Constants.COMPLEX_TOGGLE_UP_DOWN_SPACE)
         .margin({ top: Constants.COMPLEX_TOGGLE_UP_DOWN_SPACE })
       }, (componentName: string) => componentName)
     }
@@ -150,7 +143,8 @@ struct ControlCenterComplexToggleLayout {
 @Component
 struct ControlCenterSimpleToggleLayout {
   @StorageLink('ControlCenterSimpleToggleLayout') mSimpleToggleLayout: string[] = []
-  @Link showStatusBar: boolean
+  @State mShowLabel: boolean = true
+  @State mEditMode: boolean = false
 
   aboutToAppear() {
     Log.showInfo(TAG_ControlCenterSimpleToggleLayout, `aboutToAppear Start`)
@@ -171,21 +165,26 @@ struct ControlCenterSimpleToggleLayout {
     }) {
       ForEach(this.mSimpleToggleLayout, (componentName: string) => {
         Column() {
-          SimpleToggleComponent({
+          SimpleToggleLoadComponent({
             keyId: componentName,
-            showStatusBar: $showStatusBar
+            mShowLabel: this.mShowLabel,
+            mEditMode: this.mEditMode
           })
         }
         .width('25%')
-        .height(Constants.SIMPLE_TOGGLE_HEIGHT)
+        .height(Constants.SIMPLE_TOGGLE_HEIGHT + Constants.SIMPLE_TOGGLE_UP_DOWN_SPACE)
         .margin({ top: Constants.SIMPLE_TOGGLE_UP_DOWN_SPACE })
       }, (componentName: string) => componentName)
     }
     .width('100%')
-    .height((Math.ceil(this.mSimpleToggleLayout.length / 4) * (Constants.SIMPLE_TOGGLE_HEIGHT + Constants.SIMPLE_TOGGLE_UP_DOWN_SPACE)).toString())
+    .height((Math.ceil(this.mSimpleToggleLayout.length / 4) * (Constants.SIMPLE_TOGGLE_HEIGHT + Constants.SIMPLE_TOGGLE_UP_DOWN_SPACE)
+    + (Math.ceil(this.mSimpleToggleLayout.length / 4) == 0 ? 0 : Constants.SIMPLE_TOGGLE_UP_DOWN_SPACE * 2)).toString())
     .margin({
       left: $r('app.float.center_item_margin_left'),
-      right: $r('app.float.center_item_margin_right')
+      right: $r('app.float.center_item_margin_right'),
+      top: Math.ceil(this.mSimpleToggleLayout.length / 4) == 0 ? 0 : Constants.SIMPLE_TOGGLE_UP_TOP_SPACE
     })
+    .borderRadius(UniformConfig.config.baseBorderRadius)
+    .backgroundColor(UniformConfig.config.baseColor)
   }
 }

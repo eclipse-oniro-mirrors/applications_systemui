@@ -17,7 +17,11 @@ ohos {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar', '*.har'])
     implementation project(':features:signalcomponent')
+    implementation project(':features:capsulecomponent')
     implementation project(':features:wificomponent')
+    implementation project(':features:bluetoothcomponent')
     implementation project(':features:batterycomponent')
     implementation project(':features:clockcomponent')
+    implementation project(':features:locationcomponent')
+    implementation project(':features:ringmodecomponent')
 }

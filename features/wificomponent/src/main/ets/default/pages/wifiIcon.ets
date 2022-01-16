@@ -32,7 +32,6 @@ export default struct WifiIcon {
 
   aboutToDisappear() {
     Log.showInfo(TAG, `aboutToDisappear`)
-    //    mWifiModel.uninitWifiModel()
   }
 
   build() {

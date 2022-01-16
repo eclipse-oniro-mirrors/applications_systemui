@@ -14,12 +14,9 @@
  */
 
 import Log from '../../../../../../../../common/src/main/ets/default/Log.ets'
-import FeatureAbilityManager from '../../../../../../../../common/src/main/ets/default/abilitymanager/featureAbilityManager.ets';
+import FeatureAbilityManager from '../../../../../../../../common/src/main/ets/default/abilitymanager/featureAbilityManager.ets'
 import WindowManager from '../../../../../../../../common/src/main/ets/default/WindowManager.ets'
-import CheckEmptyUtils from '../../../../../../../../common/src/main/ets/default/CheckEmptyUtils.ets'
-import iconTitleBase from '../../../../../../../../common/src/main/ets/template/iconTitleBase.ets'
-import UniformConfig from '../../../../../../../../common/src/main/ets/template/UniformConfig.ets'
-import Constants from '../common/Constants.ets'
+import SimpleToggleBase from '../../../../../../../../common/src/main/ets/template/SimpleToggleBase.ets'
 
 const TAG = 'SimpleToggleComponent'
 
@@ -27,55 +24,61 @@ const TAG = 'SimpleToggleComponent'
 export default struct SimpleToggleComponent {
   @Prop keyId: string
   @State mItemData: any = {}
-  @Link showStatusBar: boolean
+  @StorageLink("showStatusBar") showStatusBar: boolean = false
+  @Prop mShowLabel: boolean
+  @Prop mEditMode: boolean
   private mWindowManager
   private mFeatureAbilityManager
-  private mConfig = UniformConfig.config;
+  @State mDefaultIcon: Resource = $r("app.media.icon")
+  @State mDefaultChangeSwitch: boolean  = false
+  @State mDefaultLabel: string = ''
 
   aboutToAppear() {
     Log.showInfo(TAG, `aboutToAppear Start, keyId: ${this.keyId}`)
-    this.mItemData = AppStorage.Link(this.keyId)
-    Log.showInfo(TAG, `aboutToAppear, mItemData: ${this.mItemData.get().iconUrl} ${this.mItemData.get().label}`)
-    this.mWindowManager = new WindowManager();
-    this.mFeatureAbilityManager = new FeatureAbilityManager();
+    Log.showInfo(TAG, `aboutToAppear Start, mShowLabel: ${this.mShowLabel} mEditMode: ${this.mEditMode}`)
+    this.mWindowManager = new WindowManager()
+    this.mFeatureAbilityManager = new FeatureAbilityManager()
+    this.linkItemData()
   }
 
   aboutToDisappear() {
     Log.showInfo(TAG, `aboutToDisappear`)
-    let deleteRs: boolean = AppStorage.Delete(this.keyId)
-    Log.showInfo(TAG, `aboutToDisappear AppStorage.Delete, ${deleteRs} key: ${this.keyId}`)
+  }
+
+  linkItemData() {
+    Log.showInfo(TAG, `linkItemData, keyId: ${this.keyId}`)
+    this.mItemData = AppStorage.Link(this.keyId)
+    Log.showInfo(TAG, `linkItemData, mItemData: ${this.keyId} ${this.mItemData.get().label} ${
+    this.mItemData.get()
+    .iconUrl}`)
   }
 
   build() {
-    Column({ space: Constants.SIMPLE_TOGGLE_INSIDE_SPACE }) {
-      Stack() {
-        Flex()
-          .backgroundColor(this.mConfig.iconOffBG)
-          .clip(new Circle({ width: this.mConfig.circleWidth, height: this.mConfig.circleHeight }))
-          .width(this.mConfig.circleWidth)
-          .height(this.mConfig.circleHeight)
-        Image(this.mItemData.get()
-        .iconUrl)
-          .size({ width: Constants.SIMPLE_TOGGLE_ICON_WIDTH, height: Constants.SIMPLE_TOGGLE_ICON_HEIGHT })
-          .objectFit(ImageFit.Contain)
-      }.onClick(this.onIconItemClick.bind(this))
-      .gesture(LongPressGesture({ repeat: false }).onAction(this.onIconItemLongPressGesture.bind(this)))
-
-      Text(this.mItemData.get()
-      .label)
-        .fontSize($r('app.float.icon_item_fontsize'))
-    }
+    SimpleToggleBase({
+      mToggleId: this.keyId,
+      mIcon: $mDefaultIcon,
+      mIconStr: this.mItemData.get().iconUrl,
+      mUseIconStr:true,
+      mChangeSwitch: $mDefaultChangeSwitch,
+      mLabel: $mDefaultLabel,
+      mLabelStr: this.mItemData.get().label,
+      mUseLabelStr: true,
+      mShowLabel: this.mShowLabel,
+      mEditMode: this.mEditMode,
+      mClickEvent: this.onIconItemClick.bind(this),
+      mLongClickEvent: this.onIconItemLongPressGesture.bind(this)
+    })
   }
 
-  onIconItemClick(event: ClickEvent) {
+  onIconItemClick() {
     Log.showInfo(TAG, `onIconItemClick`)
     if (this.mItemData.get().actionData && this.mItemData.get().actionData.clickAction) {
       this.startAbility(this.mItemData.get().actionData.clickAction)
     }
   }
 
-  onIconItemLongPressGesture(event: GestureEvent) {
-    Log.showInfo(TAG, `onIconItemLongPressGesture, event: ${JSON.stringify(event)}`)
+  onIconItemLongPressGesture() {
+    Log.showInfo(TAG, `onIconItemLongPressGesture`)
     if (this.mItemData.get().actionData && this.mItemData.get().actionData.longClickAction) {
       this.startAbility(this.mItemData.get().actionData.longClickAction)
     }
@@ -98,11 +101,11 @@ export default struct SimpleToggleComponent {
     }
     Log.showInfo(TAG, `startAbility, want: ${JSON.stringify(wantParam)}`)
 
-    this.showStatusBar = true;
+    this.showStatusBar = true
     this.mWindowManager.setWindowMin((result) => {
       this.mFeatureAbilityManager.openAbility(TAG, {
         want: wantParam
-      });
-    });
+      })
+    })
   }
 }

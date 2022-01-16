@@ -99,6 +99,8 @@ export class ControlCenterVM {
     if (this.mAllSimpleToggles.indexOf(itemData.id) >= 0) {
       this.mAllSimpleToggles.splice(this.mAllSimpleToggles.indexOf(itemData.id), 1);
       this.calcControlCenterLayout();
+      let deleteRs: boolean = AppStorage.Delete(itemData.id)
+      Log.showInfo(TAG, `onItemRemove AppStorage.Delete(Simple), id: ${itemData.id} ${deleteRs} `)
     }
     Log.showInfo(TAG, `onItemRemove, ComplexToggleLayout: ${JSON.stringify(this.mComplexToggleLayout.get())}`)
     Log.showInfo(TAG, `onItemRemove, SimpleToggleLayout: ${JSON.stringify(this.mSimpleToggleLayout.get())}`)

@@ -20,15 +20,19 @@ import Log from '../Log.ets';
 const TAG = 'BRManager';
 
 export default class BundleManager {
-
-  static getResourceManager(tag, bundleName, then) {
+  static async getResourceManager(tag, bundleName, then?: Function) {
     Log.showInfo(TAG, `getResourceManager from: ${tag}`);
+    if (!then) {
+      return await Resmgr.getResourceManager(bundleName);
+    }
     Resmgr.getResourceManager(bundleName).then(then);
   }
 
-  static getBundleInfo(tag, bundleName, getInfo, then) {
+  static async getBundleInfo(tag, bundleName, getInfo, then?: Function) {
     Log.showInfo(TAG, `getBundleInfo from: ${tag}`);
+    if (!then) {
+      return await BundleMgr.getBundleInfo(bundleName, getInfo);
+    }
     BundleMgr.getBundleInfo(bundleName, getInfo).then(then);
   }
-
 }

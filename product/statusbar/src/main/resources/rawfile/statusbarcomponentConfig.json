@@ -16,6 +16,9 @@
     {
       "id": 3,
       "Components": [
+        "location",
+        "bluetooth",
+        "ring_mode",
         "battery",
         "clock"
       ]
@@ -28,8 +31,11 @@
     "battery",
     "signal",
     "wifi",
+    "bluetooth",
     "capsule",
-    "notification"
+    "notification",
+    "location",
+    "ring_mode"
   ],
   "emptyPosition": {
     "x1": 0,

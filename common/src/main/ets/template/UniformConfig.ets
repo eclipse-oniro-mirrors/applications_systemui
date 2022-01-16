@@ -18,13 +18,16 @@ export default class UniformConfig {
   static config = {
     iconOnBG: "#0A59F7",
     iconOffBG:  "#F5F5F5",
+    iconOnColor: "#FFFFFF",
+    iconOffColor: "#404345",
     baseColor: "#CCFFFFFF",
-    circleWidth: 80,
-    circleHeight: 80,
-    iconWidth: 50,
-    iconHeight: 50,
-    titleSize: 20,
-    baseBorderRadius: 15
+    circleWidth: '80px',
+    circleHeight: '80px',
+    iconWidth: '50px',
+    iconHeight: '50px',
+    titleSize: '20px',
+    baseBorderRadius: 15,
+    simpleToggleTitleSize: '18px'
   }
 
   static initParams(params?) {
@@ -32,13 +35,16 @@ export default class UniformConfig {
     UniformConfig.config = params || {
                               iconOnBG: "#0A59F7",
                               iconOffBG: "#F5F5F5",
+                              iconOnColor: "#FFFFFF",
+                              iconOffColor: "#404345",
                               baseColor: "#CCFFFFFF",
-                              circleWidth: 80,
-                              circleHeight: 80,
-                              iconWidth: 50,
-                              iconHeight: 50,
-                              titleSize: 20,
-                              baseBorderRadius: 15
+                              circleWidth: '80px',
+                              circleHeight: '80px',
+                              iconWidth: '50px',
+                              iconHeight: '50px',
+                              titleSize: '20px',
+                              baseBorderRadius: 15,
+                              simpleToggleTitleSize: '18px'
                             }
     console.log('----initParams(params)----finish');
   }

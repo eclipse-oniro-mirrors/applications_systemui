@@ -60,6 +60,7 @@ interface RuleData {
 export interface NotificationItemData {
   id: string;
   hashcode: string;
+  userId: number;
   contentType: string;
   timestamp: number;
   time: string;
@@ -83,7 +84,7 @@ export interface NotificationItemData {
   versionName?: string;
   sound?: string;
   vibrationValues?: Array<number>;
-  ruleData?:RuleData;
+  ruleData?: RuleData;
   template?: any;
   isOngoing?: boolean;
   isUnremovable?: boolean;

@@ -14,118 +14,76 @@
  */
 
 import Notification from '@ohos.notification';
+import AccountManager from '@ohos.account.osAccount';
 import Log from '../../../../../../../../../common/src/main/ets/default/Log.ets';
 import BundleManager from '../../../../../../../../../common/src/main/ets/default/abilitymanager/bundleManager.ets';
 import NotificationManager from './NotificationManager.ets';
 import Constants, {NotificationItemData} from '../common/constants.ets';
 import {NotificationConfig} from './NotificationConfig.ets';
 
-let mDate;
-let mAppName;
-let mEmptyArray;
 const TAG = 'Notification_ParseDataUtil';
-mDate = new Date();
-mAppName = new Map();
-mEmptyArray = [];
+let mDate = new Date();
 let appDataMap = new Map();
+
+type NotificationContent = {
+  title: string,
+  text: string,
+  additionalText: string,
+  briefText?: string,
+  expandedTitle?: string,
+  longText?: string,
+  lines?: [],
+  picture?: any
+}
+
+async function getUserId(uid) {
+  Log.showInfo(TAG, `getOsAccountLocalIdFromUid request.creatorUid = ${uid}`);
+  let userId = 0;
+  //todo userId = AccountManager.getAccountManager().getOsAccountLocalIdFromUid(uid)
+  Log.showInfo(TAG, `getOsAccountLocalIdFromUid userId = ${userId}`);
+  return userId;
+}
+
 
 /**
  * parse data util class.
  */
 export default class ParseDataUtil {
-  static parseData(data, callback) {
-    let request = data?.request;
-    if (request == null || request == undefined) {
-      Log.showInfo(TAG, 'consumeCallback request is empty');
-      callback(Constants.ERROR_CALLBACK, undefined);
-      return;
+  static async parseData(request, sortingMap?) {
+    if (!request) {
+      return Promise.reject('consumeCallback request is empty');
     }
-    let slotLevel;
-    try {
-      slotLevel = data?.sortingMap?.sortings[request.hashCode]?.slot.level;
-    } catch (e) {
-      Log.showInfo(TAG, `slot level get error:  ${e.toString()}`);
-    }
-    let sound = '';
-    try {
-      sound = data?.sortingMap?.sortings[request.hashCode]?.slot.sound;
-    } catch (e) {
-      Log.showInfo(TAG, `sound  get error:  ${e.toString()}`);
-    }
-    let vibrationValues = [];
-    try {
-      vibrationValues = data?.sortingMap?.sortings[request.hashCode]?.slot.vibrationValues;
-    } catch (e) {
-      Log.showInfo(TAG, `vibrationValues get error:  ${e.toString()}`);
-    }
-    Log.showInfo(TAG, `want = ${JSON.stringify(request.wantAgent)}`);
+    Log.showInfo(TAG, `parse data start, want = ${JSON.stringify(request.wantAgent)}`);
     Log.showInfo(TAG, `actionButtons = ${JSON.stringify(request.actionButtons)}`);
-    Log.showInfo(TAG, `largeIcon = ${request.largeIcon}`);
-    ParseDataUtil.getAppData(request.creatorBundleName, (err, appMessage) => {
-      let notificationItem: NotificationItemData = {
-        id: request.id,
-        hashcode: request.hashCode,
-        contentType: request?.content?.contentType + '',
-        timestamp: request.deliveryTime,
-        time: ParseDataUtil.getStandardTime(request.deliveryTime),
-        appName: appMessage.appName,
-        want: request.wantAgent,
-        bundleName: request.creatorBundleName,
-        actionButtons: request.actionButtons,
-        smallIcon: NotificationConfig.USE_NOTIFICATION_ICON ? (request?.smallIcon ?? appMessage.icon) : appMessage.icon,
-        largeIcon: request.largeIcon,
-        slotLevel: slotLevel,
-        source: request.source,
-        sound: sound? sound : '',
-        vibrationValues: vibrationValues? vibrationValues : [],
-        template: request?.template,
-        isOngoing: request.isOngoing,
-        isUnremovable: request.isUnremovable,
-        isRemoveAllowed: request.isRemoveAllowed
-      };
-      Log.showInfo(TAG, `notificationItem construct over ====================`);
-      switch (request?.content?.contentType) {
-        case NotificationManager.TYPE_BASIC:
-          Log.showInfo(TAG, `contentType NOTIFICATION_CONTENT_BASIC_TEXT ====================`);
-          notificationItem.title = request.content.normal?.title ?? '';
-          notificationItem.text = request.content.normal?.text ?? '';
-          notificationItem.additionalText = request.content.normal?.additionalText ?? '';
-          break;
-        case NotificationManager.TYPE_LONG:
-          Log.showInfo(TAG, `contentType NOTIFICATION_CONTENT_LONG_TEXT ====================`);
-          notificationItem.title = request.content.longText?.title ?? '';
-          notificationItem.text = request.content.longText?.text ?? '';
-          notificationItem.additionalText = request.content.longText?.additionalText ?? '';
-          notificationItem.briefText = request.content.longText?.briefText ?? '';
-          notificationItem.expandedTitle = request.content.longText?.expandedTitle ?? '';
-          notificationItem.longText = request.content.longText?.longText ?? '';
-          break;
-        case NotificationManager.TYPE_MULTI:
-          Log.showInfo(TAG, `contentType NOTIFICATION_CONTENT_MULTILINE ====================`);
-          notificationItem.title = request.content.multiLine?.title ?? '';
-          notificationItem.text = request.content.multiLine?.text ?? '';
-          notificationItem.additionalText = request.content.multiLine?.additionalText ?? '';
-          notificationItem.briefText = request.content.multiLine?.briefText ?? '';
-          notificationItem.longTitle = request.content.multiLine?.longTitle ?? '';
-          notificationItem.lines = request.content.multiLine?.lines ?? mEmptyArray;
-          Log.showInfo(TAG, `multilines: ${JSON.stringify(request.content.multiLine?.lines)}`)
-          break;
-        case NotificationManager.TYPE_PICTURE:
-          Log.showInfo(TAG, `contentType NOTIFICATION_CONTENT_PICTURE ====================`);
-          notificationItem.title = request.content.picture?.title ?? '';
-          notificationItem.text = request.content.picture?.text ?? '';
-          notificationItem.additionalText = request.content.picture?.additionalText ?? '';
-          notificationItem.briefText = request.content.picture?.briefText ?? '';
-          notificationItem.expandedTitle = request.content.picture?.expandedTitle ?? '';
-          Log.showInfo(TAG, `picture value` + request.content.picture.picture);
-          notificationItem.picture = request.content.picture?.picture ?? '';
-          break;
-        default:
-          Log.showInfo(TAG, 'no match content type');
-          break;
-      }
-      callback(Constants.SUCCESS_CALLBACK, notificationItem);
-    })
+    let [appMessage, userId] =
+      await Promise.all([ParseDataUtil.getAppData(request.creatorBundleName), getUserId(request.creatorUid)]);
+    let notificationItem: NotificationItemData = {
+      id: request.id,
+      userId: userId,
+      hashcode: request.hashCode,
+      contentType: request?.content?.contentType + '',
+      timestamp: request.deliveryTime,
+      time: ParseDataUtil.getStandardTime(request.deliveryTime),
+      appName: appMessage.appName,
+      want: request.wantAgent,
+      bundleName: request.creatorBundleName,
+      actionButtons: request.actionButtons,
+      smallIcon: NotificationConfig.USE_NOTIFICATION_ICON ? (request?.smallIcon ?? appMessage.icon) : appMessage.icon,
+      largeIcon: request.largeIcon,
+      slotLevel: sortingMap?.sortings[request?.hashCode]?.slot?.level,
+      source: request.source,
+      sound: sortingMap?.sortings[request?.hashCode]?.slot?.sound ?? '',
+      vibrationValues: sortingMap?.sortings[request?.hashCode]?.slot?.vibrationValues ?? [],
+      template: request?.template,
+      isOngoing: request.isOngoing,
+      isUnremovable: request.isUnremovable,
+      isRemoveAllowed: request.isRemoveAllowed
+    };
+    Log.showInfo(TAG, `notificationItem construct over ====================`);
+    notificationItem = {
+      ...notificationItem, ...ParseDataUtil.getContentByType(request?.content?.contentType, request)
+    }
+    return notificationItem;
   }
 
   /**
@@ -134,42 +92,25 @@ export default class ParseDataUtil {
    * @param {string} bundleName - BundleName of the target app.
    * @return {object} appData
    */
-  static getAppData(bundleName, callback) {
-    Log.showInfo(TAG, 'getAppName start ====================');
+  static async getAppData(bundleName) {
+    Log.showInfo(TAG, `getAppName start by ${bundleName}`);
     if (appDataMap.has(bundleName)) {
-      callback(Constants.SUCCESS_CALLBACK, appDataMap.get(bundleName));
-      return;
+      Log.showInfo(TAG, `getAppData success.`);
+      return appDataMap.get(bundleName);
     }
-    BundleManager.getBundleInfo(TAG, bundleName, 0, (data) => {
-      Log.showInfo(TAG, `getBundleInfo` + JSON.stringify(data));
-      let labelId = data.appInfo.labelId;
-      let iconId = data.appInfo.iconId;
-      let appName = '';
-      BundleManager.getResourceManager(TAG, bundleName, (item) => {
-        Log.showInfo(TAG, `BundleManager.getResourceManager ${BundleManager.getResourceManager}`);
-        item.getString(labelId, (error, value) => {
-          Log.showInfo(TAG, `getString` + JSON.stringify(value));
-          if (value != null && value != undefined) {
-            appName = value
-          }
-          item.getMediaBase64(iconId, (error, MediaValue) => {
-            Log.showInfo(TAG, `getMediaBase64` + JSON.stringify(MediaValue));
-            if (MediaValue != null) {
-              let appMessage = {
-                'appName': appName,
-                'icon': MediaValue
-              }
-              Log.showInfo(TAG, `appDataMap set appInfo, appName = ` + JSON.stringify(appName));
-              if (appName != null && appName != undefined && appName != '') {
-                appDataMap.set(bundleName, appMessage);
-              }
-              Log.showInfo(TAG, `getAppData success, appMessage ` + JSON.stringify(appMessage));
-              callback(Constants.SUCCESS_CALLBACK, appDataMap.get(bundleName));
-            }
-          });
-        })
-      })
-    });
+    let data = await BundleManager.getBundleInfo(TAG, bundleName, 0);
+    let labelId = data?.appInfo?.labelId;
+    let iconId = data?.appInfo?.iconId;
+    let item = await BundleManager.getResourceManager(TAG, bundleName);
+    let appMessage = {
+      appName: await item.getString(labelId),
+      icon: await item.getMediaBase64(iconId)
+    };
+    if (appMessage.icon != null && appMessage.appName) {
+      appDataMap.set(bundleName, appMessage);
+      Log.showInfo(TAG, `getAppData success ${appMessage.appName} by ${bundleName}`);
+    }
+    return appMessage;
   }
 
   /**
@@ -178,7 +119,6 @@ export default class ParseDataUtil {
    * @param {number} timestamp - Target timestamp.
    */
   static getStandardTime(timestamp) {
-    Log.showInfo(TAG, 'getStandardTime start ====================');
     if (timestamp == 0 || timestamp == undefined || timestamp == null) {
       return '';
     }
@@ -188,5 +128,42 @@ export default class ParseDataUtil {
     let hours = hoursNumber < 10 ? '0' + hoursNumber : hoursNumber;
     let minutes = minutesNumber < 10 ? '0' + minutesNumber : minutesNumber;
     return hours + ':' + minutes;
+  }
+
+  static getContentByType(notificationType, request): NotificationContent {
+    let content = {
+      title: '', text: '', additionalText: ''
+    }
+
+    function getContentByKey(keysAndDefault, source) {
+      if (source) {
+        keysAndDefault.forEach(([key, defualt]) => {
+          content[key] = source[key] ?? defualt
+        })
+      }
+    }
+
+    switch (notificationType) {
+      case NotificationManager.TYPE_BASIC:
+        getContentByKey([['title', ''], ['text', ''], ['additionalText', '']], request.content.normal)
+        break;
+      case NotificationManager.TYPE_LONG:
+        getContentByKey([['title', ''], ['text', ''], ['additionalText', []], ['briefText', ''],
+        ['expandedTitle', ''], ['longText', '']], request.content.longText)
+        break;
+      case NotificationManager.TYPE_MULTI:
+        getContentByKey([['title', ''], ['text', ''], ['additionalText', []], ['briefText', ''],
+        ['longTitle', ''], ['lines', []]], request.content.multiLine)
+        break;
+      case NotificationManager.TYPE_PICTURE:
+        getContentByKey([['title', ''], ['text', ''], ['additionalText', []], ['briefText', ''],
+        ['expandedTitle', ''], ['picture', '']], request.content.picture)
+        break;
+      default:
+        Log.showInfo(TAG, 'no match content type');
+        break;
+    }
+    Log.showInfo(TAG, `notificationType = ${notificationType}, content = ${JSON.stringify(content)}`);
+    return content
   }
 }

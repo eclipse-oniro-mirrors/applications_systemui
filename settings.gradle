@@ -17,4 +17,5 @@ include ':entry', ':product:navigationBar', ':common', ':product:statusbar', ':p
         ':features:capsulecomponent', ':features:batterycomponent', ':features:clockcomponent',
         ':features:signalcomponent', ':features:wificomponent', ':features:navigationservice', ':features:noticeitem',
         ':features:airplanecomponent', ':features:brightnesscomponent', ':features:volumecomponent', ':features:managementcomponent',
-        ':features:statusbarcomponent', ':features:controlcentercomponent'
+        ':features:statusbarcomponent', ':features:controlcentercomponent', ':features:bluetoothcomponent', ':features:locationcomponent',
+        ':features:ringmodecomponent'

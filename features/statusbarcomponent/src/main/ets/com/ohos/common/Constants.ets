@@ -16,11 +16,14 @@
 export default class Constants {
   static EMPTY  = 'empty';
   static WIFI  = 'wifi';
+  static BLUETOOTH  = 'bluetooth';
   static SIGNAL = 'signal';
   static CLOCK = 'clock';
   static BATTERY = 'battery';
   static CAPSULE = 'capsule'
   static NOTIFICATION = 'notification';
+  static LOCATION = 'location'
+  static RING_MODE = 'ring_mode';
 
   static STATIC_BAR_ICON_WIDTH = 24;
   static STATIC_BAR_ICON_MARGIN = 2;

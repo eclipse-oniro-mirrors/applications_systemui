@@ -50,7 +50,7 @@ struct Index {
     }
     .width('100%')
     .height('100%')
-    .constraintSize({ minHeight: this.minNavHeight })
+    .constraintSize({ minHeight: this.minNavHeight  + 'px'})
     .backgroundColor($r('app.color.index_background'))
     .padding(this.showNavHorizontal ? { left: '18%', right: '18%' } : { top: '18%', bottom: '18%' })
   }

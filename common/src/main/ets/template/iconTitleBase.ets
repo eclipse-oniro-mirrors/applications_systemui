@@ -27,8 +27,10 @@ struct iconBaseComponent {
   private iconOff: any
   @State iconOffStr: string = ""
   @State iconOnStr: string = ""
-  @State mTitle: string = "None"
+  @Link mTitle: string | Resource
+  @State mTitleStr: string = ""
   private useIconStr = false
+  private useTitleStr = false
   private mConfig = UniformConfig.config;
   private mClickEvent: Function
   private mLongClickEvent: Function
@@ -71,10 +73,11 @@ struct iconBaseComponent {
         console.log(`end longClickEvent ${this.changeSwitch}`)
       }))
       Flex({ direction: FlexDirection.Column, alignItems: ItemAlign.Start, justifyContent: FlexAlign.Center }) {
-        Text(this.mTitle)
+        Text(this.useTitleStr ? this.mTitleStr : this.mTitle)
           .fontSize(this.mConfig.titleSize)
           .textOverflow({ overflow: TextOverflow.Ellipsis })
-          .margin({ left: 10 })
+          .maxLines(2)
+          .margin({ left: 10, right: 10 })
       }
       .height('100%')
     }

@@ -46,10 +46,10 @@ struct iconComponent {
         Flex()
           .backgroundColor(this.changeSwitch == false? this.mConfig.iconOffBG : this.mConfig.iconOnBG)
           .clip(Circle({ width: this.mConfig.circleWidth, height: this.mConfig.circleHeight }))
-          .width(this.mConfig.circleWidth)
-          .height(this.mConfig.circleHeight)
+          .width(this.mConfig.circleWidth )
+          .height(this.mConfig.circleHeight )
         Image(this.changeSwitch == false? (this.useIconStr ? this.iconOffStr : this.iconOff): (this.useIconStr ? this.iconOnStr : this.iconOn))
-          .size({ width: this.mConfig.iconWidth, height: this.mConfig.iconHeight })
+          .size({ width: this.mConfig.iconWidth, height: this.mConfig.iconHeight})
           .objectFit(ImageFit.Contain)
       }.margin({ left: 10 })
     }

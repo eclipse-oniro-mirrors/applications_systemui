@@ -18,8 +18,11 @@ dependencies {
     implementation project(':features:airplanecomponent')
     implementation project(':features:brightnesscomponent')
     implementation project(':features:wificomponent')
+    implementation project(':features:bluetoothcomponent')
     implementation project(':features:volumecomponent')
     implementation project(':features:batterycomponent')
     implementation project(':features:clockcomponent')
     implementation project(':features:noticeitem')
+    implementation project(':features:locationcomponent')
+    implementation project(':features:ringmodecomponent')
 }

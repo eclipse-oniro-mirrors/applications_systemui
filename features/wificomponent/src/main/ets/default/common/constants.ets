@@ -14,31 +14,27 @@
  */
 
 export default class constants {
+  static DEFAULT_WIFI_OPEN_STATUS: boolean = false;
+  static DEFAULT_WIFI_NAME: string = 'WLAN';
   static DEFAULT_WIFI_INFO: number = 0;
   static DEFAULT_WIFI_STATUS: boolean = false;
-  static WIFI_STATUS_DISPLAY_HEIGHT: string = '50%';
-  static WIFI_STATUS_HIDDEN_HEIGHT: number = 0;
-  static WIFI_STATUS_MAX_WIDTH: string = '50';
-  static EVENT_CONN_STATE: string = 'usual.event.wifi.CONN_STATE';
-  static EVENT_POWER_STATE: string = 'usual.event.wifi.POWER_STATE';
-  static Event_CONN_NAME: string = 'WIFI_CONNECT_NAME';
   static WIFI_SIGNAL_NO: number = 0;
   static WIFI_SIGNAL_LOW: number = 1;
   static WIFI_SIGNAL_MID: number = 2;
   static WIFI_SIGNAL_HIGH: number = 3;
   static WIFI_SIGNAL_FULL: number = 4;
-  static WIFI_POWER_OFF: number = 1;
-  static WIFI_POWER_ON: number = 3;
-  static WIFI_STATE_AP_CONNECTING: number = 1;
-  static WIFI_STATE_NETWORK_ENABLED: number = 3;
-  static WIFI_STATE_NO_NETWORK: number = 4;
-  static WIFI_Disconnected: number = 7;
-  static WIFI_PASSWORD_ERR: number = 8;
-  static WIFI_CONNECTING_TIMEOUT: number = 9;
-  static DEFAULT_ERR_CODE: number = 0;
-  static UPDATE_WIFI_INFO_DEFAULT_PARAM: number = -60;
-  static WIFI_SIGNAL_DEFAULT: number = -1;
-  static SIGN_LEVEL: number = 2;
   static STATIC_BAR_ICON_WIDTH = 24;
   static STATIC_BAR_ICON_HEIGHT = 24;
+}
+
+export enum WifiState {
+  STATE_OFF = 0,
+  STATE_ON = 1,
+  STATE_TURNING_ON = 2,
+  STATE_TURNING_OFF = 3
+}
+
+export enum WifiConnectionState {
+  DISCONNECTED = 0,
+  CONNECTED = 1
 }

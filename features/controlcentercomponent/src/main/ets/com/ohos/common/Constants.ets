@@ -15,12 +15,16 @@
 
 export default class Constants {
   static WIFI  = 'wifi';
+  static BLUETOOTH = 'bluetooth';
   static AIR_PLANE = 'air_plane';
-  static COMPLEX_TOGGLE_HEIGHT = 120;
-  static COMPLEX_TOGGLE_UP_DOWN_SPACE = 20;
-  static SIMPLE_TOGGLE_HEIGHT = 105;
-  static SIMPLE_TOGGLE_UP_DOWN_SPACE = 20;
-  static SIMPLE_TOGGLE_ICON_WIDTH = 50;
-  static SIMPLE_TOGGLE_ICON_HEIGHT = 50;
-  static SIMPLE_TOGGLE_INSIDE_SPACE = 10;
+  static LOCATION = 'location';
+  static RING_MODE = 'ring_mode';
+  static COMPLEX_TOGGLE_HEIGHT = px2vp(100);
+  static COMPLEX_TOGGLE_UP_DOWN_SPACE = px2vp(20);
+  static SIMPLE_TOGGLE_HEIGHT = px2vp(110);
+  static SIMPLE_TOGGLE_UP_DOWN_SPACE = px2vp(20);
+  static SIMPLE_TOGGLE_UP_TOP_SPACE = px2vp(40);
+  static SIMPLE_TOGGLE_ICON_WIDTH = px2vp(50);
+  static SIMPLE_TOGGLE_ICON_HEIGHT = px2vp(50);
+  static SIMPLE_TOGGLE_INSIDE_SPACE = px2vp(10);
 }
