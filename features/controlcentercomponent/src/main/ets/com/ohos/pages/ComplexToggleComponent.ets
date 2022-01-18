@@ -14,7 +14,7 @@
  */
 
 import Log from '../../../../../../../../common/src/main/ets/default/Log.ets'
-import FeatureAbilityManager from '../../../../../../../../common/src/main/ets/default/abilitymanager/featureAbilityManager.ets';
+import FeatureAbilityManager from '../../../../../../../../common/src/main/ets/default/abilitymanager/featureAbilityManager.ets'
 import WindowManager from '../../../../../../../../common/src/main/ets/default/WindowManager.ets'
 import CheckEmptyUtils from '../../../../../../../../common/src/main/ets/default/CheckEmptyUtils.ets'
 import iconTitleBase from '../../../../../../../../common/src/main/ets/template/iconTitleBase.ets'
@@ -27,28 +27,36 @@ export default struct ComplexToggleComponent {
   @Prop keyId: string
   @State mItemData: any = {}
   @State mStatus: boolean = false
-  @Link showStatusBar: boolean
+  @StorageLink("showStatusBar") showStatusBar: boolean = false
   private mWindowManager
   private mFeatureAbilityManager
+  @State mDefaultTitle: string = ''
 
   aboutToAppear() {
     Log.showInfo(TAG, `aboutToAppear Start, keyId: ${this.keyId}`)
-    this.mItemData = AppStorage.Link(this.keyId)
-    Log.showInfo(TAG, `aboutToAppear, mItemData: ${this.mItemData.get().iconUrl} ${this.mItemData.get().label}`)
-    this.mWindowManager = new WindowManager();
-    this.mFeatureAbilityManager = new FeatureAbilityManager();
+    this.mWindowManager = new WindowManager()
+    this.mFeatureAbilityManager = new FeatureAbilityManager()
+    this.linkItemData()
   }
 
   aboutToDisappear() {
     Log.showInfo(TAG, `aboutToDisappear`)
-    let deleteRs: boolean = AppStorage.Delete(this.keyId)
-    Log.showInfo(TAG, `aboutToDisappear AppStorage.Delete, ${deleteRs} key: ${this.keyId}`)
+  }
+
+  linkItemData() {
+    Log.showInfo(TAG, `linkItemData, keyId: ${this.keyId}`)
+    this.mItemData = AppStorage.Link(this.keyId)
+    Log.showInfo(TAG, `linkItemData, mItemData: ${this.keyId} ${this.mItemData.get().label} ${
+    this.mItemData.get()
+    .iconUrl}`)
   }
 
   build() {
     Column() {
       iconTitleBase({
-        mTitle: this.mItemData.get()
+        useTitleStr: true,
+        mTitle: $mDefaultTitle,
+        mTitleStr: this.mItemData.get()
         .label,
         useIconStr: true,
         iconOffStr: this.mItemData.get()
@@ -59,7 +67,8 @@ export default struct ComplexToggleComponent {
         mClickEvent: this.onIconItemClick.bind(this),
         mLongClickEvent: this.onIconItemLongPressGesture.bind(this)
       })
-    }
+    }.width('100%')
+    .height('100%')
   }
 
   onIconItemClick() {
@@ -93,11 +102,11 @@ export default struct ComplexToggleComponent {
     }
     Log.showInfo(TAG, `startAbility, want: ${JSON.stringify(wantParam)}`)
 
-    this.showStatusBar = true;
+    this.showStatusBar = true
     this.mWindowManager.setWindowMin((result) => {
       this.mFeatureAbilityManager.openAbility(TAG, {
         want: wantParam
-      });
-    });
+      })
+    })
   }
 }

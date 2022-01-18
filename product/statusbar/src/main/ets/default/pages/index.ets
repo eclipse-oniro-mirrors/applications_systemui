@@ -133,7 +133,7 @@ struct Index {
     }
     .width('100%')
     .height('100%')
-    .constraintSize({ minHeight: this.StatusMinH })
+    .constraintSize({ minHeight: this.StatusMinH + 'px'})
   }
 
   touchEvent(event: TouchEvent) {

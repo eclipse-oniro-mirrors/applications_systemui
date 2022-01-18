@@ -13,190 +13,149 @@
  * limitations under the License.
  */
 
-import Constants from './common/constants.ets'
-import WifiInfo from '@ohos.wifi_native_js';
-import Subscriber from '@ohos.commonEvent';
+import wifi from '@ohos.wifi';
+import {EventListener} from '@ohos.wifi';
+import Constants, {WifiState, WifiConnectionState} from './common/constants.ets'
 import Log from "../../../../../../common/src/main/ets/default/Log.ets";
 
 const TAG = 'WifiComponent-WifiModel';
 
-var mCommonEventSubscribeInfo = {
-  events: [Constants.EVENT_CONN_STATE,
-  Constants.EVENT_POWER_STATE, Constants.Event_CONN_NAME]
-};
-var mCommonEventSubscriber = null;
 var mWifiInfo;
 var mWifiStatus;
 var mWifiOpenStatus;
 var mWifiName;
 
-
 export class WifiModel {
+  mIsStart: boolean = false;
+  mListener= null;
 
   initWifiModel() {
-    Log.showInfo(TAG, `initWifiModel`)
-    mWifiInfo = AppStorage.SetAndLink("wifiInfo", 0);
-    mWifiStatus = AppStorage.SetAndLink("wifiStatus", false);
-    mWifiName = AppStorage.SetAndLink("wifiName", 'WLAN')
-    mWifiOpenStatus = AppStorage.SetAndLink("wifiOpenStatus", false);
-    if(mCommonEventSubscriber == null){
-      this.registerWiFiStatusListener();
+    if (this.mIsStart) {
+      return;
     }
-    this.getWifiMessage();
+    Log.showInfo(TAG, `initWifiModel`)
+    this.mIsStart = true;
+
+    mWifiInfo = AppStorage.SetAndLink("wifiInfo", Constants.DEFAULT_WIFI_INFO);
+    mWifiStatus = AppStorage.SetAndLink("wifiStatus", Constants.DEFAULT_WIFI_STATUS);
+    mWifiName = AppStorage.SetAndLink("wifiName", Constants.DEFAULT_WIFI_NAME)
+    mWifiOpenStatus = AppStorage.SetAndLink("wifiOpenStatus", Constants.DEFAULT_WIFI_OPEN_STATUS);
+
+    this.getWifiInfo();
+
+    this.mListener = new EventListener();
+    this.mListener.on('wifiStateChange', this.onWifiStateChange.bind(this));
+    this.mListener.on('wifiConnectionChange', this.onWifiConnectionChange.bind(this));
+    this.mListener.on('wifiRssiChange', this.onWifiRssiChange.bind(this));
   }
 
   uninitWifiModel() {
+    if (!this.mIsStart) {
+      return;
+    }
     Log.showInfo(TAG, `uninitWifiModel`)
-    this.unregisterWiFiStatusListener()
+    this.mIsStart = false;
+
+    this.mListener.off('wifiRssiChange', (data) => {
+      Log.showInfo(TAG, `uninitWifiModel->wifiRssiChange, data: ${JSON.stringify(data)}`)
+    });
+    this.mListener.off('wifiConnectionChange', (data) => {
+      Log.showInfo(TAG, `uninitWifiModel->wifiConnectionChange, data: ${JSON.stringify(data)}`)
+    });
+    this.mListener.off('wifiStateChange', (data) => {
+      Log.showInfo(TAG, `uninitWifiModel->wifiStateChange, data: ${JSON.stringify(data)}`)
+    });
+    this.mListener = null;
+    mWifiOpenStatus.set(Constants.DEFAULT_WIFI_OPEN_STATUS);
+    this.setDisconnectedStatus();
   }
 
-  /**
-   * Get Wifi value for the first time when restart device
-   *
-   */
-  getWifiMessage() {
-    Log.showInfo(TAG, `wifiModel getWifiMessage ===========`);
-    mWifiOpenStatus.set(WifiInfo.isWifiActive());
-    try{
-      WifiInfo.getLinkedInfo(data => {
-        Log.showInfo(TAG, `getWifiMessage getLinkedInfo ${JSON.stringify(data)}`);
-        if(data.ssid != ''){
-          mWifiName.set(data.ssid);
-          mWifiStatus.set(true);
-          this.updateWifiInfo();
-        }
-      });
-    }catch(err){
-      Log.showInfo(TAG, `getWifiMessage getLinkedInfo err ${JSON.stringify(err)}`);
-    }
-  }
+  onWifiStateChange(data) {
+    Log.showInfo(TAG, `onWifiStateChange, data: ${JSON.stringify(data)}`)
 
-  /**
-   * Subscribe wifi events
-   *
-   */
-  registerWiFiStatusListener() : void {
-    Log.showInfo(TAG, `register Wifi status listener ===========`);
-    Subscriber.createSubscriber(
-      mCommonEventSubscribeInfo,
-      this.createWifiStatusSubscriberCallBack.bind(this)
-    );
-  }
-
-  /**
-   * Callback of the subscriber
-   *
-   * @param {Object} err - error returns from the caller
-   * @param {Object} data - data returns from the caller
-   */
-  createWifiStatusSubscriberCallBack(err, data) {
-    Log.showInfo(TAG, `createWifiStatusSubscriberCallBack start err: ${JSON.stringify(err)} data: ${JSON.stringify(data)}`);
-    mCommonEventSubscriber = data;
-    Subscriber.subscribe(mCommonEventSubscriber, this.wifiStatusSubscriberCallBack.bind(this));
-  }
-
-  /**
-   * Callback of the events
-   *
-   * @param {Object} err - error returns from the caller
-   * @param {Object} data - data returns from the caller
-   */
-  private wifiStatusSubscriberCallBack(err, data) {
-    Log.showInfo(TAG, `wifiStatusSubscriberCallBack start err:${ JSON.stringify(err)} data: ${ JSON.stringify(data) }`);
-    if (err.code == Constants.DEFAULT_ERR_CODE) {
-      Log.showInfo(TAG, `wifi data == ${JSON.stringify(data)}`);
-      if (data.event == Constants.EVENT_CONN_STATE) {
-        if(data.code == Constants.WIFI_STATE_AP_CONNECTING ||
-        data.code == Constants.WIFI_STATE_NETWORK_ENABLED ||
-        data.code == Constants.WIFI_STATE_NO_NETWORK){
-          this.updateWifiInfo();
-          this.changeWifiStatus(true);
-        }else {
-          this.updateWifiInfo();
-          this.changeWifiStatus(false);
-          mWifiName.set('WLAN');
-        }
-      }
-      if (data.event == Constants.EVENT_POWER_STATE) {
-        if( data.code == Constants.WIFI_POWER_OFF){
-          this.updateWifiInfo();
-          this.changeWifiStatus(false);
-          mWifiOpenStatus.set(false);
-          mWifiName.set('WLAN');
-        }else if(data.code == Constants.WIFI_POWER_ON){
-          mWifiOpenStatus.set(true);
-        }
-      }
-      if(data.event == 'WIFI_CONNECT_NAME'){
-        this.updateWifiName(JSON.parse(data.data).name)
-        this.changeWifiStatus(true)
-        let rssi = JSON.parse(data.data).rssi
-        let band = JSON.parse(data.data).band
-        Log.showInfo(TAG, `WIFI_CONNECT_NAME ================ ${rssi}`)
-        this.updateWifiInfo(rssi,band);
-      }
+    let isWifiInactive = data == WifiState.STATE_OFF;
+    mWifiOpenStatus.set(!isWifiInactive);
+    if (!isWifiInactive) {
+      this.getWifiConnectInfo();
     } else {
-      Log.showError(TAG, `error when subscribing ========`);
+      this.setDisconnectedStatus();
     }
   }
 
-  /**
-   * Unsubscribe wifi events
-   *
-   */
-  private unregisterWiFiStatusListener() {
-    Subscriber.unsubscribe(mCommonEventSubscriber, () => {
-      Log.showInfo(TAG, `unregister Wifi Status Listener ===============`);
+  onWifiConnectionChange(data) {
+    Log.showInfo(TAG, `onWifiConnectionChange, data: ${JSON.stringify(data)}`)
+
+    if (data == WifiConnectionState.CONNECTED) {
+      this.getLinkedInfo();
+    } else {
+      this.setDisconnectedStatus();
+    }
+  }
+
+  onWifiRssiChange(data) {
+    Log.showInfo(TAG, `onWifiRssiChange, data: ${JSON.stringify(data)}`)
+    this.getLinkedInfo();
+  }
+
+  getWifiInfo() {
+    Log.showInfo(TAG, `getWifiInfo`)
+    let isWifiActive = wifi.isWifiActive();
+    Log.showInfo(TAG, `getWifiInfo, isWifiActive: ${isWifiActive}`)
+    mWifiOpenStatus.set(isWifiActive);
+    if (isWifiActive) {
+      this.getWifiConnectInfo();
+    } else {
+      this.setDisconnectedStatus();
+    }
+  }
+
+  getWifiConnectInfo() {
+    Log.showInfo(TAG, `getWifiConnectInfo`)
+    let isConnected = wifi.isConnected();
+    Log.showInfo(TAG, `getWifiConnectInfo, isConnected: ${isConnected}`)
+    if (isConnected) {
+      mWifiStatus.set(true);
+      this.getLinkedInfo();
+    } else {
+      this.setDisconnectedStatus();
+    }
+  }
+
+  getLinkedInfo() {
+    Log.showInfo(TAG, `getLinkedInfo`)
+    wifi.getLinkedInfo((data) => {
+      Log.showInfo(TAG, `getLinkedInfo, data: ${JSON.stringify(data)}`)
+      if (data.connState == wifi.ConnState.CONNECTED) {
+        mWifiName.set(data.ssid);
+        let signalLevel = wifi.getSignalLevel(data.rssi, data.band);
+        Log.showInfo(TAG, `getLinkedInfo, signalLevel: ${signalLevel}`)
+        mWifiInfo.set(signalLevel);
+      } else {
+        this.setDisconnectedStatus();
+      }
     });
   }
 
-  /**
-   * Check the connection status of Wifi
-   *
-   * @param {boolean} status - if display wifi icon
-   */
-  private changeWifiStatus(status) {
-    Log.showInfo(TAG, `enter changeWifiStatus ================ ${status}`);
-    mWifiStatus.set(status)
-  }
-
-  private updateWifiInfo(rssi=Constants.UPDATE_WIFI_INFO_DEFAULT_PARAM,band=Constants.SIGN_LEVEL) {
-    Log.showInfo(TAG, `enter changeWifiInfos ================ ${rssi}+${band}`);
-    mWifiInfo.set(this.getWifiInfo(rssi,band))
-    Log.showInfo(TAG, `mWifiInfo wifiInfo ${mWifiInfo.get()}`);
-  }
-
-  private updateWifiName(name) {
-    Log.showInfo(TAG, `enter changeWifiNames ================ ${name}`);
-    mWifiName.set(name);
-  }
-
-
-  /**
-   * Update the image of wifi status
-   *
-   * @param {number} rssi - the rssi number of the connected wifi
-   * @return {string} image used to show wifi status
-   */
-  private getWifiInfo(rssi,band) {
-    //The current version keeps return 0 as result, set the level as 4(full level) by hand.
-    Log.showInfo(TAG, `getWifiImage enter =========`);
-    //Fake number of band and rssi for wifi signal level temporarily
-    let level = WifiInfo.getSignalLevel(rssi, band);
-    Log.showInfo(TAG, `wifi level = ${level}`);
-    return level;
+  setDisconnectedStatus() {
+    Log.showInfo(TAG, `setDisconnectedStatus`)
+    mWifiStatus.set(Constants.DEFAULT_WIFI_STATUS);
+    mWifiInfo.set(Constants.DEFAULT_WIFI_INFO);
+    mWifiName.set(Constants.DEFAULT_WIFI_NAME);
   }
 
   enableWifi() {
-    Log.showInfo(TAG, 'enableWifi ing');
-    WifiInfo.enableWifi();
+    Log.showInfo(TAG, 'enableWifi');
+    let result = wifi.enableWifi();
+    Log.showInfo(TAG, `enableWifi, result: ${result}`);
   }
 
   disableWifi() {
-    Log.showInfo(TAG, 'disableWifi ing');
-    WifiInfo.disableWifi();
+    Log.showInfo(TAG, 'disableWifi');
+    let result = wifi.disableWifi();
+    Log.showInfo(TAG, `disableWifi, result: ${result}`);
   }
 }
 
 let mWifiModel = new WifiModel();
+
 export default mWifiModel as WifiModel;

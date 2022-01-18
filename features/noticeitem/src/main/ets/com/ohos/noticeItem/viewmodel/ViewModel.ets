@@ -14,6 +14,7 @@
  */
 
 import Log from '../../../../../../../../../common/src/main/ets/default/Log.ets';
+import SwitchUserManager from '../../../../../../../../../common/src/main/ets/default/SwitchUserManager.ets';
 import media from '@ohos.multimedia.media';
 import vibrator from '@ohos.vibrator';
 import wantAgent from '@ohos.wantAgent';
@@ -27,37 +28,48 @@ import Constants from '../common/constants.ets';
 
 const TAG = 'NotificationViewModel';
 const GROUP_THRESHOLD = 10;
+
 /**
  * Notification ViewModel class.
  */
 export class ViewModel {
   audioPlayer: any;
   mNotificationList: any[];
-  mAppNotificationCount: any;
+  mAppNotificationCount = new Map();
   mCallback: any;
   mNotificationCtrl: any = {};
 
   constructor() {
-    let tempLink = AppStorage.SetAndLink('notificationList', []);
-    this.mNotificationList = tempLink.get();
-    this.mAppNotificationCount = new Map();
+    this.mNotificationList = AppStorage.SetAndLink('notificationList', []).get();
     this.audioPlayer = media.createAudioPlayer();
     this.audioPlayer.src = 'file://system/etc/capture.ogg';
-    this.registerCallback();
-    this.loadFlowControlInfos();
+    SwitchUserManager.getInstance().registerListener(this);
+    this.initFlowControlInfos();
+    SwitchUserManager.getInstance().getCurrentUserInfo().then((userInfo) => {
+      this.registerCallback(userInfo.userId);
+    })
   }
 
-  registerCallback() {
+  registerCallback(userId) {
     this.mCallback = {
+      userId: userId,
       onNotificationConsume: this.onNotificationConsume.bind(this),
-      onNotificationCancel: this.onNotificationCancel.bind(this),
-      onNotificationLoad: this.onNotificationLoad.bind(this)
+      onNotificationCancel: this.onNotificationCancel.bind(this)
     }
     NotificationService.register(this.mCallback);
   }
 
   unregisterCallback() {
     NotificationService.unRegister(this.mCallback);
+  }
+
+  userChange(userInfo) {
+    Log.showInfo(TAG, `UserChange, userInfo: ${JSON.stringify(userInfo)}`);
+    this.unregisterCallback();
+    this.mNotificationList.length = 0;
+    this.initFlowControlInfos();
+    this.registerCallback(userInfo.userId);
+    NotificationService.loadAllNotifications();
   }
 
   /**
@@ -120,10 +132,6 @@ export class ViewModel {
         break;
       }
     }
-  }
-
-  onNotificationLoad() {
-
   }
 
 
@@ -244,19 +252,19 @@ export class ViewModel {
     CommonUtil.startWant(want, info);
   }
 
-  loadFlowControlInfos() {
-    Log.showInfo(TAG, 'loadFlowControlInfos enter');
+  initFlowControlInfos() {
+    Log.showInfo(TAG, 'initFlowControlInfos enter');
     let notificationConfig = NotificationConfig.readNotificationConfig('statusbar')
     Log.showInfo(TAG, 'NotificationConfig: ' + JSON.stringify(notificationConfig));
     if (CheckEmptyUtils.isEmpty(notificationConfig)) {
       Log.showInfo(TAG, 'NotificationConfig is no definition');
-      Log.showInfo(TAG, 'loadFlowControlInfos end');
       return
     }
-
-    this.mNotificationCtrl['currentTotal'] = 0;
-    this.mNotificationCtrl['limitTotal'] = notificationConfig.limitTotal
-    this.mNotificationCtrl['app'] = new Map();
+    this.mNotificationCtrl = {
+      currentTotal: 0,
+      limitTotal: notificationConfig.limitTotal,
+      app: new Map()
+    }
     for (let item of notificationConfig.app) {
       let tmp = {
         'canShow': item.canShow,
@@ -265,8 +273,7 @@ export class ViewModel {
       }
       this.mNotificationCtrl['app'].set(item.bundleName, tmp);
     }
-    Log.showInfo(TAG, 'mNotificationCtrl: ' + JSON.stringify(this.mNotificationCtrl));
-    Log.showInfo(TAG, 'loadFlowControlInfos end');
+    Log.showInfo(TAG, 'initFlowControlInfos end, mNotificationCtrl: ' + JSON.stringify(this.mNotificationCtrl));
   }
 
   isCanShow(bundleName: string): boolean {

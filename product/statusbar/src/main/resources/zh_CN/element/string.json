@@ -2,11 +2,11 @@
   "string": [
     {
       "name": "status_bar_size_portrait",
-      "value": "52"
+      "value": "102"
     },
     {
       "name": "status_bar_size_landscape",
-      "value": "52"
+      "value": "102"
     },
     {
       "name": "status_bar_position_portrait",

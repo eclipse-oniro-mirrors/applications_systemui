@@ -53,7 +53,7 @@ struct threeLayout {
             keyButton({ uri: item.uri, keyCode: item.keyCode })
           }
           .height('100%')
-          .constraintSize({ minHeight: this.minNavHeight })
+          .constraintSize({ minHeight: this.minNavHeight  + 'px'})
           .align(Alignment.Center)
         })
       }
@@ -67,7 +67,7 @@ struct threeLayout {
             keyButton({ uri: item.uri, keyCode: item.keyCode })
           }
           .width('100%')
-          .constraintSize({ minHeight: this.minNavHeight })
+          .constraintSize({ minHeight: this.minNavHeight  + 'px'})
           .align(Alignment.Center)
         })
       }

@@ -32,6 +32,10 @@ export default class CommonUtil {
       Log.showInfo(TAG, `wantAgent trigger err ${JSON.stringify(err)} data ${JSON.stringify(data)}`);
     }));
   }
+
+  static checkVisibilityByUser(notificationUser: number, currentUser: number): boolean{
+    return (0 <= notificationUser && notificationUser < 100) || notificationUser == currentUser
+  }
 }
 
 

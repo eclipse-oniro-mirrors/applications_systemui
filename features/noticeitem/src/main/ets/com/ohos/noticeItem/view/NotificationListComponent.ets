@@ -51,7 +51,7 @@ export default struct NotificationListComponent {
               ListItem() {
                 NotificationItem({ itemData: item })
               }
-            }, (item: any) => item.hashcode.toString())
+            }, (item: any) => `${item.hashcode}_${item.timestamp}`)
           }
           .onTouch((event: TouchEvent) => {
             Log.showInfo(TAG, `Touch Event ${event.type} at Point ${event.touches[0].x}, ${event.touches[0].y}`)

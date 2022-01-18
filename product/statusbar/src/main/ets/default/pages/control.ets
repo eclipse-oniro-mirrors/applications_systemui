@@ -17,7 +17,10 @@ import WindowManager from '../../../../../../../common/src/main/ets/default/Wind
 import BatteryIcon from '../../../../../../../features/batterycomponent/src/main/ets/default/pages/batteryIcon.ets'
 import ClockIcon from '../../../../../../../features/clockcomponent/src/main/ets/default/pages/clockIcon.ets'
 import WifiIcon from '../../../../../../../features/wificomponent/src/main/ets/default/pages/wifiIcon.ets'
+import BluetoothIcon from '../../../../../../../features/bluetoothcomponent/src/main/ets/com/ohos/pages/StatusBarIconItemBluetoothComponent.ets'
 import SignalIcon from '../../../../../../../features/signalcomponent/src/main/ets/default/pages/signalIcon.ets'
+import LocationIcon from '../../../../../../../features/locationcomponent/src/main/ets/com/ohos/pages/StatusBarIconItemLocationComponent.ets'
+import RingModeIcon from '../../../../../../../features/ringmodecomponent/src/main/ets/com/ohos/pages/StatusBarIconItemRingModeComponent.ets'
 import Log from '../../../../../../../common/src/main/ets/default/Log.ets'
 import Constants from './common/constants.ets'
 
@@ -47,7 +50,7 @@ export default struct Control {
       ControlCenterComponent({
         showStatusBar: $showStatusBar,
         mControlCenterComponentConfig: this.mControlCenterComponentConfig
-      });
+      })
     }
     .width('100%')
     .height('100%')
@@ -85,11 +88,14 @@ struct statusBar {
         WifiIcon()
       }
       Flex({ direction: FlexDirection.Row, alignItems: ItemAlign.Center, justifyContent: FlexAlign.End }) {
+        LocationIcon()
+        BluetoothIcon()
+        RingModeIcon()
         BatteryIcon()
         ClockIcon()
       }
     }
     .width('100%')
-    .height(this.minHeight)
+    .height(this.minHeight + 'px')
   }
 }

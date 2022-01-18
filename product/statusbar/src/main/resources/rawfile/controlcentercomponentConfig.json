@@ -1,14 +1,19 @@
 {
   "ComplexToggleLayout": [
     "wifi",
-    "air_plane"
+    "bluetooth"
   ],
   "TempDBSimpleToggleLayout": [
+    "ring_mode",
+    "location",
     "testid"
   ],
   "LocalToggles": [
     "wifi",
-    "air_plane"
+    "bluetooth",
+    "air_plane",
+    "location",
+    "ring_mode"
   ],
   "MetaToggles": [
     {

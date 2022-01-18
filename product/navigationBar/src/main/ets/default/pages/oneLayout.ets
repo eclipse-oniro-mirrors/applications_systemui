@@ -46,7 +46,7 @@ export default struct oneLayout {
           })
         }
         .height('100%')
-        .constraintSize({ minHeight: this.minNavHeight })
+        .constraintSize({ minHeight: this.minNavHeight + 'px'})
         .align(Alignment.Center)
       })
     }

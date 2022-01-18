@@ -19,41 +19,37 @@ import Log from '../../../../../../../../../common/src/main/ets/default/Log.ets'
 import NotificationManager from './NotificationManager.ets';
 import ParseDataUtil from './ParseDataUtil.ets';
 import RuleController from './rule/RuleController.ets';
+import CommonUtil from '../common/CommonUtil.ets';
 
 const TAG = 'NotificationService';
 
-let mSubscriber;
-let listeners;
+interface NotificationListener {
+  userId: number;
+  onNotificationConsume: Function;
+  onNotificationCancel: Function;
+}
 
 /**
  * notification service api
  */
 export class NotificationService {
-  constructor() {
-    listeners = [];
-    this.init();
-  }
+  mListeners = new Set<NotificationListener>();
+  mSubscriber;
+  mSortingMap = {};
 
-  init() {
-    this.loadAllNotifications();
+  constructor() {
     this.subscribeNotification(this.getSubscriber());
     this.loadNotificationTemplate()
   }
 
-  public register(listener) {
-    Log.showInfo(TAG, "register listener")
-    listeners.push(listener);
+  public register(listener: NotificationListener) {
+    let res = this.mListeners.add(listener);
+    Log.showInfo(TAG, `register, listener size: ${res.size}`);
   }
 
-  public unRegister(listener) {
-    Log.showInfo(TAG, "unRegister listener")
-    let removedIndex = listeners.indexOf(listener);
-    if (removedIndex == -1) {
-      Log.showInfo(TAG, "unRegister listener, listener is not found");
-      return;
-    }
-    listeners.splice(removedIndex, 1)
-    Log.showInfo(TAG, "unRegister listener success");
+  public unRegister(listener: NotificationListener) {
+    let res = this.mListeners.delete(listener);
+    Log.showInfo(TAG, `unRegister, res: ${res}`);
   }
 
   public removeAll() {
@@ -71,59 +67,51 @@ export class NotificationService {
 
   public loadAllNotifications() {
     NotificationManager.getAllActiveNotifications(TAG, (err, requestsArr) => {
-      Log.showInfo(TAG, `getAllActiveNotifications err: ${JSON.stringify(err)}`);
-      Log.showInfo(TAG, `getAllActiveNotifications requestsArr: ${JSON.stringify(requestsArr)}`);
+      Log.showInfo(TAG, `getAllActiveNotifications error:${err}}, requestsArr: ${JSON.stringify(requestsArr)}`);
       if (Array.isArray(requestsArr)) {
         for (let i = 0, len = requestsArr.length; i < len; i++) {
-          this.handleNotificationLoad(requestsArr[i]);
+          this.handleNotificationAdd(requestsArr[i]);
         }
       }
     })
   }
 
   getSubscriber() {
-    if (mSubscriber == null || mSubscriber == undefined) {
-      mSubscriber = {
-        onConsume: this.handleNotificationAdd.bind(this),
+    if (!this.mSubscriber) {
+      this.mSubscriber = {
+        onConsume: this.handleNotificationAddAndSortMap.bind(this),
         onCancel: this.handleNotificationCancel.bind(this),
       }
     }
-    return mSubscriber;
+    return this.mSubscriber;
   }
 
-  handleNotificationAdd(data) {
-    Log.showInfo(TAG, 'handleNotificationAdd started');
-    Log.showInfo(TAG, 'sortingMap' + JSON.stringify(data.sortingMap || {}));
-    Log.showInfo(TAG, JSON.stringify(data));
-    ParseDataUtil.parseData(data, (err, intermediateData) => {
+  handleNotificationAddAndSortMap(data) {
+    Log.showInfo(TAG, 'handleNotificationAddAndSortMap, sortingMap' + JSON.stringify(data.sortingMap || {}));
+    this.mSortingMap = { ...this.mSortingMap, ...data?.sortingMap };
+    this.handleNotificationAdd(data?.request);
+  }
+
+  handleNotificationAdd(request) {
+    ParseDataUtil.parseData(request, this.mSortingMap).then((intermediateData) => {
       Log.showInfo(TAG, `parseData after = ${JSON.stringify(intermediateData)}`);
       RuleController.getNotificationData(intermediateData, (finalItemData) => {
         Log.showInfo(TAG, `RuleController.getNotificationData after = ${JSON.stringify(finalItemData)}`);
-        Log.showInfo(TAG, `listeners.length = ${JSON.stringify(data)}`);
-        for (let i = 0, len = listeners.length; i < len; i++) {
-          Log.showInfo(TAG, `notify listener ` + i);
-          listeners[i].onNotificationConsume(finalItemData);
-        }
+        this.mListeners.forEach((listener) => {
+          Log.showInfo(TAG, `notifcationUserId: ${finalItemData.userId}, listener.userId: ${listener.userId}`);
+          if (CommonUtil.checkVisibilityByUser(finalItemData.userId, listener.userId)) {
+            listener.onNotificationConsume(finalItemData);
+          }
+        })
       });
-    });
+    }).catch(errorInfo => Log.showError(TAG, errorInfo));
   }
 
   handleNotificationCancel(data) {
     console.info("===>handleNotificationCancel data : ==> " + `data:${JSON.stringify(data)}`);
-    ParseDataUtil.parseData(data, (err, record) => {
-      for (let i = 0, len = listeners.length; i < len; i++) {
-        listeners[i].onNotificationCancel(record);
-      }
-    });
-  }
-
-  handleNotificationLoad(data) {
-    console.info("===>handleNotificationLoad data : ==> " + `data:${JSON.stringify(data)}`);
-    ParseDataUtil.parseData(data, (err, record) => {
-      for (let i = 0, len = listeners.length; i < len; i++) {
-        listeners[i].onNotificationLoad(record);
-      }
-    });
+    ParseDataUtil.parseData(data, this.mSortingMap)
+      .then((record) => this.mListeners.forEach((listener) => listener.onNotificationCancel(record)))
+      .catch(errorInfo => Log.showError(TAG, errorInfo));
   }
 
   subscribeNotification(subscriber) {

@@ -51,7 +51,7 @@ export class TimeModel {
     let urivar  = null;
     let helper  = null;
     try {
-      urivar = settings.getUri('settings.time.format')
+      urivar = settings.getUriSync('settings.time.format')
       helper = featureAbility.acquireDataAbilityHelper(urivar);
     } catch (e) {
       Log.showInfo(TAG, `settings getValue error:  ${e.toString()}`);
@@ -62,7 +62,7 @@ export class TimeModel {
         Log.showError(TAG, `failed to getAbilityWant because ${err.message}`);
         return;
       } else {
-        let getRetValue = settings.getValue(helper, 'settings.time.format', '24')
+        let getRetValue = settings.getValueSync(helper, 'settings.time.format', '24')
         Log.showInfo(TAG, 'observer reveive notifychange on success format = ' + getRetValue)
         if (getRetValue === '12') {
           misUsing24hFormat = false;

@@ -71,7 +71,7 @@ class StatusBarConfiguration {
       shortSideLength = await ResourceUtil.getString($r("app.string.status_bar_size_portrait"));
     }
     Log.showInfo(TAG, 'getDirectionAndPosition' + 4);
-    shortSideLength = vp2px(parseInt(shortSideLength)) + '';
+    shortSideLength = parseInt(shortSideLength) + '';
     Log.showInfo(TAG, 'directionStatus = ' + directionStatus.direction);
     Log.showInfo(TAG, 'statusbarPosition = ' + statusbarPosition);
     Log.showInfo(TAG, 'lpx2px(parseInt(shortSideLength)) = ' + shortSideLength);

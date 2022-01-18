@@ -20,8 +20,11 @@ import IconItemComponent from './IconItemComponent.ets'
 import BatteryIcon from '../../../../../../../batterycomponent/src/main/ets/default/pages/batteryIcon.ets'
 import ClockIcon from '../../../../../../../clockcomponent/src/main/ets/default/pages/clockIcon.ets'
 import WifiIcon from '../../../../../../../wificomponent/src/main/ets/default/pages/wifiIcon.ets'
+import BluetoothIcon from '../../../../../../../bluetoothcomponent/src/main/ets/com/ohos/pages/StatusBarIconItemBluetoothComponent.ets'
 import SignalIcon from '../../../../../../../signalcomponent/src/main/ets/default/pages/signalIcon.ets'
 import CapsuleIcon from '../../../../../../../capsulecomponent/src/main/ets/default/pages/CapsuleIcon.ets'
+import LocationIcon from '../../../../../../../locationcomponent/src/main/ets/com/ohos/pages/StatusBarIconItemLocationComponent.ets'
+import RingModeIcon from '../../../../../../../ringmodecomponent/src/main/ets/com/ohos/pages/StatusBarIconItemRingModeComponent.ets'
 
 const TAG = 'StatusBarComponent'
 const TAG_StatusBarGroup = 'StatusBarGroup'
@@ -151,6 +154,8 @@ struct StatusBarGroup {
                 StatusBarEmptyIcon()
               } else if (componentName == Constants.WIFI) {
                 WifiIcon()
+              } else if (componentName == Constants.BLUETOOTH) {
+                BluetoothIcon()
               } else if (componentName == Constants.SIGNAL) {
                 SignalIcon()
               } else if (componentName == Constants.CLOCK) {
@@ -161,6 +166,10 @@ struct StatusBarGroup {
                 CapsuleIcon()
               } else if (componentName == Constants.NOTIFICATION) {
                 StatusBarNotificationIcon()
+              } else if (componentName == Constants.LOCATION) {
+                LocationIcon()
+              } else if (componentName == Constants.RING_MODE) {
+                RingModeIcon()
               } else {
                 IconItemComponent({
                   keyId: componentName,
@@ -183,6 +192,8 @@ struct StatusBarGroup {
                 StatusBarEmptyIcon()
               } else if (componentName == Constants.WIFI) {
                 WifiIcon()
+              } else if (componentName == Constants.BLUETOOTH) {
+                BluetoothIcon()
               } else if (componentName == Constants.SIGNAL) {
                 SignalIcon()
               } else if (componentName == Constants.CLOCK) {
@@ -193,6 +204,10 @@ struct StatusBarGroup {
                 CapsuleIcon()
               } else if (componentName == Constants.NOTIFICATION) {
                 StatusBarNotificationIcon()
+              } else if (componentName == Constants.LOCATION) {
+                LocationIcon()
+              } else if (componentName == Constants.RING_MODE) {
+                RingModeIcon()
               } else {
                 IconItemComponent({
                   keyId: componentName,
