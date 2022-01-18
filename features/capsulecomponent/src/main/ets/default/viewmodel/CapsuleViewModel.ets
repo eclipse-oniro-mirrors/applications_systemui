@@ -34,16 +34,22 @@ function parseTime(num) {
 
 export const VIEW_MODEL_ID = "CapsuleViewModelVm";
 
-export enum CallType {
-  NO_CALL,
-  WAIT_CALL,
-  ON_CALL,
+export enum CallState {
+  CALL_ACTIVE, //通话中*
+  CALL_HOLDING, //通话保持
+  CALL_DIALING, //拨号开始
+  CALL_ALERTING, //正在呼出
+  CALL_INCOMING, //来电*
+  CALL_WAITING, //第三方来电*
+  CALL_DISCONNECTED, //挂断完成 *
+  CALL_DISCONNECTING, //正在挂断
+  CALL_IDLE //空闲
 }
 
 export default class CapsuleViewModel {
   mText: string = "00:00";
   mStartTime: number = 0;
-  mCallType: CallType = CallType.NO_CALL;
+  mCallState: CallState = CallState.CALL_DISCONNECTED;
   mIsBackground: boolean = false;
   mWantBundleName: string = "";
   mWantAbilityName: string = "";
@@ -62,7 +68,7 @@ export default class CapsuleViewModel {
     this.mIsBackground = data.isBackground;
     this.mWantBundleName = data.wantBundleName;
     this.mWantAbilityName = data.wantAbilityName;
-    if (data.callType == CallType.WAIT_CALL) {
+    if (data.callState == CallState.CALL_INCOMING || data.callState == CallState.CALL_WAITING) {
       this.mStartTime = 0;
       let id = JSON.parse(JSON.stringify($r("app.string.incoming_call"))).id;
       let resourceMgr = Rsm.getResourceManager('com.ohos.systemui');
@@ -75,12 +81,12 @@ export default class CapsuleViewModel {
             Log.showInfo(TAG, 'getStringById err : ' + JSON.stringify(err));
           });
       });
-    } else if (data.callType == CallType.ON_CALL) {
+    } else if (data.callState == CallState.CALL_ACTIVE) {
       clearTimeout(this.mTimeMeter);
-      if (this.mCallType != CallType.ON_CALL) {
+      if (this.mCallState != CallState.CALL_ACTIVE) {
         this.mStartTime = new Date().valueOf();
       }
-      this.mCallType = data.callType;
+      this.mCallState = data.callState;
 
       let startTime;
       let commonTimeDiff = new Date().valueOf() - data.startTime;
@@ -96,18 +102,33 @@ export default class CapsuleViewModel {
       }
 
       this.startUpdateTime(startTime);
-    } else {
+    } else if (data.callState == CallState.CALL_DISCONNECTED){
       clearTimeout(this.mTimeMeter);
       this.mStartTime = 0;
       this.mIsBackground = false;
       this.mText = "";
       Log.showInfo(TAG, `cannot show`);
+    } else {
+      this.mStartTime = 0;
+      let id = JSON.parse(JSON.stringify($r("app.string.communicate_by_phone"))).id;
+      let resourceMgr = Rsm.getResourceManager('com.ohos.systemui');
+      resourceMgr.then((result) => {
+        result.getString(id).then((resource) => {
+          this.mText = resource;
+          Log.showInfo(TAG, 'getStringById resource : ' + resource);
+        })
+
+
+          .catch((err) => {
+            Log.showInfo(TAG, 'getStringById err : ' + JSON.stringify(err));
+          });
+      });
     }
-    this.mCallType = data.callType;
+    this.mCallState = data.callState;
   }
 
   startUpdateTime(startTime) {
-    if (!this.mIsBackground || this.mCallType != CallType.ON_CALL) {
+    if (!this.mIsBackground || this.mCallState != CallState.CALL_ACTIVE) {
       return;
     }
     let val = new Date().valueOf() - startTime.valueOf();

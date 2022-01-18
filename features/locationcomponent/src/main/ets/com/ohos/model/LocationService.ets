@@ -14,7 +14,6 @@
  */
 
 import geolocation from '@ohos.geolocation';
-import {LocationEventListener} from '@ohos.geolocation';
 import Log from '../../../../../../../../common/src/main/ets/default/Log.ets';
 
 const TAG = 'LocationModel';
@@ -22,13 +21,20 @@ const TAG = 'LocationModel';
 export class LocationService {
   mIsStart: boolean = false;
   mListener: any;
-  mLocationEventListener = new LocationEventListener();
+  mLocationEventListener = geolocation?. LocationEventListener ? new (geolocation?.LocationEventListener)() :
+    {
+      on: (...args) => {
+      },
+      off: (...args) => {
+      }
+    };
 
   startService() {
     if (this.mIsStart) {
       return;
     }
     Log.showInfo(TAG, `startService`)
+    Log.showInfo(TAG, `LocationEventListener = ` + geolocation.LocationEventListener)
     this.mIsStart = true;
     this.getServiceState();
     this.mLocationEventListener.on('locationServiceState', (state) => {

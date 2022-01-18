@@ -42,7 +42,7 @@ export class ViewModel {
   constructor() {
     this.mNotificationList = AppStorage.SetAndLink('notificationList', []).get();
     this.audioPlayer = media.createAudioPlayer();
-    this.audioPlayer.src = 'file://system/etc/capture.ogg';
+//    this.audioPlayer.src = 'file://system/etc/capture.ogg';
     SwitchUserManager.getInstance().registerListener(this);
     this.initFlowControlInfos();
     SwitchUserManager.getInstance().getCurrentUserInfo().then((userInfo) => {
