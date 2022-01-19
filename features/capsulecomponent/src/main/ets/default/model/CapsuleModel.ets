@@ -19,7 +19,7 @@ import Log from '../../../../../../../common/src/main/ets/default/Log.ets'
 const TAG = 'CapsuleModel';
 
 let commonEventSubscribeInfo = {
-  events: ['CAPSULE_VALUE_SYSTEM_UI']
+  events: ['CAPSULE_EVENT_CALL_UI']
 };
 let commonEventSubscriber = null;
 

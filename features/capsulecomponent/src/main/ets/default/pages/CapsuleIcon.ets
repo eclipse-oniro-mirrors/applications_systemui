@@ -14,7 +14,7 @@
  */
 
 import Constants from '../common/constants.ets'
-import CapsuleViewModel, {VIEW_MODEL_ID, CallType} from '../viewmodel/CapsuleViewModel.ets'
+import CapsuleViewModel, {VIEW_MODEL_ID, CallState} from '../viewmodel/CapsuleViewModel.ets'
 import Log from '../../../../../../../common/src/main/ets/default/Log.ets'
 
 const TAG = "CapsuleIcon";

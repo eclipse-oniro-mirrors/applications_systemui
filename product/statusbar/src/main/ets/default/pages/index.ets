@@ -95,7 +95,7 @@ struct Index {
   }
 
   onStateChange(data) {
-    if (this.ableToMaximize) {
+    if (this.ableToMaximize && !this.showStatusBar) {
       this.showStatusBar = true;
       mWindowManager.setWindowMin((result) => {
       })
