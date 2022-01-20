@@ -59,7 +59,7 @@ export default struct CapsuleIcon {
     }
     .alignItems(VerticalAlign.Center)
     .margin({ left: $r("app.float.green_capsule_left_margin") })
-    .height(Constants.STATIC_BAR_ICON_HEIGHT * this.StatusCoefficient)
+    .height(Constants.STATIC_BAR_ICON_HEIGHT * this.StatusCoefficient * Constants.CAPSULE_HEIGHT_MULTIPLE + 'px')
     .backgroundColor($r('app.color.background_color'))
     .borderRadius($r('app.float.green_capsule_radius'))
     .visibility(this.mCapsuleViewModel.mIsBackground ? Visibility.Visible : Visibility.None)
