@@ -28,7 +28,7 @@ export class brightnessManager {
 
   init(): void{
     Log.showInfo(TAG, 'init');
-    this.uri = settings.getUriSync(SYSTEMUI_BRIGHTNESS);
+    this.uri = settings.getUri(SYSTEMUI_BRIGHTNESS);
     Log.showInfo(TAG, 'settings geturi of brightness is ' + this.uri);
     this.helper = featureAbility.acquireDataAbilityHelper(this.uri);
     this.getValue();
@@ -36,7 +36,7 @@ export class brightnessManager {
 
   registerBrightness() {
     this.helper.on("dataChange", this.uri, (err) => {
-      let data = settings.getValueSync(this.helper, SYSTEMUI_BRIGHTNESS, '150')
+      let data = settings.getValue(this.helper, SYSTEMUI_BRIGHTNESS, '150')
       Log.showInfo(TAG, `after brightness datachange settings getValue ${parseInt(data)}`);
       mBrightnessValue.set(parseInt(data));
     })
@@ -50,7 +50,7 @@ export class brightnessManager {
 
   getValue() {
     Log.showInfo(TAG, 'getValue');
-    let data = settings.getValueSync(this.helper, SYSTEMUI_BRIGHTNESS, '150');
+    let data = settings.getValue(this.helper, SYSTEMUI_BRIGHTNESS, '150');
     Log.showInfo(TAG, `settings getValue ${parseInt(data)}`);
     mBrightnessValue.set(parseInt(data));
   }
@@ -61,7 +61,7 @@ export class brightnessManager {
     Log.showInfo(TAG, `setValue ${value}`);
     mBrightnessValue.set(value);
     Log.showInfo(TAG, `brightness setValue ${value} end`);
-    settings.setValueSync(this.helper, SYSTEMUI_BRIGHTNESS, callback.value.toString());
+    settings.setValue(this.helper, SYSTEMUI_BRIGHTNESS, callback.value.toString());
     Log.showInfo(TAG, `settings setValue ${callback.value} end`);
   }
 }

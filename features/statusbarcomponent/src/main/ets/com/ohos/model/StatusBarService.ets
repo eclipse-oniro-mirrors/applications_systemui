@@ -15,6 +15,7 @@
 
 import Resmgr from '@ohos.resourceManager';
 import Log from '../../../../../../../../common/src/main/ets/default/Log.ets';
+import SwitchUserManager from '../../../../../../../../common/src/main/ets/default/SwitchUserManager.ets';
 import CheckEmptyUtils from '../../../../../../../../common/src/main/ets/default/CheckEmptyUtils.ets';
 import PluginDataSourceAdapter from '../../../../../../../../common/src/main/ets/plugindatasource/PluginDataSourceAdapter.ets';
 import Constants from '../common/Constants.ets';
@@ -51,6 +52,7 @@ export class StatusBarService {
       'addItem': this.onItemAdd.bind(this),
       'removeItem': this.onItemRemove.bind(this)
     });
+    SwitchUserManager.getInstance().registerListener(this);
     {
       STATUSBAR_SOURCE_CONFIG.MetaSource.filterIds = filterIds;
     }
@@ -67,9 +69,20 @@ export class StatusBarService {
     this?.mAdapter.clearAll();
   }
 
-  loadData() {
+  userChange(userInfo) {
+    Log.showInfo(TAG, `userChange userInfo ` + userInfo);
+    this.loadData(userInfo.userId);
+  }
+
+  loadData(userId) {
     Log.showInfo(TAG, `loadData`)
-    this.mAdapter.loadData();
+    if (userId === null || userId === undefined) {
+      SwitchUserManager.getInstance().getCurrentUserInfo().then((userInfo) => {
+        this.mAdapter.loadData(userInfo.userId);
+      });
+    } else {
+      this.mAdapter.loadData(userId);
+    }
   }
 
   registerListener(listener: {

@@ -20,5 +20,4 @@ export default class Constants {
   static TOUCH_TYPE_UP: number = 1;
   static TOUCH_TYPE_MOVE: number = 2;
   static DEFAULT_MAX_LINES: number= 1;
-  static CAPSULE_HEIGHT_MULTIPLE = 2;
 }
