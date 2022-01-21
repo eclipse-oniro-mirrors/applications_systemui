@@ -60,24 +60,24 @@ export default struct ControlCenterComplexToggleBluetoothComponent {
 
   mClickEvent() {
     Log.showInfo(TAG, `mClickEvent, BluetoothOpenStatus: ${this.BluetoothOpenStatus}`)
-    if (this.BluetoothOpenStatus) {
-      ViewModel.disableBluetooth()
-    } else {
-      ViewModel.enableBluetooth()
-    }
+//    if (this.BluetoothOpenStatus) {
+//      ViewModel.disableBluetooth()
+//    } else {
+//      ViewModel.enableBluetooth()
+//    }
   }
 
   mLongClickEvent() {
     Log.showInfo(TAG, `mLongClickEvent, BluetoothOpenStatus: ${this.BluetoothOpenStatus}`)
 
-    this.showStatusBar = true
-    this.mWindowManager.setWindowMin((result) => {
-      this.mFeatureAbilityManager.openAbility(TAG, {
-        want: {
-          bundleName: 'com.ohos.settings',
-          abilityName: 'com.ohos.settings.MainAbility',
-        }
-      })
-    })
+//    this.showStatusBar = true
+//    this.mWindowManager.setWindowMin((result) => {
+//      this.mFeatureAbilityManager.openAbility(TAG, {
+//        want: {
+//          bundleName: 'com.ohos.settings',
+//          abilityName: 'com.ohos.settings.MainAbility',
+//        }
+//      })
+//    })
   }
 }
