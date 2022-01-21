@@ -39,7 +39,7 @@ type NotificationContent = {
 async function getUserId(uid) {
   Log.showInfo(TAG, `getOsAccountLocalIdFromUid request.creatorUid = ${uid}`);
   let userId = 0;
-  //todo userId = AccountManager.getAccountManager().getOsAccountLocalIdFromUid(uid)
+  userId = await AccountManager.getAccountManager().getOsAccountLocalIdFromUid(uid);
   Log.showInfo(TAG, `getOsAccountLocalIdFromUid userId = ${userId}`);
   return userId;
 }

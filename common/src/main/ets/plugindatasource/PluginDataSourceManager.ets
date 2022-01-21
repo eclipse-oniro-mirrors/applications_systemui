@@ -53,10 +53,10 @@ export default class PluginDataSourceManager {
     this.mLoaders.clear();
   }
 
-  loadData() {
+  loadData(userId) {
     Log.showInfo(TAG, `loadData`);
     this.mLoaders.forEach((sourceLoader) => {
-      sourceLoader.loadData();
+      sourceLoader.loadData(userId);
     });
   }
 }

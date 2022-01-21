@@ -28,7 +28,7 @@ export default abstract class SourceLoader {
 
   abstract stopLoad(): void;
 
-  abstract loadData(): void;
+  abstract loadData(userId): void;
 
   addItem(itemData: ItemComponentData) {
     Log.showInfo(TAG, `addItem, itemData: ${JSON.stringify(itemData)}`)

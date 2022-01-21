@@ -43,9 +43,9 @@ export default class PluginDataSourceAdapter {
     this.mWorker.postMessage(obtainMsg(Constants.INIT_CONFIG, configs));
   }
 
-  loadData() {
+  loadData(userId) {
     Log.showInfo(TAG, `loadData`)
-    this.mWorker.postMessage(obtainMsg(Constants.LOAD_DATA, {}));
+    this.mWorker.postMessage(obtainMsg(Constants.LOAD_DATA, userId));
   }
 
   clearAll() {

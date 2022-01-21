@@ -37,6 +37,7 @@ export default abstract class BaseMetaSourceLoader extends SourceLoader {
   mPluginType: number = null;
   mItemComponentDatas: ItemComponentData[] = [];
   mCommonEventSubscriber = null;
+  mUserId: string = null;
 
   constructor(config, channel, pluginType) {
     super(channel);
@@ -65,8 +66,9 @@ export default abstract class BaseMetaSourceLoader extends SourceLoader {
     this.removeAllItemComponentData();
   }
 
-  loadData() {
-    Log.showInfo(TAG, `load loader`)
+  loadData(userId) {
+    Log.showInfo(TAG, `load loader userId = ` + userId)
+    this.mUserId = userId;
     this.removeAllItemComponentData();
     this.addAbilityItemComponentData({
       "action": this.mAction
@@ -118,8 +120,8 @@ export default abstract class BaseMetaSourceLoader extends SourceLoader {
   }
 
   addAbilityItemComponentData(want): void{
-    Log.showInfo(TAG, `addAbilityItemComponentData, want: ${JSON.stringify(want)} BundleFlag: ${Constants.DEFAULT_BUNDLE_FLAG}`);
-    bundleManager.queryAbilityByWant(want, Constants.DEFAULT_BUNDLE_FLAG, Constants.DEFAULT_USER_ID,
+    Log.showInfo(TAG, `addAbilityItemComponentData, want: ${JSON.stringify(want)} BundleFlag: ${Constants.DEFAULT_BUNDLE_FLAG}this.mUserId:${this.mUserId}`);
+    bundleManager.queryAbilityByWant(want, Constants.DEFAULT_BUNDLE_FLAG, this.mUserId ? this.mUserId : Constants.DEFAULT_USER_ID,
       (err, abilityInfos) => {
         Log.showInfo(TAG, `addAbilityItemComponentData queryAbilityByWant callback, want: ${JSON.stringify(want)} err: ${JSON.stringify(err)} abilityInfos: ${abilityInfos.length} ${JSON.stringify(abilityInfos)} `)
         if (err != 0) {

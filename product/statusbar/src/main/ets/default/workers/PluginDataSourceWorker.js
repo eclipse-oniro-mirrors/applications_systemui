@@ -36,7 +36,7 @@ parentPort.onmessage = (msg) => {
             clearAll();
             break;
         case Constants.LOAD_DATA:
-            loadData();
+            loadData(data.data);
             break;
         default:
             Log.showError(TAG, `onMessage, unknown action type.`);
@@ -63,9 +63,9 @@ function clearAll() {
     sManager?.clearAll();
 }
 
-function loadData() {
+function loadData(userId) {
     Log.showInfo(TAG, `loadData `);
-    sManager?.loadData();
+    sManager?.loadData(userId);
 }
 
 parentPort.onclose = function () {

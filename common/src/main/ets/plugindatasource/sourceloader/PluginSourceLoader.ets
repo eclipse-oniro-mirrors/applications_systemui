@@ -34,7 +34,7 @@ export default class PluginSourceLoader extends SourceLoader {
     // todo 停止监听，清除数据
   }
 
-  loadData() {
+  loadData(userId) {
     // todo 重新获取一次数据
   }
 }

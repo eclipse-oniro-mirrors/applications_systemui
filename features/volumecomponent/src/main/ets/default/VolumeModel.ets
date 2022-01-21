@@ -28,7 +28,7 @@ export class VolumeModel {
 
     init(): void{
         Log.showInfo(TAG, 'init');
-        this.uri = settings.getUriSync(SYSTEMUI_AUDIOVOLUMETYPE_MEDIA);
+        this.uri = settings.getUri(SYSTEMUI_AUDIOVOLUMETYPE_MEDIA);
         Log.showInfo(TAG, 'settings geturi of audio.AudioVolumeType.MEDIA is ' + this.uri);
         this.helper = featureAbility.acquireDataAbilityHelper(this.uri);
         this.getVolume();
@@ -36,7 +36,7 @@ export class VolumeModel {
 
     registerVolume() {
         this.helper.on("dataChange", this.uri, (err) => {
-            let data = settings.getValueSync(this.helper, SYSTEMUI_AUDIOVOLUMETYPE_MEDIA, '5')
+            let data = settings.getValue(this.helper, SYSTEMUI_AUDIOVOLUMETYPE_MEDIA, '5')
             Log.showInfo(TAG, `after audio.AudioVolumeType.MEDIA datachange settings getValue ${parseInt(data)}`);
             mVolumeValue.set(parseInt(data));
         })
@@ -54,13 +54,13 @@ export class VolumeModel {
         Log.showInfo(TAG, `setVolume ${value}`);
         mVolumeValue.set(value);
         Log.showInfo(TAG, `mVolumeValue setVolume ${value} end`);
-        settings.setValueSync(this.helper, SYSTEMUI_AUDIOVOLUMETYPE_MEDIA, callback.value.toString());
+        settings.setValue(this.helper, SYSTEMUI_AUDIOVOLUMETYPE_MEDIA, callback.value.toString());
         Log.showInfo(TAG, `settings setVolume ${callback.value} end`);
     }
 
     getVolume() {
         Log.showInfo(TAG, 'getVolume');
-        let data = settings.getValueSync(this.helper, SYSTEMUI_AUDIOVOLUMETYPE_MEDIA, '5');
+        let data = settings.getValue(this.helper, SYSTEMUI_AUDIOVOLUMETYPE_MEDIA, '5');
         Log.showInfo(TAG, `settings getVolume ${parseInt(data)}`);
         mVolumeValue.set(parseInt(data));
     }
