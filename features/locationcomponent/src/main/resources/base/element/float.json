@@ -1,0 +1,11 @@
+{
+  "float": [
+    {
+      "name": "status_bar_location_width",
+      "value": "20vp"
+    },{
+      "name": "status_bar_location_height",
+      "value": "24vp"
+    }
+  ]
+}

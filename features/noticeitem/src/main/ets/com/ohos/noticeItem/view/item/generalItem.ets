@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Huawei Device Co., Ltd.
+ * Copyright (c) 2021-2022 Huawei Device Co., Ltd.
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -13,39 +13,50 @@
  * limitations under the License.
  */
 
-import Constants from '../../common/constants.ets';
-import basicItem from './basicItem.ets';
-import longItem from './longItem.ets';
-import multiItem from './multiItem.ets';
-import pictureItem from './pictureItem.ets';
-import titleItem from './titleItem.ets';
-import Log from '../../../../../../../../../../common/src/main/ets/default/Log.ets';
-import CheckEmptyUtils from '../../../../../../../../../../common/src/main/ets/default/CheckEmptyUtils.ets';
-import ViewModel from '../../viewmodel/ViewModel.ets';
-import ActionComponent from './actionComponent.ets';
+import Constants, {NotificationLayout as Layout} from '../../common/constants';
+import basicItem from './basicItem';
+import longItem from './longItem';
+import multiItem from './multiItem';
+import pictureItem from './pictureItem';
+import titleItem from './titleItem';
+import Log from '../../../../../../../../../../common/src/main/ets/default/Log';
+import CheckEmptyUtils from '../../../../../../../../../../common/src/main/ets/default/CheckEmptyUtils';
+import ViewModel from '../../viewmodel/ViewModel';
+import ActionComponent from './actionComponent';
 
 const TAG = 'NoticeItem-GeneralItem';
 
 @Component
 export default struct GeneralItem {
-  private generalItemData: any = {}
+  @Consume('notificationUpdate') updateFlag: number;
   @State hasPicture: boolean = false
-  @State isExpand: boolean = false
+  @State @Watch('expandChange') isExpand: boolean = false
   @State needExpand: boolean = true
+  @State distributedDeviceName: string = ''
+  private itemData: any = {}
+  private clickAction: () => void
+  private isSubItem: boolean= false;
+
+  expandChange() {
+    this.updateFlag++;
+  }
 
   aboutToAppear() {
     Log.showInfo(TAG, `aboutToAppear Start`)
-    if (CheckEmptyUtils.isEmpty(this.generalItemData.largeIcon)) {
+    if (CheckEmptyUtils.isEmpty(this.itemData.largeIcon)) {
       this.hasPicture = false;
     } else {
       this.hasPicture = true;
     }
     this.needExpand = this.checkItemNeedExpand()
+    ViewModel.getDistributedDeviceName(this.itemData).then((deviceName) => {
+      this.distributedDeviceName = deviceName;
+    })
   }
 
   checkItemNeedExpand() {
-    if (this.generalItemData.contentType === Constants.NOTIFICATION_TYPE_BASIC
-    && (!(this.generalItemData.actionButtons?.length > 0))) {
+    if (this.itemData.contentType === Constants.NOTIFICATION_TYPE_BASIC
+    && (!(this.itemData.actionButtons?.length > 0))) {
       return false;
     } else {
       return true;
@@ -59,75 +70,75 @@ export default struct GeneralItem {
   build() {
     Column() {
       titleItem({
-        notificationSmallIcon: this.generalItemData.smallIcon,
-        notificationName: this.generalItemData.appName,
-        notificationTime: this.generalItemData.time,
+        notificationSmallIcon: this.itemData.smallIcon,
+        notificationName: this.itemData.appName,
+        notificationTime: this.itemData.time,
         isExpand: $isExpand,
-        needExpand: this.needExpand
+        needExpand: this.needExpand,
+        distributedDeviceName: this.distributedDeviceName,
+        isSubItem: this.isSubItem,
+        clickTitleAction: () => null
       })
+      ContentComponent({
+        isExpand: this.isExpand,
+        itemData: this.itemData
+      });
 
-      Flex({ direction: FlexDirection.Row, justifyContent: FlexAlign.Start, alignItems: ItemAlign.Start }) {
-        Flex({ direction: FlexDirection.Column, justifyContent: FlexAlign.Start, alignItems: ItemAlign.Start }) {
-          if (this.generalItemData.contentType === Constants.NOTIFICATION_TYPE_BASIC) {
-            basicItem({
-              itemData: this.generalItemData
-            });
-          }
-          if (this.generalItemData.contentType === Constants.NOTIFICATION_TYPE_LONG) {
-            longItem({
-              itemData: this.generalItemData,
-              isExpand: this.isExpand
-            });
-          }
-          if (this.generalItemData.contentType === Constants.NOTIFICATION_TYPE_MULTILINE) {
-            multiItem({
-              itemData: this.generalItemData,
-              isExpand: this.isExpand
-            });
-          }
-          if (this.generalItemData.contentType === Constants.NOTIFICATION_TYPE_PICTURE) {
-            pictureItem({
-              itemData: this.generalItemData,
-              isExpand: this.isExpand
-            });
-          }
-        }
-        .width(this.hasPicture ? '85%' : '100%')
-        .margin({ top: $r('app.float.body_margin_top') })
-
-        if (this.hasPicture) {
-          Column() {
-            Image(this.generalItemData.largeIcon)
-              .objectFit(ImageFit.Contain)
-              .width(50)
-              .height(50)
-          }
-          .alignItems(HorizontalAlign.End)
-          .margin({ top: $r('app.float.body_margin_top') })
-          .width('15%')
-        }
+      if (this.isExpand && this.itemData.actionButtons.length) {
+        ActionComponent({ itemData: this.itemData })
+      } else {
+        Blank()
+          .height(Layout.ITEM_MARGIN)
       }
-      .onClick(() => {
-        ViewModel.clickItem(this.generalItemData);
-      })
+    }.onClick(() => {
+      this.clickAction();
+    })
+  }
+}
 
-      if (this.isExpand) {
-        ActionComponent({ itemData: this.generalItemData })
+@Component
+struct ContentComponent {
+  @Prop isExpand: boolean;
+  itemData: any;
+
+  aboutToAppear() {
+    Log.showInfo(TAG, `aboutToDisappear pict: ${this.itemData.picture}`);
+  }
+
+  build() {
+    Flex({ alignItems: ItemAlign.Center, justifyContent: FlexAlign.Start }) {
+      Row() {
+        if (this.itemData.contentType === Constants.NOTIFICATION_TYPE_BASIC) {
+          basicItem({
+            itemData: this.itemData
+          });
+        }
+        if (this.itemData.contentType === Constants.NOTIFICATION_TYPE_LONG) {
+          longItem({
+            itemData: this.itemData,
+            isExpand: this.isExpand
+          });
+        }
+        if (this.itemData.contentType === Constants.NOTIFICATION_TYPE_MULTILINE) {
+          multiItem({
+            itemData: this.itemData,
+            isExpand: this.isExpand
+          });
+        }
+        if (this.itemData.contentType === Constants.NOTIFICATION_TYPE_PICTURE) {
+          pictureItem({
+            itemData: this.itemData,
+            isExpand: this.isExpand
+          });
+        }
+      }.flexGrow(1)
+
+      if (this.itemData.picture) {
+        Image(this.itemData.picture)
+          .objectFit(ImageFit.Contain)
+          .width(Layout.NOTIFICATION_PIC_SIZE)
+          .height(Layout.NOTIFICATION_PIC_SIZE)
       }
-    }
-    .backgroundColor($r('app.color.notificationitem_background'))
-    .opacity($r('app.float.item_opicaty'))
-    .borderRadius($r('app.float.item_borderradius'))
-    .margin({
-      left: $r('app.float.item_marginleft'),
-      right: $r('app.float.item_marginright'),
-      top: $r('app.float.item_margintop')
-    })
-    .padding({
-      left: $r('app.float.item_paddingleft'),
-      right: $r('app.float.item_paddingright'),
-      bottom: $r('app.float.item_paddingbottom')
-    })
-
+    }.margin({ left: Layout.ITEM_MARGIN, right: Layout.ITEM_MARGIN })
   }
 }

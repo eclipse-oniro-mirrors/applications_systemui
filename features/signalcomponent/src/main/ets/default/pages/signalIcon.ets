@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Huawei Device Co., Ltd.
+ * Copyright (c) 2021-2022 Huawei Device Co., Ltd.
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -13,9 +13,14 @@
  * limitations under the License.
  */
 
-import Constants from '../common/constants.ets';
-import mSignalModel from '../SignalModel.ets';
-import Log from '../../../../../../../common/src/main/ets/default/Log.ets'
+import Constants from '../common/constants';
+import mSignalModel from '../SignalModel';
+import Log from '../../../../../../../common/src/main/ets/default/Log'
+import {TintContentInfo} from '../../../../../../../common/src/main/ets/default/TintStateManager'
+import StyleConfigurationCommon from '../../../../../../../common/src/main/ets/default/StyleConfiguration'
+import StyleConfiguration from '../common/StyleConfiguration'
+import ViewModel from '../viewmodel/SignalVM'
+
 const TAG = 'SignalComponent-SignalIcon'
 
 @Component
@@ -24,8 +29,11 @@ struct SignalIcon {
   @StorageLink('cellularLevel') cellularLevel : number = Constants.CELLULAR_NO_SIM_CARD
   @StorageLink('cellularType') cellularType : number = Constants.NETWORK_TYPE_UNKNOWN
   @StorageLink('networkState') networkState : string = Constants.NET_NULL
-  @StorageLink('StatusCoefficient') StatusCoefficient:number = 1.0
   @StorageLink('signalObserved') signalObserved:boolean = false
+  @State mTintContentInfo: TintContentInfo = ViewModel.getTintContentInfo()
+  @State styleCommon: any = StyleConfigurationCommon.getCommonStyle()
+  @State style: any = StyleConfiguration.getSignalComponentStyle()
+
   aboutToAppear() {
     Log.showInfo(TAG, 'aboutToAppear');
     if (!this.signalObserved) {
@@ -40,29 +48,34 @@ struct SignalIcon {
 
   build() {
     Row() {
+      Row().width(this.styleCommon.statusBarMarginLeftRight).height('100%')
       Text(this.updateNetworkState(this.networkState))
-        .fontSize($r('app.float.fontSize_network_state'))
-        .fontColor($r('app.color.font_color_white'))
-        .textOverflow({overflow: TextOverflow.Ellipsis})
-        .constraintSize({ maxWidth: $r('app.float.signalicon_netstatus_width')})
+        .fontSize(this.styleCommon.statusBarFontSize)
+        .fontColor(this.mTintContentInfo.contentColor)
+        .textOverflow({ overflow: TextOverflow.Ellipsis })
+        .constraintSize({ maxWidth: this.style.signalTextMaxWeight})
         .flexShrink(0)
         .maxLines(1)
         .textAlign(TextAlign.Center)
+      Row().width(this.styleCommon.statusBarMarginLeftRight).height('100%')
 
       Stack({ alignContent: Alignment.TopStart }) {
         Text(this.updateCellularType(this.cellularType))
-          .fontSize($r('app.float.fontSize_cellular_type'))
-          .fontColor($r('app.color.font_color_white'))
-          .margin({ top: $r('app.float.margin_cellular_type') })
+          .fontSize(this.cellularType == Constants.NETWORK_TYPE_UNKNOWN ? this.style.statusBarSignalUnknownFontSize : this.style.statusBarSignalTypeFontSize)
+          .fontColor(this.mTintContentInfo.contentColor)
+          .width(this.style.netSignalTextMaxWidth)
+          .fontWeight(FontWeight.Bold)
+          .textAlign(TextAlign.Center)
         Image(this.updateCellularImage(this.cellularLevel))
-          .objectFit(ImageFit.ScaleDown)
-          .width(`${Constants.STATIC_BAR_ICON_WIDTH * this.StatusCoefficient}px`)
-          .height(`${Constants.STATIC_BAR_ICON_HEIGHT * this.StatusCoefficient}px`)
+          .objectFit(ImageFit.Contain)
+          .width(this.style.cellularImageWidth)
+          .height(this.style.cellularImageHeight)
+          .fillColor(this.mTintContentInfo.contentColor)
       }.flexShrink(1)
-      .width(`${Constants.STATIC_BAR_ICON_WIDTH * this.StatusCoefficient}px`)
+
+      Row().width(this.styleCommon.statusBarMarginLeftRight).height('100%')
     }
-    .margin({ left: 5})
-    .height(`${Constants.STATIC_BAR_ICON_HEIGHT * this.StatusCoefficient}px`)
+    .height('100%')
   }
 
 /**
@@ -76,7 +89,7 @@ struct SignalIcon {
     let typeString;
     switch (signalType) {
       case Constants.NETWORK_TYPE_UNKNOWN:
-        typeString = '';
+        typeString = $r('app.string.signal_null');
         break;
       case Constants.NETWORK_TYPE_GSM:
       case Constants.NETWORK_TYPE_CDMA:
@@ -127,7 +140,7 @@ struct SignalIcon {
         break;
       case Constants.CELLULAR_NO_SIM_CARD:
       default:
-        cellularImage = $r('app.media.ic_statusbar_signal_null');
+        cellularImage = $r('app.media.ic_statusbar_signal_no');
         break;
     }
     console.info('systemui updateCellularImage = ' + cellularImage);

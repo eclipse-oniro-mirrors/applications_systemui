@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Huawei Device Co., Ltd.
+ * Copyright (c) 2021-2022 Huawei Device Co., Ltd.
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -13,15 +13,15 @@
  * limitations under the License.
  */
 
-import {UpTitle} from './UpTitle.ets'
-import {MyBrightness} from '../../../../../../../brightnesscomponent/src/main/ets/default/pages/brightnessComponent.ets'
-import {MyVol} from '../../../../../../../volumecomponent/src/main/ets/default/pages/volumeComponent.ets'
-import Log from '../../../../../../../../common/src/main/ets/default/Log.ets'
-import UniformConfig from '../../../../../../../../common/src/main/ets/template/UniformConfig.ets'
-import Constants from '../common/Constants.ets'
-import ViewModel from '../viewmodel/ControlCenterVM.ets'
-import ComplexToggleLoadComponent from './ComplexToggleLoadComponent.ets'
-import SimpleToggleLoadComponent from './SimpleToggleLoadComponent.ets'
+import UpTitle from './UpTitle'
+import MyBrightness from '../../../../../../../brightnesscomponent/src/main/ets/default/pages/brightnessComponent'
+import Log from '../../../../../../../../common/src/main/ets/default/Log'
+import Constants from '../common/Constants'
+import StyleConfiguration from '../common/StyleConfiguration'
+import ViewModel from '../viewmodel/ControlCenterVM'
+import ComplexToggleLoadComponent from './ComplexToggleLoadComponent'
+import SimpleToggleLoadComponent from './SimpleToggleLoadComponent'
+import SimpleToggleLayoutEditComponent from './SimpleToggleLayoutEditComponent'
 
 const TAG = 'Control-ControlCenter'
 const TAG_ControlCenterComplexToggleLayout = 'Control-ControlCenterComplexToggleLayout'
@@ -31,31 +31,20 @@ var mUniform;
 
 @Component
 export default struct ControlCenterComponent {
-  @State mControlCenterComponentConfig: any = {}
-  @Link showStatusBar: boolean
-  componentUniform = {
-    iconOnBG: "#0A59F7",
-    iconOffBG: "#F5F5F5",
-    iconOnColor: "#FFFFFF",
-    iconOffColor: "#404345",
-    baseColor: "#CCFFFFFF",
-    circleWidth: '80px',
-    circleHeight: '80px',
-    iconWidth: '50px',
-    iconHeight: '50px',
-    titleSize: '20px',
-    iconTitleMargin: 10,
-    baseBorderRadius: 15,
-    simpleToggleTitleSize: '18px'
-  }
+  private touchMoveCallback: Function
+  private modeChangeCallback: Function
+  @State mSimpleToggleColumnCount: number = Constants.DEFAULT_SIMPLE_TOGGLE_COLUMN_COUNT
+  private mControlCenterComponentConfig: any = {}
+  @State mIsEditSimpleToggleLayout: boolean = false
+  @State style: any = StyleConfiguration.getControlCenterComponentStyle()
+  private mWidthPx: number = 0
+  private mDisplayingSimpleToggles: string[] = []
+  private mHidingSimpleToggles: string[] = []
+  private mDefaultDisplaySimpleToggles: string[] = []
+  private titleDisplayInside: boolean = false
 
   aboutToAppear() {
     Log.showInfo(TAG, 'aboutToAppear')
-    // 初始化自定义组件样式
-    mUniform = UniformConfig.initParams(this.componentUniform)
-
-    console.log(`------${JSON.stringify(mUniform)}`);
-
     Log.showInfo(TAG, `aboutToAppear, mControlCenterComponentConfig: ${JSON.stringify(this.mControlCenterComponentConfig)}`)
     ViewModel.initViewModel(this.mControlCenterComponentConfig)
   }
@@ -64,44 +53,125 @@ export default struct ControlCenterComponent {
     Log.showInfo(TAG, 'aboutToDisappear ')
   }
 
+  onSimpleToggleLayoutEditStart() {
+    Log.showInfo(TAG, 'onSimpleToggleLayoutEditStart')
+    this.mDisplayingSimpleToggles = ViewModel.getDisplayingSimpleToggles()
+    this.mHidingSimpleToggles = ViewModel.getHidingSimpleToggles()
+    this.mDefaultDisplaySimpleToggles = ViewModel.getDefaultSimpleToggleLayout()
+    this.setIsEditSimpleToggleLayout(true)
+  }
+
+  onSimpleToggleLayoutEditEnd() {
+    Log.showInfo(TAG, 'onSimpleToggleLayoutEditEnd')
+    this.setIsEditSimpleToggleLayout(false)
+  }
+
+  setIsEditSimpleToggleLayout(isEdit: boolean): void {
+    Log.showInfo(TAG, `setIsEditSimpleToggleLayout, isEdit: ${isEdit}`)
+    animateTo({
+      duration: 300,
+      tempo: 1.0,
+      curve: Curve.Friction,
+      delay: 0,
+      iterations: 1,
+      playMode: PlayMode.Normal,
+      onFinish: () => {
+        Log.showInfo(TAG, `setIsEditSimpleToggleLayout, show anim finish.`)
+      }
+    }, () => {
+      Log.showInfo(TAG, `setIsEditSimpleToggleLayout, animateTo`)
+      this.mIsEditSimpleToggleLayout = isEdit
+    })
+    if (this.modeChangeCallback) {
+      this.modeChangeCallback(isEdit)
+    }
+  }
+
+  onSaveDisplayingToggles(toggles: string[]): void {
+    Log.showInfo(TAG, `onSaveDisplayingToggles, toggles: ${JSON.stringify(toggles)}`)
+    ViewModel.saveSimpleToggleLayout(toggles)
+  }
+
   build() {
     Column() {
-      Column() {
-        UpTitle({ showStatusBar: $showStatusBar })
-      }
-      .width('100%')
-      .height($r('app.float.up_title_height'))
-      .margin({ top: $r('app.float.center_item_margin_top'),
-        left: $r('app.float.center_item_margin_left'),
-        right: $r('app.float.center_item_margin_right') })
+      if (!this.mIsEditSimpleToggleLayout) {
+        Column() {
+          Column().width('100%').height(this.style.marginTop)
+          Column() {
+            UpTitle({
+              touchMoveCallback: (data) => {
+                if (this.touchMoveCallback) {
+                  this.touchMoveCallback(data)
+                }
+              },
+              simpleToggleLayoutEditStartCallback: () => this.onSimpleToggleLayoutEditStart()
+            })
+          }
+          .width('100%')
+          .height(this.style.upTitleHeight)
 
-      ControlCenterComplexToggleLayout()
-      ControlCenterSimpleToggleLayout()
-      Column() {
-        MyBrightness()
-      }
-      .width('100%')
-      .height($r('app.float.vol_height'))
-      .margin({ top: $r('app.float.center_item_margin_top'),
-        left: $r('app.float.center_item_margin_left'),
-        right: $r('app.float.center_item_margin_right') })
+          Column().width('100%').height(this.style.titleMarginBottom)
 
-      Flex() {
-        MyVol()
+          Row() {
+            Column().width(this.style.marginLeft).height(1).layoutWeight(0)
+
+            Column() {
+              ControlCenterComplexToggleLayout()
+
+              Column().width('100%').height(this.style.toggleAreaGap)
+              Column() {
+                Column().width('100%').height(this.style.simpleToggleLayoutMarginTop)
+                ControlCenterSimpleToggleLayout({
+                  mColumnCount: this.mSimpleToggleColumnCount
+                })
+                Column().width('100%').height(this.style.simpleToggleLayoutMarginBottom)
+
+                MyBrightness()
+
+                Column().width('100%').height(this.style.brightnessMarginBottom)
+              }
+              .width('100%')
+              .borderRadius(this.style.componentBorderRadius)
+              .clip(true)
+              .backgroundColor(this.style.componentBackgroundColor)
+            }
+            .layoutWeight(1)
+
+            Column().width(this.style.marginRight).height(1).layoutWeight(0)
+          }.width('100%')
+        }
+        .width('100%')
+        .transition({ type: TransitionType.Insert, opacity: 0, translate: { x: (-this.mWidthPx * 0.8) + 'px' } })
+        .transition({ type: TransitionType.Delete, opacity: 0 })
+      } else {
+        Column() {
+          SimpleToggleLayoutEditComponent({
+            mDisplayingToggles: this.mDisplayingSimpleToggles,
+            mHidingToggles: this.mHidingSimpleToggles,
+            mDefaultDisplayToggles: this.mDefaultDisplaySimpleToggles,
+            simpleToggleLayoutEditEndCallback: () => this.onSimpleToggleLayoutEditEnd(),
+            onSaveDisplayingToggles: (toggles: string[]) => this.onSaveDisplayingToggles(toggles),
+            mColumnCount: this.mSimpleToggleColumnCount,
+            titleDisplayInside: this.titleDisplayInside
+          })
+        }
+        .width('100%')
+        .transition({ type: TransitionType.Insert, opacity: 0, translate: { x: this.mWidthPx * 0.8 + 'px' } })
+        .transition({ type: TransitionType.Delete, opacity: 0 })
       }
-      .width('100%')
-      .height($r('app.float.vol_height'))
-      .margin({ top: $r('app.float.center_item_margin_top'),
-        left: $r('app.float.center_item_margin_left'),
-        right: $r('app.float.center_item_margin_right') })
     }
     .width('100%')
+    .onAreaChange((e, e2) => {
+      Log.showInfo(TAG, `onAreaChange, e: ${JSON.stringify(e)} e2: ${JSON.stringify(e2)}`);
+      this.mWidthPx = vp2px(e2.width)
+    })
   }
 }
 
 @Component
 struct ControlCenterComplexToggleLayout {
   @StorageLink('ControlCenterComplexToggleLayout') mComplexToggleLayout: string[] = []
+  @State style: any = StyleConfiguration.getControlCenterComplexToggleLayoutStyle()
 
   aboutToAppear() {
     Log.showInfo(TAG_ControlCenterComplexToggleLayout, `aboutToAppear Start`)
@@ -113,38 +183,51 @@ struct ControlCenterComplexToggleLayout {
   }
 
   build() {
-    Flex({
-      direction: FlexDirection.Row,
-      wrap: FlexWrap.Wrap,
-      justifyContent: FlexAlign.SpaceBetween,
-      alignItems: ItemAlign.Start,
-      alignContent: FlexAlign.Start
-    }) {
-      ForEach(this.mComplexToggleLayout, (componentName: string) => {
-        Row() {
-          ComplexToggleLoadComponent({
-            keyId: componentName
-          })
+    Grid() {
+      ForEach(this.mComplexToggleLayout, (componentName) => {
+        GridItem() {
+          Column() {
+            ComplexToggleLoadComponent({
+              keyId: componentName
+            })
+          }.width('100%')
+          .height('100%')
         }
-        .width('48%')
-        .height(Constants.COMPLEX_TOGGLE_HEIGHT + Constants.COMPLEX_TOGGLE_UP_DOWN_SPACE)
-        .margin({ top: Constants.COMPLEX_TOGGLE_UP_DOWN_SPACE })
-      }, (componentName: string) => componentName)
+      }, (componentName) => componentName)
     }
     .width('100%')
-    .height((Math.ceil(this.mComplexToggleLayout.length / 2) * (Constants.COMPLEX_TOGGLE_HEIGHT + Constants.COMPLEX_TOGGLE_UP_DOWN_SPACE)).toString())
-    .margin({
-      left: $r('app.float.center_item_margin_left'),
-      right: $r('app.float.center_item_margin_right')
-    })
+    .height(this.calcGridHeight(Math.ceil(this.mComplexToggleLayout.length / 2), this.style.rowHeight, this.style.rowGap))
+    .columnsTemplate('1fr 1fr')
+    .rowsTemplate(this.generateRowsTemplate(Math.ceil(this.mComplexToggleLayout.length / 2)))
+    .rowsGap(this.style.rowGap + 'px')
+    .columnsGap(this.style.columnGap)
+  }
+
+  calcGridHeight(rowCount, rowHeight, rowGap) {
+    Log.showInfo(TAG_ControlCenterComplexToggleLayout, `calcGridHeight, rowCount: ${rowCount} rowHeight: ${rowHeight} rowGap: ${rowGap}`)
+    let height = rowCount * rowHeight + (rowCount - 1) * rowGap
+    if (height < 0) {
+      height = 0
+    }
+    Log.showInfo(TAG_ControlCenterComplexToggleLayout, `calcGridHeight, height: ${height}`)
+    return height + 'px'
+  }
+
+  generateRowsTemplate(rowCount) {
+    Log.showInfo(TAG_ControlCenterComplexToggleLayout, `generateRowsTemplate, rowCount: ${rowCount}`)
+    let rowsTemplate = '1fr'
+    for (let i = 1;i < rowCount; i++) {
+      rowsTemplate += ' 1fr'
+    }
+    return rowsTemplate
   }
 }
 
 @Component
 struct ControlCenterSimpleToggleLayout {
+  @Prop mColumnCount: number
   @StorageLink('ControlCenterSimpleToggleLayout') mSimpleToggleLayout: string[] = []
-  @State mShowLabel: boolean = true
-  @State mEditMode: boolean = false
+  @State style: any = StyleConfiguration.getControlCenterSimpleToggleLayoutStyle()
 
   aboutToAppear() {
     Log.showInfo(TAG_ControlCenterSimpleToggleLayout, `aboutToAppear Start`)
@@ -156,35 +239,57 @@ struct ControlCenterSimpleToggleLayout {
   }
 
   build() {
-    Flex({
-      direction: FlexDirection.Row,
-      wrap: FlexWrap.Wrap,
-      justifyContent: FlexAlign.Start,
-      alignItems: ItemAlign.Start,
-      alignContent: FlexAlign.Start
-    }) {
-      ForEach(this.mSimpleToggleLayout, (componentName: string) => {
-        Column() {
-          SimpleToggleLoadComponent({
-            keyId: componentName,
-            mShowLabel: this.mShowLabel,
-            mEditMode: this.mEditMode
-          })
-        }
-        .width('25%')
-        .height(Constants.SIMPLE_TOGGLE_HEIGHT + Constants.SIMPLE_TOGGLE_UP_DOWN_SPACE)
-        .margin({ top: Constants.SIMPLE_TOGGLE_UP_DOWN_SPACE })
-      }, (componentName: string) => componentName)
+    Row() {
+      Column().width(this.style.marginLeft).height(1).layoutWeight(0)
+      Grid() {
+        ForEach(this.mSimpleToggleLayout, (componentName) => {
+          GridItem() {
+            Column() {
+              SimpleToggleLoadComponent({
+                keyId: componentName
+              })
+            }.width('100%')
+            .height('100%')
+          }
+        }, (componentName) => componentName)
+      }
+      .layoutWeight(1)
+      .height(this.calcGridHeight(Math.ceil(this.mSimpleToggleLayout.length / this.mColumnCount), this.style.rowHeight, this.style.rowGap))
+      .columnsTemplate(this.generateColumnsTemplate(this.mColumnCount))
+      .rowsTemplate(this.generateRowsTemplate(Math.ceil(this.mSimpleToggleLayout.length / this.mColumnCount)))
+      .rowsGap(this.style.rowGap + 'px')
+      .columnsGap(this.style.columnGap)
+
+      Column().width(this.style.marginRight).height(1).layoutWeight(0)
     }
     .width('100%')
-    .height((Math.ceil(this.mSimpleToggleLayout.length / 4) * (Constants.SIMPLE_TOGGLE_HEIGHT + Constants.SIMPLE_TOGGLE_UP_DOWN_SPACE)
-    + (Math.ceil(this.mSimpleToggleLayout.length / 4) == 0 ? 0 : Constants.SIMPLE_TOGGLE_UP_DOWN_SPACE * 2)).toString())
-    .margin({
-      left: $r('app.float.center_item_margin_left'),
-      right: $r('app.float.center_item_margin_right'),
-      top: Math.ceil(this.mSimpleToggleLayout.length / 4) == 0 ? 0 : Constants.SIMPLE_TOGGLE_UP_TOP_SPACE
-    })
-    .borderRadius(UniformConfig.config.baseBorderRadius)
-    .backgroundColor(UniformConfig.config.baseColor)
+  }
+
+  calcGridHeight(rowCount, rowHeight, rowGap) {
+    Log.showInfo(TAG_ControlCenterSimpleToggleLayout, `calcGridHeight, rowCount: ${rowCount} rowHeight: ${rowHeight} rowGap: ${rowGap}`)
+    let height = rowCount * rowHeight + (rowCount - 1) * rowGap
+    if (height < 0) {
+      height = 0
+    }
+    Log.showInfo(TAG_ControlCenterSimpleToggleLayout, `calcGridHeight, height: ${height}`)
+    return height + 'px'
+  }
+
+  generateColumnsTemplate(columnCount) {
+    Log.showInfo(TAG_ControlCenterSimpleToggleLayout, `generateColumnsTemplate, columnCount: ${columnCount}`)
+    let columnsTemplate = '1fr'
+    for (let i = 1;i < columnCount; i++) {
+      columnsTemplate += ' 1fr'
+    }
+    return columnsTemplate
+  }
+
+  generateRowsTemplate(rowCount) {
+    Log.showInfo(TAG_ControlCenterSimpleToggleLayout, `generateRowsTemplate, rowCount: ${rowCount}`)
+    let rowsTemplate = '1fr'
+    for (let i = 1;i < rowCount; i++) {
+      rowsTemplate += ' 1fr'
+    }
+    return rowsTemplate
   }
 }

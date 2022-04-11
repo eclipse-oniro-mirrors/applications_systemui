@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Huawei Device Co., Ltd.
+ * Copyright (c) 2021-2022 Huawei Device Co., Ltd.
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -13,16 +13,21 @@
  * limitations under the License.
  */
 
-import Log from '../../../../../../../../common/src/main/ets/default/Log.ets'
-import Constants from '../common/Constants.ets'
-import ViewModel from '../viewmodel/LocationVM.ets'
+import Log from '../../../../../../../../common/src/main/ets/default/Log'
+import {TintContentInfo} from '../../../../../../../../common/src/main/ets/default/TintStateManager'
+import StyleConfigurationCommon from '../../../../../../../../common/src/main/ets/default/StyleConfiguration'
+import StyleConfiguration from '../common/StyleConfiguration'
+import Constants from '../common/Constants'
+import ViewModel from '../viewmodel/LocationVM'
 
 const TAG = 'location-StatusBarIconItemLocationComponent'
 
 @Component
 export default struct StatusBarIconItemLocationComponent {
   @StorageLink('LocationServiceUseStatus') LocationServiceUseStatus: boolean = false
-  @StorageLink('StatusCoefficient') StatusCoefficient: number = 1.0
+  @State mTintContentInfo: TintContentInfo = ViewModel.getTintContentInfo()
+  @State style: any = StyleConfiguration.getStartsBarLocationComponentStyle()
+  @State styleCommon: any = StyleConfigurationCommon.getCommonStyle()
 
   aboutToAppear() {
     Log.showInfo(TAG, 'aboutToAppear')
@@ -34,15 +39,17 @@ export default struct StatusBarIconItemLocationComponent {
   }
 
   build() {
-    Flex({ alignItems: ItemAlign.Center, justifyContent: FlexAlign.Center }) {
+    Row() {
       if (this.LocationServiceUseStatus) {
+        Row().width(this.styleCommon.statusBarMarginLeftRight).height('100%')
         Image($r("app.media.ic_statusbar_gps"))
           .objectFit(ImageFit.Contain)
-          .width(Constants.STATIC_BAR_ICON_WIDTH * this.StatusCoefficient)
-          .height(Constants.STATIC_BAR_ICON_HEIGHT * this.StatusCoefficient)
+          .width(this.style.statusBarLocationWidth)
+          .height(this.style.statusBarLocationHeight)
+          .fillColor(this.mTintContentInfo.contentColor)
+        Row().width(this.styleCommon.statusBarMarginLeftRight).height('100%')
       }
     }
-    .width(this.LocationServiceUseStatus ? Constants.STATIC_BAR_ICON_WIDTH * this.StatusCoefficient : 0)
-    .height(this.LocationServiceUseStatus ? Constants.STATIC_BAR_ICON_HEIGHT * this.StatusCoefficient : 0)
+    .height('100%')
   }
 }

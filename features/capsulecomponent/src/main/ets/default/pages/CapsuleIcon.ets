@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Huawei Device Co., Ltd.
+ * Copyright (c) 2021-2022 Huawei Device Co., Ltd.
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -13,20 +13,23 @@
  * limitations under the License.
  */
 
-import Constants from '../common/constants.ets'
-import CapsuleViewModel, {VIEW_MODEL_ID, CallState} from '../viewmodel/CapsuleViewModel.ets'
-import Log from '../../../../../../../common/src/main/ets/default/Log.ets'
+import Constants from '../common/constants'
+import CapsuleViewModel, {VIEW_MODEL_ID, CallState} from '../viewmodel/CapsuleViewModel'
+import Log from '../../../../../../../common/src/main/ets/default/Log'
+import StyleConfigurationCommon from '../../../../../../../common/src/main/ets/default/StyleConfiguration'
+import StyleConfiguration from '../common/StyleConfiguration'
 
 const TAG = "CapsuleIcon";
 
 @Component
 export default struct CapsuleIcon {
   @StorageLink(VIEW_MODEL_ID) mCapsuleViewModel: CapsuleViewModel = CapsuleViewModel.getInstance();
-  @StorageLink('StatusCoefficient') StatusCoefficient: number = 1.0
   startX: number = 0
   startY: number = 0
   moveX: number = 0
   moveY: number = 0
+  @State style: any = StyleConfiguration.getCapsuleComponentStyle()
+  @State styleCommon: any = StyleConfigurationCommon.getCommonStyle()
 
   aboutToAppear() {
     this.mCapsuleViewModel.initViewModel();
@@ -39,31 +42,31 @@ export default struct CapsuleIcon {
 
   build() {
     Row() {
-      Image($r("app.media.ic_statusbar_phone"))
-        .width($r("app.float.ic_statusbar_phone_width"))
-        .height($r("app.float.ic_statusbar_phone_height"))
-        .objectFit(ImageFit.Contain)
-        .margin({ left: $r("app.float.green_capsule_margin") })
-      Text(this.mCapsuleViewModel.mText)
-        .fontSize($r("app.float.green_capsule_font_size"))
-        .fontWeight(FontWeight.Regular)
-        .fontColor($r('app.color.green_capsule_text_color'))
-        .maxLines(Constants.DEFAULT_MAX_LINES)
-        .textOverflow({ overflow: TextOverflow.Ellipsis })
-        .margin({
-          left: $r("app.float.green_capsule_text_margin"),
-          right: $r("app.float.green_capsule_margin"),
-          top: $r("app.float.green_capsule_text_margin"),
-          bottom: $r("app.float.green_capsule_text_margin")
-        })
+      Row().width(this.styleCommon.statusBarMarginLeftRight).height('100%')
+      Row() {
+        Row().width(this.style.greenCapsuleTextMarginLeftRight).height('100%')
+        Image($r("app.media.ic_statusbar_phone"))
+          .width(this.style.greenCapsulePhoneWidth)
+          .height(this.style.greenCapsulePhoneHeight)
+          .objectFit(ImageFit.Contain)
+        Row().width(this.style.greenCapsuleTextMarginLeftRight).height('100%')
+        Text(this.mCapsuleViewModel.mText)
+          .fontSize(this.styleCommon.statusBarFontSize)
+          .fontWeight(FontWeight.Regular)
+          .fontColor(this.style.greenCapsuleTextColor)
+          .maxLines(this.style.maxLines)
+          .textOverflow({ overflow: TextOverflow.Ellipsis })
+        Row().width(this.style.greenCapsuleTextMarginLeftRight).height('100%')
+      }
+      .alignItems(VerticalAlign.Center)
+      .height(this.style.greenCapsuleHeight)
+      .backgroundColor(this.style.greenCapsuleBackgroundColor)
+      .borderRadius(this.style.greenCapsuleRadius)
+      .onTouch(this.touchEvent.bind(this))
+
+      Row().width(this.styleCommon.statusBarMarginLeftRight).height('100%')
     }
-    .alignItems(VerticalAlign.Center)
-    .margin({ left: $r("app.float.green_capsule_left_margin") })
-    .height(Constants.STATIC_BAR_ICON_HEIGHT * this.StatusCoefficient * Constants.CAPSULE_HEIGHT_MULTIPLE + 'px')
-    .backgroundColor($r('app.color.background_color'))
-    .borderRadius($r('app.float.green_capsule_radius'))
     .visibility(this.mCapsuleViewModel.mIsBackground ? Visibility.Visible : Visibility.None)
-    .onTouch(this.touchEvent.bind(this))
   }
 
   touchEvent(event: TouchEvent) {

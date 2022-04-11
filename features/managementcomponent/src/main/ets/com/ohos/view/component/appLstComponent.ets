@@ -1,6 +1,6 @@
 // @ts-nocheck
 /**
- * Copyright (c) 2021 Huawei Device Co., Ltd.
+ * Copyright (c) 2021-2022 Huawei Device Co., Ltd.
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -13,11 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import ConfigData from '../../common/constants.ets';
-import AppItemComponent from './appItemComponent.ets';
+import ConfigData from '../../common/constants';
+import AppItemComponent from './appItemComponent';
 import Router from '@system.router';
-import Log from '../../../../../../../../../common/src/main/ets/default/Log.ets';
-import ViewModel from '../../vm/appLstComponentViewModel.ets'
+import Log from '../../../../../../../../../common/src/main/ets/default/Log';
+import ViewModel from '../../vm/appLstComponentViewModel'
 
 const TAG = 'ManagementComponent-AppLstComponent';
 
@@ -57,33 +57,35 @@ export default struct AppLstComponent {
               appUri: item.appUri,
               appBundleName: item.appBundleName,
               appUid: item.appUid,
-              appSwitch: 0
+              appSwitch: 0,
+              isCanChange:item.systemApp
             })
           }
           .onClick(() => {
             Log.showInfo(TAG, `onClick`)
             Router.push({ uri: item.appUri, params: item });
           })
-          .height($r('app.float.appitem_item_height'));
+          .height($r('app.float.appitem_item_height'))
         });
       }
       .divider({
         strokeWidth: 1,
         color: $r('app.color.divider_color'),
-        startMargin: $r('app.float.divider_margin_l'),
-        endMargin: $r('app.float.divider_margin_r')
+        startMargin: $r('app.float.divider_margin_l_info')
       })
       .width(ConfigData.WH_100_100)
       .height(ConfigData.WH_100_100)
+      .align(Alignment.Top)
       .visibility(Visibility.Visible)
       .zIndex(0)
       .border({ width: $r('app.float.border_width'), color: Color.White,
         radius: $r('app.float.border_radius') })
       .backgroundColor(Color.White)
+      .padding({
+        left: $r('app.float.itemComp_padding_l'),
+        right: $r('app.float.itemComp_padding_r')
+      })
     }
-    .margin({ left: $r('app.float.page_margin_l'),
-      right: $r('app.float.page_margin_r') })
-    .backgroundColor($r('app.color.background_color'))
     .align(Alignment.Center)
     .width(ConfigData.WH_100_100)
     .height(ConfigData.WH_100_100);

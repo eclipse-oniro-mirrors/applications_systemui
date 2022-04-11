@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Huawei Device Co., Ltd.
+ * Copyright (c) 2021-2022 Huawei Device Co., Ltd.
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-import Constants,{NotificationItemData} from '../../common/constants.ets';
+import Constants, {NotificationItemData, NotificationLayout as Layout} from '../../common/constants';
 
 @Component
 export default struct MultiItem {
@@ -21,31 +21,35 @@ export default struct MultiItem {
   @Prop isExpand: boolean
 
   build() {
-    Flex({ direction: FlexDirection.Column, justifyContent: FlexAlign.Start, alignItems: ItemAlign.Start }) {
+    Column() {
       Text(this.isExpand ? this.itemData.longTitle : this.itemData.title)
-        .maxLines(Constants.DEFAULT_MAX_LINES)
+        .maxLines(Constants.SINGLE_LINE)
         .textOverflow({ overflow: TextOverflow.Ellipsis })
-        .fontSize($r('app.float.notification_title_fontsize'))
-        .fontColor($r('app.color.title_text_color'))
-        .fontWeight(FontWeight.Bold)
-        .lineHeight(Constants.CONTENT_LINE_HEIGHT)
+        .fontColor($r("sys.color.ohos_fa_text_primary"))
+        .fontSize($r("sys.float.ohos_id_text_size_body2"))
+        .fontWeight(FontWeight.Medium)
+        .lineHeight(Layout.TEXT_LINE_HEIGHT)
       if (this.isExpand) {
         ForEach(this.itemData.lines,
           (item: string) => {
-            Text(`${item}`)
-              .fontSize($r('app.float.notification_content_fontsize'))
-              .fontColor($r('app.color.content_text_color'))
-              .margin({ top: $r('app.float.content_margin_top') })
+            Text(item)
+              .maxLines(Constants.SINGLE_LINE)
+              .textOverflow({ overflow: TextOverflow.Ellipsis })
+              .fontColor($r("sys.color.ohos_fa_text_secondary"))
+              .fontSize($r("sys.float.ohos_id_text_size_body2"))
+              .fontWeight(FontWeight.Regular)
+              .lineHeight(Layout.TEXT_LINE_HEIGHT)
           }, (item: string) => item.toString()
         )
       } else {
         Text(this.itemData.text)
-          .fontSize($r('app.float.notification_content_fontsize'))
-          .maxLines(Constants.DEFAULT_MAX_LINES)
+          .maxLines(Constants.SINGLE_LINE)
           .textOverflow({ overflow: TextOverflow.Ellipsis })
-          .fontColor($r('app.color.content_text_color'))
-          .margin({ top: $r('app.float.content_margin_top') })
+          .fontColor($r("sys.color.ohos_fa_text_secondary"))
+          .fontSize($r("sys.float.ohos_id_text_size_body2"))
+          .fontWeight(FontWeight.Regular)
+          .lineHeight(Layout.TEXT_LINE_HEIGHT)
       }
-    }.width('100%')
+    }.alignItems(HorizontalAlign.Start)
   }
 }

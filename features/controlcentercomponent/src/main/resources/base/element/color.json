@@ -1,16 +1,56 @@
 {
   "color": [
     {
-      "name": "default_background",
-      "value": "#66000000"
+      "name": "control_center_title_font_color",
+      "value": "#FFFFFF"
     },
     {
-      "name": "default_font_color",
-      "value": "#ffffffff"
+      "name": "control_center_title_image_color",
+      "value": "#FFFFFF"
     },
     {
-      "name": "title_font_color",
-      "value": "#FFF"
+      "name": "control_center_title_icon_hover_color",
+      "value": "rgba(0, 0, 0, 0.05)"
+    },
+    {
+      "name": "control_center_title_icon_transparent_color",
+      "value": "rgba(255, 255, 255, 0)"
+    },
+    {
+      "name": "control_center_component_background",
+      "value": "#99FFFFFF"
+    },
+    {
+      "name": "center_edit_up_area_bg_color",
+      "value": "#99FFFFFF"
+    },
+    {
+      "name": "center_edit_down_area_bg_color",
+      "value": "#4DFFFFFF"
+    },
+    {
+      "name": "simple_toggle_edit_btn_font_color",
+      "value": "#FF0000FF"
+    },
+    {
+      "name": "simple_toggle_edit_btn_bg_color",
+      "value": "#0D000000"
+    },
+    {
+      "name": "simple_toggle_edit_title_font_color",
+      "value": "#FFFFFFFF"
+    },
+    {
+      "name": "center_edit_dialog_color",
+      "value": "#FFFFFFFF"
+    },
+    {
+      "name": "center_edit_dialog_btn_font_color",
+      "value": "#FF0000FF"
+    },
+    {
+      "name": "center_edit_dialog_btn_bg_color",
+      "value": "#00FFFFFF"
     }
   ]
 }

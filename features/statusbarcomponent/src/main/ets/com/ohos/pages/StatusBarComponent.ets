@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Huawei Device Co., Ltd.
+ * Copyright (c) 2021-2022 Huawei Device Co., Ltd.
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -13,40 +13,40 @@
  * limitations under the License.
  */
 
-import Log from '../../../../../../../../common/src/main/ets/default/Log.ets'
-import Constants from '../common/Constants.ets'
-import ViewModel from '../viewmodel/StatusBarVM.ets'
-import IconItemComponent from './IconItemComponent.ets'
-import BatteryIcon from '../../../../../../../batterycomponent/src/main/ets/default/pages/batteryIcon.ets'
-import ClockIcon from '../../../../../../../clockcomponent/src/main/ets/default/pages/clockIcon.ets'
-import WifiIcon from '../../../../../../../wificomponent/src/main/ets/default/pages/wifiIcon.ets'
-import BluetoothIcon from '../../../../../../../bluetoothcomponent/src/main/ets/com/ohos/pages/StatusBarIconItemBluetoothComponent.ets'
-import SignalIcon from '../../../../../../../signalcomponent/src/main/ets/default/pages/signalIcon.ets'
-import CapsuleIcon from '../../../../../../../capsulecomponent/src/main/ets/default/pages/CapsuleIcon.ets'
-import LocationIcon from '../../../../../../../locationcomponent/src/main/ets/com/ohos/pages/StatusBarIconItemLocationComponent.ets'
-import RingModeIcon from '../../../../../../../ringmodecomponent/src/main/ets/com/ohos/pages/StatusBarIconItemRingModeComponent.ets'
+import Log from '../../../../../../../../common/src/main/ets/default/Log'
+import {StatusBarData, StatusBarBackgroundData} from '../common/Constants'
+import {FASlotName} from '../../../../../../../../common/src/main/ets/default/Constants'
+import {TintContentInfo} from '../../../../../../../../common/src/main/ets/default/TintStateManager'
+import StyleConfigurationCommon from '../../../../../../../../common/src/main/ets/default/StyleConfiguration'
+import StyleConfiguration from '../common/StyleConfiguration'
+import ViewModel from '../viewmodel/StatusBarVM'
+import IconItemComponent from './IconItemComponent'
+import BatteryIcon from '../../../../../../../batterycomponent/src/main/ets/default/pages/batteryIcon'
+import ClockIcon from '../../../../../../../clockcomponent/src/main/ets/default/pages/clockIcon'
+import WifiIcon from '../../../../../../../wificomponent/src/main/ets/default/pages/wifiIcon'
+import BluetoothIcon from '../../../../../../../bluetoothcomponent/src/main/ets/com/ohos/pages/StatusBarIconItemBluetoothComponent'
+import SignalIcon from '../../../../../../../signalcomponent/src/main/ets/default/pages/signalIcon'
+import CapsuleIcon from '../../../../../../../capsulecomponent/src/main/ets/default/pages/CapsuleIcon'
+import LocationIcon from '../../../../../../../locationcomponent/src/main/ets/com/ohos/pages/StatusBarIconItemLocationComponent'
+import RingModeIcon from '../../../../../../../ringmodecomponent/src/main/ets/com/ohos/pages/StatusBarIconItemRingModeComponent'
 
 const TAG = 'StatusBarComponent'
 const TAG_StatusBarGroup = 'StatusBarGroup'
+const TAG_VerticalStatusBarItemLoadComponent = 'VerticalStatusBarItemLoadComponent'
+const TAG_StatusBarItemLoadComponent = 'StatusBarItemLoadComponent'
 const TAG_StatusBarEmptyIcon = 'StatusBarEmptyIcon'
 const TAG_StatusBarNotificationIcon = 'StatusBarNotificationIcon'
+const TAG_StatusBarBackground = 'StatusBarBackground'
 
 @Component
 export default struct StatusBarComponent {
-  @State mStatusBarComponentConfig: any = {}
-  @Prop mStatusBarColor: string
+  private mStatusBarComponentConfig: any = {}
   @StorageLink('StatusBarLayout') mStatusBarLayout: any = [[], [], []]
-  @StorageLink('maxWidth') @Watch('onSizeUpdated') maxWidth: number = 0
-  @StorageLink('maxHeight') @Watch('onSizeUpdated') maxHeight: number = 0
-  @StorageLink('minHeight') @Watch('onSizeUpdated') minHeight: number = 0
-  @StorageLink('StatusBarComponentIsStart') mIsStart: boolean = false
-  @StorageLink("showHorizontal") showHorizontal: boolean = AppStorage.SetAndLink("showHorizontal", true).get();
+  @State mStatusBarData: StatusBarData = ViewModel.getStatusBarData()
 
   aboutToAppear() {
     Log.showInfo(TAG, `aboutToAppear Start, mStatusBarComponentConfig: ${JSON.stringify(this.mStatusBarComponentConfig)}`)
-    if (this.maxWidth > 0 && this.maxHeight > 0 && this.minHeight > 0) {
-      this.initViewModel()
-    }
+    this.initViewModel()
     Log.showInfo(TAG, `aboutToAppear End`)
   }
 
@@ -54,70 +54,99 @@ export default struct StatusBarComponent {
     Log.showInfo(TAG, `aboutToDisappear`)
   }
 
-  onSizeUpdated(propName: string): void {
-    Log.showInfo(TAG, `onSizeUpdated, propName: ${propName} maxWidth: ${this.maxWidth} maxHeight: ${this.maxHeight} minHeight: ${this.minHeight}`)
-    if (this.maxWidth == 0 || this.maxHeight == 0 || this.minHeight == 0) {
-      return
-    }
-    this.initViewModel()
-  }
-
   initViewModel() {
     Log.showInfo(TAG, `initViewModel`)
-    if (this.mIsStart) {
-      return
-    }
-    this.mIsStart = true
-    ViewModel.initViewModel(this.mStatusBarComponentConfig, {
-      width: this.maxWidth,
-      height: this.maxHeight,
-      statusBarHeight: this.minHeight
-    })
+    ViewModel.initViewModel(this.mStatusBarComponentConfig)
   }
 
   build() {
-    if (this.showHorizontal) {
+    Stack() {
+      StatusBarBackground()
+      if (this.mStatusBarData.showHorizontal) {
+        Row() {
+          StatusBarGroup({
+            mComponents: this.mStatusBarLayout[0],
+            mLayoutWeight: 1,
+            mAlignItems: HorizontalAlign.Start
+          })
+          StatusBarGroup({
+            mComponents: this.mStatusBarLayout[1],
+            mLayoutWeight: 0,
+            mAlignItems: HorizontalAlign.Center
+          })
+          StatusBarGroup({
+            mComponents: this.mStatusBarLayout[2],
+            mLayoutWeight: 1,
+            mAlignItems: HorizontalAlign.End
+          })
+        }
+        .width('100%')
+        .height('100%')
+      } else {
+        Column() {
+          StatusBarGroup({
+            mComponents: this.mStatusBarLayout[0],
+            mLayoutWeight: 1,
+            mAlignItems: VerticalAlign.Center
+          })
+          StatusBarGroup({
+            mComponents: this.mStatusBarLayout[1],
+            mLayoutWeight: 0,
+            mAlignItems: VerticalAlign.Center
+          })
+          StatusBarGroup({
+            mComponents: this.mStatusBarLayout[2],
+            mLayoutWeight: 1,
+            mAlignItems: VerticalAlign.Center
+          })
+        }
+        .width('100%')
+        .height('100%')
+      }
+    }
+    .width('100%')
+    .height('100%')
+  }
+}
+
+@Component
+struct StatusBarBackground {
+  @State mStatusBarData: StatusBarData = ViewModel.getStatusBarData()
+  @State mBackgroundDatas: StatusBarBackgroundData[] = ViewModel.getBackgroundDatas()
+
+  aboutToAppear() {
+    Log.showInfo(TAG_StatusBarBackground, `aboutToAppear Start`)
+  }
+
+  aboutToDisappear() {
+    Log.showInfo(TAG_StatusBarBackground, `aboutToDisAppear`)
+  }
+
+  build() {
+    if (this.mStatusBarData.showHorizontal) {
       Row() {
-        StatusBarGroup({
-          mColor: this.mStatusBarColor,
-          mComponents: this.mStatusBarLayout[0],
-          mLayoutWeight: 1,
-          mAlignItems: HorizontalAlign.Start
-        })
-        StatusBarGroup({
-          mColor: this.mStatusBarColor,
-          mComponents: this.mStatusBarLayout[1],
-          mLayoutWeight: 0,
-          mAlignItems: HorizontalAlign.Center
-        })
-        StatusBarGroup({
-          mColor: this.mStatusBarColor,
-          mComponents: this.mStatusBarLayout[2],
-          mLayoutWeight: 1,
-          mAlignItems: HorizontalAlign.End
+        ForEach(this.mBackgroundDatas, (data: StatusBarBackgroundData) => {
+          if (data.width > 0) {
+            Column() {
+            }
+            .width(data.width + 'px')
+            .height('100%')
+            .backgroundColor(data.backgroundColor)
+          }
         })
       }
       .width('100%')
       .height('100%')
     } else {
       Column() {
-        StatusBarGroup({
-          mColor: this.mStatusBarColor,
-          mComponents: this.mStatusBarLayout[0],
-          mLayoutWeight: 1,
-          mAlignItems: VerticalAlign.Center
-        })
-        StatusBarGroup({
-          mColor: this.mStatusBarColor,
-          mComponents: this.mStatusBarLayout[1],
-          mLayoutWeight: 0,
-          mAlignItems: VerticalAlign.Center
-        })
-        StatusBarGroup({
-          mColor: this.mStatusBarColor,
-          mComponents: this.mStatusBarLayout[2],
-          mLayoutWeight: 1,
-          mAlignItems: VerticalAlign.Center
+        ForEach(this.mBackgroundDatas, (data: StatusBarBackgroundData) => {
+          if (data.width > 0) {
+            Column() {
+            }
+            .width('100%')
+            .height(data.width + 'px')
+            .backgroundColor(data.backgroundColor)
+          }
         })
       }
       .width('100%')
@@ -128,12 +157,10 @@ export default struct StatusBarComponent {
 
 @Component
 struct StatusBarGroup {
-  @Prop mColor: string
   @State mComponents: string[] = []
-  @State mLayoutWeight: number = 1
-  @State mAlignItems: HorizontalAlign = HorizontalAlign.Center;
-  @StorageLink('StatusBarEmptyWidth') mStatusBarEmptyWidth: any = 0
-  @StorageLink("showHorizontal") showHorizontal: boolean = AppStorage.SetAndLink("showHorizontal", true).get();
+  private mLayoutWeight: number = 1
+  private mAlignItems: HorizontalAlign = HorizontalAlign.Center;
+  @State mStatusBarData: StatusBarData = ViewModel.getStatusBarData()
 
   aboutToAppear() {
     Log.showInfo(TAG_StatusBarGroup, `aboutToAppear Start`)
@@ -145,93 +172,115 @@ struct StatusBarGroup {
   }
 
   build() {
-    if (this.showHorizontal) {
+    if (this.mStatusBarData.showHorizontal) {
       Column() {
         Row() {
           ForEach(this.mComponents, (componentName: string) => {
-            Row() {
-              if (componentName == Constants.EMPTY) {
-                StatusBarEmptyIcon()
-              } else if (componentName == Constants.WIFI) {
-                WifiIcon()
-              } else if (componentName == Constants.BLUETOOTH) {
-                BluetoothIcon()
-              } else if (componentName == Constants.SIGNAL) {
-                SignalIcon()
-              } else if (componentName == Constants.CLOCK) {
-                ClockIcon()
-              } else if (componentName == Constants.BATTERY) {
-                BatteryIcon()
-              } else if (componentName == Constants.CAPSULE) {
-                CapsuleIcon()
-              } else if (componentName == Constants.NOTIFICATION) {
-                StatusBarNotificationIcon()
-              } else if (componentName == Constants.LOCATION) {
-                LocationIcon()
-              } else if (componentName == Constants.RING_MODE) {
-                RingModeIcon()
-              } else {
-                IconItemComponent({
-                  keyId: componentName,
-                  color: this.mColor
-                })
-              }
-            }
-            .height('100%')
+            StatusBarItemLoadComponent({
+              mComponentName: componentName
+            })
           }, (componentName: string) => componentName)
-        }
+        }.height('100%')
       }
       .alignItems(this.mAlignItems)
       .layoutWeight(this.mLayoutWeight)
+      .height('100%')
     } else {
       Row() {
         Column() {
           ForEach(this.mComponents, (componentName: string) => {
-            Row() {
-              if (componentName == Constants.EMPTY) {
-                StatusBarEmptyIcon()
-              } else if (componentName == Constants.WIFI) {
-                WifiIcon()
-              } else if (componentName == Constants.BLUETOOTH) {
-                BluetoothIcon()
-              } else if (componentName == Constants.SIGNAL) {
-                SignalIcon()
-              } else if (componentName == Constants.CLOCK) {
-                ClockIcon()
-              } else if (componentName == Constants.BATTERY) {
-                BatteryIcon()
-              } else if (componentName == Constants.CAPSULE) {
-                CapsuleIcon()
-              } else if (componentName == Constants.NOTIFICATION) {
-                StatusBarNotificationIcon()
-              } else if (componentName == Constants.LOCATION) {
-                LocationIcon()
-              } else if (componentName == Constants.RING_MODE) {
-                RingModeIcon()
-              } else {
-                IconItemComponent({
-                  keyId: componentName,
-                  color: this.mColor
-                })
-              }
-            }
-            .width('100%')
-            .margin({
-              top: $r("app.float.status_bar_vertical_margin"),
-              bottom: $r("app.float.status_bar_vertical_margin")
+            VerticalStatusBarItemLoadComponent({
+              mComponentName: componentName
             })
           }, (componentName: string) => componentName)
-        }
+        }.width('100%')
       }
       .alignItems(this.mAlignItems)
+      .width('100%')
       .layoutWeight(this.mLayoutWeight)
     }
   }
 }
 
 @Component
+struct VerticalStatusBarItemLoadComponent {
+  private mComponentName: string
+  @State mComponentHeight: number = 0
+  @State style: any = StyleConfiguration.getVerticalStatusBarItemLoadComponentStyle()
+
+  aboutToAppear() {
+    Log.showInfo(TAG_VerticalStatusBarItemLoadComponent, `aboutToAppear, mComponentName: ${this.mComponentName}`)
+  }
+
+  aboutToDisappear() {
+    Log.showInfo(TAG_VerticalStatusBarItemLoadComponent, `aboutToDisAppear, mComponentName: ${this.mComponentName}`)
+  }
+
+  build() {
+    Row() {
+      StatusBarItemLoadComponent({
+        mComponentName: this.mComponentName
+      })
+    }
+    .height(this.mComponentHeight + 'px')
+    .onAreaChange((e, e2) => {
+      Log.showInfo(TAG_VerticalStatusBarItemLoadComponent, `onAreaChange, mComponentName: ${this.mComponentName} e: ${JSON.stringify(e)} e2: ${JSON.stringify(e2)}`);
+      this.mComponentHeight = e2.width > 0 ? this.style.statusBarVerticalComponentHeight : 0
+      Log.showInfo(TAG_VerticalStatusBarItemLoadComponent, `onAreaChange, mComponentName: ${this.mComponentName} mComponentHeight: ${this.mComponentHeight}`);
+    })
+  }
+}
+
+@Component
+struct StatusBarItemLoadComponent {
+  private mComponentName: string
+
+  aboutToAppear() {
+    Log.showInfo(TAG_StatusBarItemLoadComponent, `aboutToAppear, mComponentName: ${this.mComponentName} `)
+  }
+
+  aboutToDisappear() {
+    Log.showInfo(TAG_StatusBarGroup, `aboutToDisAppear, mComponentName: ${this.mComponentName} `)
+  }
+
+  build() {
+    Row() {
+      if (this.mComponentName == FASlotName.EMPTY) {
+        StatusBarEmptyIcon()
+      } else if (this.mComponentName == FASlotName.WIFI) {
+        WifiIcon()
+      } else if (this.mComponentName == FASlotName.BLUETOOTH) {
+        BluetoothIcon()
+      } else if (this.mComponentName == FASlotName.SIGNAL) {
+        SignalIcon()
+      } else if (this.mComponentName == FASlotName.CLOCK) {
+        ClockIcon()
+      } else if (this.mComponentName == FASlotName.BATTERY) {
+        BatteryIcon()
+      } else if (this.mComponentName == FASlotName.CAPSULE) {
+        CapsuleIcon()
+      } else if (this.mComponentName == FASlotName.NOTIFICATION) {
+        StatusBarNotificationIcon()
+      } else if (this.mComponentName == FASlotName.LOCATION) {
+        LocationIcon()
+      } else if (this.mComponentName == FASlotName.RING_MODE) {
+        RingModeIcon()
+      } else {
+        IconItemComponent({
+          keyId: this.mComponentName
+        })
+      }
+    }.height('100%')
+    .onAreaChange((e: Area, e2: Area) => {
+      ViewModel.updateComponentArea(this.mComponentName, e2)
+    })
+  }
+}
+
+@Component
 struct StatusBarEmptyIcon {
   @StorageLink('StatusBarEmptyWidth') mStatusBarEmptyWidth: any = 0
+  @State mTintContentInfo: TintContentInfo = ViewModel.getEmptyTintContentInfo()
 
   aboutToAppear() {
     Log.showInfo(TAG_StatusBarEmptyIcon, `aboutToAppear Start`)
@@ -251,6 +300,9 @@ struct StatusBarEmptyIcon {
 struct StatusBarNotificationIcon {
   @StorageLink('notificationList') notificationList: any = []
   @StorageLink('StatusCoefficient') StatusCoefficient: number = 1.0
+  @State mTintContentInfo: TintContentInfo = ViewModel.getNotificationTintContentInfo()
+  @State styleCommon: any = StyleConfigurationCommon.getCommonStyle()
+  @State style: any = StyleConfiguration.getStatusBarNotificationIconStyle()
 
   aboutToAppear() {
     Log.showInfo(TAG_StatusBarNotificationIcon, `aboutToAppear Start`)
@@ -262,30 +314,41 @@ struct StatusBarNotificationIcon {
 
   build() {
     Row() {
+      if (this.notificationList.length > 0) {
+        Row().height(1).width(this.styleCommon.statusBarMarginLeftRight)
+      }
       if (this.notificationList.length > 3) {
         ForEach(this.notificationList.slice(0, 3), (item: any) => {
-          Image(item.smallIcon)
+          Image(item[0].smallIcon)
             .objectFit(ImageFit.ScaleDown)
-            .height(Constants.STATIC_BAR_ICON_HEIGHT * this.StatusCoefficient)
-            .width(Constants.STATIC_BAR_ICON_WIDTH * this.StatusCoefficient)
-            .margin({ right: Constants.STATIC_BAR_ICON_MARGIN })
+            .height(this.style.iconHeight)
+            .width(this.style.iconWidth)
+            .margin({ right: this.style.iconSpace })
+            .fillColor(this.mTintContentInfo.contentColor)
         })
         Row() {
           Text('...')
-            .fontSize(20)
+            .fontSize(this.styleCommon.statusBarFontSize)
+            .fontColor(this.mTintContentInfo.contentColor)
         }
       } else {
-        ForEach(this.notificationList, (item: any) => {
-          Image(item.smallIcon)
+        ForEach(this.notificationList.map((item, index1) => {
+          return { i: index1, data: item }
+        }), (item) => {
+          if (item.i > 0) {
+            Row().height(1).width(this.style.iconSpace)
+          }
+          Image(item.data[0].smallIcon)
             .objectFit(ImageFit.ScaleDown)
-            .height(Constants.STATIC_BAR_ICON_HEIGHT * this.StatusCoefficient)
-            .width(Constants.STATIC_BAR_ICON_WIDTH * this.StatusCoefficient)
-            .margin({ right: Constants.STATIC_BAR_ICON_MARGIN })
+            .height(this.style.iconHeight)
+            .width(this.style.iconWidth)
+            .fillColor(this.mTintContentInfo.contentColor)
         })
       }
+      if (this.notificationList.length > 0) {
+        Row().height(1).width(this.styleCommon.statusBarMarginLeftRight)
+      }
     }
-    .width(this.notificationList.length > 3 ?
-      (Constants.STATIC_BAR_ICON_WIDTH + Constants.STATIC_BAR_ICON_MARGIN) * 4 :
-      (Constants.STATIC_BAR_ICON_WIDTH + Constants.STATIC_BAR_ICON_MARGIN) * this.notificationList.length)
+    .height('100%')
   }
 }

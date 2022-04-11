@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Huawei Device Co., Ltd.
+ * Copyright (c) 2021-2022 Huawei Device Co., Ltd.
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -13,10 +13,10 @@
  * limitations under the License.
  */
 
-import Log from '../../../../../../../../../../common/src/main/ets/default/Log.ets';
-import CheckEmptyUtils from '../../../../../../../../../../common/src/main/ets/default/CheckEmptyUtils.ets';
-import ViewModel from '../../viewmodel/ViewModel.ets';
-import Constants, {InputActionButtonData} from '../../common/constants.ets';
+import Log from '../../../../../../../../../../common/src/main/ets/default/Log';
+import CheckEmptyUtils from '../../../../../../../../../../common/src/main/ets/default/CheckEmptyUtils';
+import ViewModel from '../../viewmodel/ViewModel';
+import Constants, {InputActionButtonData, NotificationLayout as Layout} from '../../common/constants';
 
 const TAG = 'NoticeItem-ActionComponent';
 
@@ -39,8 +39,8 @@ export default struct ActionComponent {
   }
 
   build() {
-    Flex({ direction: FlexDirection.Row, justifyContent: FlexAlign.Start, alignItems: ItemAlign.Start }) {
-      if (CheckEmptyUtils.isEmpty(this.inputData) && !this.inputActionData.isSending) {
+    Flex({ direction: FlexDirection.Row, justifyContent: FlexAlign.Start, alignItems: ItemAlign.Center }) {
+      if (!this.inputData) {
         ForEach(this.itemData.actionButtons, (item: any) => {
           ActionButton({
             content: item.title,
@@ -56,28 +56,26 @@ export default struct ActionComponent {
       } else {
         TextInput({ placeholder: this.placeholder, text: this.inputActionData.content })
           .type(InputType.Normal)
-          .borderRadius(12)
           .caretColor(Color.Green)
-          .backgroundColor(Color.White)
           .enterKeyType(EnterKeyType.Send)
-          .height($r("app.float.action_button_height"))
+          .height(Layout.INPUT_TEXT_HEIGHT)
           .enabled(this.inputActionData.isSending ? false : true)
-          .width('80%')
-          .margin({ right: $r("app.float.action_button_padding") })
-        ActionButton({
-          content: this.inputActionData.isSending ? $r('app.string.Sending') : $r('app.string.enter'),
-          clickable: !this.inputActionData.isSending,
-          clickEvent: () => {
-            ViewModel.clickReply(this.inputData?.inputKey, this.placeholder, this.inputData?.wantAgent);
+          .flexGrow(1)
+          .margin({ right: Layout.ACTION_MARGIN })
+        Image($r("app.media.send"))
+          .objectFit(ImageFit.Contain)
+          .width(Layout.INPUT_IMAGE_SIZE)
+          .height(Layout.INPUT_IMAGE_SIZE)
+          .onClick(() => {
+            ViewModel.clickReply(this.inputData.inputKey, this.placeholder, this.inputData.wantAgent);
             this.inputActionData = {
               isSending: true,
               content: this.placeholder
             };
             AppStorage.SetOrCreate(Constants.KEY_INPUT + this.itemData.id, this.inputActionData);
-          }
-        })
+          })
       }
-    }.margin({ top: 10 })
+    }.height(!this.inputData ? Layout.ACTION_HEIGHT : Layout.INPUT_LAYOUT_HEIGHT)
   }
 }
 
@@ -86,31 +84,23 @@ struct ActionButton {
   @State backgroundColor: Resource = $r("app.color.transparent");
   @Prop content: string;
   clickable: boolean = true;
-  clickEvent: Function = () => {
+  clickEvent: () => void = () => {
   };
-
-  aboutToAppear() {
-    Log.showInfo(TAG, `ActionButton ${this.content} aboutToAppear Start`);
-  }
-
-  aboutToDisappear() {
-    Log.showInfo(TAG, `ActionButton ${this.content} aboutToDisAppear`);
-  }
 
   build() {
     Text(this.content)
-      .fontSize(20)
-      .height($r("app.float.action_button_height"))
-      .borderRadius(4)
-      .fontColor($r("app.color.action_button_color"))
-      .padding({ left: $r("app.float.action_button_padding"), right: $r("app.float.action_button_padding") })
+      .fontSize($r("sys.float.ohos_id_text_size_button2"))
+      .fontColor($r("sys.color.ohos_id_color_text_primary_activated"))
+      .borderRadius($r("sys.float.ohos_fa_corner_radius_default_s"))
+      .height(Layout.ACTION_HEIGHT)
+      .padding({ left: Layout.ACTION_MARGIN, right: Layout.ACTION_MARGIN })
       .backgroundColor(this.backgroundColor)
       .onTouch((event: TouchEvent) => {
         if (!this.clickable) {
           return;
         }
         if (event.type == TouchType.Down) {
-          this.backgroundColor = $r("app.color.action_button_click_color");
+          this.backgroundColor = $r("sys.color.ohos_fa_click_effect");
         } else if (event.type == TouchType.Up) {
           this.backgroundColor = $r("app.color.transparent");
         }

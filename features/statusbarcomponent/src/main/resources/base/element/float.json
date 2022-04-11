@@ -1,12 +1,48 @@
 {
   "float": [
     {
-      "name": "icon_item_fontsize",
-      "value": "18"
+      "name": "status_bar_icon_item_stack_height",
+      "value": "34vp"
     },
     {
-      "name": "status_bar_vertical_margin",
-      "value": "24"
+      "name": "status_bar_icon_item_stack_padding",
+      "value": "4vp"
+    },
+    {
+      "name": "status_bar_icon_item_stack_border_radius",
+      "value": "4vp"
+    },
+    {
+      "name": "status_bar_icon_item_component_space",
+      "value": "8vp"
+    },
+    {
+      "name": "status_bar_icon_item_icon_width",
+      "value": "26vp"
+    },
+    {
+      "name": "status_bar_icon_item_icon_height",
+      "value": "26vp"
+    },
+    {
+      "name": "status_bar_icon_item_margin_left",
+      "value": "1vp"
+    },
+    {
+      "name": "status_bar_icon_item_margin_right",
+      "value": "1vp"
+    },
+    {
+      "name": "status_bar_notification_icon_width",
+      "value": "24vp"
+    },
+    {
+      "name": "status_bar_notification_icon_height",
+      "value": "24vp"
+    },
+    {
+      "name": "status_bar_notification_icon_space",
+      "value": "8vp"
     }
   ]
 }
