@@ -1,0 +1,80 @@
+/*
+ * Copyright (c) 2021-2022 Huawei Device Co., Ltd.
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+import Log from '../../../../../../../../common/src/main/ets/default/Log';
+import getSingleInstance from '../../../../../../../../common/src/main/ets/default/SingleInstanceHelper';
+import VolumePanelService from '../model/VolumePanelService';
+import {VolumeInfo} from '../common/Constants';
+
+const TAG = 'VolumeWindowController'
+const SINGLE_STANCE_KEY = 'VolumeWindowController'
+const INTERVAL = 3 * 1000
+
+export default class VolumeWindowController {
+  mWindowHandle: any;
+  mInterval: number = INTERVAL;
+  mLastActionTime: number;
+  mIsWindowShown: boolean;
+
+  static getInstance(): VolumeWindowController{
+    return getSingleInstance(VolumeWindowController, SINGLE_STANCE_KEY)
+  }
+
+  constructor() {
+    VolumePanelService.startService();
+    VolumePanelService.registerListener(this);
+    Log.showInfo(TAG, `constructor done.`)
+  }
+
+  setInterval(interval) {
+    this.mInterval = interval;
+  }
+
+  setWindowHandle(windowHandle) {
+    Log.showInfo(TAG, `setWindowHandle windowHandle：${windowHandle}`)
+    this.mWindowHandle = windowHandle;
+  }
+
+  updateVolumeInfo(volumeInfo: VolumeInfo) {
+    Log.showInfo(TAG, `updateVolumeInfo, volumeInfo: ${JSON.stringify(volumeInfo)} `)
+    if (volumeInfo && !volumeInfo.updateUi && !this.mIsWindowShown) {
+      return;
+    }
+    this.setWindowState(true);
+    this.mLastActionTime = (new Date()).getTime();
+    setTimeout(() => {
+      Log.showInfo(TAG, `check need hide window or not.`)
+      if ((new Date()).getTime() - this.mLastActionTime >= this.mInterval) {
+        this.setWindowState(false);
+      }
+    }, this.mInterval);
+  }
+
+  setWindowState(isShow: boolean) {
+    Log.showInfo(TAG, `setWindowState ${isShow}.`);
+    if (this.mIsWindowShown == isShow) {
+      Log.showInfo(TAG, `Neen't set volueme window state.`)
+      return;
+    }
+    if (this.mWindowHandle) {
+      this.mIsWindowShown = isShow;
+      (isShow ? this.mWindowHandle.show() : this.mWindowHandle.hide())
+        .then(() => {
+          Log.showInfo(TAG, `updateShowStatus ${isShow}.`);
+        })
+        .catch((err) => Log.showInfo(TAG, `Can't set volueme window: ${err}.`))
+    }
+  }
+}

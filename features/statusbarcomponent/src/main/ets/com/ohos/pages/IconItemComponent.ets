@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Huawei Device Co., Ltd.
+ * Copyright (c) 2021-2022 Huawei Device Co., Ltd.
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -13,91 +13,120 @@
  * limitations under the License.
  */
 
-import Log from '../../../../../../../../common/src/main/ets/default/Log.ets'
-import FeatureAbilityManager from '../../../../../../../../common/src/main/ets/default/abilitymanager/featureAbilityManager.ets';
-import WindowManager from '../../../../../../../../common/src/main/ets/default/WindowManager.ets'
-import CheckEmptyUtils from '../../../../../../../../common/src/main/ets/default/CheckEmptyUtils.ets'
-import Constants from '../common/Constants.ets'
+import Log from '../../../../../../../../common/src/main/ets/default/Log'
+import EventManager, {unsubscribe} from '../../../../../../../../common/src/main/ets/default/event/EventManager'
+import CheckEmptyUtils from '../../../../../../../../common/src/main/ets/default/CheckEmptyUtils'
+import {WINDOW_SHOW_HIDE_EVENT} from '../../../../../../../../common/src/main/ets/default/WindowManager'
+import {PluginType} from "../../../../../../../../common/src/main/ets/plugindatasource/common/Constants"
+import ViewModel from '../viewmodel/StatusBarVM'
+import StyleConfigurationCommon from '../../../../../../../../common/src/main/ets/default/StyleConfiguration'
+import StyleConfiguration from '../common/StyleConfiguration'
+import MetaIconItemComponent from './MetaIconItemComponent'
 
 const TAG = 'IconItemComponent'
 
 @Component
 export default struct IconItemComponent {
-  @Prop keyId: string
-  @Prop color: string
+  private keyId: string
   @State mItemData: any = {}
-  private mWindowManager
-  private mFeatureAbilityManager
+  @State mItemStatus: any = {
+    selected: false
+  }
+  mClearCallback: unsubscribe | undefined
+  @State style: any = StyleConfiguration.getIconItemComponentStyle()
+  @State styleCommon: any = StyleConfigurationCommon.getCommonStyle()
 
   aboutToAppear() {
-    Log.showInfo(TAG, `aboutToAppear Start, keyId: ${this.keyId} color:${JSON.stringify(this.color)}`)
-    this.mItemData = AppStorage.Link(this.keyId)
-    Log.showInfo(TAG, `aboutToAppear, mItemData: ${this.mItemData.get().iconUrl} ${this.mItemData.get().label}`)
-    this.mWindowManager = new WindowManager();
-    this.mFeatureAbilityManager = new FeatureAbilityManager();
+    Log.showInfo(TAG, `aboutToAppear Start, keyId: ${this.keyId} `)
+    this.linkItemData()
+    if (this.mItemData.get()?.relationWindowId) {
+      this.mClearCallback = EventManager.subscribe(WINDOW_SHOW_HIDE_EVENT, (args) => this.onWindowChange(args))
+    }
   }
 
   aboutToDisappear() {
     Log.showInfo(TAG, `aboutToDisappear`)
-    let deleteRs: boolean = AppStorage.Delete(this.keyId)
-    Log.showInfo(TAG, `aboutToDisappear AppStorage.Delete, ${deleteRs} key: ${this.keyId}`)
+    this.mClearCallback && this.mClearCallback()
+    this.mClearCallback = undefined
+  }
+
+  linkItemData() {
+    Log.showInfo(TAG, `linkItemData, keyId: ${this.keyId}`)
+    this.mItemData = AppStorage.Link('StatusBar_' + this.keyId)
+    Log.showInfo(TAG, `linkItemData, mItemData: ${this.keyId} ${this.mItemData.get().label} ${
+    this.mItemData.get()
+    .iconUrl}`)
+    this.mItemStatus = AppStorage.SetAndLink('StatusBar_Status_' + this.keyId, { selected: false }).get()
   }
 
   build() {
-    Row({ space: Constants.STATIC_BAR_ICON_INSIDE_SPACE }) {
-      if (!CheckEmptyUtils.isEmpty(this.mItemData.get().label)) {
-        Text(this.mItemData.get()
-        .label)
-          .fontColor(this.color)
-          .fontSize($r('app.float.icon_item_fontsize'))
-          .textAlign(TextAlign.End)
+    Row() {
+      Row().width(this.style.marginLeft).height('100%')
+      Row() {
+        Row().width(this.style.stackPadding).height('100%')
+
+        if (this.mItemData.get().pluginType == PluginType.META) {
+          MetaIconItemComponent({
+            keyId: this.keyId
+          })
+        } else if (this.mItemData.get().pluginType == PluginType.DATA_ABILITY) {
+          // TODO:
+        } else if (this.mItemData.get().pluginType == PluginType.PLUGIN_COMPONENT) {
+          // TODO:
+        }
+
+        Row().width(this.style.stackPadding).height('100%')
       }
-      if (!CheckEmptyUtils.isEmpty(this.mItemData.get().iconUrl)) {
-        Image(this.mItemData.get().iconUrl)
-          .size({ width: Constants.STATIC_BAR_ICON_WIDTH, height: Constants.STATIC_BAR_ICON_HEIGHT })
-      }
+      .height(this.style.stackHeight)
+      .borderRadius(this.style.stackBorderRadius)
+      .backgroundColor(this.mItemStatus.selected ? this.style.stackBgColorSelected : this.style.stackBgColorUnSelected)
+      .onClick(this.onIconItemClick.bind(this))
+      .gesture(LongPressGesture({ repeat: false }).onAction(this.onIconItemLongPressGesture.bind(this)))
+      .onTouch(this.onIconItemTouch.bind(this))
+
+      Row().width(this.style.marginRight).height('100%')
+    }.height('100%')
+  }
+
+  onWindowChange(args) {
+    if (this.mItemData.get().canSelect && args?.windowName == this.mItemData.get().relationWindowId) {
+      this.mItemStatus.selected = args?.isShow
     }
-    .margin({ left: Constants.STATIC_BAR_ICON_OUTSIDE_MARGIN, right: Constants.STATIC_BAR_ICON_OUTSIDE_MARGIN })
-    .height('100%')
-    .onClick(this.onIconItemClick.bind(this))
-    .gesture(LongPressGesture({ repeat: false }).onAction(this.onIconItemLongPressGesture.bind(this)))
   }
 
   onIconItemClick(event: ClickEvent) {
     Log.showInfo(TAG, `onIconItemClick`)
-    if (this.mItemData.get().actionData && this.mItemData.get().actionData.clickAction) {
-      this.startAbility(this.mItemData.get().actionData.clickAction)
+    if (!this.mItemStatus.selected) {
+      this.execClickAction()
+    } else {
+      this.execSelectedClickAction()
+    }
+  }
+
+  execClickAction() {
+    Log.showInfo(TAG, `execClickAction`)
+    if (this.mItemData.get()?.actionData?.clickAction) {
+      EventManager.publish(this.mItemData.get().actionData.clickAction)
+    }
+  }
+
+  execSelectedClickAction() {
+    Log.showInfo(TAG, `execSelectedClickAction ${this.mItemData.get()?.actionData?.selectedClickAction}`)
+    if (this.mItemData.get()?.actionData?.selectedClickAction) {
+      EventManager.publish(this.mItemData.get().actionData.selectedClickAction)
     }
   }
 
   onIconItemLongPressGesture(event: GestureEvent) {
     Log.showInfo(TAG, `onIconItemLongPressGesture, event: ${JSON.stringify(event)}`)
-    if (this.mItemData.get().actionData && this.mItemData.get().actionData.longClickAction) {
-      this.startAbility(this.mItemData.get().actionData.longClickAction)
-    }
+    let longClickEvent = this.mItemData.get().actionData.longClickAction;
+    longClickEvent && EventManager.publish(longClickEvent);
   }
 
-  startAbility(action) {
-    Log.showInfo(TAG, `startAbility, action: ${action}`)
-    let actionInfos = action.split('&')
-    let wantParam = {
-      parameters: {}
+  onIconItemTouch(event: TouchEvent) {
+    Log.showInfo(TAG, `onIconItemTouch, event: ${JSON.stringify(event)}`)
+    if (this.mItemData.get()?.actionData?.clickAction || this.mItemData.get()?.actionData?.longClickAction) {
+      event.stopPropagation()
     }
-    for (let actionInfoStr of actionInfos) {
-      let actionInfo = actionInfoStr.split('=')
-      if (actionInfo[0] == 'want') {
-        wantParam['bundleName'] = actionInfo[1].split('/')[0]
-        wantParam['abilityName'] = actionInfo[1].split('/')[1]
-      } else {
-        wantParam.parameters[actionInfo[0]] = actionInfo.length > 1 ? actionInfo[1] : actionInfo[0]
-      }
-    }
-    Log.showInfo(TAG, `startAbility, want: ${JSON.stringify(wantParam)}`)
-
-    this.mWindowManager.setWindowMin((result) => {
-      this.mFeatureAbilityManager.openAbility(TAG, {
-        want: wantParam
-      });
-    });
   }
 }

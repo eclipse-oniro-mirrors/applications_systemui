@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2021 Huawei Device Co., Ltd.
+ * Copyright (c) 2021-2022 Huawei Device Co., Ltd.
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -12,9 +12,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import ConfigData from '../../common/constants.ets';
-import Log from '../../../../../../../../../common/src/main/ets/default/Log.ets';
-import Notification from '@ohos.notification';
+import ConfigData from '../../common/constants';
+import Log from '../../../../../../../../../common/src/main/ets/default/Log';
+import Notification from '../../model/notificationListener';
 import Router from '@system.router'
 
 const TAG = 'ManagementComponent-AppItemComponent';
@@ -32,87 +32,197 @@ export default struct AppItemComponent {
   @Prop appSwitch: number;
   @Prop appBundleName: string;
   @Prop appUid: number;
+  @State isCanChange: boolean = true
 
   build() {
     Flex({ justifyContent: FlexAlign.SpaceBetween }) {
       Row() {
-        Image(this.appIcon)
-          .width($r('app.float.appitem_icon_width'))
-          .height($r('app.float.appitem_icon_height'))
-          .margin({ right: $r('app.float.appitem_icon_margin_r') })
-          .visibility('' === this.appIcon ? Visibility.None : Visibility.Visible)
-          .objectFit(ImageFit.Contain);
+        if (this.appSwitch === 2 || this.appSwitch === 3) {
+          Image(this.appIcon)
+            .width($r('app.float.appitem_notice_info_icon_width_l'))
+            .height($r('app.float.appitem_notice_info_icon_height_l'))
+            .margin({ right: $r('app.float.appitem_icon_info_margin_r') })
+            .visibility('' === this.appIcon ? Visibility.None : Visibility.Visible)
+            .objectFit(ImageFit.Contain);
+        } else {
+          Image(this.appIcon)
+            .width($r('app.float.appitem_notice_info_icon_width'))
+            .height($r('app.float.appitem_notice_info_icon_height'))
+            .margin({ right: $r('app.float.appitem_icon_info_list_margin_r') })
+            .visibility('' === this.appIcon ? Visibility.None : Visibility.Visible)
+            .objectFit(ImageFit.Contain);
+        }
         Column() {
           Text(this.appTitle)
-            .fontColor($r('app.color.appitem_label_fontcolor'))
-            .fontSize($r('app.float.appitem_label_font'))
+            .fontColor($r('sys.color.ohos_id_color_text_primary'))
+            .fontSize($r('sys.float.ohos_id_text_size_body1'))
             .textAlign(TextAlign.Start)
             .maxLines(ConfigData.MAX_LINES_3)
             .textOverflow({ overflow: TextOverflow.Ellipsis })
-            .margin({ top: $r('app.float.appitem_label_margin_t'), bottom: $r('app.float.appitem_labelmargin_b') });
+            .margin({ top: $r('app.float.appitem_label_margin_t'), bottom: $r('app.float.appitem_label_margin_b'), left: $r('app.float.page_notice_info_label_margin') });
           Row() {
-            Text($r('app.string.version'))
-              .fontColor($r('app.color.appitem_version_fontcolor'))
-              .fontSize($r('app.float.appitem_version_font'))
-              .textAlign(TextAlign.Start)
-              .maxLines(ConfigData.MAX_LINES_1)
-              .textOverflow({ overflow: TextOverflow.Ellipsis })
-              .visibility(Visibility.Visible)
-              .margin({ bottom: $r('app.float.appitem_version_margin_b') });
-            Text(this.appSummary)
-              .fontColor($r('app.color.appitem_version_fontcolor'))
-              .fontSize($r('app.float.appitem_version_font'))
-              .textAlign(TextAlign.Start)
-              .maxLines(ConfigData.MAX_LINES_1)
-              .textOverflow({ overflow: TextOverflow.Ellipsis })
-              .visibility(Visibility.Visible)
-              .margin({ bottom: $r('app.float.appitem_version_margin_b') });
+            if (this.appSwitch === 3) {
+              if (parseInt(this.appValue) == 0) {
+                Text($r('app.string.slot_unknown'))
+                  .fontColor($r('sys.color.ohos_id_color_text_secondary'))
+                  .fontSize($r('sys.float.ohos_id_text_size_body2'))
+                  .textAlign(TextAlign.Start)
+                  .maxLines(ConfigData.MAX_LINES_1)
+                  .textOverflow({ overflow: TextOverflow.Ellipsis })
+                  .visibility(Visibility.Visible)
+                  .margin({ bottom: $r('app.float.appitem_version_margin_b'), left: $r('app.float.page_notice_info_label_margin') });
+              } else if (parseInt(this.appValue) == 1) {
+                Text($r('app.string.slot_social_communication'))
+                  .fontColor($r('sys.color.ohos_id_color_text_secondary'))
+                  .fontSize($r('sys.float.ohos_id_text_size_body2'))
+                  .textAlign(TextAlign.Start)
+                  .maxLines(ConfigData.MAX_LINES_1)
+                  .textOverflow({ overflow: TextOverflow.Ellipsis })
+                  .visibility(Visibility.Visible)
+                  .margin({ bottom: $r('app.float.appitem_version_margin_b'), left: $r('app.float.page_notice_info_label_margin') });
+              } else if (parseInt(this.appValue) == 2) {
+                Text($r('app.string.slot_service_information'))
+                  .fontColor($r('sys.color.ohos_id_color_text_secondary'))
+                  .fontSize($r('sys.float.ohos_id_text_size_body2'))
+                  .textAlign(TextAlign.Start)
+                  .maxLines(ConfigData.MAX_LINES_1)
+                  .textOverflow({ overflow: TextOverflow.Ellipsis })
+                  .visibility(Visibility.Visible)
+                  .margin({ bottom: $r('app.float.appitem_version_margin_b'), left: $r('app.float.page_notice_info_label_margin') });
+              } else if (parseInt(this.appValue) == 3) {
+                Text($r('app.string.slot_content_information'))
+                  .fontColor($r('sys.color.ohos_id_color_text_secondary'))
+                  .fontSize($r('sys.float.ohos_id_text_size_body2'))
+                  .textAlign(TextAlign.Start)
+                  .maxLines(ConfigData.MAX_LINES_1)
+                  .textOverflow({ overflow: TextOverflow.Ellipsis })
+                  .visibility(Visibility.Visible)
+                  .margin({ bottom: $r('app.float.appitem_version_margin_b'), left: $r('app.float.page_notice_info_label_margin') });
+              } else if (parseInt(this.appValue) == 0xFFFF) {
+                Text($r('app.string.slot_other'))
+                  .fontColor($r('sys.color.ohos_id_color_text_secondary'))
+                  .fontSize($r('sys.float.ohos_id_text_size_body2'))
+                  .textAlign(TextAlign.Start)
+                  .maxLines(ConfigData.MAX_LINES_1)
+                  .textOverflow({ overflow: TextOverflow.Ellipsis })
+                  .visibility(Visibility.Visible)
+                  .margin({ bottom: $r('app.float.appitem_version_margin_b'), left: $r('app.float.page_notice_info_label_margin') });
+              } else {
+                Text('')
+                  .fontColor($r('sys.color.ohos_id_color_text_secondary'))
+                  .fontSize($r('sys.float.ohos_id_text_size_body2'))
+                  .textAlign(TextAlign.Start)
+                  .maxLines(ConfigData.MAX_LINES_1)
+                  .textOverflow({ overflow: TextOverflow.Ellipsis })
+                  .visibility(Visibility.Visible)
+                  .margin({ bottom: $r('app.float.appitem_version_margin_b'), left: $r('app.float.page_notice_info_label_margin') });
+              }
+            } else {
+              Text($r('app.string.version'))
+                .fontColor($r('sys.color.ohos_id_color_text_secondary'))
+                .fontSize($r('sys.float.ohos_id_text_size_body2'))
+                .textAlign(TextAlign.Start)
+                .maxLines(ConfigData.MAX_LINES_1)
+                .textOverflow({ overflow: TextOverflow.Ellipsis })
+                .visibility(Visibility.Visible)
+                .margin({ bottom: $r('app.float.appitem_version_margin_b'), left: $r('app.float.page_notice_info_label_margin') });
+              Text(this.appSummary)
+                .fontColor($r('sys.color.ohos_id_color_text_secondary'))
+                .fontSize($r('sys.float.ohos_id_text_size_body2'))
+                .textAlign(TextAlign.Start)
+                .maxLines(ConfigData.MAX_LINES_1)
+                .textOverflow({ overflow: TextOverflow.Ellipsis })
+                .visibility(Visibility.Visible)
+                .margin({ bottom: $r('app.float.appitem_version_margin_b') });
+            }
           }
         }
         .alignItems(HorizontalAlign.Start);
       }
       .flexShrink(0)
+      .height(ConfigData.WH_100_100)
       .alignItems(VerticalAlign.Center)
       .align(Alignment.Start)
 
       Row() {
         if (this.appSwitch === 0) {
           Text(this.appValue)
+            .fontColor($r('sys.color.ohos_id_color_text_secondary'))
+            .fontSize($r('sys.float.ohos_id_text_size_body2'))
+            .margin({ right: $r('app.float.appitem_version_margin_r') })
+            .align(Alignment.End);
+          Image(this.appArrow)
+            .width($r('app.float.itemComp_image_width'))
+            .height($r('app.float.itemComp_image_height'))
+            .visibility(Visibility.Visible);
+        } else if (this.appSwitch === 2) {
+          Text(this.appValue)
+            .width($r('app.float.itemComp_image_width'))
+            .height($r('app.float.itemComp_image_height'))
+            .margin({ right: $r('app.float.appitem_version_margin_r') })
+            .align(Alignment.End);
+          Image($r('app.media.ic_settings_arrow'))
+            .width($r('app.float.appitem_notice_infopop_icon_width'))
+            .height($r('app.float.appitem_notice_infopop_icon_height'))
+            .margin({ right: $r('app.float.appitem_notice_info_icon_margin_r') })
+            .visibility(Visibility.None);
+        } else if (this.appSwitch === 3) {
+          Text('')
             .fontSize($r('app.float.appitem_version_font'))
             .fontColor($r('app.color.appitem_version_fontcolor'))
             .margin({ right: $r('app.float.appitem_version_margin_r') })
             .align(Alignment.End);
-          Image(this.appArrow)
-            .width($r('app.float.arrow_icon_width'))
-            .height($r('app.float.arrow_icon_height'))
-            .visibility(Visibility.Visible);
+          Image($r('app.media.ic_settings_arrow'))
+            .width($r('app.float.appitem_notice_infopop_icon_width'))
+            .height($r('app.float.appitem_notice_infopop_icon_height'))
+            .margin({ right: $r('app.float.appitem_notice_infopop_icon_margin_r') })
+            .visibility(Visibility.None);
         } else {
           Toggle({ type: ToggleType.Switch, isOn: this.canNotice })
             .align(Alignment.End)
             .width($r('app.float.toggle_comp_width'))
             .height($r('app.float.toggle_comp_height'))
+            .enabled(this.isCanChange)
             .onChange((flag) => {
-              Log.showInfo(TAG, `Toggle onChange param: ` + this.appBundleName + "  data:" + flag)
-              Notification.enableNotification({ bundle: this.appBundleName, uid: this.appUid }, flag, (err, result) => {
-              })
+              Log.showInfo(TAG, `Toggle onChange param: data:${flag} `);
+              Notification.enableNotification({ bundle: this.appBundleName, uid: this.appUid }, flag);
             })
         }
       }
-      .margin({ right: $r('app.float.page_margin_r') })
+      .height(ConfigData.WH_100_100)
+      .alignItems(VerticalAlign.Center)
       .align(Alignment.End);
     }
-    .margin({ left: $r('app.float.page_margin_l') })
+    .height($r('app.float.page_notice_app_item_row_height'))
     .width(ConfigData.WH_100_100)
   }
 
   aboutToAppear(): void{
     Log.showInfo(TAG, `aboutToAppear`)
-    Notification.isNotificationEnabled({ bundle: this.appBundleName, uid: this.appUid })
-      .then((data) => {
-        Log.showInfo(TAG, `Notification.isNotificationEnabled:` + data)
-        this.canNotice = data;
-        Log.showInfo(TAG, `Notification.isNotificationEnabled isOn:` + this.canNotice)
-      });
+    if (this.appSwitch === 1) {
+      Notification.subscribeEnableChanged();
+      Notification.register({ bundle: this.appBundleName,
+        onEnableChanged: (stateValue: boolean) => {
+          Log.showInfo(TAG, `aboutToAppear listener call`)
+          this.canNotice = stateValue;
+        } });
+
+      Notification.isNotificationEnabled({ bundle: this.appBundleName, uid: this.appUid })
+        .then((stateValue) => {
+          Log.showInfo(TAG, `Notification.isNotificationEnabled data:${JSON.stringify(stateValue)}`)
+          this.canNotice = stateValue;
+        })
+        .catch((error) => {
+          Log.showInfo(TAG, `Notification.isNotificationEnabled error:${JSON.stringify(error)}`)
+        });
+    }
+  }
+
+  aboutToDisappear(): void{
+    Log.showInfo(TAG, `aboutToDisappear`)
+    if (this.appSwitch === 1) {
+      Notification.unsubscribeEnableChanged();
+    }
   }
 
   onBackPress() {

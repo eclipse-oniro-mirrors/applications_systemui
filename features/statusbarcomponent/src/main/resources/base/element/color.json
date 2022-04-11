@@ -1,12 +1,12 @@
 {
   "color": [
     {
-      "name": "default_background",
-      "value": "#66000000"
+      "name": "status_bar_icon_item_stack_bg_color_selected",
+      "value": "#3800FF9D"
     },
     {
-      "name": "default_font_color",
-      "value": "#ffffffff"
+      "name": "status_bar_icon_item_stack_bg_color_un_selected",
+      "value": "#00000000"
     }
   ]
 }

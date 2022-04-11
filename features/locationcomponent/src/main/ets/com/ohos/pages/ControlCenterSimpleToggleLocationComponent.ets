@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Huawei Device Co., Ltd.
+ * Copyright (c) 2021-2022 Huawei Device Co., Ltd.
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -13,31 +13,28 @@
  * limitations under the License.
  */
 
-import Log from '../../../../../../../../common/src/main/ets/default/Log.ets'
-import FeatureAbilityManager from '../../../../../../../../common/src/main/ets/default/abilitymanager/featureAbilityManager.ets'
-import WindowManager from '../../../../../../../../common/src/main/ets/default/WindowManager.ets'
-import ViewModel from '../viewmodel/LocationVM.ets'
-import SimpleToggleBase from '../../../../../../../../common/src/main/ets/template/SimpleToggleBase.ets'
+import Log from '../../../../../../../../common/src/main/ets/default/Log'
+import EventManager from "../../../../../../../../common/src/main/ets/default/event/EventManager"
+import {obtainStartAbility} from "../../../../../../../../common/src/main/ets/default/event/EventUtil"
+import {LocationData} from '../common/Constants'
+import ViewModel from '../viewmodel/LocationVM'
+import SimpleToggleBase from '../../../../../../../../common/src/main/ets/template/SimpleToggleBase'
 
 const TAG = 'location-ControlCenterSimpleToggleLocationComponent'
 
 @Component
 export default struct ControlCenterSimpleToggleLocationComponent {
-  @Prop keyId: string
-  @Prop mShowLabel: boolean
-  @Prop mEditMode: boolean
+  private keyId: string
+  private mEditMode: boolean = false
+  private mDragMode: boolean = false
   @State mIcon: Resource = $r("app.media.ic_controlcenter_gps")
   @State mLabel: Resource = $r("app.string.control_center_complex_toggle_location_title")
-  @StorageLink('LocationServiceOpenStatus') LocationServiceOpenStatus: boolean = false
-  @StorageLink("showStatusBar") showStatusBar: boolean = false
-  private mWindowManager
-  private mFeatureAbilityManager
+  @State mLocationData: LocationData = new LocationData()
 
   aboutToAppear() {
     Log.showInfo(TAG, 'aboutToAppear')
-    this.mWindowManager = new WindowManager()
-    this.mFeatureAbilityManager = new FeatureAbilityManager()
     ViewModel.initViewModel()
+    this.mLocationData = ViewModel.getLocationData()
   }
 
   aboutToDisappear() {
@@ -48,19 +45,18 @@ export default struct ControlCenterSimpleToggleLocationComponent {
     SimpleToggleBase({
       mToggleId: this.keyId,
       mIcon: $mIcon,
-      mAutoIconColor: true,
-      mChangeSwitch: $LocationServiceOpenStatus,
+      mChangeSwitch: this.mLocationData.isEnabled,
       mLabel: $mLabel,
-      mShowLabel: this.mShowLabel,
       mEditMode: this.mEditMode,
-      mClickEvent: this.mClickEvent.bind(this),
-      mLongClickEvent: this.mLongClickEvent.bind(this)
+      mDragMode: this.mDragMode,
+      mClickEvent: () => this.mClickEvent(),
+      mLongClickEvent: () => this.mLongClickEvent()
     })
   }
 
   mClickEvent() {
-    Log.showInfo(TAG, `mClickEvent, LocationServiceOpenStatus: ${this.LocationServiceOpenStatus}`)
-    if (this.LocationServiceOpenStatus) {
+    Log.showInfo(TAG, `mClickEvent, isEnabled: ${this.mLocationData.isEnabled}`)
+    if (this.mLocationData.isEnabled) {
       ViewModel.disableLocation()
     } else {
       ViewModel.enableLocation()
@@ -68,17 +64,7 @@ export default struct ControlCenterSimpleToggleLocationComponent {
   }
 
   mLongClickEvent() {
-    Log.showInfo(TAG, `mLongClickEvent, LocationServiceOpenStatus: ${this.LocationServiceOpenStatus}`)
-
-    this.showStatusBar = true
-    this.mWindowManager.setWindowMin((result) => {
-      this.mFeatureAbilityManager.openAbility(TAG, {
-        want: {
-          bundleName: 'com.ohos.settings',
-          abilityName: 'com.ohos.settings.MainAbility',
-        }
-      })
-    })
-
+    Log.showInfo(TAG, `mLongClickEvent`)
+    EventManager.publish(obtainStartAbility('com.ohos.settings', 'com.ohos.settings.MainAbility'))
   }
 }

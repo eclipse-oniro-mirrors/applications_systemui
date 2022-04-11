@@ -1,20 +1,40 @@
 {
   "float": [
     {
-      "name": "control_common_font_size",
-      "value": "20"
-    },{
-      "name": "slider_text_padding_left",
-      "value": "5"
-    },{
-      "name": "slider_size_width",
-      "value": "300"
-    },{
-      "name": "brightness_border_radius",
-      "value": "15"
-    },{
-      "name": "font_constraint_maxSize",
-      "value": "70"
+      "name": "brightness_margin_left",
+      "value": "26vp"
+    },
+    {
+      "name": "brightness_margin_right",
+      "value": "26vp"
+    },
+    {
+      "name": "brightness_component_gap",
+      "value": "26vp"
+    },
+    {
+      "name": "brightness_reduce_width",
+      "value": "44vp"
+    },
+    {
+      "name": "brightness_reduce_height",
+      "value": "44vp"
+    },
+    {
+      "name": "brightness_plus_width",
+      "value": "44vp"
+    },
+    {
+      "name": "brightness_plus_height",
+      "value": "44vp"
+    },
+    {
+      "name": "brightness_height",
+      "value": "44vp"
+    },
+    {
+      "name": "brightness_slider_height",
+      "value": "40vp"
     }
   ]
 }

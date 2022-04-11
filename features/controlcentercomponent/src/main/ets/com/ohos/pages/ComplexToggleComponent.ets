@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Huawei Device Co., Ltd.
+ * Copyright (c) 2021-2022 Huawei Device Co., Ltd.
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -13,12 +13,10 @@
  * limitations under the License.
  */
 
-import Log from '../../../../../../../../common/src/main/ets/default/Log.ets'
-import FeatureAbilityManager from '../../../../../../../../common/src/main/ets/default/abilitymanager/featureAbilityManager.ets'
-import WindowManager from '../../../../../../../../common/src/main/ets/default/WindowManager.ets'
-import CheckEmptyUtils from '../../../../../../../../common/src/main/ets/default/CheckEmptyUtils.ets'
-import iconTitleBase from '../../../../../../../../common/src/main/ets/template/iconTitleBase.ets'
-import Constants from '../common/Constants.ets'
+import Log from '../../../../../../../../common/src/main/ets/default/Log'
+import EventManager from '../../../../../../../../common/src/main/ets/default/event/EventManager'
+import iconTitleBase from '../../../../../../../../common/src/main/ets/template/iconTitleBase'
+import Constants from '../common/Constants'
 
 const TAG = 'ComplexToggleComponent'
 
@@ -27,15 +25,10 @@ export default struct ComplexToggleComponent {
   @Prop keyId: string
   @State mItemData: any = {}
   @State mStatus: boolean = false
-  @StorageLink("showStatusBar") showStatusBar: boolean = false
-  private mWindowManager
-  private mFeatureAbilityManager
   @State mDefaultTitle: string = ''
 
   aboutToAppear() {
     Log.showInfo(TAG, `aboutToAppear Start, keyId: ${this.keyId}`)
-    this.mWindowManager = new WindowManager()
-    this.mFeatureAbilityManager = new FeatureAbilityManager()
     this.linkItemData()
   }
 
@@ -45,7 +38,7 @@ export default struct ComplexToggleComponent {
 
   linkItemData() {
     Log.showInfo(TAG, `linkItemData, keyId: ${this.keyId}`)
-    this.mItemData = AppStorage.Link(this.keyId)
+    this.mItemData = AppStorage.Link('ControlCenter_' + this.keyId)
     Log.showInfo(TAG, `linkItemData, mItemData: ${this.keyId} ${this.mItemData.get().label} ${
     this.mItemData.get()
     .iconUrl}`)
@@ -64,8 +57,8 @@ export default struct ComplexToggleComponent {
         iconOnStr: this.mItemData.get()
         .iconUrl,
         changeSwitch: $mStatus,
-        mClickEvent: this.onIconItemClick.bind(this),
-        mLongClickEvent: this.onIconItemLongPressGesture.bind(this)
+        mClickEvent: () => this.onIconItemClick(),
+        mLongClickEvent: () => this.onIconItemLongPressGesture()
       })
     }.width('100%')
     .height('100%')
@@ -73,40 +66,15 @@ export default struct ComplexToggleComponent {
 
   onIconItemClick() {
     Log.showInfo(TAG, `onIconItemClick`)
-    if (this.mItemData.get().actionData && this.mItemData.get().actionData.clickAction) {
-      this.startAbility(this.mItemData.get().actionData.clickAction)
+    if (this.mItemData.get()?.actionData?.clickAction) {
+      EventManager.publish(this.mItemData.get().actionData.clickAction);
     }
   }
 
   onIconItemLongPressGesture() {
     Log.showInfo(TAG, `onIconItemLongPressGesture`)
-    if (this.mItemData.get().actionData && this.mItemData.get().actionData.longClickAction) {
-      this.startAbility(this.mItemData.get().actionData.longClickAction)
+    if (this.mItemData.get()?.actionData?.longClickAction) {
+      EventManager.publish(this.mItemData.get().actionData.longClickAction);
     }
-  }
-
-  startAbility(action) {
-    Log.showInfo(TAG, `startAbility, action: ${action}`)
-    let actionInfos = action.split('&')
-    let wantParam = {
-      parameters: {}
-    }
-    for (let actionInfoStr of actionInfos) {
-      let actionInfo = actionInfoStr.split('=')
-      if (actionInfo[0] == 'want') {
-        wantParam['bundleName'] = actionInfo[1].split('/')[0]
-        wantParam['abilityName'] = actionInfo[1].split('/')[1]
-      } else {
-        wantParam.parameters[actionInfo[0]] = actionInfo.length > 1 ? actionInfo[1] : actionInfo[0]
-      }
-    }
-    Log.showInfo(TAG, `startAbility, want: ${JSON.stringify(wantParam)}`)
-
-    this.showStatusBar = true
-    this.mWindowManager.setWindowMin((result) => {
-      this.mFeatureAbilityManager.openAbility(TAG, {
-        want: wantParam
-      })
-    })
   }
 }

@@ -25,6 +25,14 @@
       "value": "免打扰"
     },
     {
+      "name": "noDisturb_closed",
+      "value": "已关闭"
+    },
+    {
+      "name": "noDisturb_opened",
+      "value": "已启动"
+    },
+    {
       "name": "slotType",
       "value": "类别"
     },
@@ -49,6 +57,14 @@
       "value": "其他"
     },
     {
+      "name": "startDate",
+      "value": "开始日期"
+    },
+    {
+      "name": "endDate",
+      "value": "结束日期"
+    },
+    {
       "name": "startTime",
       "value": "开始时间"
     },
@@ -61,10 +77,37 @@
       "value": "重复"
     },
     {
-      "name": "daily",
+      "name": "noDisturb_once_label",
+      "value": "仅一次："
+    },
+    {
+      "name": "noDisturb_daily_label",
+      "value": "每天："
+    },
+    {
+      "name": "noDisturb_clearly_label",
+      "value": "自定义："
+    },
+    {
+      "name": "noDisturb_none",
+      "value": "关闭"
+    },
+    {
+      "name": "noDisturb_once",
+      "value": "仅一次"
+    },
+    {
+      "name": "noDisturb_daily",
       "value": "每天"
     },
-
+    {
+      "name": "noDisturb_clearly",
+      "value": "自定义"
+    },
+    {
+      "name": "noDisturb_nextDay",
+      "value": "次日"
+    },
     {
       "name": "cancel",
       "value": "取消"
@@ -72,6 +115,18 @@
     {
       "name": "confirm",
       "value": "确定"
+    },
+    {
+      "name": "notificationStyle",
+      "value": "提醒方式"
+    },
+    {
+      "name": "notificationStyle_banner",
+      "value": "横幅通知"
+    },
+    {
+      "name": "notificationSound",
+      "value": "通知铃声"
     }
   ]
 }

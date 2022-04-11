@@ -38,6 +38,10 @@
     {
       "name": "5G",
       "value": "5G"
+    },
+    {
+      "name": "signal_null",
+      "value": "×"
     }
   ]
 }
