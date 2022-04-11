@@ -13,9 +13,22 @@
  * limitations under the License.
  */
 
-include ':entry', ':product:navigationBar', ':common', ':product:statusbar', ':product:notificationmanagement',
+include ':common',
+        ':phone_entry', ':phone_statusbar', ':phone_dropdownpanel',
+        ':pc_entry', ':pc_statusbar', ':pc_controlpanel', ':pc_notificationpanel',
+        ':default_navigationBar', ':default_notificationmanagement', ':default_volumepanel',
         ':features:capsulecomponent', ':features:batterycomponent', ':features:clockcomponent',
         ':features:signalcomponent', ':features:wificomponent', ':features:navigationservice', ':features:noticeitem',
         ':features:airplanecomponent', ':features:brightnesscomponent', ':features:volumecomponent', ':features:managementcomponent',
         ':features:statusbarcomponent', ':features:controlcentercomponent', ':features:bluetoothcomponent', ':features:locationcomponent',
-        ':features:ringmodecomponent'
+        ':features:ringmodecomponent', ':features:volumepanelcomponent', ':features:autorotatecomponent'
+project(':phone_entry').projectDir = new File('./entry/phone')
+project(':phone_statusbar').projectDir = new File('./product/phone/statusbar')
+project(':phone_dropdownpanel').projectDir = new File('./product/phone/dropdownpanel')
+project(':pc_entry').projectDir = new File('./entry/pc')
+project(':pc_statusbar').projectDir = new File('./product/pc/statusbar')
+project(':pc_controlpanel').projectDir = new File('./product/pc/controlpanel')
+project(':pc_notificationpanel').projectDir = new File('./product/pc/notificationpanel')
+project(':default_navigationBar').projectDir = new File('./product/default/navigationBar')
+project(':default_notificationmanagement').projectDir = new File('./product/default/notificationmanagement')
+project(':default_volumepanel').projectDir = new File('./product/default/volumepanel')

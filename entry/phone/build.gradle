@@ -1,0 +1,12 @@
+apply plugin: 'com.huawei.ohos.hap'
+ohos {
+    compileSdkVersion rootProject.ext.version.compileSdk
+    defaultConfig {
+        compatibleSdkVersion rootProject.ext.version.compatibleSdk
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar', '*.har'])
+    testCompile 'junit:junit:4.12'
+}

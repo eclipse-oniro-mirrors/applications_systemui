@@ -1,0 +1,28 @@
+{
+  "string": [
+    {
+      "name": "status_bar_size_portrait",
+      "value": "44"
+    },
+    {
+      "name": "status_bar_size_landscape",
+      "value": "44"
+    },
+    {
+      "name": "status_bar_position_portrait",
+      "value": "1"
+    },
+    {
+      "name": "status_bar_position_landscape",
+      "value": "2"
+    },
+    {
+      "name": "app_name",
+      "value": "SystemUI"
+    },
+    {
+      "name": "mainability_description",
+      "value": "JS_Phone_Empty Feature Ability"
+    }
+  ]
+}

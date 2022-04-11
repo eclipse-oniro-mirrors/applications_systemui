@@ -1,0 +1,60 @@
+  {
+  "float": [
+    {
+      "name": "status_bar_height",
+      "value": "48vp"
+    },
+    {
+      "name": "quickly_setting_time_font_size",
+      "value": "30fp"
+    },
+    {
+      "name": "quickly_setting_date_font_size",
+      "value": "20fp"
+    },
+    {
+      "name": "quickly_setting_text_flex_margin_left",
+      "value": "10vp"
+    },
+    {
+      "name": "quickly_setting_image_width",
+      "value": "50vp"
+    },
+    {
+      "name": "quickly_setting_image_height",
+      "value": "50vp"
+    },
+    {
+      "name": "quickly_setting_image_margin_right",
+      "value": "10vp"
+    },
+    {
+      "name": "quickly_setting_border_radius",
+      "value": "20vp"
+    },
+    {
+      "name": "quickly_setting_margin_left",
+      "value": "10vp"
+    },
+    {
+      "name": "quickly_setting_margin_right",
+      "value": "10vp"
+    },
+    {
+      "name": "delete_all_image_width",
+      "value": "50vp"
+    },
+    {
+      "name": "delete_all_image_height",
+      "value": "50vp"
+    },
+    {
+      "name": "delete_all_image_border_radius",
+      "value": "25vp"
+    },
+    {
+      "name": "delete_all_image_opacity",
+      "value": "0.9"
+    }
+  ]
+}

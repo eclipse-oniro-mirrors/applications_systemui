@@ -1,0 +1,70 @@
+{
+  "app": {
+    "bundleName": "com.ohos.systemui",
+    "vendor": "ohos",
+    "version": {
+      "code": 1,
+      "name": "1.0"
+    },
+    "singleton": true
+  },
+  "deviceConfig": {},
+  "module": {
+    "package": "com.ohos.systemui.notificationpanel",
+    "name": ".MyApplication",
+    "deviceType": [
+      "tablet"
+    ],
+    "distro": {
+      "deliveryWithInstall": true,
+      "moduleName": "pc_notificationpanel",
+      "moduleType": "feature"
+    },
+    "abilities": [
+      {
+        "visible": true,
+        "skills": [
+          {
+            "actions": [
+              "com.ohos.systemui.action.BAR_ICON"
+            ]
+          }
+        ],
+        "name": "com.ohos.systemui.notificationpanel.ServiceExtAbility",
+        "icon": "$media:ic_message_filled",
+        "description": "$string:mainability_description",
+        "label": "$string:app_name",
+        "type": "service",
+        "launchType": "singleton",
+        "srcPath": "ServiceExtAbility",
+        "srcLanguage": "ets",
+        "metaData": {
+          "customizeData" : [
+            {
+              "name": "com.ohos.systemui.action.BAR_ICON",
+              "value": "",
+              "extra": "\"pluginType\":\"1\",\"clickAction\":\"local=showNotificationPanel\",\"selectedClickAction\":\"local=hideNotificationPanel\",\"relationWindowId\":\"SystemUi_NotificationPanel\""
+            }
+          ]
+        }
+      }
+    ],
+    "js": [
+      {
+        "mode": {
+          "syntax": "ets",
+          "type": "pageAbility"
+        },
+        "name": "ServiceExtAbility",
+        "window": {
+          "designWidth": 1280,
+          "autoDesignWidth": false
+        },
+        "pages": [
+          "pages/index",
+          "pages/bannerNotification"
+        ]
+      }
+    ]
+  }
+}
