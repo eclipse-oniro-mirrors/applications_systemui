@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Huawei Device Co., Ltd.
+ * Copyright (c) 2021-2022 Huawei Device Co., Ltd.
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -13,23 +13,25 @@
  * limitations under the License.
  */
 
-import Log from '../default/Log.ets';
-import UniformConfig from './UniformConfig.ets'
+import Log from '../default/Log';
+import StyleConfiguration from './common/StyleConfiguration'
 
-const TAG= 'iconComponent.ets'
+const TAG = 'iconComponent'
 
 @Component
 export default
 struct iconComponent {
 
-  private mConfig = UniformConfig.config;
   @State iconOff: any = ""
   @State iconOn: any = ""
   @Prop iconOffStr: string
   @Prop iconOnStr: string
   private useIconStr = false
 
+  @State mIconIsHover: boolean = false
+
   @Link changeSwitch: boolean
+  @State style: any = StyleConfiguration.getIconComponentStyle()
 
   aboutToAppear() {
     Log.showInfo(TAG,`aboutToAppear, ${this.changeSwitch} ${JSON.stringify(this.iconOff)} ${JSON.stringify(this.iconOn)}`)
@@ -44,15 +46,25 @@ struct iconComponent {
     Column() {
       Stack() {
         Flex()
-          .backgroundColor(this.changeSwitch == false? this.mConfig.iconOffBG : this.mConfig.iconOnBG)
-          .clip(Circle({ width: this.mConfig.circleWidth, height: this.mConfig.circleHeight }))
-          .width(this.mConfig.circleWidth )
-          .height(this.mConfig.circleHeight )
-        Image(this.changeSwitch == false? (this.useIconStr ? this.iconOffStr : this.iconOff): (this.useIconStr ? this.iconOnStr : this.iconOn))
-          .size({ width: this.mConfig.iconWidth, height: this.mConfig.iconHeight})
+          .backgroundColor(this.changeSwitch? this.style.iconOnBG: this.style.iconOffBG)
+          .clip(new Circle({ width: this.style.circleWidth, height: this.style.circleHeight }))
+          .width(this.style.circleWidth)
+          .height(this.style.circleHeight)
+        Flex()
+          .backgroundColor(this.mIconIsHover? this.style.hoverColor: this.style.transparentColor)
+          .clip(new Circle({ width: this.style.circleWidth, height: this.style.circleHeight }))
+          .width(this.style.circleWidth)
+          .height(this.style.circleHeight)
+        Image(this.changeSwitch == false ? (this.useIconStr ? this.iconOffStr : this.iconOff) : (this.useIconStr ? this.iconOnStr : this.iconOn))
+          .size({ width: this.style.iconWidth, height: this.style.iconHeight })
           .objectFit(ImageFit.Contain)
-      }.margin({ left: 10 })
+          .fillColor(this.changeSwitch ? this.style.iconOnColor : this.style.iconOffColor)
+          .onHover((isHover) => {
+            this.mIconIsHover = isHover;
+          })
+      }
+      .width(this.style.circleWidth)
+      .height(this.style.circleHeight)
     }
-    .flexShrink(0)
   }
 }
