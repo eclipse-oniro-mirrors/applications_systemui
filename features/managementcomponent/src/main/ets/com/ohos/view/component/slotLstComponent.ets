@@ -63,6 +63,7 @@ export default struct SlotLstComponent {
           .border({ width: $r('app.float.border_width'), color: Color.White,
             radius: $r('app.float.border_radius') })
           .backgroundColor(Color.White)
+          .flexShrink(1)
         }
         .padding({ left: $r('sys.float.ohos_id_default_padding_start'), right: $r('sys.float.ohos_id_default_padding_end')})
         .margin({ top: $r('app.float.page_notice_title_margin_t')})

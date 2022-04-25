@@ -77,6 +77,7 @@ export default struct DevicesDialog {
         .border({ width: $r('app.float.device_border_width'), color: Color.White,
           radius: $r('app.float.device_border_radius') })
         .backgroundColor(Color.White)
+        .flexShrink(1)
       }
       .margin({ bottom: $r("app.float.device_margin_16") })
 

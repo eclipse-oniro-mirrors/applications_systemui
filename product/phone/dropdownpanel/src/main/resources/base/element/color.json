@@ -15,9 +15,26 @@
     {
       "name": "quickly_setting_date_font_color",
       "value": "#ffffffff"
-    },{
+    },
+    {
       "name": "statusbar_background_color",
       "value": "#1a262626"
+    },
+    {
+      "name": "brightness_slider_block_color",
+      "value": "#FFFFFFFF"
+    },
+    {
+      "name": "brightness_slider_track_color",
+      "value": "#1A000000"
+    },
+    {
+      "name": "brightness_slider_selected_color",
+      "value": "#FF007DFF"
+    },
+    {
+      "name": "control_center_complex_toggle_ring_mode_on_bg_color",
+      "value": "#FFFF9800"
     }
   ]
 }

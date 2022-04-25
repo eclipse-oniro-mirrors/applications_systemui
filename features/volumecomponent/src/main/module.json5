@@ -1,0 +1,10 @@
+{
+  "module": {
+    "name": "volumecomponent",
+    "type": "har",
+    "deviceTypes": [
+      "phone",
+    ],
+    "uiSyntax": "ets"
+  }
+}

@@ -17,7 +17,7 @@ import ServiceExtension from '@ohos.application.ServiceExtensionAbility'
 import Log from '../../../../../../../common/src/main/ets/default/Log'
 import WindowManager, { WindowType } from '../../../../../../../common/src/main/ets/default/WindowManager'
 import AbilityManager from '../../../../../../../common/src/main/ets/default/abilitymanager/abilityManager'
-import NavBarConfiguration from './common/NavBarConfiguration'
+import NavBarConfiguration from '../common/navbarconfiguration'
 
 const TAG = "NavigationBar_ServiceExtAbility"
 

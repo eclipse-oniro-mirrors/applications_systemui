@@ -1,0 +1,14 @@
+{
+	"devDependencies":{},
+	"name":"systemui",
+	"ohos":{
+		"org":"huawei",
+		"directoryLevel":"project",
+		"buildTool":"hvigor"
+	},
+	"version":"1.0.0",
+	"dependencies":{
+		"@ohos/hvigor-ohos-plugin":"1.0.6",
+		"@ohos/hvigor":"1.0.6"
+	}
+}

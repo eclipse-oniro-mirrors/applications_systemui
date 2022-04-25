@@ -27,6 +27,7 @@ export default class AbilityManager {
   static ABILITY_NAME_NOTIFICATION_PANEL = 'SystemUi_NotificationPanel';
   static ABILITY_NAME_CONTROL_PANEL = 'SystemUi_ControlPanel';
   static ABILITY_NAME_BANNER_NOTICE = 'SystemUi_BannerNotice';
+  static ABILITY_NAME_APP_LIST = 'SystemUi_AppList';
 
   static ABILITY_NAME_OWNER_WANT = 'Owner_Want';
 

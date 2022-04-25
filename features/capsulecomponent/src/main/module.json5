@@ -1,0 +1,10 @@
+{
+  "module": {
+    "name": "capsulecomponent",
+    "type": "har",
+    "deviceTypes": [
+      "phone",
+    ],
+    "uiSyntax": "ets"
+  }
+}

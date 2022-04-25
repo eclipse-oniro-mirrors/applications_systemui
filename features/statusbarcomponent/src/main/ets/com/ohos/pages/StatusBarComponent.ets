@@ -43,10 +43,11 @@ export default struct StatusBarComponent {
   private mStatusBarComponentConfig: any = {}
   @StorageLink('StatusBarLayout') mStatusBarLayout: any = [[], [], []]
   @State mStatusBarData: StatusBarData = ViewModel.getStatusBarData()
+  private moduleName: string = ''
 
   aboutToAppear() {
     Log.showInfo(TAG, `aboutToAppear Start, mStatusBarComponentConfig: ${JSON.stringify(this.mStatusBarComponentConfig)}`)
-    this.initViewModel()
+    this.initViewModel(this.moduleName)
     Log.showInfo(TAG, `aboutToAppear End`)
   }
 
@@ -54,9 +55,9 @@ export default struct StatusBarComponent {
     Log.showInfo(TAG, `aboutToDisappear`)
   }
 
-  initViewModel() {
+  initViewModel(moduleName) {
     Log.showInfo(TAG, `initViewModel`)
-    ViewModel.initViewModel(this.mStatusBarComponentConfig)
+    ViewModel.initViewModel(this.mStatusBarComponentConfig, moduleName)
   }
 
   build() {
@@ -159,7 +160,7 @@ struct StatusBarBackground {
 struct StatusBarGroup {
   @State mComponents: string[] = []
   private mLayoutWeight: number = 1
-  private mAlignItems: HorizontalAlign = HorizontalAlign.Center;
+  private mAlignItems: any = HorizontalAlign.Center;
   @State mStatusBarData: StatusBarData = ViewModel.getStatusBarData()
 
   aboutToAppear() {

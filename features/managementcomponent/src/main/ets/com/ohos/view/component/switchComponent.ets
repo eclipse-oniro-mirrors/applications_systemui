@@ -22,7 +22,7 @@ export default struct SwitchComponent {
   @Link title: string | Resource;
   @State describe: string | Resource = '';
   private initializationAction: (params?) => Promise<any>
-  private settingAction: (params?) => Promise<any>
+  private settingAction: (params?) => void
   private register?: (listener) => void
   @State isCanChange: boolean = true
   @State initState: boolean= false

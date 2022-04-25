@@ -3,7 +3,8 @@
     {
       "name": "status_bar_ring_mode_width",
       "value": "27vp"
-    },{
+    },
+    {
       "name": "status_bar_ring_mode_height",
       "value": "24vp"
     }

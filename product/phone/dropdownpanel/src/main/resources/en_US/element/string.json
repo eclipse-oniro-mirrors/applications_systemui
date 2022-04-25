@@ -47,6 +47,30 @@
     {
       "name": "no_notification",
       "value": "No Notification"
+    },
+    {
+      "name": "airplane_mode",
+      "value": "Airplane mode"
+    },
+    {
+      "name": "control_center_complex_toggle_bluetooth_title",
+      "value": "Bluetooth"
+    },
+    {
+      "name": "control_center_complex_toggle_location_title",
+      "value": "Location"
+    },
+    {
+      "name": "control_center_complex_toggle_ring_mode_title_on",
+      "value": "Sound"
+    },
+    {
+      "name": "control_center_complex_toggle_ring_mode_title_off",
+      "value": "Silent"
+    },
+    {
+      "name": "control_center_complex_toggle_ring_mode_title_vibration",
+      "value": "Vibration"
     }
   ]
 }

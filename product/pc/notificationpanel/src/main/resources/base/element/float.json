@@ -74,19 +74,19 @@
     },
     {
       "name": "confirm_title_fontsize",
-      "value": "20vp"
+      "value": "20fp"
     },
     {
       "name": "title_image_width",
-      "value": "28vp"
+      "value": "24vp"
     },
     {
       "name": "title_image_height",
-      "value": "28vp"
+      "value": "24vp"
     },
     {
       "name": "setting_cont_fontsize",
-      "value": "32"
+      "value": "16fp"
     },
     {
       "name": "close_notification_margin_top",
@@ -115,6 +115,42 @@
     {
       "name": "applist_hieght",
       "value": "361vp"
+    },
+    {
+      "name": "setting_dialog_height",
+      "value": "192vp"
+    },
+    {
+      "name": "setting_dialog_width",
+      "value": "362vp"
+    },
+    {
+      "name": "setting_dialog_row_width",
+      "value": "330vp"
+    },
+    {
+      "name": "setting_dialog_row_height",
+      "value": "40vp"
+    },
+    {
+      "name": "confirm_dialog_height",
+      "value": "146vp"
+    },
+    {
+      "name": "confirm_dialog_width",
+      "value": "362vp"
+    },
+    {
+      "name": "confirm_dialog_row_width",
+      "value": "330vp"
+    },
+    {
+      "name": "confirm_dialog_button_width",
+      "value": "181vp"
+    },
+    {
+      "name": "confirm_cont_fontsize",
+      "value": "16fp"
     }
   ]
 }

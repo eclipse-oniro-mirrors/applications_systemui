@@ -82,7 +82,7 @@ export class StatusBarVM {
     }
   }
 
-  initViewModel(config) {
+  initViewModel(config, moduleName) {
     if (this.mIsStart) {
       return;
     }
@@ -90,7 +90,7 @@ export class StatusBarVM {
     this.mIsStart = true;
 
     this.install();
-    StatusBarService.startService(config);
+    StatusBarService.startService(config, moduleName);
   }
 
   setStatusBarLayout(layout: string[][]): void{
@@ -265,8 +265,8 @@ export class StatusBarVM {
   updateComponentArea(id: string, area: Area): void{
     Log.showInfo(TAG, `updateComponentArea, id ${id} area: ${JSON.stringify(area)}`);
     let areaInfo = {
-      left: vp2px(area.globalPos.x as number),
-      top: vp2px(area.globalPos.y as number),
+      left: vp2px(area.globalPosition.x as number),
+      top: vp2px(area.globalPosition.y as number),
       width: vp2px(area.width as number),
       height: vp2px(area.height as number)
     };
