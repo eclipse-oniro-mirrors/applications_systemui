@@ -29,7 +29,7 @@ export default class StyleConfiguration {
         greenCapsuleTextColor: $r('app.color.green_capsule_text_color'),
         greenCapsuleTextMarginLeftRight: $r('app.float.green_capsule_text_left_right'),
         greenCapsuleRadius: $r('app.float.green_capsule_radius'),
-        greenCapsuleBackgroundColor: $r('app.color.background_color'),
+        greenCapsuleBackgroundColor: $r('app.color.capsule_background_color'),
         maxLines:Constants.DEFAULT_MAX_LINES
       };
     });

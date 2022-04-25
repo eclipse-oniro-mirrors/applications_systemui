@@ -1,5 +1,14 @@
 .gradle
 .idea
 build
+node_modules/
 local.properties
 signature/systemui_provision_verified.json
+product/default/volumepanel/node_modules
+product/default/notificationmanagement/node_modules
+product/default/navigationBar/node_modules
+product/pc/controlpanel/node_modules
+product/pc/notificationpanel/node_modules
+product/pc/statusbar/node_modules
+product/phone/dropdownpanel/node_modules
+product/phone/statusbar/node_modules

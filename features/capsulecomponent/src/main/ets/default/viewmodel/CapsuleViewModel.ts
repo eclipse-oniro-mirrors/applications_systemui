@@ -29,7 +29,7 @@ function fixInteger(num) {
 }
 
 function parseTime(num) {
-  return fixInteger(Math.floor(num / MIN_VAL)) + ":" + fixInteger(Math.floor((num % MIN_VAL) / SEC_VAL);
+  return fixInteger(Math.floor(num / MIN_VAL)) + ":" + fixInteger(Math.floor((num % MIN_VAL) / SEC_VAL));
 }
 
 export const VIEW_MODEL_ID = "CapsuleViewModelVm";

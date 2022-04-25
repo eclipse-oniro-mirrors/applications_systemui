@@ -23,6 +23,30 @@
     {
       "name": "mainability_description",
       "value": "JS_Phone_Empty Feature Ability"
+    },
+    {
+      "name": "net_null",
+      "value": "No SIM"
+    },
+    {
+      "name": "2G",
+      "value": "2G"
+    },
+    {
+      "name": "3G",
+      "value": "3G"
+    },
+    {
+      "name": "4G",
+      "value": "4G"
+    },
+    {
+      "name": "5G",
+      "value": "5G"
+    },
+    {
+      "name": "signal_null",
+      "value": "×"
     }
   ]
 }

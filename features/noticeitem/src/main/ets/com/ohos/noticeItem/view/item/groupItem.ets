@@ -180,6 +180,7 @@ struct ContentList {
           strokeWidth: 1,
           color: $r('app.color.device_divider_color')
         })
+        .flexShrink(1)
       }
     }
     .alignItems(HorizontalAlign.Start)

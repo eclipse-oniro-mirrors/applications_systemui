@@ -121,8 +121,8 @@ export default struct BannerNotificationItem {
           .onClick(this.showDevicesDialog.bind(this))
           .onAreaChange((e, e2) => {
             Log.showInfo(TAG, `onAreaChange, e: ${JSON.stringify(e)} e2: ${JSON.stringify(e2)}`);
-            let heightEx = parseInt(e['height']);
-            let heightCur = parseInt(e2['height']);
+            let heightEx = parseInt(String(e['height']));
+            let heightCur = parseInt(String(e2['height']));
             let heightWin = parseInt(this.mDefaultBannerRect['height']);
             if (this.isExpand) {
               heightWin = heightWin + (heightCur - heightEx) + this.expandPaddingBottom;

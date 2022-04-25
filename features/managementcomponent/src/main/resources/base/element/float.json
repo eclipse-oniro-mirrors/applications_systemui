@@ -37,8 +37,16 @@
       "value": "476vp"
     },
     {
+      "name": "applist_hieght_phone",
+      "value": "800vp"
+    },
+    {
       "name": "applist_hieght_bat",
       "value": "584vp"
+    },
+    {
+      "name": "applist_hieght_bat_phone",
+      "value": "1022vp"
     },
     {
       "name": "page_header_margin_t",

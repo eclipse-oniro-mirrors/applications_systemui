@@ -23,7 +23,7 @@ const TAG = 'NoticeItem-Confirm';
  */
 @CustomDialog
 export default struct ConfirmDialog {
-  private title: string
+  private title: string | Resource
   private bundleName: string
   public controller: CustomDialogController
   public action: () => void
@@ -35,14 +35,14 @@ export default struct ConfirmDialog {
         Text(this.title)
           .fontSize($r('app.float.confirm_title_fontsize'))
           .fontWeight(FontWeight.Bold)
-      }.width(Constants.SETTING_DIALOG_WITH)
-      .margin({top:$r('app.float.title_font_margin_t')})
+      }.width($r('app.float.confirm_dialog_row_width'))
+      .margin({ top: $r('app.float.title_font_margin_t') })
 
       Row() {
         Text($r('app.string.confirm_message', this.bundleName))
           .fontSize($r('app.float.confirm_cont_fontsize'))
-      }.width(Constants.SETTING_DIALOG_WITH)
-      .margin({top:$r('app.float.message_font_margin_t')})
+      }.width($r('app.float.confirm_dialog_row_width'))
+      .margin({ top: $r('app.float.message_font_margin_t') })
 
       Row() {
         Column() {
@@ -53,7 +53,8 @@ export default struct ConfirmDialog {
           this.controller.close();
         })
         .alignItems(HorizontalAlign.Center)
-        .width(Constants.CONFIRM_BUTTON_WITH)
+        .width($r('app.float.confirm_dialog_button_width'))
+
         Divider()
           .vertical(true)
           .color($r('app.color.confirm_divider_color'))
@@ -69,12 +70,12 @@ export default struct ConfirmDialog {
           this.action();
         })
         .alignItems(HorizontalAlign.Center)
-        .width(Constants.CONFIRM_BUTTON_WITH)
+        .width($r('app.float.confirm_dialog_button_width'))
       }
-      .width(Constants.CONFIRM_DIALOG_WITH)
-      .margin({top:$r('app.float.confirm_button_margin_t')})
-    }.height(Constants.CONFIRM_DIALOG_HEIGHT)
-    .width(Constants.SETTING_DIALOG_WIDTH)
+      .width($r('app.float.confirm_dialog_width'))
+      .margin({ top: $r('app.float.confirm_button_margin_t') })
+    }.height($r('app.float.confirm_dialog_height'))
+    .width($r('app.float.confirm_dialog_width'))
     .backgroundColor('#FFFFFFFF')
     .border({ width: $r('app.float.setting_border_width'), color: Color.White,
       radius: $r('app.float.notification_border_radius') })

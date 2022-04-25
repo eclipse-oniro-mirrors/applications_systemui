@@ -19,7 +19,6 @@ import WindowManager, { WindowType } from '../../../../../../../common/src/main/
 import AbilityManager from '../../../../../../../common/src/main/ets/default/abilitymanager/abilityManager'
 import StatusBarConfiguration from '../../../../../../../features/statusbarcomponent/src/main/ets/com/ohos/common/StatusBarConfiguration';
 
-
 const TAG = "StatusBar_ServiceExtAbility"
 
 class ServiceExtAbility extends ServiceExtension {

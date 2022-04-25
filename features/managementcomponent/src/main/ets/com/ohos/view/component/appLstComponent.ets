@@ -74,7 +74,6 @@ export default struct AppLstComponent {
         startMargin: $r('app.float.divider_margin_l_info')
       })
       .width(ConfigData.WH_100_100)
-      .height(ConfigData.WH_100_100)
       .align(Alignment.Top)
       .visibility(Visibility.Visible)
       .zIndex(0)
@@ -88,6 +87,6 @@ export default struct AppLstComponent {
     }
     .align(Alignment.Center)
     .width(ConfigData.WH_100_100)
-    .height(ConfigData.WH_100_100);
+    .flexShrink(1)
   }
 }

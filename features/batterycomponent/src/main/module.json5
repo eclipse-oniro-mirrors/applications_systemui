@@ -1,0 +1,10 @@
+{
+  "module": {
+    "name": "batterycomponent",
+    "type": "har",
+    "deviceTypes": [
+      "phone",
+    ],
+    "uiSyntax": "ets"
+  }
+}

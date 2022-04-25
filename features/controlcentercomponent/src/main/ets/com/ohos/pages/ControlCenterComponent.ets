@@ -42,11 +42,12 @@ export default struct ControlCenterComponent {
   private mHidingSimpleToggles: string[] = []
   private mDefaultDisplaySimpleToggles: string[] = []
   private titleDisplayInside: boolean = false
+  private moduleName: string = ''
 
   aboutToAppear() {
     Log.showInfo(TAG, 'aboutToAppear')
     Log.showInfo(TAG, `aboutToAppear, mControlCenterComponentConfig: ${JSON.stringify(this.mControlCenterComponentConfig)}`)
-    ViewModel.initViewModel(this.mControlCenterComponentConfig)
+    ViewModel.initViewModel(this.mControlCenterComponentConfig, this.moduleName)
   }
 
   aboutToDisappear() {
@@ -163,7 +164,7 @@ export default struct ControlCenterComponent {
     .width('100%')
     .onAreaChange((e, e2) => {
       Log.showInfo(TAG, `onAreaChange, e: ${JSON.stringify(e)} e2: ${JSON.stringify(e2)}`);
-      this.mWidthPx = vp2px(e2.width)
+      this.mWidthPx = vp2px(Number(e2.width))
     })
   }
 }

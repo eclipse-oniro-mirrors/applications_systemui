@@ -17,7 +17,7 @@
  ``` 
 
 ### 环境搭建
-安装DevEco Studio  
+安装DevEco Studio
     
 ## 基础开发说明
 ### 系统接口调用

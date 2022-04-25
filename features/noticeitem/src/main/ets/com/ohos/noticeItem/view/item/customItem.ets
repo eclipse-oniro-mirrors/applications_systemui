@@ -51,7 +51,7 @@ export default struct CustomItem {
         }).onError(({errcode, msg}) => {
           Log.showInfo(TAG, `Error code:${errcode} message:${msg}`)
         })
-          .size({ width: '100%', height: 110 })
+          .size({ width: 200, height: 110 })
       }
       .margin({ left: Layout.ITEM_MARGIN, right: Layout.ITEM_MARGIN })
       .onClick(() => {
