@@ -38,7 +38,6 @@ export default struct Control {
         mSimpleToggleColumnCount: Constants.DEFAULT_SIMPLE_TOGGLE_COLUMN_COUNT,
         modeChangeCallback: (isEdit) => this.modeChangeCallback(isEdit),
         titleDisplayInside: true,
-        moduleName: 'pc_controlpanel',
       })
     }
     .width('100%')

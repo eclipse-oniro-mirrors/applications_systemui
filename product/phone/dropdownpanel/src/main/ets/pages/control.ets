@@ -58,7 +58,6 @@ export default struct Control {
           ControlCenterComponent({
             touchMoveCallback: (data)=>this.controlCenterTouchMoveCallback(data),
             mControlCenterComponentConfig: ControlCenterConfig,
-            moduleName: 'phone_dropdownpanel',
           })
         }
         .width('100%')

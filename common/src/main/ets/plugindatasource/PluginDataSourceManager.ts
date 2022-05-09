@@ -25,6 +25,7 @@ import {
     registerBundleListener,
 } from "./common/BundleParseUtil";
 import { AbilityInfo } from "bundle/abilityInfo";
+import { ExtensionAbilityInfo } from "bundle/extensionAbilityInfo";
 
 export type PluginListener = {
     onItemAdd: (itemData: ItemComponentData) => void;
@@ -85,16 +86,20 @@ export default class PluginDataSourceManager {
     }
 
     async loadData(userId: number) {
+        Log.showInfo(TAG, `loadData, userId: ${userId}`);
+        Log.showInfo(TAG, `loadData, this.mUserId: ${this.mUserId}`);
         if (this.mUserId != userId) {
             this.mUserId = userId;
             this.mLoaders.forEach((sourceLoader) => sourceLoader.clearData());
             let abilityInfos = await queryAbility(this.mAction, this.mUserId);
+            Log.showInfo(TAG, `loadData, abilityInfos: ${JSON.stringify(abilityInfos)}`);
             abilityInfos.forEach((info) => this.notifyAbilityAdd(info));
         }
         this.mLoaders.forEach((sourceLoader) => sourceLoader.reloadData(this.mUserId));
     }
 
-    private notifyAbilityAdd(info: AbilityInfo) {
+    private notifyAbilityAdd(info: AbilityInfo | ExtensionAbilityInfo) {
+        Log.showInfo(TAG, `notifyAbilityAdd, info: ${JSON.stringify(info)}`);
         let itemId = this.mFilterDatas.get(info.name);
         if (!itemId) {
             Log.showInfo(TAG, `notifyAbilityAdd, can't find itemId, ability:${info.name}`);
@@ -104,8 +109,8 @@ export default class PluginDataSourceManager {
             ...info,
             itemId: itemId,
         };
-        if (!abilityInfo.metaData || !abilityInfo.metaData.length) {
-            Log.showInfo(TAG, `Can't find metaData, abilityId: ${abilityInfo.name}`);
+        if ((!abilityInfo.metaData || !abilityInfo.metaData.length) && (!abilityInfo.metadata || !abilityInfo.metadata.length) ) {
+            Log.showInfo(TAG, `Can't find metadata, abilityId: ${abilityInfo.name}`);
             return;
         }
         this.mLoaders.forEach((loader) => loader.onAbilityAdd(abilityInfo));

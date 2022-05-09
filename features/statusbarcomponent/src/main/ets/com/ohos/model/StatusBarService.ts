@@ -62,8 +62,7 @@ function parseItemData(itemData: ItemComponentData): StatusBarComponentData {
 
 export class StatusBarService {
     mIsStart: boolean = false;
-//    mAdapter: PluginDataSourceAdapter = new PluginDataSourceAdapter(TAG, AbilityManager.getContext(), this);
-    mAdapter: PluginDataSourceAdapter;
+    mAdapter: PluginDataSourceAdapter = new PluginDataSourceAdapter(TAG, AbilityManager.getContext(), this);
     mListener: StatusBarListener | undefined;
     mConfig: any;
     mStatusBarData: StatusBarData;
@@ -79,7 +78,7 @@ export class StatusBarService {
         this.mStatusBarData = data;
     }
 
-    startService(config, moduleName) {
+    startService(config) {
         if (this.mIsStart) {
             return;
         }
@@ -90,7 +89,6 @@ export class StatusBarService {
 
         SwitchUserManager.getInstance().registerListener(this);
         STATUSBAR_SOURCE_CONFIG.filterDatas = config.MetaSlots;
-        this.mAdapter = new PluginDataSourceAdapter(TAG, AbilityManager.getContext(), this, moduleName);
         this.mAdapter.initDataSource(STATUSBAR_SOURCE_CONFIG);
 
         Log.showInfo(TAG, `start StatusBarService finish.`);

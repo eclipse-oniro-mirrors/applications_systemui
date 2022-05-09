@@ -62,6 +62,12 @@
       },
       {
         "name": "ohos.permission.MANAGE_SECURE_SETTINGS"
+      },
+      {
+        "name": "ohos.permission.ACCESS_NOTIFICATION_POLICY"
+      },
+      {
+        "name": "ohos.permission.MODIFY_AUDIO_SETTINGS"
       }
     ]
   }

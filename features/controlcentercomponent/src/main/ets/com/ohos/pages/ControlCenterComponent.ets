@@ -42,12 +42,11 @@ export default struct ControlCenterComponent {
   private mHidingSimpleToggles: string[] = []
   private mDefaultDisplaySimpleToggles: string[] = []
   private titleDisplayInside: boolean = false
-  private moduleName: string = ''
 
   aboutToAppear() {
     Log.showInfo(TAG, 'aboutToAppear')
     Log.showInfo(TAG, `aboutToAppear, mControlCenterComponentConfig: ${JSON.stringify(this.mControlCenterComponentConfig)}`)
-    ViewModel.initViewModel(this.mControlCenterComponentConfig, this.moduleName)
+    ViewModel.initViewModel(this.mControlCenterComponentConfig)
   }
 
   aboutToDisappear() {

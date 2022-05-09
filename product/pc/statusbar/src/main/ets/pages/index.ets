@@ -19,6 +19,9 @@ import HeightConfigUtils from '../../../../../../../common/src/main/ets/default/
 import StatusBarComponent from '../../../../../../../features/statusbarcomponent/src/main/ets/com/ohos/pages/StatusBarComponent'
 import StyleManager from './common/StyleManager'
 import StatusbarConfig from './common/StatusbarConfig'
+import AbilityManager from '../../../../../../../common/src/main/ets/default/abilitymanager/abilityManager'
+import StatusBarVM from '../../../../../../../features/statusbarcomponent/src/main/ets/com/ohos/viewmodel/StatusBarVM'
+import {StatusBarData} from '../../../../../../../features/statusbarcomponent/src/main/ets/com/ohos/common/Constants'
 
 const TAG = 'StatusBar-Index'
 
@@ -36,6 +39,18 @@ struct Index {
 
   aboutToAppear() {
     Log.showInfo(TAG, `aboutToAppear, start`);
+
+    let configInfo = AbilityManager.getAbilityData(AbilityManager.ABILITY_NAME_STATUS_BAR, 'config')
+    let statusBarData: StatusBarData = new StatusBarData();
+    statusBarData.displayWidth = configInfo.maxWidth;
+    statusBarData.displayHeight = configInfo.maxHeight;
+    statusBarData.showHorizontal = configInfo.showHorizontal;
+    statusBarData.ableToMaximize = configInfo.ableToMaximize;
+    statusBarData.realWidth = configInfo.realWidth;
+    statusBarData.realHeight = configInfo.realHeight;
+    statusBarData.left = configInfo.xCoordinate;
+    statusBarData.top = configInfo.yCoordinate;
+    StatusBarVM.updateStatusBarData(statusBarData);
 
     setAppBgColor('#00000000')
     CommonStyleManager.setAbilityPageName(TAG)
@@ -65,7 +80,6 @@ struct Index {
       Flex({ direction: FlexDirection.Row, alignItems: ItemAlign.Center, justifyContent: FlexAlign.Center }) {
         StatusBarComponent({
           mStatusBarComponentConfig: StatusbarConfig,
-          moduleName: 'pc_statusbar'
         })
       }
       .width('100%')
