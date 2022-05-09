@@ -199,7 +199,7 @@ struct CenterTitle {
     this.mTime = TimeManager.formatTime(date);
     let timeString = (date.getMonth() + 1) + (await ResourceUtil.getString($r('app.string.month')));
     timeString += date.getDate() + (await ResourceUtil.getString($r('app.string.month')));
-    timeString += await ResourceUtil.getString(Constants.WEEKDAY_LIST[date.getMonth()]);
+    timeString += await ResourceUtil.getString(Constants.WEEKDAY_LIST[date.getDay() - 1]);
     this.mTimeString = timeString;
   }
 

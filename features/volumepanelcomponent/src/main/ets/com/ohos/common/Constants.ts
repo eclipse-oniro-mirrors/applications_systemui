@@ -26,6 +26,7 @@ export enum AudioVolumeType {
   VOICE_CALL = 0,
   RINGTONE = 2,
   MEDIA = 3,
+  VOICE_ASSISTANT = 9
 }
 
 export interface VolumeInfo {
