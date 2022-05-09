@@ -36,14 +36,14 @@ export class ControlCenterVM {
     ControlCenterService.registerListener(this);
   }
 
-  initViewModel(config, moduleName) {
+  initViewModel(config) {
     if (this.mIsStart) {
       return;
     }
     Log.showInfo(TAG, `initViewModel, config: ${JSON.stringify(config)} `)
     this.mIsStart = true;
 
-    ControlCenterService.startService(config, moduleName);
+    ControlCenterService.startService(config);
   }
 
   setComplexToggleLayout(layout: string[]): void{

@@ -82,7 +82,7 @@ export class StatusBarVM {
     }
   }
 
-  initViewModel(config, moduleName) {
+  initViewModel(config) {
     if (this.mIsStart) {
       return;
     }
@@ -90,7 +90,7 @@ export class StatusBarVM {
     this.mIsStart = true;
 
     this.install();
-    StatusBarService.startService(config, moduleName);
+    StatusBarService.startService(config);
   }
 
   setStatusBarLayout(layout: string[][]): void{

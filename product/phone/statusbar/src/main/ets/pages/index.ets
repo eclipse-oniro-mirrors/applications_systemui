@@ -40,7 +40,7 @@ struct Index {
   startY: number = 0
   @State moveX: number = 0
   @State moveY: number = 0
-  @State mStatusBarData: StatusBarData = StatusBarVM.getStatusBarData()
+  @State mStatusBarData: StatusBarData = new StatusBarData()
   @StorageLink('StatusMinH') StatusMinH: number = 24
   @StorageLink('StatusCoefficient') StatusCoefficient: number = 1.0
   mClearCallback: unsubscribe | undefined
@@ -97,7 +97,6 @@ struct Index {
       Flex({ direction: FlexDirection.Row, alignItems: ItemAlign.Center, justifyContent: FlexAlign.Center }) {
         StatusBarComponent({
           mStatusBarComponentConfig: StatusbarConfig,
-          moduleName: 'phone_statusbar'
         })
       }
       .width('100%')

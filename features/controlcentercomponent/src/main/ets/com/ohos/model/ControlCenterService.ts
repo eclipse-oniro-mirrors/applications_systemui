@@ -54,8 +54,7 @@ function parseData(itemData: ItemComponentData): ControlComponentData {
 
 export class ControlCenterService {
     mIsStart: boolean = false;
-//    mAdapter: PluginDataSourceAdapter = new PluginDataSourceAdapter(TAG, AbilityManager.getContext(), this);
-    mAdapter: PluginDataSourceAdapter;
+    mAdapter: PluginDataSourceAdapter = new PluginDataSourceAdapter(TAG, AbilityManager.getContext(), this);
     mListener: ControlCenterListener | undefined;
     mConfig: any;
     mComplexToggleLayoutTemplate: string[];
@@ -69,7 +68,7 @@ export class ControlCenterService {
         Log.showInfo(TAG, `constructor`)
     }
 
-    startService(config, moduleName): void {
+    startService(config): void {
         if (this.mIsStart) {
             return;
         }
@@ -80,7 +79,6 @@ export class ControlCenterService {
 
         SwitchUserManager.getInstance().registerListener(this);
         CONTROLCENTER_SOURCE_CONFIG.filterDatas = config.MetaToggles;
-        this.mAdapter = new PluginDataSourceAdapter(TAG, AbilityManager.getContext(), this, moduleName);
         this.mAdapter.initDataSource(CONTROLCENTER_SOURCE_CONFIG);
     }
 
