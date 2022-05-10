@@ -41,10 +41,10 @@ struct Index {
         height: vp2px(realHeight)
       }
     } else { // Phone Mode
-      const realWidth = 96;
-      const realHeight = 568;
+      const realWidth = 48;
+      const realHeight = 284;
       volumeRect = {
-        left: configInfo.width - vp2px(32) - vp2px(realWidth),
+        left: configInfo.width - vp2px(16) - vp2px(realWidth),
         top: configInfo.height * 0.1,
         width: vp2px(realWidth) ,
         height: vp2px(realHeight)
