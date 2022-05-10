@@ -232,6 +232,8 @@ export class VolumePanelService {
       formatValue = AudioVolumeType.RINGTONE;
     } else if (audioVolumeType == audio.AudioVolumeType.MEDIA) {
       formatValue = AudioVolumeType.MEDIA;
+    } else if (audioVolumeType == audio.AudioVolumeType.VOICE_ASSISTANT) {
+      formatValue = AudioVolumeType.VOICE_ASSISTANT;
     }
     return formatValue;
   }
@@ -244,6 +246,8 @@ export class VolumePanelService {
       formatValue = audio.AudioVolumeType.RINGTONE;
     } else if (audioVolumeType == AudioVolumeType.MEDIA) {
       formatValue = audio.AudioVolumeType.MEDIA;
+    } else if (audioVolumeType == AudioVolumeType.VOICE_ASSISTANT) {
+      formatValue = audio.AudioVolumeType.VOICE_ASSISTANT;
     }
     return formatValue;
   }

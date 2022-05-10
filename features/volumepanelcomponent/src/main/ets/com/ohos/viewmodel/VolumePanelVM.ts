@@ -15,7 +15,7 @@
 
 import Log from '../../../../../../../../common/src/main/ets/default/Log';
 import Constants from '../common/Constants'
-import {AudioVolumeType, VolumeInfo} from '../common/Constants';
+import { AudioVolumeType, VolumeInfo } from '../common/Constants';
 import VolumePanelService from '../model/VolumePanelService';
 import VolumeWindowController from '../common/VolumeWindowController';
 
@@ -35,7 +35,7 @@ export class VolumePanelVM {
   mMinVolume: any;
   mVolumeValue: any;
   mIsMute: any;
-  mAllVolumeTypes = [AudioVolumeType.VOICE_CALL, AudioVolumeType.RINGTONE, AudioVolumeType.MEDIA];
+  mAllVolumeTypes = [AudioVolumeType.VOICE_CALL, AudioVolumeType.RINGTONE, AudioVolumeType.MEDIA, AudioVolumeType.VOICE_ASSISTANT];
   mVolumeBaseMap = {};
   mCurrentAudioVolumeType: number = AudioVolumeType.MEDIA;
   mCurrentAudioVolume: number;
