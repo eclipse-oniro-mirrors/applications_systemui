@@ -69,7 +69,7 @@ export default struct VolumePanelComponent {
             Image(this.getVolumeIcon(this.VolumePanelIsMute, this.VolumePanelVolumeValue, this.VolumePanelMaxVolume, this.VolumePanelMinVolume))
               .width(this.style.volumePanelMutBtnIconSize)
               .height(this.style.volumePanelMutBtnIconSize)
-              .fillColor(this.style.volumePanelRingModeColor)
+              .fillColor($r('sys.color.ohos_id_color_activated'))
             Column()
               .width('100%')
               .height(this.style.volumePanelMutBtnIconMarginBottom)
@@ -87,7 +87,7 @@ export default struct VolumePanelComponent {
         Divider()
           .vertical(false)
           .strokeWidth(this.style.volumePanelDividerHeight)
-          .color(this.style.volumePanelDividerColor)
+          .color($r('sys.color.ohos_id_color_fourth'))
           .lineCap(LineCapStyle.Square)
       }
       .width(this.style.volumeDividerWidth)
@@ -132,6 +132,8 @@ export default struct VolumePanelComponent {
         icon = $r('app.media.ic_public_sound_03')
       } else if (volume <= (((maxVolume - minVolume) / 3) * 2 + minVolume)) {
         icon = $r('app.media.ic_public_sound_02')
+      } else if (volume == (maxVolume - minVolume)) {
+        icon = $r('app.media.ic_public_sound_04')
       } else {
         icon = $r('app.media.ic_public_sound_01')
       }
