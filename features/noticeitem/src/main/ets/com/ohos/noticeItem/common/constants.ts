@@ -118,6 +118,7 @@ export interface NotificationItemData {
   distributedOption?: any;
   deviceId?: string;
   groupName?: string;
+  tapDismissed?: boolean;
 }
 
 export interface NotificationServiceListener {
