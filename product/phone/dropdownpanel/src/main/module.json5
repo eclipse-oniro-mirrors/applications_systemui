@@ -4,7 +4,7 @@
     "type": "feature",
     "srcEntrance": "./ets/Application/AbilityStage.ts",
     "description": "$string:mainability_description",
-    "mainElement": "dropdownpanel.ServiceExtAbility",
+    "mainElement": "com.ohos.systemui.dropdownpanel.ServiceExtAbility",
     "deviceTypes": [
       "phone"
     ],

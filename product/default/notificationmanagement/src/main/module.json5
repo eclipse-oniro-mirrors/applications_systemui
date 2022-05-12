@@ -4,7 +4,7 @@
     "type": "feature",
     "srcEntrance": "./ets/Application/AbilityStage.ts",
     "description": "$string:mainability_description",
-    "mainElement": "notificationmanagement.MainAbility",
+    "mainElement": "com.ohos.systemui.notificationmanagement.MainAbility",
     "deviceTypes": [
       "phone", "tablet"
     ],
