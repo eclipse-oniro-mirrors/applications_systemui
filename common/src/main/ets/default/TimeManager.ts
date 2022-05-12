@@ -32,7 +32,7 @@ export type TimeEventArgs = {
 
 const TAG = "TimeManager";
 const URI_VAR = "dataability:///com.ohos.settingsdata.DataAbility";
-const TIME_FORMAT_KEY = "settings.time.format";
+const TIME_FORMAT_KEY = settings.date.TIME_FORMAT;
 const TIME_SUBSCRIBE_INFO = {
   events: [
     commonEvent.Support.COMMON_EVENT_TIME_CHANGED,
