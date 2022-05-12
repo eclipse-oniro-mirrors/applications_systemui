@@ -44,7 +44,6 @@ async function getUserId(uid) {
   return userId;
 }
 
-
 /**
  * parse data util class.
  */
@@ -82,7 +81,8 @@ export default class ParseDataUtil {
       isRemoveAllowed: request.isRemoveAllowed,
       distributedOption: request.distributedOption,
       deviceId: request.deviceId,
-      groupName: request.groupName??request.hashcode
+      groupName: request.groupName??request.hashcode,
+      tapDismissed: request.tapDismissed
     };
     Log.showInfo(TAG, `notificationItem construct over ====================`);
     notificationItem = {
