@@ -21,7 +21,7 @@ import featureAbility from '@ohos.ability.featureAbility';
 import Brightness from '@ohos.brightness';
 import CommonConstants from "../../../../../../common/src/main/ets/default/Constants";
 
-const SYSTEMUI_BRIGHTNESS = 'settings.screen.brightness';
+const SYSTEMUI_BRIGHTNESS = settings.display.SCREEN_BRIGHTNESS_STATUS;;
 const TAG = 'Control-brightnessManager';
 var mBrightnessValue = AppStorage.SetAndLink('BrightnessValue', 100);
 
