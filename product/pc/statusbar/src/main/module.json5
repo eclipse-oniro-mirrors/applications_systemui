@@ -4,7 +4,7 @@
     "type": "feature",
     "srcEntrance": "./ets/Application/AbilityStage.ts",
     "description": "$string:mainability_description",
-    "mainElement": "statusbar.ServiceExtAbility",
+    "mainElement": "com.ohos.systemui.statusbar.ServiceExtAbility",
     "deviceTypes": [
       "tablet"
     ],
