@@ -279,11 +279,11 @@ struct Index {
   build() {
     Stack({ alignContent: Alignment.Top }) {
       if (this.mBackground) {
-        Image(this.mBackground)
+        Image($r("app.media.dropdownpanel_bgc"))
           .width('100%')
           .height('100%')
           .objectFit(ImageFit.Fill)
-          .blur(20)
+          .blur(25)
           .opacity(this.backgroundOpacity)
       }
       Column() {

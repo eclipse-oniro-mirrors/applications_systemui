@@ -189,6 +189,7 @@ export default struct SimpleToggleLayoutEditComponent {
                     Text($r("app.string.control_center_simple_toggle_layout_edit_reset"))
                       .fontColor(this.style.editBtnFontColor)
                       .fontSize(this.style.editBtnFontSize)
+                      .fontWeight(FontWeight.Medium)
                   }
                   .backgroundColor(this.style.editBtnBgColor)
                   .width('100%')
@@ -201,6 +202,7 @@ export default struct SimpleToggleLayoutEditComponent {
                     Text($r("app.string.control_center_simple_toggle_layout_edit_finish"))
                       .fontColor(this.style.editBtnFontColor)
                       .fontSize(this.style.editBtnFontSize)
+                      .fontWeight(FontWeight.Medium)
                   }
                   .backgroundColor(this.style.editBtnBgColor)
                   .width('100%')
@@ -390,7 +392,7 @@ struct SimpleToggleLayoutEditUpTitle {
       Text($r('app.string.control_center_simple_toggle_layout_edit'))
         .fontColor(this.style.fontColor)
         .fontSize(this.style.titleFontSize)
-        .fontWeight(FontWeight.Bold)
+        .fontWeight(FontWeight.Medium)
     }.width('100%')
     .height('100%')
   }

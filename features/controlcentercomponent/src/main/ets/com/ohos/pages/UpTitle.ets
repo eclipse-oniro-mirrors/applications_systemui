@@ -50,7 +50,7 @@ export default struct UpTitle {
         Text($r('app.string.control_center'))
           .fontColor(this.style.fontColor)
           .fontSize(this.style.fontSize)
-          .fontWeight(FontWeight.Bold)
+          .fontWeight(FontWeight.Medium)
       }
       .height('100%')
 
