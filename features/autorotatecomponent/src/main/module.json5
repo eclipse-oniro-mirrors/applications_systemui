@@ -1,0 +1,10 @@
+{
+  "module": {
+    "name": "autorotatecomponent",
+    "type": "har",
+    "deviceTypes": [
+      "phone",
+    ],
+    "uiSyntax": "ets"
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "module": {
+    "name": "noticeitem",
+    "type": "har",
+    "deviceTypes": [
+      "phone",
+    ],
+    "uiSyntax": "ets"
+  }
+}

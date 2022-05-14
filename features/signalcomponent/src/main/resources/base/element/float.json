@@ -1,40 +1,28 @@
 {
   "float":[
     {
-      "name":"fontSize_network_state",
-      "value":"14"
+      "name":"status_bar_signal_type_font_size",
+      "value":"10fp"
     },
     {
-      "name":"fontSize_cellular_type",
-      "value":"8"
+      "name":"status_bar_signal_unknown_font_size",
+      "value":"14fp"
     },
     {
-      "name":"shrink_network_state",
-      "value":"0"
+      "name":"signal_component_icon_width",
+      "value":"32vp"
     },
     {
-      "name":"shrink_cellular_type",
-      "value":"1"
+      "name":"signal_component_icon_height",
+      "value":"24vp"
     },
     {
-      "name":"maxLine_network_state",
-      "value":"1"
+      "name":"signal_text_max_width",
+      "value":"113vp"
     },
     {
-      "name":"margin_cellular_type",
-      "value":"1"
-    },
-    {
-      "name":"signalicon_width",
-      "value":"120"
-    },
-    {
-      "name":"signalicon_height",
-      "value":"50%"
-    },
-    {
-      "name":"signalicon_netstatus_width",
-      "value":"113"
+      "name":"status_bar_signal_net_signal_text_max_width",
+      "value":"18vp"
     }
   ]
 }

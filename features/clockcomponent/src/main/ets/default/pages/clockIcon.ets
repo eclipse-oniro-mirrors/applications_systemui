@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Huawei Device Co., Ltd.
+ * Copyright (c) 2021-2022 Huawei Device Co., Ltd.
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -13,31 +13,50 @@
  * limitations under the License.
  */
 
-import timeModel from '../timeModel.ets'
-import Log from '../../../../../../../common/src/main/ets/default/Log.ets'
+import Log from '../../../../../../../common/src/main/ets/default/Log'
+import {TintContentInfo} from '../../../../../../../common/src/main/ets/default/TintStateManager'
+import StyleConfiguration from '../common/StyleConfiguration'
+import StyleConfigurationCommon from '../../../../../../../common/src/main/ets/default/StyleConfiguration'
+import ViewModel from '../viewmodel/ClockVM'
+import TimeManager, {
+  TimeEventArgs,
+  TIME_CHANGE_EVENT,
+} from '../../../../../../../common/src/main/ets/default/TimeManager'
+import EventManager, {unsubscribe} from '../../../../../../../common/src/main/ets/default/event/EventManager'
 
 const TAG = 'ClockComponent-clockIcon';
 
 @Component
 export default struct ClockIcon {
-  @StorageLink('time') mTime: string = '16:01'
+  @State mTime: string = '16:01'
+  @State mTintContentInfo: TintContentInfo = ViewModel.getTintContentInfo()
+  @State style: any = StyleConfiguration.getClockComponentStyle()
+  @State styleCommon: any = StyleConfigurationCommon.getCommonStyle()
+  unSubscriber?: unsubscribe;
 
   aboutToAppear() {
     Log.showInfo(TAG, 'aboutToAppear');
-    timeModel.initTimeModel();
+    this.unSubscriber = EventManager.subscribe(TIME_CHANGE_EVENT, (args: TimeEventArgs) => {
+      this.mTime = TimeManager.formatTime(args.date);
+    });
+    this.mTime = TimeManager.formatTime(new Date());
   }
 
   aboutToDisappear() {
     Log.showInfo(TAG, 'aboutToDisappear');
-    timeModel.unInitTimeModel();
+    this.unSubscriber && this.unSubscriber();
+    this.unSubscriber = undefined;
   }
 
   build() {
-    Flex({ alignItems: ItemAlign.Center, justifyContent: FlexAlign.Center }) {
+    Row() {
+      Row().width(this.styleCommon.statusBarMarginLeftRight).height('100%')
       Text(this.mTime)
-        .fontColor($r('app.color.clock_text_color'))
-        .fontSize($r('app.float.clock_fontsize'))
+        .fontColor(this.mTintContentInfo.contentColor)
+        .fontSize(this.styleCommon.statusBarFontSize)
+        .width(this.style.statusBarClockMaxWidth)
+        .textAlign(TextAlign.Center)
+      Row().width(this.styleCommon.statusBarMarginLeftRight).height('100%')
     }
-    .width($r('app.float.clock_maxwidth'))
   }
 }

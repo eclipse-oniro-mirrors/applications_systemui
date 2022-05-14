@@ -1,0 +1,11 @@
+{
+  "float": [
+    {
+      "name": "status_bar_wifi_width",
+      "value": "24vp"
+    },{
+      "name": "status_bar_wifi_height",
+      "value": "24vp"
+    }
+  ]
+}

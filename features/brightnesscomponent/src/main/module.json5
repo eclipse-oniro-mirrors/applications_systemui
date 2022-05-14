@@ -1,0 +1,10 @@
+{
+  "module": {
+    "name": "brightnesscomponent",
+    "type": "har",
+    "deviceTypes": [
+      "phone",
+    ],
+    "uiSyntax": "ets"
+  }
+}

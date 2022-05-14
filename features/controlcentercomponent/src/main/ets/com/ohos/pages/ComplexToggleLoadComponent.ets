@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Huawei Device Co., Ltd.
+ * Copyright (c) 2021-2022 Huawei Device Co., Ltd.
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -13,12 +13,12 @@
  * limitations under the License.
  */
 
-import Log from '../../../../../../../../common/src/main/ets/default/Log.ets'
-import AirPlaneComponent from "../../../../../../../airplanecomponent/src/main/ets/default/pages/airplaneComponent.ets"
-import WifiComponent from '../../../../../../../wificomponent/src/main/ets/default/pages/wifiComponent.ets'
-import BluetoothComponent from '../../../../../../../bluetoothcomponent/src/main/ets/com/ohos/pages/ControlCenterComplexToggleBluetoothComponent.ets'
-import Constants from '../common/Constants.ets'
-import ComplexToggleComponent from './ComplexToggleComponent.ets'
+import Log from '../../../../../../../../common/src/main/ets/default/Log'
+import {FASlotName} from '../../../../../../../../common/src/main/ets/default/Constants'
+import AirPlaneComponent from "../../../../../../../airplanecomponent/src/main/ets/default/pages/airplaneComponent"
+import WifiComponent from '../../../../../../../wificomponent/src/main/ets/default/pages/wifiComponent'
+import BluetoothComponent from '../../../../../../../bluetoothcomponent/src/main/ets/com/ohos/pages/ControlCenterComplexToggleBluetoothComponent'
+import ComplexToggleComponent from './ComplexToggleComponent'
 
 const TAG = 'ComplexToggleLoadComponent'
 
@@ -36,11 +36,11 @@ export default struct ComplexToggleLoadComponent {
 
   build() {
     Column() {
-      if (this.keyId == Constants.WIFI) {
+      if (this.keyId == FASlotName.WIFI) {
         WifiComponent()
-      } else if (this.keyId == Constants.BLUETOOTH) {
+      } else if (this.keyId == FASlotName.BLUETOOTH) {
         BluetoothComponent()
-      } else if (this.keyId == Constants.AIR_PLANE) {
+      } else if (this.keyId == FASlotName.AIR_PLANE) {
         AirPlaneComponent()
       } else {
         ComplexToggleComponent({

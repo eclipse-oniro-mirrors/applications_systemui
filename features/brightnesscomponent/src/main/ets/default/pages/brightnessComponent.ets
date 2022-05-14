@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Huawei Device Co., Ltd.
+ * Copyright (c) 2021-2022 Huawei Device Co., Ltd.
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -14,17 +14,19 @@
  */
 
 import brightness from '@ohos.brightness';
-import mBrightnessManager from '../brightnessManager.ets';
-import Log from '../../../../../../../common/src/main/ets/default/Log.ets';
+import mBrightnessManager from '../brightnessManager';
+import StyleConfiguration from '../common/StyleConfiguration'
+import Log from '../../../../../../../common/src/main/ets/default/Log';
 
 const TAG = 'Control-brightnessComponent'
 
 @Component
-export struct MyBrightness {
+export default struct MyBrightness {
   @StorageLink('BrightnessValue') brightnessValue: number = 0;
+  @State style: any = StyleConfiguration.getBrightnessComponentStyle()
   @State brightnessItem: any = {
-    min: 0,
-    max: 255,
+    min: 4,
+    max: 100,
     value: 0
   };
 
@@ -39,23 +41,26 @@ export struct MyBrightness {
     mBrightnessManager.unRegisterBrightness();
   }
 
-  setBrightness(value) {
+  setBrightness(value, sliderChangeMode:number) {
     Log.showInfo(TAG, `setBrightness = ${value}`);
-    mBrightnessManager.setValue(value);
+    mBrightnessManager.setValue(value, sliderChangeMode);
   }
 
   build() {
-    Flex({ direction: FlexDirection.Row, justifyContent: FlexAlign.Start, alignItems: ItemAlign.Center }) {
-      Column() {
-        Text($r('app.string.brightness_text'))
-          .fontSize($r('app.float.control_common_font_size'))
-          .alignSelf(ItemAlign.Center)
+    Row() {
+      Column().width(this.style.marginLeft).height('100%').layoutWeight(0)
+      Flex({ justifyContent: FlexAlign.Center, alignItems: ItemAlign.Center }) {
+        Image($r('app.media.ic_brightness_reduce'))
+          .size({ width: this.style.brightnessReduceWidth,
+            height: this.style.brightnessReduceHeight })
+          .fillColor(this.style.brightnessIconColor)
       }
-      .width('15%')
-      .constraintSize({ maxWidth: $r("app.float.font_constraint_maxSize") })
-      .padding({ left: $r('app.float.slider_text_padding_left') })
+      .width(this.style.brightnessPlusWidth)
+      .height('100%')
+      .layoutWeight(0)
 
-      Flex({ direction: FlexDirection.Row, justifyContent: FlexAlign.Center, alignItems: ItemAlign.Center }) {
+      Column().width(this.style.componentGap).height('100%').layoutWeight(0)
+      Row() {
         Slider({
           value: this.brightnessValue,
           min: this.brightnessItem.min,
@@ -65,19 +70,32 @@ export struct MyBrightness {
 
         })
           .width('100%')
-          .blockColor(Color.Blue)
-          .trackColor(Color.Grey)
-          .selectedColor(Color.Blue)
-          .onChange((value: number) => {
+          .trackThickness(this.style.sliderHeight)
+          .blockColor(this.style.sliderBlockColor)
+          .trackColor(this.style.sliderTrackColor)
+          .selectedColor(this.style.sliderSelectedColor)
+          .onChange((value: number, mode: SliderChangeMode) => {
             this.brightnessItem.value = value;
-            this.setBrightness(this.brightnessItem);
+            this.setBrightness(this.brightnessItem, mode);
           })
       }
-      .width('85%')
-    }
-    .height('100%')
-    .width('100%')
-    .backgroundColor($r('app.color.brightness_bg_color'))
-    .borderRadius($r('app.float.brightness_border_radius'))
+      .height('100%')
+      .layoutWeight(1)
+
+      Column().width(this.style.componentGap).height('100%').layoutWeight(0)
+
+      Flex({ justifyContent: FlexAlign.Center, alignItems: ItemAlign.Center }) {
+        Image($r('app.media.ic_brightness_plus'))
+          .size({ width: this.style.brightnessPlusWidth,
+            height: this.style.brightnessPlusHeight })
+          .fillColor(this.style.brightnessIconColor)
+      }
+      .width(this.style.brightnessPlusWidth)
+      .height('100%')
+      .layoutWeight(0)
+
+      Column().width(this.style.marginRight).height('100%').layoutWeight(0)
+    }.width('100%')
+    .height(this.style.brightnessHeight)
   }
 }

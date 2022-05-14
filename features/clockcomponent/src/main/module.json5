@@ -1,0 +1,10 @@
+{
+  "module": {
+    "name": "clockcomponent",
+    "type": "har",
+    "deviceTypes": [
+      "phone",
+    ],
+    "uiSyntax": "ets"
+  }
+}

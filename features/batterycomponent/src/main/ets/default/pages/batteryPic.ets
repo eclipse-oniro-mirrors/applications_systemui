@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Huawei Device Co., Ltd.
+ * Copyright (c) 2021-2022 Huawei Device Co., Ltd.
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -13,8 +13,12 @@
  * limitations under the License.
  */
 
-import Constants from '../common/constants.ets'
-import Log from '../../../../../../../common/src/main/ets/default/Log.ets'
+import Constants from '../common/constants'
+import Log from '../../../../../../../common/src/main/ets/default/Log'
+import {TintContentInfo} from '../../../../../../../common/src/main/ets/default/TintStateManager'
+import StyleConfiguration from '../common/StyleConfiguration'
+import ViewModel from '../viewmodel/BatteryVM'
+
 const TAG = 'BatteryComponent-batteryPic'
 
 @Component
@@ -22,6 +26,9 @@ export default
 struct BatteryPic {
   @StorageLink('batterySoc') batterySoc: number = 100
   @StorageLink('batteryCharging') batteryCharging : boolean = false
+  @State mTintContentInfo: TintContentInfo = ViewModel.getTintContentInfo()
+  @State style: any = StyleConfiguration.getBatteryPicStyle()
+
   aboutToAppear(){
     Log.showInfo(TAG,'aboutToAppear Start');
   }
@@ -32,45 +39,48 @@ struct BatteryPic {
 
   build() {
 
-    Flex({ direction: FlexDirection.Row, alignItems: ItemAlign.Center, justifyContent: FlexAlign.Center }) {
-      Flex({ direction: FlexDirection.Row, alignItems: ItemAlign.Center, justifyContent: FlexAlign.Start }) {
-        Flex({ direction: FlexDirection.Row, alignItems: ItemAlign.Center, justifyContent: FlexAlign.Center }) {
+    Row() {
+      Row() {
+        Row() {
 
         }
         .height('100%')
-        .width(this.batterySoc + '%')
+        .width((this.batterySoc < 100 ? this.batterySoc: 100) + '%')
         .backgroundColor(this.getBatteryColor(this.batterySoc, this.batteryCharging))
       }
-      .width('88%')
-      .height('100%')
+      .width(this.style.picBodyWidth)
+      .height(this.style.picBodyHeight)
       .backgroundColor($r('app.color.battery_background'))
-      .border({ width: $r('app.float.battery_border_width'),
-        color: $r('app.color.battery_border'),
-        radius: $r('app.float.battery_border_radius'),
+      .border({ width: this.style.picBodyBorderWidth,
+        color: this.mTintContentInfo.contentColor,
+        radius: this.style.picBorderRadius,
         style: BorderStyle.Solid })
-      .padding($r('app.float.battery_content_padding'))
+      .padding(this.style.picBodyPadding)
 
-      Flex({ direction: FlexDirection.Row, alignItems: ItemAlign.Center, justifyContent: FlexAlign.Start }) {
+      Row() {
 
       }
-      .width('10%')
-      .height('50%')
-      .backgroundColor($r('app.color.battery_border'))
-      .borderRadius($r('app.float.battery_border_radius'))
-      .margin({ left: $r('app.float.battery_decorator_margin') })
+      .width(this.style.picGap)
+      .height(1)
+
+      Row() {
+
+      }
+      .width(this.style.picHeadWidth)
+      .height(this.style.picHeadHeight)
+      .backgroundColor(this.mTintContentInfo.contentColor)
+      .borderRadius(this.style.picHeadBorderRadius)
     }
-    .width('100%')
-    .height('100%')
   }
 
   private getBatteryColor(val, charging) {
     Log.showInfo(TAG, `getBatteryColor, val: ${ val }  charging: ${ charging } `);
     if (charging) {
-      return $r('app.color.battery_charging_color');
+      return this.style.picChargingColor;
     } else if (val <= Constants.BATTERY_LEVEL_LOW) {
-      return $r('app.color.battery_low_color');
+      return this.style.picLevelLowColor;
     } else {
-      return $r('app.color.battery_default_color');
+      return this.mTintContentInfo.contentColor;
     }
   }
 }

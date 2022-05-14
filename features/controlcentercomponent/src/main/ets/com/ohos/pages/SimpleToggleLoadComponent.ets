@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Huawei Device Co., Ltd.
+ * Copyright (c) 2021-2022 Huawei Device Co., Ltd.
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -13,23 +13,23 @@
  * limitations under the License.
  */
 
-import Log from '../../../../../../../../common/src/main/ets/default/Log.ets'
-import LocationComponent from '../../../../../../../locationcomponent/src/main/ets/com/ohos/pages/ControlCenterSimpleToggleLocationComponent.ets'
-import RingModeComponent from '../../../../../../../ringmodecomponent/src/main/ets/com/ohos/pages/ControlCenterSimpleToggleRingModeComponent.ets'
-import Constants from '../common/Constants.ets'
-import SimpleToggleComponent from './SimpleToggleComponent.ets'
+import Log from '../../../../../../../../common/src/main/ets/default/Log'
+import {FASlotName} from '../../../../../../../../common/src/main/ets/default/Constants'
+import LocationComponent from '../../../../../../../locationcomponent/src/main/ets/com/ohos/pages/ControlCenterSimpleToggleLocationComponent'
+import RingModeComponent from '../../../../../../../ringmodecomponent/src/main/ets/com/ohos/pages/ControlCenterSimpleToggleRingModeComponent'
+import SimpleToggleComponent from './SimpleToggleComponent'
 
 const TAG = 'SimpleToggleLoadComponent'
 
 @Component
 export default struct SimpleToggleLoadComponent {
-  @Prop keyId: string
-  @Prop mShowLabel: boolean
-  @Prop mEditMode: boolean
+  private keyId: string
+  private mEditMode: boolean = false
+  private mDragMode: boolean = false
 
   aboutToAppear() {
     Log.showInfo(TAG, `aboutToAppear Start, keyId: ${this.keyId}`)
-    Log.showInfo(TAG, `aboutToAppear Start, mShowLabel: ${this.mShowLabel} mEditMode: ${this.mEditMode}`)
+    Log.showInfo(TAG, `aboutToAppear Start, mEditMode: ${this.mEditMode} mDragMode: ${this.mDragMode}`)
   }
 
   aboutToDisappear() {
@@ -38,25 +38,26 @@ export default struct SimpleToggleLoadComponent {
 
   build() {
     Column() {
-      if (this.keyId == Constants.LOCATION) {
+      if (this.keyId == FASlotName.LOCATION) {
         LocationComponent({
           keyId: this.keyId,
-          mShowLabel: this.mShowLabel,
-          mEditMode: this.mEditMode
+          mEditMode: this.mEditMode,
+          mDragMode: this.mDragMode,
         })
-      } else if (this.keyId == Constants.RING_MODE) {
+      } else if (this.keyId == FASlotName.RING_MODE) {
         RingModeComponent({
           keyId: this.keyId,
-          mShowLabel: this.mShowLabel,
-          mEditMode: this.mEditMode
+          mEditMode: this.mEditMode,
+          mDragMode: this.mDragMode,
         })
       } else {
         SimpleToggleComponent({
           keyId: this.keyId,
-          mShowLabel: this.mShowLabel,
-          mEditMode: this.mEditMode
+          mEditMode: this.mEditMode,
+          mDragMode: this.mDragMode,
         })
       }
-    }
+    }.width('100%')
+    .height('100%')
   }
 }

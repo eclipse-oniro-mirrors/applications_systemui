@@ -39,6 +39,14 @@
     {
       "name": "confirm_message",
       "value": "Do you want to turn off all notifications of '%s'?"
+    },
+    {
+      "name": "device_dialog_title",
+      "value": "Please select a device"
+    },
+    {
+      "name": "distributed_devicename",
+      "value": "From the %s"
     }
   ]
 }

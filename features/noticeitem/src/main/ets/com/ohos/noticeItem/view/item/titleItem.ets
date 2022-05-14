@@ -1,5 +1,5 @@
-/*
- * Copyright (c) 2021 Huawei Device Co., Ltd.
+﻿/*
+ * Copyright (c) 2021-2022 Huawei Device Co., Ltd.
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -13,22 +13,23 @@
  * limitations under the License.
  */
 
-import Constants from '../../common/constants.ets';
-import Log from '../../../../../../../../../../common/src/main/ets/default/Log.ets';
-import CheckEmptyUtils from '../../../../../../../../../../common/src/main/ets/default/CheckEmptyUtils.ets';
+import Constants, {NotificationLayout as Layout} from '../../common/constants';
+import Log from '../../../../../../../../../../common/src/main/ets/default/Log';
+import CheckEmptyUtils from '../../../../../../../../../../common/src/main/ets/default/CheckEmptyUtils';
 
 const TAG = 'NoticeItem-TitleItem';
 
 @Component
-export default
-struct TitleItem {
+export default struct TitleItem {
   private notificationSmallIcon: PixelMap
   @Prop notificationName: string
   @Prop notificationTime: string
-  @State srcIconDisplay: any = $r('app.media.ic_notification_down')
   @Link isExpand: boolean
   @Prop needExpand: boolean
   @State rowSpace: any = $r('app.float.titleitem_row_space')
+  @Prop distributedDeviceName: string
+  private isSubItem: boolean= false;
+  private clickTitleAction: () => void
 
   aboutToAppear() {
     Log.showInfo(TAG, `aboutToAppear Start`);
@@ -39,37 +40,55 @@ struct TitleItem {
   }
 
   build() {
-    Row() {
-      Row({ space: this.rowSpace }) {
-        if (!CheckEmptyUtils.isEmpty(this.notificationSmallIcon)) {
+    Flex({ alignItems: ItemAlign.Center, justifyContent: FlexAlign.Start }) {
+      if (!this.isSubItem) {
+        if (this.notificationSmallIcon) {
           Image(this.notificationSmallIcon)
             .objectFit(ImageFit.Contain)
-            .width($r('app.float.title_image_width'))
-            .height($r('app.float.title_image_height'))
-            .flexShrink(0)
+            .width(Layout.TITLE_IMAGE_SIZE)
+            .height(Layout.TITLE_IMAGE_SIZE)
         }
-        Text(this.notificationName)
-          .maxLines(Constants.DEFAULT_MAX_LINES)
-          .fontSize($r('app.float.title_name_fontsize'))
-          .flexShrink(1)
-        Text(this.notificationTime)
-          .fontSize($r('app.float.title_time_fontsize'))
-          .flexShrink(0)
+        Row() {
+          Text(this.notificationName)
+            .fontColor($r("sys.color.ohos_fa_text_primary"))
+            .fontSize($r("sys.float.ohos_id_text_size_body3"))
+            .fontWeight(FontWeight.Regular)
+            .textOverflow({ overflow: TextOverflow.Ellipsis })
+            .maxLines(Constants.SINGLE_LINE)
+        }.margin({ left: 8 })
       }
-      .width(this.needExpand ? '80%' : '100%')
+      Text(this.notificationTime)
+        .fontColor($r("sys.color.ohos_fa_text_primary"))
+        .fontSize($r("sys.float.ohos_id_text_size_body3"))
+        .fontWeight(FontWeight.Regular)
+        .maxLines(Constants.SINGLE_LINE)
+        .flexGrow(0)
+        .margin({ left: !this.isSubItem ? 8 : 0, right: 8 })
 
+      Text($r('app.string.distributed_devicename', this.distributedDeviceName))
+        .fontColor($r("sys.color.ohos_fa_text_primary"))
+        .fontSize($r("sys.float.ohos_id_text_size_body3"))
+        .fontWeight(FontWeight.Regular)
+        .maxLines(Constants.SINGLE_LINE)
+        .visibility((this.distributedDeviceName ? true : false) ? Visibility.Visible : Visibility.None)
+
+      Blank()
       if (this.needExpand) {
-        Flex({ direction: FlexDirection.Row, justifyContent: FlexAlign.End, alignItems: ItemAlign.Center }) {
-          Image(this.srcIconDisplay)
+        if (this.isExpand) {
+          Image($r('app.media.ic_notification_up'))
             .objectFit(ImageFit.Contain)
-            .width($r('app.float.displayicon_width'))
-            .height($r('app.float.displayicon_height'))
+            .width(Layout.TITLE_IMAGE_SIZE)
+            .height(Layout.TITLE_IMAGE_SIZE)
+        } else {
+          Image($r('app.media.ic_notification_down'))
+            .objectFit(ImageFit.Contain)
+            .width(Layout.TITLE_IMAGE_SIZE)
+            .height(Layout.TITLE_IMAGE_SIZE)
         }
-        .width('20%')
       }
     }
-    .height($r('app.float.titleitem_height'))
-    .width('100%')
+    .margin({ left: 12, right: 12 })
+    .height(Layout.TITLE_HEIGHT)
     .onClick(this.clickTitleItem.bind(this))
   }
 
@@ -78,10 +97,11 @@ struct TitleItem {
     if (this.needExpand) {
       if (this.isExpand) {
         this.isExpand = false;
-        this.srcIconDisplay = $r('app.media.ic_notification_down');
       } else {
         this.isExpand = true;
-        this.srcIconDisplay = $r('app.media.ic_notification_up');
+      }
+      if (this.clickTitleAction) {
+        this.clickTitleAction();
       }
     }
   }
