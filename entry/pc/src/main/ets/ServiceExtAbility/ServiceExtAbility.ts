@@ -47,15 +47,12 @@ var notificationPanelWant = {
 class ServiceExtAbility extends ServiceExtension {
     onCreate(want) {
         Log.showInfo(TAG, `api8New onCreate, want: ${JSON.stringify(want)}`)
-        setTimeout(() => {
-            initSystemUi(this.context);
-            AbilityManager.setContext(AbilityManager.ABILITY_NAME_ENTRY, this.context)
-            AbilityManager.startAbility(statusBarWant)
-            AbilityManager.startAbility(navigationBarWant)
-            AbilityManager.startAbility(volumePanelWant)
-            AbilityManager.startAbility(controlPanelWant)
-            AbilityManager.startAbility(notificationPanelWant)
-        }, 1000)
+        AbilityManager.setContext(AbilityManager.ABILITY_NAME_ENTRY, this.context)
+        AbilityManager.startAbility(statusBarWant)
+        AbilityManager.startAbility(navigationBarWant)
+        AbilityManager.startAbility(volumePanelWant)
+        AbilityManager.startAbility(controlPanelWant)
+        AbilityManager.startAbility(notificationPanelWant)
     }
 
     onDestroy() {

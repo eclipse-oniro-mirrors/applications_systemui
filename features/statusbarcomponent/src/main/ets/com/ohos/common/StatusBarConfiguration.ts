@@ -47,13 +47,21 @@ class StatusBarConfiguration {
     Log.showInfo(TAG, 'initWindowManager');
     minHeight = 0;
 
-    await display.getDefaultDisplay()
-      .then(dis => {
-        Log.showInfo(TAG, `initWindowManager dis ${JSON.stringify(dis)}`);
-        maxWidth = dis.width;
-        maxHeight = dis.height;
-        Log.showInfo(TAG, `initWindowManager maxWidth ${maxWidth} maxHeight ${maxHeight} minHeight ${minHeight}`);
-      })
+    let displayData = null;
+    while (displayData == null) {
+      await display.getDefaultDisplay()
+        .then((res) => {
+          Log.showInfo(TAG, `getDefaultDisplay dis ${JSON.stringify(res)}`);
+          displayData = res;
+          maxWidth = res.width;
+          maxHeight = res.height;
+          Log.showInfo(TAG, `getDefaultDisplay maxWidth ${maxWidth} maxHeight ${maxHeight} minHeight ${minHeight}`);
+        })
+        .catch((err) => {
+          Log.showInfo(TAG, 'getDefaultDisplay err: ' + err);
+        });
+      await new Promise((resolve) => setTimeout(resolve, 2000));
+    }
   }
 
   async getDirectionAndPosition() {
