@@ -40,6 +40,8 @@ export enum BundleEventType {
 const TAG = "SourceLoader-BundleParseUtil";
 const DEFAULT_BUNDLE_FLAG =
   bundleManager.BundleFlag.GET_ABILITY_INFO_WITH_METADATA | bundleManager.BundleFlag.GET_ABILITY_INFO_WITH_PERMISSION;
+const EXTENSIONTYPE = 20;
+
 const BUNDLE_SUBSCRIBE_INFO = {
   events: [
     commonEvent.Support.COMMON_EVENT_PACKAGE_ADDED,
@@ -67,16 +69,17 @@ export async function queryAbility(action: string, userId: number, bundleName?: 
     }
     let extensionAbilitys = [];
     try {
-      extensionAbilitys = await bundleManager.queryExtensionAbilityInfosByWant(
+      extensionAbilitys = await bundleManager.queryExtensionAbilityInfos(
         {
           action: action,
           bundleName: bundleName,
         },
+        EXTENSIONTYPE,
         DEFAULT_BUNDLE_FLAG,
         userId
       );
     } catch (error) {
-      Log.showInfo(TAG, `queryAbility, queryExtensionAbilityInfosByWant error: ${JSON.stringify(error)}`);
+      Log.showInfo(TAG, `queryAbility, queryExtensionAbilityInfos error: ${JSON.stringify(error)}`);
     }
     Log.showInfo(TAG, `queryAbility, end`);
     let rets = [...abilitys, ...extensionAbilitys];
@@ -91,9 +94,9 @@ export async function queryAbility(action: string, userId: number, bundleName?: 
   }
   let extensionAbilitys = [];
   try {
-    extensionAbilitys = await bundleManager.queryExtensionAbilityInfosByWant({ action: action }, DEFAULT_BUNDLE_FLAG, userId);
+    extensionAbilitys = await bundleManager.queryExtensionAbilityInfos({ action: action }, EXTENSIONTYPE, DEFAULT_BUNDLE_FLAG, userId);
   } catch (error) {
-    Log.showInfo(TAG, `queryAbility, queryExtensionAbilityInfosByWant error: ${JSON.stringify(error)}`);
+    Log.showInfo(TAG, `queryAbility, queryExtensionAbilityInfos error: ${JSON.stringify(error)}`);
   }
   Log.showInfo(TAG, `queryAbility, end`);
   let rets = [...abilitys, ...extensionAbilitys];
