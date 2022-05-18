@@ -25,11 +25,11 @@ const TAG = "ControlPanel_ServiceExtAbility";
 
 class ServiceExtAbility extends ServiceExtension {
   async onCreate(want) {
-    Log.showInfo(TAG, `api8New onCreate, want: ${JSON.stringify(want)}`);
+    Log.showInfo(TAG, `onCreate, want: ${JSON.stringify(want)}`);
     AbilityManager.setContext(AbilityManager.ABILITY_NAME_CONTROL_PANEL, this.context);
 
     let dis = await display.getDefaultDisplay();
-    Log.showInfo(TAG, `api8New onCreate, dis: ${JSON.stringify(dis)}`);
+    Log.showInfo(TAG, `onCreate, dis: ${JSON.stringify(dis)}`);
     let rect = {
       left: (872 * dis.width) / 1280,
       top: (44 * dis.width) / 1280,

@@ -26,12 +26,12 @@ const TAG = "NotificationPanel_ServiceExtAbility";
 class ServiceExtAbility extends ServiceExtension {
 
   async onCreate(want) {
-    Log.showInfo(TAG, `api8New onCreate, want: ${JSON.stringify(want)}`);
+    Log.showInfo(TAG, `onCreate, want: ${JSON.stringify(want)}`);
     AbilityManager.setContext(AbilityManager.ABILITY_NAME_NOTIFICATION_PANEL, this.context);
     globalThis[AbilityManager.ABILITY_NAME_OWNER_WANT] = want;
 
     let dis = await display.getDefaultDisplay();
-    Log.showInfo(TAG, `api8New onCreate, dis: ${JSON.stringify(dis)}`);
+    Log.showInfo(TAG, `onCreate, dis: ${JSON.stringify(dis)}`);
     let rect = {
       left: (834 * dis.width) / 1280,
       top: (44 * dis.width) / 1280,
@@ -45,7 +45,7 @@ class ServiceExtAbility extends ServiceExtension {
     });
 
     WindowManager.createWindow(this.context, WindowType.NOTIFICATION_PANEL, rect, "pages/index").then(() => {
-      Log.showInfo(TAG, `api8New onCreate, createWindow callback`);
+      Log.showInfo(TAG, `onCreate, createWindow callback`);
     });
 
     AbilityManager.setContext(AbilityManager.ABILITY_NAME_BANNER_NOTICE, this.context);
@@ -58,13 +58,13 @@ class ServiceExtAbility extends ServiceExtension {
     AbilityManager.setAbilityData(AbilityManager.ABILITY_NAME_BANNER_NOTICE, 'bannerRect', bannerRect);
     WindowManager.createWindow(this.context, WindowType.BANNER_NOTICE, bannerRect, 'pages/bannerNotification')
       .then((win) => {
-        Log.showInfo(TAG, `api8New onCreate, createWindow callback`);
+        Log.showInfo(TAG, `onCreate, createWindow callback`);
       })
       .catch((err) => Log.showError(TAG, `Can't create window, err:${err}`));
   }
 
   onDestroy() {
-    Log.showInfo(TAG, "api8New onDestroy");
+    Log.showInfo(TAG, "onDestroy");
   }
 }
 

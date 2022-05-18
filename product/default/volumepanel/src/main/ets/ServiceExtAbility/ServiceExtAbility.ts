@@ -24,7 +24,7 @@ const TAG = "VolumePanel_ServiceExtAbility";
 
 class ServiceExtAbility extends ServiceExtension {
     onCreate(want) {
-        Log.showInfo(TAG, "api8New onCreate, want:" + want.abilityName);
+        Log.showInfo(TAG, "onCreate, want:" + want.abilityName);
         AbilityManager.setContext(AbilityManager.ABILITY_NAME_VOLUME_PANEL, this.context);
         display.getDefaultDisplay().then((dis) => {
             let volumeRect = {
@@ -40,7 +40,7 @@ class ServiceExtAbility extends ServiceExtension {
             });
             WindowManager.createWindow(this.context, WindowType.VOLUME_PANEL, volumeRect, "pages/index")
                 .then((win) => {
-                    Log.showInfo(TAG, `api8New onCreate, createWindow callback`);
+                    Log.showInfo(TAG, `onCreate, createWindow callback`);
                     VolumeWindowController.getInstance().setWindowHandle(win);
                 })
                 .catch((err) => Log.showError(TAG, `Can't create window, err:${err}`));
@@ -48,7 +48,7 @@ class ServiceExtAbility extends ServiceExtension {
     }
 
     onDestroy() {
-        Log.showInfo(TAG, "api8New onDestroy");
+        Log.showInfo(TAG, "onDestroy");
     }
 }
 
