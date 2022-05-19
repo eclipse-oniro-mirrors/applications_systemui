@@ -141,14 +141,14 @@ export class VolumePanelVM {
 
   updateDisplayVolume(volume: number, maxVolume: number, minVolume: number): void{
     Log.showInfo(TAG, `updateDisplayVolume, volume: ${volume} maxVolume: ${maxVolume} minVolume: ${minVolume}`)
-    let displayVolume: number = maxVolume - volume + minVolume;
+    let displayVolume: number = volume + minVolume;
     this.mVolumeValue.set(displayVolume);
     Log.showInfo(TAG, `updateDisplayVolume, mVolumeValue: ${this.mVolumeValue.get()}`)
   }
 
   calcVolumeByDisplayVolume(displayVolume: number): number{
     Log.showInfo(TAG, `calcVolumeByDisplayVolume, displayVolume: ${displayVolume}`)
-    let volume: number = this.mMaxVolume.get() - displayVolume + this.mMinVolume.get();
+    let volume: number = displayVolume + this.mMinVolume.get();
     Log.showInfo(TAG, `calcVolumeByDisplayVolume, volume: ${volume}`)
     return volume;
   }
