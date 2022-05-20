@@ -1,35 +1,260 @@
 {
   "float": [
     {
-      "name": "icon_item_fontsize",
-      "value": "18"
-    },{
-      "name": "up_title_height",
-      "value": "83"
-    },{
-      "name": "center_item_margin_top",
-      "value": "20"
-    },{
-      "name": "center_item_margin_left",
-      "value": "10"
-    },{
-      "name": "center_item_margin_right",
-      "value": "10"
-    },{
-      "name": "complex_toggle_height",
-      "value": "120"
-    },{
-      "name": "vol_height",
-      "value": "66"
-    },{
-      "name": "title_font_size",
-      "value": "35"
-    },{
-      "name": "notification_settings_width",
-      "value": "60"
-    },{
-      "name": "notification_settings_height",
-      "value": "60"
+      "name": "control_center_margin_left",
+      "value": "48vp"
+    },
+    {
+      "name": "control_center_margin_right",
+      "value": "48vp"
+    },
+    {
+      "name": "control_center_margin_top",
+      "value": "33vp"
+    },
+    {
+      "name": "control_center_title_height",
+      "value": "127vp"
+    },
+    {
+      "name": "control_center_title_margin_bottom",
+      "value": "0vp"
+    },
+    {
+      "name": "control_center_toggle_area_gap",
+      "value": "24vp"
+    },
+    {
+      "name": "control_center_component_border_radius",
+      "value": "48vp"
+    },
+    {
+      "name": "control_center_simple_toggle_layout_margin_top",
+      "value": "48vp"
+    },
+    {
+      "name": "control_center_simple_toggle_layout_margin_bottom",
+      "value": "20vp"
+    },
+    {
+      "name": "control_center_brightness_margin_bottom",
+      "value": "44vp"
+    },
+    {
+      "name": "control_center_complex_toggle_column_gap",
+      "value": "24vp"
+    },
+    {
+      "name": "control_center_simple_toggle_layout_margin_left",
+      "value": "22vp"
+    },
+    {
+      "name": "control_center_simple_toggle_layout_margin_right",
+      "value": "22vp"
+    },
+    {
+      "name": "control_center_simple_toggle_column_gap",
+      "value": "0vp"
+    },
+    {
+      "name": "control_center_title_space",
+      "value": "36vp"
+    },
+    {
+      "name": "control_center_title_font_size",
+      "value": "40fp"
+    },
+    {
+      "name": "control_center_title_icon_width",
+      "value": "48vp"
+    },
+    {
+      "name": "control_center_title_icon_height",
+      "value": "48vp"
+    },
+    {
+      "name": "control_center_title_icon_hover_width",
+      "value": "64vp"
+    },
+    {
+      "name": "control_center_title_icon_hover_height",
+      "value": "64vp"
+    },
+    {
+      "name": "control_center_title_icon_hover_radius",
+      "value": "16vp"
+    },
+    {
+      "name": "control_center_title_margin_left",
+      "value": "72vp"
+    },
+    {
+      "name": "control_center_title_margin_right",
+      "value": "30vp"
+    },
+    {
+      "name": "simple_toggle_edit_margin_left",
+      "value": "48vp"
+    },
+    {
+      "name": "simple_toggle_edit_margin_right",
+      "value": "48vp"
+    },
+    {
+      "name": "simple_toggle_edit_margin_top",
+      "value": "33vp"
+    },
+    {
+      "name": "simple_toggle_edit_title_height",
+      "value": "127vp"
+    },
+    {
+      "name": "simple_toggle_edit_title_margin_bottom",
+      "value": "0vp"
+    },
+    {
+      "name": "simple_toggle_edit_up_grid_margin_top",
+      "value": "48vp"
+    },
+    {
+      "name": "simple_toggle_edit_up_grid_margin_bottom",
+      "value": "24vp"
+    },
+    {
+      "name": "simple_toggle_edit_msg_margin_top",
+      "value": "0vp"
+    },
+    {
+      "name": "simple_toggle_edit_msg_margin_bottom",
+      "value": "0vp"
+    },
+    {
+      "name": "simple_toggle_edit_btn_margin_top",
+      "value": "24vp"
+    },
+    {
+      "name": "simple_toggle_edit_btn_margin_bottom",
+      "value": "32vp"
+    },
+    {
+      "name": "simple_toggle_edit_btn_margin_left",
+      "value": "32vp"
+    },
+    {
+      "name": "simple_toggle_edit_btn_margin_right",
+      "value": "32vp"
+    },
+    {
+      "name": "simple_toggle_edit_btn_height",
+      "value": "80vp"
+    },
+    {
+      "name": "simple_toggle_edit_btn_space",
+      "value": "32vp"
+    },
+    {
+      "name": "simple_toggle_edit_border_radius",
+      "value": "48vp"
+    },
+    {
+      "name": "simple_toggle_edit_title_margin_left",
+      "value": "72vp"
+    },
+    {
+      "name": "simple_toggle_edit_title_icon_width",
+      "value": "40vp"
+    },
+    {
+      "name": "simple_toggle_edit_title_icon_height",
+      "value": "40vp"
+    },
+    {
+      "name": "simple_toggle_edit_icon_width",
+      "value": "36vp"
+    },
+    {
+      "name": "simple_toggle_edit_title_font_size",
+      "value": "40fp"
+    },
+    {
+      "name": "simple_toggle_edit_opt_msg_font_size",
+      "value": "24fp"
+    },
+    {
+      "name": "simple_toggle_edit_opt_msg_height",
+      "value": "98vp"
+    },
+    {
+      "name": "simple_toggle_edit_opt_msg_margin_left_right",
+      "value": "44vp"
+    },
+    {
+      "name": "simple_toggle_edit_grid_margin_left",
+      "value": "18.24vp"
+    },
+    {
+      "name": "simple_toggle_edit_grid_margin_right",
+      "value": "18.24vp"
+    },
+    {
+      "name": "simple_toggle_edit_grid_column_gap",
+      "value": "0vp"
+    },
+    {
+      "name": "simple_toggle_edit_grid_drag_bg_size",
+      "value": "120vp"
+    },
+    {
+      "name": "simple_toggle_edit_dialog_height",
+      "value": "217vp"
+    },
+    {
+      "name": "simple_toggle_edit_dialog_width",
+      "value": "670vp"
+    },
+    {
+      "name": "simple_toggle_edit_dialog_font_size",
+      "value": "22fp"
+    },
+    {
+      "name": "simple_toggle_edit_dialog_btn_font_size",
+      "value": "22fp"
+    },
+    {
+      "name": "simple_toggle_edit_dialog_font_height",
+      "value": "36vp"
+    },
+    {
+      "name": "simple_toggle_edit_dialog_btn_width",
+      "value": "311vp"
+    },
+    {
+      "name": "simple_toggle_edit_dialog_divider_height",
+      "value": "36vp"
+    },
+    {
+      "name": "simple_toggle_edit_dialog_divider_width",
+      "value": "1vp"
+    },
+    {
+      "name": "simple_toggle_edit_dialog_btn_margin_lf",
+      "value": "24vp"
+    },
+    {
+      "name": "simple_toggle_edit_dialog_btn_margin_top",
+      "value": "36vp"
+    },
+    {
+      "name": "simple_toggle_edit_dialog_btn_height",
+      "value": "56vp"
+    },
+    {
+      "name": "simple_toggle_edit_dialog_radius",
+      "value": "36vp"
+    },
+    {
+      "name": "simple_toggle_edit_dialog_font_margin_top",
+      "value": "52vp"
     }
   ]
 }

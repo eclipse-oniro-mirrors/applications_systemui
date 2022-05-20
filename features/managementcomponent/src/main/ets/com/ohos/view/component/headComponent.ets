@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2021 Huawei Device Co., Ltd.
+ * Copyright (c) 2021-2022 Huawei Device Co., Ltd.
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -12,7 +12,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import ConfigData from '../../common/constants.ets';
+import ConfigData from '../../common/constants';
 import Router from '@system.router';
 
 @Component
@@ -20,17 +20,17 @@ export default
 struct HeadComponent {
   private isActive: boolean= true;
   private icBackIsVisibility: boolean= true;
-  private headName: string= '';
+  @Link headName: string | Resource;
   @State isTouch: boolean= false;
 
   build() {
     Row() {
       Image($r('app.media.ic_back'))
-        .width($r('app.float.appitem_icon_width'))
-        .height($r('app.float.appitem_icon_height'))
+        .width($r('app.float.appitem_header_icon_width'))
+        .height($r('app.float.appitem_header_icon_height'))
         .borderRadius($r('app.float.image_border_radius'))
         .margin({
-        left: $r('app.float.page_margin_r'),
+        left: $r('app.float.page_header_icon_margin_l'),
         top: $r('app.float.page_margin_t'),
         bottom: $r('app.float.page_margin_b')
       })
@@ -41,18 +41,18 @@ struct HeadComponent {
         Router.back();
       })
       Text(this.headName)
-        .fontSize($r('app.float.page_title_font'))
+        .fontColor($r('sys.color.ohos_id_color_text_primary'))
+        .fontSize($r('app.float.page_phrases_tittle_font'))
         .fontWeight(FontWeight.Bold)
-        .fontColor(Color.Black)
         .width(ConfigData.WH_100_100)
         .maxLines(ConfigData.MAX_LINES_1)
         .textOverflow({ overflow: TextOverflow.Ellipsis })
-        .margin({ left: $r('app.float.page_margin_l'), right: $r('app.float.page_margin_r') });
+        .margin({ left: $r('app.float.page_header_margin_l'), right: $r('app.float.page_margin_r') });
     }
     .width(ConfigData.WH_100_100)
     .height($r('app.float.page_title_height'))
+    .margin({top:$r('app.float.page_header_margin_t')})
     .alignItems(VerticalAlign.Center)
     .align(Alignment.Start)
-    .backgroundColor( $r('app.color.background_color'))
   }
 }

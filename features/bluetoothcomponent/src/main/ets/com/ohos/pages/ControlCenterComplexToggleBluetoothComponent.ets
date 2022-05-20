@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Huawei Device Co., Ltd.
+ * Copyright (c) 2021-2022 Huawei Device Co., Ltd.
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -13,11 +13,11 @@
  * limitations under the License.
  */
 
-import Log from '../../../../../../../../common/src/main/ets/default/Log.ets'
-import FeatureAbilityManager from '../../../../../../../../common/src/main/ets/default/abilitymanager/featureAbilityManager.ets'
-import WindowManager from '../../../../../../../../common/src/main/ets/default/WindowManager.ets'
-import ViewModel from '../viewmodel/BluetoothVM.ets'
-import iconTitleBase from '../../../../../../../../common/src/main/ets/template/iconTitleBase.ets'
+import Log from '../../../../../../../../common/src/main/ets/default/Log'
+import EventManager from "../../../../../../../../common/src/main/ets/default/event/EventManager"
+import {obtainStartAbility} from "../../../../../../../../common/src/main/ets/default/event/EventUtil"
+import ViewModel from '../viewmodel/BluetoothVM'
+import iconTitleBase from '../../../../../../../../common/src/main/ets/template/iconTitleBase'
 
 const TAG = 'bluetooth-ControlCenterComplexToggleBluetoothComponent'
 
@@ -29,14 +29,9 @@ export default struct ControlCenterComplexToggleBluetoothComponent {
   ]
   @State mTitle: Resource = $r("app.string.control_center_complex_toggle_bluetooth_title")
   @StorageLink('BluetoothOpenStatus') BluetoothOpenStatus: boolean = false
-  @StorageLink("showStatusBar") showStatusBar: boolean = false
-  private mWindowManager
-  private mFeatureAbilityManager
 
   aboutToAppear() {
     Log.showInfo(TAG, 'aboutToAppear')
-    this.mWindowManager = new WindowManager()
-    this.mFeatureAbilityManager = new FeatureAbilityManager()
     ViewModel.initViewModel()
   }
 
@@ -51,8 +46,8 @@ export default struct ControlCenterComplexToggleBluetoothComponent {
         iconOn: this.IconInfo[1],
         mTitle: $mTitle,
         changeSwitch: $BluetoothOpenStatus,
-        mClickEvent: this.mClickEvent.bind(this),
-        mLongClickEvent: this.mLongClickEvent.bind(this)
+        mClickEvent: () => this.mClickEvent(),
+        mLongClickEvent: () => this.mLongClickEvent()
       })
     }.width('100%')
     .height('100%')
@@ -60,24 +55,15 @@ export default struct ControlCenterComplexToggleBluetoothComponent {
 
   mClickEvent() {
     Log.showInfo(TAG, `mClickEvent, BluetoothOpenStatus: ${this.BluetoothOpenStatus}`)
-//    if (this.BluetoothOpenStatus) {
-//      ViewModel.disableBluetooth()
-//    } else {
-//      ViewModel.enableBluetooth()
-//    }
+    if (this.BluetoothOpenStatus) {
+      ViewModel.disableBluetooth()
+    } else {
+      ViewModel.enableBluetooth()
+    }
   }
 
   mLongClickEvent() {
     Log.showInfo(TAG, `mLongClickEvent, BluetoothOpenStatus: ${this.BluetoothOpenStatus}`)
-
-//    this.showStatusBar = true
-//    this.mWindowManager.setWindowMin((result) => {
-//      this.mFeatureAbilityManager.openAbility(TAG, {
-//        want: {
-//          bundleName: 'com.ohos.settings',
-//          abilityName: 'com.ohos.settings.MainAbility',
-//        }
-//      })
-//    })
+    EventManager.publish(obtainStartAbility('com.ohos.settings', 'com.ohos.settings.BluetoothAbility'))
   }
 }

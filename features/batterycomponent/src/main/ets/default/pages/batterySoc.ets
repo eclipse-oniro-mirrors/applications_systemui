@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Huawei Device Co., Ltd.
+ * Copyright (c) 2021-2022 Huawei Device Co., Ltd.
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -13,12 +13,18 @@
  * limitations under the License.
  */
 
-import Log from '../../../../../../../common/src/main/ets/default/Log.ets'
+import Log from '../../../../../../../common/src/main/ets/default/Log'
+import StyleConfigurationCommon from '../../../../../../../common/src/main/ets/default/StyleConfiguration'
+import {TintContentInfo} from '../../../../../../../common/src/main/ets/default/TintStateManager'
+import ViewModel from '../viewmodel/BatteryVM'
+
 const TAG = 'BatteryComponent-batterySoc'
 @Component
 export default
 struct BatterySoc {
   @StorageLink('batterySoc') batterySoc: number = 100
+  @State mTintContentInfo: TintContentInfo = ViewModel.getTintContentInfo()
+  @State styleCommon: any = StyleConfigurationCommon.getCommonStyle()
 
   aboutToAppear(){
     Log.showInfo(TAG,'aboutToAppear Start');
@@ -29,11 +35,8 @@ struct BatterySoc {
   }
 
   build() {
-    Flex({ direction: FlexDirection.Row, alignItems: ItemAlign.Center, justifyContent: FlexAlign.Center }) {
-      Text(this.batterySoc + '%')
-        .height('100%')
-        .fontColor($r('app.color.battery_default_color'))
-        .fontSize($r('app.float.fontSize_network_state'))
-    }
+    Text(this.batterySoc + '%')
+      .fontColor(this.mTintContentInfo.contentColor)
+      .fontSize(this.styleCommon.statusBarFontSize)
   }
 }

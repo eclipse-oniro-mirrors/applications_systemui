@@ -27,6 +27,10 @@
     {
       "name": "itemComp_font_color",
       "value": "#666666"
+    },
+    {
+      "name": "font_color_007DFF",
+      "value": "#007DFF"
     }
   ]
 }

@@ -1,0 +1,113 @@
+{
+  "app": {
+    "compileSdkVersion": 9,
+    "compatibleSdkVersion": 9,
+    "products": [
+      {
+        "name": "default",
+        "signingConfig": "release"
+      }
+    ]
+  },
+  "modules": [
+    {
+      "name": "phone_entry",
+      "srcPath": "./entry/phone",
+      "targets": [
+        {
+          "name": "default",
+        },
+      ],
+    },
+    {
+      "name": "pc_entry",
+      "srcPath": "./entry/pc",
+      "targets": [
+        {
+          "name": "default"
+        },
+      ],
+    },
+    {
+      "name": "default_navigationBar",
+      "srcPath": "./product/default/navigationBar",
+      "targets": [
+        {
+          "name": "default"
+        },
+      ],
+    },
+    {
+      "name": "default_notificationmanagement",
+      "srcPath": "./product/default/notificationmanagement",
+      "targets": [
+        {
+          "name": "default"
+        },
+      ],
+    },
+    {
+      "name": "default_volumepanel",
+      "srcPath": "./product/default/volumepanel",
+      "targets": [
+        {
+          "name": "default"
+        },
+      ],
+    },
+    {
+      "name": "pc_controlpanel",
+      "srcPath": "./product/pc/controlpanel",
+      "targets": [
+        {
+          "name": "default"
+        },
+      ],
+    },
+    {
+      "name": "pc_notificationpanel",
+      "srcPath": "./product/pc/notificationpanel",
+      "targets": [
+        {
+          "name": "default"
+        },
+      ],
+    },
+    {
+      "name": "pc_statusbar",
+      "srcPath": "./product/pc/statusbar",
+      "targets": [
+        {
+          "name": "default"
+        },
+      ],
+    },
+    {
+      "name": "phone_dropdownpanel",
+      "srcPath": "./product/phone/dropdownpanel",
+      "targets": [
+        {
+          "name": "default"
+        },
+      ],
+    },
+    {
+      "name": "phone_statusbar",
+      "srcPath": "./product/phone/statusbar",
+      "targets": [
+        {
+          "name": "default"
+        },
+      ],
+    },
+    {
+      "name": "common",
+      "srcPath": "./common",
+      "targets": [
+        {
+          "name": "default"
+        },
+      ],
+    }
+  ],
+}

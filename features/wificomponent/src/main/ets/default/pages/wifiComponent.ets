@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Huawei Device Co., Ltd.
+ * Copyright (c) 2021-2022 Huawei Device Co., Ltd.
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -13,12 +13,12 @@
  * limitations under the License.
  */
 
-import mWifiManger from '../WifiModel.ets'
-import Log from '../../../../../../../common/src/main/ets/default/Log.ets'
-import FeatureAbilityManager from '../../../../../../../common/src/main/ets/default/abilitymanager/featureAbilityManager.ets'
-import WindowManager from '../../../../../../../common/src/main/ets/default/WindowManager.ets'
-import iconTitleBase from '../../../../../../../common/src/main/ets/template/iconTitleBase.ets'
-import Constants from '../common/constants.ets'
+import mWifiManger from '../WifiModel'
+import Log from '../../../../../../../common/src/main/ets/default/Log'
+import EventManager from "../../../../../../../common/src/main/ets/default/event/EventManager"
+import {obtainStartAbility} from "../../../../../../../common/src/main/ets/default/event/EventUtil"
+import iconTitleBase from '../../../../../../../common/src/main/ets/template/iconTitleBase'
+import Constants from '../common/constants'
 
 const TAG = 'Control-wifiComponent'
 
@@ -30,9 +30,6 @@ export default struct WifiComponent {
   ]
   @StorageLink('wifiName') wifiName: string = Constants.DEFAULT_WIFI_NAME
   @StorageLink('wifiOpenStatus') wifiOpenStatus: boolean = Constants.DEFAULT_WIFI_OPEN_STATUS
-  @StorageLink("showStatusBar") showStatusBar: boolean = false
-  private mWindowManager
-  private mFeatureAbilityManager
 
   mClickEvent() {
     Log.showInfo(TAG, `mClickEvent, wifiOpenStatus: ${this.wifiOpenStatus}`)
@@ -48,22 +45,11 @@ export default struct WifiComponent {
 
   mLongClickEvent() {
     Log.showInfo(TAG, `mLongClickEvent, wifiOpenStatus: ${this.wifiOpenStatus}`)
-
-    this.showStatusBar = true
-    this.mWindowManager.setWindowMin((result) => {
-      this.mFeatureAbilityManager.openAbility(TAG, {
-        want: {
-          bundleName: 'com.ohos.settings',
-          abilityName: 'com.ohos.settings.MainAbility',
-        }
-      })
-    })
+    EventManager.publish(obtainStartAbility('com.ohos.settings', 'com.ohos.settings.WifiAbility'))
   }
 
   aboutToAppear() {
     Log.showInfo(TAG, 'aboutToAppear')
-    this.mWindowManager = new WindowManager()
-    this.mFeatureAbilityManager = new FeatureAbilityManager()
     mWifiManger.initWifiModel()
   }
 
@@ -78,8 +64,8 @@ export default struct WifiComponent {
         iconOn: this.IconInfo[1],
         mTitle: $wifiName,
         changeSwitch: $wifiOpenStatus,
-        mClickEvent: this.mClickEvent.bind(this),
-        mLongClickEvent: this.mLongClickEvent.bind(this)
+        mClickEvent: () => this.mClickEvent(),
+        mLongClickEvent: () => this.mLongClickEvent()
       })
     }.width('100%')
     .height('100%')

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Huawei Device Co., Ltd.
+ * Copyright (c) 2021-2022 Huawei Device Co., Ltd.
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -13,9 +13,9 @@
  * limitations under the License.
  */
 
-import WifiInfo from '@ohos.wifi_native_js';
-import Log from '../../../../../../../common/src/main/ets/default/Log.ets';
-import iconTitleBase from '../../../../../../../common/src/main/ets/template/iconTitleBase.ets'
+import wifi from '@ohos.wifi';
+import Log from '../../../../../../../common/src/main/ets/default/Log';
+import iconTitleBase from '../../../../../../../common/src/main/ets/template/iconTitleBase'
 const TAG = 'Control-airPlaneComponent'
 
 @Component
@@ -41,15 +41,15 @@ struct airplaneComponent {
   mClickEvent() {
     this.flyModelStatus =!this.flyModelStatus
     if (this.flyModelStatus == true) {
-      this.mWifiOriginalStatus = WifiInfo.isWifiActive()
+      this.mWifiOriginalStatus = wifi.isWifiActive();
       console.log(`airplane status is opening, WLAN Original Status ：${this.mWifiOriginalStatus}`)
-      WifiInfo.disableWifi();
+      wifi.disableWifi();
     }else{
       if(this.mWifiOriginalStatus == true) {
-        WifiInfo.enableWifi();
+        wifi.enableWifi()
         console.log(`airplane status closed, WLAN Original Status：${this.mWifiOriginalStatus},get system interface, set WLAN status enableWifi`)
       } else {
-        WifiInfo.disableWifi();
+        wifi.disableWifi();
         console.log(`airplane status closed, WLAN Original Status：${this.mWifiOriginalStatus},,get system interface, set WLAN status disableWifi`)
       }
     }
@@ -70,7 +70,7 @@ struct airplaneComponent {
         iconOn: this.IconInfo[1],
         mTitle: $flyModelTitle,
         changeSwitch: $flyModelStatus,
-        mClickEvent: this.mClickEvent.bind(this)
+        mClickEvent: () => this.mClickEvent()
       })
     }.width('100%')
     .height('100%')

@@ -1,31 +1,24 @@
 {
   "float": [
     {
-      "name": "green_capsule_font_size",
-      "value": "24"
-    }, {
+      "name": "green_capsule_phone_width",
+      "value": "15vp"
+    },
+    {
+      "name": "green_capsule_phone_height",
+      "value": "15vp"
+    },
+    {
+      "name": "green_capsule_height",
+      "value": "48vp"
+    },
+    {
+      "name": "green_capsule_text_left_right",
+      "value": "10vp"
+    },
+    {
       "name": "green_capsule_radius",
-      "value": "25"
-    },
-    {
-      "name": "green_capsule_margin",
-      "value": "16"
-    },
-    {
-      "name" : "green_capsule_text_margin",
-      "value" : "4"
-    },
-    {
-      "name" : "green_capsule_left_margin",
-      "value" : "5"
-    },
-    {
-      "name": "ic_statusbar_phone_width",
-      "value": "30"
-    },
-    {
-      "name": "ic_statusbar_phone_height",
-      "value": "30"
+      "value": "24vp"
     }
   ]
 }

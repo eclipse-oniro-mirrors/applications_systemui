@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Huawei Device Co., Ltd.
+ * Copyright (c) 2021-2022 Huawei Device Co., Ltd.
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -13,8 +13,8 @@
  * limitations under the License.
  */
 
-import Constants from '../../common/constants.ets';
-import Log from '../../../../../../../../../../common/src/main/ets/default/Log.ets';
+import Constants from '../../common/constants';
+import Log from '../../../../../../../../../../common/src/main/ets/default/Log';
 
 const TAG = 'NoticeItem-Confirm';
 
@@ -23,25 +23,26 @@ const TAG = 'NoticeItem-Confirm';
  */
 @CustomDialog
 export default struct ConfirmDialog {
-  private title: string
+  private title: string | Resource
   private bundleName: string
   public controller: CustomDialogController
   public action: () => void
 
   build() {
 
-    Column({ space: 30 }) {
+    Column() {
       Row() {
         Text(this.title)
           .fontSize($r('app.float.confirm_title_fontsize'))
           .fontWeight(FontWeight.Bold)
-      }.width(Constants.SETTING_DIALOG_WITH)
-      .margin({ top: 20 })
+      }.width($r('app.float.confirm_dialog_row_width'))
+      .margin({ top: $r('app.float.title_font_margin_t') })
 
       Row() {
         Text($r('app.string.confirm_message', this.bundleName))
           .fontSize($r('app.float.confirm_cont_fontsize'))
-      }.width(Constants.SETTING_DIALOG_WITH)
+      }.width($r('app.float.confirm_dialog_row_width'))
+      .margin({ top: $r('app.float.message_font_margin_t') })
 
       Row() {
         Column() {
@@ -52,7 +53,7 @@ export default struct ConfirmDialog {
           this.controller.close();
         })
         .alignItems(HorizontalAlign.Center)
-        .width(Constants.CONFIRM_BUTTON_WITH)
+        .width($r('app.float.confirm_dialog_button_width'))
 
         Divider()
           .vertical(true)
@@ -63,18 +64,20 @@ export default struct ConfirmDialog {
           Text($r('app.string.close'))
             .fontSize($r('app.float.confirm_cont_fontsize'))
             .fontColor(Color.Red)
-
         }.onClick(() => {
           Log.showInfo(TAG, `confirm button of TimeDialog on click`)
           this.controller.close();
           this.action();
         })
         .alignItems(HorizontalAlign.Center)
-        .width(Constants.CONFIRM_BUTTON_WITH)
+        .width($r('app.float.confirm_dialog_button_width'))
       }
-      .width(Constants.CONFIRM_DIALOG_WITH)
-      .height($r('app.float.confirm_button_height'))
-    }.height(Constants.CONFIRM_DIALOG_HEIGHT)
-
+      .width($r('app.float.confirm_dialog_width'))
+      .margin({ top: $r('app.float.confirm_button_margin_t') })
+    }.height($r('app.float.confirm_dialog_height'))
+    .width($r('app.float.confirm_dialog_width'))
+    .backgroundColor('#FFFFFFFF')
+    .border({ width: $r('app.float.setting_border_width'), color: Color.White,
+      radius: $r('app.float.notification_border_radius') })
   }
 }

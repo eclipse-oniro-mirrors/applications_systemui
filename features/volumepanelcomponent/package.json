@@ -1,0 +1,12 @@
+{
+  "name": "@ohos/volumepanelcomponent",
+  "version": "1.0.0",
+  "description": "a npm package which contains volumepanelcomponent function",
+  "ohos": {
+    "org": "huawei",
+    "buildTool": "hvigor",
+    "directoryLevel": "module"
+  },
+  "dependencies": {
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "module": {
+    "name": "navigationservice",
+    "type": "har",
+    "deviceTypes": [
+      "phone",
+    ],
+    "uiSyntax": "ets"
+  }
+}

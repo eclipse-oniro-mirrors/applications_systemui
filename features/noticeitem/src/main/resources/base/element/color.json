@@ -2,7 +2,7 @@
   "color": [
     {
       "name":"notificationitem_background",
-      "value":"#ffffff"
+      "value":"#ffffffff"
     },
     {
       "name":"title_text_color",
@@ -43,6 +43,14 @@
     {
       "name":"transparent",
       "value":"#00000000"
+    },
+    {
+      "name": "button_background",
+      "value": "#4d000000"
+    },
+    {
+      "name": "device_divider_color",
+      "value": "#E3E3E3"
     }
   ]
 }

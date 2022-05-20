@@ -1,0 +1,10 @@
+{
+  "module": {
+    "name": "statusbarcomponent",
+    "type": "har",
+    "deviceTypes": [
+      "phone",
+    ],
+    "uiSyntax": "ets"
+  }
+}

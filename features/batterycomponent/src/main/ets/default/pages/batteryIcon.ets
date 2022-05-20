@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Huawei Device Co., Ltd.
+ * Copyright (c) 2021-2022 Huawei Device Co., Ltd.
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -13,11 +13,13 @@
  * limitations under the License.
  */
 
-import mBatteryModel from '../batteryModel.ets';
-import BatteryPic from './batteryPic.ets'
+import mBatteryModel from '../batteryModel';
+import BatteryPic from './batteryPic'
 import BatterySoc from './batterySoc'
-import Constants from '../common/constants.ets'
-import Log from '../../../../../../../common/src/main/ets/default/Log.ets'
+import Constants from '../common/constants'
+import Log from '../../../../../../../common/src/main/ets/default/Log'
+import StyleConfigurationCommon from '../../../../../../../common/src/main/ets/default/StyleConfiguration'
+import StyleConfiguration from '../common/StyleConfiguration'
 
 const TAG = 'BatteryComponent-batteryIcon'
 
@@ -25,6 +27,8 @@ const TAG = 'BatteryComponent-batteryIcon'
 export default struct BatteryIcon {
   @StorageLink('batterySoc') batterySoc: number = 100
   @StorageLink('StatusCoefficient') StatusCoefficient: number = 1.0
+  @State style: any = StyleConfiguration.getBatteryComponentStyle()
+  @State styleCommon: any = StyleConfigurationCommon.getCommonStyle()
 
   aboutToAppear() {
     mBatteryModel.initBatteryModel();
@@ -36,19 +40,13 @@ export default struct BatteryIcon {
   }
 
   build() {
-    Flex({ direction: FlexDirection.Row, alignItems: ItemAlign.Center, justifyContent: FlexAlign.Center }) {
-      Flex({ direction: FlexDirection.Row, alignItems: ItemAlign.Center, justifyContent: FlexAlign.Center }) {
-        BatterySoc()
-      }
-
-      Flex({ direction: FlexDirection.Row, alignItems: ItemAlign.Center, justifyContent: FlexAlign.Center }) {
-        BatteryPic()
-      }
-      .width('70%')
-      .height('100%')
+    Row() {
+      Row().width(this.styleCommon.statusBarMarginLeftRight).height('100%')
+      BatterySoc()
+      Row().width(this.style.componentGap).height('100%')
+      BatteryPic()
+      Row().width(this.styleCommon.statusBarMarginLeftRight).height('100%')
     }
-    .width(`${Constants.WHOLE_CONTAINER_WIDTH * this.StatusCoefficient}px`)
-    .height(`${Constants.WHOLE_CONTAINER_HEIGHT * this.StatusCoefficient}px`)
-    .margin($r('app.float.whole_container_margin'))
+    .height('100%')
   }
 }
