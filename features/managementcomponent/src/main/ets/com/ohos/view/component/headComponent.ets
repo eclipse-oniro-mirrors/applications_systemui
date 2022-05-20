@@ -43,7 +43,7 @@ struct HeadComponent {
       Text(this.headName)
         .fontColor($r('sys.color.ohos_id_color_text_primary'))
         .fontSize($r('app.float.page_phrases_tittle_font'))
-        .fontWeight(FontWeight.Bold)
+        .fontWeight(FontWeight.Medium)
         .width(ConfigData.WH_100_100)
         .maxLines(ConfigData.MAX_LINES_1)
         .textOverflow({ overflow: TextOverflow.Ellipsis })
@@ -51,7 +51,6 @@ struct HeadComponent {
     }
     .width(ConfigData.WH_100_100)
     .height($r('app.float.page_title_height'))
-    .margin({top:$r('app.float.page_header_margin_t')})
     .alignItems(VerticalAlign.Center)
     .align(Alignment.Start)
   }
