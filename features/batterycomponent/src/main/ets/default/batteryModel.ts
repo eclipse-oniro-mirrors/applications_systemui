@@ -28,7 +28,7 @@ const SUBSCRIBE_INFO = {
 };
 
 function getChargingStatus(state: typeof BatteryInfo.BatteryChargeState): boolean {
-  Log.showInfo(TAG, `charging status update: ${state}`);
+  Log.showDebug(TAG, `charging status update: ${state}`);
   let batteryStatus = false;
   switch (state) {
     case BatteryInfo.BatteryChargeState.DISABLE:

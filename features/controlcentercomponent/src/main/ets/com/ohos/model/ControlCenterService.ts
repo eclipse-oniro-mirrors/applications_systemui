@@ -120,6 +120,7 @@ export class ControlCenterService {
         Log.showInfo(TAG, `loadSimpleToggleLayoutTemplate`);
         this.mSimpleToggleLayoutTemplate = [];
         let simpleToggleLayout = this.getSimpleToggleLayoutFromSettings();
+        Log.showDebug(TAG, `simpleToggleLayout: ${JSON.stringify(simpleToggleLayout)}`);
         if (simpleToggleLayout) {
             this.mSimpleToggleLayoutTemplate = simpleToggleLayout;
         } else {
@@ -185,8 +186,6 @@ export class ControlCenterService {
         let controlData: ControlComponentData = parseData(itemData);
         let id: string = controlData.id;
         this.mListener?.setItemData(id, controlData);
-        Log.showInfo(TAG, `controlData.toggleType == Constants.TOGGLE_TYPE_COMPLEX: ${controlData.toggleType == Constants.TOGGLE_TYPE_COMPLEX}`);
-        Log.showInfo(TAG, `this.mAllComplexToggles.indexOf(id) < 0: ${this.mAllComplexToggles.indexOf(id) < 0}`);
         if (controlData.toggleType == Constants.TOGGLE_TYPE_COMPLEX) {
             if (this.mAllComplexToggles.indexOf(id) < 0) {
                 this.mAllComplexToggles.push(id);

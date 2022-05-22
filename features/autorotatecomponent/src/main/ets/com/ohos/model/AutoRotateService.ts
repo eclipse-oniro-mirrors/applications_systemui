@@ -84,7 +84,7 @@ export class AutoRotateService {
   }
 
   updateAutoRotateSwitchStatus(orientation: number): void{
-    Log.showInfo(TAG, `updateAutoRotateSwitchStatus, orientation: ${orientation}`);
+    Log.showDebug(TAG, `updateAutoRotateSwitchStatus, orientation: ${orientation}`);
     if (orientation == 0) {
       this.mListener?.updateAutoRotateSwitchStatus(false);
     } else if (orientation == 5) {

@@ -74,7 +74,7 @@ struct BatteryPic {
   }
 
   private getBatteryColor(val, charging) {
-    Log.showInfo(TAG, `getBatteryColor, val: ${ val }  charging: ${ charging } `);
+    Log.showDebug(TAG, `getBatteryColor, val: ${ val }  charging: ${ charging } `);
     if (charging) {
       return this.style.picChargingColor;
     } else if (val <= Constants.BATTERY_LEVEL_LOW) {

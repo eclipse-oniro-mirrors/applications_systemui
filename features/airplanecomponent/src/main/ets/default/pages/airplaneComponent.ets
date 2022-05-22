@@ -41,6 +41,7 @@ struct airplaneComponent {
  */
   mClickEvent() {
     this.flyModelStatus =!this.flyModelStatus;
+    Log.showDebug(TAG, `flyModelStatus：${this.flyModelStatus}`);
     if (this.flyModelStatus == true) {
       this.mWifiOriginalStatus = wifi.isWifiActive();
       Log.showInfo(TAG, `airplane status is opening, WLAN Original Status ：${this.mWifiOriginalStatus}`);
@@ -52,8 +53,8 @@ struct airplaneComponent {
       } else {
         wifi.disableWifi();
         Log.showInfo(TAG, `airplane status closed, WLAN Original Status：${this.mWifiOriginalStatus},,get system interface, set WLAN status disableWifi`);
-      }
-    }
+      };
+    };
   }
 
   aboutToAppear(){
