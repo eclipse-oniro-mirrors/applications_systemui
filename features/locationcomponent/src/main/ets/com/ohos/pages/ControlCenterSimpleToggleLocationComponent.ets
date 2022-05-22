@@ -13,32 +13,32 @@
  * limitations under the License.
  */
 
-import Log from '../../../../../../../../common/src/main/ets/default/Log'
-import EventManager from "../../../../../../../../common/src/main/ets/default/event/EventManager"
-import {obtainStartAbility} from "../../../../../../../../common/src/main/ets/default/event/EventUtil"
-import {LocationData} from '../common/Constants'
-import ViewModel from '../viewmodel/LocationVM'
-import SimpleToggleBase from '../../../../../../../../common/src/main/ets/template/SimpleToggleBase'
+import Log from '../../../../../../../../common/src/main/ets/default/Log';
+import EventManager from "../../../../../../../../common/src/main/ets/default/event/EventManager";
+import {obtainStartAbility} from "../../../../../../../../common/src/main/ets/default/event/EventUtil";
+import {LocationData} from '../common/Constants';
+import ViewModel from '../viewmodel/LocationVM';
+import SimpleToggleBase from '../../../../../../../../common/src/main/ets/template/SimpleToggleBase';
 
-const TAG = 'location-ControlCenterSimpleToggleLocationComponent'
+const TAG = 'location-ControlCenterSimpleToggleLocationComponent';
 
 @Component
 export default struct ControlCenterSimpleToggleLocationComponent {
-  private keyId: string
-  private mEditMode: boolean = false
-  private mDragMode: boolean = false
-  @State mIcon: Resource = $r("app.media.ic_controlcenter_gps")
-  @State mLabel: Resource = $r("app.string.control_center_complex_toggle_location_title")
-  @State mLocationData: LocationData = new LocationData()
+  private keyId: string;
+  private mEditMode: boolean = false;
+  private mDragMode: boolean = false;
+  @State mIcon: Resource = $r("app.media.ic_controlcenter_gps");
+  @State mLabel: Resource = $r("app.string.control_center_complex_toggle_location_title");
+  @State mLocationData: LocationData = new LocationData();
 
   aboutToAppear() {
-    Log.showInfo(TAG, 'aboutToAppear')
-    ViewModel.initViewModel()
-    this.mLocationData = ViewModel.getLocationData()
+    Log.showDebug(TAG, 'aboutToAppear');
+    ViewModel.initViewModel();
+    this.mLocationData = ViewModel.getLocationData();
   }
 
   aboutToDisappear() {
-    Log.showInfo(TAG, 'aboutToDisappear')
+    Log.showDebug(TAG, 'aboutToDisappear');
   }
 
   build() {
@@ -55,16 +55,16 @@ export default struct ControlCenterSimpleToggleLocationComponent {
   }
 
   mClickEvent() {
-    Log.showInfo(TAG, `mClickEvent, isEnabled: ${this.mLocationData.isEnabled}`)
+    Log.showInfo(TAG, `mClickEvent, isEnabled: ${this.mLocationData.isEnabled}`);
     if (this.mLocationData.isEnabled) {
-      ViewModel.disableLocation()
+      ViewModel.disableLocation();
     } else {
-      ViewModel.enableLocation()
-    }
+      ViewModel.enableLocation();
+    };
   }
 
   mLongClickEvent() {
-    Log.showInfo(TAG, `mLongClickEvent`)
-    EventManager.publish(obtainStartAbility('com.ohos.settings', 'com.ohos.settings.MainAbility'))
+    Log.showInfo(TAG, `mLongClickEvent`);
+    EventManager.publish(obtainStartAbility('com.ohos.settings', 'com.ohos.settings.MainAbility'));
   }
 }

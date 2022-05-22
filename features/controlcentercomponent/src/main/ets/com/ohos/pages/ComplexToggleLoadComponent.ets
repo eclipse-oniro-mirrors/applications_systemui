@@ -13,25 +13,25 @@
  * limitations under the License.
  */
 
-import Log from '../../../../../../../../common/src/main/ets/default/Log'
-import {FASlotName} from '../../../../../../../../common/src/main/ets/default/Constants'
-import AirPlaneComponent from "../../../../../../../airplanecomponent/src/main/ets/default/pages/airplaneComponent"
-import WifiComponent from '../../../../../../../wificomponent/src/main/ets/default/pages/wifiComponent'
-import BluetoothComponent from '../../../../../../../bluetoothcomponent/src/main/ets/com/ohos/pages/ControlCenterComplexToggleBluetoothComponent'
-import ComplexToggleComponent from './ComplexToggleComponent'
+import Log from '../../../../../../../../common/src/main/ets/default/Log';
+import {FASlotName} from '../../../../../../../../common/src/main/ets/default/Constants';
+import AirPlaneComponent from "../../../../../../../airplanecomponent/src/main/ets/default/pages/airplaneComponent";
+import WifiComponent from '../../../../../../../wificomponent/src/main/ets/default/pages/wifiComponent';
+import BluetoothComponent from '../../../../../../../bluetoothcomponent/src/main/ets/com/ohos/pages/ControlCenterComplexToggleBluetoothComponent';
+import ComplexToggleComponent from './ComplexToggleComponent';
 
-const TAG = 'ComplexToggleLoadComponent'
+const TAG = 'ComplexToggleLoadComponent';
 
 @Component
 export default struct ComplexToggleLoadComponent {
-  @Prop keyId: string
+  @Prop keyId: string;
 
   aboutToAppear() {
-    Log.showInfo(TAG, `aboutToAppear Start, keyId: ${this.keyId}`)
+    LLog.showDebug(TAG, `aboutToAppear Start, keyId: ${this.keyId}`);
   }
 
   aboutToDisappear() {
-    Log.showInfo(TAG, `aboutToDisappear`)
+    Log.showDebug(TAG, `aboutToDisappear`);
   }
 
   build() {

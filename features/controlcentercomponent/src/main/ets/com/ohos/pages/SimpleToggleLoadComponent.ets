@@ -13,13 +13,13 @@
  * limitations under the License.
  */
 
-import Log from '../../../../../../../../common/src/main/ets/default/Log'
-import {FASlotName} from '../../../../../../../../common/src/main/ets/default/Constants'
-import LocationComponent from '../../../../../../../locationcomponent/src/main/ets/com/ohos/pages/ControlCenterSimpleToggleLocationComponent'
-import RingModeComponent from '../../../../../../../ringmodecomponent/src/main/ets/com/ohos/pages/ControlCenterSimpleToggleRingModeComponent'
-import SimpleToggleComponent from './SimpleToggleComponent'
+import Log from '../../../../../../../../common/src/main/ets/default/Log';
+import {FASlotName} from '../../../../../../../../common/src/main/ets/default/Constants';
+import LocationComponent from '../../../../../../../locationcomponent/src/main/ets/com/ohos/pages/ControlCenterSimpleToggleLocationComponent';
+import RingModeComponent from '../../../../../../../ringmodecomponent/src/main/ets/com/ohos/pages/ControlCenterSimpleToggleRingModeComponent';
+import SimpleToggleComponent from './SimpleToggleComponent';
 
-const TAG = 'SimpleToggleLoadComponent'
+const TAG = 'SimpleToggleLoadComponent';
 
 @Component
 export default struct SimpleToggleLoadComponent {
@@ -28,12 +28,11 @@ export default struct SimpleToggleLoadComponent {
   private mDragMode: boolean = false
 
   aboutToAppear() {
-    Log.showInfo(TAG, `aboutToAppear Start, keyId: ${this.keyId}`)
-    Log.showInfo(TAG, `aboutToAppear Start, mEditMode: ${this.mEditMode} mDragMode: ${this.mDragMode}`)
+    Log.showDebug(TAG, `aboutToAppear Start, keyId: ${this.keyId}, mEditMode: ${this.mEditMode} mDragMode: ${this.mDragMode}`);
   }
 
   aboutToDisappear() {
-    Log.showInfo(TAG, `aboutToDisappear`)
+    Log.showDebug(TAG, `aboutToDisappear`);
   }
 
   build() {

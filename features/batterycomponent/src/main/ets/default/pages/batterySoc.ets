@@ -13,25 +13,25 @@
  * limitations under the License.
  */
 
-import Log from '../../../../../../../common/src/main/ets/default/Log'
-import StyleConfigurationCommon from '../../../../../../../common/src/main/ets/default/StyleConfiguration'
-import {TintContentInfo} from '../../../../../../../common/src/main/ets/default/TintStateManager'
-import ViewModel from '../viewmodel/BatteryVM'
+import Log from '../../../../../../../common/src/main/ets/default/Log';
+import StyleConfigurationCommon from '../../../../../../../common/src/main/ets/default/StyleConfiguration';
+import {TintContentInfo} from '../../../../../../../common/src/main/ets/default/TintStateManager';
+import ViewModel from '../viewmodel/BatteryVM';
 
-const TAG = 'BatteryComponent-batterySoc'
+const TAG = 'BatteryComponent-batterySoc';
 @Component
 export default
 struct BatterySoc {
-  @StorageLink('batterySoc') batterySoc: number = 100
-  @State mTintContentInfo: TintContentInfo = ViewModel.getTintContentInfo()
-  @State styleCommon: any = StyleConfigurationCommon.getCommonStyle()
+  @StorageLink('batterySoc') batterySoc: number = 100;
+  @State mTintContentInfo: TintContentInfo = ViewModel.getTintContentInfo();
+  @State styleCommon: any = StyleConfigurationCommon.getCommonStyle();
 
   aboutToAppear(){
-    Log.showInfo(TAG,'aboutToAppear Start');
+    Log.showDebug(TAG,'aboutToAppear Start');
   }
 
   aboutToDisappear(){
-    Log.showInfo(TAG,'aboutToDisappear');
+    Log.showDebug(TAG,'aboutToDisappear');
   }
 
   build() {

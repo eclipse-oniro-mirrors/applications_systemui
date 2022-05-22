@@ -18,12 +18,8 @@ import commonEvent from "@ohos.commonEvent";
 import createOrGet from "../../../../../../common/src/main/ets/default/SingleInstanceHelper";
 import Constants from "./common/constants";
 import Log from "../../../../../../common/src/main/ets/default/Log";
-import { CommonEventData } from "commonEvent/commonEventData";
-import {
-  CommonEventManager,
-  getCommonEventManager,
-  POLICY,
-} from "../../../../../../common/src/main/ets/default/commonEvent/CommonEventManager";
+import {CommonEventData} from "commonEvent/commonEventData";
+import {CommonEventManager, getCommonEventManager, POLICY} from "../../../../../../common/src/main/ets/default/commonEvent/CommonEventManager";
 
 const TAG = "BatteryComponent-batteryModel";
 const DEFAULT_PROGRESS = 100;

@@ -13,31 +13,31 @@
  * limitations under the License.
  */
 
-import Constants from '../common/constants'
-import CapsuleViewModel, {VIEW_MODEL_ID, CallState} from '../viewmodel/CapsuleViewModel'
-import Log from '../../../../../../../common/src/main/ets/default/Log'
-import StyleConfigurationCommon from '../../../../../../../common/src/main/ets/default/StyleConfiguration'
-import StyleConfiguration from '../common/StyleConfiguration'
+import Constants from '../common/constants';
+import CapsuleViewModel, {VIEW_MODEL_ID, CallState} from '../viewmodel/CapsuleViewModel';
+import Log from '../../../../../../../common/src/main/ets/default/Log';
+import StyleConfigurationCommon from '../../../../../../../common/src/main/ets/default/StyleConfiguration';
+import StyleConfiguration from '../common/StyleConfiguration';
 
 const TAG = "CapsuleIcon";
 
 @Component
 export default struct CapsuleIcon {
   @StorageLink(VIEW_MODEL_ID) mCapsuleViewModel: CapsuleViewModel = CapsuleViewModel.getInstance();
-  startX: number = 0
-  startY: number = 0
-  moveX: number = 0
-  moveY: number = 0
-  @State style: any = StyleConfiguration.getCapsuleComponentStyle()
-  @State styleCommon: any = StyleConfigurationCommon.getCommonStyle()
+  startX: number = 0;
+  startY: number = 0;
+  moveX: number = 0;
+  moveY: number = 0;
+  @State style: any = StyleConfiguration.getCapsuleComponentStyle();
+  @State styleCommon: any = StyleConfigurationCommon.getCommonStyle();
 
   aboutToAppear() {
     this.mCapsuleViewModel.initViewModel();
-    Log.showInfo(TAG, 'aboutToAppear, text: ' + this.mCapsuleViewModel.mText);
+    Log.showDebug(TAG, 'aboutToAppear, text: ' + this.mCapsuleViewModel.mText);
   }
 
   aboutToDisappear() {
-    Log.showInfo(TAG, 'aboutToDisappear');
+    Log.showDebug(TAG, 'aboutToDisappear');
   }
 
   build() {
@@ -70,7 +70,7 @@ export default struct CapsuleIcon {
   }
 
   touchEvent(event: TouchEvent) {
-    Log.showInfo(TAG, `touchEventtouchEventtouchEvent`)
+    Log.showInfo(TAG, `touchEventtouchEventtouchEvent`);
     if (event.type == Constants.TOUCH_TYPE_DOWN) {
       this.startX = event.touches[0].screenX;
       this.startY = event.touches[0].screenY;
@@ -86,7 +86,7 @@ export default struct CapsuleIcon {
         event.stopPropagation();
         this.mCapsuleViewModel.onClickEvent();
         this.mCapsuleViewModel.mIsBackground = false;
-      }
-    }
+      };
+    };
   }
 }

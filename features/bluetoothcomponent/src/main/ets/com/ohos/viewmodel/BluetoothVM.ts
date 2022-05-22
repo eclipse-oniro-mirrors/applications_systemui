@@ -30,7 +30,7 @@ export class BluetoothVM {
   mTintContentInfo: TintContentInfo = getOrCreateTintContentInfo(FASlotName.BLUETOOTH);
 
   constructor() {
-    Log.showInfo(TAG, `constructor`)
+    Log.showInfo(TAG, `constructor`);
   }
 
   initViewModel() {
@@ -45,7 +45,7 @@ export class BluetoothVM {
   }
 
   updateState(state: boolean) {
-    Log.showInfo(TAG, `updateState, state: ${state} this.mBluetoothOpenStatus ${this.mBluetoothOpenStatus}`)
+    Log.showInfo(TAG, `updateState, state: ${state} this.mBluetoothOpenStatus ${this.mBluetoothOpenStatus}`);
     this.mBluetoothOpenStatus.set(state);
   }
 

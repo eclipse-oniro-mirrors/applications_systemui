@@ -13,30 +13,30 @@
  * limitations under the License.
  */
 
-import Log from '../../../../../../../../common/src/main/ets/default/Log'
-import EventManager from "../../../../../../../../common/src/main/ets/default/event/EventManager"
-import {obtainStartAbility} from "../../../../../../../../common/src/main/ets/default/event/EventUtil"
-import ViewModel from '../viewmodel/BluetoothVM'
-import iconTitleBase from '../../../../../../../../common/src/main/ets/template/iconTitleBase'
+import Log from '../../../../../../../../common/src/main/ets/default/Log';
+import EventManager from "../../../../../../../../common/src/main/ets/default/event/EventManager";
+import {obtainStartAbility} from "../../../../../../../../common/src/main/ets/default/event/EventUtil";
+import ViewModel from '../viewmodel/BluetoothVM';
+import iconTitleBase from '../../../../../../../../common/src/main/ets/template/iconTitleBase';
 
-const TAG = 'bluetooth-ControlCenterComplexToggleBluetoothComponent'
+const TAG = 'bluetooth-ControlCenterComplexToggleBluetoothComponent';
 
 @Component
 export default struct ControlCenterComplexToggleBluetoothComponent {
   private IconInfo: any[] = [
     $r("app.media.ic_controlcenter_bt_d"),
     $r("app.media.ic_controlcenter_bt"),
-  ]
-  @State mTitle: Resource = $r("app.string.control_center_complex_toggle_bluetooth_title")
-  @StorageLink('BluetoothOpenStatus') BluetoothOpenStatus: boolean = false
+  ];
+  @State mTitle: Resource = $r("app.string.control_center_complex_toggle_bluetooth_title");
+  @StorageLink('BluetoothOpenStatus') BluetoothOpenStatus: boolean = false;
 
   aboutToAppear() {
-    Log.showInfo(TAG, 'aboutToAppear')
-    ViewModel.initViewModel()
+    Log.showDebug(TAG, 'aboutToAppear');
+    ViewModel.initViewModel();
   }
 
   aboutToDisappear() {
-    Log.showInfo(TAG, 'aboutToDisappear')
+    Log.showDebug(TAG, 'aboutToDisappear');
   }
 
   build() {
@@ -54,16 +54,16 @@ export default struct ControlCenterComplexToggleBluetoothComponent {
   }
 
   mClickEvent() {
-    Log.showInfo(TAG, `mClickEvent, BluetoothOpenStatus: ${this.BluetoothOpenStatus}`)
+    Log.showInfo(TAG, `mClickEvent, BluetoothOpenStatus: ${this.BluetoothOpenStatus}`);
     if (this.BluetoothOpenStatus) {
-      ViewModel.disableBluetooth()
+      ViewModel.disableBluetooth();
     } else {
-      ViewModel.enableBluetooth()
-    }
+      ViewModel.enableBluetooth();
+    };
   }
 
   mLongClickEvent() {
-    Log.showInfo(TAG, `mLongClickEvent, BluetoothOpenStatus: ${this.BluetoothOpenStatus}`)
-    EventManager.publish(obtainStartAbility('com.ohos.settings', 'com.ohos.settings.BluetoothAbility'))
+    Log.showInfo(TAG, `mLongClickEvent, BluetoothOpenStatus: ${this.BluetoothOpenStatus}`);
+    EventManager.publish(obtainStartAbility('com.ohos.settings', 'com.ohos.settings.BluetoothAbility'));
   }
 }

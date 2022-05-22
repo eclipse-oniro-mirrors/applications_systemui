@@ -13,10 +13,10 @@
  * limitations under the License.
  */
 
-import CapsuleModel from '../model/CapsuleModel'
-import Log from '../../../../../../../common/src/main/ets/default/Log'
-import AbilityManager from '../../../../../../../common/src/main/ets/default/abilitymanager/abilityManager'
-import ResourceUtil from '../../../../../../../common/src/main/ets/default/ResourceUtil'
+import CapsuleModel from '../model/CapsuleModel';
+import Log from '../../../../../../../common/src/main/ets/default/Log';
+import AbilityManager from '../../../../../../../common/src/main/ets/default/abilitymanager/abilityManager';
+import ResourceUtil from '../../../../../../../common/src/main/ets/default/ResourceUtil';
 
 let sCapsuleViewModel;
 
@@ -59,7 +59,7 @@ export default class CapsuleViewModel {
   async initViewModel() {
     this.mCallback = {
       "onStateChange": this.onStateChange.bind(this)
-    }
+    };
     CapsuleModel.registerCallback(this.mCallback);
   }
 
@@ -75,7 +75,7 @@ export default class CapsuleViewModel {
       clearTimeout(this.mTimeMeter);
       if (this.mCallState != CallState.CALL_ACTIVE) {
         this.mStartTime = new Date().valueOf();
-      }
+      };
       this.mCallState = data.callState;
 
       let startTime;
@@ -86,10 +86,10 @@ export default class CapsuleViewModel {
           startTime = new Date().valueOf();
         } else {
           startTime = this.mStartTime;
-        }
+        };
       } else {
         startTime = data.startTime;
-      }
+      };
 
       this.startUpdateTime(startTime);
     } else if (data.callState == CallState.CALL_DISCONNECTED){
@@ -101,7 +101,7 @@ export default class CapsuleViewModel {
     } else {
       this.mStartTime = 0;
       this.mText  =await ResourceUtil.getString($r("app.string.communicate_by_phone"));
-    }
+    };
     this.mCallState = data.callState;
   }
 
@@ -135,7 +135,7 @@ export default class CapsuleViewModel {
     if (sCapsuleViewModel == null) {
       sCapsuleViewModel = new CapsuleViewModel();
       AppStorage.SetAndLink(VIEW_MODEL_ID, sCapsuleViewModel);
-    }
+    };
     return sCapsuleViewModel;
   }
 }

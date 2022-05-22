@@ -26,8 +26,8 @@ const TAG = 'Control-brightnessManager';
 var mBrightnessValue = AppStorage.SetAndLink('BrightnessValue', 100);
 
 export class brightnessManager {
-  helper: any
-  uri: string
+  helper: any;
+  uri: string;
   SLIDER_CHANG_MODE_MOVING = 1;
 
   init(): void{
@@ -40,7 +40,7 @@ export class brightnessManager {
 
   registerBrightness() {
     this.helper.on("dataChange", this.uri, (err) => {
-      let data = settings.getValueSync(this.helper, SYSTEMUI_BRIGHTNESS, '100')
+      let data = settings.getValueSync(this.helper, SYSTEMUI_BRIGHTNESS, '100');
       Log.showInfo(TAG, `after brightness datachange settings getValue ${parseInt(data)}`);
       mBrightnessValue.set(parseInt(data));
     })

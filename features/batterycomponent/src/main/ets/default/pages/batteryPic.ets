@@ -13,28 +13,28 @@
  * limitations under the License.
  */
 
-import Constants from '../common/constants'
-import Log from '../../../../../../../common/src/main/ets/default/Log'
-import {TintContentInfo} from '../../../../../../../common/src/main/ets/default/TintStateManager'
-import StyleConfiguration from '../common/StyleConfiguration'
-import ViewModel from '../viewmodel/BatteryVM'
+import Constants from '../common/constants';
+import Log from '../../../../../../../common/src/main/ets/default/Log';
+import {TintContentInfo} from '../../../../../../../common/src/main/ets/default/TintStateManager';
+import StyleConfiguration from '../common/StyleConfiguration';
+import ViewModel from '../viewmodel/BatteryVM';
 
-const TAG = 'BatteryComponent-batteryPic'
+const TAG = 'BatteryComponent-batteryPic';
 
 @Component
 export default
 struct BatteryPic {
-  @StorageLink('batterySoc') batterySoc: number = 100
-  @StorageLink('batteryCharging') batteryCharging : boolean = false
-  @State mTintContentInfo: TintContentInfo = ViewModel.getTintContentInfo()
-  @State style: any = StyleConfiguration.getBatteryPicStyle()
+  @StorageLink('batterySoc') batterySoc: number = 100;
+  @StorageLink('batteryCharging') batteryCharging : boolean = false;
+  @State mTintContentInfo: TintContentInfo = ViewModel.getTintContentInfo();
+  @State style: any = StyleConfiguration.getBatteryPicStyle();
 
   aboutToAppear(){
-    Log.showInfo(TAG,'aboutToAppear Start');
+    Log.showDebug(TAG,'aboutToAppear Start');
   }
 
   aboutToDisappear(){
-    Log.showInfo(TAG,'aboutToDisappear');
+    Log.showDebug(TAG,'aboutToDisappear');
   }
 
   build() {

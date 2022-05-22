@@ -13,38 +13,35 @@
  * limitations under the License.
  */
 
-import Log from '../../../../../../../../common/src/main/ets/default/Log'
-import EventManager from '../../../../../../../../common/src/main/ets/default/event/EventManager'
-import SimpleToggleBase from '../../../../../../../../common/src/main/ets/template/SimpleToggleBase'
+import Log from '../../../../../../../../common/src/main/ets/default/Log';
+import EventManager from '../../../../../../../../common/src/main/ets/default/event/EventManager';
+import SimpleToggleBase from '../../../../../../../../common/src/main/ets/template/SimpleToggleBase';
 
-const TAG = 'SimpleToggleComponent'
+const TAG = 'SimpleToggleComponent';
 
 @Component
 export default struct SimpleToggleComponent {
-  private keyId: string
-  @State mItemData: any = {}
-  private mEditMode: boolean = false
-  private mDragMode: boolean = false
-  @State mDefaultIcon: Resource = $r("app.media.icon")
-  @State mDefaultChangeSwitch: boolean  = false
-  @State mDefaultLabel: string = ''
+  private keyId: string;
+  @State mItemData: any = {};
+  private mEditMode: boolean = false;
+  private mDragMode: boolean = false;
+  @State mDefaultIcon: Resource = $r("app.media.icon");
+  @State mDefaultChangeSwitch: boolean  = false;
+  @State mDefaultLabel: string = '';
 
   aboutToAppear() {
-    Log.showInfo(TAG, `aboutToAppear Start, keyId: ${this.keyId}`)
-    Log.showInfo(TAG, `aboutToAppear Start, mEditMode: ${this.mEditMode} mDragMode: ${this.mDragMode}`)
-    this.linkItemData()
+    Log.showDebug(TAG, `aboutToAppear Start, keyId: ${this.keyId}, mEditMode: ${this.mEditMode} mDragMode: ${this.mDragMode}`);
+    this.linkItemData();
   }
 
   aboutToDisappear() {
-    Log.showInfo(TAG, `aboutToDisappear`)
+    Log.showDebug(TAG, `aboutToDisappear`);
   }
 
   linkItemData() {
-    Log.showInfo(TAG, `linkItemData, keyId: ${this.keyId}`)
-    this.mItemData = AppStorage.Link('ControlCenter_' + this.keyId)
-    Log.showInfo(TAG, `linkItemData, mItemData: ${this.keyId} ${this.mItemData.get().label} ${
-    this.mItemData.get()
-    .iconUrl}`)
+    Log.showInfo(TAG, `linkItemData, keyId: ${this.keyId}`);
+    this.mItemData = AppStorage.Link('ControlCenter_' + this.keyId);
+    Log.showInfo(TAG, `linkItemData, mItemData: ${this.keyId} ${this.mItemData.get().label} ${this.mItemData.get().iconUrl}`);
   }
 
   build() {
@@ -68,16 +65,16 @@ export default struct SimpleToggleComponent {
   }
 
   onIconItemClick() {
-    Log.showInfo(TAG, `onIconItemClick`)
+    Log.showInfo(TAG, `onIconItemClick`);
     if (this.mItemData.get()?.actionData?.clickAction) {
       EventManager.publish(this.mItemData.get().actionData.clickAction);
-    }
+    };
   }
 
   onIconItemLongPressGesture() {
-    Log.showInfo(TAG, `onIconItemLongPressGesture`)
+    Log.showInfo(TAG, `onIconItemLongPressGesture`);
     if (this.mItemData.get()?.actionData?.longClickAction) {
       EventManager.publish(this.mItemData.get().actionData.longClickAction);
-    }
+    };
   }
 }

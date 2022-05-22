@@ -13,35 +13,33 @@
  * limitations under the License.
  */
 
-import Log from '../../../../../../../../common/src/main/ets/default/Log'
-import EventManager from '../../../../../../../../common/src/main/ets/default/event/EventManager'
-import iconTitleBase from '../../../../../../../../common/src/main/ets/template/iconTitleBase'
-import Constants from '../common/Constants'
+import Log from '../../../../../../../../common/src/main/ets/default/Log';
+import EventManager from '../../../../../../../../common/src/main/ets/default/event/EventManager';
+import iconTitleBase from '../../../../../../../../common/src/main/ets/template/iconTitleBase';
+import Constants from '../common/Constants';
 
-const TAG = 'ComplexToggleComponent'
+const TAG = 'ComplexToggleComponent';
 
 @Component
 export default struct ComplexToggleComponent {
-  @Prop keyId: string
-  @State mItemData: any = {}
-  @State mStatus: boolean = false
-  @State mDefaultTitle: string = ''
+  @Prop keyId: string;
+  @State mItemData: any = {};
+  @State mStatus: boolean = false;
+  @State mDefaultTitle: string = '';
 
   aboutToAppear() {
-    Log.showInfo(TAG, `aboutToAppear Start, keyId: ${this.keyId}`)
-    this.linkItemData()
+    Log.showDebug(TAG, `aboutToAppear Start, keyId: ${this.keyId}`);
+    this.linkItemData();
   }
 
   aboutToDisappear() {
-    Log.showInfo(TAG, `aboutToDisappear`)
+    Log.showDebug(TAG, `aboutToDisappear`);
   }
 
   linkItemData() {
-    Log.showInfo(TAG, `linkItemData, keyId: ${this.keyId}`)
-    this.mItemData = AppStorage.Link('ControlCenter_' + this.keyId)
-    Log.showInfo(TAG, `linkItemData, mItemData: ${this.keyId} ${this.mItemData.get().label} ${
-    this.mItemData.get()
-    .iconUrl}`)
+    Log.showInfo(TAG, `linkItemData, keyId: ${this.keyId}`);
+    this.mItemData = AppStorage.Link('ControlCenter_' + this.keyId);
+    Log.showInfo(TAG, `linkItemData, mItemData: ${this.keyId} ${this.mItemData.get().label} ${this.mItemData.get().iconUrl}`);
   }
 
   build() {
@@ -65,14 +63,14 @@ export default struct ComplexToggleComponent {
   }
 
   onIconItemClick() {
-    Log.showInfo(TAG, `onIconItemClick`)
+    Log.showInfo(TAG, `onIconItemClick`);
     if (this.mItemData.get()?.actionData?.clickAction) {
       EventManager.publish(this.mItemData.get().actionData.clickAction);
     }
   }
 
   onIconItemLongPressGesture() {
-    Log.showInfo(TAG, `onIconItemLongPressGesture`)
+    Log.showInfo(TAG, `onIconItemLongPressGesture`);
     if (this.mItemData.get()?.actionData?.longClickAction) {
       EventManager.publish(this.mItemData.get().actionData.longClickAction);
     }

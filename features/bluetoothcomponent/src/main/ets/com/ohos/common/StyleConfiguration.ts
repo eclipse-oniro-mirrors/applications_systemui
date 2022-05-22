@@ -13,8 +13,8 @@
  * limitations under the License.
  */
 
-import StyleManager from '../../../../../../../../common/src/main/ets/default/StyleManager'
-import Constants from './Constants'
+import StyleManager from '../../../../../../../../common/src/main/ets/default/StyleManager';
+import Constants from './Constants';
 
 const TAG = 'bluetooth-StyleConfiguration';
 

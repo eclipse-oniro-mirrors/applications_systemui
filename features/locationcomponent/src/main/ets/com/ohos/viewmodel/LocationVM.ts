@@ -30,14 +30,14 @@ export class LocationVM {
   mTintContentInfo: TintContentInfo = getOrCreateTintContentInfo(FASlotName.LOCATION);
 
   constructor() {
-    Log.showInfo(TAG, `constructor`)
+    Log.showInfo(TAG, `constructor`);
   }
 
   initViewModel() {
     if (this.mIsStart) {
       return;
-    }
-    Log.showInfo(TAG, `initViewModel `)
+    };
+    Log.showInfo(TAG, `initViewModel `);
     this.mIsStart = true;
     this.mLocationData = AppStorage.SetAndLink(TAG + '_LocationData', this.mLocationData).get();
     LocationService.registerListener(this);
@@ -45,22 +45,22 @@ export class LocationVM {
   }
 
   getLocationData(): LocationData {
-    Log.showInfo(TAG, `getLocationData`)
+    Log.showInfo(TAG, `getLocationData`);
     return this.mLocationData;
   }
 
   updateServiceState(state) {
-    Log.showInfo(TAG, `updateServiceState, state: ${state} `)
+    Log.showInfo(TAG, `updateServiceState, state: ${state} `);
     this.mLocationData.isEnabled = state;
   }
 
   enableLocation() {
-    Log.showInfo(TAG, `enableLocation`)
+    Log.showInfo(TAG, `enableLocation`);
     LocationService.enableLocation();
   }
 
   disableLocation() {
-    Log.showInfo(TAG, `disableLocation`)
+    Log.showInfo(TAG, `disableLocation`);
     LocationService.disableLocation();
   }
 

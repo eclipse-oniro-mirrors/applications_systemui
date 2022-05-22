@@ -26,24 +26,24 @@ export class AutoRotateVM {
   };
 
   constructor() {
-    Log.showInfo(TAG, `constructor`)
+    Log.showInfo(TAG, `constructor`);
     this.mAutoRotateData = AppStorage.SetAndLink(TAG + '_AutoRotateData', this.mAutoRotateData).get();
     AutoRotateService.registerListener(this);
     AutoRotateService.startService();
   }
 
   getAutoRotateData(): AutoRotateData {
-    Log.showInfo(TAG, `getAutoRotateData`)
+    Log.showInfo(TAG, `getAutoRotateData`);
     return this.mAutoRotateData;
   }
 
   updateAutoRotateSwitchStatus(status: boolean): void{
-    Log.showInfo(TAG, `updateAutoRotateSwitchStatus, status: ${status}`)
+    Log.showInfo(TAG, `updateAutoRotateSwitchStatus, status: ${status}`);
     this.mAutoRotateData.switchStatus = status;
   }
 
   processAutoRotateSwitchStatusChange(status: boolean): void{
-    Log.showInfo(TAG, `processAutoRotateSwitchStatusChange, status: ${status}`)
+    Log.showInfo(TAG, `processAutoRotateSwitchStatusChange, status: ${status}`);
     AutoRotateService.changeSwitch(status);
   }
 }
