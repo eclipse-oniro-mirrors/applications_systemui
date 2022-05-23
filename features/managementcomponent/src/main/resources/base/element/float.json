@@ -359,6 +359,14 @@
     {
       "name": "noDisturb_offset_x",
       "value": "0"
+    },
+    {
+      "name": "noDisturb_text_margin_vertical",
+      "value": "0vp"
+    },
+    {
+      "name": "noDisturb_text_margin_right",
+      "value": "0vp"
     }
   ]
 }

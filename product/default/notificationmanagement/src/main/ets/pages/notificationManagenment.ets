@@ -75,14 +75,14 @@ export default struct notificationManagenment {
                         .fontSize($r('sys.float.ohos_id_text_size_body1'))
                         .fontColor($r('app.color.itemComp_title_color'))
                         .align(Alignment.End)
-                        .margin({ right: $r("sys.float.ohos_id_dialog_margin_end") })
+                        .margin({ right: $r("app.float.noDisturb_text_margin_right") })
                         .fontWeight(FontWeight.Medium)
                     } else {
                       Text($r('app.string.noDisturb_closed'))
                         .fontSize($r('sys.float.ohos_id_text_size_body1'))
                         .fontColor($r('app.color.itemComp_title_color'))
                         .align(Alignment.End)
-                        .margin({ right: $r("sys.float.ohos_id_dialog_margin_end") })
+                        .margin({ right: $r("app.float.noDisturb_text_margin_right") })
                         .fontWeight(FontWeight.Medium)
                     }
                     Image($r('app.media.ic_settings_arrow'))

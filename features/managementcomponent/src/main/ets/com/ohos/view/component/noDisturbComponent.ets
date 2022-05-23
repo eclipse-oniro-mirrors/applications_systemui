@@ -66,7 +66,7 @@ export default struct NoDisturbComponent {
                   .fontSize($r('app.float.itemComp_value_font'))
                   .fontColor($r('app.color.itemComp_font_color'))
                   .textAlign(TextAlign.Start)
-                  .margin({ top: $r("sys.float.ohos_id_text_margin_vertical") })
+                  .margin({ top: $r("app.float.noDisturb_text_margin_vertical") })
               } else if (this.mViewModel.repeatMode == DoNotDisturbType.TYPE_DAILY) {
                 Text($r('app.string.noDisturb_daily_label'))
                   .fontSize($r('app.float.itemComp_value_font'))
@@ -76,7 +76,7 @@ export default struct NoDisturbComponent {
                   .fontSize($r('app.float.itemComp_value_font'))
                   .fontColor($r('app.color.itemComp_font_color'))
                   .textAlign(TextAlign.Start)
-                  .margin({ top: $r("sys.float.ohos_id_text_margin_vertical") })
+                  .margin({ top: $r("app.float.noDisturb_text_margin_vertical") })
               } else if (this.mViewModel.repeatMode == DoNotDisturbType.TYPE_CLEARLY) {
                 Text($r('app.string.noDisturb_clearly_label'))
                   .fontSize($r('app.float.itemComp_value_font'))
@@ -86,13 +86,13 @@ export default struct NoDisturbComponent {
                   .fontSize($r('app.float.itemComp_value_font'))
                   .fontColor($r('app.color.itemComp_font_color'))
                   .textAlign(TextAlign.Start)
-                  .margin({ top: $r("sys.float.ohos_id_text_margin_vertical") })
+                  .margin({ top: $r("app.float.noDisturb_text_margin_vertical") })
               } else {
                 Text($r('app.string.noDisturb_closed'))
                   .fontSize($r('app.float.itemComp_value_font'))
                   .fontColor($r('app.color.itemComp_font_color'))
                   .textAlign(TextAlign.Start)
-                  .margin({ top: $r("sys.float.ohos_id_text_margin_vertical") })
+                  .margin({ top: $r("app.float.noDisturb_text_margin_vertical") })
               }
             } else {
               Blank();
