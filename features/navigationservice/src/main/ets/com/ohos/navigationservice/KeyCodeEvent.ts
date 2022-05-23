@@ -27,28 +27,25 @@ export class KeyCodeEvent {
     Log.showInfo(TAG, `sendKeyEvent keycode: ${keyCode} type: ${eventType}`);
     switch (keyCode) {
       case Constants.KEYCODE_BACK:
-        Log.showInfo(TAG, `sendKeyEvent case back type: ${eventType}`);
         if (eventType === Constants.KEY_DOWN) {
-          Log.showInfo(TAG, 'sendKeyEvent : KEY_DOWN');
+          Log.showDebug(TAG, 'sendKeyEvent : KEY_DOWN');
           this.sendBackKeyEventStart(); //down
         } else if (eventType === Constants.KEY_UP) {
-          Log.showInfo(TAG, `sendKeyEvent : KEY_UP`);
+          Log.showDebug(TAG, `sendKeyEvent : KEY_UP`);
           this.sentEvnt();
           this.sendBackKeyEventEnd(); //up
         }
         break;
       case Constants.KEYCODE_HOME:
-        Log.showInfo(TAG, `sendKeyEvent case home type: ${eventType}`);
         if (eventType === Constants.KEY_UP) {
-          Log.showInfo(TAG, 'sendKeyEvent : KEY_UP');
+          Log.showDebug(TAG, 'sendKeyEvent : KEY_UP');
           this.sentEvnt();
           this.sendHomeKeyEvent();
         }
         break;
       case Constants.KEYCODE_RECENT:
-        Log.showInfo(TAG, `sendKeyEvent case recent type: ${eventType}`);
         if (eventType === Constants.KEY_UP) {
-          Log.showInfo(TAG, 'sendKeyEvent : KEY_UP');
+          Log.showDebug(TAG, 'sendKeyEvent : KEY_UP');
           this.sentEvnt();
           this.sendRecentKeyEvent();
         }
@@ -74,7 +71,7 @@ export class KeyCodeEvent {
     res = Input.injectEvent({
       KeyEvent: keyEvent
     });
-    Log.showInfo(TAG, `injectEventHandler injectEventSync down res: ${res}`);
+    Log.showDebug(TAG, `injectEventHandler injectEventSync down res: ${res}`);
   }
 
   private sendBackKeyEventEnd() {
@@ -94,9 +91,6 @@ export class KeyCodeEvent {
   }
 
   private sendHomeKeyEvent() {
-    Log.showInfo(TAG, 'sendHomeKeyEvent');
-    Log.showInfo(TAG, 'home click and start ability launcher');
-    Log.showInfo(TAG, `startAbility`);
     AbilityManager.startAbility({
       bundleName: Constants.LAUNCHER_BUNDLE_NAME,
       abilityName: Constants.LAUNCHER_ABILITY_NAME
@@ -104,12 +98,10 @@ export class KeyCodeEvent {
   }
 
   private sendRecentKeyEvent() {
-    Log.showInfo(TAG, 'sendRecentKeyEvent');
     commonEvent.publish('CREATE_RECENT_WINDOW_EVENT', (err, data) => {
       Log.showInfo(TAG, `publish launcher err: ${JSON.stringify(err)} data: ${JSON.stringify(data)}`);
     });
 
-    Log.showInfo(TAG, `startAbility`);
     AbilityManager.startAbility({
       bundleName: Constants.RECENT_BUNDLE_NAME,
       abilityName: Constants.RECENT_ABILITY_NAME

@@ -78,6 +78,6 @@ export default struct SlotItemComponent {
   }
 
   aboutToAppear() {
-    Log.showDebug(TAG, `aboutToDisAppear`);
+    Log.showInfo(TAG, `aboutToDisAppear`);
   }
 }

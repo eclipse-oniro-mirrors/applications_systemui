@@ -33,11 +33,11 @@ export default struct GroupItem {
   @State @Watch('scrollEdge') mEdgeEnd: boolean = false;
 
   aboutToAppear() {
-    Log.showDebug(TAG, `aboutToAppear`);
+    Log.showInfo(TAG, `aboutToAppear`);
   }
 
   aboutToDisappear() {
-    Log.showDebug(TAG, `aboutToDisAppear`);
+    Log.showInfo(TAG, `aboutToDisAppear`);
   }
 
   expandChange() {

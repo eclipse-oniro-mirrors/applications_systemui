@@ -40,11 +40,11 @@ export default class NoDisturbComponentViewModel {
   getNoDisturbingDate() {
     Log.showInfo(TAG, 'getNoDisturbingDate');
     NoDisturbingModel.getNoDisturbingDate((data) => {
-      Log.showInfo(TAG, 'getNoDisturbingDate data:' + JSON.stringify(data));
+      Log.showDebug(TAG, 'getNoDisturbingDate data:' + JSON.stringify(data));
       this.repeatMode = data.type
       this.startTime = data.begin
       this.endTime = data.end
-      Log.showInfo(TAG, `getNoDisturbingDate repeatMode : ${this.repeatMode} startTime : ${this.startTime} endTime : ${this.endTime}`);
+      Log.showDebug(TAG, `getNoDisturbingDate repeatMode : ${this.repeatMode} startTime : ${this.startTime} endTime : ${this.endTime}`);
       this.repeatName = this.refreshRepeatName(this.repeatMode);
       this.setClues.bind(this)()
     })
@@ -54,7 +54,7 @@ export default class NoDisturbComponentViewModel {
     if (!this.isEffective) {
       this.repeatMode = DoNotDisturbType.TYPE_NONE
     }
-    Log.showInfo(TAG, `this.repeatMode is : ${this.repeatMode}`);
+    Log.showDebug(TAG, `this.repeatMode is : ${this.repeatMode}`);
     let noDisturbingTime = {
       type: this.repeatMode, begin: this.defaultStartTime, end: this.defaultEndTime
     }
@@ -74,7 +74,7 @@ export default class NoDisturbComponentViewModel {
     }
 
     this.setCluesWithoutSetEffect();
-    Log.showInfo(TAG, `this.prompt : ${this.prompt}`);
+    Log.showDebug(TAG, `this.prompt : ${this.prompt}`);
   }
   setCluesWithoutSetEffect() {
     Log.showInfo(TAG, `setCluesWithoutSetEffect start`);

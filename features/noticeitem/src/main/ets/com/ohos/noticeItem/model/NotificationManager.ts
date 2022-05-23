@@ -147,7 +147,6 @@ export default class NotificationManager {
       name: DEBUG_TEMPLATE_NAME,
       data: reqData
     };
-    Log.showInfo(TAG, `requestDebugTemplate requestParam: ${JSON.stringify(requestParam)}`);
     NotificationManager.request(tag, requestParam, (err, data) => {
       Log.showInfo(TAG, `requestDebugTemplate finished err: ${JSON.stringify(err)} data: ${JSON.stringify(data)}`);
       if (!!data) {
@@ -158,7 +157,6 @@ export default class NotificationManager {
   }
 
   static isDebugMode(tag): boolean{
-    Log.showInfo(TAG, `isDebugMode from: ${tag}`);
     let debug = Systemparameter.getSync(DEBUG_SETTING_KEY, "")
     Log.showInfo(TAG, `Systemparameter DEBUG_SETTING: ${debug}`);
     return!!debug;

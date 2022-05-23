@@ -56,7 +56,7 @@ export default struct BannerNotificationItem {
   expandPaddingBottom: number = Layout.EXPAND_PADDING_BOTTOM;
 
   aboutToAppear() {
-    Log.showDebug(TAG, `aboutToAppear Start`);
+    Log.showInfo(TAG, `aboutToAppear Start`);
     setAppBgColor('#00000000');
     this.mCloseEnableFlg = false;
     this.mDefaultBannerRect = AbilityManager.getAbilityData(AbilityManager.ABILITY_NAME_BANNER_NOTICE, 'bannerRect');
@@ -67,7 +67,7 @@ export default struct BannerNotificationItem {
   }
 
   aboutToDisappear() {
-    Log.showDebug(TAG, `aboutToDisAppear`);
+    Log.showInfo(TAG, `aboutToDisAppear`);
   }
 
   build() {

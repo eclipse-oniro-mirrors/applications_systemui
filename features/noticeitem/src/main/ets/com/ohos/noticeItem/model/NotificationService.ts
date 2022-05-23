@@ -89,7 +89,7 @@ export class NotificationService {
   }
 
   handleNotificationAddAndSortMap(data) {
-    Log.showInfo(TAG, 'handleNotificationAddAndSortMap, sortingMap' + JSON.stringify(data.sortingMap || {}));
+    Log.showDebug(TAG, 'handleNotificationAddAndSortMap, sortingMap' + JSON.stringify(data.sortingMap || {}));
     this.mSortingMap = { ...this.mSortingMap, ...data?.sortingMap };
     this.handleNotificationAdd(data?.request);
   }
@@ -110,7 +110,7 @@ export class NotificationService {
   }
 
   handleNotificationCancel(data) {
-    Log.showInfo(TAG, `handleNotificationCancel hashCode: ${JSON.stringify(data?.request?.hashCode)}`);
+    Log.showDebug(TAG, `handleNotificationCancel hashCode: ${JSON.stringify(data?.request?.hashCode)}`);
     this.mSortingMap = { ...this.mSortingMap, ...data?.sortingMap };
     const hashCode = data?.request?.hashCode;
     if (!hashCode) {
@@ -143,7 +143,7 @@ export class NotificationService {
   }
 
   enableNotification(bundleOption, data) {
-    Log.showInfo(TAG, `enableNotification bundleOption:${JSON.stringify(bundleOption)} data:${JSON.stringify(data)} `);
+    Log.showDebug(TAG, `enableNotification bundleOption:${JSON.stringify(bundleOption)} data:${JSON.stringify(data)} `);
     NotificationManager.enableNotification(TAG, bundleOption, data, (result) => {
       Log.showInfo(TAG, `enableNotification ==> result: ${JSON.stringify(result)}`);
     });

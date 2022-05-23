@@ -43,7 +43,7 @@ export default class NotificationDistributionManager {
     Log.showInfo(TAG, `initDeviceManager`);
     DeviceManager.createDeviceManager("com.ohos.systemui", (err, data) => {
       if (err) {
-        Log.showInfo(TAG, "createDeviceManager err:" + JSON.stringify(err));
+        Log.showError(TAG, "createDeviceManager err:" + JSON.stringify(err));
         return;
       }
       Log.showInfo(TAG, "createDeviceManager success");
@@ -55,7 +55,7 @@ export default class NotificationDistributionManager {
     Log.showInfo(TAG, `getTrustedDeviceDeviceName deviceId:${deviceId}`);
     let deviceName = '';
     let deviceArr:any[] = this.getTrustedDeviceListSync();
-    Log.showInfo(TAG, `getTrustedDeviceDeviceName deviceArr:${JSON.stringify(deviceArr)}`);
+    Log.showDebug(TAG, `getTrustedDeviceDeviceName deviceArr:${JSON.stringify(deviceArr)}`);
     if (deviceArr && deviceArr.length > 0) {
       for (let item of deviceArr) {
         if (item.deviceId == deviceId) {

@@ -29,7 +29,6 @@ export default struct ConfirmDialog {
   public action: () => void
 
   build() {
-
     Column() {
       Row() {
         Text(this.title)

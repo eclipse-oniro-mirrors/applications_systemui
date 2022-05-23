@@ -39,9 +39,9 @@ export class RuleController {
         return;
       }
       this.getNotificationDataByApp(notificationItemData, (originalData) => {
-        Log.showInfo(TAG, `originalData = ${JSON.stringify(originalData)}`);
+        Log.showDebug(TAG, `originalData = ${JSON.stringify(originalData)}`);
         this.updateNotificationDataBySense(originalData, (finalData) => {
-          Log.showInfo(TAG, `finalData = ${JSON.stringify(finalData)}`);
+          Log.showDebug(TAG, `finalData = ${JSON.stringify(finalData)}`);
           callback(finalData);
         });
       });
@@ -125,7 +125,7 @@ export class RuleController {
     } else {
       mNotificationItemData.ruleData.isAllowNotificationListShow = false;
     }
-    Log.showInfo(TAG, `mNotificationItemData.ruleData = ${JSON.stringify(mNotificationItemData.ruleData)}`);
+    Log.showDebug(TAG, `mNotificationItemData.ruleData = ${JSON.stringify(mNotificationItemData.ruleData)}`);
     callback(mNotificationItemData);
   }
 

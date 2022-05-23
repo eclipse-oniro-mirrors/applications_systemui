@@ -42,7 +42,7 @@ export default struct GeneralItem {
   }
 
   aboutToAppear() {
-    Log.showDebug(TAG, `aboutToAppear Start`);
+    Log.showInfo(TAG, `aboutToAppear Start`);
     if (CheckEmptyUtils.isEmpty(this.itemData.largeIcon)) {
       this.hasPicture = false;
     } else {
