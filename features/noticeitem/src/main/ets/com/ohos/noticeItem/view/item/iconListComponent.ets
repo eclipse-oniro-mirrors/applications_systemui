@@ -47,6 +47,7 @@ export default struct IconListComponent {
       action: () => this.confirmDialogController.open()
     }),
     autoCancel: false,
+    alignment:DialogAlignment.Bottom,
     offset: { dx: 0, dy: $r('app.float.setting_dialog_dy') },
     customStyle:true
   });
@@ -57,6 +58,7 @@ export default struct IconListComponent {
       action: () => ViewModel.enableNotification(this.itemData, false)
     }),
     autoCancel: false,
+    alignment:DialogAlignment.Bottom,
     offset: { dx: 0, dy: $r('app.float.confirm_dialog_dy') },
     customStyle:true
   });

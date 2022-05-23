@@ -69,7 +69,7 @@ export default struct SettingDialog {
         Column() {
           Text($r('app.string.moreSettings'))
             .fontSize($r('app.float.setting_cont_fontsize'))
-            .fontColor($r('app.color.dialog_font_back_color'))
+            .fontColor($r('app.color.button_text_color'))
             .height($r('app.float.setting_dialog_row_height'))
         }.alignItems(HorizontalAlign.Center)
         .width(Constants.SETTING_CONTENT_WITH)
@@ -88,7 +88,7 @@ export default struct SettingDialog {
             .maxLines(Constants.DEFAULT_MAX_LINES)
             .textOverflow({ overflow: TextOverflow.Ellipsis })
             .fontSize($r('app.float.setting_cont_fontsize'))
-            .fontColor($r('app.color.dialog_font_back_color'))
+            .fontColor($r('app.color.button_text_color'))
         }.alignItems(HorizontalAlign.Center)
         .width(Constants.SETTING_CONTENT_WITH)
       }
@@ -100,9 +100,10 @@ export default struct SettingDialog {
         radius: $r('app.float.setting_border_radius') })
       .backgroundColor($r('app.color.dialog_font_color'))
       .onClick(this.closeAbility.bind(this))
-    }.height($r('app.float.setting_dialog_height'))
+    }
+    .height($r('app.float.setting_dialog_height'))
     .width($r('app.float.setting_dialog_width'))
-    .backgroundColor('#FFFFFFFF')
+    .backgroundColor('#FFFFFF')
     .border({ width: $r('app.float.setting_border_width'), color: Color.White,
       radius: $r('app.float.notification_border_radius') })
   }

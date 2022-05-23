@@ -3,6 +3,10 @@
     {
       "name": "default_background",
       "value": "#999999"
+    },
+    {
+      "name": "notification_delete_all_background",
+      "value": "#4C000000"
     }
   ]
 }

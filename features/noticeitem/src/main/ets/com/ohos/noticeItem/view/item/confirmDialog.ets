@@ -44,11 +44,11 @@ export default struct ConfirmDialog {
       }.width($r('app.float.confirm_dialog_row_width'))
       .margin({ top: $r('app.float.message_font_margin_t') })
 
-      Row() {
+      Flex({justifyContent:FlexAlign.Center,alignItems:ItemAlign.Center}) {
         Column() {
           Text($r('app.string.cancel'))
             .fontSize($r('app.float.confirm_cont_fontsize'))
-            .fontColor(Color.Blue)
+            .fontColor($r("app.color.button_text_color"))
         }.onClick(() => {
           this.controller.close();
         })
@@ -63,7 +63,7 @@ export default struct ConfirmDialog {
         Column() {
           Text($r('app.string.close'))
             .fontSize($r('app.float.confirm_cont_fontsize'))
-            .fontColor(Color.Red)
+            .fontColor($r("app.color.button_text_color"))
         }.onClick(() => {
           Log.showInfo(TAG, `confirm button of TimeDialog on click`)
           this.controller.close();
@@ -76,7 +76,7 @@ export default struct ConfirmDialog {
       .margin({ top: $r('app.float.confirm_button_margin_t') })
     }.height($r('app.float.confirm_dialog_height'))
     .width($r('app.float.confirm_dialog_width'))
-    .backgroundColor('#FFFFFFFF')
+    .backgroundColor('#FFFFFF')
     .border({ width: $r('app.float.setting_border_width'), color: Color.White,
       radius: $r('app.float.notification_border_radius') })
   }

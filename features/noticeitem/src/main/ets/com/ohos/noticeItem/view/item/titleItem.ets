@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-import Constants, {NotificationLayout as Layout} from '../../common/constants';
+import Constants, { NotificationLayout as Layout } from '../../common/constants';
 import Log from '../../../../../../../../../../common/src/main/ets/default/Log';
 import CheckEmptyUtils from '../../../../../../../../../../common/src/main/ets/default/CheckEmptyUtils';
 

@@ -215,6 +215,10 @@
     {
       "name": "device_margin_16",
       "value": "16fp"
+    },
+    {
+      "name": "notice_image_boderRadius",
+      "value": "0"
     }
   ]
 }

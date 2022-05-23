@@ -14,10 +14,10 @@
  */
 
 import Log from '../../../../../../../../../../common/src/main/ets/default/Log';
-import Constants, {NotificationLayout as Layout} from '../../common/constants';
+import Constants, { NotificationLayout as Layout } from '../../common/constants';
 import NotificationItem from './notificationItem'
 import titleItem from './titleItem';
-import IconListComponent, {getIconListSize} from './iconListComponent';
+import IconListComponent, { getIconListSize } from './iconListComponent';
 import ScrollbarManager from '../../common/ScrollbarManager';
 
 const TAG = 'NoticeItem-GroupItem';
@@ -62,6 +62,9 @@ export default struct GroupItem {
             }.backgroundColor($r('app.color.notificationitem_background'))
             .width(Constants.FULL_CONTAINER_WIDTH)
 
+            if (this.toExpand) {
+              Row().height(1).width('100%')
+            }
             Row() {
               ContentList({ groupData: this.groupData, toExpand: this.toExpand })
             }.width(Constants.FULL_CONTAINER_WIDTH)
