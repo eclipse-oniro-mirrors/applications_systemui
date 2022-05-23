@@ -49,16 +49,17 @@ export default struct VolumePanelComponent {
           max: this.VolumePanelMaxVolume,
           step: 1,
           style: SliderStyle.OutSet,
-          direction: Axis.Vertical
+          direction: Axis.Vertical,
+          reverse: true
         })
-          .height('100%')
           .trackThickness(this.style.volumePanSliderWidth)
           .blockColor(this.style.volumePanelSliderBlockColor)
-          .trackColor(this.style.volumeSelectedColor)
-          .selectedColor(this.style.volumeSliderTrackColor)
+          .trackColor($r('sys.color.ohos_id_color_component_normal'))
+          .selectedColor(this.style.volumeSelectedColor)
           .onChange(this.onVolumeChange.bind(this))
       }
-      .height(this.style.volumePanSliderHeight)
+      .flexGrow(1)
+      .flexShrink(1)
 
       Column()
         .width('100%')
@@ -128,11 +129,11 @@ export default struct VolumePanelComponent {
     if (isMute) {
       icon = $r('app.media.ic_public_mute')
     } else {
-      if (volume <= ((maxVolume - minVolume) / 3 + minVolume)) {
+      if (volume >= (((maxVolume - minVolume) / 3) * 2 + minVolume)) {
         icon = $r('app.media.ic_public_sound_03')
-      } else if (volume <= (((maxVolume - minVolume) / 3) * 2 + minVolume)) {
+      } else if (volume >= ((maxVolume - minVolume) / 3 + minVolume)) {
         icon = $r('app.media.ic_public_sound_02')
-      } else if (volume == (maxVolume - minVolume)) {
+      } else if (volume == minVolume) {
         icon = $r('app.media.ic_public_sound_04')
       } else {
         icon = $r('app.media.ic_public_sound_01')

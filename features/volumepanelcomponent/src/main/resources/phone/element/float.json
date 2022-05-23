@@ -5,7 +5,7 @@
   "float": [
     {
       "name": "volume_panel_component_slider_margin_top",
-      "value": "20vp"
+      "value": "6.5vp"
     },
     {
       "name": "volume_panel_component_slider_width",
@@ -21,7 +21,7 @@
     },
     {
       "name": "volume_panel_component_slider_margin_bottom",
-      "value": "20vp"
+      "value": "6.5vp"
     },
     {
       "name": "volume_panel_component_mute_btn_icon_size",

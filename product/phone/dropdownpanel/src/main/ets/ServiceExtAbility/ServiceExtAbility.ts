@@ -24,7 +24,7 @@ const TAG = "DropdownPanel_ServiceExtAbility";
 
 class ServiceExtAbility extends ServiceExtension {
     async onCreate(want) {
-        Log.showInfo(TAG, `api8New onCreate, want: ${JSON.stringify(want)}`);
+        Log.showInfo(TAG, `onCreate, want: ${JSON.stringify(want)}`);
         AbilityManager.setContext(AbilityManager.ABILITY_NAME_DROPDOWN_PANEL, this.context);
         globalThis[AbilityManager.ABILITY_NAME_OWNER_WANT] = want;
 
@@ -37,7 +37,7 @@ class ServiceExtAbility extends ServiceExtension {
             };
             AbilityManager.setAbilityData(AbilityManager.ABILITY_NAME_DROPDOWN_PANEL, "rect", rect);
             WindowManager.createWindow(this.context, WindowType.DROPDOWN_PANEL, rect, "pages/index").then(() =>
-                Log.showInfo(TAG, `api8New onCreate, createWindow callback`)
+                Log.showInfo(TAG, `onCreate, createWindow callback`)
             );
 
             AbilityManager.setContext(AbilityManager.ABILITY_NAME_BANNER_NOTICE, this.context);
@@ -50,14 +50,14 @@ class ServiceExtAbility extends ServiceExtension {
             AbilityManager.setAbilityData(AbilityManager.ABILITY_NAME_BANNER_NOTICE, 'bannerRect', bannerRect);
             WindowManager.createWindow(this.context, WindowType.BANNER_NOTICE, bannerRect, 'pages/bannerNotification')
                 .then((win) => {
-                    Log.showInfo(TAG, `api8New onCreate, createWindow callback`);
+                    Log.showInfo(TAG, `onCreate, createWindow callback`);
                 })
                 .catch((err) => Log.showError(TAG, `Can't create window, err:${err}`));
         });
     }
 
     onDestroy() {
-        Log.showInfo(TAG, "api8New onDestroy");
+        Log.showInfo(TAG, "onDestroy");
     }
 }
 

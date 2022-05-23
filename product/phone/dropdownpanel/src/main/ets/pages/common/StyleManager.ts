@@ -42,7 +42,7 @@ export default class StyleManager {
             let style: any = ControlCenterStyleConfiguration.getControlCenterComponentStyle();
             style.marginLeft = StyleManager.calcScaleSizePx(48);
             style.marginRight = StyleManager.calcScaleSizePx(48);
-            style.marginTop = StyleManager.calcScaleSizePx(33);
+            style.marginTop = StyleManager.calcScaleSizePx(36);
             style.upTitleHeight = StyleManager.calcScaleSizePx(127);
             style.titleMarginBottom = StyleManager.calcScaleSizePx(0);
             style.toggleAreaGap = StyleManager.calcScaleSizePx(24);
@@ -57,7 +57,7 @@ export default class StyleManager {
         {
             let style: any = ControlCenterStyleConfiguration.getControlCenterUpTitleStyle();
             style.marginLeft = StyleManager.calcScaleSizePx(72);
-            style.marginRight = StyleManager.calcScaleSizePx(30);
+            style.marginRight = StyleManager.calcScaleSizePx(72);
             style.fontSize = StyleManager.calcScaleSizePx(40);
             style.fontColor = "#FFFFFFFF";
             style.imageWidth = StyleManager.calcScaleSizePx(48);
@@ -96,7 +96,7 @@ export default class StyleManager {
             style.marginRight = StyleManager.calcScaleSizePx(16);
             style.componentGap = StyleManager.calcScaleSizePx(8);
             style.titleSize = StyleManager.calcScaleSizePx(24);
-            style.titleColor = $r("sys.color.ohos_id_color_text_secondary");
+            style.titleColor = $r("sys.color.ohos_id_color_text_primary");
             style.borderRadius = StyleManager.calcScaleSizePx(48);
             style.backgroundColor = '#99FFFFFF';
             style.textMargin = StyleManager.calcScaleSizePx(8);
@@ -114,7 +114,7 @@ export default class StyleManager {
             style.circleHeight = StyleManager.calcScaleSizePx(96);
             style.iconWidth = StyleManager.calcScaleSizePx(48);
             style.iconHeight = StyleManager.calcScaleSizePx(48);
-            style.iconOffBG = '#1A000000';
+            style.iconOffBG = '#1A182431';
             style.iconOnBG = '#FF007DFF';
             style.iconOnColor = '#FFFFFFFF';
             style.iconOffColor = $r("sys.color.ohos_id_color_secondary");
@@ -133,13 +133,13 @@ export default class StyleManager {
             style.dragCircleHeight = StyleManager.calcScaleSizePx(120);
             style.dragIconWidth = StyleManager.calcScaleSizePx(72);
             style.dragIconHeight = StyleManager.calcScaleSizePx(72);
-            style.iconOffBG = '#1A000000';
+            style.iconOffBG = '#1A182431';
             style.iconOnBG = '#FF007DFF';
             style.iconOnColor = '#FFFFFFFF';
             style.iconOffColor = $r("sys.color.ohos_id_color_secondary");
             style.componentGap = StyleManager.calcScaleSizePx(10);
             style.titleSize = StyleManager.calcScaleSizePx(24);
-            style.titleColor = $r("sys.color.ohos_id_color_text_secondary");
+            style.titleColor = $r("sys.color.ohos_id_color_text_primary");
             style.textHoverWidth = StyleManager.calcScaleSizePx(136);
             style.textHoverHeight = StyleManager.calcScaleSizePx(36);
             style.textHoverRadius = StyleManager.calcScaleSizePx(8);
@@ -161,7 +161,7 @@ export default class StyleManager {
             style.brightnessHeight = StyleManager.calcScaleSizePx(44);
             style.sliderHeight = StyleManager.calcScaleSizePx(40);
             style.sliderBlockColor = '#FFFFFFFF';
-            style.sliderTrackColor = '#0D000000';
+            style.sliderTrackColor = '#1A182431';
             style.selectedColor = '#FF007DFF';
         }
 

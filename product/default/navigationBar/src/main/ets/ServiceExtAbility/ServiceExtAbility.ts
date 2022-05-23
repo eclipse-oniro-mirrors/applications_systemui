@@ -23,7 +23,7 @@ const TAG = "NavigationBar_ServiceExtAbility"
 
 class ServiceExtAbility extends ServiceExtension {
     async onCreate(want) {
-        Log.showInfo(TAG, `api8New onCreate, want: ${JSON.stringify(want)}`);
+        Log.showInfo(TAG, `onCreate, want: ${JSON.stringify(want)}`);
         AbilityManager.setContext(AbilityManager.ABILITY_NAME_NAVIGATION_BAR, this.context)
 
         let configInfo = await NavBarConfiguration.getConfiguration();
@@ -49,7 +49,7 @@ class ServiceExtAbility extends ServiceExtension {
             }
         }
         AbilityManager.setAbilityData(AbilityManager.ABILITY_NAME_NAVIGATION_BAR, 'config', configInfo)
-        Log.showInfo(TAG, `api8New onCreate, configInfo: ${JSON.stringify(configInfo)}`)
+        Log.showInfo(TAG, `onCreate, configInfo: ${JSON.stringify(configInfo)}`)
 
         let navigationBarRect = {
             left: configInfo.xCoordinate,
@@ -59,14 +59,14 @@ class ServiceExtAbility extends ServiceExtension {
         }
         WindowManager.createWindow(this.context, WindowType.NAVIGATION_BAR, navigationBarRect, "pages/index")
         .then(() => {
-            Log.showInfo(TAG, `api8New onCreate, createWindow success.`);
+            Log.showInfo(TAG, `onCreate, createWindow success.`);
             WindowManager.showWindow(WindowType.NAVIGATION_BAR);
         })
         .catch((err) => Log.showError(TAG, `Can't create window, err:${err}`));
     }
 
     onDestroy() {
-        Log.showInfo(TAG, 'api8New onDestroy');
+        Log.showInfo(TAG, 'onDestroy');
     }
 }
 
