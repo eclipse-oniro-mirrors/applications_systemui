@@ -49,12 +49,12 @@ export default struct WifiComponent {
   }
 
   aboutToAppear() {
-    Log.showInfo(TAG, 'aboutToAppear');
+    Log.showDebug(TAG, 'aboutToAppear');
     mWifiManger.initWifiModel();
   }
 
   aboutToDisappear() {
-    Log.showInfo(TAG, 'aboutToDisappear');
+    Log.showDebug(TAG, 'aboutToDisappear');
   }
 
   build() {

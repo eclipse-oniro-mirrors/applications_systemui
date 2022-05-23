@@ -32,12 +32,12 @@ export default struct WifiIcon {
   @State style: any = StyleConfiguration.getStartsBarWifiComponentStyle()
 
   aboutToAppear() {
-    Log.showInfo(TAG, `aboutToAppear`);
+    Log.showDebug(TAG, `aboutToAppear`);
     mWifiModel.initWifiModel();
   }
 
   aboutToDisappear() {
-    Log.showInfo(TAG, `aboutToDisappear`);
+    Log.showDebug(TAG, `aboutToDisappear`);
   }
 
   build() {

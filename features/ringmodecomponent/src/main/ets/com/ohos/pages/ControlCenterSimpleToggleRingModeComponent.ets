@@ -35,13 +35,13 @@ export default struct ControlCenterSimpleToggleRingModeComponent {
   @State style: any = StyleConfiguration.getControlCenterRingModeComponentStyle()
 
   aboutToAppear() {
-    Log.showInfo(TAG, 'aboutToAppear');
+    Log.showDebug(TAG, 'aboutToAppear');
     ViewModel.initViewModel()
     this.onRingModeUpdated('RingModeComponentMode')
   }
 
   aboutToDisappear() {
-    Log.showInfo(TAG, 'aboutToDisappear');
+    Log.showDebug(TAG, 'aboutToDisappear');
   }
 
   onRingModeUpdated(propName: string): void {

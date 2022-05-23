@@ -198,12 +198,12 @@ export default struct AppItemComponent {
   }
 
   aboutToAppear(): void{
-    Log.showInfo(TAG, `aboutToAppear`);
+    Log.showDebug(TAG, `aboutToAppear`);
     if (this.appSwitch === 1) {
       Notification.subscribeEnableChanged();
       Notification.register({ bundle: this.appBundleName,
         onEnableChanged: (stateValue: boolean) => {
-          Log.showInfo(TAG, `aboutToAppear listener call`);
+          Log.showDebug(TAG, `aboutToAppear listener call`);
           this.canNotice = stateValue;
         } });
 
@@ -219,14 +219,14 @@ export default struct AppItemComponent {
   }
 
   aboutToDisappear(): void{
-    Log.showInfo(TAG, `aboutToDisappear`);
+    Log.showDebug(TAG, `aboutToDisappear`);
     if (this.appSwitch === 1) {
       Notification.unsubscribeEnableChanged();
     }
   }
 
   onBackPress() {
-    Log.showInfo(TAG, `onBackPress`);
+    Log.showDebug(TAG, `onBackPress`);
     Router.back();
   }
 }

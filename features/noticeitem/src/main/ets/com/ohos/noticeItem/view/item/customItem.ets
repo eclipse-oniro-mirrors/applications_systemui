@@ -31,7 +31,7 @@ export default struct CustomItem {
   private clickAction: () => void
 
   aboutToAppear() {
-    Log.showInfo(TAG, `aboutToAppear Start`);
+    Log.showDebug(TAG, `aboutToAppear Start`);
     this.template = ViewModel.getPluginTempLate(this.customItemData.template.name);
     this.templateData = this.customItemData.template.data;
     this.isDebugMode = NotificationManager.isDebugMode(TAG);

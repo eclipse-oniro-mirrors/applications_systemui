@@ -85,7 +85,7 @@ export default struct SlotLstComponent {
   }
 
   onBackPress() {
-    Log.showInfo(TAG, `onBackPress`);
+    Log.showDebug(TAG, `onBackPress`);
     Router.back();
   }
 }

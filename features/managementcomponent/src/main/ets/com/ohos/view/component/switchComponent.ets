@@ -73,7 +73,7 @@ export default struct SwitchComponent {
   }
 
   aboutToAppear(): void{
-    Log.showInfo(TAG, `aboutToAppear`);
+    Log.showDebug(TAG, `aboutToAppear`);
     if (this.register) {
       Log.showInfo(TAG, `aboutToAppear register listener`);
       this.register((stateValue: boolean) => {

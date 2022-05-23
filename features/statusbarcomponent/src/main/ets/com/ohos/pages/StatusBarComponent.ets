@@ -45,13 +45,13 @@ export default struct StatusBarComponent {
   @State mStatusBarData: StatusBarData = ViewModel.getStatusBarData()
 
   aboutToAppear() {
-    Log.showInfo(TAG, `aboutToAppear Start, mStatusBarComponentConfig: ${JSON.stringify(this.mStatusBarComponentConfig)}`);
+    Log.showDebug(TAG, `aboutToAppear Start, mStatusBarComponentConfig: ${JSON.stringify(this.mStatusBarComponentConfig)}`);
     this.initViewModel();
-    Log.showInfo(TAG, `aboutToAppear End`);
+    Log.showDebug(TAG, `aboutToAppear End`);
   }
 
   aboutToDisappear() {
-    Log.showInfo(TAG, `aboutToDisappear`);
+    Log.showDebug(TAG, `aboutToDisappear`);
   }
 
   initViewModel() {
@@ -115,11 +115,11 @@ struct StatusBarBackground {
   @State mBackgroundDatas: StatusBarBackgroundData[] = ViewModel.getBackgroundDatas()
 
   aboutToAppear() {
-    Log.showInfo(TAG_StatusBarBackground, `aboutToAppear`);
+    Log.showDebug(TAG_StatusBarBackground, `aboutToAppear`);
   }
 
   aboutToDisappear() {
-    Log.showInfo(TAG_StatusBarBackground, `aboutToDisAppear`);
+    Log.showDebug(TAG_StatusBarBackground, `aboutToDisAppear`);
   }
 
   build() {
@@ -163,11 +163,11 @@ struct StatusBarGroup {
   @State mStatusBarData: StatusBarData = ViewModel.getStatusBarData()
 
   aboutToAppear() {
-    Log.showInfo(TAG_StatusBarGroup, `aboutToAppear, mLayoutWeight: ${this.mLayoutWeight} mAlignItems: ${this.mAlignItems} `);
+    Log.showDebug(TAG_StatusBarGroup, `aboutToAppear, mLayoutWeight: ${this.mLayoutWeight} mAlignItems: ${this.mAlignItems} `);
   }
 
   aboutToDisappear() {
-    Log.showInfo(TAG_StatusBarGroup, `aboutToDisAppear`);
+    Log.showDebug(TAG_StatusBarGroup, `aboutToDisAppear`);
   }
 
   build() {
@@ -208,11 +208,11 @@ struct VerticalStatusBarItemLoadComponent {
   @State style: any = StyleConfiguration.getVerticalStatusBarItemLoadComponentStyle()
 
   aboutToAppear() {
-    Log.showInfo(TAG_VerticalStatusBarItemLoadComponent, `aboutToAppear, mComponentName: ${this.mComponentName}`);
+    Log.showDebug(TAG_VerticalStatusBarItemLoadComponent, `aboutToAppear, mComponentName: ${this.mComponentName}`);
   }
 
   aboutToDisappear() {
-    Log.showInfo(TAG_VerticalStatusBarItemLoadComponent, `aboutToDisAppear, mComponentName: ${this.mComponentName}`);
+    Log.showDebug(TAG_VerticalStatusBarItemLoadComponent, `aboutToDisAppear, mComponentName: ${this.mComponentName}`);
   }
 
   build() {
@@ -235,11 +235,11 @@ struct StatusBarItemLoadComponent {
   private mComponentName: string
 
   aboutToAppear() {
-    Log.showInfo(TAG_StatusBarItemLoadComponent, `aboutToAppear, mComponentName: ${this.mComponentName} `)
+    Log.showDebug(TAG_StatusBarItemLoadComponent, `aboutToAppear, mComponentName: ${this.mComponentName} `)
   }
 
   aboutToDisappear() {
-    Log.showInfo(TAG_StatusBarGroup, `aboutToDisAppear, mComponentName: ${this.mComponentName} `)
+    Log.showDebug(TAG_StatusBarGroup, `aboutToDisAppear, mComponentName: ${this.mComponentName} `)
   }
 
   build() {
@@ -282,11 +282,11 @@ struct StatusBarEmptyIcon {
   @State mTintContentInfo: TintContentInfo = ViewModel.getEmptyTintContentInfo()
 
   aboutToAppear() {
-    Log.showInfo(TAG_StatusBarEmptyIcon, `aboutToAppear, mStatusBarEmptyWidth: ${this.mStatusBarEmptyWidth} `)
+    Log.showDebug(TAG_StatusBarEmptyIcon, `aboutToAppear, mStatusBarEmptyWidth: ${this.mStatusBarEmptyWidth} `)
   }
 
   aboutToDisappear() {
-    Log.showInfo(TAG_StatusBarEmptyIcon, `aboutToDisAppear`);
+    Log.showDebug(TAG_StatusBarEmptyIcon, `aboutToDisAppear`);
   }
 
   build() {
@@ -303,11 +303,11 @@ struct StatusBarNotificationIcon {
   @State style: any = StyleConfiguration.getStatusBarNotificationIconStyle()
 
   aboutToAppear() {
-    Log.showInfo(TAG_StatusBarNotificationIcon, `aboutToAppear`);
+    Log.showDebug(TAG_StatusBarNotificationIcon, `aboutToAppear`);
   }
 
   aboutToDisappear() {
-    Log.showInfo(TAG_StatusBarNotificationIcon, `aboutToDisAppear`);
+    Log.showDebug(TAG_StatusBarNotificationIcon, `aboutToDisAppear`);
   }
 
   build() {

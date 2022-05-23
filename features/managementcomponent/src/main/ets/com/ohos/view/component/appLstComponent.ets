@@ -26,7 +26,7 @@ export default struct AppLstComponent {
   @StorageLink('appManagementList') appList: any[]= [];
 
   aboutToAppear(): void{
-    Log.showInfo(TAG, `aboutToAppear`);
+    Log.showDebug(TAG, `aboutToAppear`);
     ViewModel.ViewModelInit();
   }
 

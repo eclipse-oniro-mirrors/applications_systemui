@@ -29,13 +29,13 @@ export default struct ActionComponent {
   private itemData: any = undefined;
 
   aboutToAppear() {
-    Log.showInfo(TAG, `aboutToAppear Start`);
+    Log.showDebug(TAG, `aboutToAppear Start`);
     let actionData = AppStorage.Get(Constants.KEY_INPUT + this.itemData.id);
     this.inputActionData = (actionData instanceof InputActionButtonData) ? actionData : this.inputActionData;
   }
 
   aboutToDisappear() {
-    Log.showInfo(TAG, `aboutToDisAppear`);
+    Log.showDebug(TAG, `aboutToDisAppear`);
   }
 
   build() {
