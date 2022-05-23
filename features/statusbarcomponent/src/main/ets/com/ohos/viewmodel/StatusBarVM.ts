@@ -287,7 +287,7 @@ export class StatusBarVM {
   }
 
   updateStatusBarData(data: StatusBarData): void{
-    Log.showInfo(TAG, `updateStatusBarData, data: ${JSON.stringify(data)}`);
+    Log.showDebug(TAG, `updateStatusBarData, data: ${JSON.stringify(data)}`);
     for (let key in data) {
       this.mStatusBarData[key] = data[key];
     }

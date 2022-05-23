@@ -35,13 +35,13 @@ export default struct ControlCenterSimpleToggleRingModeComponent {
   @State style: any = StyleConfiguration.getControlCenterRingModeComponentStyle()
 
   aboutToAppear() {
-    Log.showDebug(TAG, 'aboutToAppear');
+    Log.showInfo(TAG, 'aboutToAppear');
     ViewModel.initViewModel()
     this.onRingModeUpdated('RingModeComponentMode')
   }
 
   aboutToDisappear() {
-    Log.showDebug(TAG, 'aboutToDisappear');
+    Log.showInfo(TAG, 'aboutToDisappear');
   }
 
   onRingModeUpdated(propName: string): void {
@@ -73,7 +73,7 @@ export default struct ControlCenterSimpleToggleRingModeComponent {
   }
 
   mClickEvent() {
-    Log.showInfo(TAG, `mClickEvent, RingModeComponentMode: ${JSON.stringify(this.RingModeComponentMode)}`);
+    Log.showInfo(TAG, `mClickEvent`);
     if (this.RingModeComponentMode == AudioRingMode.RINGER_MODE_SILENT) {
       ViewModel.setRingerMode(AudioRingMode.RINGER_MODE_NORMAL)
     } else if (this.RingModeComponentMode == AudioRingMode.RINGER_MODE_VIBRATE) {
@@ -84,7 +84,7 @@ export default struct ControlCenterSimpleToggleRingModeComponent {
   }
 
   mLongClickEvent() {
-    Log.showInfo(TAG, `mLongClickEvent, RingModeComponentMode: ${JSON.stringify(this.RingModeComponentMode)}`);
+    Log.showInfo(TAG, `mLongClickEvent`);
     EventManager.publish(obtainStartAbility('com.ohos.settings', 'com.ohos.settings.MainAbility'))
   }
 }

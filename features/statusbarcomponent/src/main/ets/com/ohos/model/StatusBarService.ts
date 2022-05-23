@@ -90,8 +90,6 @@ export class StatusBarService {
         SwitchUserManager.getInstance().registerListener(this);
         STATUSBAR_SOURCE_CONFIG.filterDatas = config.MetaSlots;
         this.mAdapter.initDataSource(STATUSBAR_SOURCE_CONFIG);
-
-        Log.showInfo(TAG, `start StatusBarService finish.`);
     }
 
     stopService() {
@@ -102,12 +100,10 @@ export class StatusBarService {
         this.mIsStart = false;
 
         this.mAdapter.clearAll();
-
-        Log.showInfo(TAG, `stop StatusBarService finish.`);
     }
 
     parseConfig(config) {
-        Log.showInfo(TAG, `parseConfig, config: ${JSON.stringify(config)}`);
+        Log.showInfo(TAG, `parseConfig`);
         this.mConfig = config;
 
         const groupIds = [Constants.GROUP_ID_LEFT, Constants.GROUP_ID_CENTER, Constants.GROUP_ID_RIGHT];
@@ -138,12 +134,12 @@ export class StatusBarService {
             }
             statusBarLayout.push(components);
         }
-        Log.showInfo(TAG, `calcStatusBarLayout, statusBarLayout: ${JSON.stringify(statusBarLayout)}`)
+        Log.showDebug(TAG, `calcStatusBarLayout, statusBarLayout: ${JSON.stringify(statusBarLayout)}`)
         this.mListener?.setStatusBarLayout(statusBarLayout);
     }
 
     userChange(userInfo) {
-        Log.showInfo(TAG, `userChange userInfo ` + userInfo);
+        Log.showInfo(TAG, `userChange`);
         this.mAdapter.loadData(userInfo.userId);
     }
 
@@ -162,7 +158,7 @@ export class StatusBarService {
     }
 
     onItemAdd(itemData: ItemComponentData) {
-        Log.showInfo(TAG, `onItemAdd, itemData: ${JSON.stringify(itemData)}`);
+        Log.showInfo(TAG, `onItemAdd`);
         let statusBarData: StatusBarComponentData = parseItemData(itemData);
         let id = itemData.id;
         this.mListener?.setItemData(id, statusBarData);
@@ -174,7 +170,7 @@ export class StatusBarService {
     }
 
     onItemRemove(itemData: ItemComponentData) {
-        Log.showInfo(TAG, `onItemRemove, itemData: ${JSON.stringify(itemData)}`);
+        Log.showInfo(TAG, `onItemRemove`);
         let id = itemData.id;
         if (this.mStatusBarAllLayout.indexOf(id) >= 0) {
             this.mStatusBarAllLayout.splice(this.mStatusBarAllLayout.indexOf(id), 1);

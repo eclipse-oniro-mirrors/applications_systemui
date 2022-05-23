@@ -31,13 +31,13 @@ export default struct MetaIconItemComponent {
   @State styleCommon: any = StyleConfigurationCommon.getCommonStyle()
 
   aboutToAppear() {
-    Log.showDebug(TAG, `aboutToAppear Start, keyId: ${this.keyId}`);
+    Log.showInfo(TAG, `aboutToAppear Start, keyId: ${this.keyId}`);
     this.linkItemData()
     this.mTintContentInfo = ViewModel.getPluginTintContentInfo(this.keyId)
   }
 
   aboutToDisappear() {
-    Log.showDebug(TAG, `aboutToDisappear`);
+    Log.showInfo(TAG, `aboutToDisappear`);
   }
 
   linkItemData() {

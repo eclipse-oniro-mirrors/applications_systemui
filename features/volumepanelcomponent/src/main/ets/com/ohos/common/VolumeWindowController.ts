@@ -48,7 +48,7 @@ export default class VolumeWindowController {
   }
 
   updateVolumeInfo(volumeInfo: VolumeInfo) {
-    Log.showInfo(TAG, `updateVolumeInfo, volumeInfo: ${JSON.stringify(volumeInfo)} `);
+    Log.showDebug(TAG, `updateVolumeInfo, volumeInfo: ${JSON.stringify(volumeInfo)} `);
     if (volumeInfo && !volumeInfo.updateUi && !this.mIsWindowShown) {
       return;
     }
@@ -74,7 +74,7 @@ export default class VolumeWindowController {
         .then(() => {
           Log.showInfo(TAG, `updateShowStatus ${isShow}.`);
         })
-        .catch((err) => Log.showError(TAG, `Can't set volueme window: ${err}.`));
+        .catch((err) => Log.showError(TAG, `Can't set volueme window: ${JSON.stringify(err)}.`));
     }
   }
 }

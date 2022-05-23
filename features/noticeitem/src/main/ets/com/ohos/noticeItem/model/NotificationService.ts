@@ -106,7 +106,7 @@ export class NotificationService {
           }
         })
       });
-    }).catch(errorInfo => Log.showError(TAG, errorInfo));
+    }).catch(errorInfo => Log.showError(TAG, `error: ${JSON.stringify(errorInfo)}`));
   }
 
   handleNotificationCancel(data) {

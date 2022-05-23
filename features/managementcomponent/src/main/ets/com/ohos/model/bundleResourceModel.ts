@@ -86,7 +86,7 @@ export default class BundleResourceModel {
         this.nextIconItem(index, count, data, this.mBundleInfoList, that)
       });
     } catch (error) {
-      Log.showError(TAG, 'getIconItem catch error:' + error);
+      Log.showError(TAG, `getMediaBase64 err:${JSON.stringify(error)}`);
     }
   }
 

@@ -35,7 +35,7 @@ struct SignalIcon {
   @State style: any = StyleConfiguration.getSignalComponentStyle()
 
   aboutToAppear() {
-    Log.showDebug(TAG, 'aboutToAppear');
+    Log.showInfo(TAG, 'aboutToAppear');
     if (!this.signalObserved) {
       mSignalModel.initSignalModel();
       this.signalObserved = true;
@@ -43,7 +43,7 @@ struct SignalIcon {
   }
 
   aboutToDisappear() {
-    Log.showDebug(TAG, 'aboutToDisappear');
+    Log.showInfo(TAG, 'aboutToDisappear');
   }
 
   build() {

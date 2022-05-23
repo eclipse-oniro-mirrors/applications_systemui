@@ -51,14 +51,13 @@ class StatusBarConfiguration {
     while (displayData == null) {
       await display.getDefaultDisplay()
         .then((res) => {
-          Log.showInfo(TAG, `getDefaultDisplay dis ${JSON.stringify(res)}`);
           displayData = res;
           maxWidth = res.width;
           maxHeight = res.height;
           Log.showInfo(TAG, `getDefaultDisplay maxWidth ${maxWidth} maxHeight ${maxHeight} minHeight ${minHeight}`);
         })
         .catch((err) => {
-          Log.showInfo(TAG, 'getDefaultDisplay err: ' + err);
+          Log.showError(TAG, `getDefaultDisplay err:${JSON.stringify(err)}`);
         });
       await new Promise((resolve) => setTimeout(resolve, 2000));
     }

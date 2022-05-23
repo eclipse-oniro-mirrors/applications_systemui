@@ -30,7 +30,6 @@ export struct MyVol {
   };
 
   aboutToAppear() {
-    Log.showDebug(TAG,'aboutToAppear Start init Volume!');
     this.initVolume()
     Log.showInfo(TAG,'Finished init Volume!');
     VolumeModel.init();
@@ -39,7 +38,7 @@ export struct MyVol {
   }
 
   aboutToDisappear () {
-    Log.showDebug(TAG,'aboutToDisappear');
+    Log.showInfo(TAG,'aboutToDisappear');
   }
 
   initVolume() {

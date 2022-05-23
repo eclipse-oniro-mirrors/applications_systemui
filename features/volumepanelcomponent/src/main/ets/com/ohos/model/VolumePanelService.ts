@@ -67,7 +67,7 @@ export class VolumePanelService {
   }
 
   async onVolumeChange(data) {
-    Log.showInfo(TAG, `onVolumeChange, data: ${JSON.stringify(data)}`);
+    Log.showInfo(TAG, `onVolumeChange`);
     let volumeType = this.formatAudioVolumeTypeFromInterface(data.volumeType);
     this.isMute(volumeType, (volumeType2, data2) => {
       Log.showInfo(TAG, `onVolumeChange->isMute, volumeType2: ${volumeType2} data2: ${data2}`);
@@ -100,9 +100,9 @@ export class VolumePanelService {
   getVolumeInfo(volumeType: AudioVolumeType, callback?: (volumeInfo: VolumeInfo) => void) {
     Log.showInfo(TAG, `getVolumeInfo, volumeType: ${volumeType}`);
     this.getVolume(volumeType, (volumeType, data) => {
-      Log.showInfo(TAG, `getVolumeInfo->getVolume, volumeType: ${volumeType} data: ${data}`);
+      Log.showInfo(TAG, `getVolumeInfo->getVolume`);
       this.isMute(volumeType, (volumeType2, data2) => {
-        Log.showInfo(TAG, `getVolumeInfo->isMute, volumeType2: ${volumeType2} data2: ${data2}`);
+        Log.showInfo(TAG, `getVolumeInfo->isMute`);
         let volumeInfo: VolumeInfo = {
           volumeType: volumeType,
           volume: data,
@@ -173,7 +173,7 @@ export class VolumePanelService {
     Log.showInfo(TAG, `setVolumeAndMute, volumeType: ${volumeType} volume: ${volume} mute: ${mute}`);
     if (volume !== undefined && mute !== undefined) {
       this.setVolume(volumeType, volume, () => {
-        Log.showInfo(TAG, `setVolumeAndMute, setVolume callback volumeType: ${volumeType} volume: ${volume} mute: ${mute}`);
+        Log.showInfo(TAG, `setVolume`);
         this.setMute(volumeType, mute, callback);
       });
     } else if (volume !== undefined) {
@@ -255,7 +255,7 @@ export class VolumePanelService {
     params: any[],
     callbackFunction: Function
   }) {
-    Log.showInfo(TAG, `addInterfaceCallQueue, interfaceName: ${data.interfaceName} params: ${JSON.stringify(data.params)}`);
+    Log.showDebug(TAG, `addInterfaceCallQueue, interfaceName: ${data.interfaceName} params: ${JSON.stringify(data.params)}`);
     this.mInterfaceCallQueue.push(data);
     if (this.mInterfaceCallQueue.length == 1) {
       this.execInterfaceCallQueueFirst();

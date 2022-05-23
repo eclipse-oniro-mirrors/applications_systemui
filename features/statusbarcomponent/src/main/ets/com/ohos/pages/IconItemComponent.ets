@@ -37,7 +37,7 @@ export default struct IconItemComponent {
   @State styleCommon: any = StyleConfigurationCommon.getCommonStyle()
 
   aboutToAppear() {
-    Log.showDebug(TAG, `aboutToAppear Start, keyId: ${this.keyId} `);
+    Log.showInfo(TAG, `aboutToAppear Start, keyId: ${this.keyId} `);
     this.linkItemData()
     if (this.mItemData.get()?.relationWindowId) {
       this.mClearCallback = EventManager.subscribe(WINDOW_SHOW_HIDE_EVENT, (args) => this.onWindowChange(args))
@@ -45,7 +45,7 @@ export default struct IconItemComponent {
   }
 
   aboutToDisappear() {
-    Log.showDebug(TAG, `aboutToDisappear`);
+    Log.showInfo(TAG, `aboutToDisappear`);
     this.mClearCallback && this.mClearCallback()
     this.mClearCallback = undefined
   }

@@ -50,7 +50,7 @@ export class ViewModel {
     SwitchUserManager.getInstance()
       .getCurrentUserInfo()
       .then((userInfo) => this.registerCallback(userInfo.userId))
-      .catch((err) => Log.showError(TAG, `Can't get current user, err: ${err}`));
+      .catch((err) => Log.showError(TAG, `Can't get current user, err: ${JSON.stringify(err)}`));
   }
 
   registerCallback(userId) {
@@ -356,7 +356,7 @@ export class ViewModel {
           this.audioPlayer.play();
           Log.showInfo(TAG, `sound end `);
         } catch (e) {
-          Log.showError(TAG, `sound notificationItem id：${itemData.id} alert error: ${e.toString()}`);
+          Log.showError(TAG, `sound error: ${JSON.stringify(e)}`);
         }
       }
     }

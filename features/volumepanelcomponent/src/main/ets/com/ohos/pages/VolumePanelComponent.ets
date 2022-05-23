@@ -31,12 +31,12 @@ export default struct VolumePanelComponent {
   @State style: any = StyleConfiguration.getVolumePanelComponentStyle()
 
   aboutToAppear() {
-    Log.showDebug(TAG, 'aboutToAppear');
+    Log.showInfo(TAG, 'aboutToAppear');
     ViewModel.initViewModel()
   }
 
   aboutToDisappear() {
-    Log.showDebug(TAG, 'aboutToDisappear');
+    Log.showInfo(TAG, 'aboutToDisappear');
   }
 
   build() {

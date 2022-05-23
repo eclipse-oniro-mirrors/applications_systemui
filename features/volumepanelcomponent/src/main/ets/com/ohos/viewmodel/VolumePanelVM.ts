@@ -143,7 +143,6 @@ export class VolumePanelVM {
   }
 
   calcVolumeByDisplayVolume(displayVolume: number): number{
-    Log.showInfo(TAG, `calcVolumeByDisplayVolume, displayVolume: ${displayVolume}`);
     let volume: number = displayVolume + this.mMinVolume.get();
     Log.showInfo(TAG, `calcVolumeByDisplayVolume, volume: ${volume}`);
     return volume;

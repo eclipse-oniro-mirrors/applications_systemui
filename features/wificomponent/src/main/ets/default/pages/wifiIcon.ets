@@ -56,7 +56,7 @@ export default struct WifiIcon {
   }
 
   private getImage(wifiInfo: number) {
-    Log.showInfo(TAG, `getImage, wifiInfo: ${JSON.stringify(wifiInfo)}`);
+    Log.showInfo(TAG, `getImage`);
     let wifiImage;
     switch (wifiInfo) {
       case Constants.WIFI_SIGNAL_NO:
