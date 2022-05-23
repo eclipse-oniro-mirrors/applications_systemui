@@ -28,12 +28,12 @@ export default struct ComplexToggleComponent {
   @State mDefaultTitle: string = '';
 
   aboutToAppear() {
-    Log.showDebug(TAG, `aboutToAppear Start, keyId: ${this.keyId}`);
+    Log.showInfo(TAG, `aboutToAppear Start, keyId: ${this.keyId}`);
     this.linkItemData();
   }
 
   aboutToDisappear() {
-    Log.showDebug(TAG, `aboutToDisappear`);
+    Log.showInfo(TAG, `aboutToDisappear`);
   }
 
   linkItemData() {

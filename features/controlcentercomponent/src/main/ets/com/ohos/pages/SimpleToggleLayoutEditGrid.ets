@@ -47,11 +47,11 @@ export default struct SimpleToggleLayoutEditGrid {
 
   aboutToAppear() {
     this.logTag = TAG + '-' + this.gridTag
-    Log.showDebug(this.logTag, this.gridTag + 'aboutToAppear');
+    Log.showInfo(this.logTag, this.gridTag + 'aboutToAppear');
   }
 
   aboutToDisappear() {
-    Log.showDebug(this.logTag, 'aboutToDisappear ');
+    Log.showInfo(this.logTag, 'aboutToDisappear ');
   }
 
   build() {

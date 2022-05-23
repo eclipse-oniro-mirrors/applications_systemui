@@ -30,12 +30,12 @@ export default struct SimpleToggleComponent {
   @State mDefaultLabel: string = '';
 
   aboutToAppear() {
-    Log.showDebug(TAG, `aboutToAppear Start, keyId: ${this.keyId}, mEditMode: ${this.mEditMode} mDragMode: ${this.mDragMode}`);
+    Log.showInfo(TAG, `aboutToAppear Start, keyId: ${this.keyId}, mEditMode: ${this.mEditMode} mDragMode: ${this.mDragMode}`);
     this.linkItemData();
   }
 
   aboutToDisappear() {
-    Log.showDebug(TAG, `aboutToDisappear`);
+    Log.showInfo(TAG, `aboutToDisappear`);
   }
 
   linkItemData() {

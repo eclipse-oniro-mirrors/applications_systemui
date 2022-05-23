@@ -30,14 +30,14 @@ export class LocationVM {
   mTintContentInfo: TintContentInfo = getOrCreateTintContentInfo(FASlotName.LOCATION);
 
   constructor() {
-    Log.showDebug(TAG, `constructor`);
+    Log.showInfo(TAG, `constructor`);
   }
 
   initViewModel() {
     if (this.mIsStart) {
       return;
     };
-    Log.showDebug(TAG, `initViewModel `);
+    Log.showInfo(TAG, `initViewModel `);
     this.mIsStart = true;
     this.mLocationData = AppStorage.SetAndLink(TAG + '_LocationData', this.mLocationData).get();
     LocationService.registerListener(this);

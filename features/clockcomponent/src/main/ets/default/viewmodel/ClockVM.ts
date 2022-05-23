@@ -24,7 +24,7 @@ export class ClockVM {
   mTintContentInfo: TintContentInfo = getOrCreateTintContentInfo(FASlotName.CLOCK);
 
   constructor() {
-    Log.showDebug(TAG, `constructor`);
+    Log.showInfo(TAG, `constructor`);
   }
 
   getTintContentInfo(): TintContentInfo {

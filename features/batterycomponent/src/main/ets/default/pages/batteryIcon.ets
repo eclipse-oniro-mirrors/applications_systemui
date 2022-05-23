@@ -32,11 +32,11 @@ export default struct BatteryIcon {
 
   aboutToAppear() {
     mBatteryModel.initBatteryModel();
-    Log.showDebug(TAG, 'aboutToAppear');
+    Log.showInfo(TAG, 'aboutToAppear');
   }
 
   aboutToDisappear() {
-    Log.showDebug(TAG, 'aboutToDisappear');
+    Log.showInfo(TAG, 'aboutToDisappear');
   }
 
   build() {

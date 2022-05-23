@@ -32,13 +32,13 @@ export default struct ControlCenterSimpleToggleLocationComponent {
   @State mLocationData: LocationData = new LocationData();
 
   aboutToAppear() {
-    Log.showDebug(TAG, 'aboutToAppear');
+    Log.showInfo(TAG, 'aboutToAppear');
     ViewModel.initViewModel();
     this.mLocationData = ViewModel.getLocationData();
   }
 
   aboutToDisappear() {
-    Log.showDebug(TAG, 'aboutToDisappear');
+    Log.showInfo(TAG, 'aboutToDisappear');
   }
 
   build() {

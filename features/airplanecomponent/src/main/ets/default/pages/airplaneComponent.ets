@@ -44,25 +44,25 @@ struct airplaneComponent {
     Log.showDebug(TAG, `flyModelStatus：${this.flyModelStatus}`);
     if (this.flyModelStatus == true) {
       this.mWifiOriginalStatus = wifi.isWifiActive();
-      Log.showDebug(TAG, `airplane status is opening, WLAN Original Status ：${this.mWifiOriginalStatus}`);
+      Log.showInfo(TAG, `airplane status is opening, WLAN Original Status ：${this.mWifiOriginalStatus}`);
       wifi.disableWifi();
     }else{
       if(this.mWifiOriginalStatus == true) {
         wifi.enableWifi();
-        Log.showDebug(TAG, `airplane status closed, WLAN Original Status：${this.mWifiOriginalStatus},get system interface, set WLAN status enableWifi`);
+        Log.showInfo(TAG, `airplane status closed, WLAN Original Status：${this.mWifiOriginalStatus},get system interface, set WLAN status enableWifi`);
       } else {
         wifi.disableWifi();
-        Log.showDebug(TAG, `airplane status closed, WLAN Original Status：${this.mWifiOriginalStatus},,get system interface, set WLAN status disableWifi`);
+        Log.showInfo(TAG, `airplane status closed, WLAN Original Status：${this.mWifiOriginalStatus},,get system interface, set WLAN status disableWifi`);
       };
     };
   }
 
   aboutToAppear(){
-    Log.showDebug(TAG, 'aboutToAppear');
+    Log.showInfo(TAG, 'aboutToAppear');
   }
 
   aboutToDisappear (){
-    Log.showDebug(TAG, 'aboutToDisappear ');
+    Log.showInfo(TAG, 'aboutToDisappear ');
   }
 
   build() {

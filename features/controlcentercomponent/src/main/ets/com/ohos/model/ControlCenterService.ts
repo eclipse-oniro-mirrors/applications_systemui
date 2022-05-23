@@ -64,7 +64,7 @@ export class ControlCenterService {
     mSimpleToggleLayout: string[];
 
     constructor() {
-        Log.showDebug(TAG, `constructor`)
+        Log.showInfo(TAG, `constructor`);
     }
 
     startService(config): void {
@@ -168,12 +168,12 @@ export class ControlCenterService {
     }
 
     registerListener(listener: ControlCenterListener) {
-        Log.showDebug(TAG, `registerListener, listener: ${listener}`);
+        Log.showInfo(TAG, `registerListener, listener: ${listener}`);
         this.mListener = listener;
     }
 
     initFinish() {
-        Log.showDebug(TAG, `initFinish`);
+        Log.showInfo(TAG, `initFinish`);
         SwitchUserManager.getInstance()
             .getCurrentUserInfo()
             .then((userInfo) => {

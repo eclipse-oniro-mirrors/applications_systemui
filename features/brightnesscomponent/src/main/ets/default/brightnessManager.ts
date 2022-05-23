@@ -31,9 +31,9 @@ export class brightnessManager {
   SLIDER_CHANG_MODE_MOVING = 1;
 
   init(): void{
-    Log.showDebug(TAG, 'init');
+    Log.showInfo(TAG, 'init');
     this.uri = settings.getUriSync(SYSTEMUI_BRIGHTNESS);
-    Log.showDebug(TAG, 'settings geturi of brightness is ' + this.uri);
+    Log.showInfo(TAG, 'settings geturi of brightness is ' + this.uri);
     this.helper = featureAbility.acquireDataAbilityHelper(AbilityManager.getContext(), CommonConstants.URI_VAR);
     this.getValue();
   }

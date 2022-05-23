@@ -33,11 +33,11 @@ export default struct CapsuleIcon {
 
   aboutToAppear() {
     this.mCapsuleViewModel.initViewModel();
-    Log.showDebug(TAG, 'aboutToAppear, text: ' + this.mCapsuleViewModel.mText);
+    Log.showInfo(TAG, 'aboutToAppear, text: ' + this.mCapsuleViewModel.mText);
   }
 
   aboutToDisappear() {
-    Log.showDebug(TAG, 'aboutToDisappear');
+    Log.showInfo(TAG, 'aboutToDisappear');
   }
 
   build() {

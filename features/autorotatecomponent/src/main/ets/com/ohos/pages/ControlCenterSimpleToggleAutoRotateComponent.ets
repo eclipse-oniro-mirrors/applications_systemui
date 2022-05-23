@@ -30,12 +30,12 @@ export default struct ControlCenterSimpleToggleAutoRotateComponent {
   @State @Watch('onAutoRotateDataChange') mAutoRotateData: AutoRotateData = ViewModel.getAutoRotateData();
 
   aboutToAppear() {
-    Log.showDebug(TAG, 'aboutToAppear');
+    Log.showInfo(TAG, 'aboutToAppear');
     this.onAutoRotateDataChange('mAutoRotateData');
   }
 
   aboutToDisappear() {
-    Log.showDebug(TAG, 'aboutToDisappear')
+    Log.showInfo(TAG, 'aboutToDisappear')
   }
 
   onAutoRotateDataChange(propName: string): void {

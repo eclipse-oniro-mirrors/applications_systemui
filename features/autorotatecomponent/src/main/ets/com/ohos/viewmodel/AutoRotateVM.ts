@@ -26,7 +26,7 @@ export class AutoRotateVM {
   };
 
   constructor() {
-    Log.showDebug(TAG, `constructor`);
+    Log.showInfo(TAG, `constructor`);
     this.mAutoRotateData = AppStorage.SetAndLink(TAG + '_AutoRotateData', this.mAutoRotateData).get();
     AutoRotateService.registerListener(this);
     AutoRotateService.startService();

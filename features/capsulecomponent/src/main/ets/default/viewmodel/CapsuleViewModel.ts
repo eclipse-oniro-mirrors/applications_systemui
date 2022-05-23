@@ -124,7 +124,7 @@ export default class CapsuleViewModel {
       this.mIsBackground = false;
     }
     Log.showDebug(TAG, `onClickEvent `);
-    Log.showDebug(TAG, `startAbility`);
+    Log.showInfo(TAG, `startAbility`);
     AbilityManager.startAbility({
       bundleName: this.mWantBundleName,
       abilityName: this.mWantAbilityName

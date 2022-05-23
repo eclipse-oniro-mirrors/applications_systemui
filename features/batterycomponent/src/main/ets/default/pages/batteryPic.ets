@@ -30,11 +30,11 @@ struct BatteryPic {
   @State style: any = StyleConfiguration.getBatteryPicStyle();
 
   aboutToAppear(){
-    Log.showDebug(TAG,'aboutToAppear Start');
+    Log.showInfo(TAG,'aboutToAppear Start');
   }
 
   aboutToDisappear(){
-    Log.showDebug(TAG,'aboutToDisappear');
+    Log.showInfo(TAG,'aboutToDisappear');
   }
 
   build() {

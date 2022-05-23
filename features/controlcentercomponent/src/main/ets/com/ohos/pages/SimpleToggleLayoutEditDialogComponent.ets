@@ -29,11 +29,11 @@ export default struct SimpleToggleLayoutEditDialogComponent {
   @State style: any = StyleConfiguration.getControlEditDialogStyle();
 
   aboutToAppear() {
-    Log.showDebug(TAG, 'aboutToAppear');
+    Log.showInfo(TAG, 'aboutToAppear');
   }
 
   aboutToDisappear() {
-    Log.showDebug(TAG, 'aboutToDisappear');
+    Log.showInfo(TAG, 'aboutToDisappear');
   }
 
   build() {

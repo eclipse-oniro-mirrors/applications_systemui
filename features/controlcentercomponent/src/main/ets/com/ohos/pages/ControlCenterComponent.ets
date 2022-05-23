@@ -44,12 +44,12 @@ export default struct ControlCenterComponent {
   private titleDisplayInside: boolean = false;
 
   aboutToAppear() {
-    Log.showDebug(TAG, `aboutToAppear, mControlCenterComponentConfig: ${JSON.stringify(this.mControlCenterComponentConfig)}`);
+    Log.showInfo(TAG, `aboutToAppear, mControlCenterComponentConfig: ${JSON.stringify(this.mControlCenterComponentConfig)}`);
     ViewModel.initViewModel(this.mControlCenterComponentConfig);
   }
 
   aboutToDisappear() {
-    Log.Log.showDebug(TAG, 'aboutToDisappear');
+    Log.showInfo(TAG, 'aboutToDisappear');
   }
 
   onSimpleToggleLayoutEditStart() {
@@ -174,11 +174,11 @@ struct ControlCenterComplexToggleLayout {
   @State style: any = StyleConfiguration.getControlCenterComplexToggleLayoutStyle();
 
   aboutToAppear() {
-    Log.showDebug(TAG_ControlCenterComplexToggleLayout, `aboutToAppear, mComplexToggleLayout: ${this.mComplexToggleLayout} `)
+    Log.showInfo(TAG_ControlCenterComplexToggleLayout, `aboutToAppear, mComplexToggleLayout: ${this.mComplexToggleLayout} `)
   }
 
   aboutToDisappear() {
-    Log.showDebug(TAG_ControlCenterComplexToggleLayout, `aboutToDisAppear`);
+    Log.showInfo(TAG_ControlCenterComplexToggleLayout, `aboutToDisAppear`);
   }
 
   build() {
@@ -229,11 +229,11 @@ struct ControlCenterSimpleToggleLayout {
   @State style: any = StyleConfiguration.getControlCenterSimpleToggleLayoutStyle();
 
   aboutToAppear() {
-    Log.showDebug(TAG_ControlCenterSimpleToggleLayout, `aboutToAppear, mSimpleToggleLayout: ${this.mSimpleToggleLayout} `);
+    Log.showInfo(TAG_ControlCenterSimpleToggleLayout, `aboutToAppear, mSimpleToggleLayout: ${this.mSimpleToggleLayout} `);
   }
 
   aboutToDisappear() {
-    Log.showDebug(TAG_ControlCenterSimpleToggleLayout, `aboutToDisAppear`);
+    Log.showInfo(TAG_ControlCenterSimpleToggleLayout, `aboutToDisAppear`);
   }
 
   build() {

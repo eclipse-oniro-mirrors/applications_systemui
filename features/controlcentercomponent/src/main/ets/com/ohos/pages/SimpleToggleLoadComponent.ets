@@ -28,11 +28,11 @@ export default struct SimpleToggleLoadComponent {
   private mDragMode: boolean = false
 
   aboutToAppear() {
-    Log.showDebug(TAG, `aboutToAppear Start, keyId: ${this.keyId}, mEditMode: ${this.mEditMode} mDragMode: ${this.mDragMode}`);
+    Log.showInfo(TAG, `aboutToAppear Start, keyId: ${this.keyId}, mEditMode: ${this.mEditMode} mDragMode: ${this.mDragMode}`);
   }
 
   aboutToDisappear() {
-    Log.showDebug(TAG, `aboutToDisappear`);
+    Log.showInfo(TAG, `aboutToDisappear`);
   }
 
   build() {

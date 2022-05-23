@@ -27,11 +27,11 @@ export default struct ComplexToggleLoadComponent {
   @Prop keyId: string;
 
   aboutToAppear() {
-    LLog.showDebug(TAG, `aboutToAppear Start, keyId: ${this.keyId}`);
+    LLog.showInfo(TAG, `aboutToAppear Start, keyId: ${this.keyId}`);
   }
 
   aboutToDisappear() {
-    Log.showDebug(TAG, `aboutToDisappear`);
+    Log.showInfo(TAG, `aboutToDisappear`);
   }
 
   build() {

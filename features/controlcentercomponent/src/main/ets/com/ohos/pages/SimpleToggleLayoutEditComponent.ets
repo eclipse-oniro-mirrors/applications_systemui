@@ -68,7 +68,7 @@ export default struct SimpleToggleLayoutEditComponent {
   });
 
   aboutToAppear() {
-    Log.showDebug(TAG, 'aboutToAppear');
+    Log.showInfo(TAG, 'aboutToAppear');
     this.mNewDisplayingToggles = [...this.mDisplayingToggles];
     this.mNewHidingToggles = [...this.mHidingToggles];
     let allTogglesCount = this.mNewDisplayingToggles.length + this.mNewHidingToggles.length;
@@ -83,7 +83,7 @@ export default struct SimpleToggleLayoutEditComponent {
   }
 
   aboutToDisappear() {
-    Log.showDebug(TAG, 'aboutToDisappear ');
+    Log.showInfo(TAG, 'aboutToDisappear ');
   }
 
   build() {
@@ -368,11 +368,11 @@ struct SimpleToggleLayoutEditUpTitle {
   @State style: any = StyleConfiguration.getSimpleToggleLayoutEditUpTitleStyle()
 
   aboutToAppear() {
-    Log.showDebug(TAG_SimpleToggleLayoutEditUpTitle, 'aboutToAppear');
+    Log.showInfo(TAG_SimpleToggleLayoutEditUpTitle, 'aboutToAppear');
   }
 
   aboutToDisappear() {
-    Log.showDebug(TAG_SimpleToggleLayoutEditUpTitle, 'aboutToDisappear ');
+    Log.showInfo(TAG_SimpleToggleLayoutEditUpTitle, 'aboutToDisappear ');
   }
 
   build() {
@@ -409,11 +409,11 @@ struct SimpleToggleLayoutEditOptMsg {
   @State style: any = StyleConfiguration.getSimpleToggleLayoutEditOptMsgStyle();
 
   aboutToAppear() {
-    Log.showDebug(TAG_SimpleToggleLayoutEditOptMsg, 'aboutToAppear');
+    Log.showInfo(TAG_SimpleToggleLayoutEditOptMsg, 'aboutToAppear');
   }
 
   aboutToDisappear() {
-    Log.showDebug(TAG_SimpleToggleLayoutEditOptMsg, 'aboutToDisappear ');
+    Log.showInfo(TAG_SimpleToggleLayoutEditOptMsg, 'aboutToDisappear ');
   }
 
   build() {

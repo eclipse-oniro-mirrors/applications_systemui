@@ -32,7 +32,7 @@ export default struct ClockIcon {
   unSubscriber?: unsubscribe;
 
   aboutToAppear() {
-    Log.showDebug(TAG, 'aboutToAppear');
+    Log.showInfo(TAG, 'aboutToAppear');
     this.unSubscriber = EventManager.subscribe(TIME_CHANGE_EVENT, (args: TimeEventArgs) => {
       this.mTime = TimeManager.formatTime(args.date);
     });
@@ -40,7 +40,7 @@ export default struct ClockIcon {
   }
 
   aboutToDisappear() {
-    Log.showDebug(TAG, 'aboutToDisappear');
+    Log.showInfo(TAG, 'aboutToDisappear');
     this.unSubscriber && this.unSubscriber();
     this.unSubscriber = undefined;
   }
