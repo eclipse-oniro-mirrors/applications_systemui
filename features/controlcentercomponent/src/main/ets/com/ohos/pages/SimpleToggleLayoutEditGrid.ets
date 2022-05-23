@@ -51,7 +51,7 @@ export default struct SimpleToggleLayoutEditGrid {
   }
 
   aboutToDisappear() {
-    Log.showInfo(this.logTag, 'aboutToDisappear ');
+    Log.showDebug(this.logTag, 'aboutToDisappear ');
   }
 
   build() {
@@ -94,58 +94,58 @@ export default struct SimpleToggleLayoutEditGrid {
   }
 
   calcColumnsTemplate(columnCount: number): string{
-    Log.showInfo(this.logTag, `calcColumnsTemplate, columnCount: ${columnCount}`);
+    Log.showDebug(this.logTag, `calcColumnsTemplate, columnCount: ${columnCount}`);
     let columnsTemplate = '1fr';
     for (let i = 1;i < columnCount; i++) {
       columnsTemplate += ' 1fr';
     }
-    Log.showInfo(this.logTag, `calcColumnsTemplate, columnsTemplate: ${columnsTemplate}`);
+    Log.showDebug(this.logTag, `calcColumnsTemplate, columnsTemplate: ${columnsTemplate}`);
     return columnsTemplate;
   }
 
   calcMaxRowCount(maxCount: number, columnCount: number): number{
-    Log.showInfo(this.logTag, `calcMaxRowCount, maxCount: ${maxCount} columnCount: ${columnCount}`);
+    Log.showDebug(this.logTag, `calcMaxRowCount, maxCount: ${maxCount} columnCount: ${columnCount}`);
     let maxRowCount = Math.ceil(maxCount / columnCount);
     if (maxRowCount < 1) {
       maxRowCount = 1;
     };
-    Log.showInfo(this.logTag, `calcMaxRowCount, maxRowCount: ${maxRowCount}`);
+    Log.showDebug(this.logTag, `calcMaxRowCount, maxRowCount: ${maxRowCount}`);
     return maxRowCount;
   }
 
   calcMinRowCount(minCount: number, columnCount: number): number{
-    Log.showInfo(this.logTag, `calcMinRowCount, minCount: ${minCount} columnCount: ${columnCount}`);
+    Log.showDebug(this.logTag, `calcMinRowCount, minCount: ${minCount} columnCount: ${columnCount}`);
     let minRowCount = Math.ceil(minCount / columnCount);
     if (minRowCount < 1) {
       minRowCount = 1;
     }
-    Log.showInfo(this.logTag, `calcMinRowCount, minRowCount: ${minRowCount}`);
+    Log.showDebug(this.logTag, `calcMinRowCount, minRowCount: ${minRowCount}`);
     return minRowCount;
   }
 
   onItemDragEnter(event) {
-    Log.showInfo(this.logTag, `onItemDragEnter, event: ${JSON.stringify(event)}`);
+    Log.showDebug(this.logTag, `onItemDragEnter, event: ${JSON.stringify(event)}`);
   }
 
   onItemDragMove(event, itemIndex, insertIndex) {
-    Log.showInfo(this.logTag, `onItemDragMove, itemIndex: ${itemIndex} insertIndex: ${insertIndex} event: ${JSON.stringify(event)}`);
+    Log.showDebug(this.logTag, `onItemDragMove, itemIndex: ${itemIndex} insertIndex: ${insertIndex} event: ${JSON.stringify(event)}`);
   }
 
   onItemDragLeave(event, itemIndex) {
-    Log.showInfo(this.logTag, `onItemDragLeave, itemIndex: ${itemIndex} event: ${JSON.stringify(event)}`);
+    Log.showDebug(this.logTag, `onItemDragLeave, itemIndex: ${itemIndex} event: ${JSON.stringify(event)}`);
   }
 
   onGridItemDragStart(event, itemIndex) {
-    Log.showInfo(this.logTag, `onGridItemDragStart, itemIndex: ${itemIndex} event: ${JSON.stringify(event)}`);
+    Log.showDebug(this.logTag, `onGridItemDragStart, itemIndex: ${itemIndex} event: ${JSON.stringify(event)}`);
     this.mCurrentDragToggleName = this.mToggles[itemIndex];
     if (this.onItemDragStart) {
       this.onItemDragStart(this.mCurrentDragToggleName);
     };
-    Log.showInfo(this.logTag, `onGridItemDragStart, mCurrentDragToggleName: ${this.mCurrentDragToggleName}`);
+    Log.showDebug(this.logTag, `onGridItemDragStart, mCurrentDragToggleName: ${this.mCurrentDragToggleName}`);
   }
 
   onGridItemDrop(event, itemIndex, insertIndex, isSuccess) {
-    Log.showInfo(this.logTag, `onGridItemDrop, itemIndex: ${itemIndex} insertIndex: ${insertIndex} isSuccess: ${isSuccess} event: ${JSON.stringify(event)}`);
+    Log.showDebug(this.logTag, `onGridItemDrop, itemIndex: ${itemIndex} insertIndex: ${insertIndex} isSuccess: ${isSuccess} event: ${JSON.stringify(event)}`);
     if (!isSuccess) {
       this.callOnItemDrop('fail');
       return;
@@ -157,10 +157,10 @@ export default struct SimpleToggleLayoutEditGrid {
     let status = 'success';
     let currentDragToggleName = this.mCurrentDragToggleName;
     let globalDragToggleName = this.mGlobalDragToggleName;
-    Log.showInfo(this.logTag, `onItemDrop, currentDragToggleName: ${currentDragToggleName}`);
-    Log.showInfo(this.logTag, `onItemDrop, globalDragToggleName: ${globalDragToggleName}`);
+    Log.showDebug(this.logTag, `onItemDrop, currentDragToggleName: ${currentDragToggleName}`);
+    Log.showDebug(this.logTag, `onItemDrop, globalDragToggleName: ${globalDragToggleName}`);
     if (itemIndex >= 0 && insertIndex >= 0) { // move
-      Log.showInfo(this.logTag, `onItemDrop, move`);
+      Log.showDebug(this.logTag, `onItemDrop, move`);
       if (itemIndex > insertIndex) {
         this.mToggles.splice(insertIndex, 0, currentDragToggleName);
         this.mToggles.splice(itemIndex + 1, 1);
@@ -169,7 +169,7 @@ export default struct SimpleToggleLayoutEditGrid {
         this.mToggles.splice(itemIndex, 1);
       };
     } else if (itemIndex == -1 && insertIndex >= 0) { // insert
-      Log.showInfo(this.logTag, `onItemDrop, insert`);
+      Log.showDebug(this.logTag, `onItemDrop, insert`);
       if (this.mToggles.length < this.mMaxCount) {
         this.mToggles.splice(insertIndex, 0, globalDragToggleName);
       } else {
@@ -177,7 +177,7 @@ export default struct SimpleToggleLayoutEditGrid {
         status = 'cancel';
       };
     } else if (itemIndex >= 0 && insertIndex == -1) { // delete
-      Log.showInfo(this.logTag, `onItemDrop, delete`);
+      Log.showDebug(this.logTag, `onItemDrop, delete`);
       if (this.mToggles.length > this.mMinCount) {
         this.mToggles.splice(itemIndex, 1);
       } else {
@@ -189,7 +189,7 @@ export default struct SimpleToggleLayoutEditGrid {
   }
 
   callOnItemDrop(status: string): void {
-    Log.showInfo(this.logTag, `callOnItemDrop, status: ${status}`);
+    Log.showDebug(this.logTag, `callOnItemDrop, status: ${status}`);
     if (this.onItemDrop) {
       this.onItemDrop(status);
     };

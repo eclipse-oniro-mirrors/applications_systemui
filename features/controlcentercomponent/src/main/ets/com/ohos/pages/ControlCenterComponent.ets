@@ -203,12 +203,12 @@ struct ControlCenterComplexToggleLayout {
   }
 
   calcGridHeight(rowCount, rowHeight, rowGap) {
-    Log.showInfo(TAG_ControlCenterComplexToggleLayout, `calcGridHeight, rowCount: ${rowCount} rowHeight: ${rowHeight} rowGap: ${rowGap}`);
+    Log.showDebug(TAG_ControlCenterComplexToggleLayout, `calcGridHeight, rowCount: ${rowCount} rowHeight: ${rowHeight} rowGap: ${rowGap}`);
     let height = rowCount * rowHeight + (rowCount - 1) * rowGap;
     if (height < 0) {
       height = 0
     };
-    Log.showInfo(TAG_ControlCenterComplexToggleLayout, `calcGridHeight, height: ${height}`);
+    Log.showDebug(TAG_ControlCenterComplexToggleLayout, `calcGridHeight, height: ${height}`);
     return height + 'px';
   }
 
@@ -264,17 +264,17 @@ struct ControlCenterSimpleToggleLayout {
   }
 
   calcGridHeight(rowCount, rowHeight, rowGap) {
-    Log.showInfo(TAG_ControlCenterSimpleToggleLayout, `calcGridHeight, rowCount: ${rowCount} rowHeight: ${rowHeight} rowGap: ${rowGap}`);
+    Log.showDebug(TAG_ControlCenterSimpleToggleLayout, `calcGridHeight, rowCount: ${rowCount} rowHeight: ${rowHeight} rowGap: ${rowGap}`);
     let height = rowCount * rowHeight + (rowCount - 1) * rowGap;
     if (height < 0) {
       height = 0;
     }
-    Log.showInfo(TAG_ControlCenterSimpleToggleLayout, `calcGridHeight, height: ${height}`);
+    Log.showDebug(TAG_ControlCenterSimpleToggleLayout, `calcGridHeight, height: ${height}`);
     return height + 'px';
   }
 
   generateColumnsTemplate(columnCount) {
-    Log.showInfo(TAG_ControlCenterSimpleToggleLayout, `generateColumnsTemplate, columnCount: ${columnCount}`);
+    Log.showDebug(TAG_ControlCenterSimpleToggleLayout, `generateColumnsTemplate, columnCount: ${columnCount}`);
     let columnsTemplate = '1fr';
     for (let i = 1;i < columnCount; i++) {
       columnsTemplate += ' 1fr';
@@ -283,7 +283,7 @@ struct ControlCenterSimpleToggleLayout {
   }
 
   generateRowsTemplate(rowCount) {
-    Log.showInfo(TAG_ControlCenterSimpleToggleLayout, `generateRowsTemplate, rowCount: ${rowCount}`);
+    Log.showDebug(TAG_ControlCenterSimpleToggleLayout, `generateRowsTemplate, rowCount: ${rowCount}`);
     let rowsTemplate = '1fr';
     for (let i = 1;i < rowCount; i++) {
       rowsTemplate += ' 1fr';

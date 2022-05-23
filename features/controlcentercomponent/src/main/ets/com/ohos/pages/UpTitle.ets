@@ -114,12 +114,12 @@ export default struct UpTitle {
   }
 
   settingClick() {
-    Log.showInfo(TAG, `settingClick`);
+    Log.showDebug(TAG, `settingClick`);
     EventManager.publish(obtainStartAbility('com.ohos.settings', 'com.ohos.settings.MainAbility'));
   }
 
   editClick() {
-    Log.showInfo(TAG, `editClick`);
+    Log.showDebug(TAG, `editClick`);
     if (this.simpleToggleLayoutEditStartCallback) {
       this.simpleToggleLayoutEditStartCallback();
     };
@@ -129,12 +129,12 @@ export default struct UpTitle {
     if (event.type == Constants.TOUCHTYPE_DOWN) {
       this.startX = event.touches[0].screenX;
       this.startY = event.touches[0].screenY;
-      Log.showInfo(TAG, `quicklySetting touchStart2=======startX: ${this.startX}, startY: ${this.startY}`);
+      Log.showDebug(TAG, `quicklySetting touchStart2=======startX: ${this.startX}, startY: ${this.startY}`);
     } else if (event.type == Constants.TOUCHTYPE_MOVE) {
       this.moveX = event.touches[0].screenX - this.startX;
       this.moveY = event.touches[0].screenY - this.startY;
     } else if (event.type == Constants.TOUCHTYPE_UP) {
-      Log.showInfo(TAG, `quicklySetting touchEnd2, moveX: ${this.moveX}, moveY: ${this.moveY}`);
+      Log.showDebug(TAG, `quicklySetting touchEnd2, moveX: ${this.moveX}, moveY: ${this.moveY}`);
       if (this.moveX < -30) {
         if (this.touchMoveCallback) {
           this.touchMoveCallback({ 'direction': 'left' });

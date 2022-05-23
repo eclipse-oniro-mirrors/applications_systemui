@@ -64,14 +64,14 @@ export class ControlCenterService {
     mSimpleToggleLayout: string[];
 
     constructor() {
-        Log.showInfo(TAG, `constructor`)
+        Log.showDebug(TAG, `constructor`)
     }
 
     startService(config): void {
         if (this.mIsStart) {
             return;
         }
-        Log.showInfo(TAG, `start ControlCenterService.`);
+        Log.showDebug(TAG, `start ControlCenterService.`);
         this.mIsStart = true;
 
         this.parseConfig(config);
@@ -85,13 +85,13 @@ export class ControlCenterService {
         if (!this.mIsStart) {
             return;
         }
-        Log.showInfo(TAG, `stop ControlCenterService.`);
+        Log.showDebug(TAG, `stop ControlCenterService.`);
         this.mIsStart = false;
         this.mAdapter.clearAll();
     }
 
     parseConfig(config): void {
-        Log.showInfo(TAG, `parseConfig, config: ${JSON.stringify(config)}`);
+        Log.showDebug(TAG, `parseConfig, config: ${JSON.stringify(config)}`);
         this.mConfig = config;
 
         this.mComplexToggleLayoutTemplate = [];
@@ -99,25 +99,25 @@ export class ControlCenterService {
             this.mComplexToggleLayoutTemplate.push(name);
         });
         this.loadSimpleToggleLayoutTemplate();
-        Log.showInfo(TAG,
+        Log.showDebug(TAG,
             `parseConfig, ComplexToggleLayoutTemplate: ${JSON.stringify(this.mComplexToggleLayoutTemplate)}`);
-        Log.showInfo(TAG,
+        Log.showDebug(TAG,
             `parseConfig, SimpleToggleLayoutTemplate: ${JSON.stringify(this.mSimpleToggleLayoutTemplate)}`);
 
         config.LocalToggles.ComplexToggles.forEach((name) => {
             this.mAllComplexToggles.push(name);
         });
-        Log.showInfo(TAG, `parseConfig, mAllComplexToggles: ${JSON.stringify(this.mAllComplexToggles)}`);
+        Log.showDebug(TAG, `parseConfig, mAllComplexToggles: ${JSON.stringify(this.mAllComplexToggles)}`);
         this.calcComplexToggleLayout();
         config.LocalToggles.SimpleToggles.forEach((name) => {
             this.mAllSimpleToggles.push(name);
         });
-        Log.showInfo(TAG, `parseConfig, allSimpleToggles: ${JSON.stringify(this.mAllSimpleToggles)}`);
+        Log.showDebug(TAG, `parseConfig, allSimpleToggles: ${JSON.stringify(this.mAllSimpleToggles)}`);
         this.calcSimpleToggleLayout();
     }
 
     loadSimpleToggleLayoutTemplate(): void{
-        Log.showInfo(TAG, `loadSimpleToggleLayoutTemplate`);
+        Log.showDebug(TAG, `loadSimpleToggleLayoutTemplate`);
         this.mSimpleToggleLayoutTemplate = [];
         let simpleToggleLayout = this.getSimpleToggleLayoutFromSettings();
         Log.showDebug(TAG, `simpleToggleLayout: ${JSON.stringify(simpleToggleLayout)}`);
@@ -129,11 +129,11 @@ export class ControlCenterService {
             });
             this.setSimpleToggleLayoutToSettings(this.mSimpleToggleLayoutTemplate);
         }
-        Log.showInfo(TAG, `loadSimpleToggleLayoutTemplate, mSimpleToggleLayoutTemplate: ${JSON.stringify(this.mSimpleToggleLayoutTemplate)}`);
+        Log.showDebug(TAG, `loadSimpleToggleLayoutTemplate, mSimpleToggleLayoutTemplate: ${JSON.stringify(this.mSimpleToggleLayoutTemplate)}`);
     }
 
     calcComplexToggleLayout(): void {
-        Log.showInfo(TAG, `calcComplexToggleLayout`);
+        Log.showDebug(TAG, `calcComplexToggleLayout`);
 
         let complexToggleLayout: string[] = [];
         this.mComplexToggleLayoutTemplate.forEach((name) => {
@@ -142,13 +142,13 @@ export class ControlCenterService {
             }
         });
 
-        Log.showInfo(TAG, `calcComplexToggleLayout, complexToggleLayout: ${JSON.stringify(complexToggleLayout)}`);
+        Log.showDebug(TAG, `calcComplexToggleLayout, complexToggleLayout: ${JSON.stringify(complexToggleLayout)}`);
         this.mComplexToggleLayout = complexToggleLayout;
         this.mListener?.setComplexToggleLayout(complexToggleLayout);
     }
 
     calcSimpleToggleLayout(): void {
-        Log.showInfo(TAG, `calcSimpleToggleLayout`);
+        Log.showDebug(TAG, `calcSimpleToggleLayout`);
 
         let simpleToggleLayout: string[] = [];
         this.mSimpleToggleLayoutTemplate.forEach((name) => {
@@ -157,7 +157,7 @@ export class ControlCenterService {
             }
         });
 
-        Log.showInfo(TAG, `calcSimpleToggleLayout, simpleToggleLayout: ${JSON.stringify(simpleToggleLayout)}`);
+        Log.showDebug(TAG, `calcSimpleToggleLayout, simpleToggleLayout: ${JSON.stringify(simpleToggleLayout)}`);
         this.mSimpleToggleLayout = simpleToggleLayout;
         this.mListener?.setSimpleToggleLayout(simpleToggleLayout);
     }
@@ -168,12 +168,12 @@ export class ControlCenterService {
     }
 
     registerListener(listener: ControlCenterListener) {
-        Log.showInfo(TAG, `registerListener, listener: ${listener}`);
+        Log.showDebug(TAG, `registerListener, listener: ${listener}`);
         this.mListener = listener;
     }
 
     initFinish() {
-        Log.showInfo(TAG, `initFinish`);
+        Log.showDebug(TAG, `initFinish`);
         SwitchUserManager.getInstance()
             .getCurrentUserInfo()
             .then((userInfo) => {
@@ -182,89 +182,89 @@ export class ControlCenterService {
     }
 
     onItemAdd(itemData: ItemComponentData): void {
-        Log.showInfo(TAG, `onItemAdd, itemData: ${JSON.stringify(itemData)}`);
+        Log.showDebug(TAG, `onItemAdd, itemData: ${JSON.stringify(itemData)}`);
         let controlData: ControlComponentData = parseData(itemData);
         let id: string = controlData.id;
         this.mListener?.setItemData(id, controlData);
         if (controlData.toggleType == Constants.TOGGLE_TYPE_COMPLEX) {
             if (this.mAllComplexToggles.indexOf(id) < 0) {
                 this.mAllComplexToggles.push(id);
-                Log.showInfo(TAG, `onItemAdd, mAllComplexToggles: ${JSON.stringify(this.mAllComplexToggles)}`);
+                Log.showDebug(TAG, `onItemAdd, mAllComplexToggles: ${JSON.stringify(this.mAllComplexToggles)}`);
                 this.calcComplexToggleLayout();
             }
         } else {
             if (this.mAllSimpleToggles.indexOf(id) < 0) {
                 this.mAllSimpleToggles.push(id);
-                Log.showInfo(TAG, `onItemAdd, mAllSimpleToggles: ${JSON.stringify(this.mAllSimpleToggles)}`);
+                Log.showDebug(TAG, `onItemAdd, mAllSimpleToggles: ${JSON.stringify(this.mAllSimpleToggles)}`);
                 this.calcSimpleToggleLayout();
             }
         }
     }
 
     onItemRemove(itemData: ItemComponentData): void {
-        Log.showInfo(TAG, `onItemRemove, itemData: ${JSON.stringify(itemData)}`);
+        Log.showDebug(TAG, `onItemRemove, itemData: ${JSON.stringify(itemData)}`);
         let id: string = itemData.id;
         if (this.mAllComplexToggles.indexOf(id) >= 0) {
             this.mAllComplexToggles.splice(this.mAllComplexToggles.indexOf(id), 1);
-            Log.showInfo(TAG, `onItemRemove, mAllComplexToggles: ${JSON.stringify(this.mAllComplexToggles)}`);
+            Log.showDebug(TAG, `onItemRemove, mAllComplexToggles: ${JSON.stringify(this.mAllComplexToggles)}`);
             this.calcComplexToggleLayout();
         } else if (this.mAllSimpleToggles.indexOf(id) >= 0) {
             this.mAllSimpleToggles.splice(this.mAllSimpleToggles.indexOf(id), 1);
-            Log.showInfo(TAG, `onItemRemove, mAllSimpleToggles: ${JSON.stringify(this.mAllSimpleToggles)}`);
+            Log.showDebug(TAG, `onItemRemove, mAllSimpleToggles: ${JSON.stringify(this.mAllSimpleToggles)}`);
             this.calcSimpleToggleLayout();
         }
         this.mListener?.setItemData(id, undefined);
     }
 
     getSimpleToggleLayoutFromSettings(): string[] {
-        Log.showInfo(TAG, `getSimpleToggleLayoutFromSettings`);
+        Log.showDebug(TAG, `getSimpleToggleLayoutFromSettings`);
         let value = SettingsUtil.getValue(SETTINGS_CONTROL_SIMPLE_TOGGLE_LAYOUT);
         let simpleToggleLayout: string[] = null;
         if (!CheckEmptyUtils.isEmpty(value)) {
             simpleToggleLayout = JSON.parse(value);
         }
-        Log.showInfo(TAG, `getSimpleToggleLayoutFromSettings, simpleToggleLayout: ${JSON.stringify(simpleToggleLayout)}`);
+        Log.showDebug(TAG, `getSimpleToggleLayoutFromSettings, simpleToggleLayout: ${JSON.stringify(simpleToggleLayout)}`);
         return simpleToggleLayout;
     }
 
     setSimpleToggleLayoutToSettings(simpleToggleLayout: string[]): void {
-        Log.showInfo(TAG, `setSimpleToggleLayoutToSettings, simpleToggleLayout: ${JSON.stringify(simpleToggleLayout)}`);
+        Log.showDebug(TAG, `setSimpleToggleLayoutToSettings, simpleToggleLayout: ${JSON.stringify(simpleToggleLayout)}`);
         let value: string = JSON.stringify(simpleToggleLayout);
         SettingsUtil.setValue(SETTINGS_CONTROL_SIMPLE_TOGGLE_LAYOUT, value);
     }
 
     getHidingSimpleToggles(): string[] {
-        Log.showInfo(TAG, `getHidingSimpleToggles`);
+        Log.showDebug(TAG, `getHidingSimpleToggles`);
         let hidingSimpleToggles: string[] = [];
         this.mAllSimpleToggles.forEach((toggleName) => {
             if (this.mSimpleToggleLayout.indexOf(toggleName) < 0) {
                 hidingSimpleToggles.push(toggleName);
             }
         });
-        Log.showInfo(TAG, `getHidingSimpleToggles, hidingSimpleToggles: ${JSON.stringify(hidingSimpleToggles)}`);
+        Log.showDebug(TAG, `getHidingSimpleToggles, hidingSimpleToggles: ${JSON.stringify(hidingSimpleToggles)}`);
         return hidingSimpleToggles;
     }
 
     getDefaultSimpleToggleLayout(): string[] {
-        Log.showInfo(TAG, `getDefaultSimpleToggleLayout`);
+        Log.showDebug(TAG, `getDefaultSimpleToggleLayout`);
         let defaultToggles: string[] = [];
         this.mConfig.DefaultSimpleToggleLayout.forEach((toggleName) => {
             if (this.mAllSimpleToggles.indexOf(toggleName) >= 0) {
                 defaultToggles.push(toggleName);
             }
         });
-        Log.showInfo(TAG, `getDefaultSimpleToggleLayout, defaultToggles: ${JSON.stringify(defaultToggles)}`);
+        Log.showDebug(TAG, `getDefaultSimpleToggleLayout, defaultToggles: ${JSON.stringify(defaultToggles)}`);
         return defaultToggles;
     }
 
     saveSimpleToggleLayout(layout: string[]): void{
-        Log.showInfo(TAG, `saveSimpleToggleLayout, layout: ${JSON.stringify(layout)}`);
+        Log.showDebug(TAG, `saveSimpleToggleLayout, layout: ${JSON.stringify(layout)}`);
         this.setSimpleToggleLayoutToSettings(layout);
         this.mSimpleToggleLayoutTemplate = [];
         layout.forEach((name) => {
             this.mSimpleToggleLayoutTemplate.push(name);
         });
-        Log.showInfo(TAG, `saveSimpleToggleLayout, mSimpleToggleLayoutTemplate: ${JSON.stringify(this.mSimpleToggleLayoutTemplate)}`);
+        Log.showDebug(TAG, `saveSimpleToggleLayout, mSimpleToggleLayoutTemplate: ${JSON.stringify(this.mSimpleToggleLayoutTemplate)}`);
         this.calcSimpleToggleLayout();
     }
 }

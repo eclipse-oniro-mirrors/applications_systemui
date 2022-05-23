@@ -39,7 +39,7 @@ export default struct ControlCenterSimpleToggleAutoRotateComponent {
   }
 
   onAutoRotateDataChange(propName: string): void {
-    Log.showInfo(TAG, `onAutoRotateDataChange, propName: ${propName}`);
+    Log.showDebug(TAG, `onAutoRotateDataChange, propName: ${propName}`);
     this.mIcon = this.mAutoRotateData.switchStatus ? $r("app.media.ic_controlcenter_auto_rotate_on") : $r("app.media.ic_controlcenter_auto_rotate_off");
   }
 
@@ -56,7 +56,7 @@ export default struct ControlCenterSimpleToggleAutoRotateComponent {
   }
 
   mClickEvent() {
-    Log.showInfo(TAG, `mClickEvent, status: ${this.mAutoRotateData.switchStatus}`);
+    Log.showDebug(TAG, `mClickEvent, status: ${this.mAutoRotateData.switchStatus}`);
     let newStatus = !this.mAutoRotateData.switchStatus;
     ViewModel.processAutoRotateSwitchStatusChange(newStatus);
   }

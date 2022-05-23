@@ -55,7 +55,7 @@ export default struct ControlCenterSimpleToggleLocationComponent {
   }
 
   mClickEvent() {
-    Log.showInfo(TAG, `mClickEvent, isEnabled: ${this.mLocationData.isEnabled}`);
+    Log.showDebug(TAG, `mClickEvent, isEnabled: ${this.mLocationData.isEnabled}`);
     if (this.mLocationData.isEnabled) {
       ViewModel.disableLocation();
     } else {
@@ -64,7 +64,7 @@ export default struct ControlCenterSimpleToggleLocationComponent {
   }
 
   mLongClickEvent() {
-    Log.showInfo(TAG, `mLongClickEvent`);
+    Log.showDebug(TAG, `mLongClickEvent`);
     EventManager.publish(obtainStartAbility('com.ohos.settings', 'com.ohos.settings.MainAbility'));
   }
 }

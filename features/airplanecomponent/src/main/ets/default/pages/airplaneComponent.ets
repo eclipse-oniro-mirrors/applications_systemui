@@ -44,15 +44,15 @@ struct airplaneComponent {
     Log.showDebug(TAG, `flyModelStatus：${this.flyModelStatus}`);
     if (this.flyModelStatus == true) {
       this.mWifiOriginalStatus = wifi.isWifiActive();
-      Log.showInfo(TAG, `airplane status is opening, WLAN Original Status ：${this.mWifiOriginalStatus}`);
+      Log.showDebug(TAG, `airplane status is opening, WLAN Original Status ：${this.mWifiOriginalStatus}`);
       wifi.disableWifi();
     }else{
       if(this.mWifiOriginalStatus == true) {
         wifi.enableWifi();
-        Log.showInfo(TAG, `airplane status closed, WLAN Original Status：${this.mWifiOriginalStatus},get system interface, set WLAN status enableWifi`);
+        Log.showDebug(TAG, `airplane status closed, WLAN Original Status：${this.mWifiOriginalStatus},get system interface, set WLAN status enableWifi`);
       } else {
         wifi.disableWifi();
-        Log.showInfo(TAG, `airplane status closed, WLAN Original Status：${this.mWifiOriginalStatus},,get system interface, set WLAN status disableWifi`);
+        Log.showDebug(TAG, `airplane status closed, WLAN Original Status：${this.mWifiOriginalStatus},,get system interface, set WLAN status disableWifi`);
       };
     };
   }

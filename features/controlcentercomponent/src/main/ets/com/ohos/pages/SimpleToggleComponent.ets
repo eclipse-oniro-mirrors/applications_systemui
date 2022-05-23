@@ -39,9 +39,9 @@ export default struct SimpleToggleComponent {
   }
 
   linkItemData() {
-    Log.showInfo(TAG, `linkItemData, keyId: ${this.keyId}`);
+    Log.showDebug(TAG, `linkItemData, keyId: ${this.keyId}`);
     this.mItemData = AppStorage.Link('ControlCenter_' + this.keyId);
-    Log.showInfo(TAG, `linkItemData, mItemData: ${this.keyId} ${this.mItemData.get().label} ${this.mItemData.get().iconUrl}`);
+    Log.showDebug(TAG, `linkItemData, mItemData: ${this.keyId} ${this.mItemData.get().label} ${this.mItemData.get().iconUrl}`);
   }
 
   build() {
@@ -65,14 +65,14 @@ export default struct SimpleToggleComponent {
   }
 
   onIconItemClick() {
-    Log.showInfo(TAG, `onIconItemClick`);
+    Log.showDebug(TAG, `onIconItemClick`);
     if (this.mItemData.get()?.actionData?.clickAction) {
       EventManager.publish(this.mItemData.get().actionData.clickAction);
     };
   }
 
   onIconItemLongPressGesture() {
-    Log.showInfo(TAG, `onIconItemLongPressGesture`);
+    Log.showDebug(TAG, `onIconItemLongPressGesture`);
     if (this.mItemData.get()?.actionData?.longClickAction) {
       EventManager.publish(this.mItemData.get().actionData.longClickAction);
     };

@@ -63,7 +63,7 @@ export default struct ControlCenterComplexToggleBluetoothComponent {
   }
 
   mLongClickEvent() {
-    Log.showInfo(TAG, `mLongClickEvent, BluetoothOpenStatus: ${this.BluetoothOpenStatus}`);
+    Log.showDebug(TAG, `mLongClickEvent, BluetoothOpenStatus: ${this.BluetoothOpenStatus}`);
     EventManager.publish(obtainStartAbility('com.ohos.settings', 'com.ohos.settings.BluetoothAbility'));
   }
 }

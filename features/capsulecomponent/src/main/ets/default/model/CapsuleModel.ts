@@ -27,7 +27,7 @@ export class CapsuleModel {
   mCallback: any;
 
   registerCallback(callback) {
-    Log.showInfo(TAG, 'registerCallback');
+    Log.showDebug(TAG, 'registerCallback');
     this.mCallback = callback;
     if (commonEventSubscriber == null) {
       commonEvent.createSubscriber(
@@ -40,11 +40,11 @@ export class CapsuleModel {
   createCapsuleSubscriberCallBack(err, data) {
     commonEventSubscriber = data;
     commonEvent.subscribe(commonEventSubscriber, (err, data) => {
-      Log.showInfo(TAG, `createCapsuleSubscriberCallBack err: ${JSON.stringify(err)} data: ${JSON.stringify(data)}`);
+      Log.showDebug(TAG, `createCapsuleSubscriberCallBack err: ${err.code}`);
       if (err.code == 0) {
         const processingData = JSON.parse(data.data);
         if (processingData) {
-          Log.showInfo(TAG, `createCapsuleSubscriberCallBack processingData: ${JSON.stringify(processingData)} `);
+          Log.showDebug(TAG, `createCapsuleSubscriberCallBack processingData: ${JSON.stringify(processingData)} `);
           this.mCallback.onStateChange(processingData);
         }
       } else {
@@ -56,7 +56,7 @@ export class CapsuleModel {
   unregisterCallback() {
     if (commonEventSubscriber != null) {
       commonEvent.unsubscribe(commonEventSubscriber, () => {
-        Log.showInfo(TAG, 'Subscriberregister unregister Capsule Status Listener ===============');
+        Log.showDebug(TAG, 'Subscriberregister unregister Capsule Status Listener ===============');
       });
     }
   }

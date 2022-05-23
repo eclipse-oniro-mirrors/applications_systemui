@@ -31,7 +31,7 @@ export class BluetoothService {
   mIsBluetoothOpen: boolean = false;
 
   constructor() {
-    Log.showInfo(TAG, `constructor`);
+    Log.showDebug(TAG, `constructor`);
   }
 
   startService() {
@@ -48,14 +48,14 @@ export class BluetoothService {
         this.mListener?.updateState(this.mIsBluetoothOpen);
       }
     });
-    Log.showInfo(TAG, `startService, mIsBluetoothOpen: ${this.mIsBluetoothOpen}`);
+    Log.showDebug(TAG, `startService, mIsBluetoothOpen: ${this.mIsBluetoothOpen}`);
   }
 
   stopService() {
     if (!this.mIsStart) {
       return;
     }
-    Log.showInfo(TAG, `stopService`);
+    Log.showDebug(TAG, `stopService`);
     this.mIsStart = false;
     bluetooth.off('stateChange');
   }
@@ -63,7 +63,7 @@ export class BluetoothService {
   registerListener(listener: {
     'updateState': Function
   }) {
-    Log.showInfo(TAG, `registerListener, listener: ${listener}`);
+    Log.showDebug(TAG, `registerListener, listener: ${listener}`);
     this.mListener = listener;
     this.mListener.updateState(this.mIsBluetoothOpen);
   }

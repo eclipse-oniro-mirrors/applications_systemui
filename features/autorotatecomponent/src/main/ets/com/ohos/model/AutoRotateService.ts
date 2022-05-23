@@ -29,7 +29,7 @@ export class AutoRotateService {
   registerListener(listener: {
     'updateAutoRotateSwitchStatus': Function,
   }) {
-    Log.showInfo(TAG, `registerListener, listener: ${listener}`);
+    Log.showDebug(TAG, `registerListener, listener: ${listener}`);
     this.mListener = listener;
   }
 
@@ -37,13 +37,13 @@ export class AutoRotateService {
     if (this.mIsStart) {
       return;
     }
-    Log.showInfo(TAG, `startService`);
+    Log.showDebug(TAG, `startService`);
     this.mIsStart = true;
     this.asyncStartService();
   }
 
   async asyncStartService(): Promise<void> {
-    Log.showInfo(TAG, `asyncStartService`);
+    Log.showDebug(TAG, `asyncStartService`);
     this.getOrientation();
     screen.on('change', this.onOrientationChange.bind(this));
   }
@@ -52,31 +52,31 @@ export class AutoRotateService {
     if (!this.mIsStart) {
       return;
     }
-    Log.showInfo(TAG, `stopService`);
+    Log.showDebug(TAG, `stopService`);
     this.mIsStart = false;
     this.asyncStopService();
   }
 
   async asyncStopService(): Promise<void> {
-    Log.showInfo(TAG, `asyncStopService`);
+    Log.showDebug(TAG, `asyncStopService`);
     screen.off('change', (value: number) => {
-      Log.showInfo(TAG, `asyncStopService, off change value: ${value}`);
+      Log.showDebug(TAG, `asyncStopService, off change value: ${value}`);
     });
   }
 
   onOrientationChange(value: number): void{
-    Log.showInfo(TAG, `onOrientationChange, value: ${value}`);
+    Log.showDebug(TAG, `onOrientationChange, value: ${value}`);
     this.getOrientation();
   }
 
   async getOrientation(): Promise<void> {
-    Log.showInfo(TAG, `getOrientation`);
+    Log.showDebug(TAG, `getOrientation`);
     let mScreen = await this.getScreen();
     this.updateAutoRotateSwitchStatus(mScreen.orientation);
   }
 
   async changeSwitch(status: boolean): Promise<void> {
-    Log.showInfo(TAG, `changeSwitch, status: ${status}`);
+    Log.showDebug(TAG, `changeSwitch, status: ${status}`);
     let newOrientation = status ? 5 : 0;
     let mScreen = await this.getScreen();
     let ret = await mScreen.setOrientation(newOrientation);
@@ -93,7 +93,7 @@ export class AutoRotateService {
   }
 
   async getScreen(): Promise<any> {
-    Log.showInfo(TAG, `getScreen`);
+    Log.showDebug(TAG, `getScreen`);
     let screens = await screen.getAllScreen();
     return screens[0];
   }

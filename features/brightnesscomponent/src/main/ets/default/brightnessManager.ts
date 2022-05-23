@@ -31,9 +31,9 @@ export class brightnessManager {
   SLIDER_CHANG_MODE_MOVING = 1;
 
   init(): void{
-    Log.showInfo(TAG, 'init');
+    Log.showDebug(TAG, 'init');
     this.uri = settings.getUriSync(SYSTEMUI_BRIGHTNESS);
-    Log.showInfo(TAG, 'settings geturi of brightness is ' + this.uri);
+    Log.showDebug(TAG, 'settings geturi of brightness is ' + this.uri);
     this.helper = featureAbility.acquireDataAbilityHelper(AbilityManager.getContext(), CommonConstants.URI_VAR);
     this.getValue();
   }
@@ -41,33 +41,33 @@ export class brightnessManager {
   registerBrightness() {
     this.helper.on("dataChange", this.uri, (err) => {
       let data = settings.getValueSync(this.helper, SYSTEMUI_BRIGHTNESS, '100');
-      Log.showInfo(TAG, `after brightness datachange settings getValue ${parseInt(data)}`);
+      Log.showDebug(TAG, `after brightness datachange settings getValue ${parseInt(data)}`);
       mBrightnessValue.set(parseInt(data));
     })
   }
 
   unRegisterBrightness() {
     this.helper.off("dataChange", this.uri, (err) => {
-      Log.showInfo(TAG, `unregister brightness helper`);
+      Log.showDebug(TAG, `unregister brightness helper`);
     })
   }
 
   getValue() {
     Log.showInfo(TAG, 'getValue');
     let data = settings.getValueSync(this.helper, SYSTEMUI_BRIGHTNESS, '100');
-    Log.showInfo(TAG, `settings getValue ${parseInt(data)}`);
+    Log.showDebug(TAG, `settings getValue ${parseInt(data)}`);
     mBrightnessValue.set(parseInt(data));
   }
 
   setValue(callback, sliderChangeMode:number) {
     let value = parseInt(callback.value);
-    Log.showInfo(TAG, `setValue ${value}`);
+    Log.showDebug(TAG, `setValue ${value}`);
     mBrightnessValue.set(value);
     if(sliderChangeMode === this.SLIDER_CHANG_MODE_MOVING){
       Brightness.setValue(callback.value);
     }else{
       settings.setValueSync(this.helper, SYSTEMUI_BRIGHTNESS, callback.value.toString());
-      Log.showInfo(TAG, `settings setValue ${callback.value} end`);
+      Log.showDebug(TAG, `settings setValue ${callback.value} end`);
     }
   }
 }
