@@ -53,7 +53,7 @@ export default struct ControlCenterComponent {
   }
 
   onSimpleToggleLayoutEditStart() {
-    Log.showInfo(TAG, 'onSimpleToggleLayoutEditStart');
+    Log.showDebug(TAG, 'onSimpleToggleLayoutEditStart');
     this.mDisplayingSimpleToggles = ViewModel.getDisplayingSimpleToggles();
     this.mHidingSimpleToggles = ViewModel.getHidingSimpleToggles();
     this.mDefaultDisplaySimpleToggles = ViewModel.getDefaultSimpleToggleLayout();
@@ -61,12 +61,12 @@ export default struct ControlCenterComponent {
   }
 
   onSimpleToggleLayoutEditEnd() {
-    Log.showInfo(TAG, 'onSimpleToggleLayoutEditEnd');
+    Log.showDebug(TAG, 'onSimpleToggleLayoutEditEnd');
     this.setIsEditSimpleToggleLayout(false);
   }
 
   setIsEditSimpleToggleLayout(isEdit: boolean): void {
-    Log.showInfo(TAG, `setIsEditSimpleToggleLayout, isEdit: ${isEdit}`);
+    Log.showDebug(TAG, `setIsEditSimpleToggleLayout, isEdit: ${isEdit}`);
     animateTo({
       duration: 300,
       tempo: 1.0,
@@ -81,14 +81,14 @@ export default struct ControlCenterComponent {
       Log.showInfo(TAG, `setIsEditSimpleToggleLayout, animateTo`);
       this.mIsEditSimpleToggleLayout = isEdit;
     });
-    Log.showInfo(TAG, `this.modeChangeCallback: ${this.modeChangeCallback}`);
+    Log.showDebug(TAG, `this.modeChangeCallback: ${this.modeChangeCallback}`);
     if (this.modeChangeCallback) {
       this.modeChangeCallback(isEdit);
     }
   }
 
   onSaveDisplayingToggles(toggles: string[]): void {
-    Log.showInfo(TAG, `onSaveDisplayingToggles, toggles: ${JSON.stringify(toggles)}`);
+    Log.showDebug(TAG, `onSaveDisplayingToggles, toggles: ${JSON.stringify(toggles)}`);
     ViewModel.saveSimpleToggleLayout(toggles);
   }
 
@@ -213,7 +213,7 @@ struct ControlCenterComplexToggleLayout {
   }
 
   generateRowsTemplate(rowCount) {
-    Log.showInfo(TAG_ControlCenterComplexToggleLayout, `generateRowsTemplate, rowCount: ${rowCount}`);
+    Log.showDebug(TAG_ControlCenterComplexToggleLayout, `generateRowsTemplate, rowCount: ${rowCount}`);
     let rowsTemplate = '1fr';
     for (let i = 1;i < rowCount; i++) {
       rowsTemplate += ' 1fr'

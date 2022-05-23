@@ -54,7 +54,7 @@ export default struct ControlCenterComplexToggleBluetoothComponent {
   }
 
   mClickEvent() {
-    Log.showInfo(TAG, `mClickEvent, BluetoothOpenStatus: ${this.BluetoothOpenStatus}`);
+    Log.showDebug(TAG, `mClickEvent, BluetoothOpenStatus: ${this.BluetoothOpenStatus}`);
     if (this.BluetoothOpenStatus) {
       ViewModel.disableBluetooth();
     } else {

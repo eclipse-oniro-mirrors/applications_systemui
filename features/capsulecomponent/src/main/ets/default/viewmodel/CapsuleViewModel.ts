@@ -64,7 +64,7 @@ export default class CapsuleViewModel {
   }
 
   async onStateChange(data) {
-    Log.showDebug(TAG, `onStateChange, data: ${JSON.stringify(data)}`);
+    Log.showInfo(TAG, `onStateChange, data: ${JSON.stringify(data)}`);
     this.mIsBackground = data.isBackground;
     this.mWantBundleName = data.wantBundleName;
     this.mWantAbilityName = data.wantAbilityName;
@@ -97,7 +97,7 @@ export default class CapsuleViewModel {
       this.mStartTime = 0;
       this.mIsBackground = false;
       this.mText = "";
-      Log.showDebug(TAG, `cannot show`);
+      Log.showInfo(TAG, `cannot show`);
     } else {
       this.mStartTime = 0;
       this.mText  =await ResourceUtil.getString($r("app.string.communicate_by_phone"));

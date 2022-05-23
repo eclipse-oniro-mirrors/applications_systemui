@@ -60,12 +60,12 @@ export class AutoRotateService {
   async asyncStopService(): Promise<void> {
     Log.showDebug(TAG, `asyncStopService`);
     screen.off('change', (value: number) => {
-      Log.showDebug(TAG, `asyncStopService, off change value: ${value}`);
+      Log.showInfo(TAG, `asyncStopService, off change value: ${value}`);
     });
   }
 
   onOrientationChange(value: number): void{
-    Log.showDebug(TAG, `onOrientationChange, value: ${value}`);
+    Log.showInfo(TAG, `onOrientationChange, value: ${value}`);
     this.getOrientation();
   }
 
@@ -80,7 +80,7 @@ export class AutoRotateService {
     let newOrientation = status ? 5 : 0;
     let mScreen = await this.getScreen();
     let ret = await mScreen.setOrientation(newOrientation);
-    Log.showInfo(TAG, `changeSwitch, ret: ${ret}`);
+    Log.showDebug(TAG, `changeSwitch, ret: ${ret}`);
   }
 
   updateAutoRotateSwitchStatus(orientation: number): void{

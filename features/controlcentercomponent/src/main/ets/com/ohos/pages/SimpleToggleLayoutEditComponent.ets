@@ -242,9 +242,9 @@ export default struct SimpleToggleLayoutEditComponent {
   }
 
   onSimpleToggleLayoutEditEnd() {
-    Log.showInfo(TAG, `onSimpleToggleLayoutEditEnd`);
+    Log.showDebug(TAG, `onSimpleToggleLayoutEditEnd`);
     let changed = JSON.stringify(this.mDisplayingToggles) != JSON.stringify(this.mNewDisplayingToggles);
-    Log.showInfo(TAG, `onSimpleToggleLayoutEditEnd, changed: ${changed}`);
+    Log.showDebug(TAG, `onSimpleToggleLayoutEditEnd, changed: ${changed}`);
     if (changed) {
       this.backDialogController.open();
     } else {
@@ -253,29 +253,29 @@ export default struct SimpleToggleLayoutEditComponent {
   }
 
   callSimpleToggleLayoutEditEnd() {
-    Log.showInfo(TAG, `callSimpleToggleLayoutEditEnd`);
+    Log.showDebug(TAG, `callSimpleToggleLayoutEditEnd`);
     if (this.simpleToggleLayoutEditEndCallback) {
       this.simpleToggleLayoutEditEndCallback();
     };
   }
 
   onResetBtnClick(event: ClickEvent) {
-    Log.showInfo(TAG, `onResetBtnClick`);
+    Log.showDebug(TAG, `onResetBtnClick`);
     let equalDefault = JSON.stringify(this.mDefaultDisplayToggles) == JSON.stringify(this.mNewDisplayingToggles);
-    Log.showInfo(TAG, `onResetBtnClick, equalDefault: ${equalDefault}`);
+    Log.showDebug(TAG, `onResetBtnClick, equalDefault: ${equalDefault}`);
     if (!equalDefault) {
       this.resetDialogController.open();
     };
   }
 
   editResetConfirm() {
-    Log.showInfo(TAG, `editResetConfirm`);
+    Log.showDebug(TAG, `editResetConfirm`);
     this.resetData();
     this.callSaveDisplayingToggles();
   }
 
   resetData(): void{
-    Log.showInfo(TAG, `resetData`);
+    Log.showDebug(TAG, `resetData`);
     let tempDisplayingToggles: string[] = [...this.mDefaultDisplayToggles];
     let tempHidingToggles: string[] = [];
     this.mDisplayingToggles.forEach((toggleName) => {
@@ -292,14 +292,14 @@ export default struct SimpleToggleLayoutEditComponent {
     this.mNewHidingToggles = tempHidingToggles;
     this.mDisplayingToggles = [...tempDisplayingToggles];
     this.mHidingToggles = [...tempHidingToggles];
-    Log.showInfo(TAG, `resetData, mNewDisplayingToggles: ${JSON.stringify(this.mNewDisplayingToggles)}`);
-    Log.showInfo(TAG, `resetData, mNewHidingToggles: ${JSON.stringify(this.mNewHidingToggles)}`);
+    Log.showDebug(TAG, `resetData, mNewDisplayingToggles: ${JSON.stringify(this.mNewDisplayingToggles)}`);
+    Log.showDebug(TAG, `resetData, mNewHidingToggles: ${JSON.stringify(this.mNewHidingToggles)}`);
   }
 
   onFinishBtnClick(event: ClickEvent) {
-    Log.showInfo(TAG, `onFinishBtnClick`);
+    Log.showDebug(TAG, `onFinishBtnClick`);
     let changed = JSON.stringify(this.mDisplayingToggles) != JSON.stringify(this.mNewDisplayingToggles);
-    Log.showInfo(TAG, `onFinishBtnClick, changed: ${changed}`);
+    Log.showDebug(TAG, `onFinishBtnClick, changed: ${changed}`);
     if (changed) {
       this.callSaveDisplayingToggles();
     }
@@ -307,31 +307,31 @@ export default struct SimpleToggleLayoutEditComponent {
   }
 
   callSaveDisplayingToggles(): void{
-    Log.showInfo(TAG, `callSaveDisplayingToggles`);
+    Log.showDebug(TAG, `callSaveDisplayingToggles`);
     if (this.onSaveDisplayingToggles) {
       this.onSaveDisplayingToggles(this.mNewDisplayingToggles);
     };
   }
 
   async onDisplayingGridItemDragStart(toggleName: string): Promise<void> {
-    Log.showInfo(TAG, `onDisplayingGridItemDragStart, toggleName: ${toggleName}`);
+    Log.showDebug(TAG, `onDisplayingGridItemDragStart, toggleName: ${toggleName}`);
     this.mCurrentDragToggleName = toggleName;
     this.setOptMsg(toggleName);
   }
 
   async onDisplayingGridItemDrop(status: string): Promise<void> {
-    Log.showInfo(TAG, `onDisplayingGridItemDrop, status: ${status}`);
+    Log.showDebug(TAG, `onDisplayingGridItemDrop, status: ${status}`);
     this.setOptMsg(null);
   }
 
   async onHidingGridItemDragStart(toggleName: string): Promise<void> {
-    Log.showInfo(TAG, `onHidingGridItemDragStart, toggleName: ${toggleName}`);
+    Log.showDebug(TAG, `onHidingGridItemDragStart, toggleName: ${toggleName}`);
     this.mCurrentDragToggleName = toggleName;
     this.setOptMsg(toggleName);
   }
 
   async onHidingGridItemDrop(status: string): Promise<void> {
-    Log.showInfo(TAG, `onHidingGridItemDrop, status: ${status}`);
+    Log.showDebug(TAG, `onHidingGridItemDrop, status: ${status}`);
     this.setOptMsg(null);
   }
 
@@ -357,7 +357,7 @@ export default struct SimpleToggleLayoutEditComponent {
   }
 
   onComponentTouch(event: TouchEvent) {
-    Log.showInfo(TAG, `onComponentTouch`);
+    Log.showDebug(TAG, `onComponentTouch`);
     event.stopPropagation();
   }
 }
@@ -398,7 +398,7 @@ struct SimpleToggleLayoutEditUpTitle {
   }
 
   backClick(event: ClickEvent) {
-    Log.showInfo(TAG_SimpleToggleLayoutEditUpTitle, `backClick, event: ${JSON.stringify(event)}`);
+    Log.showDebug(TAG_SimpleToggleLayoutEditUpTitle, `backClick, event: ${JSON.stringify(event)}`);
     this.simpleToggleLayoutEditEndCallback();
   }
 }

@@ -41,14 +41,14 @@ export class brightnessManager {
   registerBrightness() {
     this.helper.on("dataChange", this.uri, (err) => {
       let data = settings.getValueSync(this.helper, SYSTEMUI_BRIGHTNESS, '100');
-      Log.showDebug(TAG, `after brightness datachange settings getValue ${parseInt(data)}`);
+      Log.showInfo(TAG, `after brightness datachange settings getValue ${parseInt(data)}`);
       mBrightnessValue.set(parseInt(data));
     })
   }
 
   unRegisterBrightness() {
     this.helper.off("dataChange", this.uri, (err) => {
-      Log.showDebug(TAG, `unregister brightness helper`);
+      Log.showInfo(TAG, `unregister brightness helper`);
     })
   }
 

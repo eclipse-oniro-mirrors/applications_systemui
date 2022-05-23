@@ -55,7 +55,7 @@ export class BluetoothService {
     if (!this.mIsStart) {
       return;
     }
-    Log.showDebug(TAG, `stopService`);
+    Log.showInfo(TAG, `stopService`);
     this.mIsStart = false;
     bluetooth.off('stateChange');
   }
@@ -63,7 +63,7 @@ export class BluetoothService {
   registerListener(listener: {
     'updateState': Function
   }) {
-    Log.showDebug(TAG, `registerListener, listener: ${listener}`);
+    Log.showInfo(TAG, `registerListener, listener: ${listener}`);
     this.mListener = listener;
     this.mListener.updateState(this.mIsBluetoothOpen);
   }

@@ -40,7 +40,7 @@ export default struct ClockIcon {
   }
 
   aboutToDisappear() {
-    Log.showInfo(TAG, 'aboutToDisappear');
+    Log.showDebug(TAG, 'aboutToDisappear');
     this.unSubscriber && this.unSubscriber();
     this.unSubscriber = undefined;
   }

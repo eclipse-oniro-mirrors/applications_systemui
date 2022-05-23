@@ -71,7 +71,7 @@ export class ControlCenterService {
         if (this.mIsStart) {
             return;
         }
-        Log.showDebug(TAG, `start ControlCenterService.`);
+        Log.showInfo(TAG, `start ControlCenterService.`);
         this.mIsStart = true;
 
         this.parseConfig(config);
@@ -85,7 +85,7 @@ export class ControlCenterService {
         if (!this.mIsStart) {
             return;
         }
-        Log.showDebug(TAG, `stop ControlCenterService.`);
+        Log.showInfo(TAG, `stop ControlCenterService.`);
         this.mIsStart = false;
         this.mAdapter.clearAll();
     }

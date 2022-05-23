@@ -27,11 +27,11 @@ export class LocationService {
     if (this.mIsStart) {
       return;
     }
-    Log.showDebug(TAG, `startService`);
+    Log.showInfo(TAG, `startService`);
     this.mIsStart = true;
     this.getServiceState();
     geolocation.on('locationServiceState', (state) => {
-      Log.showDebug(TAG, `startService locationChange, state: ${JSON.stringify(state)}`);
+      Log.showInfo(TAG, `startService locationChange, state: ${JSON.stringify(state)}`);
       this.getServiceState();
     });
   }
@@ -40,24 +40,24 @@ export class LocationService {
     if (!this.mIsStart) {
       return;
     };
-    Log.showDebug(TAG, `stopService`);
+    Log.showInfo(TAG, `stopService`);
     this.mIsStart = false;
     geolocation.off('locationServiceState', (state) => {
-      Log.showDebug(TAG, `stopService locationChange, state: ${JSON.stringify(state)}`)
+      Log.showInfo(TAG, `stopService locationChange, state: ${JSON.stringify(state)}`)
     });
   }
 
   registerListener(listener: {
     'updateServiceState': Function,
   }) {
-    Log.showDebug(TAG, `registerListener, listener: ${listener}`);
+    Log.showInfo(TAG, `registerListener, listener: ${listener}`);
     this.mListener = listener;
   }
 
   getServiceState() {
     Log.showDebug(TAG, `getServiceState`);
     geolocation.isLocationEnabled().then((data) => {
-      Log.showDebug(TAG, `getServiceState isLocationEnabled, data: ${JSON.stringify(data)}`);
+      Log.showInfo(TAG, `getServiceState isLocationEnabled, data: ${JSON.stringify(data)}`);
       this.mListener?.updateServiceState(data);
     });
   }
