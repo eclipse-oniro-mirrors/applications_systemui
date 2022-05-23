@@ -13,12 +13,14 @@
  * limitations under the License.
  */
 
-import Constants, {NotificationLayout as Layout} from '../../common/constants';
+import Constants, { NotificationLayout as Layout } from '../../common/constants';
 import Log from '../../../../../../../../../../common/src/main/ets/default/Log';
 import SettingDialog from './settingDialog';
 import ConfirmDialog from './confirmDialog'
 import ViewModel from '../../viewmodel/ViewModel';
+import deviceInfo from '@ohos.deviceInfo';
 
+const deviceTypeInfo = deviceInfo.deviceType;
 const TAG = 'NoticeItem-IconListComponent';
 let iconSize: number = 0;
 
@@ -47,9 +49,9 @@ export default struct IconListComponent {
       action: () => this.confirmDialogController.open()
     }),
     autoCancel: false,
-    alignment:DialogAlignment.Bottom,
+    alignment: deviceTypeInfo === 'phone' ? DialogAlignment.Bottom : DialogAlignment.Default,
     offset: { dx: 0, dy: $r('app.float.setting_dialog_dy') },
-    customStyle:true
+    customStyle: true
   });
   private confirmDialogController: CustomDialogController = new CustomDialogController({
     builder: ConfirmDialog({
@@ -58,9 +60,9 @@ export default struct IconListComponent {
       action: () => ViewModel.enableNotification(this.itemData, false)
     }),
     autoCancel: false,
-    alignment:DialogAlignment.Bottom,
+    alignment: deviceTypeInfo === 'phone' ? DialogAlignment.Bottom : DialogAlignment.Default,
     offset: { dx: 0, dy: $r('app.float.confirm_dialog_dy') },
-    customStyle:true
+    customStyle: true
   });
   private iconConfigs: IconData[] = [
     {

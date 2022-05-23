@@ -63,7 +63,7 @@ export default struct GroupItem {
             .width(Constants.FULL_CONTAINER_WIDTH)
 
             if (this.toExpand) {
-              Row().height(1).width('100%')
+              Row().height($r("app.float.notice_divider")).width('100%')
             }
             Row() {
               ContentList({ groupData: this.groupData, toExpand: this.toExpand })

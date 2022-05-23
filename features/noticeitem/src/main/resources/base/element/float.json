@@ -219,6 +219,10 @@
     {
       "name": "notice_image_boderRadius",
       "value": "0"
+    },
+    {
+      "name": "notice_divider",
+      "value": "1vp"
     }
   ]
 }
