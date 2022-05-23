@@ -48,7 +48,7 @@ export class BluetoothService {
         this.mListener?.updateState(this.mIsBluetoothOpen);
       }
     });
-    Log.showDebug(TAG, `startService, mIsBluetoothOpen: ${this.mIsBluetoothOpen}`);
+    Log.showInfo(TAG, `startService, mIsBluetoothOpen: ${this.mIsBluetoothOpen}`);
   }
 
   stopService() {

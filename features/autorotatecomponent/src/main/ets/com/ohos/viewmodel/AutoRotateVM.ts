@@ -38,7 +38,7 @@ export class AutoRotateVM {
   }
 
   updateAutoRotateSwitchStatus(status: boolean): void{
-    Log.showDebug(TAG, `updateAutoRotateSwitchStatus, status: ${status}`);
+    Log.showInfo(TAG, `updateAutoRotateSwitchStatus, status: ${status}`);
     this.mAutoRotateData.switchStatus = status;
   }
 

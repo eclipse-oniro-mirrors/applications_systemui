@@ -29,7 +29,7 @@ export class AutoRotateService {
   registerListener(listener: {
     'updateAutoRotateSwitchStatus': Function,
   }) {
-    Log.showDebug(TAG, `registerListener, listener: ${listener}`);
+    Log.showInfo(TAG, `registerListener, listener: ${listener}`);
     this.mListener = listener;
   }
 
@@ -37,13 +37,13 @@ export class AutoRotateService {
     if (this.mIsStart) {
       return;
     }
-    Log.showDebug(TAG, `startService`);
+    Log.showInfo(TAG, `startService`);
     this.mIsStart = true;
     this.asyncStartService();
   }
 
   async asyncStartService(): Promise<void> {
-    Log.showDebug(TAG, `asyncStartService`);
+    Log.showInfo(TAG, `asyncStartService`);
     this.getOrientation();
     screen.on('change', this.onOrientationChange.bind(this));
   }
@@ -52,13 +52,13 @@ export class AutoRotateService {
     if (!this.mIsStart) {
       return;
     }
-    Log.showDebug(TAG, `stopService`);
+    Log.showInfo(TAG, `stopService`);
     this.mIsStart = false;
     this.asyncStopService();
   }
 
   async asyncStopService(): Promise<void> {
-    Log.showDebug(TAG, `asyncStopService`);
+    Log.showInfo(TAG, `asyncStopService`);
     screen.off('change', (value: number) => {
       Log.showInfo(TAG, `asyncStopService, off change value: ${value}`);
     });
@@ -84,7 +84,7 @@ export class AutoRotateService {
   }
 
   updateAutoRotateSwitchStatus(orientation: number): void{
-    Log.showDebug(TAG, `updateAutoRotateSwitchStatus, orientation: ${orientation}`);
+    Log.showInfo(TAG, `updateAutoRotateSwitchStatus, orientation: ${orientation}`);
     if (orientation == 0) {
       this.mListener?.updateAutoRotateSwitchStatus(false);
     } else if (orientation == 5) {

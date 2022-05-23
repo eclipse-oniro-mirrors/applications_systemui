@@ -55,19 +55,19 @@ export class brightnessManager {
   getValue() {
     Log.showInfo(TAG, 'getValue');
     let data = settings.getValueSync(this.helper, SYSTEMUI_BRIGHTNESS, '100');
-    Log.showDebug(TAG, `settings getValue ${parseInt(data)}`);
+    Log.showInfo(TAG, `settings getValue ${parseInt(data)}`);
     mBrightnessValue.set(parseInt(data));
   }
 
   setValue(callback, sliderChangeMode:number) {
     let value = parseInt(callback.value);
-    Log.showDebug(TAG, `setValue ${value}`);
+    Log.showInfo(TAG, `setValue ${value}`);
     mBrightnessValue.set(value);
     if(sliderChangeMode === this.SLIDER_CHANG_MODE_MOVING){
       Brightness.setValue(callback.value);
     }else{
       settings.setValueSync(this.helper, SYSTEMUI_BRIGHTNESS, callback.value.toString());
-      Log.showDebug(TAG, `settings setValue ${callback.value} end`);
+      Log.showInfo(TAG, `settings setValue ${callback.value} end`);
     }
   }
 }
