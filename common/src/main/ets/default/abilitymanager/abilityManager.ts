@@ -32,12 +32,12 @@ export default class AbilityManager {
   static ABILITY_NAME_OWNER_WANT = 'Owner_Want';
 
   static setContext(abilityName: string, context) {
-    Log.showInfo(TAG, `setContext, abilityName: ${abilityName}`);
+    Log.showDebug(TAG, `setContext, abilityName: ${abilityName}`);
     globalThis[abilityName + '_Context'] = context;
   }
 
   static getContext(abilityName?: string) {
-    Log.showInfo(TAG, `getContext, abilityName: ${abilityName}`);
+    Log.showDebug(TAG, `getContext, abilityName: ${abilityName}`);
     if (!abilityName) {
       abilityName = AbilityManager.ABILITY_NAME_ENTRY;
     }
@@ -45,17 +45,17 @@ export default class AbilityManager {
   }
 
   static setAbilityData(abilityName, key, data) {
-    Log.showInfo(TAG, `setAbilityData, abilityName: ${abilityName} key: ${key} data: ${JSON.stringify(data)}`);
+    Log.showDebug(TAG, `setAbilityData, abilityName: ${abilityName} key: ${key} data: ${JSON.stringify(data)}`);
     globalThis[abilityName + '_data_' + key] = data;
   }
 
   static getAbilityData(abilityName, key) {
-    Log.showInfo(TAG, `getAbilityData, abilityName: ${abilityName} key: ${key} `);
+    Log.showDebug(TAG, `getAbilityData, abilityName: ${abilityName} key: ${key} `);
     return globalThis[abilityName + '_data_' + key];
   }
 
   static startAbility(want, callback?: Function) {
-    Log.showInfo(TAG, `startAbility, want: ${JSON.stringify(want)}`);
+    Log.showDebug(TAG, `startAbility, want: ${JSON.stringify(want)}`);
     let context = AbilityManager.getContext();
     context.startAbility(want).then(() => {
       Log.showInfo(TAG, `startAbility, then`);
@@ -63,7 +63,7 @@ export default class AbilityManager {
         callback(null);
       }
     }).catch((error) => {
-      Log.showInfo(TAG, `startAbility, error: ${JSON.stringify(error)}`);
+      Log.showError(TAG, `startAbility, error: ${JSON.stringify(error)}`);
       callback(error);
     })
   }

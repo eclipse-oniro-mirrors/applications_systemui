@@ -20,29 +20,6 @@ import Log from '../../../../../../../common/src/main/ets/default/log'
 const TAG = "volume_AbilityStage"
 export default class MainAbilityStage extends AbilityStage {
     async onCreate() {
-        Log.showInfo(TAG, "onCreate")
-//        let configInfo = AbilityManager.getAbilityData(AbilityManager.ABILITY_NAME_VOLUME_PANEL, 'dis')
-//        let volumeRect;
-//        if (configInfo.width > configInfo.height) { // Pad、PC Mode
-//            const realWidth = 48;
-//            const realHeight = 284;
-//            volumeRect = {
-//                left: configInfo.width - vp2px(16) - vp2px(realWidth),
-//                top: (configInfo.height - vp2px(realHeight) ) / 2,
-//                width: vp2px(realWidth) ,
-//                height: vp2px(realHeight)
-//            }
-//        } else { // Phone Mode
-//            const realWidth = 96;
-//            const realHeight = 568;
-//            volumeRect = {
-//                left: configInfo.width - vp2px(32) - vp2px(realWidth),
-//                top: configInfo.height * 0.1,
-//                width: vp2px(realWidth) ,
-//                height: vp2px(realHeight)
-//            }
-//        }
-//        AbilityManager.setAbilityData(AbilityManager.ABILITY_NAME_VOLUME_PANEL, 'rect', volumeRect)
-//        WindowManager.resetSizeWindow(WindowType.VOLUME_PANEL, volumeRect);
+        Log.showDebug(TAG, "onCreate")
     }
 }

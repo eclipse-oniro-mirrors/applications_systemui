@@ -25,7 +25,7 @@ const TAG = 'NotificationManagement-NotificationManagenmentViewModel'
 export default class NotificationManagenmentViewModel extends NoDisturbComponentViewModel {
   isPhone = false;
   ViewModelInit(): void{
-    Log.showInfo(TAG, 'ViewModelInit');
+    Log.showDebug(TAG, 'ViewModelInit');
     super.ViewModelInit();
     this.MigrateTo();
     this.judgeDeviceType();
@@ -36,16 +36,16 @@ export default class NotificationManagenmentViewModel extends NoDisturbComponent
   }
 
   MigrateTo() {
-    Log.showInfo(TAG, 'MigrateTo');
+    Log.showDebug(TAG, 'MigrateTo');
     //get the want
     let want = globalThis[AbilityManager.ABILITY_NAME_NOTIFICATION_MANAGEMENT + '_want'];
-    Log.showInfo(TAG, `aboutToAppear want:${JSON.stringify(want)}`)
+    Log.showDebug(TAG, `aboutToAppear want:${JSON.stringify(want)}`)
     if (!want || !want.parameters.migrateUri || !want.parameters.migrateBundle) {
       return;
     }
     let migrateUri = want.parameters.migrateUri;
     let bundleName = want.parameters.migrateBundle;
-    Log.showInfo(TAG, `aboutToAppear migrateUri:${migrateUri} migrateBundle:${JSON.stringify(bundleName)}`)
+    Log.showDebug(TAG, `aboutToAppear migrateUri:${migrateUri} migrateBundle:${JSON.stringify(bundleName)}`)
 
     let dataModel: BundleResourceModel = new BundleResourceModel()
     dataModel.getBundleInfo(bundleName, (bundleInfo) => {
@@ -60,9 +60,9 @@ export default class NotificationManagenmentViewModel extends NoDisturbComponent
   }
 
   judgeDeviceType(){
-    Log.showInfo(TAG, "judgeDeviceType");
+    Log.showDebug(TAG, "judgeDeviceType");
     let configInfo = AbilityManager.getAbilityData(AbilityManager.ABILITY_NAME_APP_LIST, 'dis');
-    Log.showInfo(TAG, `judgeDeviceType, configInfo: ${configInfo} `);
+    Log.showDebug(TAG, `judgeDeviceType, configInfo: ${configInfo} `);
     if (configInfo.width < configInfo.height) {
       this.isPhone = true;
     }

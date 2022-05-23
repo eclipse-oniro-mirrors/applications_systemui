@@ -60,13 +60,13 @@ class WindowManager {
   mWindowInfos: Map<WindowType, WindowInfo> = new Map();
 
   async createWindow(context: any, name: WindowType, rect: Rect, loadContent: string): Promise<WindowHandle> {
-    Log.showInfo(TAG, `createWindow name: ${name}, rect: ${JSON.stringify(rect)}, url: ${loadContent}`);
+    Log.showDebug(TAG, `createWindow name: ${name}, rect: ${JSON.stringify(rect)}, url: ${loadContent}`);
     let winHandle = await Window.create(context, name, SYSTEM_WINDOW_TYPE_MAP[name]);
     await winHandle.moveTo(rect.left, rect.top);
     await winHandle.resetSize(rect.width, rect.height);
     await winHandle.loadContent(loadContent);
     this.mWindowInfos.set(name, { visibility: false, rect });
-    Log.showInfo(TAG, `create window[${name}] success.`);
+    Log.showDebug(TAG, `create window[${name}] success.`);
     return winHandle;
   }
 
@@ -81,7 +81,7 @@ class WindowManager {
         rect,
       })
     );
-    Log.showInfo(TAG, `resize window[${name}] success, rect: ${JSON.stringify(rect)}.`);
+    Log.showDebug(TAG, `resize window[${name}] success, rect: ${JSON.stringify(rect)}.`);
   }
 
   async showWindow(name: WindowType): Promise<void> {
@@ -94,7 +94,7 @@ class WindowManager {
         isShow: true,
       })
     );
-    Log.showInfo(TAG, `show window[${name}] success.`);
+    Log.showDebug(TAG, `show window[${name}] success.`);
   }
 
   async hideWindow(name: WindowType): Promise<void> {
@@ -107,7 +107,7 @@ class WindowManager {
         isShow: false,
       })
     );
-    Log.showInfo(TAG, `hide window[${name}] success.`);
+    Log.showDebug(TAG, `hide window[${name}] success.`);
   }
 
   getWindowInfo(name: WindowType): WindowInfo | undefined {

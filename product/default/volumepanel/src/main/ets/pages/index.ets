@@ -28,7 +28,7 @@ const TAG = 'VolumePanel-Index'
 @Component
 struct Index {
   aboutToAppear() {
-    Log.showInfo(TAG, `aboutToAppear Start`)
+    Log.showDebug(TAG, `aboutToAppear Start`)
     let configInfo = AbilityManager.getAbilityData(AbilityManager.ABILITY_NAME_VOLUME_PANEL, 'dis')
     let volumeRect;
     if (configInfo.width > configInfo.height) { // Pad、PC Mode
@@ -55,14 +55,14 @@ struct Index {
 
     setAppBgColor('#00000000')
     CommonStyleManager.setAbilityPageName(TAG)
-    Log.showInfo(TAG, `configInfo Start, configInfo ${JSON.stringify(configInfo)}`);
+    Log.showDebug(TAG, `configInfo Start, configInfo ${JSON.stringify(configInfo)}`);
     if (configInfo.width > configInfo.height) { // Pad、PC Mode
       StyleManager.setStyle()
     }
   }
 
   aboutToDisappear() {
-    Log.showInfo(TAG, `aboutToDisAppear`)
+    Log.showDebug(TAG, `aboutToDisAppear`)
   }
 
   build() {

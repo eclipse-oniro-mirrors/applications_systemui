@@ -51,7 +51,7 @@ export default class PluginDataSourceManager {
     }
 
     initDataSource(configs: RootConfigInfo) {
-        Log.showInfo(TAG, `initDataSource, configs: ${JSON.stringify(configs)}`);
+        Log.showDebug(TAG, `initDataSource, configs: ${JSON.stringify(configs)}`);
         this.mAction = configs.action;
         configs.filterDatas.forEach((data: FilterData) => this.mFilterDatas.set(data.abilityName, data.id));
         for (let pluginType in configs.loaderConfig) {
@@ -61,14 +61,14 @@ export default class PluginDataSourceManager {
                 Log.showInfo(TAG, `getSourceLoader plugin: ${pluginType}, loader${this.mLoaders.get(pluginType)}`);
             }
         }
-        Log.showInfo(TAG, `action:${this.mAction}, filterData: ${JSON.stringify(this.mFilterDatas)}`);
+        Log.showDebug(TAG, `action:${this.mAction}, filterData: ${JSON.stringify(this.mFilterDatas)}`);
         registerBundleListener(this, (handle) => {
             this.mListenerHandle = handle;
         });
     }
 
     async onBundleNotify(bundleName: string, event: BundleEventType) {
-        Log.showInfo(TAG, `onBundleNotify, bundleName: ${bundleName}, event: ${event}`);
+        Log.showDebug(TAG, `onBundleNotify, bundleName: ${bundleName}, event: ${event}`);
         if (event == BundleEventType.BUNDLE_CHANGE || event == BundleEventType.BUNDLE_REMOVE) {
             this.mLoaders.forEach((loader) => loader.onBundleRemove(bundleName));
         }
@@ -80,29 +80,28 @@ export default class PluginDataSourceManager {
     }
 
     clearAll() {
-        Log.showInfo(TAG, `clearAll`);
+        Log.showDebug(TAG, `clearAll`);
         this.unregisterListener();
         this.mLoaders.forEach((sourceLoader) => sourceLoader.clearData());
     }
 
     async loadData(userId: number) {
-        Log.showInfo(TAG, `loadData, userId: ${userId}`);
-        Log.showInfo(TAG, `loadData, this.mUserId: ${this.mUserId}`);
+        Log.showDebug(TAG, `loadData, userId: ${userId}, this.mUserId: ${this.mUserId}`);
         if (this.mUserId != userId) {
             this.mUserId = userId;
             this.mLoaders.forEach((sourceLoader) => sourceLoader.clearData());
             let abilityInfos = await queryAbility(this.mAction, this.mUserId);
-            Log.showInfo(TAG, `loadData, abilityInfos: ${JSON.stringify(abilityInfos)}`);
+            Log.showDebug(TAG, `loadData, abilityInfos: ${JSON.stringify(abilityInfos)}`);
             abilityInfos.forEach((info) => this.notifyAbilityAdd(info));
         }
         this.mLoaders.forEach((sourceLoader) => sourceLoader.reloadData(this.mUserId));
     }
 
     private notifyAbilityAdd(info: AbilityInfo | ExtensionAbilityInfo) {
-        Log.showInfo(TAG, `notifyAbilityAdd, info: ${JSON.stringify(info)}`);
+        Log.showDebug(TAG, `notifyAbilityAdd, info: ${JSON.stringify(info)}`);
         let itemId = this.mFilterDatas.get(info.name);
         if (!itemId) {
-            Log.showInfo(TAG, `notifyAbilityAdd, can't find itemId, ability:${info.name}`);
+            Log.showError(TAG, `notifyAbilityAdd, can't find itemId, ability:${info.name}`);
             return;
         }
         let abilityInfo: AbilityInfoWithId = {
@@ -110,7 +109,7 @@ export default class PluginDataSourceManager {
             itemId: itemId,
         };
         if ((!abilityInfo.metaData || !abilityInfo.metaData.length) && (!abilityInfo.metadata || !abilityInfo.metadata.length) ) {
-            Log.showInfo(TAG, `Can't find metadata, abilityId: ${abilityInfo.name}`);
+            Log.showError(TAG, `Can't find metadata, abilityId: ${abilityInfo.name}`);
             return;
         }
         this.mLoaders.forEach((loader) => loader.onAbilityAdd(abilityInfo));

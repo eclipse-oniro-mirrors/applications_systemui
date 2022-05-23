@@ -46,7 +46,7 @@ var notificationPanelWant = {
 
 class ServiceExtAbility extends ServiceExtension {
     onCreate(want) {
-        Log.showInfo(TAG, `onCreate, want: ${JSON.stringify(want)}`)
+        Log.showDebug(TAG, `onCreate, want: ${JSON.stringify(want)}`)
         initSystemUi(this.context);
         AbilityManager.setContext(AbilityManager.ABILITY_NAME_ENTRY, this.context)
         AbilityManager.startAbility(statusBarWant)
@@ -57,7 +57,7 @@ class ServiceExtAbility extends ServiceExtension {
     }
 
     onDestroy() {
-        Log.showInfo(TAG, 'onDestroy')
+        Log.showDebug(TAG, 'onDestroy')
     }
 }
 

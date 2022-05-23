@@ -21,7 +21,7 @@ const TAG = "NotificationManagement-MainAbility"
 
 export default class MainAbility extends Ability {
   onCreate(want, launchParam) {
-    Log.showInfo(TAG, "MainAbility onCreate")
+    Log.showDebug(TAG, "MainAbility onCreate")
     globalThis[AbilityManager.ABILITY_NAME_NOTIFICATION_MANAGEMENT + '_want'] = want;
     display.getDefaultDisplay().then((dis) => {
       AbilityManager.setAbilityData(AbilityManager.ABILITY_NAME_APP_LIST, "dis", {
@@ -32,24 +32,24 @@ export default class MainAbility extends Ability {
   }
 
   onDestroy() {
-    Log.showInfo(TAG, "MainAbility onDestroy")
+    Log.showDebug(TAG, "MainAbility onDestroy")
   }
 
   onWindowStageCreate(windowStage) {
-    Log.showInfo(TAG, "MainAbility onWindowStageCreate")
+    Log.showDebug(TAG, "MainAbility onWindowStageCreate")
     AbilityManager.setContext(AbilityManager.ABILITY_NAME_NOTIFICATION_MANAGEMENT, this.context)
     windowStage.setUIContent(this.context, "pages/notificationManagenment", null)
   }
 
   onWindowStageDestroy() {
-    Log.showInfo(TAG, "MainAbility onWindowStageDestroy")
+    Log.showDebug(TAG, "MainAbility onWindowStageDestroy")
   }
 
   onForeground() {
-    Log.showInfo(TAG, "MainAbility onForeground")
+    Log.showDebug(TAG, "MainAbility onForeground")
   }
 
   onBackground() {
-    Log.showInfo(TAG, "MainAbility onBackground")
+    Log.showDebug(TAG, "MainAbility onBackground")
   }
 };

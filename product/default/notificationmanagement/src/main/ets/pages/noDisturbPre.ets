@@ -56,7 +56,7 @@ export default struct notificationManagenment {
             }
             .align(Alignment.Start)
             .onClick(() => {
-              Log.showInfo(TAG, `NoDisturbComponent on click`)
+              Log.showDebug(TAG, `NoDisturbComponent on click`)
               Router.push({ uri: 'pages/noDisturb' });
             }).width(ConfigData.WH_100_100)
             .backgroundColor(Color.White)
@@ -84,19 +84,19 @@ export default struct notificationManagenment {
   }
 
   aboutToAppear(): void{
-    Log.showInfo(TAG, `aboutToAppear`)
+    Log.showDebug(TAG, `aboutToAppear`)
   }
 
   aboutToDisappear(): void{
-    Log.showInfo(TAG, `aboutToDisappear`)
+    Log.showDebug(TAG, `aboutToDisappear`)
   }
 
   onPageShow(): void{
-    Log.showInfo(TAG, `onPageShow`)
+    Log.showDebug(TAG, `onPageShow`)
     this.refreshRequest++;
   }
 
   onBackPress() {
-    Log.showInfo(TAG, `onBackPress`)
+    Log.showDebug(TAG, `onBackPress`)
   }
 }

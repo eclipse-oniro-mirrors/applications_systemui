@@ -24,11 +24,11 @@ export default struct Control {
   private modeChangeCallback: Function
 
   aboutToAppear() {
-    Log.showInfo(TAG, `aboutToAppear Start`)
+    Log.showDebug(TAG, `aboutToAppear Start`)
   }
 
   aboutToDisappear() {
-    Log.showInfo(TAG, `aboutToDisAppear`)
+    Log.showDebug(TAG, `aboutToDisAppear`)
   }
 
   build() {

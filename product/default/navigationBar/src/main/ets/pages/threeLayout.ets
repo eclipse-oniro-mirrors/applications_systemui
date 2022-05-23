@@ -38,11 +38,11 @@ struct threeLayout {
   @StorageLink('minNavHeight') minNavHeight:number = 32
   @StorageLink("showNavHorizontal") showNavHorizontal: boolean = AppStorage.SetAndLink("showNavHorizontal", false).get();
   aboutToAppear() {
-    Log.showInfo(TAG, `aboutToAppear Start`)
+    Log.showDebug(TAG, `aboutToAppear Start`)
   }
 
   aboutToDisappear(){
-    Log.showInfo(TAG, `aboutToDisAppear`)
+    Log.showDebug(TAG, `aboutToDisAppear`)
   }
 
   build() {

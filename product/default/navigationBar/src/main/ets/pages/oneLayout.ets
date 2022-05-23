@@ -29,11 +29,11 @@ export default struct oneLayout {
   @StorageLink('minNavHeight') minNavHeight:number = 32
 
   aboutToAppear() {
-    Log.showInfo(TAG, `aboutToAppear Start`)
+    Log.showDebug(TAG, `aboutToAppear Start`)
   }
 
   aboutToDisappear(){
-    Log.showInfo(TAG, `aboutToDisAppear`)
+    Log.showDebug(TAG, `aboutToDisAppear`)
   }
 
   build() {

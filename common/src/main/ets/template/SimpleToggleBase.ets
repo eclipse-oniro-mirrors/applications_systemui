@@ -39,13 +39,11 @@ export default struct SimpleToggleBase {
   @State style: any = StyleConfiguration.getSimpleToggleBaseStyle()
 
   aboutToAppear() {
-    Log.showInfo(TAG, `aboutToAppear, mToggleId: ${this.mToggleId}`)
-    Log.showInfo(TAG, `aboutToAppear, mLabel: ${JSON.stringify(this.mLabel)}`)
-    Log.showInfo(TAG, `aboutToAppear, mEditMode: ${this.mEditMode} mDragMode: ${this.mDragMode}`)
+    Log.showDebug(TAG, `aboutToAppear, mToggleId: ${this.mToggleId}, mLabel: ${JSON.stringify(this.mLabel)}, mEditMode: ${this.mEditMode} mDragMode: ${this.mDragMode} `)
   }
 
   aboutToDisappear() {
-    Log.showInfo(TAG, 'aboutToDisappear')
+    Log.showDebug(TAG, 'aboutToDisappear')
   }
 
   build() {
@@ -112,7 +110,7 @@ export default struct SimpleToggleBase {
     if (this.mDragMode) {
       return
     }
-    Log.showInfo(TAG, `onIconItemClick`)
+    Log.showDebug(TAG, `onIconItemClick`)
     if (this.mClickEvent) {
       this.mClickEvent()
     }
@@ -122,7 +120,7 @@ export default struct SimpleToggleBase {
     if (this.mEditMode || this.mDragMode) {
       return
     }
-    Log.showInfo(TAG, `onIconItemLongPressGesture, event: ${JSON.stringify(event)}`)
+    Log.showDebug(TAG, `onIconItemLongPressGesture, event: ${JSON.stringify(event)}`)
     if (this.mLongClickEvent) {
       this.mLongClickEvent()
     }

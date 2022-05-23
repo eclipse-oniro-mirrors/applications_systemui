@@ -32,7 +32,7 @@ export default class SourceLoaderFactory {
     mChannel: LoaderChannel;
 
     constructor(channel: LoaderChannel) {
-        Log.showInfo(TAG, `constructor, channel: ${channel}`);
+        Log.showDebug(TAG, `constructor, channel: ${channel}`);
         this.mChannel = channel;
     }
 

@@ -54,7 +54,7 @@ export default class TintStateManager {
     }
 
     constructor() {
-        Log.showInfo(TAG, `init TintStateManager. ${LISTENER_SYSTEM_BAR_TINT_CHANGE}`);
+        Log.showDebug(TAG, `init TintStateManager. ${LISTENER_SYSTEM_BAR_TINT_CHANGE}`);
         Window.on(LISTENER_SYSTEM_BAR_TINT_CHANGE, this.onSystemBarTintChange.bind(this));
     }
 
@@ -62,27 +62,27 @@ export default class TintStateManager {
         let tintState = this.mStates.get(windowType);
         tintState && listener.onTintStateChange(tintState);
         let res = this.mListeners.set(windowType, listener);
-        Log.showInfo(TAG, `registser listenerSize: ${res.size}`);
+        Log.showDebug(TAG, `registser listenerSize: ${res.size}`);
     }
 
     unregisterListener(windowType: WindowType) {
         let res = this.mListeners.delete(windowType);
-        Log.showInfo(TAG, `unregistser ${windowType}, res: ${res}`);
+        Log.showDebug(TAG, `unregistser ${windowType}, res: ${res}`);
     }
 
     async onSystemBarTintChange(data) {
-        Log.showInfo(TAG, `onSystemBarTintChange, data: ${JSON.stringify(data)}`);
+        Log.showDebug(TAG, `onSystemBarTintChange, data: ${JSON.stringify(data)}`);
         if (!Array.isArray(data.regionTint)) {
-            Log.showInfo(TAG, `regionTint is not array.`);
+            Log.showDebug(TAG, `regionTint is not array.`);
             return;
         }
         let dis = await display.getDefaultDisplay();
         if (dis.id != data.displayId) {
-            Log.showInfo(TAG, `Needn't change, displayId: ${data.displayId}`);
+            Log.showDebug(TAG, `Needn't change, displayId: ${data.displayId}`);
             return;
         }
         data.regionTint.forEach((regionTintData) => {
-            Log.showInfo(TAG, `onSystemBarTintChange, type: ${WindowNameMap[regionTintData["type"]]}`);
+            Log.showDebug(TAG, `onSystemBarTintChange, type: ${WindowNameMap[regionTintData["type"]]}`);
             let windowType = WindowNameMap[regionTintData["type"]];
             if (!windowType) {
                 return;
@@ -93,7 +93,7 @@ export default class TintStateManager {
                 backgroundColor: regionTintData.backgroundColor,
                 contentColor: regionTintData.contentColor,
             };
-            Log.showInfo(TAG, `tintState: ${JSON.stringify(tintState)}`);
+            Log.showDebug(TAG, `tintState: ${JSON.stringify(tintState)}`);
             this.mStates.set(windowType, tintState);
             this.mListeners.get(windowType)?.onTintStateChange(tintState);
         });

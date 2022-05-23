@@ -48,7 +48,7 @@ export default struct Notification {
   @StorageLink('notificationList') notificationList: any[] = []
 
   aboutToAppear() {
-    Log.showInfo(TAG, `aboutToAppear Start`)
+    Log.showDebug(TAG, `aboutToAppear Start`)
   }
 
   build() {
@@ -114,7 +114,7 @@ export default struct Notification {
   }
 
   CenterTitleTouchMoveCallback(data) {
-    Log.showInfo(TAG, `CenterTitleTouchMoveCallback, data: ${JSON.stringify(data)}`)
+    Log.showDebug(TAG, `CenterTitleTouchMoveCallback, data: ${JSON.stringify(data)}`)
     data['touchComponent'] = 'notification'
     if (this.touchMoveCallback) {
       this.touchMoveCallback(data)
@@ -158,7 +158,7 @@ struct CenterTitle {
   unSubscriber?: unsubscribe;
 
   aboutToAppear() {
-    Log.showInfo(TAG, `CenterTitle, aboutToAppear`)
+    Log.showDebug(TAG, `CenterTitle, aboutToAppear`)
     this.unSubscriber = EventManager.subscribe(TIME_CHANGE_EVENT, (args: TimeEventArgs) => {
       this.updateTimeString(args.date)
     });
@@ -166,7 +166,7 @@ struct CenterTitle {
   }
 
   aboutToDisappear() {
-    Log.showInfo(TAG, 'CenterTitle aboutToDisappear');
+    Log.showDebug(TAG, 'CenterTitle aboutToDisappear');
     this.unSubscriber && this.unSubscriber();
     this.unSubscriber = undefined;
   }
@@ -204,7 +204,7 @@ struct CenterTitle {
   }
 
   settingClick() {
-    Log.showInfo(TAG, ` settingClick `)
+    Log.showDebug(TAG, ` settingClick `)
     EventManager.publish(obtainStartAbility('com.ohos.systemui', 'com.ohos.systemui.notificationmanagement.MainAbility'))
   }
 

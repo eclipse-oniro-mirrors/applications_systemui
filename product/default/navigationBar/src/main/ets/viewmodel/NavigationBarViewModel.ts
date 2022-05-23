@@ -54,7 +54,7 @@ export default class NavigationBarViewModel {
   }
 
   install?() {
-    Log.showInfo(TAG, `install, useCount: ${this.mUseCount}`);
+    Log.showDebug(TAG, `install, useCount: ${this.mUseCount}`);
     if (!this.mUseCount) {
       TintStateManager.getInstance().registerListener('navigation', this as TintStateListener);
     }
@@ -62,7 +62,7 @@ export default class NavigationBarViewModel {
   }
 
   uninstall?() {
-    Log.showInfo(TAG, `uninstall, useCount: ${this.mUseCount}`);
+    Log.showDebug(TAG, `uninstall, useCount: ${this.mUseCount}`);
     this.mUseCount--;
     if (this.mUseCount) {
       TintStateManager.getInstance().unregisterListener('navigation');
@@ -70,12 +70,12 @@ export default class NavigationBarViewModel {
   }
 
   getNavigationBarComponentData?(): NavigationBarComponentData {
-    Log.showInfo(TAG, `getNavigationBarComponentData`)
+    Log.showDebug(TAG, `getNavigationBarComponentData`)
     return this.mNavigationBarComponentData;
   }
 
   onTintStateChange?(tintState: TintState) {
-    Log.showInfo(TAG, `onTintStateChange, tintState: ${JSON.stringify(tintState)}`)
+    Log.showDebug(TAG, `onTintStateChange, tintState: ${JSON.stringify(tintState)}`)
     if (typeof (tintState.isEnable) == 'boolean') {
       this.setWindowEnable(tintState.isEnable);
     }
@@ -85,12 +85,11 @@ export default class NavigationBarViewModel {
     if (tintState.contentColor) {
       this.mNavigationBarComponentData.contentColor = tintState.contentColor;
     }
-    Log.showInfo(TAG, `onTintStateChange, backgroundColor ${this.mNavigationBarComponentData.backgroundColor}`);
-    Log.showInfo(TAG, `onTintStateChange, contentColor ${this.mNavigationBarComponentData.contentColor}`);
+    Log.showDebug(TAG, `onTintStateChange, backgroundColor ${this.mNavigationBarComponentData.backgroundColor}, contentColor ${this.mNavigationBarComponentData.contentColor}`);
   }
 
   setWindowEnable?(isEnable: boolean) {
-    Log.showInfo(TAG, `setWindowEnable, isEnable ${isEnable}`);
+    Log.showDebug(TAG, `setWindowEnable, isEnable ${isEnable}`);
     if (this.mNavigationBarComponentData.isEnable == isEnable) {
       return;
     }
@@ -128,7 +127,7 @@ export default class NavigationBarViewModel {
       this.windowSwitches(initValue);
       this.registerListenForDataChanges(this.dataChangesCallback.bind(this));
     } catch (e) {
-      Log.showInfo(TAG, `initNavigationBarStatus error:  ${e.toString()}`);
+      Log.showError(TAG, `initNavigationBarStatus error:  ${e.toString()}`);
     }
   }
 
@@ -138,7 +137,7 @@ export default class NavigationBarViewModel {
    */
   public dataChangesCallback(data: any) {
     if (data.code !== 0) {
-      Log.showInfo(TAG, `dataChangesCallback failed, because ${data.message}`);
+      Log.showError(TAG, `dataChangesCallback failed, because ${data.message}`);
       return;
     } else {
       let getRetValue = this.getValue();

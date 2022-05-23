@@ -95,30 +95,30 @@ export default struct SetEnable {
   }
 
   aboutToAppear(): void{
-    Log.showInfo(TAG, `aboutToAppear`)
+    Log.showDebug(TAG, `aboutToAppear`)
     appInfo = Router.getParams();
     appInfo.slotSettingUrl = 'pages/slotSetting'
     Notification.subscribeEnableChanged();
-    Log.showInfo(TAG, `aboutToAppear end`)
+    Log.showDebug(TAG, `aboutToAppear end`)
   }
 
   aboutToDisappear(): void{
-    Log.showInfo(TAG, `aboutToDisappear`)
+    Log.showDebug(TAG, `aboutToDisappear`)
     Notification.unsubscribeEnableChanged();
   }
 
   onBackPress() {
-    Log.showInfo(TAG, `onBackPress`)
+    Log.showDebug(TAG, `onBackPress`)
     Router.back();
   }
 
   switchComponentInit() {
-    Log.showInfo(TAG, `switchComponentInit`)
+    Log.showDebug(TAG, `switchComponentInit`)
     return Notification.isNotificationEnabled({ bundle: appInfo.appBundleName, uid: appInfo.appUid })
   }
 
   switchComponentSet(params) {
-    Log.showInfo(TAG, `switchComponentSet`)
+    Log.showDebug(TAG, `switchComponentSet`)
     Notification.enableNotification({ bundle: appInfo.appBundleName, uid: appInfo.appUid }, params);
   }
 }

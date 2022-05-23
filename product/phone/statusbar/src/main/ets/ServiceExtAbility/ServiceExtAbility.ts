@@ -23,12 +23,12 @@ const TAG = "StatusBar_ServiceExtAbility"
 
 class ServiceExtAbility extends ServiceExtension {
     async onCreate(want) {
-        Log.showInfo(TAG, `onCreate, want: ${JSON.stringify(want)}`);
+        Log.showDebug(TAG, `onCreate, want: ${JSON.stringify(want)}`);
         AbilityManager.setContext(AbilityManager.ABILITY_NAME_STATUS_BAR, this.context)
 
         let configInfo = await StatusBarConfiguration.getConfiguration();
         AbilityManager.setAbilityData(AbilityManager.ABILITY_NAME_STATUS_BAR, 'config', configInfo)
-        Log.showInfo(TAG, `onCreate, configInfo: ${JSON.stringify(configInfo)}`)
+        Log.showDebug(TAG, `onCreate, configInfo: ${JSON.stringify(configInfo)}`)
 
         let statusBarRect = {
             left: configInfo.xCoordinate,
@@ -42,7 +42,7 @@ class ServiceExtAbility extends ServiceExtension {
     }
 
     onDestroy() {
-        Log.showInfo(TAG, 'onDestroy');
+        Log.showDebug(TAG, 'onDestroy');
     }
 }
 

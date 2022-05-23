@@ -56,7 +56,7 @@ class EventManager {
     }
 
     private publishLocalEvent(data: LocalEvent): boolean {
-        Log.showInfo(TAG, `publish localEvent type: ${data.eventName}`);
+        Log.showDebug(TAG, `publish localEvent type: ${data.eventName}`);
         if (data.eventName) {
             this.mEventBus.emit(data.eventName, data.args);
             return true;
@@ -65,7 +65,7 @@ class EventManager {
     }
 
     private startAbility(data: { [key: string]: any }): boolean {
-        Log.showInfo(TAG, `start Ability: ${data.abilityName}`);
+        Log.showDebug(TAG, `start Ability: ${data.abilityName}`);
         if (data.bundleName && data.abilityName && this.mContext) {
             this.mEventBus.emit(START_ABILITY_EVENT, { abilityName: data.abilityName });
             this.mContext.startAbility({

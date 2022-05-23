@@ -28,7 +28,7 @@ export default abstract class SourceLoader {
     mChannel: LoaderChannel | undefined;
 
     constructor(config: LoaderConfigInfo) {
-        Log.showInfo(TAG, `constructor`);
+        Log.showDebug(TAG, `constructor`);
     }
 
     public setChannel(channel: LoaderChannel) {

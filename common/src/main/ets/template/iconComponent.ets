@@ -34,12 +34,11 @@ struct iconComponent {
   @State style: any = StyleConfiguration.getIconComponentStyle()
 
   aboutToAppear() {
-    Log.showInfo(TAG,`aboutToAppear, ${this.changeSwitch} ${JSON.stringify(this.iconOff)} ${JSON.stringify(this.iconOn)}`)
-    Log.showInfo(TAG,`aboutToAppear, useIconStr: ${this.useIconStr}`)
+    Log.showDebug(TAG,`aboutToAppear, ${this.changeSwitch} ${JSON.stringify(this.iconOff)} ${JSON.stringify(this.iconOn)} , useIconStr: ${this.useIconStr}`)
   }
 
   aboutToDisappear () {
-    Log.showInfo(TAG,'aboutToDisappear')
+    Log.showDebug(TAG,'aboutToDisappear')
   }
 
   build() {

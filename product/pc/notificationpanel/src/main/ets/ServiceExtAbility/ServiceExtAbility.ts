@@ -26,12 +26,12 @@ const TAG = "NotificationPanel_ServiceExtAbility";
 class ServiceExtAbility extends ServiceExtension {
 
   async onCreate(want) {
-    Log.showInfo(TAG, `onCreate, want: ${JSON.stringify(want)}`);
+    Log.showDebug(TAG, `onCreate, want: ${JSON.stringify(want)}`);
     AbilityManager.setContext(AbilityManager.ABILITY_NAME_NOTIFICATION_PANEL, this.context);
     globalThis[AbilityManager.ABILITY_NAME_OWNER_WANT] = want;
 
     let dis = await display.getDefaultDisplay();
-    Log.showInfo(TAG, `onCreate, dis: ${JSON.stringify(dis)}`);
+    Log.showDebug(TAG, `onCreate, dis: ${JSON.stringify(dis)}`);
     let rect = {
       left: (834 * dis.width) / 1280,
       top: (44 * dis.width) / 1280,
@@ -64,7 +64,7 @@ class ServiceExtAbility extends ServiceExtension {
   }
 
   onDestroy() {
-    Log.showInfo(TAG, "onDestroy");
+    Log.showDebug(TAG, "onDestroy");
   }
 }
 

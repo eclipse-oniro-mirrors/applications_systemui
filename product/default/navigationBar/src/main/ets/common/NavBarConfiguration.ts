@@ -45,7 +45,7 @@ enum Position {
  */
 class NavBarConfiguration {
   async initNavBarConfiguration() {
-    Log.showInfo(TAG, 'initNavBarConfiguration');
+    Log.showDebug(TAG, 'initNavBarConfiguration');
     minHeight = 0;
 
     let displayData = null;
@@ -59,7 +59,7 @@ class NavBarConfiguration {
           Log.showInfo(TAG, `getDefaultDisplay maxWidth ${maxWidth} maxHeight ${maxHeight} minHeight ${minHeight}`);
         })
         .catch((err) => {
-          Log.showInfo(TAG, 'getDefaultDisplay err: ' + err);
+          Log.showError(TAG, 'getDefaultDisplay err: ' + err);
         });
       await new Promise((resolve) => setTimeout(resolve, 2000));
     }
@@ -88,11 +88,7 @@ class NavBarConfiguration {
     }
     statusShortSideLength = parseInt(statusShortSideLength) + '';
     navShortSideLength = parseInt(navShortSideLength) + '';
-    Log.showInfo(TAG, 'statusShortSideLength = ' + statusShortSideLength);
-    Log.showInfo(TAG, 'navShortSideLength = ' + navShortSideLength);
-    Log.showInfo(TAG, 'directionnav = ' + directionNav.direction);
-    Log.showInfo(TAG, 'statusbarPosition = ' + statusbarPosition);
-    Log.showInfo(TAG, 'NavbarPosition = ' + navbarPosition);
+    Log.showDebug(TAG, 'statusShortSideLength = ' + statusShortSideLength + 'navShortSideLength = ' + navShortSideLength + 'directionnav = ' + directionNav.direction + 'statusbarPosition = ' + statusbarPosition + 'NavbarPosition = ' + navbarPosition);
   }
 
 /**
@@ -107,24 +103,24 @@ class NavBarConfiguration {
     if (navbarPosition == Position.TOP_POSITION || navbarPosition == Position.BOTTOM_POSITION) {
       showNavHorizontal = true;
       minHeight = parseInt(navShortSideLength);
-      Log.showInfo(TAG, 'TOP_POSITION = ' + 2);
+      Log.showDebug(TAG, 'TOP_POSITION = ' + 2);
       if (statusbarPosition == Position.LEFT_POSITION || statusbarPosition == Position.RIGHT_POSITION) {
         realWidth = parseInt(maxWidth) - parseInt(statusShortSideLength);
       } else {
         realWidth = maxWidth;
       }
-      Log.showInfo(TAG, 'TOP_POSITION = ' + 3);
+      Log.showDebug(TAG, 'TOP_POSITION = ' + 3);
       realHeight = parseInt(navShortSideLength);
-      Log.showInfo(TAG, 'TOP_POSITION = ' + 4);
+      Log.showDebug(TAG, 'TOP_POSITION = ' + 4);
       if (statusbarPosition == Position.LEFT_POSITION) {
         xCoordinate = parseInt(statusShortSideLength);
       } else {
         xCoordinate = 0;
       }
-      Log.showInfo(TAG, 'TOP_POSITION = ' + 5);
+      Log.showDebug(TAG, 'TOP_POSITION = ' + 5);
       if (navbarPosition == Position.BOTTOM_POSITION) {
         yCoordinate = parseInt(maxHeight) - parseInt(navShortSideLength);
-        Log.showInfo(TAG, 'BOTTOM_POSITION = ' + yCoordinate);
+        Log.showDebug(TAG, 'BOTTOM_POSITION = ' + yCoordinate);
       }
     } else if (navbarPosition == Position.LEFT_POSITION || navbarPosition == Position.RIGHT_POSITION) {
       showNavHorizontal = false;
@@ -147,8 +143,7 @@ class NavBarConfiguration {
       realWidth = 0;
       realHeight = 0;
     }
-    Log.showInfo(TAG, `initWindowManager xCoordinate ${xCoordinate} yCoordinate ${yCoordinate}`);
-    Log.showInfo(TAG, `initWindowManager realWidth ${realWidth} realHeight ${realHeight}`);
+    Log.showDebug(TAG, `initWindowManager xCoordinate ${xCoordinate} yCoordinate ${yCoordinate}, realWidth ${realWidth} realHeight ${realHeight}`);
     var configuration = {
       maxWidth: maxWidth,
       maxHeight: maxHeight,

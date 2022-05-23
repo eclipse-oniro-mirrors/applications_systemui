@@ -34,7 +34,7 @@ export default struct Notification {
   @StorageLink('notificationList') notificationList: any[] = []
 
   aboutToAppear() {
-    Log.showInfo(TAG, `aboutToAppear Start`)
+    Log.showDebug(TAG, `aboutToAppear Start`)
   }
 
   build() {
@@ -61,11 +61,11 @@ export default struct Notification {
 @Component
 struct CenterTitle {
   aboutToAppear() {
-    Log.showInfo(TAG, `CenterTitle, aboutToAppear`)
+    Log.showDebug(TAG, `CenterTitle, aboutToAppear`)
   }
 
   aboutToDisappear() {
-    Log.showInfo(TAG, `CenterTitle, aboutToDisappear`)
+    Log.showDebug(TAG, `CenterTitle, aboutToDisappear`)
   }
 
   build() {
@@ -97,7 +97,7 @@ struct CenterTitle {
   }
 
   settingClick() {
-    Log.showInfo(TAG, ` settingClick `)
+    Log.showDebug(TAG, ` settingClick `)
     EventManager.publish(obtainStartAbility('com.ohos.systemui', 'com.ohos.systemui.notificationmanagement.MainAbility'))
   }
 }

@@ -83,7 +83,7 @@ struct Index {
   }
 
   aboutToAppear() {
-    Log.showInfo(TAG, `aboutToAppear, start`)
+    Log.showDebug(TAG, `aboutToAppear, start`)
 
     setAppBgColor('#00000000')
     CommonStyleManager.setAbilityPageName(TAG)
@@ -94,10 +94,10 @@ struct Index {
     this.urivar = settings.getUriSync(this.settingDataKey);
     this.helper = featureAbility.acquireDataAbilityHelper(AbilityManager.getContext(), CommonConstants.URI_VAR);
     this.resizeDropdownPanelAndNavigationBar(dropdownRect, navigationBarRect);
-    Log.showInfo(TAG, `getValueSync componentOptAreaHeightPX: ${this.componentOptAreaHeightPX}`)
+    Log.showDebug(TAG, `getValueSync componentOptAreaHeightPX: ${this.componentOptAreaHeightPX}`)
     this.helper.on("dataChange", this.urivar, (data) => {
       if (data.code !== 0) {
-        Log.showInfo(TAG, `dataChangesCallback failed, because ${data.message}`);
+        Log.showError(TAG, `dataChangesCallback failed, because ${data.message}`);
         return;
       } else {
         this.resizeDropdownPanelAndNavigationBar(dropdownRect, navigationBarRect);
@@ -130,11 +130,11 @@ struct Index {
     NavigationEvent.registerCallback(this.mCallback);
     MultimodalInputManager.registerControlListener(this.mCallback);
     MultimodalInputManager.registerNotificationListener(this.mCallback);
-    Log.showInfo(TAG, `aboutToAppear, end`)
+    Log.showDebug(TAG, `aboutToAppear, end`)
   }
 
   onPageShow() {
-    Log.showInfo(TAG, `onPageShow, start`)
+    Log.showDebug(TAG, `onPageShow, start`)
     if (!this.showComponentName) {
       return
     }
@@ -148,7 +148,7 @@ struct Index {
   }
 
   aboutToDisappear() {
-    Log.showInfo(TAG, `aboutToDisappear`)
+    Log.showDebug(TAG, `aboutToDisappear`)
     this.mClearCallbacks.forEach((mClearCallback: Function) => {
       mClearCallback()
       mClearCallback = undefined
@@ -157,7 +157,7 @@ struct Index {
   }
 
   resizeDropdownPanelAndNavigationBar(dropdownRect, navigationBarRect) {
-    Log.showInfo(TAG, `resizeDropdownPanelAndNavigationBar, dropdownRect: ${JSON.stringify(dropdownRect)} navigationBarRect: ${JSON.stringify(navigationBarRect)}`)
+    Log.showDebug(TAG, `resizeDropdownPanelAndNavigationBar, dropdownRect: ${JSON.stringify(dropdownRect)} navigationBarRect: ${JSON.stringify(navigationBarRect)}`)
     this.mNavigationBarStatusDefaultValue = settings.getValueSync(this.helper, this.settingDataKey, '1');
     this.componentOptAreaHeightPX = this.mNavigationBarStatusDefaultValue == '1' ? dropdownRect.height - navigationBarRect.realHeight : dropdownRect.height;
     this.navigationBarWidth = this.mNavigationBarStatusDefaultValue == '1' ? navigationBarRect.height : 0;
@@ -166,52 +166,52 @@ struct Index {
   }
 
   onNotificationShowOrHide(err, data) {
-    Log.showInfo(TAG, `mNotificationAsyncCallback preKeys: ${data.preKeys}, finalKey: ${data.finalKey}`);
-    Log.showInfo(TAG, `this.showComponentName: ${this.showComponentName}`);
+    Log.showDebug(TAG, `mNotificationAsyncCallback preKeys: ${data.preKeys}, finalKey: ${data.finalKey}`);
+    Log.showDebug(TAG, `this.showComponentName: ${this.showComponentName}`);
     if (this.showComponentName == 'Notification') {
       this.hideSelf();
     } else {
       this.showSelf('Notification');
     }
-    Log.showInfo(TAG, `mNotificationAsyncCallback end`);
+    Log.showDebug(TAG, `mNotificationAsyncCallback end`);
   }
 
   onControlShowOrHide(err, data) {
-    Log.showInfo(TAG, `mControlAsyncCallback preKeys: ${data.preKeys}, finalKey: ${data.finalKey}`);
-    Log.showInfo(TAG, `this.showComponentName: ${this.showComponentName}`);
+    Log.showDebug(TAG, `mControlAsyncCallback preKeys: ${data.preKeys}, finalKey: ${data.finalKey}`);
+    Log.showDebug(TAG, `this.showComponentName: ${this.showComponentName}`);
     if (this.showComponentName == 'ControlCenter') {
       this.hideSelf();
     } else {
       this.showSelf('ControlCenter');
     }
-    Log.showInfo(TAG, `mControlAsyncCallback end`);
+    Log.showDebug(TAG, `mControlAsyncCallback end`);
   }
 
   onStateChange(data) {
-    Log.showInfo(TAG, `onStateChange, data: ${JSON.stringify(data)}`)
-    Log.showInfo(TAG, `onStateChange, showComponentName: ${this.showComponentName}`)
+    Log.showDebug(TAG, `onStateChange, data: ${JSON.stringify(data)}`)
+    Log.showDebug(TAG, `onStateChange, showComponentName: ${this.showComponentName}`)
     if (this.showComponentName) {
       this.hideSelf()
     }
   }
 
   onDropdownEvent(args) {
-    Log.showInfo(TAG, `onDropdownEvent, args: ${JSON.stringify(args)}`)
+    Log.showDebug(TAG, `onDropdownEvent, args: ${JSON.stringify(args)}`)
     this.showSelf(args.dropdownArea == 'left' ? 'Notification' : 'ControlCenter')
   }
 
   onStartAbility(args) {
-    Log.showInfo(TAG, `onStartAbility, args: ${args}`)
+    Log.showDebug(TAG, `onStartAbility, args: ${args}`)
     this.hideSelf()
   }
 
   onHideNotificationWindowEvent(args) {
-    Log.showInfo(TAG, `onHideNotificationWindowEvent, args: ${args}`)
+    Log.showDebug(TAG, `onHideNotificationWindowEvent, args: ${args}`)
     this.hideSelf()
   }
 
   onTouchMove(data) {
-    Log.showInfo(TAG, `onTouchMove, data: ${JSON.stringify(data)}`)
+    Log.showDebug(TAG, `onTouchMove, data: ${JSON.stringify(data)}`)
     if (data.direction == 'top') {
       this.hideSelf()
     } else if (data.direction == 'left' && data.touchComponent == 'notification') {
@@ -222,7 +222,7 @@ struct Index {
   }
 
   switchNotificationOrControlCenter(showComponentName) {
-    Log.showInfo(TAG, `switchNotificationOrControlCenter, showComponentName: ${showComponentName}`)
+    Log.showDebug(TAG, `switchNotificationOrControlCenter, showComponentName: ${showComponentName}`)
     this.mNotificationInsert = { type: TransitionType.Insert, opacity: 0, translate: { x: (-this.mWidthPx) + 'px' } }
     this.mControlCenterInsert = { type: TransitionType.Insert, opacity: 0, translate: { x: (this.mWidthPx) + 'px' } }
     let transitionDelete = {
@@ -240,14 +240,14 @@ struct Index {
   }
 
   showSelf(showComponentName) {
-    Log.showInfo(TAG, `showSelf, showComponentName: ${showComponentName}`)
+    Log.showDebug(TAG, `showSelf, showComponentName: ${showComponentName}`)
     this.showComponentName = showComponentName
     this.updateBackground()
     WindowManager.showWindow(WindowType.DROPDOWN_PANEL)
   }
 
   hideSelf() {
-    Log.showInfo(TAG, `hideSelf`)
+    Log.showDebug(TAG, `hideSelf`)
     this._animateTo({ ...SHOW_ANIM_CONFIG, onFinish: () => {
       Log.showInfo(TAG, `hideSelf, hide anim finish.`);
       this.showComponentName = undefined
@@ -262,7 +262,7 @@ struct Index {
 
   updateBackground() {
     let rect = WindowManager.getWindowInfo(WindowType.DROPDOWN_PANEL)?.rect;
-    Log.showInfo(TAG, `start get snapShot, rect: ${JSON.stringify(rect)}`)
+    Log.showDebug(TAG, `start get snapShot, rect: ${JSON.stringify(rect)}`)
     screenshot.save({ screenRect: rect })
       .then((snapImage) => {
         Log.showInfo(TAG, `get snap: ${JSON.stringify(snapImage)}`)
@@ -271,7 +271,7 @@ struct Index {
   }
 
   _animateTo(config, callback) {
-    Log.showInfo(TAG, `_animateTo, config: ${JSON.stringify(config)}`)
+    Log.showDebug(TAG, `_animateTo, config: ${JSON.stringify(config)}`)
     animateTo(config, callback)
     setTimeout(config.onFinish, config.duration + config.delay)
   }

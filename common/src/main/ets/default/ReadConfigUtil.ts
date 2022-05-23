@@ -22,13 +22,13 @@ const TAG = 'ReadConfigUtil';
 
 export class ReadConfigUtil {
   ReadConfigFile(fileName) {
-    Log.showInfo(TAG, `readConfigFile fileName:${fileName}`);
+    Log.showDebug(TAG, `readConfigFile fileName:${fileName}`);
     try {
       let stream = FileIo.createStreamSync(fileName, 'r');
-      Log.showInfo(TAG, `readConfigFile stream:` + stream);
+      Log.showDebug(TAG, `readConfigFile stream:` + stream);
       let buf = new ArrayBuffer(DFAULT_SIZE);
       let len = stream.readSync(buf);
-      Log.showInfo(TAG, `readConfigFile len:` + len);
+      Log.showDebug(TAG, `readConfigFile len:` + len);
       let arr = new Uint8Array(buf);
       let charAt = ' '.charCodeAt(CHAR_CODE_AT_INDEX);
       for (let i = len;i < DFAULT_SIZE; i++) {
@@ -36,10 +36,10 @@ export class ReadConfigUtil {
       }
       let content = String.fromCharCode.apply(null, arr);
       stream.closeSync();
-      Log.showInfo(TAG, `readConfigFile content:` + JSON.stringify(content));
+      Log.showDebug(TAG, `readConfigFile content:` + JSON.stringify(content));
       return JSON.parse(content);
     } catch (error) {
-      Log.showInfo(TAG, `readConfigFile error:` + JSON.stringify(error));
+      Log.showError(TAG, `readConfigFile error:` + JSON.stringify(error));
     }
   }
 }

@@ -38,7 +38,7 @@ struct Index {
   }
 
   aboutToAppear() {
-    Log.showInfo(TAG, `aboutToAppear, start`);
+    Log.showDebug(TAG, `aboutToAppear, start`);
 
     let configInfo = AbilityManager.getAbilityData(AbilityManager.ABILITY_NAME_STATUS_BAR, 'config')
     let statusBarData: StatusBarData = new StatusBarData();
@@ -68,11 +68,11 @@ struct Index {
     let signalObserved = AppStorage.SetAndLink("signalObserved", false);
     signalObserved.set(false);
 
-    Log.showInfo(TAG, `aboutToAppear, end`);
+    Log.showDebug(TAG, `aboutToAppear, end`);
   }
 
   aboutToDisappear() {
-    Log.showInfo(TAG, `aboutToDisappear`);
+    Log.showDebug(TAG, `aboutToDisappear`);
   }
 
   build() {

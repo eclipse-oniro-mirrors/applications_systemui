@@ -35,7 +35,7 @@ export default class StyleManager {
     static maxWidth: number = StyleManager.STANDARD_DISPLAY_WIDTH;
 
     static setStyle() {
-        Log.showInfo(TAG, `setStyle`)
+        Log.showDebug(TAG, `setStyle`)
 
         let config = AbilityManager.getAbilityData(AbilityManager.ABILITY_NAME_STATUS_BAR, 'config');
         StyleManager.maxWidth = config.maxWidth;

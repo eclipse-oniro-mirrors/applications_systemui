@@ -25,11 +25,11 @@ const TAG = "ControlPanel_ServiceExtAbility";
 
 class ServiceExtAbility extends ServiceExtension {
   async onCreate(want) {
-    Log.showInfo(TAG, `onCreate, want: ${JSON.stringify(want)}`);
+    Log.showDebug(TAG, `onCreate, want: ${JSON.stringify(want)}`);
     AbilityManager.setContext(AbilityManager.ABILITY_NAME_CONTROL_PANEL, this.context);
 
     let dis = await display.getDefaultDisplay();
-    Log.showInfo(TAG, `onCreate, dis: ${JSON.stringify(dis)}`);
+    Log.showDebug(TAG, `onCreate, dis: ${JSON.stringify(dis)}`);
     let rect = {
       left: (872 * dis.width) / 1280,
       top: (44 * dis.width) / 1280,
@@ -43,12 +43,12 @@ class ServiceExtAbility extends ServiceExtension {
       height: dis.height,
     });
     WindowManager.createWindow(this.context, WindowType.CONTROL_PANEL, rect, "pages/index").then(() => {
-      Log.showInfo(TAG, `createWindow success.`);
+      Log.showDebug(TAG, `createWindow success.`);
     });
   }
 
   onDestroy() {
-    Log.showInfo(TAG, "onDestroy");
+    Log.showDebug(TAG, "onDestroy");
   }
 }
 

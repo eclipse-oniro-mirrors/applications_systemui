@@ -31,7 +31,7 @@ export default class StyleManager {
     static maxWidth: number = StyleManager.STANDARD_DISPLAY_WIDTH;
 
     static setStyle() {
-        Log.showInfo(TAG, `setStyle`)
+        Log.showDebug(TAG, `setStyle`)
 
         let rect = AbilityManager.getAbilityData(AbilityManager.ABILITY_NAME_DROPDOWN_PANEL, 'rect');
         StyleManager.maxWidth = rect.width;
@@ -248,7 +248,7 @@ export default class StyleManager {
             style.editDialogBtnBgColor = '#00FFFFFF';
             style.editDialogDividerColor = $r("sys.color.ohos_id_color_secondary");
             style.editDialogDividerWidth = StyleManager.calcScaleSizePx(1);
-            Log.showInfo(TAG, `getControlEditDialogStyle`)
+            Log.showDebug(TAG, `getControlEditDialogStyle`)
         }
 
     }

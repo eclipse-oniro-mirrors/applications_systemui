@@ -69,7 +69,7 @@ struct Index {
   mShowAnimReady: boolean = false;
 
   aboutToAppear() {
-    Log.showInfo(TAG, `aboutToAppear, start`)
+    Log.showDebug(TAG, `aboutToAppear, start`)
 
     setAppBgColor('#00000000')
     CommonStyleManager.setAbilityPageName(TAG)
@@ -86,7 +86,7 @@ struct Index {
     StatusCoefficient.set(mHeightConfigUtils.getStatusCoefficient());
 
     this.initWindowPolicy();
-    Log.showInfo(TAG, `aboutToAppear, end`)
+    Log.showDebug(TAG, `aboutToAppear, end`)
   }
 
   onPageShow() {
@@ -94,7 +94,7 @@ struct Index {
   }
 
   aboutToDisappear() {
-    Log.showInfo(TAG, `aboutToDisappear`)
+    Log.showDebug(TAG, `aboutToDisappear`)
     this.mClearCallbacks.forEach((unsubscribe) => unsubscribe());
     this.mClearCallbacks.length = 0;
   }
@@ -140,7 +140,7 @@ struct Index {
   }
 
   initWindowPolicy() {
-    Log.showInfo(TAG, `init controlcenter panel window Policy`);
+    Log.showDebug(TAG, `init controlcenter panel window Policy`);
     this.mClearCallbacks.push(
     EventManager.subscribe(SHOW_EVENT, () => WindowManager.showWindow(WindowType.CONTROL_PANEL)),
     EventManager.subscribe(HIDE_EVENT, () => this.hideWindow()),
@@ -185,7 +185,7 @@ struct Index {
   }
 
   hideWindow() {
-    Log.showInfo(TAG, `hide anim start: ${JSON.stringify(this)}`);
+    Log.showDebug(TAG, `hide anim start: ${JSON.stringify(this)}`);
     this._animateTo({ ...HIDE_ANIM_CONFIG, onFinish: () => {
       Log.showInfo(TAG, `anim finish, hide Notification window.`);
       this.mBlur = 0
@@ -200,14 +200,14 @@ struct Index {
   }
 
   onModeChange(isEdit) {
-    Log.showInfo(TAG, `onModeChange, isEdit: ${isEdit}`)
+    Log.showDebug(TAG, `onModeChange, isEdit: ${isEdit}`)
     let initRect = AbilityManager.getAbilityData(AbilityManager.ABILITY_NAME_CONTROL_PANEL, 'rect')
     let newRect = initRect
     if (isEdit) {
       let dis = AbilityManager.getAbilityData(AbilityManager.ABILITY_NAME_CONTROL_PANEL, 'dis')
       newRect = { ...initRect, height: StyleManager.calcScaleSize(346) }
     }
-    Log.showInfo(TAG, `onModeChange, newRect: ${JSON.stringify(newRect)}`)
+    Log.showDebug(TAG, `onModeChange, newRect: ${JSON.stringify(newRect)}`)
     this._animateTo({
       duration: 300,
       tempo: 1.0,

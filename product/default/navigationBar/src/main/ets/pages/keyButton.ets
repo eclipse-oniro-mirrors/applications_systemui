@@ -34,11 +34,11 @@ export default struct keyButton {
   @State style: any = StyleConfiguration.getKeyButtonStyle()
 
   aboutToAppear() {
-    Log.showInfo(TAG, `aboutToAppear Start`)
+    Log.showDebug(TAG, `aboutToAppear Start`)
   }
 
   aboutToDisappear(){
-    Log.showInfo(TAG, `aboutToDisAppear`)
+    Log.showDebug(TAG, `aboutToDisAppear`)
   }
 
   build() {
@@ -62,7 +62,7 @@ export default struct keyButton {
   }
 
   private onKeyTouch(event:TouchEvent) {
-    Log.showInfo(TAG, `onKeyTouch event: ${ event }`)
+    Log.showDebug(TAG, `onKeyTouch event: ${ event }`)
     let eventType = event.type;
     switch(eventType) {
       case Constants.KEY_DOWN:

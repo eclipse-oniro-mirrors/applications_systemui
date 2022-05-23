@@ -44,7 +44,7 @@ parentPort.onmessage = (msg) => {
 };
 
 function initConfig(config) {
-    Log.showInfo(TAG, `initConfig, config = ${JSON.stringify(config)}`);
+    Log.showDebug(TAG, `initConfig, config = ${JSON.stringify(config)}`);
     sManager = new PluginDataSourceManager({
         onItemAdd: (itemData) => {
             Log.showInfo(TAG, `sManager.onItemAdd, itemData = ${JSON.stringify(itemData)}`);
@@ -61,26 +61,24 @@ function initConfig(config) {
 }
 
 function clearAll() {
-    Log.showInfo(TAG, `clearAll `);
+    Log.showDebug(TAG, `clearAll `);
     sManager?.clearAll();
 }
 
 function loadData(userId) {
-    Log.showInfo(TAG, `loadData `);
+    Log.showDebug(TAG, `loadData `);
     sManager?.loadData(userId);
 }
 
 parentPort.onclose = function () {
-    Log.showInfo(TAG, `onclose`);
+    Log.showDebug(TAG, `onclose`);
 };
 
 parentPort.onmessageerror = function () {
-    Log.showInfo(TAG, `onmessageerror`);
+    Log.showDebug(TAG, `onmessageerror`);
 };
 
 parentPort.onerror = function (data) {
-    Log.showInfo(
-        TAG,
-        `onerror, lineno = ${data.lineno}, msg = ${data.message}, filename = ${data.filename}, col = ${data.colno}`
+    Log.showDebug(TAG, `onerror, lineno = ${data.lineno}, msg = ${data.message}, filename = ${data.filename}, col = ${data.colno}`
     );
 };

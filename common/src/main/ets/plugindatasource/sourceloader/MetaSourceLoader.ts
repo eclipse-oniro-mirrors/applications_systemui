@@ -30,7 +30,7 @@ export default class MetaSourceLoader extends SourceLoader {
         super(config);
         this.mPluginFilter = config.action;
         this.mPermission = config.permission;
-        Log.showInfo(TAG, `init loader, mPluginFilter: ${this.mPluginFilter}, mPermission: ${this.mPermission}`);
+        Log.showDebug(TAG, `init loader, mPluginFilter: ${this.mPluginFilter}, mPermission: ${this.mPermission}`);
     }
 
     onAbilityAdd(abilityInfo: AbilityInfoWithId): void {
@@ -42,7 +42,7 @@ export default class MetaSourceLoader extends SourceLoader {
             }
             this.mItemDatas.push(itemData);
             this.addItem(itemData);
-            Log.showInfo(TAG, `item[${itemData.id}] add success, name: ${abilityInfo.name}`);
+            Log.showDebug(TAG, `item[${itemData.id}] add success, name: ${abilityInfo.name}`);
             return;
         }
         Log.showDebug(TAG, `Can't filter ${abilityInfo.name}.`);
