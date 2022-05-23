@@ -28,7 +28,7 @@ export default struct ItemComponent {
           .fontColor($r('app.color.itemComp_title_color'))
           .width(ConfigData.WH_45_100)
           .textAlign(TextAlign.Start)
-          .fontWeight(FontWeight.Bold)
+          .fontWeight(FontWeight.Medium)
         Blank()
         Text(this.value)
           .fontSize($r('app.float.itemComp_value_font'))

@@ -34,7 +34,7 @@
     },
     {
       "name": "applist_hieght",
-      "value": "404vp"
+      "value": "476vp"
     },
     {
       "name": "applist_hieght_phone",
@@ -114,11 +114,11 @@
     },
     {
       "name": "appitem_header_icon_width",
-      "value": "20vp"
+      "value": "24vp"
     },
     {
       "name": "appitem_header_icon_height",
-      "value": "18vp"
+      "value": "24vp"
     },
     {
       "name": "appitem_icon_width",
@@ -130,11 +130,11 @@
     },
     {
       "name": "appitem_icon_info_margin_r",
-      "value": "12vp"
+      "value": "4vp"
     },
     {
       "name": "appitem_icon_info_list_margin_r",
-      "value": "16vp"
+      "value": "4vp"
     },
     {
       "name": "appitem_icon_margin_r",
@@ -174,11 +174,11 @@
     },
     {
       "name": "toggle_comp_width",
-      "value": "54vp"
+      "value": "44vp"
     },
     {
       "name": "toggle_comp_height",
-      "value": "36vp"
+      "value": "44vp"
     },
     {
       "name": "toggle_check_width",
@@ -190,7 +190,7 @@
     },
     {
       "name": "divider_margin_l_info",
-      "value": "76vp"
+      "value": "64vp"
     },
     {
       "name": "divider_margin_l",
@@ -206,7 +206,7 @@
     },
     {
       "name": "itemComp_height",
-      "value": "56vp"
+      "value": "48vp"
     },
     {
       "name": "itemComp_noDisturb_height",
@@ -214,7 +214,7 @@
     },
     {
       "name": "itemComp_titel_font",
-      "value": "20vp"
+      "value": "16vp"
     },
     {
       "name": "itemComp_value_font",
@@ -242,7 +242,7 @@
     },
     {
       "name": "itemComp_margin_b",
-      "value": "12vp"
+      "value": "8vp"
     },
     {
       "name": "slotComp_font",
@@ -274,7 +274,7 @@
     },
     {
       "name": "switchComp_height",
-      "value": "56vp"
+      "value": "64vp"
     },
     {
       "name": "switchComp_padding_r",
@@ -294,7 +294,7 @@
     },
     {
       "name": "page_notice_part_margin_t",
-      "value": "24vp"
+      "value": "8vp"
     },
     {
       "name": "page_notice_row_margin_t",
@@ -342,7 +342,7 @@
     },
     {
       "name": "notice_title_height",
-      "value": "20vp"
+      "value": "48vp"
     },
     {
       "name": "notice_row_height",
@@ -358,15 +358,15 @@
     },
     {
       "name": "noDisturb_offset_x",
-      "value": "0"
+      "value": "-18"
     },
     {
       "name": "noDisturb_text_margin_vertical",
-      "value": "0vp"
+      "value": "2vp"
     },
     {
       "name": "noDisturb_text_margin_right",
-      "value": "0vp"
+      "value": "12vp"
     }
   ]
 }
