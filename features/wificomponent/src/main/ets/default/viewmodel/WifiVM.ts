@@ -24,7 +24,7 @@ export class WifiVM {
   mTintContentInfo: TintContentInfo = getOrCreateTintContentInfo(FASlotName.WIFI);
 
   constructor() {
-    Log.showInfo(TAG, `constructor`)
+    Log.showInfo(TAG, `constructor`);
   }
 
   getTintContentInfo(): TintContentInfo {

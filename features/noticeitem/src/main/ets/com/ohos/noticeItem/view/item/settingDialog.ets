@@ -113,14 +113,14 @@ export default struct SettingDialog {
   }
 
   openAbility() {
-    Log.showInfo(TAG, ` openAbility:showNotificationManagement`)
+    Log.showInfo(TAG, ` openAbility:showNotificationManagement`);
     EventManager.publish(obtainStartAbility('com.ohos.systemui', 'com.ohos.systemui.notificationmanagement.MainAbility',
       { 'migrateUri': 'pages/setEnable', 'migrateBundle': this.itemData.bundleName }))
     this.closeAbility()
   }
 
   closeAbility() {
-    Log.showInfo(TAG, `closeAbility`)
+    Log.showInfo(TAG, `closeAbility`);
     this.controller.close()
   }
 }

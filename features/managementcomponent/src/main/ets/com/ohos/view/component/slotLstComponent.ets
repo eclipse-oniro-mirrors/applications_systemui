@@ -48,7 +48,7 @@ export default struct SlotLstComponent {
                 SlotItemComponent({ slotType: item.type })
               }
               .onClick(() => {
-                Log.showInfo(TAG, `onClick`)
+                Log.showInfo(TAG, `onClick`);
                 Router.push({ uri: this.appInfo.slotSettingUrl, params: {appInfo:this.appInfo,slotInfo:item} });
               })
             });
@@ -74,18 +74,18 @@ export default struct SlotLstComponent {
   }
 
   aboutToAppear(): void{
-    Log.showInfo(TAG, `aboutToAppear Notification.getSlotsByBundle  bundle:` + 'bundle:' + this.appInfo.appBundleName + 'uid' + this.appInfo.appUid)
+    Log.showInfo(TAG, `aboutToAppear Notification.getSlotsByBundle  bundle:` + 'bundle:' + this.appInfo.appBundleName + 'uid' + this.appInfo.appUid);
     Notification.getSlotsByBundle({ bundle: this.appInfo.appBundleName, uid: this.appInfo.appUid }, (err, data) => {
-      Log.showInfo(TAG, `aboutToAppear Notification.getSlotsByBundle  data:` + JSON.stringify(data))
+      Log.showInfo(TAG, `aboutToAppear Notification.getSlotsByBundle  data:` + JSON.stringify(data));
       data.forEach((val, idx, array) => {
-        Log.showInfo(TAG, `aboutToAppear Notification.getSlotsByBundle  data.forEach:` + JSON.stringify(val))
+        Log.showInfo(TAG, `aboutToAppear Notification.getSlotsByBundle  data.forEach:` + JSON.stringify(val));
         this.slotLst.push(val);
       })
     })
   }
 
   onBackPress() {
-    Log.showInfo(TAG, `onBackPress`)
+    Log.showInfo(TAG, `onBackPress`);
     Router.back();
   }
 }

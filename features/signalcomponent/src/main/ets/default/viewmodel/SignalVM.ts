@@ -24,7 +24,7 @@ export class SignalVM {
   mTintContentInfo: TintContentInfo = getOrCreateTintContentInfo(FASlotName.SIGNAL);
 
   constructor() {
-    Log.showInfo(TAG, `constructor`)
+    Log.showInfo(TAG, `constructor`);
   }
 
   getTintContentInfo(): TintContentInfo {

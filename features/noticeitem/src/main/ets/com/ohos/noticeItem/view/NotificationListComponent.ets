@@ -34,7 +34,7 @@ export default struct NotificationListComponent {
   }
 
   aboutToAppear() {
-    Log.showInfo(TAG, `notificationList, aboutToAppear`)
+    Log.showInfo(TAG, `notificationList, aboutToAppear`);
   }
 
   aboutToDisappear() {

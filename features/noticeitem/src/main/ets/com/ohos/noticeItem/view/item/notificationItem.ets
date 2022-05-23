@@ -93,7 +93,7 @@ struct FrontItem {
   }
 
   showDevicesDialog() {
-    Log.showInfo(TAG, `showDevicesDialog isDistributed: ${this.itemData?.distributedOption?.isDistributed}`)
+    Log.showInfo(TAG, `showDevicesDialog isDistributed: ${this.itemData?.distributedOption?.isDistributed}`);
     if (!this.itemData?.distributedOption?.isDistributed) {
       ViewModel.clickItem(this.itemData);
       return;
@@ -102,7 +102,7 @@ struct FrontItem {
     if (!!wantAgent) {
       WantAgent.getWant(wantAgent).then((want) => {
         this.nowWant = want
-        Log.showInfo(TAG, `showDevicesDialog want: ${JSON.stringify(this.nowWant)}`)
+        Log.showInfo(TAG, `showDevicesDialog want: ${JSON.stringify(this.nowWant)}`);
         if (!want?.deviceId) {
           this.devicesDialogController.open()
         } else {
@@ -115,7 +115,7 @@ struct FrontItem {
   }
 
   selectedDevice(deviceID) {
-    Log.showInfo(TAG, `selectedDevice deviceID:${deviceID}`)
+    Log.showInfo(TAG, `selectedDevice deviceID:${deviceID}`);
     this.nowWant.deviceId = deviceID;
     let triggerInfo = {
       code: 0,

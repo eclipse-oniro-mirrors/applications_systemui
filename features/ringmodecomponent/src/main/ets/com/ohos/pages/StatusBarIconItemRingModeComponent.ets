@@ -31,15 +31,15 @@ export default struct StatusBarIconItemRingModeComponent {
   private ringModeIcons: any
 
   aboutToAppear() {
-    Log.showInfo(TAG, 'aboutToAppear')
-    this.ringModeIcons = {}
-    this.ringModeIcons[AudioRingMode.RINGER_MODE_SILENT.toString()] = $r("app.media.ic_statusbar_ring_off_filled")
-    this.ringModeIcons[AudioRingMode.RINGER_MODE_VIBRATE.toString()] = $r("app.media.ic_statusbar_vibration_on")
-    ViewModel.initViewModel()
+    Log.showInfo(TAG, 'aboutToAppear');
+    this.ringModeIcons = {};
+    this.ringModeIcons[AudioRingMode.RINGER_MODE_SILENT.toString()] = $r("app.media.ic_statusbar_ring_off_filled");
+    this.ringModeIcons[AudioRingMode.RINGER_MODE_VIBRATE.toString()] = $r("app.media.ic_statusbar_vibration_on");
+    ViewModel.initViewModel();
   }
 
   aboutToDisappear() {
-    Log.showInfo(TAG, 'aboutToDisappear')
+    Log.showInfo(TAG, 'aboutToDisappear');
   }
 
   build() {

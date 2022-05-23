@@ -70,7 +70,7 @@ export class StatusBarService {
     mStatusBarAllLayout: string[] ;
 
     constructor() {
-        Log.showInfo(TAG, `constructor`)
+        Log.showInfo(TAG, `constructor`);
     }
 
     setStatusBarData(data: StatusBarData): void{
@@ -126,7 +126,7 @@ export class StatusBarService {
     }
 
     calcStatusBarLayout() {
-        Log.showInfo(TAG, `calcStatusBarLayout`)
+        Log.showInfo(TAG, `calcStatusBarLayout`);
         let statusBarLayout = [];
         for (let i = 0;i < this.mStatusBarLayoutGroupTemplate.length; i++) {
             let componentsTemplate = this.mStatusBarLayoutGroupTemplate[i];
@@ -185,7 +185,7 @@ export class StatusBarService {
     }
 
     onDisplayRotate(rotation: number) {
-        Log.showInfo(TAG, `onDisplayRotate, rotation: ${rotation}`)
+        Log.showInfo(TAG, `onDisplayRotate, rotation: ${rotation}`);
         let position: string = this.calcEmptyAreaPosition(rotation);
         this.onEmptyAreaChange(position, rotation);
     }
@@ -292,7 +292,7 @@ export class StatusBarService {
     }
 
     onEmptyAreaChange(position: string, rotation: number) {
-        Log.showInfo(TAG, `onEmptyAreaChange, position: ${position} rotation: ${rotation}`)
+        Log.showInfo(TAG, `onEmptyAreaChange, position: ${position} rotation: ${rotation}`);
         this.calcEmptyWidth(rotation);
         this.setEmptyAreaToLayoutTemplate(position);
         let id = FASlotName.EMPTY;
@@ -302,12 +302,12 @@ export class StatusBarService {
         if (position) {
             this.mStatusBarAllLayout.push(id);
         }
-        Log.showInfo(TAG, `onEmptyAreaChange, mStatusBarAllLayout: ${JSON.stringify(this.mStatusBarAllLayout)}`)
+        Log.showInfo(TAG, `onEmptyAreaChange, mStatusBarAllLayout: ${JSON.stringify(this.mStatusBarAllLayout)}`);
         this.calcStatusBarLayout();
     }
 
     setEmptyAreaToLayoutTemplate(position: string) {
-        Log.showInfo(TAG, `setEmptyAreaToLayoutTemplate, position: ${position}`)
+        Log.showInfo(TAG, `setEmptyAreaToLayoutTemplate, position: ${position}`);
         for (let i = 0;i < this.mStatusBarLayoutGroupTemplate.length; i++) {
             let componentsTemplate = this.mStatusBarLayoutGroupTemplate[i];
             let index = componentsTemplate.indexOf(FASlotName.EMPTY);
@@ -323,11 +323,11 @@ export class StatusBarService {
         } else if (position == Constants.EMPTY_AREA_POSITION_RIGHT) {
             this.mStatusBarLayoutGroupTemplate[2].push(FASlotName.EMPTY);
         }
-        Log.showInfo(TAG, `setEmptyAreaToLayoutTemplate, template: ${JSON.stringify(this.mStatusBarLayoutGroupTemplate)}`)
+        Log.showInfo(TAG, `setEmptyAreaToLayoutTemplate, template: ${JSON.stringify(this.mStatusBarLayoutGroupTemplate)}`);
     }
 
     calcEmptyWidth(rotation: number) {
-        Log.showInfo(TAG, `calcEmptyWidth, rotation: ${rotation}`)
+        Log.showInfo(TAG, `calcEmptyWidth, rotation: ${rotation}`);
         let width: number = 0;
         if (this.mConfig.emptyPosition) {
             if (rotation == 0 || rotation == 180) {
@@ -336,7 +336,7 @@ export class StatusBarService {
                 width = this.mConfig.emptyPosition.y2 - this.mConfig.emptyPosition.y1;
             }
         }
-        Log.showInfo(TAG, `calcEmptyWidth, width: ${width}`)
+        Log.showInfo(TAG, `calcEmptyWidth, width: ${width}`);
         this.mListener?.setStatusBarEmptyWidth(width);
     }
 }

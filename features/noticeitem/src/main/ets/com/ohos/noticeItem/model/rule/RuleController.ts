@@ -30,7 +30,7 @@ export class RuleController {
      * @param {callback} Data of the type to show the notification
      */
   getNotificationData(notificationItemData: NotificationItemData, callback) {
-    Log.showInfo(TAG, "getNotificationData start")
+    Log.showInfo(TAG, "getNotificationData start");
 
     this.isAllowSendNotification(notificationItemData, (isSuccess) => {
       if (!isSuccess) {
@@ -93,7 +93,7 @@ export class RuleController {
      * @param {callback} The type to show notification
      */
   getNotificationDataByApp(notificationItemData, callback) {
-    Log.showInfo(TAG, "getNotificationDataByApp start")
+    Log.showInfo(TAG, "getNotificationDataByApp start");
     let mNotificationItemData : NotificationItemData = notificationItemData;
     mNotificationItemData.ruleData = {
       isAllowBanner: false,
@@ -138,7 +138,7 @@ export class RuleController {
    * @param {callback} The final notification data
    */
   updateNotificationDataBySense(notificationItemData, callback) {
-    Log.showInfo(TAG, "updateNotificationDataBySense start")
+    Log.showInfo(TAG, "updateNotificationDataBySense start");
     let mNotificationItemData = notificationItemData;
     // TODO Scenario Management
     callback(mNotificationItemData);

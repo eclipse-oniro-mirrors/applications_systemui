@@ -33,7 +33,7 @@ export default struct GroupItem {
   @State @Watch('scrollEdge') mEdgeEnd: boolean = false;
 
   aboutToAppear() {
-    Log.showInfo(TAG, `aboutToAppear`)
+    Log.showInfo(TAG, `aboutToAppear`);
   }
 
   aboutToDisappear() {
@@ -107,7 +107,7 @@ struct ContentList {
 
   aboutToAppear() {
     this.remainderNum = this.groupData.length - 2;
-    Log.showInfo(TAG, `aboutToAppear remainderNum:${this.remainderNum}`)
+    Log.showInfo(TAG, `aboutToAppear remainderNum:${this.remainderNum}`);
   }
 
   build() {
@@ -188,6 +188,6 @@ struct ContentList {
 
   remainderChange() {
     this.remainderNum = this.groupData.length - 2;
-    Log.showInfo(TAG, `remainderChange remainderNum:${this.remainderNum}`)
+    Log.showInfo(TAG, `remainderChange remainderNum:${this.remainderNum}`);
   }
 }

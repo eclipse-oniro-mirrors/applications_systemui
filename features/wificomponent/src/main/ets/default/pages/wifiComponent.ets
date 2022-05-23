@@ -32,29 +32,29 @@ export default struct WifiComponent {
   @StorageLink('wifiOpenStatus') wifiOpenStatus: boolean = Constants.DEFAULT_WIFI_OPEN_STATUS
 
   mClickEvent() {
-    Log.showInfo(TAG, `mClickEvent, wifiOpenStatus: ${this.wifiOpenStatus}`)
+    Log.showInfo(TAG, `mClickEvent, wifiOpenStatus: ${this.wifiOpenStatus}`);
 
     if (this.wifiOpenStatus == false) {
-      Log.showInfo(TAG, `WLAN status is closing：${this.wifiOpenStatus} “no”， set WLAN status enableWifi`)
+      Log.showInfo(TAG, `WLAN status is closing：${this.wifiOpenStatus} “no”， set WLAN status enableWifi`);
       mWifiManger.enableWifi()
     } else {
-      Log.showInfo(TAG, `WLAN status is opening：${this.wifiOpenStatus} “yes”，se WLAN status disableWifi`)
+      Log.showInfo(TAG, `WLAN status is opening：${this.wifiOpenStatus} “yes”，se WLAN status disableWifi`);
       mWifiManger.disableWifi()
     }
   }
 
   mLongClickEvent() {
-    Log.showInfo(TAG, `mLongClickEvent, wifiOpenStatus: ${this.wifiOpenStatus}`)
+    Log.showInfo(TAG, `mLongClickEvent, wifiOpenStatus: ${this.wifiOpenStatus}`);
     EventManager.publish(obtainStartAbility('com.ohos.settings', 'com.ohos.settings.WifiAbility'))
   }
 
   aboutToAppear() {
-    Log.showInfo(TAG, 'aboutToAppear')
-    mWifiManger.initWifiModel()
+    Log.showInfo(TAG, 'aboutToAppear');
+    mWifiManger.initWifiModel();
   }
 
   aboutToDisappear() {
-    Log.showInfo(TAG, 'aboutToDisappear')
+    Log.showInfo(TAG, 'aboutToDisappear');
   }
 
   build() {

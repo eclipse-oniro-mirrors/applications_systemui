@@ -37,7 +37,7 @@ export default struct IconItemComponent {
   @State styleCommon: any = StyleConfigurationCommon.getCommonStyle()
 
   aboutToAppear() {
-    Log.showInfo(TAG, `aboutToAppear Start, keyId: ${this.keyId} `)
+    Log.showInfo(TAG, `aboutToAppear Start, keyId: ${this.keyId} `);
     this.linkItemData()
     if (this.mItemData.get()?.relationWindowId) {
       this.mClearCallback = EventManager.subscribe(WINDOW_SHOW_HIDE_EVENT, (args) => this.onWindowChange(args))
@@ -45,7 +45,7 @@ export default struct IconItemComponent {
   }
 
   aboutToDisappear() {
-    Log.showInfo(TAG, `aboutToDisappear`)
+    Log.showInfo(TAG, `aboutToDisappear`);
     this.mClearCallback && this.mClearCallback()
     this.mClearCallback = undefined
   }
@@ -94,7 +94,7 @@ export default struct IconItemComponent {
   }
 
   onIconItemClick(event: ClickEvent) {
-    Log.showInfo(TAG, `onIconItemClick`)
+    Log.showInfo(TAG, `onIconItemClick`);
     if (!this.mItemStatus.selected) {
       this.execClickAction()
     } else {
@@ -103,27 +103,27 @@ export default struct IconItemComponent {
   }
 
   execClickAction() {
-    Log.showInfo(TAG, `execClickAction`)
+    Log.showInfo(TAG, `execClickAction`);
     if (this.mItemData.get()?.actionData?.clickAction) {
       EventManager.publish(this.mItemData.get().actionData.clickAction)
     }
   }
 
   execSelectedClickAction() {
-    Log.showInfo(TAG, `execSelectedClickAction ${this.mItemData.get()?.actionData?.selectedClickAction}`)
+    Log.showInfo(TAG, `execSelectedClickAction ${this.mItemData.get()?.actionData?.selectedClickAction}`);
     if (this.mItemData.get()?.actionData?.selectedClickAction) {
       EventManager.publish(this.mItemData.get().actionData.selectedClickAction)
     }
   }
 
   onIconItemLongPressGesture(event: GestureEvent) {
-    Log.showInfo(TAG, `onIconItemLongPressGesture, event: ${JSON.stringify(event)}`)
+    Log.showInfo(TAG, `onIconItemLongPressGesture, event: ${JSON.stringify(event)}`);
     let longClickEvent = this.mItemData.get().actionData.longClickAction;
     longClickEvent && EventManager.publish(longClickEvent);
   }
 
   onIconItemTouch(event: TouchEvent) {
-    Log.showInfo(TAG, `onIconItemTouch, event: ${JSON.stringify(event)}`)
+    Log.showInfo(TAG, `onIconItemTouch, event: ${JSON.stringify(event)}`);
     if (this.mItemData.get()?.actionData?.clickAction || this.mItemData.get()?.actionData?.longClickAction) {
       event.stopPropagation()
     }

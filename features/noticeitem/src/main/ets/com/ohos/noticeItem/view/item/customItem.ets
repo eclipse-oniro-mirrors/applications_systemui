@@ -31,11 +31,11 @@ export default struct CustomItem {
   private clickAction: () => void
 
   aboutToAppear() {
-    Log.showInfo(TAG, `aboutToAppear Start`)
+    Log.showInfo(TAG, `aboutToAppear Start`);
     this.template = ViewModel.getPluginTempLate(this.customItemData.template.name);
     this.templateData = this.customItemData.template.data;
     this.isDebugMode = NotificationManager.isDebugMode(TAG);
-    Log.showInfo(TAG, `template = ${JSON.stringify(this.template)} templateData = ${JSON.stringify(this.templateData)} isDebugMode = ${this.isDebugMode}`)
+    Log.showInfo(TAG, `template = ${JSON.stringify(this.template)} templateData = ${JSON.stringify(this.templateData)} isDebugMode = ${this.isDebugMode}`);
   }
 
   build() {
@@ -45,9 +45,9 @@ export default struct CustomItem {
           template: this.template,
           data: this.templateData
         }).onComplete(() => {
-          Log.showInfo(TAG, `Complete`)
+          Log.showInfo(TAG, `Complete`);
         }).onError(({errcode, msg}) => {
-          Log.showInfo(TAG, `Error code:${errcode} message:${msg}`)
+          Log.showInfo(TAG, `Error code:${errcode} message:${msg}`);
         })
           .size({ width: 200, height: 110 })
       }

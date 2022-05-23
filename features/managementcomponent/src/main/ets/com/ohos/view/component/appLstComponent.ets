@@ -26,20 +26,20 @@ export default struct AppLstComponent {
   @StorageLink('appManagementList') appList: any[]= [];
 
   aboutToAppear(): void{
-    Log.showInfo(TAG, `aboutToAppear`)
-    ViewModel.ViewModelInit()
+    Log.showInfo(TAG, `aboutToAppear`);
+    ViewModel.ViewModelInit();
   }
 
   aboutToDisappear(): void{
-    Log.showInfo(TAG, `aboutToDisappear`)
+    Log.showInfo(TAG, `aboutToDisappear`);
   }
 
   onPageShow(): void{
-    Log.showInfo(TAG, `onPageShow`)
+    Log.showInfo(TAG, `onPageShow`);
   }
 
   onBackPress() {
-    Log.showInfo(TAG, `onBackPress`)
+    Log.showInfo(TAG, `onBackPress`);
   }
 
   build() {
@@ -62,7 +62,7 @@ export default struct AppLstComponent {
             })
           }
           .onClick(() => {
-            Log.showInfo(TAG, `onClick`)
+            Log.showInfo(TAG, `onClick`);
             Router.push({ uri: item.appUri, params: item });
           })
           .height($r('app.float.appitem_item_height'))

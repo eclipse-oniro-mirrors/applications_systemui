@@ -122,7 +122,7 @@ export class NotificationService {
 
   subscribeNotification(subscriber) {
     let callback = (err, data) => {
-      Log.showInfo(TAG, `subscribeCallback finished err: ${JSON.stringify(err)} data: ${JSON.stringify(data)}`)
+      Log.showInfo(TAG, `subscribeCallback finished err: ${JSON.stringify(err)} data: ${JSON.stringify(data)}`);
     };
     NotificationManager.subscribeNotification(TAG, subscriber, callback);
   }

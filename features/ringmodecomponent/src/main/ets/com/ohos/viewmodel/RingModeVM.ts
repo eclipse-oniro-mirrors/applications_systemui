@@ -30,14 +30,14 @@ export class RingModeVM {
   mTintContentInfo: TintContentInfo = getOrCreateTintContentInfo(FASlotName.RING_MODE);
 
   constructor() {
-    Log.showInfo(TAG, `constructor`)
+    Log.showInfo(TAG, `constructor`);
   }
 
   initViewModel() {
     if (this.mIsStart) {
       return;
     }
-    Log.showInfo(TAG, `initViewModel `)
+    Log.showInfo(TAG, `initViewModel `);
     this.mIsStart = true;
 
     this.mRingModeComponentMode = AppStorage.SetAndLink(RingModeComponentModeKey, AudioRingMode.RINGER_MODE_NORMAL);
@@ -49,12 +49,12 @@ export class RingModeVM {
   }
 
   updateRingerMode(mode) {
-    Log.showInfo(TAG, `updateRingerMode, mode: ${JSON.stringify(mode)} `)
+    Log.showInfo(TAG, `updateRingerMode, mode: ${JSON.stringify(mode)} `);
     this.mRingModeComponentMode.set(mode);
   }
 
   setRingerMode(mode) {
-    Log.showInfo(TAG, `setRingerMode, mode: ${JSON.stringify(mode)} `)
+    Log.showInfo(TAG, `setRingerMode, mode: ${JSON.stringify(mode)} `);
     RingModeService.setRingerMode(mode);
   }
 

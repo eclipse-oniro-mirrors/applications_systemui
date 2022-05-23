@@ -31,17 +31,17 @@ export default struct MetaIconItemComponent {
   @State styleCommon: any = StyleConfigurationCommon.getCommonStyle()
 
   aboutToAppear() {
-    Log.showInfo(TAG, `aboutToAppear Start, keyId: ${this.keyId}`)
+    Log.showInfo(TAG, `aboutToAppear Start, keyId: ${this.keyId}`);
     this.linkItemData()
     this.mTintContentInfo = ViewModel.getPluginTintContentInfo(this.keyId)
   }
 
   aboutToDisappear() {
-    Log.showInfo(TAG, `aboutToDisappear`)
+    Log.showInfo(TAG, `aboutToDisappear`);
   }
 
   linkItemData() {
-    this.mItemData = AppStorage.Link('StatusBar_' + this.keyId)
+    this.mItemData = AppStorage.Link('StatusBar_' + this.keyId);
     Log.showInfo(TAG, `linkItemData, mItemData: ${this.keyId} ${this.mItemData.get().label} ${
     this.mItemData.get()
     .iconUrl}`)
