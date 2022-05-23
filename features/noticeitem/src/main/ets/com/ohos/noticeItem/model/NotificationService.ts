@@ -56,7 +56,6 @@ export class NotificationService {
   }
 
   public removeAll() {
-    Log.showInfo(TAG, 'removeAll start');
     NotificationManager.removeAll(TAG, (data) => {
       Log.showInfo(TAG, `removeAll => data: ${JSON.stringify(data)}`);
     });

@@ -44,16 +44,13 @@ export default class NoDisturbComponentViewModel {
       this.repeatMode = data.type
       this.startTime = data.begin
       this.endTime = data.end
-      Log.showInfo(TAG, `getNoDisturbingDate this.repeatMode : ${this.repeatMode}`)
-      Log.showInfo(TAG, `getNoDisturbingDate this.startTime : ${this.startTime}`)
-      Log.showInfo(TAG, `getNoDisturbingDate this.endTime : ${this.endTime}`)
+      Log.showInfo(TAG, `getNoDisturbingDate repeatMode : ${this.repeatMode} startTime : ${this.startTime} endTime : ${this.endTime}`);
       this.repeatName = this.refreshRepeatName(this.repeatMode);
       this.setClues.bind(this)()
     })
   }
 
   setNoDisturbingDate() {
-    Log.showInfo(TAG, 'setNoDisturbingDate');
     if (!this.isEffective) {
       this.repeatMode = DoNotDisturbType.TYPE_NONE
     }

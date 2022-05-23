@@ -115,7 +115,7 @@ struct StatusBarBackground {
   @State mBackgroundDatas: StatusBarBackgroundData[] = ViewModel.getBackgroundDatas()
 
   aboutToAppear() {
-    Log.showInfo(TAG_StatusBarBackground, `aboutToAppear Start`)
+    Log.showInfo(TAG_StatusBarBackground, `aboutToAppear`)
   }
 
   aboutToDisappear() {
@@ -163,7 +163,6 @@ struct StatusBarGroup {
   @State mStatusBarData: StatusBarData = ViewModel.getStatusBarData()
 
   aboutToAppear() {
-    Log.showInfo(TAG_StatusBarGroup, `aboutToAppear Start`)
     Log.showInfo(TAG_StatusBarGroup, `aboutToAppear, mLayoutWeight: ${this.mLayoutWeight} mAlignItems: ${this.mAlignItems} `)
   }
 
@@ -283,7 +282,6 @@ struct StatusBarEmptyIcon {
   @State mTintContentInfo: TintContentInfo = ViewModel.getEmptyTintContentInfo()
 
   aboutToAppear() {
-    Log.showInfo(TAG_StatusBarEmptyIcon, `aboutToAppear Start`)
     Log.showInfo(TAG_StatusBarEmptyIcon, `aboutToAppear, mStatusBarEmptyWidth: ${this.mStatusBarEmptyWidth} `)
   }
 
@@ -305,7 +303,7 @@ struct StatusBarNotificationIcon {
   @State style: any = StyleConfiguration.getStatusBarNotificationIconStyle()
 
   aboutToAppear() {
-    Log.showInfo(TAG_StatusBarNotificationIcon, `aboutToAppear Start`)
+    Log.showInfo(TAG_StatusBarNotificationIcon, `aboutToAppear`)
   }
 
   aboutToDisappear() {

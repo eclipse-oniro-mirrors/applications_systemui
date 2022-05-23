@@ -96,7 +96,6 @@ export class WifiModel {
   }
 
   getWifiInfo() {
-    Log.showInfo(TAG, `getWifiInfo`)
     let isWifiActive = wifi.isWifiActive();
     Log.showInfo(TAG, `getWifiInfo, isWifiActive: ${isWifiActive}`)
     mWifiOpenStatus.set(isWifiActive);
@@ -108,7 +107,6 @@ export class WifiModel {
   }
 
   getWifiConnectInfo() {
-    Log.showInfo(TAG, `getWifiConnectInfo`)
     let isConnected = wifi.isConnected();
     Log.showInfo(TAG, `getWifiConnectInfo, isConnected: ${isConnected}`)
     if (isConnected) {
@@ -142,13 +140,11 @@ export class WifiModel {
   }
 
   enableWifi() {
-    Log.showInfo(TAG, 'enableWifi');
     let result = wifi.enableWifi();
     Log.showInfo(TAG, `enableWifi, result: ${result}`);
   }
 
   disableWifi() {
-    Log.showInfo(TAG, 'disableWifi');
     let result = wifi.disableWifi();
     Log.showInfo(TAG, `disableWifi, result: ${result}`);
   }

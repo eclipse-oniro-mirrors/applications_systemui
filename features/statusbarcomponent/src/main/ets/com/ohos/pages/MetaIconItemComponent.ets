@@ -41,7 +41,6 @@ export default struct MetaIconItemComponent {
   }
 
   linkItemData() {
-    Log.showInfo(TAG, `linkItemData, keyId: ${this.keyId}`)
     this.mItemData = AppStorage.Link('StatusBar_' + this.keyId)
     Log.showInfo(TAG, `linkItemData, mItemData: ${this.keyId} ${this.mItemData.get().label} ${
     this.mItemData.get()

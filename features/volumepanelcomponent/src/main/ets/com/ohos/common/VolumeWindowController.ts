@@ -74,7 +74,7 @@ export default class VolumeWindowController {
         .then(() => {
           Log.showInfo(TAG, `updateShowStatus ${isShow}.`);
         })
-        .catch((err) => Log.showInfo(TAG, `Can't set volueme window: ${err}.`))
+        .catch((err) => Log.showError(TAG, `Can't set volueme window: ${err}.`))
     }
   }
 }

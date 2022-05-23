@@ -119,8 +119,7 @@ export class StatusBarService {
                 }
             }
         });
-        Log.showInfo(TAG,
-            `parseConfig, statusBarLayoutGroupTemplate: ${JSON.stringify(this.mStatusBarLayoutGroupTemplate)}`)
+        Log.showInfo(TAG, `parseConfig, statusBarLayoutGroupTemplate: ${JSON.stringify(this.mStatusBarLayoutGroupTemplate)}`)
 
         this.mStatusBarAllLayout = [...config.LocalSlots];
         this.onDisplayRotate(0);
@@ -227,8 +226,7 @@ export class StatusBarService {
                 y2: this.mStatusBarData.top + this.mStatusBarData.realHeight
             };
         }
-        Log.showInfo(TAG, `calcEmptyAreaPosition, statusBarLeft: ${JSON.stringify(statusBarLeft)}`);
-        Log.showInfo(TAG, `calcEmptyAreaPosition, statusBarRight: ${JSON.stringify(statusBarRight)}`);
+        Log.showInfo(TAG, `calcEmptyAreaPosition, statusBarLeft: ${JSON.stringify(statusBarLeft)} statusBarRight: ${JSON.stringify(statusBarRight)}`);
 
         let emptyPosition;
         if (rotation == 0) {
@@ -271,8 +269,7 @@ export class StatusBarService {
     }
 
     isEmptyAreaGlandStatusBar(emptyPosition, statusBarArea): boolean {
-        Log.showInfo(TAG, `isEmptyAreaGlandStatusBar, emptyPosition: ${JSON.stringify(emptyPosition)}`);
-        Log.showInfo(TAG, `isEmptyAreaGlandStatusBar, statusBarArea: ${JSON.stringify(statusBarArea)}`);
+        Log.showInfo(TAG, `isEmptyAreaGlandStatusBar, emptyPosition: ${JSON.stringify(emptyPosition)} statusBarArea: ${JSON.stringify(statusBarArea)}`);
         let ex1 = emptyPosition.x1;
         let ey1 = emptyPosition.y1;
         let ex2 = emptyPosition.x2;

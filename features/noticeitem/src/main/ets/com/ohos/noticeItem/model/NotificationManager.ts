@@ -120,8 +120,7 @@ export default class NotificationManager {
 
     Log.showInfo(TAG, `requestTemplate requestParam: ${JSON.stringify(requestParam)}`)
     NotificationManager.request(tag, requestParam, (err, data) => {
-      Log.showInfo(TAG, `request finished err: ${JSON.stringify(err)} data: ${JSON.stringify(data)}`)
-      Log.showInfo(TAG, `request finished templateData: ${templateName} data: ${JSON.stringify(data.componentTemplate)}`)
+      Log.showInfo(TAG, `request finished err: ${JSON.stringify(err)} data: ${JSON.stringify(data)} templateData: ${templateName}`)
       if (data?.componentTemplate?.source) {
         Log.showInfo(TAG, `request finished data.componentTemplate.source:${JSON.stringify(data.componentTemplate.source)}`)
         let templates = JSON.parse(data.componentTemplate.source);

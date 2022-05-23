@@ -34,7 +34,6 @@ export class VolumeModel {
   }
 
   setVolume(callback) {
-    Log.showInfo(TAG, 'setVolume');
     let value = parseInt(callback.value);
     Log.showInfo(TAG, `setVolume ${value}`);
     mVolumeValue.set(value);

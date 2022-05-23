@@ -102,7 +102,7 @@ struct ContentComponent {
   itemData: any;
 
   aboutToAppear() {
-    Log.showInfo(TAG, `aboutToDisappear pict: ${this.itemData.picture}`);
+    Log.showInfo(TAG, `aboutToAppear pict: ${this.itemData.picture}`);
   }
 
   build() {

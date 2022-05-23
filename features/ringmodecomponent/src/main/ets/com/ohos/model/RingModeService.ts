@@ -60,7 +60,6 @@ export class RingModeService {
   }
 
   getRingerMode() {
-    Log.showInfo(TAG, `getRingerMode`)
     this.mAudioManager.getRingerMode((error, action) => {
       Log.showInfo(TAG, `getRingerMode, error: ${JSON.stringify(error)} action: ${JSON.stringify(action)}`)
       if (error) {
@@ -73,7 +72,7 @@ export class RingModeService {
   setRingerMode(mode) {
     Log.showInfo(TAG, `setRingerMode, mode: ${JSON.stringify(mode)}`)
     this.mAudioManager.setRingerMode(mode, (err, data) => {
-      Log.showInfo(TAG, `mAudioManager.setRingerMode, mode: ${JSON.stringify(mode)}`)
+      Log.showInfo(TAG, `mAudioManager.setRingerMode`)
     })
   }
 }

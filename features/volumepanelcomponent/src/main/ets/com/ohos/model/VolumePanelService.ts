@@ -43,9 +43,8 @@ export class VolumePanelService {
     if (this.mIsStart) {
       return;
     }
-    Log.showInfo(TAG, `startService`)
     this.mIsStart = true;
-    Log.showInfo(TAG, `registser volumeChange.`)
+    Log.showInfo(TAG, `startService`)
     this.mAudioManager.on('volumeChange', this.onVolumeChange.bind(this));
   }
 
@@ -191,7 +190,6 @@ export class VolumePanelService {
       interfaceName: InterfaceName.setVolume,
       params: [interfaceVolumeType, volume],
       callbackFunction: (err) => {
-        Log.showInfo(TAG, `setVolume, callback volumeType: ${volumeType} volume: ${volume}`)
         Log.showInfo(TAG, `setVolume, callback err: ${err} `)
         if (err) {
           return;

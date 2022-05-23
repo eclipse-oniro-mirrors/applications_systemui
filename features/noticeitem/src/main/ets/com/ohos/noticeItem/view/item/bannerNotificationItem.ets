@@ -229,8 +229,7 @@ struct ContentComponent {
   itemData: any;
 
   aboutToAppear() {
-    Log.showInfo(TAG, `aboutToDisappear pict: ${this.itemData.picture}`);
-    Log.showInfo(TAG, `NotificationItemData: ${JSON.stringify(this.itemData)}`)
+    Log.showInfo(TAG, `aboutToAppear NotificationItemData: ${JSON.stringify(this.itemData)}`)
   }
 
   build() {

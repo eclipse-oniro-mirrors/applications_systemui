@@ -29,10 +29,10 @@ export class KeyCodeEvent {
       case Constants.KEYCODE_BACK:
         Log.showInfo(TAG, `sendKeyEvent case back type: ${eventType}`);
         if (eventType === Constants.KEY_DOWN) {
-          Log.showInfo(TAG, 'sendKeyEvent, if');
+          Log.showInfo(TAG, 'sendKeyEvent : KEY_DOWN');
           this.sendBackKeyEventStart(); //down
         } else if (eventType === Constants.KEY_UP) {
-          Log.showInfo(TAG, `sendKeyEvent, else type: ${eventType}`);
+          Log.showInfo(TAG, `sendKeyEvent : KEY_UP`);
           this.sentEvnt();
           this.sendBackKeyEventEnd(); //up
         }
@@ -40,7 +40,7 @@ export class KeyCodeEvent {
       case Constants.KEYCODE_HOME:
         Log.showInfo(TAG, `sendKeyEvent case home type: ${eventType}`);
         if (eventType === Constants.KEY_UP) {
-          Log.showInfo(TAG, 'sendKeyEvent, if');
+          Log.showInfo(TAG, 'sendKeyEvent : KEY_UP');
           this.sentEvnt();
           this.sendHomeKeyEvent();
         }
@@ -48,7 +48,7 @@ export class KeyCodeEvent {
       case Constants.KEYCODE_RECENT:
         Log.showInfo(TAG, `sendKeyEvent case recent type: ${eventType}`);
         if (eventType === Constants.KEY_UP) {
-          Log.showInfo(TAG, 'sendKeyEvent, if');
+          Log.showInfo(TAG, 'sendKeyEvent : KEY_UP');
           this.sentEvnt();
           this.sendRecentKeyEvent();
         }
@@ -106,8 +106,7 @@ export class KeyCodeEvent {
   private sendRecentKeyEvent() {
     Log.showInfo(TAG, 'sendRecentKeyEvent');
     commonEvent.publish('CREATE_RECENT_WINDOW_EVENT', (err, data) => {
-      Log.showInfo(TAG, `publish launcher err ${JSON.stringify(err)}`);
-      Log.showInfo(TAG, `publish launcher data ${JSON.stringify(data)}`);
+      Log.showInfo(TAG, `publish launcher err: ${JSON.stringify(err)} data: ${JSON.stringify(data)}`);
     });
 
     Log.showInfo(TAG, `startAbility`);
@@ -126,8 +125,7 @@ export class KeyCodeEvent {
     }
 
     commonEvent.publish('SET_STATUSBAR_MIN_EVENT', commonEventPublishData, (err, data) => {
-      Log.showInfo(TAG, `publish statusbar err ${JSON.stringify(err)}`);
-      Log.showInfo(TAG, `publish statusbar data ${JSON.stringify(data)}`);
+      Log.showInfo(TAG, `publish launcher err: ${JSON.stringify(err)} data: ${JSON.stringify(data)}`);
     });
   }
 }

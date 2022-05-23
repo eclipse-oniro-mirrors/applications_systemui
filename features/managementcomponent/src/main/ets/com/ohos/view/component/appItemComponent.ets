@@ -213,7 +213,7 @@ export default struct AppItemComponent {
           this.canNotice = stateValue;
         })
         .catch((error) => {
-          Log.showInfo(TAG, `Notification.isNotificationEnabled error:${JSON.stringify(error)}`)
+          Log.showError(TAG, `Notification.isNotificationEnabled error:${JSON.stringify(error)}`)
         });
     }
   }

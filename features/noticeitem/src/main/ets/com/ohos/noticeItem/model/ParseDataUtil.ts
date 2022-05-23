@@ -52,8 +52,7 @@ export default class ParseDataUtil {
     if (!request) {
       return Promise.reject('consumeCallback request is empty');
     }
-    Log.showInfo(TAG, `parse data start, want = ${JSON.stringify(request.wantAgent)}`);
-    Log.showInfo(TAG, `actionButtons = ${JSON.stringify(request.actionButtons)}`);
+    Log.showInfo(TAG, `parse data start, want = ${JSON.stringify(request.wantAgent)} actionButtons = ${JSON.stringify(request.actionButtons)}`);
     let userId = await getUserId(request.creatorUid);
     let appMessage = await ParseDataUtil.getAppData(request.creatorBundleName, userId);
     let notificationItem: NotificationItemData = {
@@ -84,7 +83,7 @@ export default class ParseDataUtil {
       groupName: request.groupName??request.hashcode,
       tapDismissed: request.tapDismissed
     };
-    Log.showInfo(TAG, `notificationItem construct over ====================`);
+    Log.showInfo(TAG, `notificationItem construct over`);
     notificationItem = {
       ...notificationItem, ...ParseDataUtil.getContentByType(request?.content?.contentType, request)
     }

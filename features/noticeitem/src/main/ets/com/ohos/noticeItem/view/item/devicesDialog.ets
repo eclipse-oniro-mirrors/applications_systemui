@@ -102,7 +102,6 @@ export default struct DevicesDialog {
   }
 
   aboutToAppear() {
-    Log.showInfo(TAG, `aboutToAppear`)
     this.deviceInfoList = DistributionManager.getInstance().getTrustedDeviceListSync();
     Log.showInfo(TAG, `aboutToAppear deviceInfoList:${JSON.stringify(this.deviceInfoList)}`)
   }

@@ -20,7 +20,6 @@ export default class ScrollbarManager {
   static NotificationScrollBar = new Set<Scroller>();
 
   static add(scroller) {
-    Log.showInfo(TAG, `add`);
     let res = ScrollbarManager.NotificationScrollBar.add(scroller);
     Log.showInfo(TAG, `add set's size:${res.size}`);
   }

@@ -48,10 +48,11 @@ export class NotificationListener {
   handleEnabledNotificationChanged(data) {
     Log.showInfo(TAG, `handleEnabledNotificationChanged data:${JSON.stringify(data)} `);
     this.listeners.forEach((listener) => {
-      Log.showInfo(TAG, `handleEnabledNotificationChanged listener:${listener.bundle}`);
       if (!!listener && listener.bundle == data.bundle) {
         Log.showInfo(TAG, `handleEnabledNotificationChanged call:${listener.bundle} ${data.enable}`);
         listener.onEnableChanged(data.enable);
+      } else {
+        Log.showError(TAG, `handleEnabledNotificationChanged error`);
       }
     })
   }
@@ -110,7 +111,7 @@ export class NotificationListener {
         Log.showInfo(TAG, `isDistributedEnabled data:${data}`)
         resolve(data);
       }).catch((err) => {
-        Log.showInfo(TAG, `isDistributedEnabled err:${JSON.stringify(err)} `)
+        Log.showError(TAG, `isDistributedEnabled err:${JSON.stringify(err)} `)
         reject(err)
       })
     });
