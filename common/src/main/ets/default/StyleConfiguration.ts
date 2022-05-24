@@ -28,6 +28,7 @@ export default class StyleConfiguration {
                 statusBarIconWidth: '24vp',
                 statusBarIconHeight: '24vp',
                 statusBarMarginLeftRight: deviceTypeInfo === 'phone' ? '0vp' : '5vp',
+                deviceTypeInfo : deviceTypeInfo
             };
         });
     }

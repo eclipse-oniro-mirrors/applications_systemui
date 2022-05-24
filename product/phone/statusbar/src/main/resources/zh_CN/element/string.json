@@ -1,14 +1,6 @@
 {
   "string": [
     {
-      "name": "status_bar_size_portrait",
-      "value": "48"
-    },
-    {
-      "name": "status_bar_size_landscape",
-      "value": "48"
-    },
-    {
       "name": "status_bar_position_landscape",
       "value": "2"
     },

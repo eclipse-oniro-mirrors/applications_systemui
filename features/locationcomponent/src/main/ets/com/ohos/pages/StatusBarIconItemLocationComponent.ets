@@ -51,5 +51,6 @@ export default struct StatusBarIconItemLocationComponent {
       }
     }
     .height('100%')
+    .opacity($r("app.float.icon_component_opacity"))
   }
 }

@@ -2,15 +2,15 @@
   "float": [
     {
       "name": "status_bar_location_width",
-      "value": "20vp"
+      "value": "13vp"
     },
     {
       "name": "status_bar_location_height",
-      "value": "24vp"
+      "value": "15vp"
     },
     {
       "name": "icon_component_opacity",
-      "value": "1"
+      "value": "0.7"
     }
   ]
 }

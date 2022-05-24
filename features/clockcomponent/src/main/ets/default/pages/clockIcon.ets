@@ -13,13 +13,16 @@
  * limitations under the License.
  */
 
-import Log from '../../../../../../../common/src/main/ets/default/Log';
-import {TintContentInfo} from '../../../../../../../common/src/main/ets/default/TintStateManager';
-import StyleConfiguration from '../common/StyleConfiguration';
-import StyleConfigurationCommon from '../../../../../../../common/src/main/ets/default/StyleConfiguration';
-import ViewModel from '../viewmodel/ClockVM';
-import TimeManager, {TimeEventArgs, TIME_CHANGE_EVENT} from '../../../../../../../common/src/main/ets/default/TimeManager';
-import EventManager, {unsubscribe} from '../../../../../../../common/src/main/ets/default/event/EventManager';
+import Log from '../../../../../../../common/src/main/ets/default/Log'
+import { TintContentInfo } from '../../../../../../../common/src/main/ets/default/TintStateManager'
+import StyleConfiguration from '../common/StyleConfiguration'
+import StyleConfigurationCommon from '../../../../../../../common/src/main/ets/default/StyleConfiguration'
+import ViewModel from '../viewmodel/ClockVM'
+import TimeManager, {
+  TimeEventArgs,
+  TIME_CHANGE_EVENT,
+} from '../../../../../../../common/src/main/ets/default/TimeManager'
+import EventManager, { unsubscribe } from '../../../../../../../common/src/main/ets/default/event/EventManager'
 
 const TAG = 'ClockComponent-clockIcon';
 
@@ -50,10 +53,11 @@ export default struct ClockIcon {
       Row().width(this.styleCommon.statusBarMarginLeftRight).height('100%')
       Text(this.mTime)
         .fontColor(this.mTintContentInfo.contentColor)
-        .fontSize(this.styleCommon.statusBarFontSize)
+        .fontSize($r("sys.float.ohos_id_text_size_body2"))
         .width(this.style.statusBarClockMaxWidth)
         .textAlign(TextAlign.Center)
+        .margin({ left: $r("app.float.mTime_text_margin_left") })
       Row().width(this.styleCommon.statusBarMarginLeftRight).height('100%')
-    }
+    }.opacity($r("app.float.icon_component_opacity"))
   }
 }

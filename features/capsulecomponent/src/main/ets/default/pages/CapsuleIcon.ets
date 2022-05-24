@@ -13,11 +13,11 @@
  * limitations under the License.
  */
 
-import Constants from '../common/constants';
-import CapsuleViewModel, {VIEW_MODEL_ID, CallState} from '../viewmodel/CapsuleViewModel';
-import Log from '../../../../../../../common/src/main/ets/default/Log';
-import StyleConfigurationCommon from '../../../../../../../common/src/main/ets/default/StyleConfiguration';
-import StyleConfiguration from '../common/StyleConfiguration';
+import Constants from '../common/constants'
+import CapsuleViewModel, { VIEW_MODEL_ID, CallState } from '../viewmodel/CapsuleViewModel'
+import Log from '../../../../../../../common/src/main/ets/default/Log'
+import StyleConfigurationCommon from '../../../../../../../common/src/main/ets/default/StyleConfiguration'
+import StyleConfiguration from '../common/StyleConfiguration'
 
 const TAG = "CapsuleIcon";
 
@@ -49,7 +49,7 @@ export default struct CapsuleIcon {
           .width(this.style.greenCapsulePhoneWidth)
           .height(this.style.greenCapsulePhoneHeight)
           .objectFit(ImageFit.Contain)
-        Row().width(this.style.greenCapsuleTextMarginLeftRight).height('100%')
+        Row().width($r("app.float.green_capsule_phone_text_left")).height('100%')
         Text(this.mCapsuleViewModel.mText)
           .fontSize(this.styleCommon.statusBarFontSize)
           .fontWeight(FontWeight.Regular)
@@ -65,7 +65,7 @@ export default struct CapsuleIcon {
       .onTouch(this.touchEvent.bind(this))
 
       Row().width(this.styleCommon.statusBarMarginLeftRight).height('100%')
-    }
+    }.margin({ left: $r("app.float.green_capsule_phone_margin_left") })
     .visibility(this.mCapsuleViewModel.mIsBackground ? Visibility.Visible : Visibility.None)
   }
 

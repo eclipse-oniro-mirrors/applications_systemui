@@ -65,24 +65,24 @@
       "value": "24vp"
     },
     {
-      "name":"signal_component_icon_width",
-      "value":"32vp"
+      "name": "signal_component_icon_width",
+      "value": "32vp"
     },
     {
-      "name":"signal_component_icon_height",
-      "value":"24vp"
+      "name": "signal_component_icon_height",
+      "value": "24vp"
     },
     {
-      "name":"status_bar_signal_unknown_font_size",
-      "value":"14fp"
+      "name": "status_bar_signal_unknown_font_size",
+      "value": "14fp"
     },
     {
-      "name":"signal_text_max_width",
-      "value":"113vp"
+      "name": "signal_text_max_width",
+      "value": "113vp"
     },
     {
-      "name":"status_bar_signal_net_signal_text_max_width",
-      "value":"18vp"
+      "name": "status_bar_signal_net_signal_text_max_width",
+      "value": "18vp"
     },
     {
       "name": "status_bar_bluetooth_width",
@@ -101,8 +101,8 @@
       "value": "24vp"
     },
     {
-      "name":"status_bar_signal_type_font_size",
-      "value":"10fp"
+      "name": "status_bar_signal_type_font_size",
+      "value": "10fp"
     },
     {
       "name": "status_bar_wifi_width",
@@ -113,12 +113,36 @@
       "value": "24vp"
     },
     {
+      "name": "icon_component_opacity",
+      "value": "1"
+    },
+    {
       "name": "status_bar_location_width",
       "value": "20vp"
     },
     {
       "name": "status_bar_location_height",
       "value": "24vp"
+    },
+    {
+      "name": "green_capsule_phone_text_left",
+      "value": "10vp"
+    },
+    {
+      "name": "green_capsule_phone_margin_left",
+      "value": "2vp"
+    },
+    {
+      "name": "battery_component_margin",
+      "value": "0vp"
+    },
+    {
+      "name": "mTime_text_margin_left",
+      "value": "2vp"
+    },
+    {
+      "name": "signal_component_text_margin_left",
+      "value": "3vp"
     }
   ]
 }

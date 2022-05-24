@@ -1,8 +1,8 @@
-  {
+{
   "float": [
     {
       "name": "status_bar_height",
-      "value": "48vp"
+      "value": "30vp"
     },
     {
       "name": "notification_delete_all",
@@ -111,6 +111,14 @@
     {
       "name": "status_bar_ring_mode_height",
       "value": "24vp"
+    },
+    {
+      "name": "status_bar_padding_left_right",
+      "value": "12vp"
+    },
+    {
+      "name": "status_bar_padding_top_bottom",
+      "value": "4vp"
     }
   ]
 }

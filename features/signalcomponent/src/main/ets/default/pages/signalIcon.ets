@@ -53,7 +53,8 @@ struct SignalIcon {
         .fontSize(this.styleCommon.statusBarFontSize)
         .fontColor(this.mTintContentInfo.contentColor)
         .textOverflow({ overflow: TextOverflow.Ellipsis })
-        .constraintSize({ maxWidth: this.style.signalTextMaxWeight})
+        .constraintSize({ maxWidth: this.style.signalTextMaxWeight })
+        .fontWeight(FontWeight.Medium)
         .flexShrink(0)
         .maxLines(1)
         .textAlign(TextAlign.Center)
@@ -66,6 +67,8 @@ struct SignalIcon {
           .width(this.style.netSignalTextMaxWidth)
           .fontWeight(FontWeight.Bold)
           .textAlign(TextAlign.Center)
+          .textAlign(TextAlign.Start)
+          .margin({left:$r("app.float.signal_component_text_margin_left")})
         Image(this.updateCellularImage(this.cellularLevel))
           .objectFit(ImageFit.Contain)
           .width(this.style.cellularImageWidth)
@@ -76,6 +79,7 @@ struct SignalIcon {
       Row().width(this.styleCommon.statusBarMarginLeftRight).height('100%')
     }
     .height('100%')
+    .opacity($r("app.float.icon_component_opacity"))
   }
 
 /**

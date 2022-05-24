@@ -55,5 +55,6 @@ export default struct StatusBarIconItemRingModeComponent {
       }
     }
     .height('100%')
+    .opacity($r("app.float.icon_component_opacity"))
   }
 }

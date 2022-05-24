@@ -13,28 +13,27 @@
  * limitations under the License.
  */
 
-import Constants from '../common/constants';
-import Log from '../../../../../../../common/src/main/ets/default/Log';
-import {TintContentInfo} from '../../../../../../../common/src/main/ets/default/TintStateManager';
-import StyleConfiguration from '../common/StyleConfiguration';
-import ViewModel from '../viewmodel/BatteryVM';
+import Constants from '../common/constants'
+import Log from '../../../../../../../common/src/main/ets/default/Log'
+import { TintContentInfo } from '../../../../../../../common/src/main/ets/default/TintStateManager'
+import StyleConfiguration from '../common/StyleConfiguration'
+import ViewModel from '../viewmodel/BatteryVM'
 
 const TAG = 'BatteryComponent-batteryPic';
 
 @Component
-export default
-struct BatteryPic {
-  @StorageLink('batterySoc') batterySoc: number = 100;
-  @StorageLink('batteryCharging') batteryCharging : boolean = false;
-  @State mTintContentInfo: TintContentInfo = ViewModel.getTintContentInfo();
-  @State style: any = StyleConfiguration.getBatteryPicStyle();
+export default struct BatteryPic {
+  @StorageLink('batterySoc') batterySoc: number = 100
+  @StorageLink('batteryCharging') batteryCharging: boolean = false
+  @State mTintContentInfo: TintContentInfo = ViewModel.getTintContentInfo()
+  @State style: any = StyleConfiguration.getBatteryPicStyle()
 
-  aboutToAppear(){
-    Log.showInfo(TAG,'aboutToAppear Start');
+  aboutToAppear() {
+    Log.showInfo(TAG, 'aboutToAppear Start');
   }
 
-  aboutToDisappear(){
-    Log.showInfo(TAG,'aboutToDisappear');
+  aboutToDisappear() {
+    Log.showInfo(TAG, 'aboutToDisappear');
   }
 
   build() {
@@ -45,7 +44,7 @@ struct BatteryPic {
 
         }
         .height('100%')
-        .width((this.batterySoc < 100 ? this.batterySoc: 100) + '%')
+        .width((this.batterySoc < 100 ? this.batterySoc : 100) + '%')
         .backgroundColor(this.getBatteryColor(this.batterySoc, this.batteryCharging))
       }
       .width(this.style.picBodyWidth)
@@ -71,10 +70,16 @@ struct BatteryPic {
       .backgroundColor(this.mTintContentInfo.contentColor)
       .borderRadius(this.style.picHeadBorderRadius)
     }
+    .margin({
+      top: $r("app.float.battery_component_margin"),
+      bottom: $r("app.float.battery_component_margin"),
+      left: $r("app.float.battery_component_margin"),
+      right: $r("app.float.battery_component_margin")
+    })
   }
 
   private getBatteryColor(val, charging) {
-    Log.showDebug(TAG, `getBatteryColor, val: ${ val }  charging: ${ charging } `);
+    Log.showInfo(TAG, `getBatteryColor, val: ${val}  charging: ${charging} `);
     if (charging) {
       return this.style.picChargingColor;
     } else if (val <= Constants.BATTERY_LEVEL_LOW) {
