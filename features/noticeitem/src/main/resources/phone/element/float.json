@@ -61,6 +61,10 @@
       "value": "336vp"
     },
     {
+      "name": "confirm_dialog_margin",
+      "value": "12vp"
+    },
+    {
       "name": "confirm_dialog_row_width",
       "value": "288vp"
     },
@@ -110,7 +114,7 @@
     },
     {
       "name": "notice_image_boderRadius",
-      "value": "12"
+      "value": "12vp"
     },
     {
       "name": "notice_divider",
