@@ -75,10 +75,10 @@ parentPort.onclose = function () {
 };
 
 parentPort.onmessageerror = function () {
-    Log.showDebug(TAG, `onmessageerror`);
+    Log.showError(TAG, `onmessageerror`);
 };
 
 parentPort.onerror = function (data) {
-    Log.showDebug(TAG, `onerror, lineno = ${data.lineno}, msg = ${data.message}, filename = ${data.filename}, col = ${data.colno}`
+    Log.showError(TAG, `onerror, lineno = ${data.lineno}, msg = ${data.message}, filename = ${data.filename}, col = ${data.colno}`
     );
 };

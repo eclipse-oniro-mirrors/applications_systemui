@@ -140,7 +140,7 @@ export function registerBundleListener(listener: BundleListener, callback: (hand
       return;
     }
     commonEvent.subscribe(handle, (err, data) => {
-      Log.showDebug(TAG, `bundle change, err: ${JSON.stringify(err)} data: ${JSON.stringify(data)}`);
+      Log.showInfo(TAG, `bundle change, err: ${JSON.stringify(err)} data: ${JSON.stringify(data)}`);
       if (err.code != 0) {
         Log.showError(TAG, `Can't handle bundle change, err: ${JSON.stringify(err)}`);
         return;

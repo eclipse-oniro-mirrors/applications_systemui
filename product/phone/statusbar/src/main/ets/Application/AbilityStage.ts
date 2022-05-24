@@ -18,6 +18,6 @@ import Log from '../../../../../../../common/src/main/ets/default/Log'
 const TAG = "StatusBar_AbilityStage"
 export default class MainAbilityStage extends AbilityStage {
     onCreate() {
-        Log.showDebug(TAG, "onCreate")
+        Log.showInfo(TAG, "onCreate")
     }
 }

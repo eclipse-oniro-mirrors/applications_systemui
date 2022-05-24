@@ -38,7 +38,7 @@ struct Index {
   mDefaultBannerRect: any;
 
   aboutToAppear() {
-    Log.showDebug(TAG, `aboutToAppear Start`)
+    Log.showInfo(TAG, `aboutToAppear Start`)
     setAppBgColor('#00000000')
     this.mClearCallbacks = []
     this.mClearCallbacks.push(EventManager.subscribe('onBannerNoticeShow', () => this.onBannerNoticeShow()))
@@ -47,7 +47,7 @@ struct Index {
   }
 
   aboutToDisappear() {
-    Log.showDebug(TAG, `aboutToDisAppear`)
+    Log.showInfo(TAG, `aboutToDisAppear`)
     this.mClearCallbacks.forEach((mClearCallback: Function) => {
       mClearCallback()
       mClearCallback = undefined

@@ -58,22 +58,22 @@ struct Index {
   mShowAnimReady: boolean = false;
 
   aboutToAppear() {
-    Log.showDebug(TAG, `aboutToAppear, start`)
+    Log.showInfo(TAG, `aboutToAppear, start`)
     setAppBgColor('#00000000')
     this.initWindowPolicy();
   }
 
   onPageShow() {
-    Log.showDebug(TAG, `onPageShow`)
+    Log.showInfo(TAG, `onPageShow`)
     this.startShowAnim();
   }
 
   onPageHide() {
-    Log.showDebug(TAG, `onPageHide`)
+    Log.showInfo(TAG, `onPageHide`)
   }
 
   aboutToDisappear() {
-    Log.showDebug(TAG, `aboutToDisappear`)
+    Log.showInfo(TAG, `aboutToDisappear`)
     this.mClearCallbacks.forEach((unsubscribe) => unsubscribe());
     this.mClearCallbacks.length = 0;
   }

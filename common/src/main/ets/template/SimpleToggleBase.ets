@@ -39,11 +39,11 @@ export default struct SimpleToggleBase {
   @State style: any = StyleConfiguration.getSimpleToggleBaseStyle()
 
   aboutToAppear() {
-    Log.showDebug(TAG, `aboutToAppear, mToggleId: ${this.mToggleId}, mLabel: ${JSON.stringify(this.mLabel)}, mEditMode: ${this.mEditMode} mDragMode: ${this.mDragMode} `)
+    Log.showInfo(TAG, `aboutToAppear, mToggleId: ${this.mToggleId}, mLabel: ${JSON.stringify(this.mLabel)}, mEditMode: ${this.mEditMode} mDragMode: ${this.mDragMode} `)
   }
 
   aboutToDisappear() {
-    Log.showDebug(TAG, 'aboutToDisappear')
+    Log.showInfo(TAG, 'aboutToDisappear')
   }
 
   build() {

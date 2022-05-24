@@ -95,20 +95,20 @@ export default struct SetEnable {
   }
 
   aboutToAppear(): void{
-    Log.showDebug(TAG, `aboutToAppear`)
+    Log.showInfo(TAG, `aboutToAppear`)
     appInfo = Router.getParams();
     appInfo.slotSettingUrl = 'pages/slotSetting'
     Notification.subscribeEnableChanged();
-    Log.showDebug(TAG, `aboutToAppear end`)
+    Log.showInfo(TAG, `aboutToAppear end`)
   }
 
   aboutToDisappear(): void{
-    Log.showDebug(TAG, `aboutToDisappear`)
+    Log.showInfo(TAG, `aboutToDisappear`)
     Notification.unsubscribeEnableChanged();
   }
 
   onBackPress() {
-    Log.showDebug(TAG, `onBackPress`)
+    Log.showInfo(TAG, `onBackPress`)
     Router.back();
   }
 

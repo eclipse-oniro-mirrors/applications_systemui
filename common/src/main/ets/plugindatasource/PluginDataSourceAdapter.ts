@@ -117,7 +117,7 @@ export default class PluginDataSourceAdapter {
     }
 
     onMessageError(event: any) {
-        Log.showDebug(TAG, `mWorker.onmessageerror, event: ${event}`);
+        Log.showError(TAG, `mWorker.onmessageerror, event: ${event}`);
     }
 
     onExit(code: any) {
@@ -125,6 +125,6 @@ export default class PluginDataSourceAdapter {
     }
 
     onError(err: any) {
-        Log.showDebug(TAG, `mWorker.onerror, err: ${JSON.stringify(err)}`);
+        Log.showError(TAG, `mWorker.onerror, err: ${JSON.stringify(err)}`);
     }
 }

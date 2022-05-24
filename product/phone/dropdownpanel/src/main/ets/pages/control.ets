@@ -37,11 +37,11 @@ export default struct Control {
   @State style: any = StyleConfiguration.getControlStyle()
 
   aboutToAppear() {
-    Log.showDebug(TAG, `aboutToAppear Start`)
+    Log.showInfo(TAG, `aboutToAppear Start`)
   }
 
   aboutToDisappear() {
-    Log.showDebug(TAG, `aboutToDisAppear`)
+    Log.showInfo(TAG, `aboutToDisAppear`)
   }
 
   build() {

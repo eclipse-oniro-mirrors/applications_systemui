@@ -38,7 +38,7 @@ struct Index {
   }
 
   aboutToAppear() {
-    Log.showDebug(TAG, `aboutToAppear, start`);
+    Log.showInfo(TAG, `aboutToAppear, start`);
 
     let configInfo = AbilityManager.getAbilityData(AbilityManager.ABILITY_NAME_STATUS_BAR, 'config')
     let statusBarData: StatusBarData = new StatusBarData();
@@ -72,7 +72,7 @@ struct Index {
   }
 
   aboutToDisappear() {
-    Log.showDebug(TAG, `aboutToDisappear`);
+    Log.showInfo(TAG, `aboutToDisappear`);
   }
 
   build() {

@@ -24,7 +24,7 @@ const TAG = "VolumePanel_ServiceExtAbility";
 
 class ServiceExtAbility extends ServiceExtension {
     onCreate(want) {
-        Log.showDebug(TAG, "onCreate, want:" + want.abilityName);
+        Log.showInfo(TAG, "onCreate, want:" + want.abilityName);
         AbilityManager.setContext(AbilityManager.ABILITY_NAME_VOLUME_PANEL, this.context);
         display.getDefaultDisplay().then((dis) => {
             let volumeRect = {
@@ -48,7 +48,7 @@ class ServiceExtAbility extends ServiceExtension {
     }
 
     onDestroy() {
-        Log.showDebug(TAG, "onDestroy");
+        Log.showInfo(TAG, "onDestroy");
     }
 }
 

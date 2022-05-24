@@ -20,6 +20,6 @@ import Log from '../../../../../../../common/src/main/ets/default/log'
 const TAG = "volume_AbilityStage"
 export default class MainAbilityStage extends AbilityStage {
     async onCreate() {
-        Log.showDebug(TAG, "onCreate")
+        Log.showInfo(TAG, "onCreate")
     }
 }

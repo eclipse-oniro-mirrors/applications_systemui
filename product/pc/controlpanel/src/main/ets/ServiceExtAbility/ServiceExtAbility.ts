@@ -25,7 +25,7 @@ const TAG = "ControlPanel_ServiceExtAbility";
 
 class ServiceExtAbility extends ServiceExtension {
   async onCreate(want) {
-    Log.showDebug(TAG, `onCreate, want: ${JSON.stringify(want)}`);
+    Log.showInfo(TAG, `onCreate, want: ${JSON.stringify(want)}`);
     AbilityManager.setContext(AbilityManager.ABILITY_NAME_CONTROL_PANEL, this.context);
 
     let dis = await display.getDefaultDisplay();
@@ -48,7 +48,7 @@ class ServiceExtAbility extends ServiceExtension {
   }
 
   onDestroy() {
-    Log.showDebug(TAG, "onDestroy");
+    Log.showInfo(TAG, "onDestroy");
   }
 }
 

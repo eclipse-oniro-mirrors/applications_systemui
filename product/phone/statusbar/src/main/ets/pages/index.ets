@@ -50,7 +50,7 @@ struct Index {
   }
 
   aboutToAppear() {
-    Log.showDebug(TAG, `aboutToAppear, start`);
+    Log.showInfo(TAG, `aboutToAppear, start`);
 
     let configInfo = AbilityManager.getAbilityData(AbilityManager.ABILITY_NAME_STATUS_BAR, 'config')
     let statusBarData: StatusBarData = new StatusBarData();
@@ -83,11 +83,11 @@ struct Index {
     let signalObserved = AppStorage.SetAndLink("signalObserved", false);
     signalObserved.set(false);
 
-    Log.showDebug(TAG, `aboutToAppear, end`);
+    Log.showInfo(TAG, `aboutToAppear, end`);
   }
 
   aboutToDisappear() {
-    Log.showDebug(TAG, `aboutToDisappear`);
+    Log.showInfo(TAG, `aboutToDisappear`);
     this.mClearCallback && this.mClearCallback()
     this.mClearCallback = undefined
   }

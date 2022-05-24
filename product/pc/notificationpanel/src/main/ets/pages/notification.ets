@@ -34,7 +34,7 @@ export default struct Notification {
   @StorageLink('notificationList') notificationList: any[] = []
 
   aboutToAppear() {
-    Log.showDebug(TAG, `aboutToAppear Start`)
+    Log.showInfo(TAG, `aboutToAppear Start`)
   }
 
   build() {
@@ -61,11 +61,11 @@ export default struct Notification {
 @Component
 struct CenterTitle {
   aboutToAppear() {
-    Log.showDebug(TAG, `CenterTitle, aboutToAppear`)
+    Log.showInfo(TAG, `CenterTitle, aboutToAppear`)
   }
 
   aboutToDisappear() {
-    Log.showDebug(TAG, `CenterTitle, aboutToDisappear`)
+    Log.showInfo(TAG, `CenterTitle, aboutToDisappear`)
   }
 
   build() {

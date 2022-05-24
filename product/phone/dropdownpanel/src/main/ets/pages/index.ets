@@ -83,7 +83,7 @@ struct Index {
   }
 
   aboutToAppear() {
-    Log.showDebug(TAG, `aboutToAppear, start`)
+    Log.showInfo(TAG, `aboutToAppear, start`)
 
     setAppBgColor('#00000000')
     CommonStyleManager.setAbilityPageName(TAG)
@@ -134,7 +134,7 @@ struct Index {
   }
 
   onPageShow() {
-    Log.showDebug(TAG, `onPageShow, start`)
+    Log.showInfo(TAG, `onPageShow, start`)
     if (!this.showComponentName) {
       return
     }
@@ -148,7 +148,7 @@ struct Index {
   }
 
   aboutToDisappear() {
-    Log.showDebug(TAG, `aboutToDisappear`)
+    Log.showInfo(TAG, `aboutToDisappear`)
     this.mClearCallbacks.forEach((mClearCallback: Function) => {
       mClearCallback()
       mClearCallback = undefined

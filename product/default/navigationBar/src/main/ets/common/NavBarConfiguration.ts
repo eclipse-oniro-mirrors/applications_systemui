@@ -103,21 +103,17 @@ class NavBarConfiguration {
     if (navbarPosition == Position.TOP_POSITION || navbarPosition == Position.BOTTOM_POSITION) {
       showNavHorizontal = true;
       minHeight = parseInt(navShortSideLength);
-      Log.showDebug(TAG, 'TOP_POSITION = ' + 2);
       if (statusbarPosition == Position.LEFT_POSITION || statusbarPosition == Position.RIGHT_POSITION) {
         realWidth = parseInt(maxWidth) - parseInt(statusShortSideLength);
       } else {
         realWidth = maxWidth;
       }
-      Log.showDebug(TAG, 'TOP_POSITION = ' + 3);
       realHeight = parseInt(navShortSideLength);
-      Log.showDebug(TAG, 'TOP_POSITION = ' + 4);
       if (statusbarPosition == Position.LEFT_POSITION) {
         xCoordinate = parseInt(statusShortSideLength);
       } else {
         xCoordinate = 0;
       }
-      Log.showDebug(TAG, 'TOP_POSITION = ' + 5);
       if (navbarPosition == Position.BOTTOM_POSITION) {
         yCoordinate = parseInt(maxHeight) - parseInt(navShortSideLength);
         Log.showDebug(TAG, 'BOTTOM_POSITION = ' + yCoordinate);

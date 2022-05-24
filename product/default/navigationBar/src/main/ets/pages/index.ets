@@ -40,7 +40,7 @@ struct Index {
   }
 
   aboutToAppear() {
-    Log.showDebug(TAG, `aboutToAppear Start`)
+    Log.showInfo(TAG, `aboutToAppear Start`)
     let configInfo = AbilityManager.getAbilityData(AbilityManager.ABILITY_NAME_NAVIGATION_BAR, 'config')
     AppStorage.SetAndLink("showNavHorizontal", configInfo.showNavHorizontal)
     mConfigManager.initConfig()
@@ -59,7 +59,7 @@ struct Index {
   }
 
   aboutToDisappear() {
-    Log.showDebug(TAG, `aboutToDisAppear`)
+    Log.showInfo(TAG, `aboutToDisAppear`)
     NavigationBarViewModel.getInstance().uninstall()
   }
 

@@ -23,7 +23,7 @@ const TAG = "NavigationBar_ServiceExtAbility"
 
 class ServiceExtAbility extends ServiceExtension {
     async onCreate(want) {
-        Log.showDebug(TAG, `onCreate, want: ${JSON.stringify(want)}`);
+        Log.showInfo(TAG, `onCreate, want: ${JSON.stringify(want)}`);
         AbilityManager.setContext(AbilityManager.ABILITY_NAME_NAVIGATION_BAR, this.context)
 
         let configInfo = await NavBarConfiguration.getConfiguration();
@@ -66,7 +66,7 @@ class ServiceExtAbility extends ServiceExtension {
     }
 
     onDestroy() {
-        Log.showDebug(TAG, 'onDestroy');
+        Log.showInfo(TAG, 'onDestroy');
     }
 }
 

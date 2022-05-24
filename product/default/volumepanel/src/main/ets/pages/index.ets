@@ -28,7 +28,7 @@ const TAG = 'VolumePanel-Index'
 @Component
 struct Index {
   aboutToAppear() {
-    Log.showDebug(TAG, `aboutToAppear Start`)
+    Log.showInfo(TAG, `aboutToAppear Start`)
     let configInfo = AbilityManager.getAbilityData(AbilityManager.ABILITY_NAME_VOLUME_PANEL, 'dis')
     let volumeRect;
     if (configInfo.width > configInfo.height) { // Pad、PC Mode
@@ -62,7 +62,7 @@ struct Index {
   }
 
   aboutToDisappear() {
-    Log.showDebug(TAG, `aboutToDisAppear`)
+    Log.showInfo(TAG, `aboutToDisAppear`)
   }
 
   build() {

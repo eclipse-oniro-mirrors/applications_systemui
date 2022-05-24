@@ -153,14 +153,14 @@ export default struct SlotSetting {
   }
 
   aboutToAppear(): void{
-    Log.showDebug(TAG, `aboutToAppear`)
+    Log.showInfo(TAG, `aboutToAppear`)
     params = Router.getParams();
     this.appInfo = params.appInfo;
     this.slotInfo = params.slotInfo
   }
 
   onBackPress() {
-    Log.showDebug(TAG, `onBackPress`)
+    Log.showInfo(TAG, `onBackPress`)
     Router.back();
   }
 

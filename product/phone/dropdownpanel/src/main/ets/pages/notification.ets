@@ -48,7 +48,7 @@ export default struct Notification {
   @StorageLink('notificationList') notificationList: any[] = []
 
   aboutToAppear() {
-    Log.showDebug(TAG, `aboutToAppear Start`)
+    Log.showInfo(TAG, `aboutToAppear Start`)
   }
 
   build() {
@@ -158,7 +158,7 @@ struct CenterTitle {
   unSubscriber?: unsubscribe;
 
   aboutToAppear() {
-    Log.showDebug(TAG, `CenterTitle, aboutToAppear`)
+    Log.showInfo(TAG, `CenterTitle, aboutToAppear`)
     this.unSubscriber = EventManager.subscribe(TIME_CHANGE_EVENT, (args: TimeEventArgs) => {
       this.updateTimeString(args.date)
     });
@@ -166,7 +166,7 @@ struct CenterTitle {
   }
 
   aboutToDisappear() {
-    Log.showDebug(TAG, 'CenterTitle aboutToDisappear');
+    Log.showInfo(TAG, 'CenterTitle aboutToDisappear');
     this.unSubscriber && this.unSubscriber();
     this.unSubscriber = undefined;
   }

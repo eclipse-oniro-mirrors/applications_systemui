@@ -84,19 +84,19 @@ export default struct notificationManagenment {
   }
 
   aboutToAppear(): void{
-    Log.showDebug(TAG, `aboutToAppear`)
+    Log.showInfo(TAG, `aboutToAppear`)
   }
 
   aboutToDisappear(): void{
-    Log.showDebug(TAG, `aboutToDisappear`)
+    Log.showInfo(TAG, `aboutToDisappear`)
   }
 
   onPageShow(): void{
-    Log.showDebug(TAG, `onPageShow`)
+    Log.showInfo(TAG, `onPageShow`)
     this.refreshRequest++;
   }
 
   onBackPress() {
-    Log.showDebug(TAG, `onBackPress`)
+    Log.showInfo(TAG, `onBackPress`)
   }
 }

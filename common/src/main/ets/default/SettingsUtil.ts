@@ -31,7 +31,7 @@ export class SettingsUtil {
         try {
             this.helper = featureAbility.acquireDataAbilityHelper(AbilityManager.getContext(), Constants.URI_VAR);
         } catch (e) {
-            Log.showError(TAG, `constructor, acquire helper error: ${e.toString()}`);
+            Log.showError(TAG, `constructor, acquire helper error: ${JSON.stringify(e)}`);
         }
     }
 
@@ -41,7 +41,7 @@ export class SettingsUtil {
         try {
             value = settings.getValueSync(this.helper, name, defValue ? defValue : "");
         } catch (e) {
-            Log.showError(TAG, `getValue e: ${e.toString()}`);
+            Log.showError(TAG, `getValue e: ${JSON.stringify(e)}`);
         }
         Log.showDebug(TAG, `getValue, value: ${value}`);
         return value;
@@ -53,7 +53,7 @@ export class SettingsUtil {
         try {
             result = settings.setValueSync(this.helper, name, value);
         } catch (e) {
-            Log.showError(TAG, `setValue e: ${e.toString()}`);
+            Log.showError(TAG, `setValue e: ${JSON.stringify(e)}`);
         }
         Log.showDebug(TAG, `setValue, result: ${result}`);
         return result;

@@ -69,7 +69,7 @@ struct Index {
   mShowAnimReady: boolean = false;
 
   aboutToAppear() {
-    Log.showDebug(TAG, `aboutToAppear, start`)
+    Log.showInfo(TAG, `aboutToAppear, start`)
 
     setAppBgColor('#00000000')
     CommonStyleManager.setAbilityPageName(TAG)
@@ -94,7 +94,7 @@ struct Index {
   }
 
   aboutToDisappear() {
-    Log.showDebug(TAG, `aboutToDisappear`)
+    Log.showInfo(TAG, `aboutToDisappear`)
     this.mClearCallbacks.forEach((unsubscribe) => unsubscribe());
     this.mClearCallbacks.length = 0;
   }

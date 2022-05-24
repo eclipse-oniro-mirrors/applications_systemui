@@ -23,7 +23,7 @@ const TAG = "StatusBar_ServiceExtAbility";
 
 class ServiceExtAbility extends ServiceExtension {
     async onCreate(want) {
-        Log.showDebug(TAG, `onCreate, want: ${JSON.stringify(want)}`);
+        Log.showInfo(TAG, `onCreate, want: ${JSON.stringify(want)}`);
         AbilityManager.setContext(AbilityManager.ABILITY_NAME_STATUS_BAR, this.context);
 
         let configInfo = await StatusBarConfiguration.getConfiguration();
@@ -55,7 +55,7 @@ class ServiceExtAbility extends ServiceExtension {
     }
 
     onDestroy() {
-        Log.showDebug(TAG, "onDestroy");
+        Log.showInfo(TAG, "onDestroy");
     }
 }
 

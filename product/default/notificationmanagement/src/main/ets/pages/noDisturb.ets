@@ -260,14 +260,14 @@ export default struct NoDisturb {
 
 
   aboutToAppear(): void{
-    Log.showDebug(TAG, `aboutToAppear`)
+    Log.showInfo(TAG, `aboutToAppear`)
     this.mViewModel.ViewModelInit()
     this.mRefreshCnt++;
 
   }
 
   onBackPress() {
-    Log.showDebug(TAG, `onBackPress`)
+    Log.showInfo(TAG, `onBackPress`)
     Router.back();
   }
 }

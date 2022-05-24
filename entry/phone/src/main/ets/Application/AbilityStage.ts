@@ -19,6 +19,6 @@ const TAG = "SystemUI_AbilityStage"
 
 export default class MainAbilityStage extends AbilityStage {
     onCreate() {
-        Log.showDebug(TAG, "onCreate")
+        Log.showInfo(TAG, "onCreate")
     }
 }
