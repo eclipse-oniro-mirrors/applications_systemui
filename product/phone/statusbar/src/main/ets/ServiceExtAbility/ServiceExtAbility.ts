@@ -18,7 +18,6 @@ import Log from '../../../../../../../common/src/main/ets/default/Log'
 import WindowManager, { WindowType } from '../../../../../../../common/src/main/ets/default/WindowManager'
 import AbilityManager from '../../../../../../../common/src/main/ets/default/abilitymanager/abilityManager'
 import StatusBarConfiguration from '../../../../../../../features/statusbarcomponent/src/main/ets/com/ohos/common/StatusBarConfiguration';
-import CommonStyleConfiguration from '../../../../../../../common/src/main/ets/default/StyleConfiguration'
 
 const TAG = "StatusBar_ServiceExtAbility"
 
@@ -31,13 +30,11 @@ class ServiceExtAbility extends ServiceExtension {
         AbilityManager.setAbilityData(AbilityManager.ABILITY_NAME_STATUS_BAR, 'config', configInfo)
         Log.showDebug(TAG, `onCreate, configInfo: ${JSON.stringify(configInfo)}`)
 
-        let style:any = CommonStyleConfiguration.getCommonStyle()
-        let deviceTypeInfo = style.deviceTypeInfo
         let statusBarRect = {
             left: configInfo.xCoordinate,
             top: configInfo.yCoordinate,
             width: configInfo.realWidth,
-            height: deviceTypeInfo == 'phone' ? configInfo.realHeight : configInfo.realHeight/3
+            height: configInfo.realHeight
         }
         WindowManager.createWindow(this.context, WindowType.STATUS_BAR, statusBarRect, "pages/index").then(() =>
             WindowManager.showWindow(WindowType.STATUS_BAR)

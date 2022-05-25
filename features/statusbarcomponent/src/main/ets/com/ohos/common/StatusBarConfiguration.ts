@@ -16,6 +16,7 @@
 import display from '@ohos.display'
 import Log from '../../../../../../../../common/src/main/ets/default/Log'
 import ResourceUtil from '../../../../../../../../common/src/main/ets/default/ResourceUtil'
+import CommonStyleConfiguration from '../../../../../../../../common/src/main/ets/default/StyleConfiguration'
 
 const TAG = 'StatusBarConfiguration';
 
@@ -66,16 +67,31 @@ class StatusBarConfiguration {
   async getDirectionAndPosition() {
     Log.showInfo(TAG, 'getDirectionAndPosition');
     directionStatus = await ResourceUtil.getConfiguration();
+    Log.showInfo(TAG, 'getDirectionAndPosition' + 2);
+    let style: any = CommonStyleConfiguration.getCommonStyle()
+    let deviceTypeInfo = style.deviceTypeInfo
     if (directionStatus.direction == -1) {
       Log.showInfo(TAG, 'direction is -1');
       statusbarPosition = await ResourceUtil.getString($r("app.string.status_bar_position_landscape"))
-      shortSideLength = await ResourceUtil.getString($r("app.string.status_bar_size_landscape"));
+      if(deviceTypeInfo == 'phone'){
+          shortSideLength = await ResourceUtil.getString($r("app.string.phone_status_bar_size_landscape"));
+      }else{
+          shortSideLength = await ResourceUtil.getString($r("app.string.status_bar_size_landscape"));
+      }
     } else if (directionStatus.direction == 1) {
       statusbarPosition = await ResourceUtil.getString($r("app.string.status_bar_position_landscape"))
-      shortSideLength = await ResourceUtil.getString($r("app.string.status_bar_size_landscape"));
+      if(deviceTypeInfo == 'phone'){
+          shortSideLength = await ResourceUtil.getString($r("app.string.phone_status_bar_size_landscape"));
+      }else{
+          shortSideLength = await ResourceUtil.getString($r("app.string.status_bar_size_landscape"));
+      }
     } else {
       statusbarPosition = await ResourceUtil.getString($r("app.string.status_bar_position_portrait"))
-      shortSideLength = await ResourceUtil.getString($r("app.string.status_bar_size_portrait"));
+      if(deviceTypeInfo == 'phone'){
+          shortSideLength = await ResourceUtil.getString($r("app.string.phone_status_bar_size_portrait"));
+      }else{
+          shortSideLength = await ResourceUtil.getString($r("app.string.status_bar_size_portrait"));
+      }
     }
     shortSideLength = parseInt(shortSideLength) + '';
     Log.showInfo(TAG, 'directionStatus = ' + directionStatus.direction + 'statusbarPosition = ' + statusbarPosition +

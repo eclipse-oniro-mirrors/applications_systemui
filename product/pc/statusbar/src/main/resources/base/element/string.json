@@ -9,6 +9,14 @@
       "value": "44"
     },
     {
+      "name": "phone_status_bar_size_portrait",
+      "value": "90"
+    },
+    {
+      "name": "phone_status_bar_size_landscape",
+      "value": "90"
+    },
+    {
       "name": "status_bar_position_portrait",
       "value": "1"
     },
