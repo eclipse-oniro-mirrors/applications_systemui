@@ -31,7 +31,7 @@ export class BluetoothService {
   mIsBluetoothOpen: boolean = false;
 
   constructor() {
-    Log.showInfo(TAG, `constructor`);
+    Log.showDebug(TAG, `constructor`);
   }
 
   startService() {

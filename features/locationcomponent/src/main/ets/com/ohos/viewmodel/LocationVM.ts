@@ -30,7 +30,7 @@ export class LocationVM {
   mTintContentInfo: TintContentInfo = getOrCreateTintContentInfo(FASlotName.LOCATION);
 
   constructor() {
-    Log.showInfo(TAG, `constructor`);
+    Log.showDebug(TAG, `constructor`);
   }
 
   initViewModel() {

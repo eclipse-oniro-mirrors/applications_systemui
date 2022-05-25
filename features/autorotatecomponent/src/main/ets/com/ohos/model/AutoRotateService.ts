@@ -65,7 +65,7 @@ export class AutoRotateService {
   }
 
   onOrientationChange(value: number): void{
-    Log.showInfo(TAG, `onOrientationChange, value: ${value}`);
+    Log.showDebug(TAG, `onOrientationChange, value: ${value}`);
     this.getOrientation();
   }
 

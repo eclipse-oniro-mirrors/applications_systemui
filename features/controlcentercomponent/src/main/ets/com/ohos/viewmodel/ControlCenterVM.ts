@@ -30,7 +30,7 @@ export class ControlCenterVM {
   mSimpleToggleLayout: any;
 
   constructor() {
-    Log.showInfo(TAG, `constructor`);
+    Log.showDebug(TAG, `constructor`);
     this.mComplexToggleLayout = AppStorage.SetAndLink(ControlCenterComplexToggleLayoutKey, []);
     this.mSimpleToggleLayout = AppStorage.SetAndLink(ControlCenterSimpleToggleLayoutKey, []);
     ControlCenterService.registerListener(this);

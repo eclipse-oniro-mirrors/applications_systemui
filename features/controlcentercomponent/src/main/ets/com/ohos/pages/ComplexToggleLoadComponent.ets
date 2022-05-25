@@ -27,7 +27,7 @@ export default struct ComplexToggleLoadComponent {
   @Prop keyId: string;
 
   aboutToAppear() {
-    LLog.showInfo(TAG, `aboutToAppear Start, keyId: ${this.keyId}`);
+    Log.showInfo(TAG, `aboutToAppear Start, keyId: ${this.keyId}`);
   }
 
   aboutToDisappear() {

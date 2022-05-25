@@ -30,14 +30,14 @@ export class BluetoothVM {
   mTintContentInfo: TintContentInfo = getOrCreateTintContentInfo(FASlotName.BLUETOOTH);
 
   constructor() {
-    Log.showInfo(TAG, `constructor`);
+    Log.showDebug(TAG, `constructor`);
   }
 
   initViewModel() {
     if (this.mIsStart) {
       return;
     }
-    Log.showInfo(TAG, `initViewModel `)
+    Log.showDebug(TAG, `initViewModel `)
     this.mIsStart = true;
     this.mBluetoothOpenStatus = AppStorage.SetAndLink(BluetoothOpenStatusKey, false);
     BluetoothService.startService();
