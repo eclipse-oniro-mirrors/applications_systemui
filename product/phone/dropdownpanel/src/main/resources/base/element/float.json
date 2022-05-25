@@ -5,6 +5,10 @@
       "value": "48vp"
     },
     {
+      "name": "notification_delete_all",
+      "value": "32"
+    },
+    {
       "name": "quickly_setting_time_font_size",
       "value": "30fp"
     },

@@ -33,7 +33,7 @@ export default struct SlotLstComponent {
           Text($r('app.string.slotType'))
             .fontColor($r('sys.color.ohos_id_color_text_secondary'))
             .fontSize($r('sys.float.ohos_id_text_size_body2'))
-            .fontWeight(FontWeight.Bold)
+            .fontWeight(FontWeight.Medium)
             .width(ConfigData.WH_100_100)
             .maxLines(ConfigData.MAX_LINES_1)
             .textOverflow({ overflow: TextOverflow.Ellipsis })

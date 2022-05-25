@@ -14,8 +14,8 @@
  */
 
 import Log from '../../../../../../../common/src/main/ets/default/log'
-import EventManager, {unsubscribe}  from "../../../../../../../common/src/main/ets/default/event/eventmanager"
-import {obtainStartAbility} from "../../../../../../../common/src/main/ets/default/event/eventutil"
+import EventManager, { unsubscribe }  from "../../../../../../../common/src/main/ets/default/event/eventmanager"
+import { obtainStartAbility } from "../../../../../../../common/src/main/ets/default/event/eventutil"
 import Constants from './common/constants'
 import BatteryIcon from '../../../../../../../features/batterycomponent/src/main/ets/default/pages/batteryicon'
 import ClockIcon from '../../../../../../../features/clockcomponent/src/main/ets/default/pages/clockicon'
@@ -27,16 +27,19 @@ import RingModeIcon from '../../../../../../../features/ringmodecomponent/src/ma
 import NotificationListComponent from '../../../../../../../features/noticeitem/src/main/ets/com/ohos/noticeitem/view/notificationlistcomponent'
 import ViewModel from '../../../../../../../features/noticeitem/src/main/ets/com/ohos/noticeitem/viewmodel/viewmodel'
 import ResourceUtil from '../../../../../../../common/src/main/ets/default/resourceutil'
-import TimeManager, { TimeEventArgs, TIME_CHANGE_EVENT } from '../../../../../../../common/src/main/ets/default/timemanager'
+import TimeManager, { TimeEventArgs, TIME_CHANGE_EVENT
+} from '../../../../../../../common/src/main/ets/default/timemanager'
 
 const TAG = 'DropdownPanel-notification'
 const GRID_SIZE = 6;
-const IMAGE_SIZE_L = 40;
-const IMAGE_SIZE_S = 48;
+const IMAGE_SIZE_L = 24;
+const IMAGE_SIZE_S = 20;
+const BGC_SIZE_L = 40;
 const NO_NOTIFICATION_TOP_MARGIN = 40;
-const TIME_TEXT_MARGIN = 8;
+const TIME_TEXT_MARGIN = 4;
+const CENTER_TITLE_MARGIN_TOP = 12;
 const TIME_BOTTOM_OFFSET = 7;
-const SETTING_ICON_MARGIN = 12;
+const CENTER_MARGIN = 12;
 
 @Component
 export default struct Notification {
@@ -84,13 +87,20 @@ export default struct Notification {
       }
 
       if (this.notificationList.length > 0) {
-        Image($r('app.media.delete_all'))
-          .width(IMAGE_SIZE_L)
-          .height(IMAGE_SIZE_L)
-          .margin({ bottom: 32 })
-          .onClick(() => {
-            ViewModel.removeAllNotifications();
-          })
+        Flex({ justifyContent: FlexAlign.Center, alignItems: ItemAlign.Center }) {
+          Image($r('app.media.ic_public_delete_filled'))
+            .fillColor("#FFFFFF")
+            .width(IMAGE_SIZE_L)
+            .height(IMAGE_SIZE_L)
+        }
+        .width(BGC_SIZE_L)
+        .height(BGC_SIZE_L)
+        .margin({ bottom: $r('app.float.notification_delete_all') })
+        .borderRadius(BGC_SIZE_L)
+        .backgroundColor($r('app.color.notification_delete_all_background'))
+        .onClick(() => {
+          ViewModel.removeAllNotifications();
+        })
       }
     }.onTouch(this.touchEvent.bind(this))
   }
@@ -177,21 +187,22 @@ struct CenterTitle {
         .fontColor($r("sys.color.ohos_id_color_text_primary_contrary"))
         .fontSize('36fp')
         .fontWeight(FontWeight.Medium)
-        .margin({ left: TIME_TEXT_MARGIN })
+        .margin({ left: CENTER_MARGIN })
       Text(this.mTimeString)
         .fontColor($r("sys.color.ohos_id_color_text_primary_contrary"))
         .fontSize($r("sys.float.ohos_id_text_size_sub_title3"))
         .fontWeight(FontWeight.Medium)
         .margin({ left: TIME_TEXT_MARGIN, bottom: TIME_BOTTOM_OFFSET })
         .flexGrow(1)
-      Image($r('app.media.ic_settings'))
+      Image($r("app.media.ic_public_settings"))
         .objectFit(ImageFit.Contain)
         .width(IMAGE_SIZE_S)
         .height(IMAGE_SIZE_S)
-        .margin({ right: SETTING_ICON_MARGIN, bottom: TIME_BOTTOM_OFFSET })
+        .fillColor("#FFFFFF")
+        .margin({ right: CENTER_MARGIN, bottom: TIME_BOTTOM_OFFSET })
         .onClick(this.settingClick.bind(this))
     }
-    .margin({ top: TIME_TEXT_MARGIN, bottom: TIME_TEXT_MARGIN })
+    .margin({ top: CENTER_TITLE_MARGIN_TOP, bottom: TIME_TEXT_MARGIN })
     .onTouch(this.touchEvent.bind(this))
   }
 

@@ -28,7 +28,7 @@ const TAG = 'NotificationManagement-NoDisturbPre';
 @Component
 export default struct notificationManagenment {
   @State columnMargin: string = '24vp';
-  @State headName: Resource = $r('app.string.notificationManagement')
+  @State headName: Resource = $r('app.string.noDisturb')
   @State refreshRequest: number= 0
 
   build() {
@@ -45,8 +45,12 @@ export default struct notificationManagenment {
             Row() {
               Text($r('app.string.timing_on'))
                 .fontSize($r('app.float.page_phrases_font'))
-                .margin({top:$r('app.float.page_phrases_padding_t')})
+                .fontColor($r('sys.color.ohos_id_color_text_secondary'))
+                .fontWeight(FontWeight.Medium)
+                .fontFamily('HarmonyHeiTi-Medium')
+                .margin({ top: $r('app.float.page_phrases_padding_t') })
             }
+            .align(Alignment.Start)
             .width(ConfigData.WH_100_100)
             .height($r('app.float.page_phrases_height'))
             .padding({ left: $r('sys.float.ohos_id_default_padding_start') })
@@ -58,7 +62,8 @@ export default struct notificationManagenment {
             .onClick(() => {
               Log.showInfo(TAG, `NoDisturbComponent on click`)
               Router.push({ uri: 'pages/noDisturb' });
-            }).width(ConfigData.WH_100_100)
+            })
+            .width(ConfigData.WH_100_100)
             .backgroundColor(Color.White)
             .border({ width: $r('app.float.border_width'), color: Color.White,
               radius: $r('app.float.border_radius') })

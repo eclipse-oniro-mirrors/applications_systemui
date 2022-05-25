@@ -75,11 +75,15 @@ export default struct notificationManagenment {
                         .fontSize($r('sys.float.ohos_id_text_size_body1'))
                         .fontColor($r('app.color.itemComp_title_color'))
                         .align(Alignment.End)
+                        .margin({ right: $r("app.float.noDisturb_text_margin_right") })
+                        .fontWeight(FontWeight.Medium)
                     } else {
                       Text($r('app.string.noDisturb_closed'))
                         .fontSize($r('sys.float.ohos_id_text_size_body1'))
                         .fontColor($r('app.color.itemComp_title_color'))
                         .align(Alignment.End)
+                        .margin({ right: $r("app.float.noDisturb_text_margin_right") })
+                        .fontWeight(FontWeight.Medium)
                     }
                     Image($r('app.media.ic_settings_arrow'))
                       .align(Alignment.End)
@@ -103,11 +107,18 @@ export default struct notificationManagenment {
               .onClick(() => {
                 Log.showInfo(TAG, `NoDisturbComponent on click`)
                 Router.push({ uri: 'pages/noDisturbPre' });
-              }).width(ConfigData.WH_100_100)
+              })
+              .width(ConfigData.WH_100_100)
               .flexShrink(0)
+
               Column() {
                 Divider().color($r('app.color.divider_color')).strokeWidth(1)
-              }.padding({ left: $r('sys.float.ohos_id_default_padding_start'),right:$r('sys.float.ohos_id_default_padding_end') })
+              }
+              .padding({
+                left: $r('sys.float.ohos_id_default_padding_start'),
+                right: $r('sys.float.ohos_id_default_padding_end')
+              })
+
               Row() {
                 Row() {
                   SwitchComponent({
@@ -123,19 +134,19 @@ export default struct notificationManagenment {
             .backgroundColor(Color.White)
             .border({ width: $r('app.float.border_width'), color: Color.White,
               radius: $r('app.float.border_radius') })
-            .margin({top:$r('app.float.page_notice_title_margin_t')});
+            .margin({ top: $r('app.float.page_notice_title_margin_t') });
 
             Row() {
               Text($r('app.string.notificationManagement'))
                 .fontColor($r('sys.color.ohos_id_color_text_secondary'))
                 .fontSize($r('sys.float.ohos_id_text_size_body2'))
-                .fontWeight(FontWeight.Bold)
+                .fontWeight(FontWeight.Medium)
                 .fontFamily('HarmonyHeiTi-Medium')
-                .margin({top:$r('app.float.page_phrases_padding_t')})
+                .margin({ top: $r('app.float.page_phrases_padding_t') })
             }.align(Alignment.Start)
             .width(ConfigData.WH_100_100)
             .height($r('app.float.page_phrases_height'))
-            .padding({ left: $r('sys.float.ohos_id_default_padding_start')})
+            .padding({ left: $r('sys.float.ohos_id_default_padding_start') })
 
             Row() {
               ItemComponent({ title: $title, value: '', arrow: $arrow })
@@ -148,8 +159,8 @@ export default struct notificationManagenment {
             Column() {
               AppLstComponent()
             }.width(ConfigData.WH_100_100)
-            .height(this.mViewModel.isPhone?$r('app.float.applist_hieght_phone'):$r('app.float.applist_hieght'))
-            .margin({top:$r('app.float.applist_margin_t')});
+            .height(this.mViewModel.isPhone ? $r('app.float.applist_hieght_phone') : $r('app.float.applist_hieght'))
+            .margin({ top: $r('app.float.applist_margin_t') });
 
           }
           .width(ConfigData.WH_100_100)

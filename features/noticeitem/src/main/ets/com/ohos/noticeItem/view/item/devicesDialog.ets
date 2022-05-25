@@ -85,7 +85,7 @@ export default struct DevicesDialog {
         Column() {
           Text($r('app.string.cancel'))
             .fontSize($r('app.float.device_button_font'))
-            .fontColor(Color.Blue)
+            .fontColor($r("app.color.button_text_color"))
 
         }.onClick(() => {
           this.controller.close();
