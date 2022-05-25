@@ -43,7 +43,7 @@ struct Index {
     this.mClearCallbacks = []
     this.mClearCallbacks.push(EventManager.subscribe('onBannerNoticeShow', () => this.onBannerNoticeShow()))
     this.mClearCallbacks.push(EventManager.subscribe('onBannerNoticeHide', () => this.onBannerNoticeHide()))
-    Log.showInfo(TAG, `aboutToAppear End`)
+    Log.showDebug(TAG, `aboutToAppear End`)
   }
 
   aboutToDisappear() {
@@ -79,7 +79,7 @@ struct Index {
   }
 
   onBannerNoticeShow() {
-    Log.showInfo(TAG, `onBannerNoticeShow start`);
+    Log.showDebug(TAG, `onBannerNoticeShow start`);
     let winInfoNotice = WindowManager.getWindowInfo(WindowType.NOTIFICATION_PANEL);
     let bannerDisabledFlg = false;
     let screenLockStatusInfo = AppStorage.Link('lockStatus');
@@ -96,7 +96,7 @@ struct Index {
     }
     WindowManager.hideWindow(WindowType.BANNER_NOTICE);
     if (bannerDisabledFlg) {
-      Log.showInfo(TAG, `onBannerNoticeShow end`);
+      Log.showDebug(TAG, `onBannerNoticeShow end`);
       return;
     }
     this.pageData = AbilityManager.getAbilityData(AbilityManager.ABILITY_NAME_BANNER_NOTICE, 'itemData');
@@ -107,12 +107,12 @@ struct Index {
     this.isExpand = false;
     this.mBannerNoticeCnt++;
     this.mLastActionTime = (new Date()).getTime();
-    Log.showInfo(TAG, `onBannerNoticeShow count:` + this.mBannerNoticeCnt);
-    Log.showInfo(TAG, `onBannerNoticeShow pageData:${JSON.stringify(this.pageData)}`);
+    Log.showDebug(TAG, `onBannerNoticeShow count:` + this.mBannerNoticeCnt);
+    Log.showDebug(TAG, `onBannerNoticeShow pageData:${JSON.stringify(this.pageData)}`);
 
     WindowManager.resetSizeWindow(WindowType.BANNER_NOTICE, this.mDefaultBannerRect);
     WindowManager.showWindow(WindowType.BANNER_NOTICE);
-    Log.showInfo(TAG, `onBannerNoticeShow end`);
+    Log.showDebug(TAG, `onBannerNoticeShow end`);
   }
 
   onBannerNoticeHide() {

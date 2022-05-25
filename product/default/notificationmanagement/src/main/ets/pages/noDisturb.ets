@@ -325,7 +325,7 @@ struct DateDialog {
             .fontColor(Color.Blue)
 
         }.onClick(() => {
-          Log.showInfo(TAG, `confirm button of DateDialog on click`)
+          Log.showDebug(TAG, `confirm button of DateDialog on click`)
           this.controller.close();
           if(this.selectedDate != '') {
             this.action(this.selectedDate);
@@ -393,7 +393,7 @@ struct TimeDialog {
             .fontColor(Color.Blue)
 
         }.onClick(() => {
-          Log.showInfo(TAG, `confirm button of TimeDialog on click`)
+          Log.showDebug(TAG, `confirm button of TimeDialog on click`)
           this.controller.close();
           if(this.selectedTime != '') {
             this.action(this.selectedTime);
@@ -534,7 +534,7 @@ struct RepeatModeDialog {
             .fontColor($r("app.color.font_color_007DFF"))
 
         }.onClick(() => {
-          Log.showInfo(TAG, `confirm button of TimeDialog on click`)
+          Log.showDebug(TAG, `confirm button of TimeDialog on click`)
           this.controller.close();
           if (this.itSelectedBefore != -1 && this.itSelectedBefore != this.selectMode){
             this.action(this.selectMode);

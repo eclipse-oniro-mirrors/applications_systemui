@@ -124,7 +124,7 @@ export default struct Notification {
   }
 
   CenterTitleTouchMoveCallback(data) {
-    Log.showInfo(TAG, `CenterTitleTouchMoveCallback, data: ${JSON.stringify(data)}`)
+    Log.showDebug(TAG, `CenterTitleTouchMoveCallback, data: ${JSON.stringify(data)}`)
     data['touchComponent'] = 'notification'
     if (this.touchMoveCallback) {
       this.touchMoveCallback(data)
@@ -215,7 +215,7 @@ struct CenterTitle {
   }
 
   settingClick() {
-    Log.showInfo(TAG, ` settingClick `)
+    Log.showDebug(TAG, ` settingClick `)
     EventManager.publish(obtainStartAbility('com.ohos.systemui', 'com.ohos.systemui.notificationmanagement.MainAbility'))
   }
 

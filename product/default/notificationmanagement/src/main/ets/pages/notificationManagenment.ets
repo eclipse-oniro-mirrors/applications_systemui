@@ -105,7 +105,7 @@ export default struct notificationManagenment {
               .margin({ top: $r('app.float.noDisturb_margin_lf') })
               .align(Alignment.Start)
               .onClick(() => {
-                Log.showInfo(TAG, `NoDisturbComponent on click`)
+                Log.showDebug(TAG, `NoDisturbComponent on click`)
                 Router.push({ uri: 'pages/noDisturbPre' });
               })
               .width(ConfigData.WH_100_100)
@@ -151,7 +151,7 @@ export default struct notificationManagenment {
             Row() {
               ItemComponent({ title: $title, value: '', arrow: $arrow })
             }.onClick(() => {
-              Log.showInfo(TAG, `BatchManagement on click`)
+              Log.showDebug(TAG, `BatchManagement on click`)
               Router.push({ uri: 'pages/batchSetEnable' });
             }).width(ConfigData.WH_100_100)
             .flexShrink(0)
@@ -187,30 +187,30 @@ export default struct notificationManagenment {
   }
 
   aboutToAppear(): void{
-    Log.showInfo(TAG, `aboutToAppear`)
+    Log.showDebug(TAG, `aboutToAppear`)
     this.mViewModel.ViewModelInit();
   }
 
   aboutToDisappear(): void{
-    Log.showInfo(TAG, `aboutToDisappear`)
+    Log.showDebug(TAG, `aboutToDisappear`)
   }
 
   onPageShow(): void{
-    Log.showInfo(TAG, `onPageShow`)
+    Log.showDebug(TAG, `onPageShow`)
     this.mViewModel.RefreshNoDisturbState();
   }
 
   onBackPress() {
-    Log.showInfo(TAG, `onBackPress`)
+    Log.showDebug(TAG, `onBackPress`)
   }
 
   switchComponentInit() {
-    Log.showInfo(TAG, `switchComponentInit`)
+    Log.showDebug(TAG, `switchComponentInit`)
     return Notification.isDistributedEnabled();
   }
 
   switchComponentSet(params) {
-    Log.showInfo(TAG, `switchComponentSet`)
+    Log.showDebug(TAG, `switchComponentSet`)
     Notification.enableDistributed(params);
   }
 }

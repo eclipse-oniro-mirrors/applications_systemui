@@ -55,7 +55,7 @@ struct Index {
 
     setAppBgColor('#00000000')
     CommonStyleManager.setAbilityPageName(TAG)
-    Log.showInfo(TAG, `configInfo Start, configInfo ${JSON.stringify(configInfo)}`);
+    Log.showDebug(TAG, `configInfo Start, configInfo ${JSON.stringify(configInfo)}`);
     if (configInfo.width > configInfo.height) { // Pad、PC Mode
       StyleManager.setStyle()
     }

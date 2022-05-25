@@ -62,7 +62,7 @@ export default struct keyButton {
   }
 
   private onKeyTouch(event:TouchEvent) {
-    Log.showInfo(TAG, `onKeyTouch event: ${ event }`)
+    Log.showDebug(TAG, `onKeyTouch event: ${ event }`)
     let eventType = event.type;
     switch(eventType) {
       case Constants.KEY_DOWN:

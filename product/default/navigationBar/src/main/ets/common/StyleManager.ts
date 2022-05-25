@@ -28,7 +28,7 @@ export default class StyleManager {
     static rumMode: string = 'pad';
 
     static setPadStyle() {
-        Log.showInfo(TAG, `setPadStyle`)
+        Log.showDebug(TAG, `setPadStyle`)
 
         let config = AbilityManager.getAbilityData(AbilityManager.ABILITY_NAME_NAVIGATION_BAR, 'config');
         StyleManager.maxWidth = config.maxWidth;
@@ -46,7 +46,7 @@ export default class StyleManager {
     }
 
     static setPhoneStyle() {
-        Log.showInfo(TAG, `setPhoneStyle`)
+        Log.showDebug(TAG, `setPhoneStyle`)
 
         let config = AbilityManager.getAbilityData(AbilityManager.ABILITY_NAME_NAVIGATION_BAR, 'config');
         StyleManager.maxWidth = config.maxWidth;

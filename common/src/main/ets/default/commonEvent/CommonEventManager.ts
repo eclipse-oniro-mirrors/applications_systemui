@@ -48,23 +48,23 @@ export function getCommonEventManager(
   let policyClearCb: Map<POLICY, ClearPolicy> | undefined = undefined;
 
   async function subscriberCommonEvent() {
-    Log.showInfo(TAG, "registerSubscriber start");
+    Log.showDebug(TAG, "registerSubscriber start");
     let subscriber = await commonEvent.createSubscriber(SUBSCRIBE_INFOS);
     commonEvent.subscribe(subscriber, (err, data) => {
       if (err.code != 0) {
         Log.showError(TAG, `Can't handle common event, err: ${JSON.stringify(err)}`);
         return;
       }
-      Log.showInfo(TAG, `handle common event: ${data.event}`);
+      Log.showDebug(TAG, `handle common event: ${data.event}`);
       commonEventCallback(data);
     });
     unSubcribers.push(() => commonEvent.unsubscribe(subscriber));
     subscribeStateChange && subscribeStateChange(true);
-    Log.showInfo(TAG, `registerSubscriber success, size: ${unSubcribers.length}`);
+    Log.showDebug(TAG, `registerSubscriber success, size: ${unSubcribers.length}`);
   }
 
   function unSubscriberCommonEvent() {
-    Log.showInfo(TAG, `UnSubcribers size: ${unSubcribers.length}`);
+    Log.showDebug(TAG, `UnSubcribers size: ${unSubcribers.length}`);
     unSubcribers.forEach((unsubscribe) => unsubscribe());
     unSubcribers.length = 0;
     subscribeStateChange && subscribeStateChange(false);
@@ -76,7 +76,7 @@ export function getCommonEventManager(
     policys.forEach((policy) => {
       if (policyClearCb) {
         !policyClearCb.has(policy) && policyClearCb.set(policy, policyMap[policy](innerManager));
-        Log.showInfo(TAG, `apply policy: ${policy}`);
+        Log.showDebug(TAG, `apply policy: ${policy}`);
       }
     });
   }

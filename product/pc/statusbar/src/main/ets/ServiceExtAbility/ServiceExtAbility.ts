@@ -41,7 +41,7 @@ class ServiceExtAbility extends ServiceExtension {
             }
         }
         AbilityManager.setAbilityData(AbilityManager.ABILITY_NAME_STATUS_BAR, "config", configInfo);
-        Log.showInfo(TAG, `onCreate, configInfo: ${JSON.stringify(configInfo)}`);
+        Log.showDebug(TAG, `onCreate, configInfo: ${JSON.stringify(configInfo)}`);
 
         let statusBarRect = {
             left: configInfo.xCoordinate,

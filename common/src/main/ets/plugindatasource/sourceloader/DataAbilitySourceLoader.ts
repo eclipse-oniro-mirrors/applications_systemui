@@ -23,7 +23,7 @@ const TAG = "DataAbilitySourceLoader";
 export default class DataAbilitySourceLoader extends SourceLoader {
     constructor(config: LoaderConfigInfo) {
         super(config);
-        Log.showInfo(TAG, `constructor`);
+        Log.showDebug(TAG, `constructor`);
     }
 
     clearData(): void {}

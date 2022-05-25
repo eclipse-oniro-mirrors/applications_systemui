@@ -63,32 +63,32 @@ class MultimodalInputManager {
   }
 
   registerControlListener(callback) {
-    Log.showInfo(TAG, `registerListener control`);
+    Log.showDebug(TAG, `registerListener control`);
     inputConsumer.on("key", this.controlKeyOptions, (err, data) => {
       Log.showInfo(TAG, `controlRegisterCallBack err: ${JSON.stringify(err)} data: ${JSON.stringify(data)}`);
       callback.onControlShowOrHide(err, data);
     });
-    Log.showInfo(TAG, `registerListener end`);
+    Log.showDebug(TAG, `registerListener end`);
   }
 
   registerNotificationListener(callback) {
-    Log.showInfo(TAG, `registerListener notification`);
+    Log.showDebug(TAG, `registerListener notification`);
     inputConsumer.on("key", this.notificationKeyOptions, (err, data) => {
       Log.showInfo(TAG, `notificationRegisterCallBack err: ${JSON.stringify(err)} data: ${JSON.stringify(data)}`);
       callback.onNotificationShowOrHide(err, data);
     });
-    Log.showInfo(TAG, `registerListener end`);
+    Log.showDebug(TAG, `registerListener end`);
   }
 
   unregisterListener() {
-    Log.showInfo(TAG, `unregisterListener start`);
+    Log.showDebug(TAG, `unregisterListener start`);
     inputConsumer.off("key", this.notificationKeyOptions, (err, data) => {
       Log.showInfo(TAG, `notificationUnregisterCallBack err: ${JSON.stringify(err)} data: ${JSON.stringify(data)}`);
     });
     inputConsumer.off("key", this.controlKeyOptions, (err, data) => {
       Log.showInfo(TAG, `controlUnregisterCallBack err: ${JSON.stringify(err)} data: ${JSON.stringify(data)}`);
     });
-    Log.showInfo(TAG, `unregisterListener end`);
+    Log.showDebug(TAG, `unregisterListener end`);
   }
 }
 let sMultimodalInputManager = createOrGet(MultimodalInputManager, TAG);

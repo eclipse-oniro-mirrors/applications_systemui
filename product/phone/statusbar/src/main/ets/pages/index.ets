@@ -112,7 +112,7 @@ struct Index {
   }
 
   touchEvent(event: TouchEvent) {
-    Log.showInfo(TAG, 'touchEvent================' + event.touches)
+    Log.showDebug(TAG, 'touchEvent================' + event.touches)
     if (event.type == Constants.TOUCHTYPE_DOWN) { //down
       this.startX = event.touches[0].screenX
       this.startY = event.touches[0].screenY
@@ -130,7 +130,7 @@ struct Index {
   }
 
   onDropdown() {
-    Log.showInfo(TAG, `onDropdown`)
+    Log.showDebug(TAG, `onDropdown`)
     if (!this.mStatusBarData.showHorizontal || !this.mStatusBarData.ableToMaximize) {
       return
     }
@@ -154,7 +154,7 @@ struct Index {
   }
 
   onWindowShowHideEvent(args) {
-    Log.showInfo(TAG, `onWindowShowHideEvent, args: ${JSON.stringify(args)}`)
+    Log.showDebug(TAG, `onWindowShowHideEvent, args: ${JSON.stringify(args)}`)
     if (args.windowName == WindowType.DROPDOWN_PANEL) {
       if (args.isShow) {
         WindowManager.hideWindow(WindowType.STATUS_BAR)

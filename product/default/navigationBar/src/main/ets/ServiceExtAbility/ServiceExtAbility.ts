@@ -49,7 +49,7 @@ class ServiceExtAbility extends ServiceExtension {
             }
         }
         AbilityManager.setAbilityData(AbilityManager.ABILITY_NAME_NAVIGATION_BAR, 'config', configInfo)
-        Log.showInfo(TAG, `onCreate, configInfo: ${JSON.stringify(configInfo)}`)
+        Log.showDebug(TAG, `onCreate, configInfo: ${JSON.stringify(configInfo)}`)
 
         let navigationBarRect = {
             left: configInfo.xCoordinate,

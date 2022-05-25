@@ -165,17 +165,17 @@ export default struct SlotSetting {
   }
 
   notificationEnableInit() {
-    Log.showInfo(TAG, `notificationEnableInit`)
+    Log.showDebug(TAG, `notificationEnableInit`)
     return Notification.isNotificationEnabled({ bundle: this.appInfo.appBundleName, uid: this.appInfo.appUid })
   }
 
   notificationEnableSet(data) {
-    Log.showInfo(TAG, `notificationEnableSet data:${JSON.stringify(data)}`)
+    Log.showDebug(TAG, `notificationEnableSet data:${JSON.stringify(data)}`)
     Notification.enableNotification({ bundle: this.appInfo.appBundleName, uid: this.appInfo.appUid }, data);
   }
 
   soundEnableInit() {
-    Log.showInfo(TAG, `soundEnableInit`)
+    Log.showDebug(TAG, `soundEnableInit`)
     return new Promise((resolve, reject) => {
       let result: boolean = false;
       if (!!this.slotInfo.sound) {
@@ -187,7 +187,7 @@ export default struct SlotSetting {
   }
 
   soundEnableSet(params) {
-    Log.showInfo(TAG, `soundEnableSet params:${JSON.stringify(params)}`)
+    Log.showDebug(TAG, `soundEnableSet params:${JSON.stringify(params)}`)
     if (params == 0) {
       this.slotInfo.sound = '';
       this.slotInfo.level = SlotLevel.LEVEL_LOW
@@ -201,7 +201,7 @@ export default struct SlotSetting {
   }
 
   bannerEnableInit() {
-    Log.showInfo(TAG, `bannerEnableInit`)
+    Log.showDebug(TAG, `bannerEnableInit`)
     return new Promise((resolve, reject) => {
       let result: boolean = false;
       if (this.slotInfo.level == SlotLevel.LEVEL_HIGH) {
@@ -213,7 +213,7 @@ export default struct SlotSetting {
   }
 
   bannerEnableSet(params) {
-    Log.showInfo(TAG, `bannerEnableSet params:${JSON.stringify(params)}`)
+    Log.showDebug(TAG, `bannerEnableSet params:${JSON.stringify(params)}`)
     if (params == 0) {
       if (this.slotInfo.sound) {
         this.slotInfo.level = SlotLevel.LEVEL_DEFAULT;
@@ -227,7 +227,7 @@ export default struct SlotSetting {
   }
 
   notificationSlotSet() {
-    Log.showInfo(TAG, `notificationSlotSet slotInfo:${JSON.stringify(this.slotInfo)}`)
+    Log.showDebug(TAG, `notificationSlotSet slotInfo:${JSON.stringify(this.slotInfo)}`)
     Notification.notificationSlotSet({ bundle: this.appInfo.appBundleName, uid: this.appInfo.appUid }, this.slotInfo);
   }
 }

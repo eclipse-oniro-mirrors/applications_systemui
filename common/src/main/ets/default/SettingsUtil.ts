@@ -27,35 +27,35 @@ export class SettingsUtil {
     helper: DataAbilityHelper;
 
     constructor() {
-        Log.showInfo(TAG, `constructor`);
+        Log.showDebug(TAG, `constructor`);
         try {
             this.helper = featureAbility.acquireDataAbilityHelper(AbilityManager.getContext(), Constants.URI_VAR);
         } catch (e) {
-            Log.showInfo(TAG, `constructor, acquire helper error: ${e.toString()}`);
+            Log.showError(TAG, `constructor, acquire helper error: ${JSON.stringify(e)}`);
         }
     }
 
     getValue(name: string, defValue?: string): string {
-        Log.showInfo(TAG, `getValue, name: ${name} defValue: ${defValue}`);
+        Log.showDebug(TAG, `getValue, name: ${name} defValue: ${defValue}`);
         let value: string = null;
         try {
             value = settings.getValueSync(this.helper, name, defValue ? defValue : "");
         } catch (e) {
-            Log.showInfo(TAG, `getValue e: ${e.toString()}`);
+            Log.showError(TAG, `getValue e: ${JSON.stringify(e)}`);
         }
-        Log.showInfo(TAG, `getValue, value: ${value}`);
+        Log.showDebug(TAG, `getValue, value: ${value}`);
         return value;
     }
 
     setValue(name: string, value: string): boolean {
-        Log.showInfo(TAG, `setValue, name: ${name} value: ${value}`);
+        Log.showDebug(TAG, `setValue, name: ${name} value: ${value}`);
         let result = false;
         try {
             result = settings.setValueSync(this.helper, name, value);
         } catch (e) {
-            Log.showInfo(TAG, `setValue e: ${e.toString()}`);
+            Log.showError(TAG, `setValue e: ${JSON.stringify(e)}`);
         }
-        Log.showInfo(TAG, `setValue, result: ${result}`);
+        Log.showDebug(TAG, `setValue, result: ${result}`);
         return result;
     }
 }

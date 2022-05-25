@@ -35,7 +35,7 @@ export default class PluginDataSourceAdapter {
     mListener: pluginWorkerListener;
 
     constructor(name: string, context: Context, listener: pluginWorkerListener) {
-        Log.showInfo(TAG, `constructor, name: ${name}`);
+        Log.showDebug(TAG, `constructor, name: ${name}`);
         this.mName = name;
         this.mContext = context;
         this.mListener = listener;
@@ -51,22 +51,22 @@ export default class PluginDataSourceAdapter {
     }
 
     initDataSource(configs: RootConfigInfo) {
-        Log.showInfo(TAG, `initDataSource, configs: ${JSON.stringify(configs)}`);
+        Log.showDebug(TAG, `initDataSource, configs: ${JSON.stringify(configs)}`);
         this.mWorker.postMessage(obtainMsg(Constants.INIT_CONFIG, configs));
     }
 
     loadData(userId: number) {
-        Log.showInfo(TAG, `loadData`);
+        Log.showDebug(TAG, `loadData`);
         this.mWorker.postMessage(obtainMsg(Constants.LOAD_DATA, userId));
     }
 
     clearAll() {
-        Log.showInfo(TAG, `clearAll`);
+        Log.showDebug(TAG, `clearAll`);
         this.mWorker.postMessage(obtainMsg(Constants.CLEAR_ALL, {}));
     }
 
     onMessage(msg: { data: any }) {
-        Log.showInfo(TAG, `onMessage, msg: ${JSON.stringify(msg)}`);
+        Log.showDebug(TAG, `onMessage, msg: ${JSON.stringify(msg)}`);
         let data = msg.data;
         switch (data.action) {
             case Constants.INIT_FINISH:
@@ -84,19 +84,19 @@ export default class PluginDataSourceAdapter {
     }
 
     onInitFinish() {
-        Log.showInfo(TAG, `onInitFinish`);
+        Log.showDebug(TAG, `onInitFinish`);
         this.mListener.initFinish();
     }
 
     async onItemAdd(itemData: ItemComponentData) {
-        Log.showInfo(TAG, `onItemAdd, itemData: ${JSON.stringify(itemData)}`);
+        Log.showDebug(TAG, `onItemAdd, itemData: ${JSON.stringify(itemData)}`);
         itemData.label && (itemData.label = decodeURIComponent(itemData.label));
         if (itemData.label && itemData.iconUrl) {
             this.mListener.onItemAdd(itemData);
             return;
         }
         let manager = await BundleManager.getResourceManager(TAG, this.mContext, itemData.bundleName);
-        Log.showInfo(TAG, `${itemData.id} Can't find label or icon, fetch data from ${manager}`);
+        Log.showDebug(TAG, `${itemData.id} Can't find label or icon, fetch data from ${manager}`);
         if (manager) {
             Promise.all([
                 itemData.iconUrl ?? manager.getMediaBase64(itemData.abilityIconId),
@@ -112,19 +112,19 @@ export default class PluginDataSourceAdapter {
     }
 
     onItemRemove(itemData: ItemComponentData) {
-        Log.showInfo(TAG, `onItemRemove, itemData: ${JSON.stringify(itemData)}`);
+        Log.showDebug(TAG, `onItemRemove, itemData: ${JSON.stringify(itemData)}`);
         this.mListener.onItemRemove(itemData);
     }
 
     onMessageError(event: any) {
-        Log.showInfo(TAG, `mWorker.onmessageerror, event: ${event}`);
+        Log.showError(TAG, `mWorker.onmessageerror, event: ${event}`);
     }
 
     onExit(code: any) {
-        Log.showInfo(TAG, `mWorker.onexit, code: ${code}`);
+        Log.showDebug(TAG, `mWorker.onexit, code: ${code}`);
     }
 
     onError(err: any) {
-        Log.showInfo(TAG, `mWorker.onerror, err: ${JSON.stringify(err)}`);
+        Log.showError(TAG, `mWorker.onerror, err: ${JSON.stringify(err)}`);
     }
 }

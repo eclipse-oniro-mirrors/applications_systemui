@@ -68,7 +68,7 @@ struct Index {
     let signalObserved = AppStorage.SetAndLink("signalObserved", false);
     signalObserved.set(false);
 
-    Log.showInfo(TAG, `aboutToAppear, end`);
+    Log.showDebug(TAG, `aboutToAppear, end`);
   }
 
   aboutToDisappear() {

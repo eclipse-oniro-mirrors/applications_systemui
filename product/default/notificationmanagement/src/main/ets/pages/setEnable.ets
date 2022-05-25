@@ -113,12 +113,12 @@ export default struct SetEnable {
   }
 
   switchComponentInit() {
-    Log.showInfo(TAG, `switchComponentInit`)
+    Log.showDebug(TAG, `switchComponentInit`)
     return Notification.isNotificationEnabled({ bundle: appInfo.appBundleName, uid: appInfo.appUid })
   }
 
   switchComponentSet(params) {
-    Log.showInfo(TAG, `switchComponentSet`)
+    Log.showDebug(TAG, `switchComponentSet`)
     Notification.enableNotification({ bundle: appInfo.appBundleName, uid: appInfo.appUid }, params);
   }
 }

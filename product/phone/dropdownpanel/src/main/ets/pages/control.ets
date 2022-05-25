@@ -72,7 +72,7 @@ export default struct Control {
   }
 
   controlTouch(event: TouchEvent) {
-    Log.showInfo(TAG, `controlTouch================ event: ${event}`)
+    Log.showDebug(TAG, `controlTouch================ event: ${event}`)
     if (event.type == Constants.TOUCHTYPE_DOWN) {
       this.startX = event.touches[0].screenX
       this.startY = event.touches[0].screenY
@@ -91,7 +91,7 @@ export default struct Control {
   }
 
   controlCenterTouchMoveCallback(data) {
-    Log.showInfo(TAG, `controlCenterTouchMoveCallback data: ${JSON.stringify(data)}`)
+    Log.showDebug(TAG, `controlCenterTouchMoveCallback data: ${JSON.stringify(data)}`)
     data['touchComponent'] = 'control'
     if (this.touchMoveCallback) {
       this.touchMoveCallback(data)

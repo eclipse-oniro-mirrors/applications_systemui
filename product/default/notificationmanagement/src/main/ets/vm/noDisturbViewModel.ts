@@ -30,26 +30,24 @@ export default class NoDisturbViewModel extends NoDisturbComponentViewModel {
   endTimeClue: string = ''
 
   ViewModelInit(): void{
-    Log.showInfo(TAG, 'ViewModelInit');
+    Log.showDebug(TAG, 'ViewModelInit');
     this.getNextDayLabel();
     this.getNoDisturbingDate.bind(this)()
   }
   getNoDisturbingDate() {
-    Log.showInfo(TAG, 'getNoDisturbingDate');
+    Log.showDebug(TAG, 'getNoDisturbingDate');
     NoDisturbingModel.getNoDisturbingDate((data) => {
       Log.showInfo(TAG, 'getNoDisturbingDate data:' + JSON.stringify(data));
       this.repeatMode = data.type
       this.startTime = data.begin
       this.endTime = data.end
-      Log.showInfo(TAG, `getNoDisturbingDate this.repeatMode : ${this.repeatMode}`)
-      Log.showInfo(TAG, `getNoDisturbingDate this.startTime : ${this.startTime}`)
-      Log.showInfo(TAG, `getNoDisturbingDate this.endTime : ${this.endTime}`)
+      Log.showInfo(TAG, `getNoDisturbingDate this.repeatMode : ${this.repeatMode}, this.startTime : ${this.startTime}, this.endTime : ${this.endTime}`)
       this.setClues.bind(this)()
     })
   }
 
   setClues() {
-    Log.showInfo(TAG, `setClues`)
+    Log.showDebug(TAG, `setClues`)
     if (this.repeatMode == DoNotDisturbType.TYPE_DAILY ||
       this.repeatMode == DoNotDisturbType.TYPE_ONCE ||
       this.repeatMode == DoNotDisturbType.TYPE_CLEARLY) {
@@ -84,7 +82,7 @@ export default class NoDisturbViewModel extends NoDisturbComponentViewModel {
   }
 
   onStartTimeAccept(data) {
-    Log.showInfo(TAG, `onStartTimeAccept`)
+    Log.showDebug(TAG, `onStartTimeAccept`)
     this.startTime = data
     if (this.repeatMode == DoNotDisturbType.TYPE_CLEARLY) {
       let tmpDateTime = this.getDateByDateTime(this.startTime);
@@ -98,7 +96,7 @@ export default class NoDisturbViewModel extends NoDisturbComponentViewModel {
   }
 
   onEndTimeAccept(data) {
-    Log.showInfo(TAG, `onEndTimeAccept`)
+    Log.showDebug(TAG, `onEndTimeAccept`)
     this.endTime = data
     if (this.repeatMode == DoNotDisturbType.TYPE_CLEARLY) {
       let tmpDateTime = this.getDateByDateTime(this.endTime);
@@ -111,7 +109,7 @@ export default class NoDisturbViewModel extends NoDisturbComponentViewModel {
   }
 
   onRepeatModeAccect(data) {
-    Log.showInfo(TAG, `onRepeatModeAccect`)
+    Log.showDebug(TAG, `onRepeatModeAccect`)
     this.repeatMode = data;
     if (this.repeatMode == DoNotDisturbType.TYPE_CLEARLY) {
       let dateSource = new Date();
@@ -136,6 +134,6 @@ export default class NoDisturbViewModel extends NoDisturbComponentViewModel {
   }
 
   onCancel() {
-    Log.showInfo(TAG, `onCancel`)
+    Log.showDebug(TAG, `onCancel`)
   }
 }

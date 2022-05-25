@@ -21,7 +21,7 @@ const TAG = 'FeatureAbilityManager';
 export default class FeatureAbilityManager {
 
   openAbility(tag, want) {
-    Log.showInfo(TAG, `openAbility from: ${tag}`));
+    Log.showDebug(TAG, `openAbility from: ${tag}`));
     let result = FeatureAbility.startAbility(want)
       .then(data =>
     Log.showInfo(TAG, `tag: ${tag} promise then: ${JSON.stringify(data)}`))
@@ -60,7 +60,7 @@ export default class FeatureAbilityManager {
         Log.showError(TAG, `failed to finishAbility because ${JSON.stringify(err)}`);
         return;
       }
-      Log.showInfo(TAG, ` finishAbility callback err: ${JSON.stringify(err)} data:${data}`);
+      Log.showDebug(TAG, ` finishAbility callback err: ${JSON.stringify(err)} data:${data}`);
     });
   }
 }

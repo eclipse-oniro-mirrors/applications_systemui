@@ -28,7 +28,7 @@ export class navigationEvent {
   mCallback: any;
 
   registerCallback(callback) {
-    Log.showInfo(TAG, 'registerCallback');
+    Log.showDebug(TAG, 'registerCallback');
     this.mCallback = callback;
     if (commonEventSubscriber == null) {
       commonEvent.createSubscriber(
@@ -39,7 +39,7 @@ export class navigationEvent {
   }
 
   createCapsuleSubscriberCallBack(err, data) {
-    Log.showInfo(TAG, `createCapsuleSubscriberCallBack err: ${JSON.stringify(err)} data: ${JSON.stringify(data)}`);
+    Log.showDebug(TAG, `createCapsuleSubscriberCallBack err: ${JSON.stringify(err)} data: ${JSON.stringify(data)}`);
     commonEventSubscriber = data;
     commonEvent.subscribe(data, (err, data) => {
       Log.showInfo(TAG, `subscribe err: ${JSON.stringify(err)} data: ${JSON.stringify(data)}`);

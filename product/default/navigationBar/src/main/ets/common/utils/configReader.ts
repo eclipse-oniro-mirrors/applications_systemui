@@ -23,7 +23,7 @@ const TAG = "ConfigReader";
 export default class ConfigReader {
 
   public readLayoutConfig() {
-    Log.showInfo(TAG, "navigationbar ConfigReader readLayoutConfig start");
+    Log.showDebug(TAG, "navigationbar ConfigReader readLayoutConfig start");
     var mLayoutConfig = AppStorage.SetAndLink("navigationLayoutConfig", {});
     var configObj = this.readFileToJson(DEFAULT_LAYOUT_INFO_FILE_PATH);
     mLayoutConfig.set(configObj)
@@ -44,7 +44,7 @@ export default class ConfigReader {
   }
 
   public getContent(readStreamSync) {
-    Log.showInfo(TAG, "navigationbar ConfigReader getContent start");
+    Log.showDebug(TAG, "navigationbar ConfigReader getContent start");
     let buf = new ArrayBuffer(READ_DATA_SIZE);
     let len = readStreamSync.readSync(buf);
     let arr = new Uint8Array(buf)
@@ -53,7 +53,7 @@ export default class ConfigReader {
       arr[i] = charAt
     }
     let contentBuf = String.fromCharCode.apply(null, arr)
-    Log.showInfo(TAG, "navigationbar ConfigReader getContent read finished " + contentBuf);
+    Log.showDebug(TAG, "navigationbar ConfigReader getContent read finished " + contentBuf);
     return contentBuf;
   }
 }

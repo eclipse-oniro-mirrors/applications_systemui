@@ -106,7 +106,7 @@ struct Index {
   }
 
   initWindowPolicy() {
-    Log.showInfo(TAG, `init notification panel window Policy`);
+    Log.showDebug(TAG, `init notification panel window Policy`);
     this.mClearCallbacks.push(
     EventManager.subscribe(SHOW_EVENT, () => WindowManager.showWindow(WindowType.NOTIFICATION_PANEL)),
     EventManager.subscribe(HIDE_EVENT, () => this.hideWindow()),
@@ -151,7 +151,7 @@ struct Index {
   }
 
   hideWindow() {
-    Log.showInfo(TAG, `hide anim start`);
+    Log.showDebug(TAG, `hide anim start`);
     this._animateTo({ ...HIDE_ANIM_CONFIG, onFinish: () => {
       Log.showInfo(TAG, `anim finish, hide Notification window, view: ${JSON.stringify(this)}`);
       this.mBlur = 0

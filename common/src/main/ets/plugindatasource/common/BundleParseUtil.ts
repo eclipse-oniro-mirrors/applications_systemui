@@ -51,9 +51,9 @@ const BUNDLE_SUBSCRIBE_INFO = {
 };
 
 export async function queryAbility(action: string, userId: number, bundleName?: string): Promise<Array<AbilityInfo | ExtensionAbilityInfo>> {
-  Log.showInfo(TAG, `queryAbility, action: ${action} , userId: ${userId}`);
+  Log.showDebug(TAG, `queryAbility, action: ${action} , userId: ${userId}`);
   if (bundleName) {
-    Log.showInfo(TAG, `queryAbility, bundleName: ${bundleName}`);
+    Log.showDebug(TAG, `queryAbility, bundleName: ${bundleName}`);
     let abilitys = [];
     try {
       abilitys = await bundleManager.queryAbilityByWant(
@@ -65,7 +65,7 @@ export async function queryAbility(action: string, userId: number, bundleName?: 
         userId
       );
     } catch (error) {
-      Log.showInfo(TAG, `queryAbility, queryAbilityByWant error: ${JSON.stringify(error)}`);
+      Log.showError(TAG, `queryAbility, queryAbilityByWant error: ${JSON.stringify(error)}`);
     }
     let extensionAbilitys = [];
     try {
@@ -79,28 +79,28 @@ export async function queryAbility(action: string, userId: number, bundleName?: 
         userId
       );
     } catch (error) {
-      Log.showInfo(TAG, `queryAbility, queryExtensionAbilityInfos error: ${JSON.stringify(error)}`);
+      Log.showError(TAG, `queryAbility, queryExtensionAbilityInfos error: ${JSON.stringify(error)}`);
     }
-    Log.showInfo(TAG, `queryAbility, end`);
+    Log.showDebug(TAG, `queryAbility, end`);
     let rets = [...abilitys, ...extensionAbilitys];
-    Log.showInfo(TAG, `queryAbility, rets: ${JSON.stringify(rets)}`);
+    Log.showDebug(TAG, `queryAbility, rets: ${JSON.stringify(rets)}`);
     return rets;
   }
   let abilitys = [];
   try {
     abilitys = await bundleManager.queryAbilityByWant({ action: action }, DEFAULT_BUNDLE_FLAG, userId);
   } catch (error) {
-    Log.showInfo(TAG, `queryAbility, queryAbilityByWant error: ${JSON.stringify(error)}`);
+    Log.showError(TAG, `queryAbility, queryAbilityByWant error: ${JSON.stringify(error)}`);
   }
   let extensionAbilitys = [];
   try {
     extensionAbilitys = await bundleManager.queryExtensionAbilityInfos({ action: action }, EXTENSIONTYPE, DEFAULT_BUNDLE_FLAG, userId);
   } catch (error) {
-    Log.showInfo(TAG, `queryAbility, queryExtensionAbilityInfos error: ${JSON.stringify(error)}`);
+    Log.showError(TAG, `queryAbility, queryExtensionAbilityInfos error: ${JSON.stringify(error)}`);
   }
-  Log.showInfo(TAG, `queryAbility, end`);
+  Log.showDebug(TAG, `queryAbility, end`);
   let rets = [...abilitys, ...extensionAbilitys];
-  Log.showInfo(TAG, `queryAbility, rets: ${JSON.stringify(rets)}`);
+  Log.showDebug(TAG, `queryAbility, rets: ${JSON.stringify(rets)}`);
   return rets;
 }
 
@@ -140,7 +140,7 @@ export function registerBundleListener(listener: BundleListener, callback: (hand
       return;
     }
     commonEvent.subscribe(handle, (err, data) => {
-      Log.showDebug(TAG, `bundle change, err: ${JSON.stringify(err)} data: ${JSON.stringify(data)}`);
+      Log.showInfo(TAG, `bundle change, err: ${JSON.stringify(err)} data: ${JSON.stringify(data)}`);
       if (err.code != 0) {
         Log.showError(TAG, `Can't handle bundle change, err: ${JSON.stringify(err)}`);
         return;

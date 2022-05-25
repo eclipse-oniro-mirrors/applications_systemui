@@ -97,7 +97,7 @@ struct CenterTitle {
   }
 
   settingClick() {
-    Log.showInfo(TAG, ` settingClick `)
+    Log.showDebug(TAG, ` settingClick `)
     EventManager.publish(obtainStartAbility('com.ohos.systemui', 'com.ohos.systemui.notificationmanagement.MainAbility'))
   }
 }

@@ -77,7 +77,7 @@ class TimeManager {
   }
 
   private initTimeFormat(context: any) {
-    Log.showInfo(TAG, "initTimeFormat");
+    Log.showDebug(TAG, "initTimeFormat");
     this.mSettingsHelper = featureAbility.acquireDataAbilityHelper(context, URI_VAR);
 
     const handleTimeFormatChange = () => {
@@ -106,7 +106,7 @@ class TimeManager {
   }
 
   private notifyTimeChange() {
-    Log.showInfo(TAG, "notifyTimeChange");
+    Log.showDebug(TAG, "notifyTimeChange");
     let args: TimeEventArgs = {
       date: new Date(),
       timeFormat: this.mUse24hFormat,

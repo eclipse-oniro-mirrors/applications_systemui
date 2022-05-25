@@ -31,7 +31,7 @@ class ServiceExtAbility extends ServiceExtension {
     globalThis[AbilityManager.ABILITY_NAME_OWNER_WANT] = want;
 
     let dis = await display.getDefaultDisplay();
-    Log.showInfo(TAG, `onCreate, dis: ${JSON.stringify(dis)}`);
+    Log.showDebug(TAG, `onCreate, dis: ${JSON.stringify(dis)}`);
     let rect = {
       left: (834 * dis.width) / 1280,
       top: (44 * dis.width) / 1280,

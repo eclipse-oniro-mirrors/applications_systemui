@@ -60,7 +60,7 @@ export default struct notificationManagenment {
             }
             .align(Alignment.Start)
             .onClick(() => {
-              Log.showInfo(TAG, `NoDisturbComponent on click`)
+              Log.showDebug(TAG, `NoDisturbComponent on click`)
               Router.push({ uri: 'pages/noDisturb' });
             })
             .width(ConfigData.WH_100_100)

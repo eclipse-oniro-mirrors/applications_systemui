@@ -25,7 +25,7 @@ export default class StyleManager {
     static maxWidth: number = StyleManager.STANDARD_DISPLAY_WIDTH;
 
     static setStyle() {
-        Log.showInfo(TAG, `setStyle`)
+        Log.showDebug(TAG, `setStyle`)
 
         let dis = AbilityManager.getAbilityData(AbilityManager.ABILITY_NAME_NOTIFICATION_PANEL, 'dis');
         StyleManager.maxWidth = dis.width;

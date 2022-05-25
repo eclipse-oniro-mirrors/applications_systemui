@@ -22,7 +22,7 @@ const TAG = "BRManager";
 
 export default class BundleManager {
     static async getResourceManager(tag: string, context: Context, bundleName: string) {
-        Log.showInfo(TAG, `getResourceManager from: ${tag}`);
+        Log.showDebug(TAG, `getResourceManager from: ${tag}`);
         let bundleContext = await context.createBundleContext(bundleName);
         return await bundleContext.resourceManager;
     }
@@ -32,7 +32,7 @@ export default class BundleManager {
         let userInfo = {
             userId: requestId ?? (await SwitchUserManager.getInstance().getCurrentUserInfo()).userId,
         };
-        Log.showInfo(TAG, `getBundleInfo from: ${tag}, userId: ${userInfo.userId}`);
+        Log.showDebug(TAG, `getBundleInfo from: ${tag}, userId: ${userInfo.userId}`);
         return await BundleMgr.getBundleInfo(bundleName, getInfo, userInfo);
     }
 }

@@ -27,27 +27,27 @@ export default class NotificationManager {
   static TYPE_MULTI: number = Notification.ContentType.NOTIFICATION_CONTENT_MULTILINE;
 
   static subscribeNotification(tag, subscriber, asyncCallback) {
-    Log.showInfo(TAG, `subscribeNotification from: ${tag}`));
+    Log.showDebug(TAG, `subscribeNotification from: ${tag}`));
     Notification.subscribe(subscriber, asyncCallback);
   }
 
   static unsubscribeNotification(tag, subscriber) {
-    Log.showInfo(TAG, `subscribeNotification from: ${tag}`));
+    Log.showDebug(TAG, `subscribeNotification from: ${tag}`));
     Notification.unsubscribe(subscriber);
   }
 
   static removeAll(tag, callback) {
-    Log.showInfo(TAG, `removeAll from: ${tag}`));
+    Log.showDebug(TAG, `removeAll from: ${tag}`));
     Notification.removeAll(callback);
   }
 
   static remove(tag, hashCode, callback) {
-    Log.showInfo(TAG, `remove from: ${tag}`));
+    Log.showDebug(TAG, `remove from: ${tag}`));
     Notification.remove(hashCode, callback)
   }
 
   static getAllActiveNotifications(tag, callback) {
-    Log.showInfo(TAG, `getAllActiveNotifications from: ${tag}`));
+    Log.showDebug(TAG, `getAllActiveNotifications from: ${tag}`));
     Notification.getAllActiveNotifications(callback);
   }
 
