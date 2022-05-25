@@ -198,7 +198,7 @@ export default struct AppItemComponent {
   }
 
   aboutToAppear(): void{
-    Log.showDebug(TAG, `aboutToAppear`);
+    Log.showInfo(TAG, `aboutToAppear`);
     if (this.appSwitch === 1) {
       Notification.subscribeEnableChanged();
       Notification.register({ bundle: this.appBundleName,
@@ -219,7 +219,7 @@ export default struct AppItemComponent {
   }
 
   aboutToDisappear(): void{
-    Log.showDebug(TAG, `aboutToDisappear`);
+    Log.showInfo(TAG, `aboutToDisappear`);
     if (this.appSwitch === 1) {
       Notification.unsubscribeEnableChanged();
     }

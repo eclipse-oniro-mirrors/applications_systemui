@@ -30,7 +30,7 @@ export default struct NoDisturbComponent {
   @State mRefreshCnt: number = 0;
 
   aboutToAppear(): void{
-    Log.showDebug(TAG, `aboutToAppear`);
+    Log.showInfo(TAG, `aboutToAppear`);
     this.mViewModel.ViewModelInit();
     this.mPrevGetCnt = 0;
     this.mRefreshCnt++;

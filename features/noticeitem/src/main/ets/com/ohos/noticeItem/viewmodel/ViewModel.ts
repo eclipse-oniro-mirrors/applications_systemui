@@ -117,7 +117,6 @@ export class ViewModel {
     for (let i = 0, len = this.mNotificationList.length; i < len; i++) {
       if (this.mNotificationList[i].hashcode == hashCode) {
         let removeItemArr = this.mNotificationList.splice(i, 1);
-        Log.showInfo(TAG, `onNotificationCancel  i = ${i} removeItemArr= ${JSON.stringify(removeItemArr)}`);
         if (!CheckEmptyUtils.isEmpty(removeItemArr)) {
           this.updateFlowControlInfos(removeItemArr[0].bundleName, false)
         }
@@ -214,7 +213,6 @@ export class ViewModel {
     for (let i = 0, len = this.mNotificationList.length; i < len; i++) {
       if (this.mNotificationList[i].hashcode == itemData.hashcode) {
         let removeItemArr = this.mNotificationList.splice(i, 1);
-        Log.showInfo(TAG, `removeNotificationItem i = ${i} removeItemArr= ${JSON.stringify(removeItemArr)}`);
         if (!CheckEmptyUtils.isEmpty(removeItemArr)) {
           this.updateFlowControlInfos(removeItemArr[0].bundleName, false)
         }
