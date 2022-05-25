@@ -13,32 +13,32 @@
  * limitations under the License.
  */
 
-import Log from '../../../../../../../../common/src/main/ets/default/Log'
-import EventManager from "../../../../../../../../common/src/main/ets/default/event/EventManager"
-import {obtainStartAbility} from "../../../../../../../../common/src/main/ets/default/event/EventUtil"
-import Constants from '../common/Constants'
-import StyleConfiguration from '../common/StyleConfiguration'
+import Log from '../../../../../../../../common/src/main/ets/default/Log';
+import EventManager from "../../../../../../../../common/src/main/ets/default/event/EventManager";
+import {obtainStartAbility} from "../../../../../../../../common/src/main/ets/default/event/EventUtil";
+import Constants from '../common/Constants';
+import StyleConfiguration from '../common/StyleConfiguration';
 
-const TAG = 'Control-UpTitle'
+const TAG = 'Control-UpTitle';
 
 @Component
 export default struct UpTitle {
-  private touchMoveCallback: Function
-  private simpleToggleLayoutEditStartCallback: Function
-  startX: number = 0
-  startY: number = 0
-  @State moveX: number = 0
-  @State moveY: number = 0
-  @State mSettingIsHover: boolean = false
-  @State mEditIsHover: boolean = false
-  @State style: any = StyleConfiguration.getControlCenterUpTitleStyle()
+  private touchMoveCallback: Function;
+  private simpleToggleLayoutEditStartCallback: Function;
+  startX: number = 0;
+  startY: number = 0;
+  @State moveX: number = 0;
+  @State moveY: number = 0;
+  @State mSettingIsHover: boolean = false;
+  @State mEditIsHover: boolean = false;
+  @State style: any = StyleConfiguration.getControlCenterUpTitleStyle();
 
   aboutToAppear() {
     Log.showInfo(TAG, 'aboutToAppear');
   }
 
   aboutToDisappear() {
-    Log.showInfo(TAG, 'aboutToDisappear')
+    Log.showInfo(TAG, 'aboutToDisappear');
   }
 
   build() {
@@ -114,36 +114,36 @@ export default struct UpTitle {
   }
 
   settingClick() {
-    Log.showInfo(TAG, `settingClick`)
-    EventManager.publish(obtainStartAbility('com.ohos.settings', 'com.ohos.settings.MainAbility'))
+    Log.showDebug(TAG, `settingClick`);
+    EventManager.publish(obtainStartAbility('com.ohos.settings', 'com.ohos.settings.MainAbility'));
   }
 
   editClick() {
-    Log.showInfo(TAG, `editClick`)
+    Log.showDebug(TAG, `editClick`);
     if (this.simpleToggleLayoutEditStartCallback) {
-      this.simpleToggleLayoutEditStartCallback()
-    }
+      this.simpleToggleLayoutEditStartCallback();
+    };
   }
 
   touchEvent(event: TouchEvent) {
     if (event.type == Constants.TOUCHTYPE_DOWN) {
-      this.startX = event.touches[0].screenX
-      this.startY = event.touches[0].screenY
-      Log.showInfo(TAG, `quicklySetting touchStart2=======startX: ${this.startX}, startY: ${this.startY}`)
+      this.startX = event.touches[0].screenX;
+      this.startY = event.touches[0].screenY;
+      Log.showDebug(TAG, `quicklySetting touchStart2=======startX: ${this.startX}, startY: ${this.startY}`);
     } else if (event.type == Constants.TOUCHTYPE_MOVE) {
-      this.moveX = event.touches[0].screenX - this.startX
-      this.moveY = event.touches[0].screenY - this.startY
+      this.moveX = event.touches[0].screenX - this.startX;
+      this.moveY = event.touches[0].screenY - this.startY;
     } else if (event.type == Constants.TOUCHTYPE_UP) {
-      Log.showInfo(TAG, `quicklySetting touchEnd2, moveX: ${this.moveX}, moveY: ${this.moveY}`)
+      Log.showDebug(TAG, `quicklySetting touchEnd2, moveX: ${this.moveX}, moveY: ${this.moveY}`);
       if (this.moveX < -30) {
         if (this.touchMoveCallback) {
-          this.touchMoveCallback({ 'direction': 'left' })
-        }
+          this.touchMoveCallback({ 'direction': 'left' });
+        };
       } else if (this.moveX > 30) {
         if (this.touchMoveCallback) {
-          this.touchMoveCallback({ 'direction': 'right' })
-        }
-      }
-    }
+          this.touchMoveCallback({ 'direction': 'right' });
+        };
+      };
+    };
   }
 }

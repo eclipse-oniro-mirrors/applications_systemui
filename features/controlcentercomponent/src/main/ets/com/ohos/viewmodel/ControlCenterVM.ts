@@ -30,7 +30,7 @@ export class ControlCenterVM {
   mSimpleToggleLayout: any;
 
   constructor() {
-    Log.showInfo(TAG, `constructor`)
+    Log.showDebug(TAG, `constructor`);
     this.mComplexToggleLayout = AppStorage.SetAndLink(ControlCenterComplexToggleLayoutKey, []);
     this.mSimpleToggleLayout = AppStorage.SetAndLink(ControlCenterSimpleToggleLayoutKey, []);
     ControlCenterService.registerListener(this);
@@ -40,58 +40,57 @@ export class ControlCenterVM {
     if (this.mIsStart) {
       return;
     }
-    Log.showInfo(TAG, `initViewModel, config: ${JSON.stringify(config)} `)
+    Log.showInfo(TAG, `initViewModel, config: ${JSON.stringify(config)} `);
     this.mIsStart = true;
 
     ControlCenterService.startService(config);
   }
 
   setComplexToggleLayout(layout: string[]): void{
-    Log.showInfo(TAG, `setComplexToggleLayout, layout: ${JSON.stringify(layout)}`)
+    Log.showDebug(TAG, `setComplexToggleLayout, layout: ${JSON.stringify(layout)}`);
     if (JSON.stringify(layout) != JSON.stringify(this.mComplexToggleLayout.get())) {
       this.mComplexToggleLayout.set(layout);
     }
-    Log.showInfo(TAG, `setComplexToggleLayout, mComplexToggleLayout: ${JSON.stringify(this.mComplexToggleLayout.get())}`)
+    Log.showDebug(TAG, `setComplexToggleLayout, mComplexToggleLayout: ${JSON.stringify(this.mComplexToggleLayout.get())}`);
   }
 
   setSimpleToggleLayout(layout: string[]): void{
-    Log.showInfo(TAG, `setSimpleToggleLayout, layout: ${JSON.stringify(layout)}`)
+    Log.showDebug(TAG, `setSimpleToggleLayout, layout: ${JSON.stringify(layout)}`);
     if (JSON.stringify(layout) != JSON.stringify(this.mSimpleToggleLayout.get())) {
       this.mSimpleToggleLayout.set(layout);
     }
-    Log.showInfo(TAG, `setSimpleToggleLayout, mSimpleToggleLayout: ${JSON.stringify(this.mSimpleToggleLayout.get())}`)
+    Log.showDebug(TAG, `setSimpleToggleLayout, mSimpleToggleLayout: ${JSON.stringify(this.mSimpleToggleLayout.get())}`);
   }
 
   setItemData(id: string, itemData: ControlComponentData): void{
-    Log.showInfo(TAG, `setItemData, id: ${id} itemData: ${JSON.stringify(itemData)}`)
+    Log.showDebug(TAG, `setItemData, id: ${id} itemData: ${JSON.stringify(itemData)}`);
     let storageKey: string = 'ControlCenter_' + id;
     if (itemData) {
       AppStorage.SetOrCreate(storageKey, itemData);
     } else {
       let deleteRs: boolean = AppStorage.Delete(storageKey);
-      Log.showInfo(TAG, `setItemData, AppStorage.Delete rs: ${deleteRs} `)
+      Log.showDebug(TAG, `setItemData, AppStorage.Delete rs: ${deleteRs} `);
     }
   }
 
   getDisplayingSimpleToggles(): string[]{
-    Log.showInfo(TAG, `getDisplayingSimpleToggles`)
     let simpleToggles = this.mSimpleToggleLayout.get();
-    Log.showInfo(TAG, `getDisplayingSimpleToggles, simpleToggles: ${JSON.stringify(simpleToggles)}`)
+    Log.showDebug(TAG, `getDisplayingSimpleToggles, simpleToggles: ${JSON.stringify(simpleToggles)}`);
     return simpleToggles;
   }
 
   getHidingSimpleToggles(): string[] {
-    Log.showInfo(TAG, `getHidingSimpleToggles`)
+    Log.showDebug(TAG, `getHidingSimpleToggles`);
     return ControlCenterService.getHidingSimpleToggles();
   }
 
   getDefaultSimpleToggleLayout() {
-    Log.showInfo(TAG, `getDefaultSimpleToggleLayout`)
+    Log.showDebug(TAG, `getDefaultSimpleToggleLayout`);
     return ControlCenterService.getDefaultSimpleToggleLayout();
   }
 
   saveSimpleToggleLayout(layout: string[]): void{
-    Log.showInfo(TAG, `saveSimpleToggleLayout, layout: ${JSON.stringify(layout)}`)
+    Log.showDebug(TAG, `saveSimpleToggleLayout, layout: ${JSON.stringify(layout)}`);
     ControlCenterService.saveSimpleToggleLayout(layout);
   }
 }

@@ -15,8 +15,9 @@
 
 import wifi from '@ohos.wifi';
 import Log from '../../../../../../../common/src/main/ets/default/Log';
-import iconTitleBase from '../../../../../../../common/src/main/ets/template/iconTitleBase'
-const TAG = 'Control-airPlaneComponent'
+import iconTitleBase from '../../../../../../../common/src/main/ets/template/iconTitleBase';
+
+const TAG = 'Control-airPlaneComponent';
 
 @Component
 export default
@@ -25,10 +26,10 @@ struct airplaneComponent {
   private IconInfo: any[] = [
     $r('app.media.airplane_d'),
     $r('app.media.airplane'),
-  ]
-  @State flyModelTitle: any = $r("app.string.airplane_mode")
-  @StorageLink('flyModelStatus') flyModelStatus: boolean = false
-  private mWifiOriginalStatus: boolean = false
+  ];
+  @State flyModelTitle: any = $r("app.string.airplane_mode");
+  @StorageLink('flyModelStatus') flyModelStatus: boolean = false;
+  private mWifiOriginalStatus: boolean = false;
 
 
 /*  when flyModelStatus == true, so airplane is opening,
@@ -39,28 +40,29 @@ struct airplaneComponent {
  *           if variable mWifiOriginalStatus == true, set WLAN status enableWifi()，conversely disableWifi().
  */
   mClickEvent() {
-    this.flyModelStatus =!this.flyModelStatus
+    this.flyModelStatus =!this.flyModelStatus;
+    Log.showDebug(TAG, `flyModelStatus：${this.flyModelStatus}`);
     if (this.flyModelStatus == true) {
       this.mWifiOriginalStatus = wifi.isWifiActive();
-      console.log(`airplane status is opening, WLAN Original Status ：${this.mWifiOriginalStatus}`)
+      Log.showInfo(TAG, `airplane status is opening, WLAN Original Status ：${this.mWifiOriginalStatus}`);
       wifi.disableWifi();
     }else{
       if(this.mWifiOriginalStatus == true) {
-        wifi.enableWifi()
-        console.log(`airplane status closed, WLAN Original Status：${this.mWifiOriginalStatus},get system interface, set WLAN status enableWifi`)
+        wifi.enableWifi();
+        Log.showInfo(TAG, `airplane status closed, WLAN Original Status：${this.mWifiOriginalStatus},get system interface, set WLAN status enableWifi`);
       } else {
         wifi.disableWifi();
-        console.log(`airplane status closed, WLAN Original Status：${this.mWifiOriginalStatus},,get system interface, set WLAN status disableWifi`)
-      }
-    }
+        Log.showInfo(TAG, `airplane status closed, WLAN Original Status：${this.mWifiOriginalStatus},,get system interface, set WLAN status disableWifi`);
+      };
+    };
   }
 
   aboutToAppear(){
-    Log.showInfo(TAG,'aboutToAppear')
+    Log.showInfo(TAG, 'aboutToAppear');
   }
 
   aboutToDisappear (){
-    Log.showInfo(TAG,'aboutToDisappear ')
+    Log.showInfo(TAG, 'aboutToDisappear ');
   }
 
   build() {

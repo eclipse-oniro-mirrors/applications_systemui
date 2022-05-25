@@ -13,23 +13,23 @@
  * limitations under the License.
  */
 
-import Constants from '../common/constants'
-import CapsuleViewModel, {VIEW_MODEL_ID, CallState} from '../viewmodel/CapsuleViewModel'
-import Log from '../../../../../../../common/src/main/ets/default/Log'
-import StyleConfigurationCommon from '../../../../../../../common/src/main/ets/default/StyleConfiguration'
-import StyleConfiguration from '../common/StyleConfiguration'
+import Constants from '../common/constants';
+import CapsuleViewModel, {VIEW_MODEL_ID, CallState} from '../viewmodel/CapsuleViewModel';
+import Log from '../../../../../../../common/src/main/ets/default/Log';
+import StyleConfigurationCommon from '../../../../../../../common/src/main/ets/default/StyleConfiguration';
+import StyleConfiguration from '../common/StyleConfiguration';
 
 const TAG = "CapsuleIcon";
 
 @Component
 export default struct CapsuleIcon {
   @StorageLink(VIEW_MODEL_ID) mCapsuleViewModel: CapsuleViewModel = CapsuleViewModel.getInstance();
-  startX: number = 0
-  startY: number = 0
-  moveX: number = 0
-  moveY: number = 0
-  @State style: any = StyleConfiguration.getCapsuleComponentStyle()
-  @State styleCommon: any = StyleConfigurationCommon.getCommonStyle()
+  startX: number = 0;
+  startY: number = 0;
+  moveX: number = 0;
+  moveY: number = 0;
+  @State style: any = StyleConfiguration.getCapsuleComponentStyle();
+  @State styleCommon: any = StyleConfigurationCommon.getCommonStyle();
 
   aboutToAppear() {
     this.mCapsuleViewModel.initViewModel();
@@ -70,23 +70,23 @@ export default struct CapsuleIcon {
   }
 
   touchEvent(event: TouchEvent) {
-    Log.showInfo(TAG, `touchEventtouchEventtouchEvent`)
+    Log.showDebug(TAG, `touchEventtouchEventtouchEvent`);
     if (event.type == Constants.TOUCH_TYPE_DOWN) {
       this.startX = event.touches[0].screenX;
       this.startY = event.touches[0].screenY;
       this.moveX = 0;
       this.moveY = 0;
-      Log.showInfo(TAG, `touchStart2=======startX: ${this.startX}, startY: ${this.startY}`);
+      Log.showDebug(TAG, `touchStart2=======startX: ${this.startX}, startY: ${this.startY}`);
     } else if (event.type == Constants.TOUCH_TYPE_MOVE) {
       this.moveX = event.touches[0].screenX - this.startX;
       this.moveY = event.touches[0].screenY - this.startY;
     } else if (event.type == Constants.TOUCH_TYPE_UP) {
-      Log.showInfo(TAG, `touchEnd2, moveX: ${this.moveX}, moveY: ${this.moveY}`);
+      Log.showDebug(TAG, `touchEnd2, moveX: ${this.moveX}, moveY: ${this.moveY}`);
       if (this.moveX < 5 && this.moveX > -5 && this.moveY < 5 && this.moveY > -5) {
         event.stopPropagation();
         this.mCapsuleViewModel.onClickEvent();
         this.mCapsuleViewModel.mIsBackground = false;
-      }
-    }
+      };
+    };
   }
 }

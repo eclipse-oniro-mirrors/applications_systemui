@@ -18,12 +18,8 @@ import commonEvent from "@ohos.commonEvent";
 import createOrGet from "../../../../../../common/src/main/ets/default/SingleInstanceHelper";
 import Constants from "./common/constants";
 import Log from "../../../../../../common/src/main/ets/default/Log";
-import { CommonEventData } from "commonEvent/commonEventData";
-import {
-  CommonEventManager,
-  getCommonEventManager,
-  POLICY,
-} from "../../../../../../common/src/main/ets/default/commonEvent/CommonEventManager";
+import {CommonEventData} from "commonEvent/commonEventData";
+import {CommonEventManager, getCommonEventManager, POLICY} from "../../../../../../common/src/main/ets/default/commonEvent/CommonEventManager";
 
 const TAG = "BatteryComponent-batteryModel";
 const DEFAULT_PROGRESS = 100;
@@ -32,7 +28,7 @@ const SUBSCRIBE_INFO = {
 };
 
 function getChargingStatus(state: typeof BatteryInfo.BatteryChargeState): boolean {
-  Log.showInfo(TAG, `charging status update: ${state}`);
+  Log.showDebug(TAG, `charging status update: ${state}`);
   let batteryStatus = false;
   switch (state) {
     case BatteryInfo.BatteryChargeState.DISABLE:
@@ -62,7 +58,7 @@ export class BatteryModel {
       () => this.updateBatteryStatus(),
       (isSubscribe: boolean) => isSubscribe && this.updateBatteryStatus()
     );
-    Log.showInfo(TAG, "initBatteryModel");
+    Log.showDebug(TAG, "initBatteryModel");
     this.mBatterySoc = AppStorage.SetAndLink("batterySoc", 0);
     this.mBatteryCharging = AppStorage.SetAndLink("batteryCharging", false);
     this.mManager.subscriberCommonEvent();
@@ -70,7 +66,7 @@ export class BatteryModel {
   }
 
   unInitBatteryModel() {
-    Log.showInfo(TAG, "unInitBatteryModel");
+    Log.showDebug(TAG, "unInitBatteryModel");
     this.mManager?.release();
     this.mManager = undefined;
   }

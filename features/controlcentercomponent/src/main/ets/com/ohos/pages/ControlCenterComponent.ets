@@ -13,61 +13,60 @@
  * limitations under the License.
  */
 
-import UpTitle from './UpTitle'
-import MyBrightness from '../../../../../../../brightnesscomponent/src/main/ets/default/pages/brightnessComponent'
-import Log from '../../../../../../../../common/src/main/ets/default/Log'
-import Constants from '../common/Constants'
-import StyleConfiguration from '../common/StyleConfiguration'
-import ViewModel from '../viewmodel/ControlCenterVM'
-import ComplexToggleLoadComponent from './ComplexToggleLoadComponent'
-import SimpleToggleLoadComponent from './SimpleToggleLoadComponent'
-import SimpleToggleLayoutEditComponent from './SimpleToggleLayoutEditComponent'
+import UpTitle from './UpTitle';
+import MyBrightness from '../../../../../../../brightnesscomponent/src/main/ets/default/pages/brightnessComponent';
+import Log from '../../../../../../../../common/src/main/ets/default/Log';
+import Constants from '../common/Constants';
+import StyleConfiguration from '../common/StyleConfiguration';
+import ViewModel from '../viewmodel/ControlCenterVM';
+import ComplexToggleLoadComponent from './ComplexToggleLoadComponent';
+import SimpleToggleLoadComponent from './SimpleToggleLoadComponent';
+import SimpleToggleLayoutEditComponent from './SimpleToggleLayoutEditComponent';
 
-const TAG = 'Control-ControlCenter'
-const TAG_ControlCenterComplexToggleLayout = 'Control-ControlCenterComplexToggleLayout'
-const TAG_ControlCenterSimpleToggleLayout = 'Control-ControlCenterSimpleToggleLayout'
+const TAG = 'Control-ControlCenter';
+const TAG_ControlCenterComplexToggleLayout = 'Control-ControlCenterComplexToggleLayout';
+const TAG_ControlCenterSimpleToggleLayout = 'Control-ControlCenterSimpleToggleLayout';
 
 var mUniform;
 
 @Component
 export default struct ControlCenterComponent {
-  private touchMoveCallback: Function
-  private modeChangeCallback: Function
-  @State mSimpleToggleColumnCount: number = Constants.DEFAULT_SIMPLE_TOGGLE_COLUMN_COUNT
-  private mControlCenterComponentConfig: any = {}
-  @State mIsEditSimpleToggleLayout: boolean = false
-  @State style: any = StyleConfiguration.getControlCenterComponentStyle()
-  private mWidthPx: number = 0
-  private mDisplayingSimpleToggles: string[] = []
-  private mHidingSimpleToggles: string[] = []
-  private mDefaultDisplaySimpleToggles: string[] = []
-  private titleDisplayInside: boolean = false
+  private touchMoveCallback: Function;
+  private modeChangeCallback: Function;
+  @State mSimpleToggleColumnCount: number = Constants.DEFAULT_SIMPLE_TOGGLE_COLUMN_COUNT;
+  private mControlCenterComponentConfig: any = {};
+  @State mIsEditSimpleToggleLayout: boolean = false;
+  @State style: any = StyleConfiguration.getControlCenterComponentStyle();
+  private mWidthPx: number = 0;
+  private mDisplayingSimpleToggles: string[] = [];
+  private mHidingSimpleToggles: string[] = [];
+  private mDefaultDisplaySimpleToggles: string[] = [];
+  private titleDisplayInside: boolean = false;
 
   aboutToAppear() {
-    Log.showInfo(TAG, 'aboutToAppear')
-    Log.showInfo(TAG, `aboutToAppear, mControlCenterComponentConfig: ${JSON.stringify(this.mControlCenterComponentConfig)}`)
-    ViewModel.initViewModel(this.mControlCenterComponentConfig)
+    Log.showInfo(TAG, `aboutToAppear, mControlCenterComponentConfig: ${JSON.stringify(this.mControlCenterComponentConfig)}`);
+    ViewModel.initViewModel(this.mControlCenterComponentConfig);
   }
 
   aboutToDisappear() {
-    Log.showInfo(TAG, 'aboutToDisappear ')
+    Log.showInfo(TAG, 'aboutToDisappear');
   }
 
   onSimpleToggleLayoutEditStart() {
-    Log.showInfo(TAG, 'onSimpleToggleLayoutEditStart')
-    this.mDisplayingSimpleToggles = ViewModel.getDisplayingSimpleToggles()
-    this.mHidingSimpleToggles = ViewModel.getHidingSimpleToggles()
-    this.mDefaultDisplaySimpleToggles = ViewModel.getDefaultSimpleToggleLayout()
-    this.setIsEditSimpleToggleLayout(true)
+    Log.showDebug(TAG, 'onSimpleToggleLayoutEditStart');
+    this.mDisplayingSimpleToggles = ViewModel.getDisplayingSimpleToggles();
+    this.mHidingSimpleToggles = ViewModel.getHidingSimpleToggles();
+    this.mDefaultDisplaySimpleToggles = ViewModel.getDefaultSimpleToggleLayout();
+    this.setIsEditSimpleToggleLayout(true);
   }
 
   onSimpleToggleLayoutEditEnd() {
-    Log.showInfo(TAG, 'onSimpleToggleLayoutEditEnd')
-    this.setIsEditSimpleToggleLayout(false)
+    Log.showDebug(TAG, 'onSimpleToggleLayoutEditEnd');
+    this.setIsEditSimpleToggleLayout(false);
   }
 
   setIsEditSimpleToggleLayout(isEdit: boolean): void {
-    Log.showInfo(TAG, `setIsEditSimpleToggleLayout, isEdit: ${isEdit}`)
+    Log.showDebug(TAG, `setIsEditSimpleToggleLayout, isEdit: ${isEdit}`);
     animateTo({
       duration: 300,
       tempo: 1.0,
@@ -79,17 +78,18 @@ export default struct ControlCenterComponent {
         Log.showInfo(TAG, `setIsEditSimpleToggleLayout, show anim finish.`)
       }
     }, () => {
-      Log.showInfo(TAG, `setIsEditSimpleToggleLayout, animateTo`)
-      this.mIsEditSimpleToggleLayout = isEdit
-    })
+      Log.showInfo(TAG, `setIsEditSimpleToggleLayout, animateTo`);
+      this.mIsEditSimpleToggleLayout = isEdit;
+    });
+    Log.showDebug(TAG, `this.modeChangeCallback: ${this.modeChangeCallback}`);
     if (this.modeChangeCallback) {
-      this.modeChangeCallback(isEdit)
+      this.modeChangeCallback(isEdit);
     }
   }
 
   onSaveDisplayingToggles(toggles: string[]): void {
-    Log.showInfo(TAG, `onSaveDisplayingToggles, toggles: ${JSON.stringify(toggles)}`)
-    ViewModel.saveSimpleToggleLayout(toggles)
+    Log.showDebug(TAG, `onSaveDisplayingToggles, toggles: ${JSON.stringify(toggles)}`);
+    ViewModel.saveSimpleToggleLayout(toggles);
   }
 
   build() {
@@ -170,16 +170,15 @@ export default struct ControlCenterComponent {
 
 @Component
 struct ControlCenterComplexToggleLayout {
-  @StorageLink('ControlCenterComplexToggleLayout') mComplexToggleLayout: string[] = []
-  @State style: any = StyleConfiguration.getControlCenterComplexToggleLayoutStyle()
+  @StorageLink('ControlCenterComplexToggleLayout') mComplexToggleLayout: string[] = [];
+  @State style: any = StyleConfiguration.getControlCenterComplexToggleLayoutStyle();
 
   aboutToAppear() {
-    Log.showInfo(TAG_ControlCenterComplexToggleLayout, `aboutToAppear Start`)
     Log.showInfo(TAG_ControlCenterComplexToggleLayout, `aboutToAppear, mComplexToggleLayout: ${this.mComplexToggleLayout} `)
   }
 
   aboutToDisappear() {
-    Log.showInfo(TAG_ControlCenterComplexToggleLayout, `aboutToDisAppear`)
+    Log.showInfo(TAG_ControlCenterComplexToggleLayout, `aboutToDisAppear`);
   }
 
   build() {
@@ -204,38 +203,37 @@ struct ControlCenterComplexToggleLayout {
   }
 
   calcGridHeight(rowCount, rowHeight, rowGap) {
-    Log.showInfo(TAG_ControlCenterComplexToggleLayout, `calcGridHeight, rowCount: ${rowCount} rowHeight: ${rowHeight} rowGap: ${rowGap}`)
-    let height = rowCount * rowHeight + (rowCount - 1) * rowGap
+    Log.showDebug(TAG_ControlCenterComplexToggleLayout, `calcGridHeight, rowCount: ${rowCount} rowHeight: ${rowHeight} rowGap: ${rowGap}`);
+    let height = rowCount * rowHeight + (rowCount - 1) * rowGap;
     if (height < 0) {
       height = 0
-    }
-    Log.showInfo(TAG_ControlCenterComplexToggleLayout, `calcGridHeight, height: ${height}`)
-    return height + 'px'
+    };
+    Log.showDebug(TAG_ControlCenterComplexToggleLayout, `calcGridHeight, height: ${height}`);
+    return height + 'px';
   }
 
   generateRowsTemplate(rowCount) {
-    Log.showInfo(TAG_ControlCenterComplexToggleLayout, `generateRowsTemplate, rowCount: ${rowCount}`)
-    let rowsTemplate = '1fr'
+    Log.showDebug(TAG_ControlCenterComplexToggleLayout, `generateRowsTemplate, rowCount: ${rowCount}`);
+    let rowsTemplate = '1fr';
     for (let i = 1;i < rowCount; i++) {
       rowsTemplate += ' 1fr'
-    }
-    return rowsTemplate
+    };
+    return rowsTemplate;
   }
 }
 
 @Component
 struct ControlCenterSimpleToggleLayout {
-  @Prop mColumnCount: number
-  @StorageLink('ControlCenterSimpleToggleLayout') mSimpleToggleLayout: string[] = []
-  @State style: any = StyleConfiguration.getControlCenterSimpleToggleLayoutStyle()
+  @Prop mColumnCount: number;
+  @StorageLink('ControlCenterSimpleToggleLayout') mSimpleToggleLayout: string[] = [];
+  @State style: any = StyleConfiguration.getControlCenterSimpleToggleLayoutStyle();
 
   aboutToAppear() {
-    Log.showInfo(TAG_ControlCenterSimpleToggleLayout, `aboutToAppear Start`)
-    Log.showInfo(TAG_ControlCenterSimpleToggleLayout, `aboutToAppear, mSimpleToggleLayout: ${this.mSimpleToggleLayout} `)
+    Log.showInfo(TAG_ControlCenterSimpleToggleLayout, `aboutToAppear, mSimpleToggleLayout: ${this.mSimpleToggleLayout} `);
   }
 
   aboutToDisappear() {
-    Log.showInfo(TAG_ControlCenterSimpleToggleLayout, `aboutToDisAppear`)
+    Log.showInfo(TAG_ControlCenterSimpleToggleLayout, `aboutToDisAppear`);
   }
 
   build() {
@@ -266,30 +264,30 @@ struct ControlCenterSimpleToggleLayout {
   }
 
   calcGridHeight(rowCount, rowHeight, rowGap) {
-    Log.showInfo(TAG_ControlCenterSimpleToggleLayout, `calcGridHeight, rowCount: ${rowCount} rowHeight: ${rowHeight} rowGap: ${rowGap}`)
-    let height = rowCount * rowHeight + (rowCount - 1) * rowGap
+    Log.showDebug(TAG_ControlCenterSimpleToggleLayout, `calcGridHeight, rowCount: ${rowCount} rowHeight: ${rowHeight} rowGap: ${rowGap}`);
+    let height = rowCount * rowHeight + (rowCount - 1) * rowGap;
     if (height < 0) {
-      height = 0
+      height = 0;
     }
-    Log.showInfo(TAG_ControlCenterSimpleToggleLayout, `calcGridHeight, height: ${height}`)
-    return height + 'px'
+    Log.showDebug(TAG_ControlCenterSimpleToggleLayout, `calcGridHeight, height: ${height}`);
+    return height + 'px';
   }
 
   generateColumnsTemplate(columnCount) {
-    Log.showInfo(TAG_ControlCenterSimpleToggleLayout, `generateColumnsTemplate, columnCount: ${columnCount}`)
-    let columnsTemplate = '1fr'
+    Log.showDebug(TAG_ControlCenterSimpleToggleLayout, `generateColumnsTemplate, columnCount: ${columnCount}`);
+    let columnsTemplate = '1fr';
     for (let i = 1;i < columnCount; i++) {
-      columnsTemplate += ' 1fr'
+      columnsTemplate += ' 1fr';
     }
-    return columnsTemplate
+    return columnsTemplate;
   }
 
   generateRowsTemplate(rowCount) {
-    Log.showInfo(TAG_ControlCenterSimpleToggleLayout, `generateRowsTemplate, rowCount: ${rowCount}`)
-    let rowsTemplate = '1fr'
+    Log.showDebug(TAG_ControlCenterSimpleToggleLayout, `generateRowsTemplate, rowCount: ${rowCount}`);
+    let rowsTemplate = '1fr';
     for (let i = 1;i < rowCount; i++) {
-      rowsTemplate += ' 1fr'
+      rowsTemplate += ' 1fr';
     }
-    return rowsTemplate
+    return rowsTemplate;
   }
 }

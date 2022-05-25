@@ -13,20 +13,28 @@
  * limitations under the License.
  */
 
-import Log from '../../../../../../../../common/src/main/ets/default/Log'
-import StyleConfiguration from '../common/StyleConfiguration'
+import Log from '../../../../../../../../common/src/main/ets/default/Log';
+import StyleConfiguration from '../common/StyleConfiguration';
 
 const TAG = 'Control-SimpleToggleLayoutEditDialogComponent';
 
 @CustomDialog
 export default struct SimpleToggleLayoutEditDialogComponent {
-  private title: Resource
-  private leftButton: Resource
-  private rightButton: Resource
-  private controller: CustomDialogController
-  private leftAction: () => void
-  private rightAction: () => void
-  @State style: any = StyleConfiguration.getControlEditDialogStyle()
+  private title: Resource;
+  private leftButton: Resource;
+  private rightButton: Resource;
+  private controller: CustomDialogController;
+  private leftAction: () => void;
+  private rightAction: () => void;
+  @State style: any = StyleConfiguration.getControlEditDialogStyle();
+
+  aboutToAppear() {
+    Log.showInfo(TAG, 'aboutToAppear');
+  }
+
+  aboutToDisappear() {
+    Log.showInfo(TAG, 'aboutToDisappear');
+  }
 
   build() {
     Column() {

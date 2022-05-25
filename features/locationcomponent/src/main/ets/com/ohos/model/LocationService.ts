@@ -27,11 +27,11 @@ export class LocationService {
     if (this.mIsStart) {
       return;
     }
-    Log.showInfo(TAG, `startService`)
+    Log.showInfo(TAG, `startService`);
     this.mIsStart = true;
     this.getServiceState();
     geolocation.on('locationServiceState', (state) => {
-      Log.showInfo(TAG, `startService locationChange, state: ${JSON.stringify(state)}`)
+      Log.showInfo(TAG, `startService locationChange, state: ${JSON.stringify(state)}`);
       this.getServiceState();
     });
   }
@@ -39,8 +39,8 @@ export class LocationService {
   stopService() {
     if (!this.mIsStart) {
       return;
-    }
-    Log.showInfo(TAG, `stopService`)
+    };
+    Log.showInfo(TAG, `stopService`);
     this.mIsStart = false;
     geolocation.off('locationServiceState', (state) => {
       Log.showInfo(TAG, `stopService locationChange, state: ${JSON.stringify(state)}`)
@@ -50,26 +50,26 @@ export class LocationService {
   registerListener(listener: {
     'updateServiceState': Function,
   }) {
-    Log.showInfo(TAG, `registerListener, listener: ${listener}`)
+    Log.showInfo(TAG, `registerListener, listener: ${listener}`);
     this.mListener = listener;
   }
 
   getServiceState() {
-    Log.showInfo(TAG, `getServiceState`)
+    Log.showDebug(TAG, `getServiceState`);
     geolocation.isLocationEnabled().then((data) => {
-      Log.showInfo(TAG, `getServiceState isLocationEnabled, data: ${JSON.stringify(data)}`)
+      Log.showInfo(TAG, `getServiceState isLocationEnabled, data: ${JSON.stringify(data)}`);
       this.mListener?.updateServiceState(data);
     });
   }
 
   enableLocation() {
-    Log.showInfo(TAG, `enableLocation`)
+    Log.showInfo(TAG, `enableLocation`);
     geolocation.enableLocation()
       .then((res) => Log.showInfo(TAG, `enableLocation, result: ${JSON.stringify(res)}`));
   }
 
   disableLocation() {
-    Log.showInfo(TAG, `disableLocation`)
+    Log.showInfo(TAG, `disableLocation`);
     geolocation.disableLocation()
       .then((res) => Log.showInfo(TAG, `disableLocation, result: ${JSON.stringify(res)}`));
   }

@@ -15,15 +15,15 @@
 
 import brightness from '@ohos.brightness';
 import mBrightnessManager from '../brightnessManager';
-import StyleConfiguration from '../common/StyleConfiguration'
+import StyleConfiguration from '../common/StyleConfiguration';
 import Log from '../../../../../../../common/src/main/ets/default/Log';
 
-const TAG = 'Control-brightnessComponent'
+const TAG = 'Control-brightnessComponent';
 
 @Component
 export default struct MyBrightness {
   @StorageLink('BrightnessValue') brightnessValue: number = 0;
-  @State style: any = StyleConfiguration.getBrightnessComponentStyle()
+  @State style: any = StyleConfiguration.getBrightnessComponentStyle();
   @State brightnessItem: any = {
     min: 4,
     max: 100,
@@ -31,13 +31,13 @@ export default struct MyBrightness {
   };
 
   aboutToAppear() {
-    Log.showInfo(TAG, `Brightness  aboutToAppear ${JSON.stringify(this.brightnessItem)}`);
+    Log.showDebug(TAG, `Brightness  aboutToAppear ${JSON.stringify(this.brightnessItem)}`);
     mBrightnessManager.init();
     mBrightnessManager.registerBrightness();
   }
 
   aboutToDisappear() {
-    Log.showInfo(TAG, 'aboutToDisappear')
+    Log.showDebug(TAG, 'aboutToDisappear');
     mBrightnessManager.unRegisterBrightness();
   }
 

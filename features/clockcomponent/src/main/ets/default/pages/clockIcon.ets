@@ -13,25 +13,22 @@
  * limitations under the License.
  */
 
-import Log from '../../../../../../../common/src/main/ets/default/Log'
-import {TintContentInfo} from '../../../../../../../common/src/main/ets/default/TintStateManager'
-import StyleConfiguration from '../common/StyleConfiguration'
-import StyleConfigurationCommon from '../../../../../../../common/src/main/ets/default/StyleConfiguration'
-import ViewModel from '../viewmodel/ClockVM'
-import TimeManager, {
-  TimeEventArgs,
-  TIME_CHANGE_EVENT,
-} from '../../../../../../../common/src/main/ets/default/TimeManager'
-import EventManager, {unsubscribe} from '../../../../../../../common/src/main/ets/default/event/EventManager'
+import Log from '../../../../../../../common/src/main/ets/default/Log';
+import {TintContentInfo} from '../../../../../../../common/src/main/ets/default/TintStateManager';
+import StyleConfiguration from '../common/StyleConfiguration';
+import StyleConfigurationCommon from '../../../../../../../common/src/main/ets/default/StyleConfiguration';
+import ViewModel from '../viewmodel/ClockVM';
+import TimeManager, {TimeEventArgs, TIME_CHANGE_EVENT} from '../../../../../../../common/src/main/ets/default/TimeManager';
+import EventManager, {unsubscribe} from '../../../../../../../common/src/main/ets/default/event/EventManager';
 
 const TAG = 'ClockComponent-clockIcon';
 
 @Component
 export default struct ClockIcon {
-  @State mTime: string = '16:01'
-  @State mTintContentInfo: TintContentInfo = ViewModel.getTintContentInfo()
-  @State style: any = StyleConfiguration.getClockComponentStyle()
-  @State styleCommon: any = StyleConfigurationCommon.getCommonStyle()
+  @State mTime: string = '16:01';
+  @State mTintContentInfo: TintContentInfo = ViewModel.getTintContentInfo();
+  @State style: any = StyleConfiguration.getClockComponentStyle();
+  @State styleCommon: any = StyleConfigurationCommon.getCommonStyle();
   unSubscriber?: unsubscribe;
 
   aboutToAppear() {

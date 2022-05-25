@@ -24,7 +24,7 @@ export class BatteryVM {
   mTintContentInfo: TintContentInfo = getOrCreateTintContentInfo(FASlotName.BATTERY);
 
   constructor() {
-    Log.showInfo(TAG, `constructor`)
+    Log.showDebug(TAG, `constructor`);
   }
 
   getTintContentInfo(): TintContentInfo {

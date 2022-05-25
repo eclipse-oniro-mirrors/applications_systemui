@@ -13,29 +13,29 @@
  * limitations under the License.
  */
 
-import Log from '../../../../../../../../common/src/main/ets/default/Log'
-import {TintContentInfo} from '../../../../../../../../common/src/main/ets/default/TintStateManager'
-import StyleConfigurationCommon from '../../../../../../../../common/src/main/ets/default/StyleConfiguration'
-import StyleConfiguration from '../common/StyleConfiguration'
-import Constants from '../common/Constants'
-import ViewModel from '../viewmodel/LocationVM'
+import Log from '../../../../../../../../common/src/main/ets/default/Log';
+import {TintContentInfo} from '../../../../../../../../common/src/main/ets/default/TintStateManager';
+import StyleConfigurationCommon from '../../../../../../../../common/src/main/ets/default/StyleConfiguration';
+import StyleConfiguration from '../common/StyleConfiguration';
+import Constants from '../common/Constants';
+import ViewModel from '../viewmodel/LocationVM';
 
-const TAG = 'location-StatusBarIconItemLocationComponent'
+const TAG = 'location-StatusBarIconItemLocationComponent';
 
 @Component
 export default struct StatusBarIconItemLocationComponent {
-  @StorageLink('LocationServiceUseStatus') LocationServiceUseStatus: boolean = false
-  @State mTintContentInfo: TintContentInfo = ViewModel.getTintContentInfo()
-  @State style: any = StyleConfiguration.getStartsBarLocationComponentStyle()
-  @State styleCommon: any = StyleConfigurationCommon.getCommonStyle()
+  @StorageLink('LocationServiceUseStatus') LocationServiceUseStatus: boolean = false;
+  @State mTintContentInfo: TintContentInfo = ViewModel.getTintContentInfo();
+  @State style: any = StyleConfiguration.getStartsBarLocationComponentStyle();
+  @State styleCommon: any = StyleConfigurationCommon.getCommonStyle();
 
   aboutToAppear() {
-    Log.showInfo(TAG, 'aboutToAppear')
-    ViewModel.initViewModel()
+    Log.showInfo(TAG, 'aboutToAppear');
+    ViewModel.initViewModel();
   }
 
   aboutToDisappear() {
-    Log.showInfo(TAG, 'aboutToDisappear')
+    Log.showInfo(TAG, 'aboutToDisappear');
   }
 
   build() {

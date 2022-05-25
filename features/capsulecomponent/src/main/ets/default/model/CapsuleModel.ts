@@ -14,7 +14,7 @@
  */
 
 import commonEvent from '@ohos.commonEvent';
-import Log from '../../../../../../../common/src/main/ets/default/Log'
+import Log from '../../../../../../../common/src/main/ets/default/Log';
 
 const TAG = 'CapsuleModel';
 
@@ -40,7 +40,7 @@ export class CapsuleModel {
   createCapsuleSubscriberCallBack(err, data) {
     commonEventSubscriber = data;
     commonEvent.subscribe(commonEventSubscriber, (err, data) => {
-      Log.showInfo(TAG, `createCapsuleSubscriberCallBack err: ${JSON.stringify(err)} data: ${JSON.stringify(data)}`);
+      Log.showInfo(TAG, `createCapsuleSubscriberCallBack err: ${err.code}`);
       if (err.code == 0) {
         const processingData = JSON.parse(data.data);
         if (processingData) {

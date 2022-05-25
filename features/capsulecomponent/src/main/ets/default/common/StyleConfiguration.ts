@@ -14,7 +14,7 @@
  */
 
 import StyleManager from '../../../../../../../common/src/main/ets/default/StyleManager';
-import Constants from './Constants'
+import Constants from './Constants';
 
 const TAG = 'capsule-StyleConfiguration';
 

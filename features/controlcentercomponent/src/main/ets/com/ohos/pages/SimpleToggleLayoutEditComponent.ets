@@ -13,34 +13,34 @@
  * limitations under the License.
  */
 
-import Log from '../../../../../../../../common/src/main/ets/default/Log'
-import Constants from '../common/Constants'
-import StyleConfiguration from '../common/StyleConfiguration'
-import SimpleToggleLayoutEditGrid from './SimpleToggleLayoutEditGrid'
-import SimpleToggleLayoutEditDialogComponent from './SimpleToggleLayoutEditDialogComponent'
+import Log from '../../../../../../../../common/src/main/ets/default/Log';
+import Constants from '../common/Constants';
+import StyleConfiguration from '../common/StyleConfiguration';
+import SimpleToggleLayoutEditGrid from './SimpleToggleLayoutEditGrid';
+import SimpleToggleLayoutEditDialogComponent from './SimpleToggleLayoutEditDialogComponent';
 
-const TAG = 'Control-SimpleToggleLayoutEditComponent'
-const TAG_SimpleToggleLayoutEditUpTitle = 'Control-SimpleToggleLayoutEditUpTitle'
-const TAG_SimpleToggleLayoutEditOptMsg = 'Control-SimpleToggleLayoutEditOptMsg'
+const TAG = 'Control-SimpleToggleLayoutEditComponent';
+const TAG_SimpleToggleLayoutEditUpTitle = 'Control-SimpleToggleLayoutEditUpTitle';
+const TAG_SimpleToggleLayoutEditOptMsg = 'Control-SimpleToggleLayoutEditOptMsg';
 
 @Component
 export default struct SimpleToggleLayoutEditComponent {
-  private mDisplayingToggles: string[] = []
-  private mHidingToggles: string[] = []
-  private mDefaultDisplayToggles: string[] = []
-  @Prop mColumnCount: number
-  private simpleToggleLayoutEditEndCallback: () => void
-  private onSaveDisplayingToggles: (toggles: string[]) => void
-  @State mNewDisplayingToggles: string[] = []
-  @State mNewHidingToggles: string[] = []
-  @State style: any = StyleConfiguration.getSimpleToggleLayoutEditComponentStyle()
-  @State mOptMsg: Resource = $r('app.string.control_center_simple_toggle_layout_edit_opt_desc')
-  private mDisplayingTogglesMaxCount: number = Constants.SIMPLE_TOGGLE_LAYOUT_MAX_TOGGLE_COUNT
-  private mDisplayingTogglesMinCount: number = Constants.SIMPLE_TOGGLE_LAYOUT_MIN_TOGGLE_COUNT
-  private mHidingTogglesMaxCount: number = 0
-  private mHidingTogglesMinCount: number = 0
-  @State mCurrentDragToggleName: string = ''
-  private titleDisplayInside: boolean = false
+  private mDisplayingToggles: string[] = [];
+  private mHidingToggles: string[] = [];
+  private mDefaultDisplayToggles: string[] = [];
+  @Prop mColumnCount: number;
+  private simpleToggleLayoutEditEndCallback: () => void;
+  private onSaveDisplayingToggles: (toggles: string[]) => void;
+  @State mNewDisplayingToggles: string[] = [];
+  @State mNewHidingToggles: string[] = [];
+  @State style: any = StyleConfiguration.getSimpleToggleLayoutEditComponentStyle();
+  @State mOptMsg: Resource = $r('app.string.control_center_simple_toggle_layout_edit_opt_desc');
+  private mDisplayingTogglesMaxCount: number = Constants.SIMPLE_TOGGLE_LAYOUT_MAX_TOGGLE_COUNT;
+  private mDisplayingTogglesMinCount: number = Constants.SIMPLE_TOGGLE_LAYOUT_MIN_TOGGLE_COUNT;
+  private mHidingTogglesMaxCount: number = 0;
+  private mHidingTogglesMinCount: number = 0;
+  @State mCurrentDragToggleName: string = '';
+  private titleDisplayInside: boolean = false;
   private backDialogController: CustomDialogController = new CustomDialogController({
     builder: SimpleToggleLayoutEditDialogComponent({
       title: $r("app.string.control_center_simple_toggle_layout_edit_back_confirm"),
@@ -68,22 +68,22 @@ export default struct SimpleToggleLayoutEditComponent {
   });
 
   aboutToAppear() {
-    Log.showInfo(TAG, 'aboutToAppear')
-    this.mNewDisplayingToggles = [...this.mDisplayingToggles]
-    this.mNewHidingToggles = [...this.mHidingToggles]
-    let allTogglesCount = this.mNewDisplayingToggles.length + this.mNewHidingToggles.length
-    this.mHidingTogglesMaxCount = allTogglesCount - this.mDisplayingTogglesMinCount
+    Log.showInfo(TAG, 'aboutToAppear');
+    this.mNewDisplayingToggles = [...this.mDisplayingToggles];
+    this.mNewHidingToggles = [...this.mHidingToggles];
+    let allTogglesCount = this.mNewDisplayingToggles.length + this.mNewHidingToggles.length;
+    this.mHidingTogglesMaxCount = allTogglesCount - this.mDisplayingTogglesMinCount;
     if (this.mHidingTogglesMaxCount < 0) {
-      this.mHidingTogglesMaxCount = 0
-    }
-    this.mHidingTogglesMinCount = allTogglesCount - this.mDisplayingTogglesMaxCount
+      this.mHidingTogglesMaxCount = 0;
+    };
+    this.mHidingTogglesMinCount = allTogglesCount - this.mDisplayingTogglesMaxCount;
     if (this.mHidingTogglesMinCount < 0) {
-      this.mHidingTogglesMinCount = 0
-    }
+      this.mHidingTogglesMinCount = 0;
+    };
   }
 
   aboutToDisappear() {
-    Log.showInfo(TAG, 'aboutToDisappear ')
+    Log.showInfo(TAG, 'aboutToDisappear ');
   }
 
   build() {
@@ -242,123 +242,123 @@ export default struct SimpleToggleLayoutEditComponent {
   }
 
   onSimpleToggleLayoutEditEnd() {
-    Log.showInfo(TAG, `onSimpleToggleLayoutEditEnd`)
-    let changed = JSON.stringify(this.mDisplayingToggles) != JSON.stringify(this.mNewDisplayingToggles)
-    Log.showInfo(TAG, `onSimpleToggleLayoutEditEnd, changed: ${changed}`)
+    Log.showDebug(TAG, `onSimpleToggleLayoutEditEnd`);
+    let changed = JSON.stringify(this.mDisplayingToggles) != JSON.stringify(this.mNewDisplayingToggles);
+    Log.showDebug(TAG, `onSimpleToggleLayoutEditEnd, changed: ${changed}`);
     if (changed) {
-      this.backDialogController.open()
+      this.backDialogController.open();
     } else {
-      this.callSimpleToggleLayoutEditEnd()
-    }
+      this.callSimpleToggleLayoutEditEnd();
+    };
   }
 
   callSimpleToggleLayoutEditEnd() {
-    Log.showInfo(TAG, `callSimpleToggleLayoutEditEnd`)
+    Log.showDebug(TAG, `callSimpleToggleLayoutEditEnd`);
     if (this.simpleToggleLayoutEditEndCallback) {
-      this.simpleToggleLayoutEditEndCallback()
-    }
+      this.simpleToggleLayoutEditEndCallback();
+    };
   }
 
   onResetBtnClick(event: ClickEvent) {
-    Log.showInfo(TAG, `onResetBtnClick`)
-    let equalDefault = JSON.stringify(this.mDefaultDisplayToggles) == JSON.stringify(this.mNewDisplayingToggles)
-    Log.showInfo(TAG, `onResetBtnClick, equalDefault: ${equalDefault}`)
+    Log.showDebug(TAG, `onResetBtnClick`);
+    let equalDefault = JSON.stringify(this.mDefaultDisplayToggles) == JSON.stringify(this.mNewDisplayingToggles);
+    Log.showDebug(TAG, `onResetBtnClick, equalDefault: ${equalDefault}`);
     if (!equalDefault) {
-      this.resetDialogController.open()
-    }
+      this.resetDialogController.open();
+    };
   }
 
   editResetConfirm() {
-    Log.showInfo(TAG, `editResetConfirm`)
-    this.resetData()
-    this.callSaveDisplayingToggles()
+    Log.showDebug(TAG, `editResetConfirm`);
+    this.resetData();
+    this.callSaveDisplayingToggles();
   }
 
   resetData(): void{
-    Log.showInfo(TAG, `resetData`)
-    let tempDisplayingToggles: string[] = [...this.mDefaultDisplayToggles]
-    let tempHidingToggles: string[] = []
+    Log.showDebug(TAG, `resetData`);
+    let tempDisplayingToggles: string[] = [...this.mDefaultDisplayToggles];
+    let tempHidingToggles: string[] = [];
     this.mDisplayingToggles.forEach((toggleName) => {
       if (tempDisplayingToggles.indexOf(toggleName) < 0) {
-        tempHidingToggles.push(toggleName)
-      }
+        tempHidingToggles.push(toggleName);
+      };
     })
     this.mHidingToggles.forEach((toggleName) => {
       if (tempDisplayingToggles.indexOf(toggleName) < 0) {
-        tempHidingToggles.push(toggleName)
-      }
+        tempHidingToggles.push(toggleName);
+      };
     })
-    this.mNewDisplayingToggles = tempDisplayingToggles
-    this.mNewHidingToggles = tempHidingToggles
-    this.mDisplayingToggles = [...tempDisplayingToggles]
-    this.mHidingToggles = [...tempHidingToggles]
-    Log.showInfo(TAG, `resetData, mNewDisplayingToggles: ${JSON.stringify(this.mNewDisplayingToggles)}`)
-    Log.showInfo(TAG, `resetData, mNewHidingToggles: ${JSON.stringify(this.mNewHidingToggles)}`)
+    this.mNewDisplayingToggles = tempDisplayingToggles;
+    this.mNewHidingToggles = tempHidingToggles;
+    this.mDisplayingToggles = [...tempDisplayingToggles];
+    this.mHidingToggles = [...tempHidingToggles];
+    Log.showDebug(TAG, `resetData, mNewDisplayingToggles: ${JSON.stringify(this.mNewDisplayingToggles)}`);
+    Log.showDebug(TAG, `resetData, mNewHidingToggles: ${JSON.stringify(this.mNewHidingToggles)}`);
   }
 
   onFinishBtnClick(event: ClickEvent) {
-    Log.showInfo(TAG, `onFinishBtnClick`)
-    let changed = JSON.stringify(this.mDisplayingToggles) != JSON.stringify(this.mNewDisplayingToggles)
-    Log.showInfo(TAG, `onFinishBtnClick, changed: ${changed}`)
+    Log.showDebug(TAG, `onFinishBtnClick`);
+    let changed = JSON.stringify(this.mDisplayingToggles) != JSON.stringify(this.mNewDisplayingToggles);
+    Log.showDebug(TAG, `onFinishBtnClick, changed: ${changed}`);
     if (changed) {
-      this.callSaveDisplayingToggles()
+      this.callSaveDisplayingToggles();
     }
-    this.callSimpleToggleLayoutEditEnd()
+    this.callSimpleToggleLayoutEditEnd();
   }
 
   callSaveDisplayingToggles(): void{
-    Log.showInfo(TAG, `callSaveDisplayingToggles`)
+    Log.showDebug(TAG, `callSaveDisplayingToggles`);
     if (this.onSaveDisplayingToggles) {
-      this.onSaveDisplayingToggles(this.mNewDisplayingToggles)
-    }
+      this.onSaveDisplayingToggles(this.mNewDisplayingToggles);
+    };
   }
 
   async onDisplayingGridItemDragStart(toggleName: string): Promise<void> {
-    Log.showInfo(TAG, `onDisplayingGridItemDragStart, toggleName: ${toggleName}`)
-    this.mCurrentDragToggleName = toggleName
-    this.setOptMsg(toggleName)
+    Log.showDebug(TAG, `onDisplayingGridItemDragStart, toggleName: ${toggleName}`);
+    this.mCurrentDragToggleName = toggleName;
+    this.setOptMsg(toggleName);
   }
 
   async onDisplayingGridItemDrop(status: string): Promise<void> {
-    Log.showInfo(TAG, `onDisplayingGridItemDrop, status: ${status}`)
-    this.setOptMsg(null)
+    Log.showDebug(TAG, `onDisplayingGridItemDrop, status: ${status}`);
+    this.setOptMsg(null);
   }
 
   async onHidingGridItemDragStart(toggleName: string): Promise<void> {
-    Log.showInfo(TAG, `onHidingGridItemDragStart, toggleName: ${toggleName}`)
-    this.mCurrentDragToggleName = toggleName
-    this.setOptMsg(toggleName)
+    Log.showDebug(TAG, `onHidingGridItemDragStart, toggleName: ${toggleName}`);
+    this.mCurrentDragToggleName = toggleName;
+    this.setOptMsg(toggleName);
   }
 
   async onHidingGridItemDrop(status: string): Promise<void> {
-    Log.showInfo(TAG, `onHidingGridItemDrop, status: ${status}`)
-    this.setOptMsg(null)
+    Log.showDebug(TAG, `onHidingGridItemDrop, status: ${status}`);
+    this.setOptMsg(null);
   }
 
   setOptMsg(toggleName: string): void {
-    Log.showInfo(TAG, `setOptMsg, toggleName: ${toggleName}`)
+    Log.showInfo(TAG, `setOptMsg, toggleName: ${toggleName}, toggleName.length: ${toggleName.length}`);
     if (!toggleName || toggleName.length == 0) {
-      this.mOptMsg = $r('app.string.control_center_simple_toggle_layout_edit_opt_desc')
-      return
+      this.mOptMsg = $r('app.string.control_center_simple_toggle_layout_edit_opt_desc');
+      return;
     }
     if (this.mNewDisplayingToggles.indexOf(toggleName) >= 0) {
       if (this.mNewDisplayingToggles.length <= this.mDisplayingTogglesMinCount) {
-        this.mOptMsg = $r('app.string.control_center_simple_toggle_layout_edit_opt_min', this.mDisplayingTogglesMinCount.toString())
+        this.mOptMsg = $r('app.string.control_center_simple_toggle_layout_edit_opt_min', this.mDisplayingTogglesMinCount.toString());
       } else {
-        this.mOptMsg = $r('app.string.control_center_simple_toggle_layout_edit_opt_drag')
+        this.mOptMsg = $r('app.string.control_center_simple_toggle_layout_edit_opt_drag');
       }
     } else if (this.mNewHidingToggles.indexOf(toggleName) >= 0) {
       if (this.mNewDisplayingToggles.length >= this.mDisplayingTogglesMaxCount) {
-        this.mOptMsg = $r('app.string.control_center_simple_toggle_layout_edit_opt_max', this.mDisplayingTogglesMaxCount.toString())
+        this.mOptMsg = $r('app.string.control_center_simple_toggle_layout_edit_opt_max', this.mDisplayingTogglesMaxCount.toString());
       } else {
-        this.mOptMsg = $r('app.string.control_center_simple_toggle_layout_edit_opt_drag')
+        this.mOptMsg = $r('app.string.control_center_simple_toggle_layout_edit_opt_drag');
       }
-    }
+    };
   }
 
   onComponentTouch(event: TouchEvent) {
-    Log.showInfo(TAG, `onComponentTouch`)
-    event.stopPropagation()
+    Log.showDebug(TAG, `onComponentTouch`);
+    event.stopPropagation();
   }
 }
 
@@ -368,11 +368,11 @@ struct SimpleToggleLayoutEditUpTitle {
   @State style: any = StyleConfiguration.getSimpleToggleLayoutEditUpTitleStyle()
 
   aboutToAppear() {
-    Log.showInfo(TAG_SimpleToggleLayoutEditUpTitle, 'aboutToAppear')
+    Log.showInfo(TAG_SimpleToggleLayoutEditUpTitle, 'aboutToAppear');
   }
 
   aboutToDisappear() {
-    Log.showInfo(TAG_SimpleToggleLayoutEditUpTitle, 'aboutToDisappear ')
+    Log.showInfo(TAG_SimpleToggleLayoutEditUpTitle, 'aboutToDisappear ');
   }
 
   build() {
@@ -398,22 +398,22 @@ struct SimpleToggleLayoutEditUpTitle {
   }
 
   backClick(event: ClickEvent) {
-    Log.showInfo(TAG_SimpleToggleLayoutEditUpTitle, `backClick, event: ${JSON.stringify(event)}`)
-    this.simpleToggleLayoutEditEndCallback()
+    Log.showDebug(TAG_SimpleToggleLayoutEditUpTitle, `backClick, event: ${JSON.stringify(event)}`);
+    this.simpleToggleLayoutEditEndCallback();
   }
 }
 
 @Component
 struct SimpleToggleLayoutEditOptMsg {
-  @Link mOptMsg: Resource
-  @State style: any = StyleConfiguration.getSimpleToggleLayoutEditOptMsgStyle()
+  @Link mOptMsg: Resource;
+  @State style: any = StyleConfiguration.getSimpleToggleLayoutEditOptMsgStyle();
 
   aboutToAppear() {
-    Log.showInfo(TAG_SimpleToggleLayoutEditOptMsg, 'aboutToAppear')
+    Log.showInfo(TAG_SimpleToggleLayoutEditOptMsg, 'aboutToAppear');
   }
 
   aboutToDisappear() {
-    Log.showInfo(TAG_SimpleToggleLayoutEditOptMsg, 'aboutToDisappear ')
+    Log.showInfo(TAG_SimpleToggleLayoutEditOptMsg, 'aboutToDisappear ');
   }
 
   build() {

@@ -20,7 +20,7 @@ import createOrGet from '../../../../../../../../common/src/main/ets/default/Sin
 const TAG = 'BluetoothModel';
 
 function isBluetoothOpen(state) {
-  Log.showInfo(TAG, `BluetoothState is: ${state}`)
+  Log.showInfo(TAG, `BluetoothState is: ${state}`);
   return state == bluetooth.BluetoothState.STATE_ON || state == bluetooth.BluetoothState.STATE_BLE_ON
   || state == bluetooth.BluetoothState.STATE_TURNING_ON || state == bluetooth.BluetoothState.STATE_BLE_TURNING_ON;
 }
@@ -31,7 +31,7 @@ export class BluetoothService {
   mIsBluetoothOpen: boolean = false;
 
   constructor() {
-    Log.showInfo(TAG, `constructor`)
+    Log.showDebug(TAG, `constructor`);
   }
 
   startService() {
@@ -48,14 +48,14 @@ export class BluetoothService {
         this.mListener?.updateState(this.mIsBluetoothOpen);
       }
     });
-    Log.showInfo(TAG, `startService, mIsBluetoothOpen: ${this.mIsBluetoothOpen}`)
+    Log.showInfo(TAG, `startService, mIsBluetoothOpen: ${this.mIsBluetoothOpen}`);
   }
 
   stopService() {
     if (!this.mIsStart) {
       return;
     }
-    Log.showInfo(TAG, `stopService`)
+    Log.showInfo(TAG, `stopService`);
     this.mIsStart = false;
     bluetooth.off('stateChange');
   }
@@ -63,9 +63,9 @@ export class BluetoothService {
   registerListener(listener: {
     'updateState': Function
   }) {
-    Log.showInfo(TAG, `registerListener, listener: ${listener}`)
+    Log.showInfo(TAG, `registerListener, listener: ${listener}`);
     this.mListener = listener;
-    this.mListener.updateState(this.mIsBluetoothOpen)
+    this.mListener.updateState(this.mIsBluetoothOpen);
   }
 
   getState(): boolean {
@@ -73,16 +73,16 @@ export class BluetoothService {
   }
 
   enableBluetooth(): boolean{
-    Log.showInfo(TAG, `enableBluetooth`)
+    Log.showInfo(TAG, `enableBluetooth`);
     let result = bluetooth.enableBluetooth();
-    Log.showInfo(TAG, `enableBluetooth, result: ${result}`)
+    Log.showInfo(TAG, `enableBluetooth, result: ${result}`);
     return result;
   }
 
   disableBluetooth(): boolean{
-    Log.showInfo(TAG, `disableBluetooth`)
+    Log.showInfo(TAG, `disableBluetooth`);
     let result = bluetooth.disableBluetooth();
-    Log.showInfo(TAG, `disableBluetooth, result: ${result}`)
+    Log.showInfo(TAG, `disableBluetooth, result: ${result}`);
     return result;
   }
 }

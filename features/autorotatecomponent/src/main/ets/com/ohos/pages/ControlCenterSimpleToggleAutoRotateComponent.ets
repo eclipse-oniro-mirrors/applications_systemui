@@ -13,25 +13,25 @@
  * limitations under the License.
  */
 
-import Log from '../../../../../../../../common/src/main/ets/default/Log'
+import Log from '../../../../../../../../common/src/main/ets/default/Log';
 import {AutoRotateData} from '../common/Constants';
-import ViewModel from '../viewmodel/AutoRotateVM'
-import SimpleToggleBase from '../../../../../../../../common/src/main/ets/template/SimpleToggleBase'
+import ViewModel from '../viewmodel/AutoRotateVM';
+import SimpleToggleBase from '../../../../../../../../common/src/main/ets/template/SimpleToggleBase';
 
-const TAG = 'autorotate-ControlCenterSimpleToggleAutoRotateComponent'
+const TAG = 'autorotate-ControlCenterSimpleToggleAutoRotateComponent';
 
 @Component
 export default struct ControlCenterSimpleToggleAutoRotateComponent {
-  private keyId: string
-  private mEditMode: boolean = false
-  private mDragMode: boolean = false
-  @State mIcon: Resource = $r("app.media.ic_controlcenter_auto_rotate_off")
-  @State mLabel: Resource = $r("app.string.control_center_complex_toggle_auto_rotate_title")
-  @State @Watch('onAutoRotateDataChange') mAutoRotateData: AutoRotateData = ViewModel.getAutoRotateData()
+  private keyId: string;
+  private mEditMode: boolean = false;
+  private mDragMode: boolean = false;
+  @State mIcon: Resource = $r("app.media.ic_controlcenter_auto_rotate_off");
+  @State mLabel: Resource = $r("app.string.control_center_complex_toggle_auto_rotate_title");
+  @State @Watch('onAutoRotateDataChange') mAutoRotateData: AutoRotateData = ViewModel.getAutoRotateData();
 
   aboutToAppear() {
-    Log.showInfo(TAG, 'aboutToAppear')
-    this.onAutoRotateDataChange('mAutoRotateData')
+    Log.showInfo(TAG, 'aboutToAppear');
+    this.onAutoRotateDataChange('mAutoRotateData');
   }
 
   aboutToDisappear() {
@@ -39,8 +39,8 @@ export default struct ControlCenterSimpleToggleAutoRotateComponent {
   }
 
   onAutoRotateDataChange(propName: string): void {
-    Log.showInfo(TAG, `onAutoRotateDataChange, propName: ${propName}`)
-    this.mIcon = this.mAutoRotateData.switchStatus ? $r("app.media.ic_controlcenter_auto_rotate_on") : $r("app.media.ic_controlcenter_auto_rotate_off")
+    Log.showDebug(TAG, `onAutoRotateDataChange, propName: ${propName}`);
+    this.mIcon = this.mAutoRotateData.switchStatus ? $r("app.media.ic_controlcenter_auto_rotate_on") : $r("app.media.ic_controlcenter_auto_rotate_off");
   }
 
   build() {
@@ -56,8 +56,8 @@ export default struct ControlCenterSimpleToggleAutoRotateComponent {
   }
 
   mClickEvent() {
-    Log.showInfo(TAG, `mClickEvent, status: ${this.mAutoRotateData.switchStatus}`)
-    let newStatus = !this.mAutoRotateData.switchStatus
-    ViewModel.processAutoRotateSwitchStatusChange(newStatus)
+    Log.showDebug(TAG, `mClickEvent, status: ${this.mAutoRotateData.switchStatus}`);
+    let newStatus = !this.mAutoRotateData.switchStatus;
+    ViewModel.processAutoRotateSwitchStatusChange(newStatus);
   }
 }
