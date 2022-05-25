@@ -35,7 +35,7 @@ export default class VolumeWindowController {
   constructor() {
     VolumePanelService.startService();
     VolumePanelService.registerListener(this);
-    Log.showInfo(TAG, `constructor done.`)
+    Log.showInfo(TAG, `constructor done.`);
   }
 
   setInterval(interval) {
@@ -43,19 +43,19 @@ export default class VolumeWindowController {
   }
 
   setWindowHandle(windowHandle) {
-    Log.showInfo(TAG, `setWindowHandle windowHandle：${windowHandle}`)
+    Log.showInfo(TAG, `setWindowHandle windowHandle：${windowHandle}`);
     this.mWindowHandle = windowHandle;
   }
 
   updateVolumeInfo(volumeInfo: VolumeInfo) {
-    Log.showInfo(TAG, `updateVolumeInfo, volumeInfo: ${JSON.stringify(volumeInfo)} `)
+    Log.showDebug(TAG, `updateVolumeInfo, volumeInfo: ${JSON.stringify(volumeInfo)} `);
     if (volumeInfo && !volumeInfo.updateUi && !this.mIsWindowShown) {
       return;
     }
     this.setWindowState(true);
     this.mLastActionTime = (new Date()).getTime();
     setTimeout(() => {
-      Log.showInfo(TAG, `check need hide window or not.`)
+      Log.showInfo(TAG, `check need hide window or not.`);
       if ((new Date()).getTime() - this.mLastActionTime >= this.mInterval) {
         this.setWindowState(false);
       }
@@ -65,7 +65,7 @@ export default class VolumeWindowController {
   setWindowState(isShow: boolean) {
     Log.showInfo(TAG, `setWindowState ${isShow}.`);
     if (this.mIsWindowShown == isShow) {
-      Log.showInfo(TAG, `Neen't set volueme window state.`)
+      Log.showInfo(TAG, `Neen't set volueme window state.`);
       return;
     }
     if (this.mWindowHandle) {
@@ -74,7 +74,7 @@ export default class VolumeWindowController {
         .then(() => {
           Log.showInfo(TAG, `updateShowStatus ${isShow}.`);
         })
-        .catch((err) => Log.showInfo(TAG, `Can't set volueme window: ${err}.`))
+        .catch((err) => Log.showError(TAG, `Can't set volueme window: ${JSON.stringify(err)}.`));
     }
   }
 }

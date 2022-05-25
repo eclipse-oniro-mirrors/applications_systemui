@@ -26,9 +26,9 @@ export default class NoDisturbingModel {
   static getNoDisturbingDate(callback) {
     Notification.getDoNotDisturbDate((error, data) => {
       if (error.code != 0) {
-        Log.showInfo(TAG, 'getNoDisturbingDate error:' + JSON.stringify(error));
+        Log.showError(TAG, 'getNoDisturbingDate error:' + JSON.stringify(error));
       } else {
-        Log.showInfo(TAG, 'getNoDisturbingDate data:' + JSON.stringify(data));
+        Log.showDebug(TAG, 'getNoDisturbingDate data:' + JSON.stringify(data));
         let noDisturbingData = {}
         noDisturbingData['type'] = data.type
         if (data.type == DoNotDisturbType.TYPE_CLEARLY) {
@@ -48,9 +48,8 @@ export default class NoDisturbingModel {
     targetDate['type'] = noDisturbingTime.type
     targetDate['begin'] = noDisturbingTime.begin
     targetDate['end'] = noDisturbingTime.end
-    Log.showInfo(TAG, `Notification.setDoNotDisturbDate targetDate['type'] : ` + JSON.stringify(targetDate['type']));
-    Log.showInfo(TAG, `Notification.setDoNotDisturbDate targetDate['begin'] : ` + JSON.stringify(targetDate['begin']));
-    Log.showInfo(TAG, `Notification.setDoNotDisturbDate targetDate['end'] : ` + JSON.stringify(targetDate['end']));
+    Log.showDebug(TAG, `setDoNotDisturbDate targetDate['type'] : ` + JSON.stringify(targetDate['type']) +
+    ` ['begin'] : ` + JSON.stringify(targetDate['begin']) + ` ['end'] : ` +  JSON.stringify(targetDate['end']));
     Notification.setDoNotDisturbDate(targetDate, callback)
   }
   static formatDate (data: Date): string {

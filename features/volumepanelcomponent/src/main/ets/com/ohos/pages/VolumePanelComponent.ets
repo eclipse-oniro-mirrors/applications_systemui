@@ -31,12 +31,12 @@ export default struct VolumePanelComponent {
   @State style: any = StyleConfiguration.getVolumePanelComponentStyle()
 
   aboutToAppear() {
-    Log.showInfo(TAG, 'aboutToAppear')
+    Log.showInfo(TAG, 'aboutToAppear');
     ViewModel.initViewModel()
   }
 
   aboutToDisappear() {
-    Log.showInfo(TAG, 'aboutToDisappear')
+    Log.showInfo(TAG, 'aboutToDisappear');
   }
 
   build() {
@@ -124,7 +124,7 @@ export default struct VolumePanelComponent {
   }
 
   getVolumeIcon(isMute, volume, maxVolume, minVolume) {
-    Log.showInfo(TAG, `getVolumeIcon, isMute: ${isMute} volume: ${volume} maxVolume: ${maxVolume} minVolume: ${minVolume}`)
+    Log.showInfo(TAG, `getVolumeIcon, isMute: ${isMute} volume: ${volume} maxVolume: ${maxVolume} minVolume: ${minVolume}`);
     let icon
     if (isMute) {
       icon = $r('app.media.ic_public_mute')
@@ -143,17 +143,17 @@ export default struct VolumePanelComponent {
   }
 
   onVolumeChange(value: number, mode: SliderChangeMode) {
-    Log.showInfo(TAG, `onVolumeChange, value: ${value} mode: ${mode}`)
+    Log.showInfo(TAG, `onVolumeChange, value: ${value} mode: ${mode}`);
     ViewModel.setVolume(value)
   }
 
   onMuteBtnClick(event: ClickEvent) {
-    Log.showInfo(TAG, `onMuteBtnClick`)
+    Log.showInfo(TAG, `onMuteBtnClick`);
     ViewModel.mute()
   }
 
   onSettingsBtnClick(event: ClickEvent) {
-    Log.showInfo(TAG, `onSettingsBtnClick`)
+    Log.showInfo(TAG, `onSettingsBtnClick`);
     AbilityManager.startAbility({
       bundleName: 'com.ohos.settings',
       abilityName: 'com.ohos.settings.MainAbility',

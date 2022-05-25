@@ -42,13 +42,13 @@ export default struct GeneralItem {
   }
 
   aboutToAppear() {
-    Log.showInfo(TAG, `aboutToAppear Start`)
+    Log.showInfo(TAG, `aboutToAppear Start`);
     if (CheckEmptyUtils.isEmpty(this.itemData.largeIcon)) {
       this.hasPicture = false;
     } else {
       this.hasPicture = true;
     }
-    this.needExpand = this.checkItemNeedExpand()
+    this.needExpand = this.checkItemNeedExpand();
     ViewModel.getDistributedDeviceName(this.itemData).then((deviceName) => {
       this.distributedDeviceName = deviceName;
     })
@@ -102,7 +102,7 @@ struct ContentComponent {
   itemData: any;
 
   aboutToAppear() {
-    Log.showInfo(TAG, `aboutToDisappear pict: ${this.itemData.picture}`);
+    Log.showInfo(TAG, `aboutToAppear pict: ${this.itemData.picture}`);
   }
 
   build() {

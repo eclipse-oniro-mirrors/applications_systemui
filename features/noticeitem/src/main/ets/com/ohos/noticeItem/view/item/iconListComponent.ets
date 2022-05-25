@@ -86,7 +86,7 @@ export default struct IconListComponent {
   ]
 
   aboutToAppear() {
-    Log.showInfo(TAG, `iconConfigs: ${JSON.stringify(this.iconConfigs)}`)
+    Log.showInfo(TAG, `iconConfigs: ${JSON.stringify(this.iconConfigs)}`);
     iconSize = this.iconConfigs.length;
   }
 

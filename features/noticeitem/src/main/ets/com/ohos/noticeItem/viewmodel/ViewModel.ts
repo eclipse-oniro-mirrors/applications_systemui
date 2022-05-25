@@ -50,7 +50,7 @@ export class ViewModel {
     SwitchUserManager.getInstance()
       .getCurrentUserInfo()
       .then((userInfo) => this.registerCallback(userInfo.userId))
-      .catch((err) => Log.showError(TAG, `Can't get current user, err: ${err}`));
+      .catch((err) => Log.showError(TAG, `Can't get current user, err: ${JSON.stringify(err)}`));
   }
 
   registerCallback(userId) {
@@ -83,7 +83,7 @@ export class ViewModel {
    */
   onNotificationConsume(notificationItemData) {
     if (notificationItemData === undefined) {
-      Log.showInfo(TAG, `onNotificationConsume notificationItemData is undefined`);
+      Log.showError(TAG, `onNotificationConsume notificationItemData is undefined`);
       return;
     }
     this.onNotificationCancel(notificationItemData.hashcode)
@@ -111,13 +111,12 @@ export class ViewModel {
    * notification CancelCallback
    */
   onNotificationCancel(hashCode: string) {
-    Log.showInfo(TAG, `onNotificationCancel hashCode: ${JSON.stringify(hashCode)}`);
+    Log.showInfo(TAG, `onNotificationCancel hashCode: ` + hashCode);
+
     // Common Notification Deletion Logic Processing
     for (let i = 0, len = this.mNotificationList.length; i < len; i++) {
       if (this.mNotificationList[i].hashcode == hashCode) {
-        Log.showInfo(TAG, `removeNotificationItem i = ${i}`);
         let removeItemArr = this.mNotificationList.splice(i, 1);
-        Log.showInfo(TAG, `onNotificationCancel removeItemArr= ${JSON.stringify(removeItemArr)}`);
         if (!CheckEmptyUtils.isEmpty(removeItemArr)) {
           this.updateFlowControlInfos(removeItemArr[0].bundleName, false)
         }
@@ -128,8 +127,7 @@ export class ViewModel {
   }
 
   updateNotification() {
-    Log.showInfo(TAG, `updateNotification list: ${JSON.stringify(this.mNotificationList)}`);
-    Log.showInfo(TAG, `updateNotification length: ${this.mNotificationList.length}`);
+    Log.showInfo(TAG, `updateNotification length: ${this.mNotificationList.length} list: ${JSON.stringify(this.mNotificationList)}`);
     this.sortNotification()
     let notificationList = this.groupByGroupName();
     AppStorage.SetOrCreate('notificationList', notificationList);
@@ -191,18 +189,16 @@ export class ViewModel {
     } else {
       let index = this.mNotificationList.length
       while (index--) {
-        Log.showInfo(TAG, `removeAllNotifications isRemoveAllowed: ${index}  ${this.mNotificationList[index].isRemoveAllowed} `);
-        Log.showInfo(TAG, `removeAllNotifications isOngoing: ${index}  ${this.mNotificationList[index].isOngoing} `);
-        Log.showInfo(TAG, `removeAllNotifications isUnremovable: ${index}  ${this.mNotificationList[index].isUnremovable} `);
+        Log.showInfo(TAG, `removeAllNotifications isRemoveAllowed: ${index}  ${this.mNotificationList[index].isRemoveAllowed}
+        isOngoing: ${this.mNotificationList[index].isOngoing} isUnremovable: ${this.mNotificationList[index].isUnremovable}`);
 
         //Except the Long term notifications
         if (this.mNotificationList[index].isRemoveAllowed &&
         !this.mNotificationList[index].isOngoing && !this.mNotificationList[index].isUnremovable) {
-          Log.showInfo(TAG, `mNotificationList[${index}].hashcode: ${this.mNotificationList[index].hashcode}`);
           let hashCode = this.mNotificationList[index].hashcode
           this.removeSysNotificationItem(hashCode)
           let removeItemArr = this.mNotificationList.splice(index, 1)
-          Log.showInfo(TAG, `removeAllNotifications removeItemArr= ${JSON.stringify(removeItemArr)}`);
+          Log.showInfo(TAG, `removeAllNotifications hashCode = ${hashCode}, removeItemArr = ${JSON.stringify(removeItemArr)}`);
           if (!CheckEmptyUtils.isEmpty(removeItemArr)) {
             this.updateFlowControlInfos(removeItemArr[0].bundleName, false)
           }
@@ -216,9 +212,7 @@ export class ViewModel {
     Log.showInfo(TAG, `removeNotificationItem, hashcode: ${itemData.hashcode}`);
     for (let i = 0, len = this.mNotificationList.length; i < len; i++) {
       if (this.mNotificationList[i].hashcode == itemData.hashcode) {
-        Log.showInfo(TAG, `removeNotificationItem i = ${i}`);
         let removeItemArr = this.mNotificationList.splice(i, 1);
-        Log.showInfo(TAG, `removeNotificationItem removeItemArr= ${JSON.stringify(removeItemArr)}`);
         if (!CheckEmptyUtils.isEmpty(removeItemArr)) {
           this.updateFlowControlInfos(removeItemArr[0].bundleName, false)
         }
@@ -237,11 +231,10 @@ export class ViewModel {
     let groupName = itemData.groupName
     for (let i = 0, len = this.mNotificationList.length; i < len; i++) {
       if (this.mNotificationList[i].groupName == groupName) {
-        Log.showInfo(TAG, `removeGroupNotification i = ${i}`);
         let id = this.mNotificationList[i].id
         let hashcode = this.mNotificationList[i].hashcode
         let removeItemArr = this.mNotificationList.splice(i, 1);
-        Log.showInfo(TAG, `removeGroupNotification removeItemArr= ${JSON.stringify(removeItemArr)}`);
+        Log.showInfo(TAG, `removeGroupNotification i = ${i} removeItemArr= ${JSON.stringify(removeItemArr)}`);
         if (!CheckEmptyUtils.isEmpty(removeItemArr)) {
           this.updateFlowControlInfos(removeItemArr[0].bundleName, false)
         }
@@ -361,7 +354,7 @@ export class ViewModel {
           this.audioPlayer.play();
           Log.showInfo(TAG, `sound end `);
         } catch (e) {
-          Log.showInfo(TAG, `sound notificationItem id：${itemData.id} alert error: ${e.toString()}`);
+          Log.showError(TAG, `sound error: ${JSON.stringify(e)}`);
         }
       }
     }
@@ -401,9 +394,7 @@ export class ViewModel {
 
   //get distributed device name
   getDistributedDeviceName(itemData): Promise<string>{
-    Log.showInfo(TAG, `getDistributedDeviceName`);
-    Log.showInfo(TAG, `getDistributedDeviceName itemData want:${JSON.stringify(itemData.want)}`);
-    Log.showInfo(TAG, `getDistributedDeviceName itemData deviceId:${itemData.deviceId}`);
+    Log.showInfo(TAG, `getDistributedDeviceName itemData want:${JSON.stringify(itemData.want)} deviceId:${itemData.deviceId}`);
 
     return new Promise((resolve) => {
       let deviceName: string = '';

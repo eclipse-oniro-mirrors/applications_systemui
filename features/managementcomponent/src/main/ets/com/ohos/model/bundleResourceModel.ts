@@ -28,7 +28,6 @@ export default class BundleResourceModel {
 
   async getAllBundleInfos() {
     let userId =(await SwitchUserManager.getInstance().getCurrentUserInfo()).userId;
-    Log.showInfo(TAG, 'getAllBundleInfos entry, userId = ：' + userId);
     Bundle.getAllBundleInfo(IS_INCLUDE_ABILITY_INFO, userId)
       .then((data) => {
         this.getIconItem(INDEX, data.length, data);
@@ -41,7 +40,7 @@ export default class BundleResourceModel {
     let imageValue = '';
     let label = '';
     let that = this;
-    Log.showInfo(TAG, 'getIconItem data[index].name :' + data[index].name);
+    Log.showDebug(TAG, 'getIconItem data[index].name :' + data[index].name);
     try {
       let bundleContext = await AbilityManager.getContext().createBundleContext(data[index].name);
       let bundleResourceManager = await bundleContext.resourceManager;
@@ -49,30 +48,26 @@ export default class BundleResourceModel {
       let appInfo = data[index].appInfo;
       if (appInfo.labelId > 0) {
         bundleResourceManager.getString(appInfo.labelId, (error, value) => {
-          Log.showInfo(TAG, 'getIconItem ResMgr.getResourceManager  value.length:' + value.length);
           if (value != null) {
-            Log.showInfo(TAG, 'getIconItem ResMgr.getResourceManager getString() value:' + value);
+            Log.showDebug(TAG, 'getIconItem ResMgr.getResourceManager getString() value:' + value);
             label = value;
-            Log.showInfo(TAG, 'getIconItem ResMgr.getResourceManager getString() label:' + label);
           } else {
-            Log.showInfo(TAG, 'getIconItem ResMgr.getResourceManager getString() error:' + error);
+            Log.showError(TAG, 'getIconItem ResMgr.getResourceManager getString() error:' + error);
           }
         });
       } else {
-        Log.showInfo(TAG, 'getIconItem ResMgr.getResourceManager label:' + appInfo.label);
         label = appInfo.label;
       }
-      Log.showInfo(TAG, 'getIconItem ResMgr.getResourceManager finish label:' + label);
+      Log.showDebug(TAG, 'getIconItem ResMgr.getResourceManager finish label:' + label);
       if (appInfo.iconId <= 0) {
         this.nextIconItem(index, count, data, this.mBundleInfoList, that)
         return
       }
       bundleResourceManager.getMediaBase64(appInfo.iconId, (error, value) => {
         if (error === undefined) {
-          Log.showInfo(TAG, 'getIconItem ResMgr.getMediaBase64() value:' + value.length);
+          Log.showDebug(TAG, 'getIconItem ResMgr.getMediaBase64() value:' + value.length);
           if (value.length > 0) {
             imageValue = value;
-            Log.showInfo(TAG, 'getIconItem ResMgr.getMediaBase64() imageValue:' + imageValue);
           }
           this.mBundleInfoList.push({
             appIcon: imageValue,
@@ -91,44 +86,39 @@ export default class BundleResourceModel {
         this.nextIconItem(index, count, data, this.mBundleInfoList, that)
       });
     } catch (error) {
-      Log.showInfo(TAG, 'getIconItem catch error:' + error);
+      Log.showError(TAG, `getMediaBase64 err:${JSON.stringify(error)}`);
     }
-    Log.showInfo(TAG, 'getIconItem end');
   }
 
   nextIconItem(index, count, data, bundleInfoList, that) {
+    Log.showInfo(TAG, 'nextIconItem index:' + index + ' | count:' + count);
     if (count - 1 > index) {
-      Log.showInfo(TAG, 'nextIconItem if index:' + index + ' | count:' + count);
       index = index + 1;
       that.getIconItem(index, count, data);
     } else {
-      Log.showInfo(TAG, 'nextIconItem else index:' + index + ' | count:' + count);
       AppStorage.SetOrCreate('appManagementList', bundleInfoList);
     }
   }
 
   async getBundleInfo(bundleName, callback) {
-    Log.showInfo(TAG, 'getBundleInfo entry');
     let mBundleInfo: any = {};
     let label = '';
 
-    let userInfo = await SwitchUserManager.getInstance().getCurrentUserInfo()
-    Log.showInfo(TAG, `getBundleInfo UserID:${JSON.stringify(userInfo)}`);
+    let userInfo = await SwitchUserManager.getInstance().getCurrentUserInfo();
 
     Bundle.getBundleInfo(bundleName, IS_INCLUDE_ABILITY_INFO, {
       userId: userInfo.userId
     }).then((data) => {
       Log.showInfo(TAG, `getBundleInfo bundleInfo:${JSON.stringify(data)}`);
       ResMgr.getResourceManager(AbilityManager.getContext(), data.name, (error, item) => {
-        Log.showInfo(TAG, `getBundleInfo getResourceManager getString() item:${JSON.stringify(item)}`);
         let appInfo = data.appInfo;
         if (appInfo.labelId > 0) {
           item.getString(appInfo.labelId, (error, value) => {
             if (value != null) {
-              Log.showInfo(TAG, `getBundleInfo getResourceManager getString() value:${JSON.stringify(value)}`);
+              Log.showDebug(TAG, `getBundleInfo getResourceManager getString() value: ` + value);
               mBundleInfo.appTitle = value
             } else {
-              Log.showInfo(TAG, `getBundleInfo getResourceManager getString() error:${JSON.stringify(error)}`);
+              Log.showError(TAG, `getBundleInfo getResourceManager getString() error:${JSON.stringify(error)}`);
             }
           });
         }
@@ -142,11 +132,10 @@ export default class BundleResourceModel {
         mBundleInfo.appUid = data.uid
         mBundleInfo.systemApp = appInfo.systemApp
 
-        Log.showInfo(TAG, 'getBundleInfo getResourceManager label:' + label);
+        Log.showDebug(TAG, 'getBundleInfo getResourceManager label:' + label);
         if (appInfo.iconId > 0) {
           item.getMediaBase64(appInfo.iconId, (error, imageValue) => {
             if (!!imageValue) {
-              Log.showInfo(TAG, 'getBundleInfo getResourceManager getMediaBase64 value:' + imageValue.length);
               mBundleInfo.appIcon = imageValue
             }
             callback(mBundleInfo);

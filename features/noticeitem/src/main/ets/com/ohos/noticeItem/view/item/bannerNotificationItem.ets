@@ -56,18 +56,18 @@ export default struct BannerNotificationItem {
   expandPaddingBottom: number = Layout.EXPAND_PADDING_BOTTOM;
 
   aboutToAppear() {
-    Log.showInfo(TAG, `aboutToAppear Start`)
-    setAppBgColor('#00000000')
+    Log.showInfo(TAG, `aboutToAppear Start`);
+    setAppBgColor('#00000000');
     this.mCloseEnableFlg = false;
     this.mDefaultBannerRect = AbilityManager.getAbilityData(AbilityManager.ABILITY_NAME_BANNER_NOTICE, 'bannerRect');
     setTimeout(() => {
       this.hideWindowForTimeout();
     }, this.mInterval);
-    Log.showInfo(TAG, `aboutToAppear End`)
+    Log.showInfo(TAG, `aboutToAppear End`);
   }
 
   aboutToDisappear() {
-    Log.showInfo(TAG, `aboutToDisAppear`)
+    Log.showInfo(TAG, `aboutToDisAppear`);
   }
 
   build() {
@@ -159,7 +159,7 @@ export default struct BannerNotificationItem {
   }
 
   hideWindowForTimeout() {
-    Log.showInfo(TAG, `check need hide window or not.`)
+    Log.showInfo(TAG, `check need hide window or not.`);
     if ((new Date()).getTime() - this.mLastActionTime >= this.mInterval) {
       if (this.mCloseEnableFlg) {
         this.mLastActionTime = (new Date()).getTime();
@@ -182,7 +182,7 @@ export default struct BannerNotificationItem {
   }
 
   showDevicesDialog() {
-    Log.showInfo(TAG, `showDevicesDialog`)
+    Log.showInfo(TAG, `showDevicesDialog`);
     if (!this.want?.distributedOption?.isDistributed) {
       ViewModel.clickItem(this.want);
       this.onBannerNoticeHide();
@@ -203,7 +203,7 @@ export default struct BannerNotificationItem {
   }
 
   selectedDevice(deviceID) {
-    Log.showInfo(TAG, `selectedDevice deviceID:${deviceID}`)
+    Log.showInfo(TAG, `selectedDevice deviceID:${deviceID}`);
     this.nowWant.deviceId = deviceID;
     let triggerInfo = {
       code: 0,
@@ -229,8 +229,7 @@ struct ContentComponent {
   itemData: any;
 
   aboutToAppear() {
-    Log.showInfo(TAG, `aboutToDisappear pict: ${this.itemData.picture}`);
-    Log.showInfo(TAG, `NotificationItemData: ${JSON.stringify(this.itemData)}`)
+    Log.showInfo(TAG, `aboutToAppear NotificationItemData: ${JSON.stringify(this.itemData)}`);
   }
 
   build() {

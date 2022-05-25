@@ -46,81 +46,78 @@ export class NotificationListener {
   }
 
   handleEnabledNotificationChanged(data) {
-    Log.showInfo(TAG, `handleEnabledNotificationChanged data:${JSON.stringify(data)} `);
+    Log.showDebug(TAG, `handleEnabledNotificationChanged data:${JSON.stringify(data)} `);
     this.listeners.forEach((listener) => {
-      Log.showInfo(TAG, `handleEnabledNotificationChanged listener:${listener.bundle}`);
       if (!!listener && listener.bundle == data.bundle) {
-        Log.showInfo(TAG, `handleEnabledNotificationChanged call:${listener.bundle} ${data.enable}`);
         listener.onEnableChanged(data.enable);
+      } else {
+        Log.showError(TAG, `handleEnabledNotificationChanged error`);
       }
     })
   }
 
   register(listener: EnableListener) {
-    Log.showInfo(TAG, `register listener:${JSON.stringify(listener)}`)
     this.listeners.add(listener);
-    Log.showInfo(TAG, `register finished`)
+    Log.showInfo(TAG, `register finished`);
   }
 
   unRegister(listener: EnableListener) {
-    Log.showInfo(TAG, `unRegister`)
     this.listeners.delete(listener);
-    Log.showInfo(TAG, `unRegister finished`)
+    Log.showInfo(TAG, `unRegister finished`);
   }
 
   unRegisterAll() {
-    Log.showInfo(TAG, `unRegisterAll`)
     this.listeners.clear();
-    Log.showInfo(TAG, `unRegisterAll finished`)
+    Log.showInfo(TAG, `unRegisterAll finished`);
   }
 
   isNotificationEnabled(bundleOption): Promise<boolean> {
-    Log.showInfo(TAG, `isNotificationEnabled bundleOption:${JSON.stringify(bundleOption)} `)
+    Log.showDebug(TAG, `isNotificationEnabled bundleOption:${JSON.stringify(bundleOption)} `)
     return new Promise((resolve, reject) => {
       Notification.isNotificationEnabled(bundleOption, (err, data) => {
         Log.showInfo(TAG, `isNotificationEnabled callback data:${JSON.stringify(data)} err:${JSON.stringify(err)}`)
         if (!!data) {
-          resolve(data)
+          resolve(data);
         } else {
-          reject(err)
+          reject(err);
         }
       })
     });
   }
 
   enableNotification(bundleOption, data) {
-    Log.showInfo(TAG, `enableNotification bundleOption:${JSON.stringify(bundleOption)} data:${JSON.stringify(data)}`)
+    Log.showDebug(TAG, `enableNotification bundleOption:${JSON.stringify(bundleOption)} data:${JSON.stringify(data)}`)
     let enableValue: boolean = data ? true : false
     Notification.enableNotification(bundleOption, enableValue, (err, result) => {
-      Log.showInfo(TAG, `enableNotification err:${JSON.stringify(err)} result:${JSON.stringify(result)} `)
+      Log.showInfo(TAG, `enableNotification err:${JSON.stringify(err)} result:${JSON.stringify(result)}`);
     })
   }
 
   notificationSlotSet(bundleOption, data) {
-    Log.showInfo(TAG, `notificationSlotSet bundleOption:${JSON.stringify(bundleOption)} data:${JSON.stringify(data)}`)
+    Log.showDebug(TAG, `notificationSlotSet bundleOption:${JSON.stringify(bundleOption)} data:${JSON.stringify(data)}`);
     Notification.setSlotByBundle(bundleOption, data, (err, result) => {
-      Log.showInfo(TAG, `notificationSlotSet err:${JSON.stringify(err)} result:${JSON.stringify(result)} `)
+      Log.showInfo(TAG, `notificationSlotSet err:${JSON.stringify(err)} result:${JSON.stringify(result)}`);
     })
   }
 
   isDistributedEnabled(): Promise<boolean> {
-    Log.showInfo(TAG, `isDistributedEnabled`)
+    Log.showInfo(TAG, `isDistributedEnabled`);
     return new Promise((resolve, reject) => {
       Notification.isDistributedEnabled().then((data) => {
-        Log.showInfo(TAG, `isDistributedEnabled data:${data}`)
+        Log.showInfo(TAG, `isDistributedEnabled data:${data}`);
         resolve(data);
       }).catch((err) => {
-        Log.showInfo(TAG, `isDistributedEnabled err:${JSON.stringify(err)} `)
-        reject(err)
+        Log.showError(TAG, `isDistributedEnabled err:${JSON.stringify(err)}`);
+        reject(err);
       })
     });
   }
 
   enableDistributed(data) {
-    Log.showInfo(TAG, `enableDistributed data:${JSON.stringify(data)}`)
+    Log.showDebug(TAG, `enableDistributed data:${JSON.stringify(data)}`);
     let enableValue: boolean = data ? true : false
     Notification.enableDistributed(enableValue, (err, result) => {
-      Log.showInfo(TAG, `enableDistributed err:${JSON.stringify(err)} result:${JSON.stringify(result)} `)
+      Log.showInfo(TAG, `enableDistributed err:${JSON.stringify(err)} result:${JSON.stringify(result)}`);
     })
   }
 }

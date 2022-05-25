@@ -30,17 +30,17 @@ export default struct NoDisturbComponent {
   @State mRefreshCnt: number = 0;
 
   aboutToAppear(): void{
-    Log.showInfo(TAG, `aboutToAppear`)
-    this.mViewModel.ViewModelInit()
+    Log.showInfo(TAG, `aboutToAppear`);
+    this.mViewModel.ViewModelInit();
     this.mPrevGetCnt = 0;
-    this.mRefreshCnt++
+    this.mRefreshCnt++;
   }
 
   onRefresh(propName: string): void {
-    Log.showInfo(TAG, `onRefresh`)
-    this.mViewModel.ViewModelInit()
+    Log.showInfo(TAG, `onRefresh`);
+    this.mViewModel.ViewModelInit();
     this.mPrevGetCnt = 0;
-    this.mRefreshCnt++
+    this.mRefreshCnt++;
   }
 
   build() {
@@ -113,7 +113,7 @@ export default struct NoDisturbComponent {
           .height($r('app.float.toggle_comp_height'))
           .selectedColor($r("app.color.font_color_007DFF"))
           .onChange((data) => {
-            Log.showInfo(TAG, `Toggle onChange param: data = ${data}`)
+            Log.showInfo(TAG, `Toggle onChange param: data = ${data}`);
             if (this.mPrevGetCnt == 0) {
               this.mPrevReapMode = this.mViewModel.repeatMode
               if (this.mPrevReapMode == DoNotDisturbType.TYPE_NONE) {

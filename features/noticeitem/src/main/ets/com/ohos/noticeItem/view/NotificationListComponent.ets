@@ -34,11 +34,11 @@ export default struct NotificationListComponent {
   }
 
   aboutToAppear() {
-    Log.showInfo(TAG, `notificationList, aboutToAppear`)
+    Log.showDebug(TAG, `notificationList, aboutToAppear`);
   }
 
   aboutToDisappear() {
-    Log.showInfo(TAG, `aboutToDisAppear`);
+    Log.showDebug(TAG, `aboutToDisAppear`);
   }
 
   build() {

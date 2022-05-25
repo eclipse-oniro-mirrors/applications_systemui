@@ -14,7 +14,6 @@
  */
 
 export default class Constants {
-
     static WH_45_100 = '45%';
     static WH_50_100 = '50%';
     static WH_60_100 = '60%';

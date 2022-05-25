@@ -51,25 +51,23 @@ class StatusBarConfiguration {
     while (displayData == null) {
       await display.getDefaultDisplay()
         .then((res) => {
-          Log.showInfo(TAG, `getDefaultDisplay dis ${JSON.stringify(res)}`);
           displayData = res;
           maxWidth = res.width;
           maxHeight = res.height;
           Log.showInfo(TAG, `getDefaultDisplay maxWidth ${maxWidth} maxHeight ${maxHeight} minHeight ${minHeight}`);
         })
         .catch((err) => {
-          Log.showInfo(TAG, 'getDefaultDisplay err: ' + err);
+          Log.showError(TAG, `getDefaultDisplay err:${JSON.stringify(err)}`);
         });
       await new Promise((resolve) => setTimeout(resolve, 2000));
     }
   }
 
   async getDirectionAndPosition() {
-    Log.showInfo(TAG, 'getDirectionAndPosition' + 1);
+    Log.showInfo(TAG, 'getDirectionAndPosition');
     directionStatus = await ResourceUtil.getConfiguration();
-    Log.showInfo(TAG, 'getDirectionAndPosition' + 2);
     if (directionStatus.direction == -1) {
-      Log.showInfo(TAG, 'getDirectionAndPosition' + 3);
+      Log.showInfo(TAG, 'direction is -1');
       statusbarPosition = await ResourceUtil.getString($r("app.string.status_bar_position_landscape"))
       shortSideLength = await ResourceUtil.getString($r("app.string.status_bar_size_landscape"));
     } else if (directionStatus.direction == 1) {
@@ -79,11 +77,9 @@ class StatusBarConfiguration {
       statusbarPosition = await ResourceUtil.getString($r("app.string.status_bar_position_portrait"))
       shortSideLength = await ResourceUtil.getString($r("app.string.status_bar_size_portrait"));
     }
-    Log.showInfo(TAG, 'getDirectionAndPosition' + 4);
     shortSideLength = parseInt(shortSideLength) + '';
-    Log.showInfo(TAG, 'directionStatus = ' + directionStatus.direction);
-    Log.showInfo(TAG, 'statusbarPosition = ' + statusbarPosition);
-    Log.showInfo(TAG, 'lpx2px(parseInt(shortSideLength)) = ' + shortSideLength);
+    Log.showInfo(TAG, 'directionStatus = ' + directionStatus.direction + 'statusbarPosition = ' + statusbarPosition +
+    'shortSideLength = ' + shortSideLength);
   }
 
 /**
@@ -95,9 +91,8 @@ class StatusBarConfiguration {
     let showHorizontal = false;
     let ableToMaximize = false;
     if (statusbarPosition == Position.TOP_POSITION || statusbarPosition == Position.BOTTOM_POSITION) {
-      Log.showInfo(TAG, `showHorizontal1`);
+      Log.showInfo(TAG, `getConfiguration`);
       showHorizontal = true;
-      Log.showInfo(TAG, `showHorizontal2`);
       minHeight = parseInt(shortSideLength);
       realWidth = maxWidth;
       realHeight = parseInt(shortSideLength);
@@ -118,8 +113,7 @@ class StatusBarConfiguration {
       realWidth = 0;
       realHeight = 0;
     }
-    Log.showInfo(TAG, `initWindowManager xCoordinate ${xCoordinate} yCoordinate ${yCoordinate}`);
-    Log.showInfo(TAG, `initWindowManager realWidth ${realWidth} realHeight ${realHeight}`);
+    Log.showInfo(TAG, `initWindowManager xCoordinate ${xCoordinate} yCoordinate ${yCoordinate} realWidth ${realWidth} realHeight ${realHeight}`);
 
     var configuration = {
       maxWidth: maxWidth,

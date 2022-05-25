@@ -32,12 +32,12 @@ export default struct WifiIcon {
   @State style: any = StyleConfiguration.getStartsBarWifiComponentStyle()
 
   aboutToAppear() {
-    Log.showInfo(TAG, `aboutToAppear`)
-    mWifiModel.initWifiModel()
+    Log.showDebug(TAG, `aboutToAppear`);
+    mWifiModel.initWifiModel();
   }
 
   aboutToDisappear() {
-    Log.showInfo(TAG, `aboutToDisappear`)
+    Log.showDebug(TAG, `aboutToDisappear`);
   }
 
   build() {
@@ -56,7 +56,7 @@ export default struct WifiIcon {
   }
 
   private getImage(wifiInfo: number) {
-    Log.showInfo(TAG, `getImage, wifiInfo: ${JSON.stringify(wifiInfo)}`)
+    Log.showInfo(TAG, `getImage`);
     let wifiImage;
     switch (wifiInfo) {
       case Constants.WIFI_SIGNAL_NO:

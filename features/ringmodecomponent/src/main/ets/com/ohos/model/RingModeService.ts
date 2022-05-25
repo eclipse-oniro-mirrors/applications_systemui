@@ -29,7 +29,7 @@ export class RingModeService {
     if (this.mIsStart) {
       return;
     }
-    Log.showInfo(TAG, `startService`)
+    Log.showInfo(TAG, `startService`);
     this.mIsStart = true;
 
     this.mAudioManager = getAudioManager();
@@ -37,7 +37,7 @@ export class RingModeService {
     this.getRingerMode();
 
     this.mAudioManager.on('ringerModeChange', (data) => {
-      Log.showInfo(TAG, `startService->ringerModeChange, data: ${JSON.stringify(data)}`)
+      Log.showInfo(TAG, `startService->ringerModeChange, data: ${JSON.stringify(data)}`);
       this.mListener?.updateRingerMode(data);
     });
   }
@@ -46,7 +46,7 @@ export class RingModeService {
     if (!this.mIsStart) {
       return;
     }
-    Log.showInfo(TAG, `stopService`)
+    Log.showInfo(TAG, `stopService`);
     this.mIsStart = false;
 
     this.mAudioManager = null;
@@ -55,14 +55,13 @@ export class RingModeService {
   registerListener(listener: {
     'updateRingerMode': Function
   }) {
-    Log.showInfo(TAG, `registerListener, listener: ${listener}`)
+    Log.showInfo(TAG, `registerListener, listener: ${listener}`);
     this.mListener = listener;
   }
 
   getRingerMode() {
-    Log.showInfo(TAG, `getRingerMode`)
     this.mAudioManager.getRingerMode((error, action) => {
-      Log.showInfo(TAG, `getRingerMode, error: ${JSON.stringify(error)} action: ${JSON.stringify(action)}`)
+      Log.showInfo(TAG, `getRingerMode, error: ${JSON.stringify(error)} action: ${JSON.stringify(action)}`);
       if (error) {
         return;
       }
@@ -71,9 +70,9 @@ export class RingModeService {
   }
 
   setRingerMode(mode) {
-    Log.showInfo(TAG, `setRingerMode, mode: ${JSON.stringify(mode)}`)
+    Log.showInfo(TAG, `setRingerMode, mode: ${JSON.stringify(mode)}`);
     this.mAudioManager.setRingerMode(mode, (err, data) => {
-      Log.showInfo(TAG, `mAudioManager.setRingerMode, mode: ${JSON.stringify(mode)}`)
+      Log.showInfo(TAG, `mAudioManager.setRingerMode`);
     })
   }
 }

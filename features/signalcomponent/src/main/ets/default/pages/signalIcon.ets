@@ -143,7 +143,7 @@ struct SignalIcon {
         cellularImage = $r('app.media.ic_statusbar_signal_no');
         break;
     }
-    console.info('systemui updateCellularImage = ' + cellularImage);
+    Log.showInfo(TAG, 'updateCellularImage = ' + cellularImage);
     return cellularImage;
   }
 

@@ -27,7 +27,7 @@ const DEFAULT_INFO = {
 export default class CommonUtil {
   static startWant(want, triggerInfo?: any) {
     let info = (triggerInfo) ? triggerInfo : DEFAULT_INFO;
-    Log.showInfo(TAG, `startWant ${JSON.stringify(want)}, info ${JSON.stringify(info)}`);
+    Log.showDebug(TAG, `startWant ${JSON.stringify(want)}, info ${JSON.stringify(info)}`);
     WantAgent.trigger(want, info, ((err, data) => {
       Log.showInfo(TAG, `wantAgent trigger err ${JSON.stringify(err)} data ${JSON.stringify(data)}`);
     }));

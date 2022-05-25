@@ -36,16 +36,15 @@ export class VolumePanelService {
   mInterfaceCallQueue = [];
 
   constructor() {
-    Log.showInfo(TAG, `constructor`)
+    Log.showInfo(TAG, `constructor`);
   }
 
   startService() {
     if (this.mIsStart) {
       return;
     }
-    Log.showInfo(TAG, `startService`)
     this.mIsStart = true;
-    Log.showInfo(TAG, `registser volumeChange.`)
+    Log.showInfo(TAG, `startService`);
     this.mAudioManager.on('volumeChange', this.onVolumeChange.bind(this));
   }
 
@@ -53,7 +52,7 @@ export class VolumePanelService {
     if (!this.mIsStart) {
       return;
     }
-    Log.showInfo(TAG, `stopService`)
+    Log.showInfo(TAG, `stopService`);
     this.mIsStart = false;
   }
 
@@ -68,10 +67,10 @@ export class VolumePanelService {
   }
 
   async onVolumeChange(data) {
-    Log.showInfo(TAG, `onVolumeChange, data: ${JSON.stringify(data)}`)
+    Log.showInfo(TAG, `onVolumeChange`);
     let volumeType = this.formatAudioVolumeTypeFromInterface(data.volumeType);
     this.isMute(volumeType, (volumeType2, data2) => {
-      Log.showInfo(TAG, `onVolumeChange->isMute, volumeType2: ${volumeType2} data2: ${data2}`)
+      Log.showInfo(TAG, `onVolumeChange->isMute, volumeType2: ${volumeType2} data2: ${data2}`);
       let volumeInfo: VolumeInfo = {
         volumeType: volumeType,
         volume: data.volume,
@@ -83,13 +82,13 @@ export class VolumePanelService {
   }
 
   isMute(volumeType: AudioVolumeType, callback: Function) {
-    Log.showInfo(TAG, `isMute, volumeType: ${volumeType}`)
+    Log.showInfo(TAG, `isMute, volumeType: ${volumeType}`);
     let interfaceVolumeType = this.formatAudioVolumeTypeToInterface(volumeType);
     this.addInterfaceCallQueue({
       interfaceName: InterfaceName.isMute,
       params: [interfaceVolumeType],
       callbackFunction: (err, data) => {
-        Log.showInfo(TAG, `isMute, err: ${err} data: ${JSON.stringify(data)}`)
+        Log.showInfo(TAG, `isMute, err: ${err} data: ${JSON.stringify(data)}`);
         if (err) {
           return;
         }
@@ -99,11 +98,11 @@ export class VolumePanelService {
   }
 
   getVolumeInfo(volumeType: AudioVolumeType, callback?: (volumeInfo: VolumeInfo) => void) {
-    Log.showInfo(TAG, `getVolumeInfo, volumeType: ${volumeType}`)
+    Log.showInfo(TAG, `getVolumeInfo, volumeType: ${volumeType}`);
     this.getVolume(volumeType, (volumeType, data) => {
-      Log.showInfo(TAG, `getVolumeInfo->getVolume, volumeType: ${volumeType} data: ${data}`)
+      Log.showInfo(TAG, `getVolumeInfo->getVolume`);
       this.isMute(volumeType, (volumeType2, data2) => {
-        Log.showInfo(TAG, `getVolumeInfo->isMute, volumeType2: ${volumeType2} data2: ${data2}`)
+        Log.showInfo(TAG, `getVolumeInfo->isMute`);
         let volumeInfo: VolumeInfo = {
           volumeType: volumeType,
           volume: data,
@@ -119,10 +118,10 @@ export class VolumePanelService {
   }
 
   isActive(volumeType: AudioVolumeType, callback: Function) {
-    Log.showInfo(TAG, `isActive, volumeType: ${volumeType}`)
+    Log.showInfo(TAG, `isActive, volumeType: ${volumeType}`);
     let interfaceVolumeType = this.formatAudioVolumeTypeToInterface(volumeType);
     this.mAudioManager.isActive(interfaceVolumeType, (err, data) => {
-      Log.showInfo(TAG, `isActive, err: ${err} data: ${JSON.stringify(data)}`)
+      Log.showInfo(TAG, `isActive, err: ${err} data: ${JSON.stringify(data)}`);
       if (err) {
         return;
       }
@@ -131,13 +130,13 @@ export class VolumePanelService {
   }
 
   getVolume(volumeType: AudioVolumeType, callback: Function) {
-    Log.showInfo(TAG, `getVolume, volumeType: ${volumeType}`)
+    Log.showInfo(TAG, `getVolume, volumeType: ${volumeType}`);
     let interfaceVolumeType = this.formatAudioVolumeTypeToInterface(volumeType);
     this.addInterfaceCallQueue({
       interfaceName: InterfaceName.getVolume,
       params: [interfaceVolumeType],
       callbackFunction: (err, data) => {
-        Log.showInfo(TAG, `getVolume, err: ${err} data: ${JSON.stringify(data)}`)
+        Log.showInfo(TAG, `getVolume, err: ${err} data: ${JSON.stringify(data)}`);
         if (err) {
           return;
         }
@@ -147,10 +146,10 @@ export class VolumePanelService {
   }
 
   getMaxVolume(volumeType: AudioVolumeType, callback: Function) {
-    Log.showInfo(TAG, `getMaxVolume, volumeType: ${volumeType}`)
+    Log.showInfo(TAG, `getMaxVolume, volumeType: ${volumeType}`);
     let interfaceVolumeType = this.formatAudioVolumeTypeToInterface(volumeType);
     this.mAudioManager.getMaxVolume(interfaceVolumeType, (err, data) => {
-      Log.showInfo(TAG, `getMaxVolume, err: ${err} data: ${JSON.stringify(data)}`)
+      Log.showInfo(TAG, `getMaxVolume, err: ${err} data: ${JSON.stringify(data)}`);
       if (err) {
         return;
       }
@@ -159,10 +158,10 @@ export class VolumePanelService {
   }
 
   getMinVolume(volumeType: AudioVolumeType, callback: Function) {
-    Log.showInfo(TAG, `getMinVolume, volumeType: ${volumeType}`)
+    Log.showInfo(TAG, `getMinVolume, volumeType: ${volumeType}`);
     let interfaceVolumeType = this.formatAudioVolumeTypeToInterface(volumeType);
     this.mAudioManager.getMinVolume(interfaceVolumeType, (err, data) => {
-      Log.showInfo(TAG, `getMinVolume, err: ${err} data: ${JSON.stringify(data)}`)
+      Log.showInfo(TAG, `getMinVolume, err: ${err} data: ${JSON.stringify(data)}`);
       if (err) {
         return;
       }
@@ -171,10 +170,10 @@ export class VolumePanelService {
   }
 
   setVolumeAndMute(volumeType: AudioVolumeType, volume: number, mute: boolean, callback?: () => void) {
-    Log.showInfo(TAG, `setVolumeAndMute, volumeType: ${volumeType} volume: ${volume} mute: ${mute}`)
+    Log.showInfo(TAG, `setVolumeAndMute, volumeType: ${volumeType} volume: ${volume} mute: ${mute}`);
     if (volume !== undefined && mute !== undefined) {
       this.setVolume(volumeType, volume, () => {
-        Log.showInfo(TAG, `setVolumeAndMute, setVolume callback volumeType: ${volumeType} volume: ${volume} mute: ${mute}`)
+        Log.showInfo(TAG, `setVolume`);
         this.setMute(volumeType, mute, callback);
       });
     } else if (volume !== undefined) {
@@ -185,14 +184,13 @@ export class VolumePanelService {
   }
 
   setVolume(volumeType: AudioVolumeType, volume: number, callback?: () => void) {
-    Log.showInfo(TAG, `setVolume, volumeType: ${volumeType} volume: ${volume}`)
+    Log.showInfo(TAG, `setVolume, volumeType: ${volumeType} volume: ${volume}`);
     let interfaceVolumeType = this.formatAudioVolumeTypeToInterface(volumeType);
     this.addInterfaceCallQueue({
       interfaceName: InterfaceName.setVolume,
       params: [interfaceVolumeType, volume],
       callbackFunction: (err) => {
-        Log.showInfo(TAG, `setVolume, callback volumeType: ${volumeType} volume: ${volume}`)
-        Log.showInfo(TAG, `setVolume, callback err: ${err} `)
+        Log.showInfo(TAG, `setVolume, callback err: ${err} `);
         if (err) {
           return;
         }
@@ -204,18 +202,18 @@ export class VolumePanelService {
   }
 
   setMute(volumeType: AudioVolumeType, mute: boolean, callback?: () => void) {
-    Log.showInfo(TAG, `setMute, volumeType: ${volumeType} mute: ${mute}`)
+    Log.showInfo(TAG, `setMute, volumeType: ${volumeType} mute: ${mute}`);
     let interfaceVolumeType = this.formatAudioVolumeTypeToInterface(volumeType);
     this.addInterfaceCallQueue({
       interfaceName: InterfaceName.mute,
       params: [interfaceVolumeType, mute],
       callbackFunction: (err) => {
-        Log.showInfo(TAG, `setMute, err: ${err}`)
+        Log.showInfo(TAG, `setMute, err: ${err}`);
         if (err) {
           return;
         }
         this.getVolumeInfo(volumeType, (volumeInfo: VolumeInfo) => {
-          Log.showInfo(TAG, `setMute, volumeInfo: ${JSON.stringify(volumeInfo)}`)
+          Log.showInfo(TAG, `setMute, volumeInfo: ${JSON.stringify(volumeInfo)}`);
           if (callback) {
             callback();
           }
@@ -257,7 +255,7 @@ export class VolumePanelService {
     params: any[],
     callbackFunction: Function
   }) {
-    Log.showInfo(TAG, `addInterfaceCallQueue, interfaceName: ${data.interfaceName} params: ${JSON.stringify(data.params)}`)
+    Log.showDebug(TAG, `addInterfaceCallQueue, interfaceName: ${data.interfaceName} params: ${JSON.stringify(data.params)}`);
     this.mInterfaceCallQueue.push(data);
     if (this.mInterfaceCallQueue.length == 1) {
       this.execInterfaceCallQueueFirst();
@@ -265,29 +263,29 @@ export class VolumePanelService {
   }
 
   execInterfaceCallQueueFirst() {
-    Log.showInfo(TAG, `execInterfaceCallQueueFirst, ${this.mInterfaceCallQueue.length}`)
+    Log.showInfo(TAG, `execInterfaceCallQueueFirst, ${this.mInterfaceCallQueue.length}`);
     let queueData = this.mInterfaceCallQueue[0];
     if (queueData.interfaceName == InterfaceName.isMute) {
       this.mAudioManager.isMute(queueData.params[0], (err, data) => {
-        Log.showInfo(TAG, `execInterfaceCallQueueFirst, isMute callback`)
+        Log.showInfo(TAG, `execInterfaceCallQueueFirst, isMute callback`);
         this.execInterfaceCallQueueNext();
         queueData.callbackFunction(err, data);
       });
     } else if (queueData.interfaceName == InterfaceName.mute) {
       this.mAudioManager.mute(queueData.params[0], queueData.params[1], (err) => {
-        Log.showInfo(TAG, `execInterfaceCallQueueFirst, mute callback`)
+        Log.showInfo(TAG, `execInterfaceCallQueueFirst, mute callback`);
         this.execInterfaceCallQueueNext();
         queueData.callbackFunction(err);
       });
     } else if (queueData.interfaceName == InterfaceName.getVolume) {
       this.mAudioManager.getVolume(queueData.params[0], (err, data) => {
-        Log.showInfo(TAG, `execInterfaceCallQueueFirst, getVolume callback`)
+        Log.showInfo(TAG, `execInterfaceCallQueueFirst, getVolume callback`);
         this.execInterfaceCallQueueNext();
         queueData.callbackFunction(err, data);
       });
     } else if (queueData.interfaceName == InterfaceName.setVolume) {
       this.mAudioManager.setVolume(queueData.params[0], queueData.params[1], (err) => {
-        Log.showInfo(TAG, `execInterfaceCallQueueFirst, setVolume callback`)
+        Log.showInfo(TAG, `execInterfaceCallQueueFirst, setVolume callback`);
         this.execInterfaceCallQueueNext();
         queueData.callbackFunction(err);
       });
@@ -295,7 +293,7 @@ export class VolumePanelService {
   }
 
   async execInterfaceCallQueueNext() {
-    Log.showInfo(TAG, `execInterfaceCallQueueNext, ${this.mInterfaceCallQueue.length}`)
+    Log.showInfo(TAG, `execInterfaceCallQueueNext, ${this.mInterfaceCallQueue.length}`);
     this.mInterfaceCallQueue.splice(0, 1);
     if (this.mInterfaceCallQueue.length > 0) {
       this.execInterfaceCallQueueFirst();

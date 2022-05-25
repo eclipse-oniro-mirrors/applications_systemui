@@ -14,7 +14,6 @@
  */
 
 export default class Constants {
-
   static NETWORK_TYPE_UNKNOWN = 0;
   static NETWORK_TYPE_GSM = 1;
   static NETWORK_TYPE_CDMA = 2;

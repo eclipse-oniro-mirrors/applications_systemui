@@ -55,7 +55,6 @@ export class SignalModel {
   checkCellularStatus() {
     let cellularStatus;
     let slotId = 0;
-    Log.showInfo(TAG, 'enter checkCellularStatus ============');
 
     Sim.hasSimCard(slotId, (err, value) => {
       if (value === true) {

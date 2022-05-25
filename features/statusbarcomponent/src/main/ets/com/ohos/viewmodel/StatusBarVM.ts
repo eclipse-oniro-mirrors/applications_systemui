@@ -45,7 +45,7 @@ export class StatusBarVM {
   mUseInWindowName: WindowType = WindowType.STATUS_BAR;
 
   constructor() {
-    Log.showInfo(TAG, `constructor`)
+    Log.showInfo(TAG, `constructor`);
     this.mStatusBarData = AppStorage.SetAndLink(TAG + '_StatusBarData', this.mStatusBarData).get();
     StatusBarService.setStatusBarData(this.mStatusBarData);
 
@@ -86,7 +86,7 @@ export class StatusBarVM {
     if (this.mIsStart) {
       return;
     }
-    Log.showInfo(TAG, `initViewModel, config: ${JSON.stringify(config)}`)
+    Log.showInfo(TAG, `initViewModel, config: ${JSON.stringify(config)}`);
     this.mIsStart = true;
 
     this.install();
@@ -94,7 +94,7 @@ export class StatusBarVM {
   }
 
   setStatusBarLayout(layout: string[][]): void{
-    Log.showInfo(TAG, `setStatusBarLayout, layout: ${JSON.stringify(layout)}`)
+    Log.showInfo(TAG, `setStatusBarLayout, layout: ${JSON.stringify(layout)}`);
     for (let i = 0;i < layout.length; i++) {
       if (JSON.stringify(layout[i]) != JSON.stringify(this.mStatusBarLayout[i])) {
         this.mStatusBarLayout[i] = layout[i];
@@ -103,23 +103,23 @@ export class StatusBarVM {
   }
 
   setStatusBarEmptyWidth(width: number): void{
-    Log.showInfo(TAG, `setStatusBarEmptyWidth, width: ${width}`)
+    Log.showInfo(TAG, `setStatusBarEmptyWidth, width: ${width}`);
     this.mStatusBarEmptyWidth.set(width);
   }
 
   setItemData(id: string, itemData: StatusBarComponentData): void{
-    Log.showInfo(TAG, `setItemData, id: ${id} itemData: ${JSON.stringify(itemData)}`)
+    Log.showInfo(TAG, `setItemData, id: ${id} itemData: ${JSON.stringify(itemData)}`);
     let storageKey: string = 'StatusBar_' + id;
     if (itemData) {
       AppStorage.SetOrCreate(storageKey, itemData);
     } else {
       let deleteRs: boolean = AppStorage.Delete(storageKey);
-      Log.showInfo(TAG, `setItemData, AppStorage.Delete rs: ${deleteRs} `)
+      Log.showInfo(TAG, `setItemData, AppStorage.Delete rs: ${deleteRs} `);
     }
   }
 
   onTintStateChange(tintState: TintState) {
-    Log.showInfo(TAG, `onTintStateChange, tintState: ${JSON.stringify(tintState)}`)
+    Log.showInfo(TAG, `onTintStateChange, tintState: ${JSON.stringify(tintState)}`);
     if (typeof (tintState.isEnable) == 'boolean') {
       this.setStatusBarEnable(tintState.isEnable);
     }
@@ -141,7 +141,7 @@ export class StatusBarVM {
   }
 
   changeBackground(tintState: TintState): void{
-    Log.showInfo(TAG, `changeBackground, backgroundColor: ${tintState.backgroundColor} region: ${JSON.stringify(tintState.region)}`)
+    Log.showInfo(TAG, `changeBackground, backgroundColor: ${tintState.backgroundColor} region: ${JSON.stringify(tintState.region)}`);
     let data = new StatusBarBackgroundData();
     data.backgroundColor = tintState.backgroundColor;
     if (this.mStatusBarData.showHorizontal) {
@@ -177,11 +177,11 @@ export class StatusBarVM {
         }
       }
     }
-    Log.showInfo(TAG, `changeBackground, data: ${JSON.stringify(data)}`)
+    Log.showInfo(TAG, `changeBackground, data: ${JSON.stringify(data)}`);
   }
 
   changeContent(tintState: TintState): void{
-    Log.showInfo(TAG, `changeContent, contentColor: ${tintState.contentColor} region: ${JSON.stringify(tintState.region)}`)
+    Log.showInfo(TAG, `changeContent, contentColor: ${tintState.contentColor} region: ${JSON.stringify(tintState.region)}`);
     let data = new StatusBarComponentGroupContentData();
     data.contentColor = tintState.contentColor;
     if (this.mStatusBarData.showHorizontal) {
@@ -217,7 +217,7 @@ export class StatusBarVM {
         }
       }
     }
-    Log.showInfo(TAG, `changeContent, data: ${JSON.stringify(data)}`)
+    Log.showInfo(TAG, `changeContent, data: ${JSON.stringify(data)}`);
 
     this.mComponentAreaMap.forEach((value: Rect, key: string) => {
       this.changeComponentContent(key, value);
@@ -287,7 +287,7 @@ export class StatusBarVM {
   }
 
   updateStatusBarData(data: StatusBarData): void{
-    Log.showInfo(TAG, `updateStatusBarData, data: ${JSON.stringify(data)}`)
+    Log.showDebug(TAG, `updateStatusBarData, data: ${JSON.stringify(data)}`);
     for (let key in data) {
       this.mStatusBarData[key] = data[key];
     }

@@ -43,14 +43,14 @@ export class VolumePanelVM {
   mVolumeBeforeMute: number;
 
   constructor() {
-    Log.showInfo(TAG, `constructor`)
+    Log.showInfo(TAG, `constructor`);
   }
 
   initViewModel() {
     if (this.mIsStart) {
       return;
     }
-    Log.showInfo(TAG, `initViewModel `)
+    Log.showInfo(TAG, `initViewModel `);
     this.mIsStart = true;
 
     this.mMaxVolume = AppStorage.SetAndLink(VolumePanelMaxVolumeKey, Constants.DEFAULT_MAX_VOLUME);
@@ -73,9 +73,8 @@ export class VolumePanelVM {
   }
 
   getInitVolumeInfo() {
-    Log.showInfo(TAG, `getInitVolumeInfo`)
     this.getActiveVolumeType(JSON.parse(JSON.stringify(this.mAllVolumeTypes)), (activeVolumeType: AudioVolumeType) => {
-      Log.showInfo(TAG, `getInitVolumeInfo, activeVolumeType: ${activeVolumeType}`)
+      Log.showInfo(TAG, `getInitVolumeInfo, activeVolumeType: ${activeVolumeType}`);
       if (activeVolumeType == undefined) {
         activeVolumeType = AudioVolumeType.MEDIA;
       }
@@ -85,13 +84,13 @@ export class VolumePanelVM {
   }
 
   getActiveVolumeType(volumeTypes: number[], callback: Function) {
-    Log.showInfo(TAG, `getActiveVolumeType, volumeTypes: ${JSON.stringify(volumeTypes)}`)
+    Log.showInfo(TAG, `getActiveVolumeType, volumeTypes: ${JSON.stringify(volumeTypes)}`);
     if (volumeTypes.length == 0) {
       callback(undefined);
       return;
     }
     VolumePanelService.isActive(volumeTypes[0], (volumeType: AudioVolumeType, data: boolean) => {
-      Log.showInfo(TAG, `getActiveVolumeType, volumeType: ${volumeType} data: ${data}`)
+      Log.showInfo(TAG, `getActiveVolumeType, volumeType: ${volumeType} data: ${data}`);
       if (data) {
         callback(volumeType);
       } else {
@@ -102,20 +101,19 @@ export class VolumePanelVM {
   }
 
   updateMaxVolume(volumeType: AudioVolumeType, value: number) {
-    Log.showInfo(TAG, `updateMaxVolume, volumeType: ${volumeType} value: ${value}`)
+    Log.showInfo(TAG, `updateMaxVolume, volumeType: ${volumeType} value: ${value}`);
     this.mVolumeBaseMap[volumeType].maxVolume = value;
-    Log.showInfo(TAG, `updateMaxVolume, mVolumeBaseMap: ${JSON.stringify(this.mVolumeBaseMap)}`)
+    Log.showInfo(TAG, `updateMaxVolume, mVolumeBaseMap: ${JSON.stringify(this.mVolumeBaseMap)}`);
   }
 
   updateMinVolume(volumeType: AudioVolumeType, value: number) {
-    Log.showInfo(TAG, `updateMinVolume, volumeType: ${volumeType} value: ${value}`)
+    Log.showInfo(TAG, `updateMinVolume, volumeType: ${volumeType} value: ${value}`);
     this.mVolumeBaseMap[volumeType].minVolume = value;
-    Log.showInfo(TAG, `updateMinVolume, mVolumeBaseMap: ${JSON.stringify(this.mVolumeBaseMap)}`)
+    Log.showInfo(TAG, `updateMinVolume, mVolumeBaseMap: ${JSON.stringify(this.mVolumeBaseMap)}`);
   }
 
   updateVolumeInfo(volumeInfo: VolumeInfo) {
-    Log.showInfo(TAG, `updateVolumeInfo, volumeInfo: ${JSON.stringify(volumeInfo)} `)
-    Log.showInfo(TAG, `updateVolumeInfo, mCurrentAudioVolumeType: ${this.mCurrentAudioVolumeType} `)
+    Log.showInfo(TAG, `updateVolumeInfo, volumeInfo: ${JSON.stringify(volumeInfo)} , mCurrentAudioVolumeType: ${this.mCurrentAudioVolumeType}`);
     if (!volumeInfo.updateUi && volumeInfo.volumeType != this.mCurrentAudioVolumeType) {
       return;
     }
@@ -124,37 +122,34 @@ export class VolumePanelVM {
     let minVolume = this.mVolumeBaseMap[volumeType].minVolume;
     this.mMaxVolume.set(maxVolume);
     this.mMinVolume.set(minVolume);
-    Log.showInfo(TAG, `updateVolumeInfo, mMaxVolume: ${this.mMaxVolume.get()} `)
-    Log.showInfo(TAG, `updateVolumeInfo, mMinVolume: ${this.mMinVolume.get()} `)
+    Log.showInfo(TAG, `updateVolumeInfo, mMaxVolume: ${this.mMaxVolume.get()} , mMinVolume: ${this.mMinVolume.get()}`);
 
     this.mCurrentAudioVolume = volumeInfo.volume;
     this.mCurrentAudioVolumeType = volumeType;
-    Log.showInfo(TAG, `updateVolumeInfo, mCurrentAudioVolume: ${this.mCurrentAudioVolume} `)
-    Log.showInfo(TAG, `updateVolumeInfo, mCurrentAudioVolumeType: ${this.mCurrentAudioVolumeType} `)
+    Log.showInfo(TAG, `updateVolumeInfo, mCurrentAudioVolume: ${this.mCurrentAudioVolume} , mCurrentAudioVolumeType: ${this.mCurrentAudioVolumeType}`);
 
     this.mVolumeBeforeMute = minVolume;
     this.mIsMute.set(volumeInfo.isMute);
-    Log.showInfo(TAG, `updateVolumeInfo, mIsMute: ${this.mIsMute.get()} `)
+    Log.showInfo(TAG, `updateVolumeInfo, mIsMute: ${this.mIsMute.get()} `);
 
     this.updateDisplayVolume(volumeInfo.isMute ? minVolume : volumeInfo.volume, maxVolume, minVolume);
   }
 
   updateDisplayVolume(volume: number, maxVolume: number, minVolume: number): void{
-    Log.showInfo(TAG, `updateDisplayVolume, volume: ${volume} maxVolume: ${maxVolume} minVolume: ${minVolume}`)
+    Log.showInfo(TAG, `updateDisplayVolume, volume: ${volume} maxVolume: ${maxVolume} minVolume: ${minVolume}`);
     let displayVolume: number = volume + minVolume;
     this.mVolumeValue.set(displayVolume);
-    Log.showInfo(TAG, `updateDisplayVolume, mVolumeValue: ${this.mVolumeValue.get()}`)
+    Log.showInfo(TAG, `updateDisplayVolume, mVolumeValue: ${this.mVolumeValue.get()}`);
   }
 
   calcVolumeByDisplayVolume(displayVolume: number): number{
-    Log.showInfo(TAG, `calcVolumeByDisplayVolume, displayVolume: ${displayVolume}`)
     let volume: number = displayVolume + this.mMinVolume.get();
-    Log.showInfo(TAG, `calcVolumeByDisplayVolume, volume: ${volume}`)
+    Log.showInfo(TAG, `calcVolumeByDisplayVolume, volume: ${volume}`);
     return volume;
   }
 
   setVolume(displayVolume: number) {
-    Log.showInfo(TAG, `setVolume, displayVolume: ${displayVolume} `)
+    Log.showInfo(TAG, `setVolume, displayVolume: ${displayVolume} `);
     let volume: number = this.calcVolumeByDisplayVolume(displayVolume);
     if (this.mUpdatingAudioVolume != undefined && volume == this.mUpdatingAudioVolume) {
       return;
@@ -169,7 +164,7 @@ export class VolumePanelVM {
   }
 
   mute() {
-    Log.showInfo(TAG, `mute, isMute: ${this.mIsMute.get()} mCurrentAudioVolume: ${this.mCurrentAudioVolume}`)
+    Log.showInfo(TAG, `mute, isMute: ${this.mIsMute.get()} mCurrentAudioVolume: ${this.mCurrentAudioVolume}`);
     this.mUpdatingAudioVolume = undefined;
     let isMute = this.mIsMute.get();
     isMute = !isMute;
@@ -179,7 +174,7 @@ export class VolumePanelVM {
     let currentAudioVolume = this.mCurrentAudioVolume;
     let volumeType = this.mCurrentAudioVolumeType;
     VolumePanelService.setVolumeAndMute(volumeType, volume, isMute, () => {
-      Log.showInfo(TAG, `mute, setVolumeAndMute callback`)
+      Log.showInfo(TAG, `mute, setVolumeAndMute callback`);
       if (volumeType == this.mCurrentAudioVolumeType && this.mIsMute.get()) {
         this.mVolumeBeforeMute = currentAudioVolume;
       }

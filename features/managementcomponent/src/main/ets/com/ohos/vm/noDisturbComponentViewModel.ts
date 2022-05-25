@@ -40,65 +40,62 @@ export default class NoDisturbComponentViewModel {
   getNoDisturbingDate() {
     Log.showInfo(TAG, 'getNoDisturbingDate');
     NoDisturbingModel.getNoDisturbingDate((data) => {
-      Log.showInfo(TAG, 'getNoDisturbingDate data:' + JSON.stringify(data));
+      Log.showDebug(TAG, 'getNoDisturbingDate data:' + JSON.stringify(data));
       this.repeatMode = data.type
       this.startTime = data.begin
       this.endTime = data.end
-      Log.showInfo(TAG, `getNoDisturbingDate this.repeatMode : ${this.repeatMode}`)
-      Log.showInfo(TAG, `getNoDisturbingDate this.startTime : ${this.startTime}`)
-      Log.showInfo(TAG, `getNoDisturbingDate this.endTime : ${this.endTime}`)
+      Log.showDebug(TAG, `getNoDisturbingDate repeatMode : ${this.repeatMode} startTime : ${this.startTime} endTime : ${this.endTime}`);
       this.repeatName = this.refreshRepeatName(this.repeatMode);
       this.setClues.bind(this)()
     })
   }
 
   setNoDisturbingDate() {
-    Log.showInfo(TAG, 'setNoDisturbingDate');
     if (!this.isEffective) {
       this.repeatMode = DoNotDisturbType.TYPE_NONE
     }
-    Log.showInfo(TAG, `this.repeatMode is : ${this.repeatMode}`);
+    Log.showDebug(TAG, `this.repeatMode is : ${this.repeatMode}`);
     let noDisturbingTime = {
       type: this.repeatMode, begin: this.defaultStartTime, end: this.defaultEndTime
     }
     NoDisturbingModel.setNoDisturbingDate(noDisturbingTime, () => {
-      Log.showInfo(TAG, 'setNoDisturbingDate is success')
+      Log.showInfo(TAG, 'setNoDisturbingDate is success');
     })
   }
 
   setClues() {
-    Log.showInfo(TAG, `setClues`)
+    Log.showInfo(TAG, `setClues`);
     if (this.repeatMode == DoNotDisturbType.TYPE_DAILY ||
     this.repeatMode == DoNotDisturbType.TYPE_ONCE ||
     this.repeatMode == DoNotDisturbType.TYPE_CLEARLY) {
-      this.isEffective = true
+      this.isEffective = true;
     } else {
-      this.isEffective = false
+      this.isEffective = false;
     }
 
     this.setCluesWithoutSetEffect();
-    Log.showInfo(TAG, `this.prompt : ${this.prompt}`)
+    Log.showDebug(TAG, `this.prompt : ${this.prompt}`);
   }
   setCluesWithoutSetEffect() {
-    Log.showInfo(TAG, `setCluesWithoutSetEffect start`)
+    Log.showInfo(TAG, `setCluesWithoutSetEffect start`);
     if (this.repeatMode == DoNotDisturbType.TYPE_CLEARLY) {
-      this.prompt = this.getDateTimeLabel(this.startTime) + ' - ' + this.getDateTimeLabel(this.endTime)
-      this.defaultStartTime = this.getDateByDateTime(this.startTime)
-      this.defaultEndTime = this.getDateByDateTime(this.endTime)
+      this.prompt = this.getDateTimeLabel(this.startTime) + ' - ' + this.getDateTimeLabel(this.endTime);
+      this.defaultStartTime = this.getDateByDateTime(this.startTime);
+      this.defaultEndTime = this.getDateByDateTime(this.endTime);
     } else if (this.repeatMode == DoNotDisturbType.TYPE_DAILY || this.repeatMode == DoNotDisturbType.TYPE_ONCE) {
       if (this.startTime >= this.endTime) {
-        this.prompt = this.startTime + ' - ' + this.nextDayLabel + this.endTime
+        this.prompt = this.startTime + ' - ' + this.nextDayLabel + this.endTime;
       } else {
-        this.prompt = this.startTime + ' - ' + this.endTime
+        this.prompt = this.startTime + ' - ' + this.endTime;
       }
-      this.defaultStartTime = this.getDateByHHMI(this.startTime)
-      this.defaultEndTime = this.getDateByHHMI(this.endTime)
+      this.defaultStartTime = this.getDateByHHMI(this.startTime);
+      this.defaultEndTime = this.getDateByHHMI(this.endTime);
     } else {
       this.prompt = ''
-      this.defaultStartTime = this.getDateByHHMI(this.startTime)
-      this.defaultEndTime = this.getDateByHHMI(this.endTime)
+      this.defaultStartTime = this.getDateByHHMI(this.startTime);
+      this.defaultEndTime = this.getDateByHHMI(this.endTime);
     }
-    Log.showInfo(TAG, `setCluesWithoutSetEffect end`)
+    Log.showInfo(TAG, `setCluesWithoutSetEffect end`);
   }
   refreshDate(repeatMode: number, inputStartTime: Date, inputEndTime: Date) {
     this.defaultStartTime = inputStartTime;
@@ -126,7 +123,7 @@ export default class NoDisturbComponentViewModel {
   }
 
   getDateByHHMI(selectDate: string): Date{
-    Log.showInfo(TAG, `getDateByHHMI selectDate：` + selectDate)
+    Log.showInfo(TAG, `getDateByHHMI selectDate：` + selectDate);
     let tempDate: Date = new Date()
     let HHmiArr = selectDate.split(':')
     let hour = parseInt(HHmiArr[0])
@@ -136,7 +133,7 @@ export default class NoDisturbComponentViewModel {
     return tempDate;
   }
   getDateByDateTime(selectDate: string): Date{
-    Log.showInfo(TAG, `getDateByDateTime selectDate：` + selectDate)
+    Log.showInfo(TAG, `getDateByDateTime selectDate：` + selectDate);
     let arrayValue = this.getValuesFromDate(selectDate);
     let tempDate: Date = new Date()
     tempDate = new Date(arrayValue[ConfigData.DATE_YEAR_IDX], arrayValue[ConfigData.DATE_MONTH_IDX] - 1,

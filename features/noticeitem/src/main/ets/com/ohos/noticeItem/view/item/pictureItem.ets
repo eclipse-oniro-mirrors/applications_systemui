@@ -22,7 +22,6 @@ export default struct PictureItem {
   @Prop isExpand: boolean
 
   build() {
-
     Column() {
       Text(this.isExpand ? this.itemData.expandedTitle : this.itemData.title)
         .maxLines(Constants.SINGLE_LINE)

@@ -30,7 +30,7 @@ export class RuleController {
      * @param {callback} Data of the type to show the notification
      */
   getNotificationData(notificationItemData: NotificationItemData, callback) {
-    Log.showInfo(TAG, "getNotificationData start")
+    Log.showInfo(TAG, "getNotificationData start");
 
     this.isAllowSendNotification(notificationItemData, (isSuccess) => {
       if (!isSuccess) {
@@ -39,9 +39,9 @@ export class RuleController {
         return;
       }
       this.getNotificationDataByApp(notificationItemData, (originalData) => {
-        Log.showInfo(TAG, `originalData = ${JSON.stringify(originalData)}`);
+        Log.showDebug(TAG, `originalData = ${JSON.stringify(originalData)}`);
         this.updateNotificationDataBySense(originalData, (finalData) => {
-          Log.showInfo(TAG, `finalData = ${JSON.stringify(finalData)}`);
+          Log.showDebug(TAG, `finalData = ${JSON.stringify(finalData)}`);
           callback(finalData);
         });
       });
@@ -93,7 +93,7 @@ export class RuleController {
      * @param {callback} The type to show notification
      */
   getNotificationDataByApp(notificationItemData, callback) {
-    Log.showInfo(TAG, "getNotificationDataByApp start")
+    Log.showInfo(TAG, "getNotificationDataByApp start");
     let mNotificationItemData : NotificationItemData = notificationItemData;
     mNotificationItemData.ruleData = {
       isAllowBanner: false,
@@ -125,7 +125,7 @@ export class RuleController {
     } else {
       mNotificationItemData.ruleData.isAllowNotificationListShow = false;
     }
-    Log.showInfo(TAG, `mNotificationItemData.ruleData = ${JSON.stringify(mNotificationItemData.ruleData)}`);
+    Log.showDebug(TAG, `mNotificationItemData.ruleData = ${JSON.stringify(mNotificationItemData.ruleData)}`);
     callback(mNotificationItemData);
   }
 
@@ -138,7 +138,7 @@ export class RuleController {
    * @param {callback} The final notification data
    */
   updateNotificationDataBySense(notificationItemData, callback) {
-    Log.showInfo(TAG, "updateNotificationDataBySense start")
+    Log.showInfo(TAG, "updateNotificationDataBySense start");
     let mNotificationItemData = notificationItemData;
     // TODO Scenario Management
     callback(mNotificationItemData);
