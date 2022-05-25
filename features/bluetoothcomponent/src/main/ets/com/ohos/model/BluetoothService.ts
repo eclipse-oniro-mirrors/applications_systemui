@@ -73,9 +73,9 @@ export class BluetoothService {
   }
 
   enableBluetooth(): boolean{
-    Log.showInfo(TAG, `enableBluetooth`)
+    Log.showInfo(TAG, `enableBluetooth`);
     let result = bluetooth.enableBluetooth();
-    Log.showInfo(TAG, `enableBluetooth, result: ${result}`)
+    Log.showInfo(TAG, `enableBluetooth, result: ${result}`);
     return result;
   }
 
