@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-import Constants, {NotificationLayout as Layout} from '../../common/constants';
+import Constants, { NotificationLayout as Layout } from '../../common/constants';
 import basicItem from './basicItem';
 import longItem from './longItem';
 import multiItem from './multiItem';
@@ -138,6 +138,7 @@ struct ContentComponent {
           .objectFit(ImageFit.Contain)
           .width(Layout.NOTIFICATION_PIC_SIZE)
           .height(Layout.NOTIFICATION_PIC_SIZE)
+          .borderRadius($r("app.float.notice_image_boderRadius"))
       }
     }.margin({ left: Layout.ITEM_MARGIN, right: Layout.ITEM_MARGIN })
   }
