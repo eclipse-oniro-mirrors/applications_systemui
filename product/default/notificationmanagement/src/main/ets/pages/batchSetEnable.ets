@@ -28,7 +28,7 @@ const TAG = 'NotificationManagement-BatchSetEnable';
 export default struct BatchSetEnable {
   @State mViewModel: ViewModel = new ViewModel();
   @StorageLink('appManagementList') appList: any[]= [];
-  @State headName:Resource =  $r('app.string.notificationManagement')
+  @State headName:Resource =  $r('app.string.batch_Management')
 
   build() {
     Column() {
@@ -58,7 +58,7 @@ export default struct BatchSetEnable {
           }
           .divider({
             strokeWidth: 1,
-            color: $r('app.color.background_color'),
+            color: $r('app.color.divider_color'),
             startMargin: $r('app.float.divider_margin_l_info'),
             endMargin: $r('app.float.divider_margin_r')
           })

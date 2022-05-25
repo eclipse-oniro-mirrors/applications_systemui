@@ -56,78 +56,104 @@ export default struct AppItemComponent {
           Text(this.appTitle)
             .fontColor($r('sys.color.ohos_id_color_text_primary'))
             .fontSize($r('sys.float.ohos_id_text_size_body1'))
+            .fontWeight(FontWeight.Medium)
             .textAlign(TextAlign.Start)
             .maxLines(ConfigData.MAX_LINES_3)
             .textOverflow({ overflow: TextOverflow.Ellipsis })
-            .margin({ top: $r('app.float.appitem_label_margin_t'), bottom: $r('app.float.appitem_label_margin_b'), left: $r('app.float.page_notice_info_label_margin') });
+            .margin({
+              top: $r('app.float.appitem_label_margin_t'),
+              bottom: $r('app.float.appitem_label_margin_b'),
+              left: $r('app.float.page_notice_info_label_margin')
+            });
           Row() {
             if (this.appSwitch === 3) {
               if (parseInt(this.appValue) == 0) {
                 Text($r('app.string.slot_unknown'))
-                  .fontColor($r('sys.color.ohos_id_color_text_secondary'))
+                  .fontColor($r('sys.color.ohos_id_color_text_primary'))
                   .fontSize($r('sys.float.ohos_id_text_size_body2'))
                   .textAlign(TextAlign.Start)
                   .maxLines(ConfigData.MAX_LINES_1)
                   .textOverflow({ overflow: TextOverflow.Ellipsis })
                   .visibility(Visibility.Visible)
-                  .margin({ bottom: $r('app.float.appitem_version_margin_b'), left: $r('app.float.page_notice_info_label_margin') });
+                  .margin({
+                    bottom: $r('app.float.appitem_version_margin_b'),
+                    left: $r('app.float.page_notice_info_label_margin')
+                  });
               } else if (parseInt(this.appValue) == 1) {
                 Text($r('app.string.slot_social_communication'))
-                  .fontColor($r('sys.color.ohos_id_color_text_secondary'))
+                  .fontColor($r('sys.color.ohos_id_color_text_primary'))
                   .fontSize($r('sys.float.ohos_id_text_size_body2'))
                   .textAlign(TextAlign.Start)
                   .maxLines(ConfigData.MAX_LINES_1)
                   .textOverflow({ overflow: TextOverflow.Ellipsis })
                   .visibility(Visibility.Visible)
-                  .margin({ bottom: $r('app.float.appitem_version_margin_b'), left: $r('app.float.page_notice_info_label_margin') });
+                  .margin({
+                    bottom: $r('app.float.appitem_version_margin_b'),
+                    left: $r('app.float.page_notice_info_label_margin')
+                  });
               } else if (parseInt(this.appValue) == 2) {
                 Text($r('app.string.slot_service_information'))
-                  .fontColor($r('sys.color.ohos_id_color_text_secondary'))
+                  .fontColor($r('sys.color.ohos_id_color_text_primary'))
                   .fontSize($r('sys.float.ohos_id_text_size_body2'))
                   .textAlign(TextAlign.Start)
                   .maxLines(ConfigData.MAX_LINES_1)
                   .textOverflow({ overflow: TextOverflow.Ellipsis })
                   .visibility(Visibility.Visible)
-                  .margin({ bottom: $r('app.float.appitem_version_margin_b'), left: $r('app.float.page_notice_info_label_margin') });
+                  .margin({
+                    bottom: $r('app.float.appitem_version_margin_b'),
+                    left: $r('app.float.page_notice_info_label_margin')
+                  });
               } else if (parseInt(this.appValue) == 3) {
                 Text($r('app.string.slot_content_information'))
-                  .fontColor($r('sys.color.ohos_id_color_text_secondary'))
+                  .fontColor($r('sys.color.ohos_id_color_text_primary'))
                   .fontSize($r('sys.float.ohos_id_text_size_body2'))
                   .textAlign(TextAlign.Start)
                   .maxLines(ConfigData.MAX_LINES_1)
                   .textOverflow({ overflow: TextOverflow.Ellipsis })
                   .visibility(Visibility.Visible)
-                  .margin({ bottom: $r('app.float.appitem_version_margin_b'), left: $r('app.float.page_notice_info_label_margin') });
+                  .margin({
+                    bottom: $r('app.float.appitem_version_margin_b'),
+                    left: $r('app.float.page_notice_info_label_margin')
+                  });
               } else if (parseInt(this.appValue) == 0xFFFF) {
                 Text($r('app.string.slot_other'))
-                  .fontColor($r('sys.color.ohos_id_color_text_secondary'))
+                  .fontColor($r('sys.color.ohos_id_color_text_primary'))
                   .fontSize($r('sys.float.ohos_id_text_size_body2'))
                   .textAlign(TextAlign.Start)
                   .maxLines(ConfigData.MAX_LINES_1)
                   .textOverflow({ overflow: TextOverflow.Ellipsis })
                   .visibility(Visibility.Visible)
-                  .margin({ bottom: $r('app.float.appitem_version_margin_b'), left: $r('app.float.page_notice_info_label_margin') });
+                  .margin({
+                    bottom: $r('app.float.appitem_version_margin_b'),
+                    left: $r('app.float.page_notice_info_label_margin')
+                  });
               } else {
                 Text('')
-                  .fontColor($r('sys.color.ohos_id_color_text_secondary'))
+                  .fontColor($r('sys.color.ohos_id_color_text_primary'))
                   .fontSize($r('sys.float.ohos_id_text_size_body2'))
                   .textAlign(TextAlign.Start)
                   .maxLines(ConfigData.MAX_LINES_1)
                   .textOverflow({ overflow: TextOverflow.Ellipsis })
                   .visibility(Visibility.Visible)
-                  .margin({ bottom: $r('app.float.appitem_version_margin_b'), left: $r('app.float.page_notice_info_label_margin') });
+                  .margin({
+                    bottom: $r('app.float.appitem_version_margin_b'),
+                    left: $r('app.float.page_notice_info_label_margin')
+                  });
               }
             } else {
               Text($r('app.string.version'))
-                .fontColor($r('sys.color.ohos_id_color_text_secondary'))
+                .fontColor($r('sys.color.ohos_id_color_text_primary'))
                 .fontSize($r('sys.float.ohos_id_text_size_body2'))
                 .textAlign(TextAlign.Start)
                 .maxLines(ConfigData.MAX_LINES_1)
                 .textOverflow({ overflow: TextOverflow.Ellipsis })
                 .visibility(Visibility.Visible)
-                .margin({ bottom: $r('app.float.appitem_version_margin_b'), left: $r('app.float.page_notice_info_label_margin') });
+                .margin({
+                  bottom: $r('app.float.appitem_version_margin_b'),
+                  left: $r('app.float.page_notice_info_label_margin')
+                });
               Text(this.appSummary)
-                .fontColor($r('sys.color.ohos_id_color_text_secondary'))
+                .fontColor($r('sys.color.ohos_id_color_text_primary'))
                 .fontSize($r('sys.float.ohos_id_text_size_body2'))
                 .textAlign(TextAlign.Start)
                 .maxLines(ConfigData.MAX_LINES_1)
@@ -180,6 +206,7 @@ export default struct AppItemComponent {
         } else {
           Toggle({ type: ToggleType.Switch, isOn: this.canNotice })
             .align(Alignment.End)
+            .selectedColor($r("app.color.font_color_007DFF"))
             .width($r('app.float.toggle_comp_width'))
             .height($r('app.float.toggle_comp_height'))
             .enabled(this.isCanChange)

@@ -5,6 +5,10 @@
       "value": "#4D999999"
     },
     {
+      "name": "notification_delete_all_background",
+      "value": "#4C000000"
+    },
+    {
       "name": "default_font_color",
       "value": "#ffffffff"
     },

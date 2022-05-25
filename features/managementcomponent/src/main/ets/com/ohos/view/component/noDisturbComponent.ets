@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 import Log from '../../../../../../../../../common/src/main/ets/default/Log';
-import ConfigData, {DoNotDisturbType} from '../../common/constants';
+import ConfigData, { DoNotDisturbType } from '../../common/constants';
 import ViewModel from '../../vm/noDisturbComponentViewModel'
 
 const TAG = 'ManagementComponent-NoDisturbComponent';
@@ -52,8 +52,9 @@ export default struct NoDisturbComponent {
               .fontSize($r('app.float.itemComp_titel_font'))
               .fontColor($r('app.color.itemComp_title_color'))
               .textAlign(TextAlign.Start)
-              .fontWeight(FontWeight.Bold)
+              .fontWeight(FontWeight.Medium)
           }
+
           Row() {
             if (this.mRefreshCnt > 0) {
               if (this.mViewModel.repeatMode == DoNotDisturbType.TYPE_ONCE) {
@@ -65,6 +66,7 @@ export default struct NoDisturbComponent {
                   .fontSize($r('app.float.itemComp_value_font'))
                   .fontColor($r('app.color.itemComp_font_color'))
                   .textAlign(TextAlign.Start)
+                  .margin({ top: $r("app.float.noDisturb_text_margin_vertical") })
               } else if (this.mViewModel.repeatMode == DoNotDisturbType.TYPE_DAILY) {
                 Text($r('app.string.noDisturb_daily_label'))
                   .fontSize($r('app.float.itemComp_value_font'))
@@ -74,6 +76,7 @@ export default struct NoDisturbComponent {
                   .fontSize($r('app.float.itemComp_value_font'))
                   .fontColor($r('app.color.itemComp_font_color'))
                   .textAlign(TextAlign.Start)
+                  .margin({ top: $r("app.float.noDisturb_text_margin_vertical") })
               } else if (this.mViewModel.repeatMode == DoNotDisturbType.TYPE_CLEARLY) {
                 Text($r('app.string.noDisturb_clearly_label'))
                   .fontSize($r('app.float.itemComp_value_font'))
@@ -83,11 +86,13 @@ export default struct NoDisturbComponent {
                   .fontSize($r('app.float.itemComp_value_font'))
                   .fontColor($r('app.color.itemComp_font_color'))
                   .textAlign(TextAlign.Start)
+                  .margin({ top: $r("app.float.noDisturb_text_margin_vertical") })
               } else {
                 Text($r('app.string.noDisturb_closed'))
                   .fontSize($r('app.float.itemComp_value_font'))
                   .fontColor($r('app.color.itemComp_font_color'))
                   .textAlign(TextAlign.Start)
+                  .margin({ top: $r("app.float.noDisturb_text_margin_vertical") })
               }
             } else {
               Blank();
@@ -106,6 +111,7 @@ export default struct NoDisturbComponent {
           .align(Alignment.End)
           .width($r('app.float.toggle_comp_width'))
           .height($r('app.float.toggle_comp_height'))
+          .selectedColor($r("app.color.font_color_007DFF"))
           .onChange((data) => {
             Log.showInfo(TAG, `Toggle onChange param: data = ${data}`);
             if (this.mPrevGetCnt == 0) {
@@ -124,8 +130,8 @@ export default struct NoDisturbComponent {
             this.mViewModel.repeatMode = this.mViewModel.isEffective ? this.mPrevReapMode : DoNotDisturbType.TYPE_NONE;
             if (this.mViewModel.repeatMode == DoNotDisturbType.TYPE_NONE) {
               this.mViewModel.refreshDate.bind(this.mViewModel)(this.mViewModel.repeatMode,
-                this.mViewModel.getDateByHHMI(ConfigData.TIME_EMPTY),
-                this.mViewModel.getDateByHHMI(ConfigData.TIME_EMPTY));
+              this.mViewModel.getDateByHHMI(ConfigData.TIME_EMPTY),
+              this.mViewModel.getDateByHHMI(ConfigData.TIME_EMPTY));
             } else {
               this.mViewModel.refreshDate.bind(this.mViewModel)(this.mViewModel.repeatMode,
                 this.mPrevStartTime,
@@ -140,7 +146,7 @@ export default struct NoDisturbComponent {
       .flexShrink(0)
       .align(Alignment.End)
       .alignItems(VerticalAlign.Center)
-      .padding({ right: $r('sys.float.ohos_id_max_padding_end') })
+      .padding({ right: $r('sys.float.ohos_id_default_padding_end') })
     }
     .width(ConfigData.WH_100_100)
     .height($r('app.float.itemComp_noDisturb_height'))
