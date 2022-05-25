@@ -16,6 +16,7 @@
 import screenshot from "@ohos.screenshot"
 import image from "@ohos.multimedia.image"
 import Log from '../../../../../../../common/src/main/ets/default/Log'
+import Trace from '../../../../../../../common/src/main/ets/default/Trace'
 import WindowManager,
 {WindowType, WINDOW_SHOW_HIDE_EVENT} from '../../../../../../../common/src/main/ets/default/WindowManager'
 import EventManager, {unsubscribe} from "../../../../../../../common/src/main/ets/default/event/EventManager"
@@ -145,6 +146,7 @@ struct Index {
       this.componentOptAreaTranslateY = '0px'
       this.backgroundOpacity = 1
     })
+    Trace.end(Trace.CORE_METHOD_START_DROPDOWNPANEL)
   }
 
   aboutToDisappear() {
@@ -240,10 +242,12 @@ struct Index {
   }
 
   showSelf(showComponentName) {
+    Trace.end(Trace.CORE_METHOD_START_TOUCHEVENT)
     Log.showDebug(TAG, `showSelf, showComponentName: ${showComponentName}`)
     this.showComponentName = showComponentName
     this.updateBackground()
     WindowManager.showWindow(WindowType.DROPDOWN_PANEL)
+    Trace.start(Trace.CORE_METHOD_START_DROPDOWNPANEL)
   }
 
   hideSelf() {

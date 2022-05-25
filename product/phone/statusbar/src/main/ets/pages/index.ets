@@ -14,6 +14,7 @@
  */
 
 import Log from '../../../../../../../common/src/main/ets/default/Log'
+import Trace from '../../../../../../../common/src/main/ets/default/Trace'
 import WindowManager, {WindowType, WINDOW_SHOW_HIDE_EVENT
 } from '../../../../../../../common/src/main/ets/default/WindowManager'
 import EventManager, {unsubscribe} from "../../../../../../../common/src/main/ets/default/event/EventManager"
@@ -112,6 +113,7 @@ struct Index {
   }
 
   touchEvent(event: TouchEvent) {
+    Trace.start(Trace.CORE_METHOD_START_TOUCHEVENT)
     Log.showDebug(TAG, 'touchEvent================' + event.touches)
     if (event.type == Constants.TOUCHTYPE_DOWN) { //down
       this.startX = event.touches[0].screenX
