@@ -51,12 +51,18 @@ export default struct Control {
       }
       .width('100%')
       .height(this.style.statusBarHeight)
+      .padding({
+        top: $r("app.float.status_bar_padding_top_bottom"),
+        bottom: $r("app.float.status_bar_padding_top_bottom"),
+        left: $r("sys.float.ohos_id_max_padding_start"),
+        right: $r("sys.float.ohos_id_max_padding_end")
+      })
       .layoutWeight(0)
 
       Scroll(new Scroller()) {
         Column() {
           ControlCenterComponent({
-            touchMoveCallback: (data)=>this.controlCenterTouchMoveCallback(data),
+            touchMoveCallback: (data) => this.controlCenterTouchMoveCallback(data),
             mControlCenterComponentConfig: ControlCenterConfig,
           })
         }

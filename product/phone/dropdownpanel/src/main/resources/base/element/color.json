@@ -2,7 +2,7 @@
   "color": [
     {
       "name": "default_background",
-      "value": "#4D999999"
+      "value": "#999999"
     },
     {
       "name": "notification_delete_all_background",
@@ -22,7 +22,7 @@
     },
     {
       "name": "statusbar_background_color",
-      "value": "#1a262626"
+      "value": "#00ffff00"
     },
     {
       "name": "brightness_slider_block_color",

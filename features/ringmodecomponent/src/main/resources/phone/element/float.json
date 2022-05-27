@@ -2,15 +2,15 @@
   "float": [
     {
       "name": "status_bar_ring_mode_width",
-      "value": "27vp"
+      "value": "17vp"
     },
     {
       "name": "status_bar_ring_mode_height",
-      "value": "24vp"
+      "value": "15vp"
     },
     {
       "name": "icon_component_opacity",
-      "value": "1"
+      "value": "0.7"
     }
   ]
 }

@@ -2,15 +2,15 @@
   "float": [
     {
       "name": "status_bar_clock_width",
-      "value": "60vp"
+      "value": "37vp"
     },
     {
       "name": "mTime_text_margin_left",
-      "value": "0vp"
+      "value": "2vp"
     },
     {
       "name": "icon_component_opacity",
-      "value": "1"
+      "value": "0.7"
     }
   ]
 }

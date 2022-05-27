@@ -49,6 +49,7 @@ export default struct WifiIcon {
           .width(this.style.statusBarWifiWidth)
           .height(this.style.statusBarWifiHeight)
           .fillColor(this.mTintContentInfo.contentColor)
+          .opacity($r("app.float.icon_component_opacity"))
         Row().width(this.styleCommon.statusBarMarginLeftRight).height('100%')
       }
     }

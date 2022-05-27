@@ -46,7 +46,6 @@ export default struct BatteryIcon {
       Row().width(this.style.componentGap).height('100%')
       BatteryPic()
       Row().width(this.styleCommon.statusBarMarginLeftRight).height('100%')
-    }
-    .height('100%')
+    }.height('100%').opacity($r("app.float.icon_component_opacity"))
   }
 }

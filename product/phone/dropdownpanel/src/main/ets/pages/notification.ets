@@ -151,8 +151,14 @@ struct statusBar {
         ClockIcon()
       }
     }
-    .height(24)
+    .height($r("app.float.status_bar_height"))
     .width('100%')
+    .padding({
+      top: $r("app.float.status_bar_padding_top_bottom"),
+      bottom: $r("app.float.status_bar_padding_top_bottom"),
+      left: $r("app.float.status_bar_padding_left_right"),
+      right: $r("app.float.status_bar_padding_left_right")
+    })
   }
 }
 
