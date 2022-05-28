@@ -13,7 +13,6 @@
  * limitations under the License.
  */
 
-import screenshot from "@ohos.screenshot"
 import image from "@ohos.multimedia.image"
 import Log from '../../../../../../../common/src/main/ets/default/Log'
 import Trace from '../../../../../../../common/src/main/ets/default/Trace'
@@ -62,7 +61,6 @@ struct Index {
   @State componentOptAreaHeightPX: number = 0
   @StorageLink('StatusCoefficient') StatusCoefficient: number = 1.0
   @State controlCenterComponentConfig: any = {};
-  @State mBackground: PixelMap | undefined = undefined;
   mCallback: any;
   mClearCallbacks: unsubscribe[]
   settingDataKey = 'settings.display.navigationbar_status';
@@ -245,7 +243,6 @@ struct Index {
     Trace.end(Trace.CORE_METHOD_START_TOUCHEVENT)
     Log.showDebug(TAG, `showSelf, showComponentName: ${showComponentName}`)
     this.showComponentName = showComponentName
-    this.updateBackground()
     WindowManager.showWindow(WindowType.DROPDOWN_PANEL)
     Trace.start(Trace.CORE_METHOD_START_DROPDOWNPANEL)
   }
@@ -255,23 +252,11 @@ struct Index {
     this._animateTo({ ...SHOW_ANIM_CONFIG, onFinish: () => {
       Log.showInfo(TAG, `hideSelf, hide anim finish.`);
       this.showComponentName = undefined
-      this.mBackground && this.mBackground.release();
-      this.mBackground = undefined;
       WindowManager.hideWindow(WindowType.DROPDOWN_PANEL)
     } }, () => {
       this.componentOptAreaTranslateY = (-this.componentOptAreaHeightPX * 0.1) + 'px'
       this.backgroundOpacity = 0
     })
-  }
-
-  updateBackground() {
-    let rect = WindowManager.getWindowInfo(WindowType.DROPDOWN_PANEL)?.rect;
-    Log.showDebug(TAG, `start get snapShot, rect: ${JSON.stringify(rect)}`)
-    screenshot.save({ screenRect: rect })
-      .then((snapImage) => {
-        Log.showInfo(TAG, `get snap: ${JSON.stringify(snapImage)}`)
-        this.mBackground = snapImage
-      })
   }
 
   _animateTo(config, callback) {
@@ -282,14 +267,12 @@ struct Index {
 
   build() {
     Stack({ alignContent: Alignment.Top }) {
-      if (this.mBackground) {
-        Image($r("app.media.dropdownpanel_bgc"))
-          .width('100%')
-          .height('100%')
-          .objectFit(ImageFit.Fill)
-          .blur(25)
-          .opacity(this.backgroundOpacity)
-      }
+      Image($r("app.media.dropdownpanel_bgc"))
+        .width('100%')
+        .height('100%')
+        .objectFit(ImageFit.Fill)
+        .blur(25)
+        .opacity(this.backgroundOpacity)
       Column() {
         if (this.showComponentName == 'Notification') {
           Column() {
