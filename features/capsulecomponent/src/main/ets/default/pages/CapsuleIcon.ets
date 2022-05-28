@@ -65,7 +65,10 @@ export default struct CapsuleIcon {
       .onTouch(this.touchEvent.bind(this))
 
       Row().width(this.styleCommon.statusBarMarginLeftRight).height('100%')
-    }.margin({ left: $r("app.float.green_capsule_phone_margin_left") })
+    }.margin({
+      left: $r("app.float.green_capsule_phone_margin_left"),
+      right: $r("app.float.green_capsule_phone_margin_left")
+    })
     .visibility(this.mCapsuleViewModel.mIsBackground ? Visibility.Visible : Visibility.None)
   }
 
