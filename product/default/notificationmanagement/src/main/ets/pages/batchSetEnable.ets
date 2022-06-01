@@ -63,7 +63,7 @@ export default struct BatchSetEnable {
             endMargin: $r('app.float.divider_margin_r')
           })
           .width(ConfigData.WH_100_100)
-          .height(this.mViewModel.isPhone?$r('app.float.applist_hieght_bat_phone'):$r('app.float.applist_hieght_bat'))
+          .layoutWeight(1)
           .padding({ left: $r('app.float.itemComp_padding_l'), right: $r('app.float.itemComp_padding_r') })
           .align(Alignment.Top)
           .backgroundColor(Color.White)
