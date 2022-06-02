@@ -30,7 +30,7 @@ import StatusbarConfig from './common/StatusbarConfig'
 import AbilityManager from '../../../../../../../common/src/main/ets/default/abilitymanager/abilityManager'
 
 const TAG = 'StatusBar-Index'
-const SLIDING_STATUS_BAR_DISTANCE = 30
+const SLIDING_STATUS_BAR_DISTANCE = 18
 
 let mHeightConfigUtils;
 
