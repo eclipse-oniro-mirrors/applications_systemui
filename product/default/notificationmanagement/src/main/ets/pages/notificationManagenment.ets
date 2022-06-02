@@ -159,7 +159,7 @@ export default struct notificationManagenment {
             Column() {
               AppLstComponent()
             }.width(ConfigData.WH_100_100)
-            .height(this.mViewModel.isPhone ? $r('app.float.applist_hieght_phone') : $r('app.float.applist_hieght'))
+            .layoutWeight(1)
             .margin({ top: $r('app.float.applist_margin_t') });
 
           }
