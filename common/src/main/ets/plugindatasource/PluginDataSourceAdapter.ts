@@ -26,19 +26,21 @@ export type pluginWorkerListener = {
 };
 
 const TAG = "PluginDataSourceAdapter";
-const WORKER_JS_URL = "workers/PluginDataSourceWorker.js";
 
 export default class PluginDataSourceAdapter {
     mContext: Context;
     mWorker: any;
     mName: string;
     mListener: pluginWorkerListener;
+    mModuleName: string;
 
-    constructor(name: string, context: Context, listener: pluginWorkerListener) {
+    constructor(name: string, context: Context, listener: pluginWorkerListener, moduleName: string) {
         Log.showDebug(TAG, `constructor, name: ${name}`);
         this.mName = name;
         this.mContext = context;
         this.mListener = listener;
+        this.mModuleName = moduleName;
+        const WORKER_JS_URL = this.mModuleName + "/ets/workers/PluginDataSourceWorker.js";
         this.mWorker = new worker.Worker(WORKER_JS_URL, {
             type: "classic",
             name: this.mName,
