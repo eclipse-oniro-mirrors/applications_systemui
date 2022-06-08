@@ -98,6 +98,7 @@ struct Index {
       Flex({ direction: FlexDirection.Row, alignItems: ItemAlign.Center, justifyContent: FlexAlign.Center }) {
         StatusBarComponent({
           mStatusBarComponentConfig: StatusbarConfig,
+          moduleName: 'phone_statusbar'
         })
       }
       .width('100%')
