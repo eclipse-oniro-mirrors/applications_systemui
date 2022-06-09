@@ -34,11 +34,6 @@ var volumePanelWant = {
     "abilityName": "com.ohos.systemui.volumepanel.ServiceExtAbility"
 }
 
-var dropdownPanelWant = {
-    "bundleName": "com.ohos.systemui",
-    "abilityName": "com.ohos.systemui.dropdownpanel.ServiceExtAbility"
-}
-
 class ServiceExtAbility extends ServiceExtension {
     onCreate(want) {
         Log.showInfo(TAG, `onCreate, want: ${JSON.stringify(want)}`)
@@ -47,7 +42,6 @@ class ServiceExtAbility extends ServiceExtension {
         AbilityManager.startAbility(statusBarWant)
         AbilityManager.startAbility(navigationBarWant)
         AbilityManager.startAbility(volumePanelWant)
-        AbilityManager.startAbility(dropdownPanelWant)
     }
 
     onDestroy() {

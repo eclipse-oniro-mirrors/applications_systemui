@@ -40,13 +40,13 @@ export const WINDOW_RESIZE_EVENT = "WindowResizeEvent";
 type WindowHandle = typeof Window.Window;
 const TAG = "WindowManager";
 const SYSTEM_WINDOW_TYPE_MAP: { [key in WindowType]: number } = {
-  SystemUi_StatusBar: 2108,
-  SystemUi_NavigationBar: 2112,
-  SystemUi_DropdownPanel: 2109,
-  SystemUi_NotificationPanel: 2111,
-  SystemUi_ControlPanel: 2111,
-  SystemUi_VolumePanel: 2111,
-  SystemUi_BannerNotice: 2111,
+  SystemUi_StatusBar: Window.WindowType.TYPE_STATUS_BAR,
+  SystemUi_NavigationBar: Window.WindowType.TYPE_NAVIGATION_BAR,
+  SystemUi_DropdownPanel: Window.WindowType.TYPE_PANEL,
+  SystemUi_NotificationPanel: Window.WindowType.TYPE_VOLUME_OVERLAY,
+  SystemUi_ControlPanel: Window.WindowType.TYPE_VOLUME_OVERLAY,
+  SystemUi_VolumePanel: Window.WindowType.TYPE_VOLUME_OVERLAY,
+  SystemUi_BannerNotice: Window.WindowType.TYPE_VOLUME_OVERLAY,
 };
 const DEFAULT_WINDOW_INFO: WindowInfo = {
   visibility: false,
