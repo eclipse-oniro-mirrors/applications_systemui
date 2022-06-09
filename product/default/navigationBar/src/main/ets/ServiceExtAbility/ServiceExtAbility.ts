@@ -13,6 +13,7 @@
  * limitations under the License.
  */
 
+import deviceInfo from "@ohos.deviceInfo"
 import ServiceExtension from '@ohos.application.ServiceExtensionAbility'
 import Log from '../../../../../../../common/src/main/ets/default/Log'
 import WindowManager, { WindowType } from '../../../../../../../common/src/main/ets/default/WindowManager'
@@ -20,6 +21,11 @@ import AbilityManager from '../../../../../../../common/src/main/ets/default/abi
 import NavBarConfiguration from '../common/navbarconfiguration'
 
 const TAG = "NavigationBar_ServiceExtAbility"
+
+var dropdownPanelWant = {
+    "bundleName": "com.ohos.systemui",
+    "abilityName": "com.ohos.systemui.dropdownpanel.ServiceExtAbility"
+}
 
 class ServiceExtAbility extends ServiceExtension {
     async onCreate(want) {
@@ -49,6 +55,10 @@ class ServiceExtAbility extends ServiceExtension {
             }
         }
         AbilityManager.setAbilityData(AbilityManager.ABILITY_NAME_NAVIGATION_BAR, 'config', configInfo)
+
+        if(deviceInfo.deviceType == "phone"){
+            AbilityManager.startAbility(dropdownPanelWant)
+        }
         Log.showDebug(TAG, `onCreate, configInfo: ${JSON.stringify(configInfo)}`)
 
         let navigationBarRect = {
