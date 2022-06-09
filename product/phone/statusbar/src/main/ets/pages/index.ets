@@ -108,7 +108,8 @@ struct Index {
     .width('100%')
     .height('100%')
     .constraintSize({ minHeight: this.StatusMinH })
-    .padding({ left: $r('sys.float.ohos_id_max_padding_start'), right: $r('sys.float.ohos_id_max_padding_end') })
+    .padding(this.mStatusBarData.showHorizontal ?
+      { left: $r('sys.float.ohos_id_max_padding_start'), right: $r('sys.float.ohos_id_max_padding_end') } : { left: '0'})
     .onAreaChange((e, e2) => {
       Log.showInfo(TAG, `onAreaChange, e: ${JSON.stringify(e)} e2: ${JSON.stringify(e2)}`);
     })

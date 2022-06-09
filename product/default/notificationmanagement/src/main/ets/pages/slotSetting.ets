@@ -61,8 +61,7 @@ export default struct SlotSetting {
                   appUri: this.appInfo.appUri,
                   appBundleName: this.appInfo.appBundleName,
                   appUid: this.appInfo.appUid,
-                  appSwitch: 3,
-                  isCanChange: !this.appInfo.systemApp
+                  appSwitch: 3
                 });
               }
               .margin({ top: $r('app.float.page_notice_part_margin_t') })
@@ -79,8 +78,7 @@ export default struct SlotSetting {
                   register: (listener) => Notification.register({
                     bundle: this.appInfo.appBundleName,
                     onEnableChanged: listener
-                  }),
-                  isCanChange: false //TODO: There is no service, so it cannot be modified
+                  })
                 })
               }
               .margin({ top: $r('app.float.page_notice_title_margin_t') })

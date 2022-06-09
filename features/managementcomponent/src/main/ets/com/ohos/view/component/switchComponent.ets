@@ -24,7 +24,6 @@ export default struct SwitchComponent {
   private initializationAction: (params?) => Promise<any>
   private settingAction: (params?) => void
   private register?: (listener) => void
-  @State isCanChange: boolean = true
   @State initState: boolean= false
 
   build() {
@@ -57,7 +56,6 @@ export default struct SwitchComponent {
           .selectedColor($r("app.color.font_color_007DFF"))
           .width($r('app.float.toggle_comp_width'))
           .height($r('app.float.toggle_comp_height'))
-          .enabled(this.isCanChange)
           .onChange((data) => {
             Log.showInfo(TAG, `Toggle onChange data:${data}`);
             this.initState = data ? true : false;

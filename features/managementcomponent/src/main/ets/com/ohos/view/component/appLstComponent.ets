@@ -57,8 +57,7 @@ export default struct AppLstComponent {
               appUri: item.appUri,
               appBundleName: item.appBundleName,
               appUid: item.appUid,
-              appSwitch: 0,
-              isCanChange:item.systemApp
+              appSwitch: 0
             })
           }
           .onClick(() => {
