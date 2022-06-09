@@ -63,8 +63,7 @@ export default struct SetEnable {
                   title: $allowNotice,
                   initializationAction: () => this.switchComponentInit(),
                   settingAction: (params) => this.switchComponentSet(params),
-                  register: (listener) => Notification.register({bundle:appInfo.appBundleName,onEnableChanged:listener}),
-                  isCanChange: !appInfo.systemApp
+                  register: (listener) => Notification.register({bundle:appInfo.appBundleName,onEnableChanged:listener})
                 })
               }
               .margin({ top: $r('app.float.page_notice_title_margin_t')})

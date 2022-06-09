@@ -26,6 +26,7 @@ const STORAGE_NAVIGATION_TYPE = 'navigationType'
 
 const TAG = 'NavigationBar-Index';
 let mConfigManager = configManager
+
 @Entry
 @Component
 struct Index {
@@ -42,7 +43,7 @@ struct Index {
   aboutToAppear() {
     Log.showInfo(TAG, `aboutToAppear Start`)
     let configInfo = AbilityManager.getAbilityData(AbilityManager.ABILITY_NAME_NAVIGATION_BAR, 'config')
-    AppStorage.SetAndLink("showNavHorizontal", configInfo.showNavHorizontal)
+    AppStorage.SetOrCreate("showNavHorizontal", configInfo.showNavHorizontal)
     mConfigManager.initConfig()
 
     setAppBgColor('#00000000')
@@ -69,7 +70,7 @@ struct Index {
     }
     .width('100%')
     .height('100%')
-    .constraintSize({ minHeight: this.minNavHeight  + 'px'})
+    .constraintSize({ minHeight: this.minNavHeight + 'px' })
     .backgroundColor(this.mNavigationBarComponentData.backgroundColor)
     .padding(this.showNavHorizontal ? { left: '18%', right: '18%' } : { top: '18%', bottom: '18%' })
   }

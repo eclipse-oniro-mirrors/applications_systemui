@@ -12,3 +12,4 @@ product/pc/notificationpanel/node_modules
 product/pc/statusbar/node_modules
 product/phone/dropdownpanel/node_modules
 product/phone/statusbar/node_modules
+*/.preview/*

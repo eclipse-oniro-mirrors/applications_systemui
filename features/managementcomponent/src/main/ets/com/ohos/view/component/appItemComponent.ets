@@ -32,7 +32,6 @@ export default struct AppItemComponent {
   @Prop appSwitch: number;
   @Prop appBundleName: string;
   @Prop appUid: number;
-  @State isCanChange: boolean = true
 
   build() {
     Flex({ justifyContent: FlexAlign.SpaceBetween }) {
@@ -209,7 +208,6 @@ export default struct AppItemComponent {
             .selectedColor($r("app.color.font_color_007DFF"))
             .width($r('app.float.toggle_comp_width'))
             .height($r('app.float.toggle_comp_height'))
-            .enabled(this.isCanChange)
             .onChange((flag) => {
               Log.showInfo(TAG, `Toggle onChange param: data:${flag} `);
               Notification.enableNotification({ bundle: this.appBundleName, uid: this.appUid }, flag);

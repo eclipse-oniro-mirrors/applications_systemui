@@ -192,6 +192,7 @@ struct StatusBarGroup {
             })
           }, (componentName: string) => componentName)
         }.width('100%')
+        .alignItems(HorizontalAlign.Start)
       }
       .alignItems(this.mAlignItems)
       .width('100%')
