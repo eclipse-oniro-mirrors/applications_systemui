@@ -12,11 +12,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-export const WindowNameMap = {
-  2112: 'navigation',
-  2108: 'status',
-  2111: 'volume'
-};
+import Window from "@ohos.window";
 
 export interface Rect {
   left: number;
@@ -26,6 +22,17 @@ export interface Rect {
 };
 
 export type WindowType = 'status' | 'navigation' | 'volume';
+
+export function getWindowName(windowType): WindowType{
+  switch (windowType) {
+    case Window.WindowType.TYPE_NAVIGATION_BAR:
+      return 'navigation';
+    case Window.WindowType.TYPE_STATUS_BAR:
+      return 'status';
+    case Window.WindowType.TYPE_VOLUME_OVERLAY:
+      return 'volume';
+  }
+}
 
 export default class Constants {
   static URI_VAR: string = 'dataability:///com.ohos.settingsdata.DataAbility';

@@ -16,7 +16,7 @@
 import Window from "@ohos.window";
 import display from "@ohos.display";
 import Log from "./Log";
-import {WindowType, Rect, WindowNameMap} from "./Constants";
+import {WindowType, Rect, getWindowName} from "./Constants";
 import getSingleInstance from "./SingleInstanceHelper";
 
 const TAG = "TintStateManager";
@@ -82,9 +82,9 @@ export default class TintStateManager {
             return;
         }
         data.regionTint.forEach((regionTintData) => {
-            Log.showDebug(TAG, `onSystemBarTintChange, type: ${WindowNameMap[regionTintData["type"]]}`);
-            let windowType = WindowNameMap[regionTintData["type"]];
-            if (!windowType) {
+            Log.showDebug(TAG, `onSystemBarTintChange, type: ${getWindowName(regionTintData["type"])}`);
+            let windowName = getWindowName(regionTintData["type"]);
+            if (!windowName) {
                 return;
             }
             let tintState: TintState = {
@@ -94,8 +94,8 @@ export default class TintStateManager {
                 contentColor: regionTintData.contentColor,
             };
             Log.showDebug(TAG, `tintState: ${JSON.stringify(tintState)}`);
-            this.mStates.set(windowType, tintState);
-            this.mListeners.get(windowType)?.onTintStateChange(tintState);
+            this.mStates.set(windowName, tintState);
+            this.mListeners.get(windowName)?.onTintStateChange(tintState);
         });
     }
 }
