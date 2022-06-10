@@ -39,7 +39,7 @@ export const WINDOW_RESIZE_EVENT = "WindowResizeEvent";
 
 type WindowHandle = typeof Window.Window;
 const TAG = "WindowManager";
-const SYSTEM_WINDOW_TYPE_MAP: { [key in WindowType]: number } = {
+const SYSTEM_WINDOW_TYPE_MAP: { [key in WindowType]: Window.WindowType } = {
   SystemUi_StatusBar: Window.WindowType.TYPE_STATUS_BAR,
   SystemUi_NavigationBar: Window.WindowType.TYPE_NAVIGATION_BAR,
   SystemUi_DropdownPanel: Window.WindowType.TYPE_PANEL,
