@@ -48,21 +48,16 @@ class NavBarConfiguration {
     Log.showDebug(TAG, 'initNavBarConfiguration');
     minHeight = 0;
 
-    let displayData = null;
-    while (displayData == null) {
-      await display.getDefaultDisplay()
-        .then((res) => {
-          Log.showInfo(TAG, `getDefaultDisplay dis ${JSON.stringify(res)}`);
-          displayData = res;
-          maxWidth = res.width;
-          maxHeight = res.height;
-          Log.showInfo(TAG, `getDefaultDisplay maxWidth ${maxWidth} maxHeight ${maxHeight} minHeight ${minHeight}`);
-        })
-        .catch((err) => {
-          Log.showError(TAG, 'getDefaultDisplay err: ' + err);
-        });
-      await new Promise((resolve) => setTimeout(resolve, 2000));
-    }
+    await display.getDefaultDisplay()
+      .then(dis => {
+        Log.showInfo(TAG, `initNavBarConfiguration dis ${JSON.stringify(dis)}`);
+        maxWidth = dis.width;
+        maxHeight = dis.height;
+        Log.showInfo(TAG, `initNavBarConfiguration maxWidth ${maxWidth} maxHeight ${maxHeight} minHeight ${minHeight}`);
+      })
+    .catch((err) => {
+      Log.showError(TAG, 'getDefaultDisplay err: ' + err);
+    });
   }
 
   async getDirectionAndPosition() {
