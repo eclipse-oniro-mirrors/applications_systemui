@@ -108,7 +108,6 @@ export default struct SetEnable {
 
   onBackPress() {
     Log.showInfo(TAG, `onBackPress`)
-    Router.back();
   }
 
   switchComponentInit() {

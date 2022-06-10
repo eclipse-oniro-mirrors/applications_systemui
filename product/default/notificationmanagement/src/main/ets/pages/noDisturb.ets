@@ -268,7 +268,6 @@ export default struct NoDisturb {
 
   onBackPress() {
     Log.showInfo(TAG, `onBackPress`)
-    Router.back();
   }
 }
 
