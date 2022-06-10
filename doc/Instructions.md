@@ -14,7 +14,7 @@
  3. 本机git bash 中执行：
  ```
  git clone '复制的下载地址'
- ``` 
+ ```
 
 ### 环境搭建
 安装DevEco Studio
@@ -25,7 +25,7 @@
 - 导入指定模块
 ``` JavaScript
 import bundle from '@ohos.bundle';
-```  
+```
 - 调用模块中的相应函数
 ``` JavaScript
 bundle.getApplicationInfos().then(data => {
@@ -97,9 +97,6 @@ this.title = this.$r('app.string.hello_world');
 
 ![](../figures/signature_2.png)
 
-配置完成后，对应的build.gradle文件中会出现如下内容
-
-![](../figures/signature_3.png)
 ### 打包
 DevEco Studio 支持 debug 与 release 两种打包类型。可以在 OhosBuild Variants 窗口中进行切换。
 
@@ -163,28 +160,14 @@ DevEco Studio 支持 debug 与 release 两种打包类型。可以在 OhosBuild 
 ```
 hdc target mount 
 ```
-将签名好的 hap 包放入设备的 `/system/app` 目录下，并修改hap包的权限
+将签名好的 hap 包放入设备的 `/system/app/com.ohos.systemui` 目录下，并修改hap包的权限
 
 ```
-hdc file send 本地路径 /system/app/hap包名称
-例如：hdc file send SystemUI-StatusBar.hap /system/app/SystemUI-StatusBar.hap
+hdc file send 本地路径 /system/app/com.ohos.systemui/hap包名称
+例如：hdc file send SystemUI-StatusBar.hap /system/app/com.ohos.systemui/SystemUI-StatusBar.hap
 ```
-> 注意，如果设备不存在 `/system/app` 目录，则需要手动创建该目录并修改权限。
-> ```
-> hdc shell
-> cd system
-> mkdir app
-> chmod 777 app
-> ```
-> `/system/app` 目录放置系统应用，例如：Launcher，SystemUI，Settings 等。
-> 
-> 但hap包需要在该目录下手动设置权限
-> ```
-> chmod 666 hap包名
-> ```
-> 此目录应用不用手动安装，系统自动拉起。
 ## 应用运行
-SystemUI属于系统应用，在将签名的 hap 包放入 `/system/app` 目录后，重启系统，应用会自动拉起。
+SystemUI属于系统应用，在将签名的 hap 包放入 `/system/app/com.ohos.systemui` 目录后，重启系统，应用会自动拉起。
 ```
 hdc shell
 reboot
@@ -204,6 +187,7 @@ console.info("SystemUI log info");
 ### log获取及过滤
 - log获取
   
+
 将log输出至文件  
 ```
 hdc shell hilog > 输出文件名称
@@ -243,6 +227,7 @@ hilog │ grep Label
    ```
 
 3. 修改代码。
+   
    > 将代码引入工程，以及编译工程等相关内容请参见 **3. 代码使用** 部分的相关内容。
 4. 提交代码到 fork 仓库。  
    > 修改后的代码，首先执行 `git add` 命令，然后执行 `git commit` 命令与 `git push` 命令，将代码 push 到我们自己的 fork 仓中。
