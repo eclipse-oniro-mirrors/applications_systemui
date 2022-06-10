@@ -159,7 +159,6 @@ export default struct SlotSetting {
 
   onBackPress() {
     Log.showInfo(TAG, `onBackPress`)
-    Router.back();
   }
 
   notificationEnableInit() {

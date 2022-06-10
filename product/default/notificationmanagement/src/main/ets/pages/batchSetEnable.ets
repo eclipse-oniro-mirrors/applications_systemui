@@ -96,7 +96,6 @@ export default struct BatchSetEnable {
 
   onBackPress() {
     Log.showInfo(TAG, `onBackPress`)
-    Router.back();
   }
 
 }

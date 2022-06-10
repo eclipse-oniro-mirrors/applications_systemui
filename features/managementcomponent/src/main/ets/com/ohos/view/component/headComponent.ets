@@ -36,10 +36,16 @@ struct HeadComponent {
       })
         .backgroundColor(this.isTouch ? $r('app.color.background_color') : $r('app.color.background_transparent'))
         .visibility(this.icBackIsVisibility ? Visibility.Visible : Visibility.None)
-        .onTouch(() => {
-        this.isTouch = true;
-        Router.back();
-      })
+        .onClick(() => {
+          Router.back();
+        })
+        .onTouch((touchEvent: TouchEvent) => {
+          if (touchEvent.type === TouchType.Down){
+            this.isTouch = true;
+          } else if (touchEvent.type === TouchType.Up){
+            this.isTouch = false;
+          }
+        })
       Text(this.headName)
         .fontColor($r('sys.color.ohos_id_color_text_primary'))
         .fontSize($r('app.float.page_phrases_tittle_font'))
