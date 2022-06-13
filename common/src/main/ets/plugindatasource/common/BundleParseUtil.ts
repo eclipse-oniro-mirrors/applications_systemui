@@ -18,6 +18,7 @@ import { ExtensionAbilityInfo } from "bundle/extensionAbilityInfo";
 import commonEvent from "@ohos.commonEvent";
 import { AbilityInfo } from "bundle/abilityInfo";
 import Log from "../../default/Log";
+import switchUserManager from "../../default/SwitchUserManager"
 
 export type AbilityInfoWithId = AbilityInfo & { itemId: string };
 export type BundleListener = {
@@ -145,21 +146,30 @@ export function registerBundleListener(listener: BundleListener, callback: (hand
         Log.showError(TAG, `Can't handle bundle change, err: ${JSON.stringify(err)}`);
         return;
       }
-      let event = BundleEventType.UNKNOWN_EVENT;
-      switch (data.event) {
-        case commonEvent.Support.COMMON_EVENT_PACKAGE_ADDED:
-          event = BundleEventType.BUNDLE_ADD;
-          break;
-        case commonEvent.Support.COMMON_EVENT_PACKAGE_CHANGED:
-          event = BundleEventType.BUNDLE_CHANGE;
-          break;
-        case commonEvent.Support.COMMON_EVENT_PACKAGE_REMOVED:
-          event = BundleEventType.BUNDLE_REMOVE;
-          break;
-        default:
-          Log.showError(TAG, `unknow event: ${event}`);
-      }
-      listener.onBundleNotify(data.bundleName ?? "unkown", event);
+
+      switchUserManager.getInstance()
+        .getCurrentUserInfo()
+        .then((userInfo) => {
+          if(data.parameters.userId != userInfo.userId) {
+            return;
+          } else {
+            let event = BundleEventType.UNKNOWN_EVENT;
+            switch (data.event) {
+              case commonEvent.Support.COMMON_EVENT_PACKAGE_ADDED:
+                event = BundleEventType.BUNDLE_ADD;
+                break;
+              case commonEvent.Support.COMMON_EVENT_PACKAGE_CHANGED:
+                event = BundleEventType.BUNDLE_CHANGE;
+                break;
+              case commonEvent.Support.COMMON_EVENT_PACKAGE_REMOVED:
+                event = BundleEventType.BUNDLE_REMOVE;
+                break;
+              default:
+                Log.showError(TAG, `unknow event: ${event}`);
+            }
+            listener.onBundleNotify(data.bundleName ?? "unkown", event);
+          }
+        });
     });
     callback({
       unRegister: () => {
