@@ -46,9 +46,16 @@ export default class NavigationBarViewModel {
   }
 
   constructor() {
+    Log.showInfo(TAG, 'constructor');
     this.mNavigationBarComponentData =
     AppStorage.SetAndLink(NavigationBarComponentDataKey, this.mNavigationBarComponentData).get()
     this.urivar = settings.getUriSync(this.settingDataKey);
+    if (AbilityManager.getContext() == null) {
+      Log.showError(TAG, `AbilityManager.getContext() is null`);
+    } else {
+      Log.showInfo(TAG, 'context: ' + AbilityManager.getContext() +
+        'stageMode: ' + AbilityManager.getContext().stageMode);
+    }
     this.helper = featureAbility.acquireDataAbilityHelper(AbilityManager.getContext(), CommonConstants.URI_VAR);
     this.initNavigationBarStatus();
   }
@@ -85,7 +92,8 @@ export default class NavigationBarViewModel {
     if (tintState.contentColor) {
       this.mNavigationBarComponentData.contentColor = tintState.contentColor;
     }
-    Log.showDebug(TAG, `onTintStateChange, backgroundColor ${this.mNavigationBarComponentData.backgroundColor}, contentColor ${this.mNavigationBarComponentData.contentColor}`);
+    Log.showDebug(TAG, `onTintStateChange, backgroundColor ${this.mNavigationBarComponentData.backgroundColor},
+      contentColor ${this.mNavigationBarComponentData.contentColor}`);
   }
 
   setWindowEnable?(isEnable: boolean) {
