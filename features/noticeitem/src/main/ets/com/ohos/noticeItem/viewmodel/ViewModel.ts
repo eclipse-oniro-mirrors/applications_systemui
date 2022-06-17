@@ -292,7 +292,7 @@ export class ViewModel {
       }
       this.mNotificationCtrl['app'].set(item.bundleName, tmp);
     }
-    Log.showInfo(TAG, 'initFlowControlInfos end, mNotificationCtrl: ' + JSON.stringify(this.mNotificationCtrl));
+    Log.showDebug(TAG, 'initFlowControlInfos end, mNotificationCtrl: ' + JSON.stringify(this.mNotificationCtrl));
   }
 
   isCanShow(bundleName: string): boolean {
