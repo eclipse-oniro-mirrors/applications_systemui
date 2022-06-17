@@ -18,13 +18,13 @@ export default class Constants {
   static TOUCHTYPE_UP = 1;
   static TOUCHTYPE_MOVE = 2;
   static WEEKDAY_LIST = [
+    $r('app.string.sunday'),
     $r('app.string.monday'),
     $r('app.string.tuesday'),
     $r('app.string.wednesday'),
     $r('app.string.thursday'),
     $r('app.string.friday'),
-    $r('app.string.saturday'),
-    $r('app.string.sunday')
+    $r('app.string.saturday')
   ]
   static DIGITS = 10;
   static MARK_MONTH = 0;
