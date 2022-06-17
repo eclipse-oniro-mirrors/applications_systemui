@@ -229,8 +229,7 @@ export class ViewModel {
   removeGroupNotification(itemData, isDelSysConent) {
     Log.showInfo(TAG, `removeGroupNotification, groupName: ${itemData.groupName}`);
     let groupName = itemData.groupName;
-    let index = this.mNotificationList.length;
-    while (i--) {
+    for (let i =  this.mNotificationList.length - 1, i >= len; i--) {
       if (this.mNotificationList[i].groupName == groupName) {
         let id = this.mNotificationList[i].id
         let hashcode = this.mNotificationList[i].hashcode
