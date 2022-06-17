@@ -229,12 +229,12 @@ export class ViewModel {
   removeGroupNotification(itemData, isDelSysConent) {
     Log.showInfo(TAG, `removeGroupNotification, groupName: ${itemData.groupName}`);
     let groupName = itemData.groupName;
-    for (let i =  this.mNotificationList.length - 1, i >= len; i--) {
+    for (let i =  this.mNotificationList.length - 1; i >= 0; i--) {
       if (this.mNotificationList[i].groupName == groupName) {
         let id = this.mNotificationList[i].id
         let hashcode = this.mNotificationList[i].hashcode
         let removeItemArr = this.mNotificationList.splice(i, 1);
-        Log.showInfo(TAG, `removeGroupNotification i = ${i} removeItemArr= ${JSON.stringify(removeItemArr)}`);
+        Log.showDebug(TAG, `removeGroupNotification i = ${i} removeItemArr= ${JSON.stringify(removeItemArr)}`);
         if (!CheckEmptyUtils.isEmpty(removeItemArr)) {
           this.updateFlowControlInfos(removeItemArr[0].bundleName, false)
         }
