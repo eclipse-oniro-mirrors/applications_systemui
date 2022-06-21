@@ -108,8 +108,6 @@ struct Index {
     .width('100%')
     .height('100%')
     .constraintSize({ minHeight: this.StatusMinH })
-    .padding(this.mStatusBarData.showHorizontal ?
-      { left: $r('sys.float.ohos_id_max_padding_start'), right: $r('sys.float.ohos_id_max_padding_end') } : { left: '0'})
     .onAreaChange((e, e2) => {
       Log.showInfo(TAG, `onAreaChange, e: ${JSON.stringify(e)} e2: ${JSON.stringify(e2)}`);
     })
@@ -117,11 +115,11 @@ struct Index {
 
   touchEvent(event: TouchEvent) {
     Trace.start(Trace.CORE_METHOD_START_TOUCHEVENT)
-    Log.showDebug(TAG, 'touchEvent================' + event.touches)
+    Log.showDebug(TAG, 'touchEvent' + event.touches)
     if (event.type == Constants.TOUCHTYPE_DOWN) { //down
       this.startX = event.touches[0].screenX
       this.startY = event.touches[0].screenY
-      Log.showInfo(TAG, `touchStart=======startX: ${this.startX}, startY: ${this.startY}`)
+      Log.showInfo(TAG, `touchStart, startX: ${this.startX}, startY: ${this.startY}`)
     } else if (event.type == Constants.TOUCHTYPE_MOVE) { //move
       this.moveX = event.touches[0].screenX - this.startX
       this.moveY = event.touches[0].screenY - this.startY
