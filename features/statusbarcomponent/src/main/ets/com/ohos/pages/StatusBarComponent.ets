@@ -80,7 +80,7 @@ export default struct StatusBarComponent {
             mAlignItems: HorizontalAlign.End
           })
         }
-        .padding({ left: $r('sys.float.ohos_id_max_padding_start'), right: $r('sys.float.ohos_id_max_padding_end') })
+        .padding({ left: $r('app.float.status_bar_padding_start'), right: $r('app.float.status_bar_padding_end') })
         .width('100%')
         .height('100%')
       } else {

@@ -43,6 +43,14 @@
     {
       "name": "status_bar_notification_icon_space",
       "value": "8vp"
+    },
+    {
+      "name": "status_bar_padding_start",
+      "value": "0vp"
+    },
+    {
+      "name": "status_bar_padding_end",
+      "value": "0vp"
     }
   ]
 }
