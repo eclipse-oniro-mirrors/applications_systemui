@@ -115,11 +115,11 @@ struct Index {
 
   touchEvent(event: TouchEvent) {
     Trace.start(Trace.CORE_METHOD_START_TOUCHEVENT)
-    Log.showDebug(TAG, 'touchEvent================' + event.touches)
+    Log.showDebug(TAG, 'touchEvent' + event.touches)
     if (event.type == Constants.TOUCHTYPE_DOWN) { //down
       this.startX = event.touches[0].screenX
       this.startY = event.touches[0].screenY
-      Log.showInfo(TAG, `touchStart=======startX: ${this.startX}, startY: ${this.startY}`)
+      Log.showInfo(TAG, `touchStart, startX: ${this.startX}, startY: ${this.startY}`)
     } else if (event.type == Constants.TOUCHTYPE_MOVE) { //move
       this.moveX = event.touches[0].screenX - this.startX
       this.moveY = event.touches[0].screenY - this.startY

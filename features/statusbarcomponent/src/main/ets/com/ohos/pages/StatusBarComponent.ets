@@ -69,7 +69,6 @@ export default struct StatusBarComponent {
             mLayoutWeight: 1,
             mAlignItems: HorizontalAlign.Start
           })
-
           StatusBarGroup({
             mComponents: this.mStatusBarLayout[1],
             mLayoutWeight: 0,
