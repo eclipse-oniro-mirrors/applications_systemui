@@ -69,6 +69,7 @@ export default struct StatusBarComponent {
             mLayoutWeight: 1,
             mAlignItems: HorizontalAlign.Start
           })
+
           StatusBarGroup({
             mComponents: this.mStatusBarLayout[1],
             mLayoutWeight: 0,
@@ -80,6 +81,8 @@ export default struct StatusBarComponent {
             mAlignItems: HorizontalAlign.End
           })
         }
+        .padding(this.mStatusBarData.showHorizontal ?
+          { left: $r('sys.float.ohos_id_max_padding_start'), right: $r('sys.float.ohos_id_max_padding_end') } : { left: '0'})
         .width('100%')
         .height('100%')
       } else {
