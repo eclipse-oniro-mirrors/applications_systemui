@@ -5,7 +5,6 @@
     "srcEntrance": "./ets/Application/AbilityStage.ts",
     "description": "$string:mainability_description",
     "mainElement": "com.ohos.systemui.statusbar.ServiceExtAbility",
-    "process": "com.ohos.systemui:extension",
     "deviceTypes": [
       "phone"
     ],
