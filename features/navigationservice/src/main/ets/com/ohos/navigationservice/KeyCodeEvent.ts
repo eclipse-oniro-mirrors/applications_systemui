@@ -15,7 +15,7 @@
 
 import Log from '../../../../../../../../common/src/main/ets/default/Log';
 import AbilityManager from '../../../../../../../../common/src/main/ets/default/abilitymanager/abilityManager';
-import commonEvent from '@ohos.commonevent';
+import commonEvent from '@ohos.commonEvent';
 import Constants from './common/constants';
 import Input from '@ohos.multimodalInput.inputEventClient';
 const TAG = 'KeyCodeEvent'
