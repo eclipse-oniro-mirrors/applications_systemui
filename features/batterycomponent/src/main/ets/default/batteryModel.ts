@@ -1,3 +1,4 @@
+//@ts-nocheck
 /*
  * Copyright (c) 2022 Huawei Device Co., Ltd.
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -13,7 +14,7 @@
  * limitations under the License.
  */
 
-import BatteryInfo from "@ohos.batteryInfo";
+import BatteryInfo from "@ohos.batteryinfo";
 import commonEvent from "@ohos.commonEvent";
 import createOrGet from "../../../../../../common/src/main/ets/default/SingleInstanceHelper";
 import Constants from "./common/constants";

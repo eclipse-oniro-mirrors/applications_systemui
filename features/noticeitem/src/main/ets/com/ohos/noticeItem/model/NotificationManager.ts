@@ -15,7 +15,7 @@
 
 //import { NotificationSubscriber } from './notification/notificationSubscriber';
 import Notification from '@ohos.notification';
-import PluginComponentManager from '@ohos.plugincomponent';
+import PluginComponentManager from '@ohos.pluginComponent';
 import Systemparameter from '@ohos.systemparameter';
 import Log from '../../../../../../../../../common/src/main/ets/default/Log';
 
