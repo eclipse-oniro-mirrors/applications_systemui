@@ -28,8 +28,8 @@ export default class CommonUtil {
   static startWant(want, triggerInfo?: any) {
     let info = (triggerInfo) ? triggerInfo : DEFAULT_INFO;
     Log.showDebug(TAG, `startWant ${JSON.stringify(want)}, info ${JSON.stringify(info)}`);
-    WantAgent.trigger(want, info, ((err, data) => {
-      Log.showInfo(TAG, `wantAgent trigger err ${JSON.stringify(err)} data ${JSON.stringify(data)}`);
+    WantAgent.trigger(want, info, ((data) => {
+      Log.showInfo(TAG, `wantAgent trigger data ${JSON.stringify(data)}`);
     }));
   }
 

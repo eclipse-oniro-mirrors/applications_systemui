@@ -15,7 +15,6 @@
 
 import {NotificationItemData} from '../../common/constants';
 import Log from '../../../../../../../../../../common/src/main/ets/default/Log';
-import {SlotLevel} from '@ohos.notification';
 import Notification from '@ohos.notification';
 import CheckEmptyUtils from '../../../../../../../../../../common/src/main/ets/default/CheckEmptyUtils';
 import Bundle from '@ohos.bundle';
@@ -103,7 +102,7 @@ export class RuleController {
       isAllowNotificationListShow : false
     };
     Log.showInfo(TAG, `notificationItemData.slotLevel = ${notificationItemData.slotLevel}`);
-    if (notificationItemData.slotLevel === SlotLevel.LEVEL_HIGH) {
+    if (notificationItemData.slotLevel === Notification.SlotLevel.LEVEL_HIGH) {
       mNotificationItemData.ruleData.isAllowBanner = true;
       this.SoundOrVibrate(notificationItemData, (sound, vibrationValues) => {
         mNotificationItemData.ruleData.isAllowSound = sound;
@@ -112,15 +111,15 @@ export class RuleController {
       mNotificationItemData.ruleData.isAllowStatusBarShow = true;
       mNotificationItemData.ruleData.isAllowNotificationListShow = true;
 
-    } else if (notificationItemData.slotLevel === SlotLevel.LEVEL_DEFAULT) {
+    } else if (notificationItemData.slotLevel === Notification.SlotLevel.LEVEL_DEFAULT) {
       this.SoundOrVibrate(notificationItemData, (sound, vibrationValues) => {
         mNotificationItemData.ruleData.isAllowSound = sound;
         mNotificationItemData.ruleData.isAllowVibrationValues = vibrationValues;
       });
       mNotificationItemData.ruleData.isAllowStatusBarShow = true;
       mNotificationItemData.ruleData.isAllowNotificationListShow = true;
-    } else if (notificationItemData.slotLevel === SlotLevel.LEVEL_LOW ||
-      notificationItemData.slotLevel === SlotLevel.LEVEL_MIN) {
+    } else if (notificationItemData.slotLevel === Notification.SlotLevel.LEVEL_LOW ||
+      notificationItemData.slotLevel === Notification.SlotLevel.LEVEL_MIN) {
       mNotificationItemData.ruleData.isAllowNotificationListShow = true;
     } else {
       mNotificationItemData.ruleData.isAllowNotificationListShow = false;

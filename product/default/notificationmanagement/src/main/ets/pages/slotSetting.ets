@@ -21,7 +21,7 @@ import ConfigData from '../common/constants';
 import NotificationConfigData from '../../../../../../../features/managementcomponent/src/main/ets/com/ohos/common/constants';
 import Router from '@system.router'
 import Notification from '../../../../../../../features/managementcomponent/src/main/ets/com/ohos/model/notificationlistener';
-import {SlotLevel} from '@ohos.notification';
+import notification from '@ohos.notification';
 
 const TAG = 'NotificationManagement-SlotSetting';
 const DEFAULT_SOUND = 'file://system/etc/Light.ogg';
@@ -187,11 +187,11 @@ export default struct SlotSetting {
     Log.showDebug(TAG, `soundEnableSet params:${JSON.stringify(params)}`)
     if (params == 0) {
       this.slotInfo.sound = '';
-      this.slotInfo.level = SlotLevel.LEVEL_LOW
+      this.slotInfo.level = notification.SlotLevel.LEVEL_LOW
     } else if (params == 1) {
       this.slotInfo.sound = DEFAULT_SOUND;
-      if (this.slotInfo.level < SlotLevel.LEVEL_DEFAULT) {
-        this.slotInfo.level = SlotLevel.LEVEL_DEFAULT
+      if (this.slotInfo.level < notification.SlotLevel.LEVEL_DEFAULT) {
+        this.slotInfo.level = notification.SlotLevel.LEVEL_DEFAULT
       }
     }
     this.notificationSlotSet();
@@ -201,7 +201,7 @@ export default struct SlotSetting {
     Log.showDebug(TAG, `bannerEnableInit`)
     return new Promise((resolve, reject) => {
       let result: boolean = false;
-      if (this.slotInfo.level == SlotLevel.LEVEL_HIGH) {
+      if (this.slotInfo.level == notification.SlotLevel.LEVEL_HIGH) {
         result = true;
       }
       Log.showInfo(TAG, `bannerEnableInit state:${result}`)
@@ -213,12 +213,12 @@ export default struct SlotSetting {
     Log.showDebug(TAG, `bannerEnableSet params:${JSON.stringify(params)}`)
     if (params == 0) {
       if (this.slotInfo.sound) {
-        this.slotInfo.level = SlotLevel.LEVEL_DEFAULT;
+        this.slotInfo.level = notification.SlotLevel.LEVEL_DEFAULT;
       } else {
-        this.slotInfo.level = SlotLevel.LEVEL_LOW;
+        this.slotInfo.level = notification.SlotLevel.LEVEL_LOW;
       }
     } else if (params == 1) {
-      this.slotInfo.level = SlotLevel.LEVEL_HIGH;
+      this.slotInfo.level = notification.SlotLevel.LEVEL_HIGH;
     }
     this.notificationSlotSet();
   }

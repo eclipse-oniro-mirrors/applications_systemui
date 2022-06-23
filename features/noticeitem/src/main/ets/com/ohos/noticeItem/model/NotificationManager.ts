@@ -89,14 +89,14 @@ export default class NotificationManager {
 
   static requestListener(tag, ownerWant, asyncCallback) {
     Log.showInfo(TAG, `requestListener from: ${tag}`);
-    PluginComponentManager.on(ownerWant, 'request', (source, name, data) => {
+    PluginComponentManager.on('request', (source, name, data) => {
       asyncCallback(source, name, data);
     })
   }
 
   static pushListener(tag, ownerWant, asyncCallback) {
     Log.showInfo(TAG, `pushListener from: ${tag}`);
-    PluginComponentManager.on(ownerWant, 'push', (source, template, data, extraData) => {
+    PluginComponentManager.on('push', (source, template, data, extraData) => {
       asyncCallback(source, template, data, extraData);
     });
   }

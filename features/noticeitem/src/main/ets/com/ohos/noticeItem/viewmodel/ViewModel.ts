@@ -18,7 +18,7 @@ import SwitchUserManager from '../../../../../../../../../common/src/main/ets/de
 import media from '@ohos.multimedia.media';
 import vibrator from '@ohos.vibrator';
 import wantAgent from '@ohos.wantAgent';
-import SourceType from '@ohos.notification'
+import Notification from '@ohos.notification'
 import NotificationService from '../model/NotificationService'
 import NotificationWindowManager from '../model/NotificationWindowManager';
 import NotificationConfig from '../model/NotificationConfig';
@@ -164,15 +164,15 @@ export class ViewModel {
     }
     this.mNotificationList.sort((itemA, itemB) => {
       //long term notification come first
-      if (itemA.source == SourceType.TYPE_CONTINUOUS && itemB.source != SourceType.TYPE_CONTINUOUS) {
+      if (itemA.source == Notification.SourceType.TYPE_CONTINUOUS && itemB.source != Notification.SourceType.TYPE_CONTINUOUS) {
         return -1
       }
       //long term notification come first
-      if (itemA.source != SourceType.TYPE_CONTINUOUS && itemB.source == SourceType.TYPE_CONTINUOUS) {
+      if (itemA.source != Notification.SourceType.TYPE_CONTINUOUS && itemB.source == Notification.SourceType.TYPE_CONTINUOUS) {
         return 1
       }
-      if ((itemA.source == SourceType.TYPE_CONTINUOUS && itemB.source == SourceType.TYPE_CONTINUOUS) ||
-      (itemA.source != SourceType.TYPE_CONTINUOUS && itemB.source != SourceType.TYPE_CONTINUOUS)
+      if ((itemA.source == Notification.SourceType.TYPE_CONTINUOUS && itemB.source == Notification.SourceType.TYPE_CONTINUOUS) ||
+      (itemA.source != Notification.SourceType.TYPE_CONTINUOUS && itemB.source != Notification.SourceType.TYPE_CONTINUOUS)
       ) {
         return -1 * (itemA.timestamp - itemB.timestamp)
       }
