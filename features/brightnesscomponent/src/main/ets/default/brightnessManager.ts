@@ -25,7 +25,7 @@ import CommonConstants from "../../../../../../common/src/main/ets/default/Const
 
 const SYSTEMUI_BRIGHTNESS = settings.display.SCREEN_BRIGHTNESS_STATUS;;
 const TAG = 'Control-brightnessManager';
-var mBrightnessValue = AppStorage.SetAndLink('BrightnessValue', '100');
+var mBrightnessValue = AppStorage.SetAndLink('BrightnessValue', 100);
 
 export class brightnessManager {
   helper: any;
@@ -42,7 +42,7 @@ export class brightnessManager {
 
   registerBrightness() {
     this.helper.on("dataChange", this.uri, (err) => {
-      let data = settings.getValueSync(this.helper, SYSTEMUI_BRIGHTNESS, '100');
+      let data = settings.getValueSync(this.helper, SYSTEMUI_BRIGHTNESS, JSON.stringify(this.getDefault()));
       Log.showInfo(TAG, `after brightness datachange settings getValue ${parseInt(data)}`);
       mBrightnessValue.set(parseInt(data));
     })
@@ -56,7 +56,7 @@ export class brightnessManager {
 
   getValue() {
     Log.showInfo(TAG, 'getValue');
-    let data = settings.getValueSync(this.helper, SYSTEMUI_BRIGHTNESS, '100');
+    let data = settings.getValueSync(this.helper, SYSTEMUI_BRIGHTNESS, JSON.stringify(this.getDefault()));
     Log.showInfo(TAG, `settings getValue ${parseInt(data)}`);
     mBrightnessValue.set(parseInt(data));
   }
