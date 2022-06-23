@@ -23,10 +23,13 @@ export default class Constants {
     static REMOVE_ITEM = "removeItem";
     static LOCAL_DEVICE = "local";
     static LOAD_DATA = "loadData";
+    static readonly LOAD_PLUGIN_COMPONENT_DATA = 'loadPluginComponentData';
+    static readonly UPDATE_PLUGIN_COMPONENT_DATA = 'updatePluginComponentData';
 }
 
 export type FilterData = {
     id: string;
+    bundleName: string;
     abilityName: string;
 };
 
@@ -71,6 +74,11 @@ export class ActionData {
     clickAction?: Event;
     longClickAction?: Event;
     launchType?: number;
-    pluginData?: any;
+    pluginData?: PluginComponentData;
     extra?: any;
+}
+
+export class PluginComponentData {
+    template;
+    data;
 }

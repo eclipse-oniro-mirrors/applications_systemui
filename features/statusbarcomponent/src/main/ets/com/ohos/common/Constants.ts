@@ -25,6 +25,8 @@ export default class Constants {
   static GROUP_ID_CENTER = 2;
   static GROUP_ID_RIGHT = 3;
   static VERTICAL_COMPONENT_HEIGHT_VP = 58;
+  static readonly PLUGIN_COMPONENT_ICON_WIDTH = 32;
+  static readonly PLUGIN_COMPONENT_OWNER_WANT_KEY = 'StatusBar_PluginComponentOwnerWant';
 }
 
 export type StatusBarComponentData = ItemComponentData & {

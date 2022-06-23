@@ -39,6 +39,10 @@ const STATUSBAR_SOURCE_CONFIG = {
             action: "com.ohos.systemui.action.BAR_ICON",
             permission: null,
         },
+        PluginSourceLoader: {
+            action: 'com.ohos.systemui.action.BAR_ICON',
+            permission: null,
+        },
     },
 };
 
@@ -90,6 +94,7 @@ export class StatusBarService {
         SwitchUserManager.getInstance().registerListener(this);
         STATUSBAR_SOURCE_CONFIG.filterDatas = config.MetaSlots;
         this.mAdapter = new PluginDataSourceAdapter(TAG, AbilityManager.getContext(), this, moduleName);
+        this.mAdapter.setWant(globalThis[Constants.PLUGIN_COMPONENT_OWNER_WANT_KEY]);
         this.mAdapter.initDataSource(STATUSBAR_SOURCE_CONFIG);
     }
 

@@ -22,6 +22,7 @@ const TAG = "SourceLoader";
 export type LoaderChannel = {
     add: (item: ItemComponentData) => void;
     remove: (item: ItemComponentData) => void;
+    onLoadPluginComponentData: (item: ItemComponentData) => void;
 };
 
 export default abstract class SourceLoader {
@@ -33,6 +34,10 @@ export default abstract class SourceLoader {
 
     public setChannel(channel: LoaderChannel) {
         this.mChannel = channel;
+    }
+
+    protected getChannel(): LoaderChannel {
+        return this.mChannel;
     }
 
     protected addItem(itemData: ItemComponentData) {

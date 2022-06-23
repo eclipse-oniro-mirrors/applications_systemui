@@ -16,8 +16,10 @@
 import worker from "@ohos.worker";
 import Log from "../default/Log";
 import BundleManager from "../default/abilitymanager/bundleManager";
+import { Want } from 'ability/want';
 import Constants, { ItemComponentData, obtainMsg, RootConfigInfo } from "./common/Constants";
 import Context from "application/ServiceExtensionContext";
+import PluginSourceLoaderPatch from './sourceloader/PluginSourceLoaderPatch'
 
 export type pluginWorkerListener = {
     initFinish: () => void;
@@ -32,6 +34,8 @@ export default class PluginDataSourceAdapter {
     mWorker: any;
     mName: string;
     mListener: pluginWorkerListener;
+    mWant: Want;
+    mPluginSourceLoaderPatch: PluginSourceLoaderPatch;
     mModuleName: string;
 
     constructor(name: string, context: Context, listener: pluginWorkerListener, moduleName: string) {
@@ -52,9 +56,16 @@ export default class PluginDataSourceAdapter {
         this.mWorker.onerror = this.onError.bind(this);
     }
 
+    setWant(want: Want): void{
+        this.mWant = want;
+    }
+
     initDataSource(configs: RootConfigInfo) {
         Log.showDebug(TAG, `initDataSource, configs: ${JSON.stringify(configs)}`);
         this.mWorker.postMessage(obtainMsg(Constants.INIT_CONFIG, configs));
+        if (configs.loaderConfig.PluginSourceLoader) {
+            this.mPluginSourceLoaderPatch = new PluginSourceLoaderPatch(this.mWant, this);
+        }
     }
 
     loadData(userId: number) {
@@ -65,6 +76,7 @@ export default class PluginDataSourceAdapter {
     clearAll() {
         Log.showDebug(TAG, `clearAll`);
         this.mWorker.postMessage(obtainMsg(Constants.CLEAR_ALL, {}));
+        this.mPluginSourceLoaderPatch?.clearAll();
     }
 
     onMessage(msg: { data: any }) {
@@ -79,6 +91,11 @@ export default class PluginDataSourceAdapter {
                 break;
             case Constants.REMOVE_ITEM:
                 this.onItemRemove(data.data);
+                break;
+            case Constants.LOAD_PLUGIN_COMPONENT_DATA:
+                this.onLoadPluginComponentData(data.data).then(() => {
+                }).catch(err => {
+                });
                 break;
             default:
                 Log.showError(TAG, `unknown type: ${JSON.stringify(msg)}`);
@@ -116,6 +133,17 @@ export default class PluginDataSourceAdapter {
     onItemRemove(itemData: ItemComponentData) {
         Log.showDebug(TAG, `onItemRemove, itemData: ${JSON.stringify(itemData)}`);
         this.mListener.onItemRemove(itemData);
+    }
+
+    async onLoadPluginComponentData(itemData: ItemComponentData): Promise<void> {
+        Log.showDebug(TAG, `name: ${this.mName}, onLoadPluginComponentData, itemData: ${JSON.stringify(itemData)}`);
+        let ret = await this.mPluginSourceLoaderPatch?.requestPluginComponentData(itemData);
+        this.mWorker.postMessage(obtainMsg(Constants.UPDATE_PLUGIN_COMPONENT_DATA, ret));
+    }
+
+    async onUpdatePluginComponentData(pluginComponentData: ItemComponentData): Promise<void> {
+        Log.showDebug(TAG, `name: ${this.mName}, onUpdatePluginComponentData, pluginComponentData: ${JSON.stringify(pluginComponentData)}`);
+        this.mWorker.postMessage(obtainMsg(Constants.UPDATE_PLUGIN_COMPONENT_DATA, pluginComponentData));
     }
 
     onMessageError(event: any) {

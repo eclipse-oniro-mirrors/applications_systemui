@@ -19,6 +19,9 @@ import WindowManager, {WindowType} from '../../../../../../../../common/src/main
 import TintStateManager, {TintState, TintContentInfo, getOrCreateTintContentInfo
 } from '../../../../../../../../common/src/main/ets/default/TintStateManager';
 import {FASlotName, Rect} from '../../../../../../../../common/src/main/ets/default/Constants';
+import { PluginType, PluginComponentData
+} from '../../../../../../../../common/src/main/ets/plugindatasource/common/Constants';
+import StyleConfigurationCommon from '../../../../../../../../common/src/main/ets/default/StyleConfiguration';
 import Constants, {StatusBarData, StatusBarBackgroundData, StatusBarComponentGroupContentData, StatusBarComponentData
 } from '../common/Constants';
 import StatusBarService from '../model/StatusBarService';
@@ -116,6 +119,47 @@ export class StatusBarVM {
       let deleteRs: boolean = AppStorage.Delete(storageKey);
       Log.showInfo(TAG, `setItemData, AppStorage.Delete rs: ${deleteRs} `);
     }
+    this.setPluginData(id, itemData);
+  }
+
+  setPluginData(id: string, itemData: StatusBarComponentData): void{
+    Log.showInfo(TAG, `setPluginData, itemData: ${JSON.stringify(itemData)}`);
+    if (itemData && itemData.pluginType == PluginType.PLUGIN_COMPONENT) {
+      let data = undefined;
+      if (itemData.actionData.pluginData && itemData.actionData.pluginData.data) {
+        data = JSON.parse(JSON.stringify(itemData.actionData.pluginData.data));
+        if (Object.keys(data).length > 0) {
+          if (!data['fontSize']) {
+            data['fontSize'] = (StyleConfigurationCommon.getCommonStyle() as any).statusBarFontSize;
+          }
+          if (!data['fontColor']) {
+            if (!this.mComponentAreaMap.get(id)) {
+              this.changeComponentContent(id, { left: 0, top: 0, width: 0, height: 0 });
+            }
+            data['fontColor'] = this.getPluginTintContentInfo(id).contentColor;
+          }
+        }
+      }
+      let pluginData = this.getPluginData(id);
+      pluginData.template = itemData.actionData.pluginData.template;
+      pluginData.data = data;
+      Log.showInfo(TAG, `setPluginData, pluginData: ${JSON.stringify(pluginData)} `);
+    } else {
+      let storageKey = 'StatusBar_PluginIcon_' + id;
+      if (AppStorage.Has(storageKey)) {
+        let deleteRs: boolean = AppStorage.Delete(storageKey);
+        Log.showInfo(TAG, `setPluginData, AppStorage.Delete rs: ${String(deleteRs)} `);
+      }
+    }
+  }
+
+  getPluginData(id: string): PluginComponentData {
+    Log.showInfo(TAG, `getPluginData, id: ${id}`);
+    let storageKey = 'StatusBar_PluginIcon_' + id;
+    if (!AppStorage.Has(storageKey)) {
+      AppStorage.SetOrCreate(storageKey, new PluginComponentData());
+    }
+    return AppStorage.Get(storageKey);
   }
 
   onTintStateChange(tintState: TintState) {
@@ -230,10 +274,6 @@ export class StatusBarVM {
       this.setComponentContent(id, '#FFFFFFFF');
       return;
     }
-    if ((this.mStatusBarData.showHorizontal && area.width == 0) || (!this.mStatusBarData.showHorizontal && area.height == 0)) {
-      this.setComponentContent(id, '#FFFFFFFF');
-      return;
-    }
     let startPos = this.mStatusBarData.showHorizontal ? this.mStatusBarData.left : this.mStatusBarData.top;
     for (let group of this.mComponentGroupContentDatas) {
       if (group.width == 0) {
@@ -249,7 +289,7 @@ export class StatusBarVM {
         componentStartPos = area.top;
         componentEndPos = area.top + area.height;
       }
-      if (!(componentEndPos <= startPos) && !(componentStartPos >= endPos)) {
+      if (!(componentEndPos < startPos || componentStartPos > endPos)) {
         this.setComponentContent(id, group.contentColor);
         break;
       }

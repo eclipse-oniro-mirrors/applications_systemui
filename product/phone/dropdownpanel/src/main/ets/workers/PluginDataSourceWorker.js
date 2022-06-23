@@ -38,6 +38,9 @@ parentPort.onmessage = (msg) => {
         case Constants.LOAD_DATA:
             loadData(data.data);
             break;
+        case Constants.UPDATE_PLUGIN_COMPONENT_DATA:
+            updatePluginComponentData(data.data);
+            break;
         default:
             Log.showError(TAG, `onMessage, unknown action type.`);
     }
@@ -55,6 +58,10 @@ function initConfig(config) {
             Log.showInfo(TAG, `sManager.onItemRemove, itemData = ${JSON.stringify(itemData)}`);
             parentPort.postMessage(obtainMsg(Constants.REMOVE_ITEM, itemData));
         },
+        onLoadPluginComponentData: (itemData) => {
+            Log.showInfo(TAG, `sManager.onLoadPluginComponentData, itemData = ${JSON.stringify(itemData)}`);
+            parentPort.postMessage(obtainMsg(Constants.LOAD_PLUGIN_COMPONENT_DATA, itemData));
+        },
     });
     sManager.initDataSource(config);
     parentPort.postMessage(obtainMsg(Constants.INIT_FINISH, {}));
@@ -68,6 +75,11 @@ function clearAll() {
 function loadData(userId) {
     Log.showDebug(TAG, `loadData `);
     sManager?.loadData(userId);
+}
+
+function updatePluginComponentData(pluginComponentData) {
+    Log.showDebug(TAG, 'updatePluginComponentData ');
+    sManager?.updatePluginComponentData(pluginComponentData);
 }
 
 parentPort.onclose = function () {

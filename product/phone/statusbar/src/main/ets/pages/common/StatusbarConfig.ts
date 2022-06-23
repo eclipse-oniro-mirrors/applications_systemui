@@ -52,6 +52,7 @@ const StatusbarConfig: Config = {
         FASlotName.WIFI,
         FASlotName.CAPSULE,
         FASlotName.NOTIFICATION,
+        'demosystemuisbrmeta',
       ],
     },
     {
@@ -61,7 +62,7 @@ const StatusbarConfig: Config = {
     {
       id: 3,
       Components: [
-        "testid",
+        'demosystemuisbrplugin',
         FASlotName.LOCATION,
         FASlotName.BLUETOOTH,
         FASlotName.RING_MODE,
@@ -83,9 +84,14 @@ const StatusbarConfig: Config = {
   ],
   MetaSlots: [
     {
-      id: "testid",
-      bundleName: "com.example.test_app_id",
-      abilityName: "com.example.test_app_id.MainAbility",
+      id: 'demosystemuisbrmeta',
+      bundleName: 'com.ohos.demosystemuisbrmeta',
+      abilityName: 'com.ohos.demosystemuisbrmeta.MainAbility',
+    },
+    {
+      id: 'demosystemuisbrplugin',
+      bundleName: 'com.ohos.demosystemuisbrplugin',
+      abilityName: 'com.ohos.demosystemuisbrplugin.ServiceExtAbility',
     },
   ],
   emptyPosition: {

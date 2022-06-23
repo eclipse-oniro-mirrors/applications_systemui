@@ -56,4 +56,13 @@ export default class StyleConfiguration {
             };
         });
     }
+
+    static getPluginIconItemComponentStyle() {
+        const key: string = TAG + '-PluginIconItemComponent';
+        return StyleManager.getStyle(key, () => {
+            return {
+                iconWidth : vp2px(Constants.PLUGIN_COMPONENT_ICON_WIDTH),
+            };
+        });
+    }
 }
