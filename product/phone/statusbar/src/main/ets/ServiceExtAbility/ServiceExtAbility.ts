@@ -18,6 +18,7 @@ import Log from '../../../../../../../common/src/main/ets/default/Log'
 import WindowManager, { WindowType } from '../../../../../../../common/src/main/ets/default/WindowManager'
 import AbilityManager from '../../../../../../../common/src/main/ets/default/abilitymanager/abilityManager'
 import StatusBarConfiguration from '../../../../../../../features/statusbarcomponent/src/main/ets/com/ohos/common/StatusBarConfiguration';
+import StatusBarConstants from '../../../../../../../features/statusbarcomponent/src/main/ets/com/ohos/common/Constants';
 
 const TAG = "StatusBar_ServiceExtAbility"
 
@@ -25,6 +26,7 @@ class ServiceExtAbility extends ServiceExtension {
     async onCreate(want) {
         Log.showInfo(TAG, `onCreate, want: ${JSON.stringify(want)}`);
         AbilityManager.setContext(AbilityManager.ABILITY_NAME_STATUS_BAR, this.context)
+        globalThis[StatusBarConstants.PLUGIN_COMPONENT_OWNER_WANT_KEY] = want;
 
         let configInfo = await StatusBarConfiguration.getConfiguration();
         AbilityManager.setAbilityData(AbilityManager.ABILITY_NAME_STATUS_BAR, 'config', configInfo)

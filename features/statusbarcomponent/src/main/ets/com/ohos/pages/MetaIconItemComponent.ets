@@ -49,6 +49,10 @@ export default struct MetaIconItemComponent {
 
   build() {
     Row() {
+      if ((this.mItemData.get().isShowLabel && !CheckEmptyUtils.isEmpty(this.mItemData.get().label))
+      || (this.mItemData.get().isShowIcon && !CheckEmptyUtils.isEmpty(this.mItemData.get().iconUrl))) {
+        Row().width(this.style.stackPadding).height('100%')
+      }
       if (this.mItemData.get().isShowLabel && !CheckEmptyUtils.isEmpty(this.mItemData.get().label)) {
         Text(this.mItemData.get()
         .label)
@@ -69,6 +73,10 @@ export default struct MetaIconItemComponent {
           .height(this.style.iconHeight)
           .fillColor(this.mTintContentInfo.contentColor)
           .objectFit(ImageFit.Contain)
+      }
+      if ((this.mItemData.get().isShowLabel && !CheckEmptyUtils.isEmpty(this.mItemData.get().label))
+      || (this.mItemData.get().isShowIcon && !CheckEmptyUtils.isEmpty(this.mItemData.get().iconUrl))) {
+        Row().width(this.style.stackPadding).height('100%')
       }
     }.height('100%')
   }

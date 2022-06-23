@@ -22,6 +22,7 @@ import ViewModel from '../viewmodel/StatusBarVM'
 import StyleConfigurationCommon from '../../../../../../../../common/src/main/ets/default/StyleConfiguration'
 import StyleConfiguration from '../common/StyleConfiguration'
 import MetaIconItemComponent from './MetaIconItemComponent'
+import PluginIconItemComponent from './PluginIconItemComponent'
 
 const TAG = 'IconItemComponent'
 
@@ -35,6 +36,7 @@ export default struct IconItemComponent {
   mClearCallback: unsubscribe | undefined
   @State style: any = StyleConfiguration.getIconItemComponentStyle()
   @State styleCommon: any = StyleConfigurationCommon.getCommonStyle()
+  @State mHasMarginLR: boolean = false
 
   aboutToAppear() {
     Log.showInfo(TAG, `aboutToAppear Start, keyId: ${this.keyId} `);
@@ -60,10 +62,10 @@ export default struct IconItemComponent {
 
   build() {
     Row() {
-      Row().width(this.style.marginLeft).height('100%')
+      if (this.mHasMarginLR) {
+        Row().width(this.style.marginLeft).height('100%')
+      }
       Row() {
-        Row().width(this.style.stackPadding).height('100%')
-
         if (this.mItemData.get().pluginType == PluginType.META) {
           MetaIconItemComponent({
             keyId: this.keyId
@@ -71,10 +73,10 @@ export default struct IconItemComponent {
         } else if (this.mItemData.get().pluginType == PluginType.DATA_ABILITY) {
           // TODO:
         } else if (this.mItemData.get().pluginType == PluginType.PLUGIN_COMPONENT) {
-          // TODO:
+          PluginIconItemComponent({
+            keyId: this.keyId
+          })
         }
-
-        Row().width(this.style.stackPadding).height('100%')
       }
       .height(this.style.stackHeight)
       .borderRadius(this.style.stackBorderRadius)
@@ -82,8 +84,13 @@ export default struct IconItemComponent {
       .onClick(this.onIconItemClick.bind(this))
       .gesture(LongPressGesture({ repeat: false }).onAction(this.onIconItemLongPressGesture.bind(this)))
       .onTouch(this.onIconItemTouch.bind(this))
+      .onAreaChange((e, e2) => {
+        this.mHasMarginLR = e2.width > 0
+      })
 
-      Row().width(this.style.marginRight).height('100%')
+      if (this.mHasMarginLR) {
+        Row().width(this.style.marginRight).height('100%')
+      }
     }.height('100%')
   }
 

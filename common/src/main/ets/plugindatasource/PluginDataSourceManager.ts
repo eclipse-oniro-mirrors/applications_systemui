@@ -16,6 +16,7 @@
 import Log from "../default/Log";
 import SourceLoaderFactory from "./sourceloader/SourceLoaderFactory";
 import SourceLoader from "./sourceloader/SourceLoader";
+import PluginSourceLoader from './sourceloader/PluginSourceLoader';
 import { FilterData, ItemComponentData, RootConfigInfo } from "./common/Constants";
 import {
     AbilityInfoWithId,
@@ -30,6 +31,7 @@ import { ExtensionAbilityInfo } from "bundle/extensionAbilityInfo";
 export type PluginListener = {
     onItemAdd: (itemData: ItemComponentData) => void;
     onItemRemove: (itemData: ItemComponentData) => void;
+    onLoadPluginComponentData: (itemData: ItemComponentData) => void;
 };
 
 const TAG = "PluginDataSourceManager";
@@ -47,6 +49,7 @@ export default class PluginDataSourceManager {
         this.mFactory = new SourceLoaderFactory({
             add: listener.onItemAdd,
             remove: listener.onItemRemove,
+            onLoadPluginComponentData: listener.onLoadPluginComponentData,
         });
     }
 
@@ -118,5 +121,14 @@ export default class PluginDataSourceManager {
     private unregisterListener() {
         this.mListenerHandle?.unRegister();
         this.mListenerHandle = undefined;
+    }
+
+    async updatePluginComponentData(pluginComponentData: ItemComponentData): Promise<void> {
+        Log.showInfo(TAG, 'updatePluginComponentData');
+        this.mLoaders.forEach((loader) => {
+            if (loader instanceof PluginSourceLoader) {
+                (loader as PluginSourceLoader).onUpdatePluginComponentData(pluginComponentData);
+            }
+        });
     }
 }
