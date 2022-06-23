@@ -18,13 +18,14 @@ import Log from '../../../../../../common/src/main/ets/default/Log';
 import AbilityManager from '../../../../../../common/src/main/ets/default/abilitymanager/abilityManager';
 import commonEvent from '@ohos.commonEvent';
 import settings from '@ohos.settings';
+import systemParameter from '@ohos.systemparameter'
 import featureAbility from '@ohos.ability.featureAbility';
 import Brightness from '@ohos.brightness';
 import CommonConstants from "../../../../../../common/src/main/ets/default/Constants";
 
 const SYSTEMUI_BRIGHTNESS = settings.display.SCREEN_BRIGHTNESS_STATUS;;
 const TAG = 'Control-brightnessManager';
-var mBrightnessValue = AppStorage.SetAndLink('BrightnessValue', 100);
+var mBrightnessValue = AppStorage.SetAndLink('BrightnessValue', '100');
 
 export class brightnessManager {
   helper: any;
@@ -70,6 +71,18 @@ export class brightnessManager {
       settings.setValueSync(this.helper, SYSTEMUI_BRIGHTNESS, callback.value.toString());
       Log.showInfo(TAG, `settings setValue ${callback.value} end`);
     }
+  }
+
+  getMin(){
+    return parseInt(systemParameter.getSync('const.display.brightness.min'))
+  }
+
+  getMax(){
+    return parseInt(systemParameter.getSync('const.display.brightness.max'))
+  }
+
+  getDefault(){
+    return parseInt(systemParameter.getSync('const.display.brightness.default'))
   }
 }
 

@@ -25,9 +25,9 @@ export default struct MyBrightness {
   @StorageLink('BrightnessValue') brightnessValue: number = 0;
   @State style: any = StyleConfiguration.getBrightnessComponentStyle();
   @State brightnessItem: any = {
-    min: 4,
-    max: 100,
-    value: 0
+    min: mBrightnessManager.getMin(),
+    max: mBrightnessManager.getMax(),
+    value: mBrightnessManager.getDefault()
   };
 
   aboutToAppear() {
