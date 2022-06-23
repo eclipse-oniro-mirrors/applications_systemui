@@ -18,6 +18,7 @@ import Log from '../../../../../../common/src/main/ets/default/Log';
 import AbilityManager from '../../../../../../common/src/main/ets/default/abilitymanager/abilityManager';
 import commonEvent from '@ohos.commonEvent';
 import settings from '@ohos.settings';
+import systemParameter from '@ohos.systemparameter'
 import featureAbility from '@ohos.ability.featureAbility';
 import Brightness from '@ohos.brightness';
 import CommonConstants from "../../../../../../common/src/main/ets/default/Constants";
@@ -41,7 +42,7 @@ export class brightnessManager {
 
   registerBrightness() {
     this.helper.on("dataChange", this.uri, (err) => {
-      let data = settings.getValueSync(this.helper, SYSTEMUI_BRIGHTNESS, '100');
+      let data = settings.getValueSync(this.helper, SYSTEMUI_BRIGHTNESS, JSON.stringify(this.getDefault()));
       Log.showInfo(TAG, `after brightness datachange settings getValue ${parseInt(data)}`);
       mBrightnessValue.set(parseInt(data));
     })
@@ -55,7 +56,7 @@ export class brightnessManager {
 
   getValue() {
     Log.showInfo(TAG, 'getValue');
-    let data = settings.getValueSync(this.helper, SYSTEMUI_BRIGHTNESS, '100');
+    let data = settings.getValueSync(this.helper, SYSTEMUI_BRIGHTNESS, JSON.stringify(this.getDefault()));
     Log.showInfo(TAG, `settings getValue ${parseInt(data)}`);
     mBrightnessValue.set(parseInt(data));
   }
@@ -70,6 +71,18 @@ export class brightnessManager {
       settings.setValueSync(this.helper, SYSTEMUI_BRIGHTNESS, callback.value.toString());
       Log.showInfo(TAG, `settings setValue ${callback.value} end`);
     }
+  }
+
+  getMin(){
+    return parseInt(systemParameter.getSync('const.display.brightness.min'))
+  }
+
+  getMax(){
+    return parseInt(systemParameter.getSync('const.display.brightness.max'))
+  }
+
+  getDefault(){
+    return parseInt(systemParameter.getSync('const.display.brightness.default'))
   }
 }
 

@@ -1,4 +1,3 @@
-//@ts-nocheck
 /*
  * Copyright (c) 2022 Huawei Device Co., Ltd.
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -28,7 +27,7 @@ const SUBSCRIBE_INFO = {
   events: [commonEvent.Support.COMMON_EVENT_BATTERY_CHANGED],
 };
 
-function getChargingStatus(state: typeof BatteryInfo.BatteryChargeState): boolean {
+function getChargingStatus(state: BatteryInfo.BatteryChargeState): boolean {
   Log.showDebug(TAG, `charging status update: ${state}`);
   let batteryStatus = false;
   switch (state) {
