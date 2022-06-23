@@ -1,3 +1,4 @@
+//@ts-nocheck
 /*
  * Copyright (c) 2021-2022 Huawei Device Co., Ltd.
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -37,7 +38,6 @@ export enum WindowType {
 export const WINDOW_SHOW_HIDE_EVENT = "WindowShowHideEvent";
 export const WINDOW_RESIZE_EVENT = "WindowResizeEvent";
 
-type WindowHandle = typeof Window.Window;
 const TAG = "WindowManager";
 const SYSTEM_WINDOW_TYPE_MAP: { [key in WindowType]: Window.WindowType } = {
   SystemUi_StatusBar: Window.WindowType.TYPE_STATUS_BAR,
@@ -59,7 +59,7 @@ const DEFAULT_WINDOW_INFO: WindowInfo = {
 class WindowManager {
   mWindowInfos: Map<WindowType, WindowInfo> = new Map();
 
-  async createWindow(context: any, name: WindowType, rect: Rect, loadContent: string): Promise<WindowHandle> {
+  async createWindow(context: any, name: WindowType, rect: Rect, loadContent: string): Promise<Window.Window> {
     Log.showInfo(TAG, `createWindow name: ${name}, rect: ${JSON.stringify(rect)}, url: ${loadContent}`);
     let winHandle = await Window.create(context, name, SYSTEM_WINDOW_TYPE_MAP[name]);
     await winHandle.moveTo(rect.left, rect.top);

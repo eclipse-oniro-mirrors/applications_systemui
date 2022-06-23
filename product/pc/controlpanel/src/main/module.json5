@@ -31,7 +31,8 @@
         "metadata": [
           {
             "name": "com.ohos.systemui.action.BAR_ICON",
-            "value": "\"pluginType\":\"1\",\"clickAction\":\"local=showControlCenter\",\"selectedClickAction\":\"local=hideControlCenter\",\"relationWindowId\":\"SystemUi_ControlPanel\""
+            "value": "\"pluginType\":\"1\",\"clickAction\":\"local=showControlCenter\",\"selectedClickAction\":\"local=hideControlCenter\",\"relationWindowId\":\"SystemUi_ControlPanel\"",
+            "resource": "$profile:form_config"
           }
         ]
       }

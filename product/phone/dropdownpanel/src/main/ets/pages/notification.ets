@@ -65,7 +65,7 @@ export default struct Notification {
 
       Flex({ direction: FlexDirection.Row, alignItems: ItemAlign.Center, justifyContent: FlexAlign.Center }) {
         Flex({ direction: FlexDirection.Column, alignItems: ItemAlign.Start, justifyContent: FlexAlign.Start }) {
-          statusBar()
+          statusBar({ touchMoveCallback: (data) => this.touchMoveCallback(data) })
           CenterTitle({
             touchMoveCallback: (data) => this.CenterTitleTouchMoveCallback(data)
           })
@@ -135,20 +135,35 @@ export default struct Notification {
 @Component
 struct statusBar {
   @StorageLink('StatusCoefficient') StatusCoefficient: number = 1.0
+  private touchMoveCallback: Function
+  startX: number = 0
+  startY: number = 0
+  @State moveX: number = 0
+  @State moveY: number = 0
 
   build() {
-    Flex({ direction: FlexDirection.Row, alignItems: ItemAlign.Center, justifyContent: FlexAlign.Center }) {
-      Flex({ direction: FlexDirection.Row, alignItems: ItemAlign.Center, justifyContent: FlexAlign.Start }) {
-        SignalIcon()
-        WifiIcon()
-      }
+    Column(){
+      Stack(){
 
-      Flex({ direction: FlexDirection.Row, alignItems: ItemAlign.Center, justifyContent: FlexAlign.End }) {
-        LocationIcon()
-        BluetoothIcon()
-        RingModeIcon()
-        BatteryIcon()
-        ClockIcon()
+        Row(){
+          Row(){}.width('50%').height('100%').onTouch((touchEvent) => {this.touchEvent(touchEvent, 'left')})
+          Row(){}.width('50%').height('100%').onTouch((touchEvent) => {this.touchEvent(touchEvent, 'right')})
+        }.width('100%').height('100%')
+
+        Flex({ direction: FlexDirection.Row, alignItems: ItemAlign.Center, justifyContent: FlexAlign.Center }) {
+          Flex({ direction: FlexDirection.Row, alignItems: ItemAlign.Center, justifyContent: FlexAlign.Start }) {
+            SignalIcon()
+            WifiIcon()
+          }
+
+          Flex({ direction: FlexDirection.Row, alignItems: ItemAlign.Center, justifyContent: FlexAlign.End }) {
+            LocationIcon()
+            BluetoothIcon()
+            RingModeIcon()
+            BatteryIcon()
+            ClockIcon()
+          }
+        }
       }
     }
     .height($r("app.float.status_bar_height"))
@@ -159,6 +174,29 @@ struct statusBar {
       left: $r("app.float.status_bar_padding_left_right"),
       right: $r("app.float.status_bar_padding_left_right")
     })
+  }
+
+  touchEvent(event: TouchEvent, touchLocation: string) {
+    if (event.type == Constants.TOUCHTYPE_DOWN) {
+      this.startX = event.touches[0].screenX
+      this.startY = event.touches[0].screenY
+      Log.showInfo(TAG, `statusBar startX: ${this.startX}, startY: ${this.startY}`)
+    } else if (event.type == Constants.TOUCHTYPE_MOVE) {
+      this.moveX = event.touches[0].screenX - this.startX
+      this.moveY = event.touches[0].screenY - this.startY
+    } else if (event.type == Constants.TOUCHTYPE_UP) {
+      Log.showInfo(TAG, `statusBar, moveX: ${this.moveX}, moveY: ${this.moveY}`)
+      if (this.moveY > 15) {
+        if (this.touchMoveCallback) {
+          if(touchLocation === 'left'){
+            this.touchMoveCallback({ 'direction': 'drop_left', 'touchComponent': 'control' })
+          }else if(touchLocation === 'right'){
+            this.touchMoveCallback({ 'direction': 'drop_right', 'touchComponent': 'notification' })
+          }
+
+        }
+      }
+    }
   }
 }
 

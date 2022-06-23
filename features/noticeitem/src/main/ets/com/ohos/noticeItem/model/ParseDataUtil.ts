@@ -107,8 +107,8 @@ export default class ParseDataUtil {
     let iconId = data?.appInfo?.iconId;
     let item = await BundleManager.getResourceManager(TAG, AbilityManager.getContext(), bundleName);
     let appMessage = {
-      appName: await item.getString(labelId),
-      icon: await item.getMediaBase64(iconId)
+      appName: await item.getString(parseInt(labelId)),
+      icon: await item.getMediaBase64(parseInt(iconId))
     };
     if (appMessage.icon != null && appMessage.appName) {
       appDataMap.set(bundleName, appMessage);

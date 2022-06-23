@@ -6,7 +6,8 @@
     "description": "$string:mainability_description",
     "mainElement": "com.ohos.systemui.notificationmanagement.MainAbility",
     "deviceTypes": [
-      "phone", "tablet"
+      "default",
+      "tablet"
     ],
     "deliveryWithInstall": true,
     "installationFree": false,
@@ -20,7 +21,9 @@
         "icon": "$media:icon",
         "description": "$string:mainability_description",
         "label": "$string:app_name",
-        "launchType": "singleton"
+        "launchType": "singleton",
+        "startWindowIcon": "$media:icon",
+        "startWindowBackground": "$color:color_1"
       }
     ]
   }

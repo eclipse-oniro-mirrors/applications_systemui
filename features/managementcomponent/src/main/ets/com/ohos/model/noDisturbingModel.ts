@@ -44,10 +44,10 @@ export default class NoDisturbingModel {
   }
 
   static setNoDisturbingDate(noDisturbingTime, callback) {
-    let targetDate = {}
-    targetDate['type'] = noDisturbingTime.type
-    targetDate['begin'] = noDisturbingTime.begin
-    targetDate['end'] = noDisturbingTime.end
+    let targetDate: Notification.DoNotDisturbDate = {
+      type: noDisturbingTime.type,
+      begin: noDisturbingTime.begin,
+      end: noDisturbingTime.end }
     Log.showDebug(TAG, `setDoNotDisturbDate targetDate['type'] : ` + JSON.stringify(targetDate['type']) +
     ` ['begin'] : ` + JSON.stringify(targetDate['begin']) + ` ['end'] : ` +  JSON.stringify(targetDate['end']));
     Notification.setDoNotDisturbDate(targetDate, callback)

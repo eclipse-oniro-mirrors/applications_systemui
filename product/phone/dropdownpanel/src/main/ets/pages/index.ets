@@ -1,3 +1,4 @@
+//@ts-nocheck
 /*
  * Copyright (c) 2021-2022 Huawei Device Co., Ltd.
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -12,6 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+import BatteryIcon from '../../../../../../../features/batterycomponent/src/main/ets/default/pages/batteryIcon'
+import ClockIcon from '../../../../../../../features/clockcomponent/src/main/ets/default/pages/clockIcon'
+import WifiIcon from '../../../../../../../features/wificomponent/src/main/ets/default/pages/wifiIcon'
+import BluetoothIcon from '../../../../../../../features/bluetoothcomponent/src/main/ets/com/ohos/pages/StatusBarIconItemBluetoothComponent'
+import SignalIcon from '../../../../../../../features/signalcomponent/src/main/ets/default/pages/signalIcon'
+import LocationIcon from '../../../../../../../features/locationcomponent/src/main/ets/com/ohos/pages/StatusBarIconItemLocationComponent'
+import RingModeIcon from '../../../../../../../features/ringmodecomponent/src/main/ets/com/ohos/pages/StatusBarIconItemRingModeComponent'
 
 import image from "@ohos.multimedia.image"
 import Log from '../../../../../../../common/src/main/ets/default/Log'
@@ -123,8 +132,8 @@ struct Index {
 
     this.mCallback = {
       "onStateChange": (data) => this.onStateChange(data),
-      "onNotificationShowOrHide": (err, data) => this.onNotificationShowOrHide(err, data),
-      "onControlShowOrHide": (err, data) => this.onControlShowOrHide(err, data)
+      "onNotificationShowOrHide": (data) => this.onNotificationShowOrHide(data),
+      "onControlShowOrHide": (data) => this.onControlShowOrHide(data)
     }
     NavigationEvent.registerCallback(this.mCallback);
     MultimodalInputManager.registerControlListener(this.mCallback);
@@ -138,12 +147,8 @@ struct Index {
       return
     }
     StatusBarVM.setUseInWindowName(WindowType.DROPDOWN_PANEL)
-    this._animateTo({ ...SHOW_ANIM_CONFIG, onFinish: () => {
-      Log.showInfo(TAG, `onPageShow, show anim finish.`);
-    } }, () => {
-      this.componentOptAreaTranslateY = '0px'
-      this.backgroundOpacity = 1
-    })
+    this.componentOptAreaTranslateY = '0px'
+    this.backgroundOpacity = 1
     Trace.end(Trace.CORE_METHOD_START_DROPDOWNPANEL)
   }
 
@@ -165,7 +170,7 @@ struct Index {
     WindowManager.resetSizeWindow(WindowType.DROPDOWN_PANEL, { ...dropdownRect, height: this.componentOptAreaHeightPX })
   }
 
-  onNotificationShowOrHide(err, data) {
+  onNotificationShowOrHide(data) {
     Log.showDebug(TAG, `mNotificationAsyncCallback preKeys: ${data.preKeys}, finalKey: ${data.finalKey}`);
     Log.showDebug(TAG, `this.showComponentName: ${this.showComponentName}`);
     if (this.showComponentName == 'Notification') {
@@ -176,7 +181,7 @@ struct Index {
     Log.showDebug(TAG, `mNotificationAsyncCallback end`);
   }
 
-  onControlShowOrHide(err, data) {
+  onControlShowOrHide(data) {
     Log.showDebug(TAG, `mControlAsyncCallback preKeys: ${data.preKeys}, finalKey: ${data.finalKey}`);
     Log.showDebug(TAG, `this.showComponentName: ${this.showComponentName}`);
     if (this.showComponentName == 'ControlCenter') {
@@ -218,6 +223,10 @@ struct Index {
       this.switchNotificationOrControlCenter('ControlCenter')
     } else if (data.direction == 'right' && data.touchComponent == 'control') {
       this.switchNotificationOrControlCenter('Notification')
+    } else if (data.direction == 'drop_left' && data.touchComponent == 'control') {
+      this.showComponentName = 'Notification'
+    } else if (data.direction == 'drop_right' && data.touchComponent == 'notification') {
+      this.showComponentName = 'ControlCenter'
     }
   }
 

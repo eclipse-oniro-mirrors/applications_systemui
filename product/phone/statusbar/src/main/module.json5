@@ -6,7 +6,7 @@
     "description": "$string:mainability_description",
     "mainElement": "com.ohos.systemui.statusbar.ServiceExtAbility",
     "deviceTypes": [
-      "phone"
+      "default"
     ],
     "deliveryWithInstall": true,
     "installationFree": false,

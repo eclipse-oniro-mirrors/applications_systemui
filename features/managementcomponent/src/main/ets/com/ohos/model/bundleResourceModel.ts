@@ -110,10 +110,10 @@ export default class BundleResourceModel {
       userId: userInfo.userId
     }).then((data) => {
       Log.showInfo(TAG, `getBundleInfo bundleInfo:${JSON.stringify(data)}`);
-      ResMgr.getResourceManager(AbilityManager.getContext(), data.name, (error, item) => {
+      ResMgr.getResourceManager(data.name, (error, item) => {
         let appInfo = data.appInfo;
-        if (appInfo.labelId > 0) {
-          item.getString(appInfo.labelId, (error, value) => {
+        if (parseInt(appInfo.labelId) > 0) {
+          item.getString(parseInt(appInfo.labelId), (error, value) => {
             if (value != null) {
               Log.showDebug(TAG, `getBundleInfo getResourceManager getString() value: ` + value);
               mBundleInfo.appTitle = value
@@ -133,8 +133,8 @@ export default class BundleResourceModel {
         mBundleInfo.systemApp = appInfo.systemApp
 
         Log.showDebug(TAG, 'getBundleInfo getResourceManager label:' + label);
-        if (appInfo.iconId > 0) {
-          item.getMediaBase64(appInfo.iconId, (error, imageValue) => {
+        if (parseInt(appInfo.iconId) > 0) {
+          item.getMediaBase64(parseInt(appInfo.iconId), (error, imageValue) => {
             if (!!imageValue) {
               mBundleInfo.appIcon = imageValue
             }

@@ -6,7 +6,8 @@
     "description": "$string:mainability_description",
     "mainElement": "com.ohos.systemui.volumepanel.ServiceExtAbility",
     "deviceTypes": [
-      "phone", "tablet"
+      "default",
+      "tablet"
     ],
     "deliveryWithInstall": true,
     "installationFree": false,

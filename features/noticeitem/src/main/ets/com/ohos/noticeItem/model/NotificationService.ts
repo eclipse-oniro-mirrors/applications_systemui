@@ -14,7 +14,6 @@
  */
 
 import notification from '@ohos.notification';
-import NotificationSubscriber from '@ohos.notificationSubscriber';
 import Log from '../../../../../../../../../common/src/main/ets/default/Log';
 import NotificationManager from './NotificationManager';
 import ParseDataUtil from './ParseDataUtil';

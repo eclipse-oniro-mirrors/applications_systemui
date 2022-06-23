@@ -16,7 +16,7 @@ import inputConsumer from "@ohos.multimodalInput.inputConsumer";
 import Log from "./Log";
 import createOrGet from "./SingleInstanceHelper";
 
-export type MultiCallback = (keyOptions: typeof inputConsumer.KeyOptions) => void;
+export type MultiCallback = (keyOptions: inputConsumer.KeyOptions) => void;
 export enum MultiKeyCode {
   WIN = 2076,
   N = 2030,
@@ -52,41 +52,41 @@ class MultimodalInputManager {
       isFinalKeyDown: true,
       finalKeyDownDuration: 0,
     };
-    inputConsumer.on("key", keyOptions, (err, options) => {
-      Log.showInfo(TAG, `on CombinationKey, options:${JSON.stringify(options)}, err: ${JSON.stringify(err)}`);
+    inputConsumer.on("key", keyOptions, (options) => {
+      Log.showInfo(TAG, `on CombinationKey, options:${JSON.stringify(options)}`);
       cb(options);
     });
     Log.showInfo(TAG, `subscribe CombinationKey, keys:${JSON.stringify(keys)}`);
     return () => {
-      inputConsumer.off("key", keyOptions, (err, data) => {});
+      inputConsumer.off("key", keyOptions, (data) => {});
     };
   }
 
   registerControlListener(callback) {
     Log.showDebug(TAG, `registerListener control`);
-    inputConsumer.on("key", this.controlKeyOptions, (err, data) => {
-      Log.showInfo(TAG, `controlRegisterCallBack err: ${JSON.stringify(err)} data: ${JSON.stringify(data)}`);
-      callback.onControlShowOrHide(err, data);
+    inputConsumer.on("key", this.controlKeyOptions, (data) => {
+      Log.showInfo(TAG, `controlRegisterCallBack data: ${JSON.stringify(data)}`);
+      callback.onControlShowOrHide(data);
     });
     Log.showDebug(TAG, `registerListener end`);
   }
 
   registerNotificationListener(callback) {
     Log.showDebug(TAG, `registerListener notification`);
-    inputConsumer.on("key", this.notificationKeyOptions, (err, data) => {
-      Log.showInfo(TAG, `notificationRegisterCallBack err: ${JSON.stringify(err)} data: ${JSON.stringify(data)}`);
-      callback.onNotificationShowOrHide(err, data);
+    inputConsumer.on("key", this.notificationKeyOptions, ( data) => {
+      Log.showInfo(TAG, `notificationRegisterCallBack data: ${JSON.stringify(data)}`);
+      callback.onNotificationShowOrHide(data);
     });
     Log.showDebug(TAG, `registerListener end`);
   }
 
   unregisterListener() {
     Log.showDebug(TAG, `unregisterListener start`);
-    inputConsumer.off("key", this.notificationKeyOptions, (err, data) => {
-      Log.showInfo(TAG, `notificationUnregisterCallBack err: ${JSON.stringify(err)} data: ${JSON.stringify(data)}`);
+    inputConsumer.off("key", this.notificationKeyOptions, (data) => {
+      Log.showInfo(TAG, `notificationUnregisterCallBack data: ${JSON.stringify(data)}`);
     });
-    inputConsumer.off("key", this.controlKeyOptions, (err, data) => {
-      Log.showInfo(TAG, `controlUnregisterCallBack err: ${JSON.stringify(err)} data: ${JSON.stringify(data)}`);
+    inputConsumer.off("key", this.controlKeyOptions, (data) => {
+      Log.showInfo(TAG, `controlUnregisterCallBack data: ${JSON.stringify(data)}`);
     });
     Log.showDebug(TAG, `unregisterListener end`);
   }

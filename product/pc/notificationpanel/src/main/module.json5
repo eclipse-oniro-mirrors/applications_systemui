@@ -31,7 +31,8 @@
         "metadata": [
           {
             "name": "com.ohos.systemui.action.BAR_ICON",
-            "value": "\"pluginType\":\"1\",\"clickAction\":\"local=showNotificationPanel\",\"selectedClickAction\":\"local=hideNotificationPanel\",\"relationWindowId\":\"SystemUi_NotificationPanel\""
+            "value": "\"pluginType\":\"1\",\"clickAction\":\"local=showNotificationPanel\",\"selectedClickAction\":\"local=hideNotificationPanel\",\"relationWindowId\":\"SystemUi_NotificationPanel\"",
+            "resource": "$profile:form_config"
           }
         ]
       }
