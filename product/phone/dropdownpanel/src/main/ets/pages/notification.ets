@@ -33,6 +33,7 @@ import TimeManager, { TimeEventArgs, TIME_CHANGE_EVENT
 const TAG = 'DropdownPanel-notification'
 const GRID_SIZE = 6;
 const IMAGE_SIZE_L = 24;
+const IMAGE_SIZE_S = 20;
 const BGC_SIZE_L = 40;
 const NO_NOTIFICATION_TOP_MARGIN = 40;
 const TIME_TEXT_MARGIN = 4;
@@ -239,8 +240,8 @@ struct CenterTitle {
         .flexGrow(1)
       Image($r("app.media.ic_public_settings"))
         .objectFit(ImageFit.Contain)
-        .width($r('app.float.notification_title_setting_icon_width'))
-        .height($r('app.float.notification_title_setting_icon_height'))
+        .width(IMAGE_SIZE_S)
+        .height(IMAGE_SIZE_S)
         .fillColor("#FFFFFF")
         .margin({ right: CENTER_MARGIN, bottom: TIME_BOTTOM_OFFSET })
         .onClick(this.settingClick.bind(this))
