@@ -119,6 +119,14 @@
     {
       "name": "status_bar_padding_top_bottom",
       "value": "4vp"
+    },
+    {
+      "name": "notification_title_setting_icon_width",
+      "value": "48vp"
+    },
+    {
+      "name": "notification_title_setting_icon_height",
+      "value": "48vp"
     }
   ]
 }
