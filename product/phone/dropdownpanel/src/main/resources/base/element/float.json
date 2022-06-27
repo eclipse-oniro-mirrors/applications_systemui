@@ -122,11 +122,11 @@
     },
     {
       "name": "notification_title_setting_icon_width",
-      "value": "48vp"
+      "value": "48px"
     },
     {
       "name": "notification_title_setting_icon_height",
-      "value": "48vp"
+      "value": "48px"
     }
   ]
 }
