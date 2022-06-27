@@ -14,33 +14,34 @@
  * limitations under the License.
  */
 
-import Log from '../../../../../../../common/src/main/ets/default/log';
-import WindowManager, { WindowType } from '../../../../../../../common/src/main/ets/default/windowmanager';
-import getSingleInstance from '../../../../../../../common/src/main/ets/default/singleinstancehelper';
-import TintStateManager, {TintState, TintStateListener
-} from '../../../../../../../common/src/main/ets/default/tintstatemanager';
-import {NavigationBarComponentData} from '../common/constants';
+import Log from '../../../../../../../common/src/main/ets/default/Log';
+import WindowManager, { WindowType } from '../../../../../../../common/src/main/ets/default/WindowManager';
+import getSingleInstance from '../../../../../../../common/src/main/ets/default/SingleInstanceHelper';
+import TintStateManager, { TintState, TintStateListener
+} from '../../../../../../../common/src/main/ets/default/TintStateManager';
+import { NavigationBarComponentData } from '../common/constants';
 import featureAbility from '@ohos.ability.featureAbility';
+import { DataAbilityHelper } from 'ability/dataAbilityHelper';
 import settings from '@ohos.settings';
-import AbilityManager from '../../../../../../../common/src/main/ets/default/abilitymanager/abilitymanager';
-import CommonConstants from "../../../../../../../common/src/main/ets/default/constants";
+import AbilityManager from '../../../../../../../common/src/main/ets/default/abilitymanager/abilityManager';
+import CommonConstants from '../../../../../../../common/src/main/ets/default/Constants';
 
 const TAG = 'NavigationBarViewModel';
 
 const NAVIGATION_BAE_VIEW_MODEL_KEY = 'AppStorage_NavigationBarViewModel';
 
-const NavigationBarComponentDataKey = 'AppStorage_NavigationBarComponentData';
+const NAVIGATION_BAR_COMPONENT_DATA_KEY = 'AppStorage_NavigationBarComponentData';
 
 export default class NavigationBarViewModel {
-  private settingDataKey = 'settings.display.navigationbar_status';
-  private urivar: string = null;
-  private helper: any = null;
-  private navigationBarStatusDefaultValue: string = '1';
+  private readonly settingDataKey = 'settings.display.navigationbar_status';
+  private readonly urivar: string;
+  private readonly helper: DataAbilityHelper;
+  private readonly navigationBarStatusDefaultValue = '1';
   private isDisplay = true;
-  mNavigationBarComponentData?: NavigationBarComponentData  = {
+  mNavigationBarComponentData: NavigationBarComponentData  = {
     ...new NavigationBarComponentData()
   };
-  mUseCount?: number = 0;
+  mUseCount = 0;
 
   static getInstance(): NavigationBarViewModel {
     return getSingleInstance(NavigationBarViewModel, NAVIGATION_BAE_VIEW_MODEL_KEY);
@@ -49,19 +50,18 @@ export default class NavigationBarViewModel {
   constructor() {
     Log.showInfo(TAG, 'constructor');
     this.mNavigationBarComponentData =
-    AppStorage.SetAndLink(NavigationBarComponentDataKey, this.mNavigationBarComponentData).get()
+    AppStorage.SetAndLink(NAVIGATION_BAR_COMPONENT_DATA_KEY, this.mNavigationBarComponentData).get()
     this.urivar = settings.getUriSync(this.settingDataKey);
     if (AbilityManager.getContext() == null) {
-      Log.showError(TAG, `AbilityManager.getContext() is null`);
+      Log.showError(TAG, 'AbilityManager.getContext() is null');
     } else {
-      Log.showInfo(TAG, 'context: ' + AbilityManager.getContext() +
-        'stageMode: ' + AbilityManager.getContext().stageMode);
+      Log.showInfo(TAG, 'context: ' + AbilityManager.getContext());
     }
     this.helper = featureAbility.acquireDataAbilityHelper(AbilityManager.getContext(), CommonConstants.URI_VAR);
     this.initNavigationBarStatus();
   }
 
-  install?() {
+  install(): void {
     Log.showDebug(TAG, `install, useCount: ${this.mUseCount}`);
     if (!this.mUseCount) {
       TintStateManager.getInstance().registerListener('navigation', this as TintStateListener);
@@ -69,7 +69,7 @@ export default class NavigationBarViewModel {
     this.mUseCount++;
   }
 
-  uninstall?() {
+  uninstall(): void {
     Log.showDebug(TAG, `uninstall, useCount: ${this.mUseCount}`);
     this.mUseCount--;
     if (this.mUseCount) {
@@ -77,13 +77,13 @@ export default class NavigationBarViewModel {
     }
   }
 
-  getNavigationBarComponentData?(): NavigationBarComponentData {
-    Log.showDebug(TAG, `getNavigationBarComponentData`)
+  getNavigationBarComponentData(): NavigationBarComponentData {
+    Log.showDebug(TAG, 'getNavigationBarComponentData');
     return this.mNavigationBarComponentData;
   }
 
-  onTintStateChange?(tintState: TintState) {
-    Log.showDebug(TAG, `onTintStateChange, tintState: ${JSON.stringify(tintState)}`)
+  onTintStateChange(tintState: TintState): void {
+    Log.showDebug(TAG, `onTintStateChange, tintState: ${JSON.stringify(tintState)}`);
     if (typeof (tintState.isEnable) == 'boolean') {
       this.setWindowEnable(tintState.isEnable);
     }
@@ -97,39 +97,43 @@ export default class NavigationBarViewModel {
       contentColor ${this.mNavigationBarComponentData.contentColor}`);
   }
 
-  setWindowEnable?(isEnable: boolean) {
-    Log.showDebug(TAG, `setWindowEnable, isEnable ${isEnable}`);
+  setWindowEnable(isEnable: boolean): void {
+    Log.showDebug(TAG, `setWindowEnable, isEnable ${String(isEnable)}`);
     if (this.mNavigationBarComponentData.isEnable == isEnable) {
       return;
     }
     this.mNavigationBarComponentData.isEnable = isEnable;
     if (isEnable && this.isDisplay) {
-      WindowManager.showWindow(WindowType.NAVIGATION_BAR);
+      WindowManager.showWindow(WindowType.NAVIGATION_BAR).then(() => {
+      }).catch((err) => {
+      });
     } else {
-      WindowManager.hideWindow(WindowType.NAVIGATION_BAR);
+      WindowManager.hideWindow(WindowType.NAVIGATION_BAR).then(() => {
+      }).catch((err) => {
+      });
     }
   }
 
-  private setValue(value: string) {
+  private setValue(value: string): void {
     settings.setValueSync(this.helper, this.settingDataKey, value);
   }
 
-  private getValue(defaultValue?: string) {
+  private getValue(defaultValue?: string): string {
     return settings.getValueSync(
       this.helper, this.settingDataKey, defaultValue ? defaultValue : this.navigationBarStatusDefaultValue
     );
   }
 
-  private registerListenForDataChanges(callback) {
-    this.helper.on("dataChange", this.urivar, (data) => {
+  private registerListenForDataChanges(callback: (data) => void): void {
+    this.helper.on('dataChange', this.urivar, (data) => {
       callback(data);
-    })
+    });
   }
 
   /**
    * Initialize the NavigationBar status.
    */
-  public initNavigationBarStatus() {
+  initNavigationBarStatus(): void {
     try {
       let initValue = this.getValue();
       Log.showInfo(TAG, `initNavigationBarStatus initValue ${initValue}`);
@@ -144,7 +148,7 @@ export default class NavigationBarViewModel {
    * Get NavigationBar status data.
    * @return
    */
-  public dataChangesCallback(data: any) {
+  dataChangesCallback(data): void {
     if (data.code !== 0) {
       Log.showError(TAG, `dataChangesCallback failed, because ${data.message}`);
       return;
@@ -155,12 +159,16 @@ export default class NavigationBarViewModel {
     }
   }
 
-  private windowSwitches(navigationBarStatusValue) {
+  private windowSwitches(navigationBarStatusValue: string): void {
     this.isDisplay = navigationBarStatusValue == '1' ? true : false;
     if (!this.isDisplay) {
-      WindowManager.hideWindow(WindowType.NAVIGATION_BAR);
+      WindowManager.hideWindow(WindowType.NAVIGATION_BAR).then(() => {
+      }).catch((err) => {
+      });
     } else {
-      WindowManager.showWindow(WindowType.NAVIGATION_BAR);
+      WindowManager.showWindow(WindowType.NAVIGATION_BAR).then(() => {
+      }).catch((err) => {
+      });
     }
   }
 }

@@ -13,65 +13,65 @@
  * limitations under the License.
  */
 
-import Log from '../../../../../../../common/src/main/ets/default/log';
-import AbilityManager from '../../../../../../../common/src/main/ets/default/abilitymanager/abilitymanager';
-import StyleConfiguration from './styleconfiguration'
+import Log from '../../../../../../../common/src/main/ets/default/Log';
+import AbilityManager from '../../../../../../../common/src/main/ets/default/abilitymanager/abilityManager';
+import StyleConfiguration from './StyleConfiguration';
 
 const TAG = 'StatusBar-StyleManager';
 
 export default class StyleManager {
-    static PAD_STANDARD_DISPLAY_WIDTH: number = 1280;
-    static PAD_STANDARD_DISPLAY_HEIGHT: number = 800;
-    static PHONE_STANDARD_DISPLAY_WIDTH: number = 720;
-    static PHONE_STANDARD_DISPLAY_HEIGHT: number = 1280;
-    static maxWidth: number = StyleManager.PAD_STANDARD_DISPLAY_WIDTH;
-    static rumMode: string = 'pad';
+  static readonly PAD_STANDARD_DISPLAY_WIDTH = 1280;
+  static readonly PAD_STANDARD_DISPLAY_HEIGHT = 800;
+  static readonly PHONE_STANDARD_DISPLAY_WIDTH = 720;
+  static readonly PHONE_STANDARD_DISPLAY_HEIGHT = 1280;
+  static maxWidth: number = StyleManager.PAD_STANDARD_DISPLAY_WIDTH;
+  static rumMode = 'pad';
 
-    static setPadStyle() {
-        Log.showDebug(TAG, `setPadStyle`)
+  static setPadStyle(): void {
+    Log.showDebug(TAG, 'setPadStyle');
 
-        let config = AbilityManager.getAbilityData(AbilityManager.ABILITY_NAME_NAVIGATION_BAR, 'config');
-        StyleManager.maxWidth = config.maxWidth;
-        StyleManager.rumMode = 'pad'
+    let config = AbilityManager.getAbilityData(AbilityManager.ABILITY_NAME_NAVIGATION_BAR, 'config');
+    StyleManager.maxWidth = config.maxWidth;
+    StyleManager.rumMode = 'pad';
 
-        // keyButton
-        {
-            let style: any = StyleConfiguration.getKeyButtonStyle();
-            style.buttonWidth = StyleManager.calcScaleSizePx(88);
-            style.buttonHeight = StyleManager.calcScaleSizePx(44);
-            style.buttonBorderRadius = StyleManager.calcScaleSizePx(22);
-            style.buttonIconWidth = StyleManager.calcScaleSizePx(15);
-            style.buttonIconHeight = StyleManager.calcScaleSizePx(15);
-        }
+    // keyButton
+    {
+      let style = StyleConfiguration.getKeyButtonStyle();
+      style.buttonWidth = StyleManager.calcScaleSizePx(88);
+      style.buttonHeight = StyleManager.calcScaleSizePx(44);
+      style.buttonBorderRadius = StyleManager.calcScaleSizePx(22);
+      style.buttonIconWidth = StyleManager.calcScaleSizePx(15);
+      style.buttonIconHeight = StyleManager.calcScaleSizePx(15);
     }
+  }
 
-    static setPhoneStyle() {
-        Log.showDebug(TAG, `setPhoneStyle`)
+  static setPhoneStyle(): void {
+    Log.showDebug(TAG, 'setPhoneStyle');
 
-        let config = AbilityManager.getAbilityData(AbilityManager.ABILITY_NAME_NAVIGATION_BAR, 'config');
-        StyleManager.maxWidth = config.maxWidth;
-        StyleManager.rumMode = 'phone'
+    let config = AbilityManager.getAbilityData(AbilityManager.ABILITY_NAME_NAVIGATION_BAR, 'config');
+    StyleManager.maxWidth = config.maxWidth;
+    StyleManager.rumMode = 'phone';
 
-        // keyButton
-        {
-            let style: any = StyleConfiguration.getKeyButtonStyle();
-            style.buttonWidth = StyleManager.calcScaleSizePx(144);
-            style.buttonHeight = StyleManager.calcScaleSizePx(72);
-            style.buttonBorderRadius = StyleManager.calcScaleSizePx(36);
-            style.buttonIconWidth = StyleManager.calcScaleSizePx(24);
-            style.buttonIconHeight = StyleManager.calcScaleSizePx(24);
-        }
+    // keyButton
+    {
+      let style = StyleConfiguration.getKeyButtonStyle();
+      style.buttonWidth = StyleManager.calcScaleSizePx(144);
+      style.buttonHeight = StyleManager.calcScaleSizePx(72);
+      style.buttonBorderRadius = StyleManager.calcScaleSizePx(36);
+      style.buttonIconWidth = StyleManager.calcScaleSizePx(24);
+      style.buttonIconHeight = StyleManager.calcScaleSizePx(24);
     }
+  }
 
-    static number2px(n: number): string {
-        return n.toString() + 'px';
-    }
+  static number2px(n: number): string {
+    return n.toString() + 'px';
+  }
 
-    static calcScaleSize(n: number): number {
-        return n * StyleManager.maxWidth / (StyleManager.rumMode == 'pad' ? StyleManager.PAD_STANDARD_DISPLAY_WIDTH : StyleManager.PHONE_STANDARD_DISPLAY_WIDTH);
-    }
+  static calcScaleSize(n: number): number {
+    return n * StyleManager.maxWidth / (StyleManager.rumMode == 'pad' ? StyleManager.PAD_STANDARD_DISPLAY_WIDTH : StyleManager.PHONE_STANDARD_DISPLAY_WIDTH);
+  }
 
-    static calcScaleSizePx(n: number): string {
-        return StyleManager.number2px(StyleManager.calcScaleSize(n));
-    }
+  static calcScaleSizePx(n: number): string {
+    return StyleManager.number2px(StyleManager.calcScaleSize(n));
+  }
 }

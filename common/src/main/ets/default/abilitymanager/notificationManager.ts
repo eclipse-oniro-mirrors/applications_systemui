@@ -13,42 +13,44 @@
  * limitations under the License.
  */
 
-//import { NotificationSubscriber } from './notification/notificationSubscriber';
 import Notification from '@ohos.notification';
+import { AsyncCallback } from 'basic';
+import { NotificationSubscriber } from 'notification/notificationSubscriber';
+import { NotificationRequest } from 'notification/notificationRequest';
 import Log from '../Log';
 
 const TAG = 'NotificationManager';
 
 
 export default class NotificationManager {
+  static readonly TYPE_BASIC: number = Notification.ContentType.NOTIFICATION_CONTENT_BASIC_TEXT;
+  static readonly TYPE_LONG: number = Notification.ContentType.NOTIFICATION_CONTENT_LONG_TEXT;
+  static readonly TYPE_MULTI: number = Notification.ContentType.NOTIFICATION_CONTENT_MULTILINE;
 
-  static TYPE_BASIC: number = Notification.ContentType.NOTIFICATION_CONTENT_BASIC_TEXT;
-  static TYPE_LONG: number = Notification.ContentType.NOTIFICATION_CONTENT_LONG_TEXT;
-  static TYPE_MULTI: number = Notification.ContentType.NOTIFICATION_CONTENT_MULTILINE;
-
-  static subscribeNotification(tag, subscriber, asyncCallback) {
-    Log.showDebug(TAG, `subscribeNotification from: ${tag}`));
+  static subscribeNotification(tag: string, subscriber: NotificationSubscriber, asyncCallback: AsyncCallback<void>): void {
+    Log.showDebug(TAG, `subscribeNotification from: ${tag}`);
     Notification.subscribe(subscriber, asyncCallback);
   }
 
-  static unsubscribeNotification(tag, subscriber) {
-    Log.showDebug(TAG, `subscribeNotification from: ${tag}`));
-    Notification.unsubscribe(subscriber);
+  static unsubscribeNotification(tag: string, subscriber: NotificationSubscriber): void {
+    Log.showDebug(TAG, `subscribeNotification from: ${tag}`);
+    Notification.unsubscribe(subscriber).then(() => {
+    }).catch(err => {
+    });
   }
 
-  static removeAll(tag, callback) {
-    Log.showDebug(TAG, `removeAll from: ${tag}`));
+  static removeAll(tag: string, callback: AsyncCallback<void>): void {
+    Log.showDebug(TAG, `removeAll from: ${tag}`);
     Notification.removeAll(callback);
   }
 
-  static remove(tag, hashCode, callback) {
-    Log.showDebug(TAG, `remove from: ${tag}`));
-    Notification.remove(hashCode, callback)
+  static remove(tag: string, hashCode: string, callback: AsyncCallback<void>): void {
+    Log.showDebug(TAG, `remove from: ${tag}`);
+    Notification.remove(hashCode, callback);
   }
 
-  static getAllActiveNotifications(tag, callback) {
-    Log.showDebug(TAG, `getAllActiveNotifications from: ${tag}`));
+  static getAllActiveNotifications(tag: string, callback: AsyncCallback<NotificationRequest[]>): void {
+    Log.showDebug(TAG, `getAllActiveNotifications from: ${tag}`);
     Notification.getAllActiveNotifications(callback);
   }
-
 }

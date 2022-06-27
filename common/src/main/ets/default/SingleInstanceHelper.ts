@@ -16,7 +16,7 @@
 import Log from './Log';
 import audio from '@ohos.multimedia.audio';
 
-const TAG = "SingleInstanceHelper";
+const TAG = 'SingleInstanceHelper';
 const AUDIO_MANAGER_KEY = 'MultiMediaAudioManager';
 
 export default function createOrGet<T>(objectClass: { new(): T }, storageKey: string): T {
@@ -30,7 +30,7 @@ export default function createOrGet<T>(objectClass: { new(): T }, storageKey: st
 export function getAudioManager() {
   if (!globalThis[AUDIO_MANAGER_KEY]) {
     globalThis[AUDIO_MANAGER_KEY] = audio.getAudioManager();
-    Log.showInfo(TAG, `Create Audio Manager.`);
+    Log.showInfo(TAG, 'Create Audio Manager.');
   }
   return globalThis[AUDIO_MANAGER_KEY];
 }

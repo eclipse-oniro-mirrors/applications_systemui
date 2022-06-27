@@ -14,36 +14,39 @@
  */
 
 import StyleManager from '../../../../../../../common/src/main/ets/default/StyleManager';
-import Constants from './Constants';
 
 const TAG = 'battery-StyleConfiguration';
 
-export default class StyleConfiguration {
-    static getBatteryComponentStyle() {
-        const key: string = TAG + "-BatteryComponent";
-        return StyleManager.getStyle(key, () => {
-            return {
-                componentGap: $r('app.float.battery_component_gap')
-            };
-        });
-    }
+export class BatteryComponentStyle {
+  componentGap: Length = $r('app.float.battery_component_gap');
+}
 
-    static getBatteryPicStyle() {
-        const key: string = TAG + "-BatteryPicComponent";
-        return StyleManager.getStyle(key, () => {
-            return {
-                picGap: $r('app.float.battery_component_pic_gap'),
-                picBodyWidth: $r('app.float.battery_component_pic_body_width'),
-                picBodyHeight: $r('app.float.battery_component_pic_body_height'),
-                picBodyPadding: $r('app.float.battery_component_pic_body_padding'),
-                picBodyBorderWidth: $r('app.float.battery_component_pic_body_border_width'),
-                picBorderRadius: $r('app.float.battery_component_pic_border_radius'),
-                picHeadBorderRadius: $r('app.float.battery_component_pic_head_radius'),
-                picChargingColor: $r('app.color.battery_component_pic_charging_color'),
-                picLevelLowColor: $r('app.color.battery_component_pic_level_low_color'),
-                picHeadWidth: $r('app.float.battery_component_pic_head_width'),
-                picHeadHeight: $r('app.float.battery_component_pic_head_height'),
-            };
-        });
-    }
+export class BatteryPicStyle {
+  picGap: Length = $r('app.float.battery_component_pic_gap');
+  picBodyWidth: Length = $r('app.float.battery_component_pic_body_width');
+  picBodyHeight: Length = $r('app.float.battery_component_pic_body_height');
+  picBodyPadding: Length = $r('app.float.battery_component_pic_body_padding');
+  picBodyBorderWidth: Length = $r('app.float.battery_component_pic_body_border_width');
+  picBorderRadius: Length = $r('app.float.battery_component_pic_border_radius');
+  picHeadBorderRadius: Length = $r('app.float.battery_component_pic_head_radius');
+  picChargingColor: ResourceColor = $r('app.color.battery_component_pic_charging_color');
+  picLevelLowColor: ResourceColor = $r('app.color.battery_component_pic_level_low_color');
+  picHeadWidth: Length = $r('app.float.battery_component_pic_head_width');
+  picHeadHeight: Length = $r('app.float.battery_component_pic_head_height');
+}
+
+export default class StyleConfiguration {
+  static getBatteryComponentStyle(): BatteryComponentStyle {
+    const key: string = TAG + '-BatteryComponent';
+    return StyleManager.getStyle(key, () => {
+      return new BatteryComponentStyle();
+    });
+  }
+
+  static getBatteryPicStyle(): BatteryPicStyle {
+    const key: string = TAG + '-BatteryPicComponent';
+    return StyleManager.getStyle(key, () => {
+      return new BatteryPicStyle();
+    });
+  }
 }

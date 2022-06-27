@@ -17,13 +17,15 @@ import StyleManager from '../../../../../../../../common/src/main/ets/default/st
 
 const TAG = 'NotificationPanel-StyleConfiguration';
 
+export class IndexStyle {
+  borderRadius: Length = $r('app.float.default_border_radius');
+}
+
 export default class StyleConfiguration {
-    static getIndexStyle() {
-        const key: string = TAG + "-Index";
-        return StyleManager.getStyle(key, () => {
-            return {
-                borderRadius: $r('app.float.default_border_radius')
-            };
-        });
-    }
+  static getIndexStyle(): IndexStyle {
+    const key: string = TAG + '-Index';
+    return StyleManager.getStyle(key, () => {
+      return new IndexStyle();
+    });
+  }
 }

@@ -14,9 +14,10 @@
  */
 
 import Log from '../../../../../../../../common/src/main/ets/default/Log';
-import {TintContentInfo} from '../../../../../../../../common/src/main/ets/default/TintStateManager';
-import StyleConfigurationCommon from '../../../../../../../../common/src/main/ets/default/StyleConfiguration';
-import StyleConfiguration from '../common/StyleConfiguration';
+import { TintContentInfo } from '../../../../../../../../common/src/main/ets/default/TintStateManager';
+import StyleConfigurationCommon, { CommonStyle
+} from '../../../../../../../../common/src/main/ets/default/StyleConfiguration';
+import StyleConfiguration, { StartsBarLocationComponentStyle } from '../common/StyleConfiguration';
 import Constants from '../common/Constants';
 import ViewModel from '../viewmodel/LocationVM';
 
@@ -26,8 +27,8 @@ const TAG = 'location-StatusBarIconItemLocationComponent';
 export default struct StatusBarIconItemLocationComponent {
   @StorageLink('LocationServiceUseStatus') LocationServiceUseStatus: boolean = false;
   @State mTintContentInfo: TintContentInfo = ViewModel.getTintContentInfo();
-  @State style: any = StyleConfiguration.getStartsBarLocationComponentStyle();
-  @State styleCommon: any = StyleConfigurationCommon.getCommonStyle();
+  @State style: StartsBarLocationComponentStyle = StyleConfiguration.getStartsBarLocationComponentStyle();
+  @State styleCommon: CommonStyle = StyleConfigurationCommon.getCommonStyle();
 
   aboutToAppear() {
     Log.showInfo(TAG, 'aboutToAppear');

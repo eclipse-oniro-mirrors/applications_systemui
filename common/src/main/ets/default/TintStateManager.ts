@@ -13,89 +13,88 @@
  * limitations under the License.
  */
 
-import Window from "@ohos.window";
-import display from "@ohos.display";
-import Log from "./Log";
-import {WindowType, Rect, getWindowName} from "./Constants";
-import getSingleInstance from "./SingleInstanceHelper";
+import Window from '@ohos.window';
+import display from '@ohos.display';
+import Log from './Log';
+import { WindowType, Rect, getWindowName } from './Constants';
+import getSingleInstance from './SingleInstanceHelper';
 
-const TAG = "TintStateManager";
-const LISTENER_SYSTEM_BAR_TINT_CHANGE = "systemBarTintChange";
+const TAG = 'TintStateManager';
+const LISTENER_SYSTEM_BAR_TINT_CHANGE = 'systemBarTintChange';
 
-export type TintStateListener = { onTintStateChange: (state: TintState) => void }
-;
+export interface TintStateListener { onTintStateChange(state: TintState): void }
 
 export interface TintState {
-    isEnable?: boolean;
-    region?: Rect;
-    backgroundColor?: string;
-    contentColor?: string;
+  isEnable?: boolean;
+  region?: Rect;
+  backgroundColor?: string;
+  contentColor?: string;
 }
 
 export class TintContentInfo {
-    contentColor: string = "#FFFFFFFF";
+  contentColor = '#FFFFFFFF';
 }
 
 export function getOrCreateTintContentInfo(key: string): TintContentInfo {
-    let storageKey = 'SystemUI_TintContentInfo_' + key;
-    if (!AppStorage.Has(storageKey)) {
-        AppStorage.SetOrCreate(storageKey, new TintContentInfo());
-        Log.showInfo(TAG, `getOrCreateTintContentInfo, Create storageKey of ${storageKey}`);
-    }
-    return AppStorage.Get(storageKey);
+  let storageKey = 'SystemUI_TintContentInfo_' + key;
+  if (!AppStorage.Has(storageKey)) {
+    AppStorage.SetOrCreate(storageKey, new TintContentInfo());
+    Log.showInfo(TAG, `getOrCreateTintContentInfo, Create storageKey of ${storageKey}`);
+  }
+  return AppStorage.Get(storageKey);
 }
 
 export default class TintStateManager {
-    mListeners: Map<WindowType, TintStateListener> = new Map();
-    mStates: Map<WindowType, TintState> = new Map();
+  mListeners: Map<WindowType, TintStateListener> = new Map();
+  mStates: Map<WindowType, TintState> = new Map();
 
-    static getInstance(): TintStateManager {
-        return getSingleInstance(TintStateManager, TAG);
-    }
+  static getInstance(): TintStateManager {
+    return getSingleInstance(TintStateManager, TAG);
+  }
 
-    constructor() {
-        Log.showDebug(TAG, `init TintStateManager. ${LISTENER_SYSTEM_BAR_TINT_CHANGE}`);
-        Window.on(LISTENER_SYSTEM_BAR_TINT_CHANGE, this.onSystemBarTintChange.bind(this));
-    }
+  constructor() {
+    Log.showDebug(TAG, `init TintStateManager. ${LISTENER_SYSTEM_BAR_TINT_CHANGE}`);
+    Window.on(LISTENER_SYSTEM_BAR_TINT_CHANGE, this.onSystemBarTintChange.bind(this));
+  }
 
-    registerListener(windowType: WindowType, listener: TintStateListener) {
-        let tintState = this.mStates.get(windowType);
-        tintState && listener.onTintStateChange(tintState);
-        let res = this.mListeners.set(windowType, listener);
-        Log.showDebug(TAG, `registser listenerSize: ${res.size}`);
-    }
+  registerListener(windowType: WindowType, listener: TintStateListener): void {
+    let tintState = this.mStates.get(windowType);
+    tintState && listener.onTintStateChange(tintState);
+    let res = this.mListeners.set(windowType, listener);
+    Log.showDebug(TAG, `registser listenerSize: ${res.size}`);
+  }
 
-    unregisterListener(windowType: WindowType) {
-        let res = this.mListeners.delete(windowType);
-        Log.showDebug(TAG, `unregistser ${windowType}, res: ${res}`);
-    }
+  unregisterListener(windowType: WindowType): void {
+    let res = this.mListeners.delete(windowType);
+    Log.showDebug(TAG, `unregistser ${windowType}, res: ${res}`);
+  }
 
-    async onSystemBarTintChange(data) {
-        Log.showDebug(TAG, `onSystemBarTintChange, data: ${JSON.stringify(data)}`);
-        if (!Array.isArray(data.regionTint)) {
-            Log.showDebug(TAG, `regionTint is not array.`);
-            return;
-        }
-        let dis = await display.getDefaultDisplay();
-        if (dis.id != data.displayId) {
-            Log.showDebug(TAG, `Needn't change, displayId: ${data.displayId}`);
-            return;
-        }
-        data.regionTint.forEach((regionTintData) => {
-            Log.showDebug(TAG, `onSystemBarTintChange, type: ${getWindowName(regionTintData["type"])}`);
-            let windowName = getWindowName(regionTintData["type"]);
-            if (!windowName) {
-                return;
-            }
-            let tintState: TintState = {
-                isEnable: regionTintData.isEnable,
-                region: regionTintData.region,
-                backgroundColor: regionTintData.backgroundColor,
-                contentColor: regionTintData.contentColor,
-            };
-            Log.showDebug(TAG, `tintState: ${JSON.stringify(tintState)}`);
-            this.mStates.set(windowName, tintState);
-            this.mListeners.get(windowName)?.onTintStateChange(tintState);
-        });
+  async onSystemBarTintChange(data): Promise<void> {
+    Log.showDebug(TAG, `onSystemBarTintChange, data: ${JSON.stringify(data)}`);
+    if (!Array.isArray(data.regionTint)) {
+      Log.showDebug(TAG, 'regionTint is not array.');
+      return;
     }
+    let dis = await display.getDefaultDisplay();
+    if (dis.id != data.displayId) {
+      Log.showDebug(TAG, `Needn't change, displayId: ${data.displayId}`);
+      return;
+    }
+    data.regionTint.forEach((regionTintData) => {
+      Log.showDebug(TAG, `onSystemBarTintChange, type: ${getWindowName(regionTintData['type'])}`);
+      let windowName = getWindowName(regionTintData['type']);
+      if (!windowName) {
+        return;
+      }
+      let tintState: TintState = {
+        isEnable: regionTintData.isEnable,
+        region: regionTintData.region,
+        backgroundColor: regionTintData.backgroundColor,
+        contentColor: regionTintData.contentColor,
+      };
+      Log.showDebug(TAG, `tintState: ${JSON.stringify(tintState)}`);
+      this.mStates.set(windowName, tintState);
+      this.mListeners.get(windowName)?.onTintStateChange(tintState);
+    });
+  }
 }

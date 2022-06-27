@@ -14,53 +14,53 @@
  * limitations under the License.
  */
 
-import settings from "@ohos.settings";
-import {DataAbilityHelper} from "ability/dataAbilityHelper";
-import featureAbility from "@ohos.ability.featureAbility";
-import Log from "./Log";
-import Constants from "./Constants";
-import createOrGet from "./SingleInstanceHelper";
-import AbilityManager from "./abilitymanager/abilityManager";
+import settings from '@ohos.settings';
+import { DataAbilityHelper } from 'ability/dataAbilityHelper';
+import featureAbility from '@ohos.ability.featureAbility';
+import Log from './Log';
+import Constants from './Constants';
+import createOrGet from './SingleInstanceHelper';
+import AbilityManager from './abilitymanager/abilityManager';
 
-const TAG = "SettingsUtil";
+const TAG = 'SettingsUtil';
 
 export class SettingsUtil {
-    helper: DataAbilityHelper;
+  helper: DataAbilityHelper;
 
-    constructor() {
-        Log.showDebug(TAG, `constructor`);
-        try {
-            this.helper = featureAbility.acquireDataAbilityHelper(AbilityManager.getContext(), Constants.URI_VAR);
-        } catch (e) {
-            Log.showError(TAG, `constructor, acquire helper error: ${JSON.stringify(e)}`);
-        }
+  constructor() {
+    Log.showDebug(TAG, 'constructor');
+    try {
+      this.helper = featureAbility.acquireDataAbilityHelper(AbilityManager.getContext(), Constants.URI_VAR);
+    } catch (e) {
+      Log.showError(TAG, `constructor, acquire helper error: ${JSON.stringify(e)}`);
     }
+  }
 
-    getValue(name: string, defValue?: string): string {
-        Log.showDebug(TAG, `getValue, name: ${name} defValue: ${defValue}`);
-        let value: string = null;
-        try {
-            value = settings.getValueSync(this.helper, name, defValue ? defValue : "");
-        } catch (e) {
-            Log.showError(TAG, `getValue e: ${JSON.stringify(e)}`);
-        }
-        Log.showDebug(TAG, `getValue, value: ${value}`);
-        return value;
+  getValue(name: string, defValue?: string): string {
+    Log.showDebug(TAG, `getValue, name: ${name} defValue: ${defValue}`);
+    let value: string = null;
+    try {
+      value = settings.getValueSync(this.helper, name, defValue ? defValue : '');
+    } catch (e) {
+      Log.showError(TAG, `getValue e: ${JSON.stringify(e)}`);
     }
+    Log.showDebug(TAG, `getValue, value: ${value}`);
+    return value;
+  }
 
-    setValue(name: string, value: string): boolean {
-        Log.showDebug(TAG, `setValue, name: ${name} value: ${value}`);
-        let result = false;
-        try {
-            result = settings.setValueSync(this.helper, name, value);
-        } catch (e) {
-            Log.showError(TAG, `setValue e: ${JSON.stringify(e)}`);
-        }
-        Log.showDebug(TAG, `setValue, result: ${result}`);
-        return result;
+  setValue(name: string, value: string): boolean {
+    Log.showDebug(TAG, `setValue, name: ${name} value: ${value}`);
+    let result = false;
+    try {
+      result = settings.setValueSync(this.helper, name, value);
+    } catch (e) {
+      Log.showError(TAG, `setValue e: ${JSON.stringify(e)}`);
     }
+    Log.showDebug(TAG, `setValue, result: ${result}`);
+    return result;
+  }
 }
 
 let sSettingsUtil = createOrGet(SettingsUtil, TAG);
 
-export default sSettingsUtil as SettingsUtil;
+export default sSettingsUtil;

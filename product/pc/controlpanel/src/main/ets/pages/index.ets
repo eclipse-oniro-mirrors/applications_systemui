@@ -18,15 +18,15 @@ import Log from '../../../../../../../common/src/main/ets/default/Log'
 import CommonStyleManager from '../../../../../../../common/src/main/ets/default/StyleManager'
 import HeightConfigUtils from '../../../../../../../common/src/main/ets/default/heightcofigUtils/HeightConfigUtils'
 import AbilityManager from '../../../../../../../common/src/main/ets/default/abilitymanager/AbilityManager'
-import StyleConfiguration from './common/StyleConfiguration'
+import StyleConfiguration, { IndexStyle } from './common/StyleConfiguration'
 import StyleManager from './common/StyleManager'
 import ControlCenterComponent from './control'
 import WindowManager, {
   WindowType,
   WINDOW_SHOW_HIDE_EVENT,
 } from "../../../../../../../common/src/main/ets/default/WindowManager";
-import EventManager, {unsubscribe} from "../../../../../../../common/src/main/ets/default/event/EventManager";
-import {START_ABILITY_EVENT} from "../../../../../../../common/src/main/ets/default/event/EventUtil";
+import EventManager, { unsubscribe } from "../../../../../../../common/src/main/ets/default/event/EventManager";
+import { START_ABILITY_EVENT } from "../../../../../../../common/src/main/ets/default/event/EventUtil";
 import MultimodalInputManager, {
   MultiKeyCode,
 } from "../../../../../../../common/src/main/ets/default/MultimodalInputManager";
@@ -58,7 +58,7 @@ let mHeightConfigUtils
 @Component
 struct Index {
   @StorageLink('StatusCoefficient') StatusCoefficient: number = 1.0
-  @State style: any = {}
+  @State style: IndexStyle = new IndexStyle()
   @State mBackground: PixelMap | undefined = undefined;
   @State mBlur: number = 0;
   @State mOpacity: number = 0.0;

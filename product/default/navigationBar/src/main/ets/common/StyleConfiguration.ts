@@ -13,21 +13,23 @@
  * limitations under the License.
  */
 
-import StyleManager from '../../../../../../../common/src/main/ets/default/stylemanager';
+import StyleManager from '../../../../../../../common/src/main/ets/default/StyleManager';
 
 const TAG = 'NavigationBar-StyleConfiguration';
 
+export class KeyButtonStyle {
+  buttonWidth: Length = $r('app.float.navigation_bar_button_width');
+  buttonHeight: Length = $r('app.float.navigation_bar_button_height');
+  buttonBorderRadius: Length = $r('app.float.navigation_bar_button_radius');
+  buttonIconWidth: Length = $r('app.float.navigation_bar_button_icon_width');
+  buttonIconHeight: Length = $r('app.float.navigation_bar_button_icon_height');
+}
+
 export default class StyleConfiguration {
-    static getKeyButtonStyle() {
-        const key: string = TAG + "-KeyButton";
-        return StyleManager.getStyle(key, () => {
-            return {
-                buttonWidth: $r('app.float.navigation_bar_button_width'),
-                buttonHeight: $r('app.float.navigation_bar_button_height'),
-                buttonBorderRadius: $r('app.float.navigation_bar_button_radius'),
-                buttonIconWidth: $r('app.float.navigation_bar_button_icon_width'),
-                buttonIconHeight: $r('app.float.navigation_bar_button_icon_height'),
-            };
-        });
-    }
+  static getKeyButtonStyle(): KeyButtonStyle {
+    const key: string = TAG + '-KeyButton';
+    return StyleManager.getStyle(key, () => {
+      return new KeyButtonStyle();
+    });
+  }
 }

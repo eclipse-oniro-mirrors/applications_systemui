@@ -14,24 +14,25 @@
  */
 
 import Log from '../../../../../../../common/src/main/ets/default/Log';
-import StyleConfigurationCommon from '../../../../../../../common/src/main/ets/default/StyleConfiguration';
-import {TintContentInfo} from '../../../../../../../common/src/main/ets/default/TintStateManager';
+import StyleConfigurationCommon, { CommonStyle
+} from '../../../../../../../common/src/main/ets/default/StyleConfiguration';
+import { TintContentInfo } from '../../../../../../../common/src/main/ets/default/TintStateManager';
 import ViewModel from '../viewmodel/BatteryVM';
 
 const TAG = 'BatteryComponent-batterySoc';
+
 @Component
-export default
-struct BatterySoc {
+export default struct BatterySoc {
   @StorageLink('batterySoc') batterySoc: number = 100;
   @State mTintContentInfo: TintContentInfo = ViewModel.getTintContentInfo();
-  @State styleCommon: any = StyleConfigurationCommon.getCommonStyle();
+  @State styleCommon: CommonStyle = StyleConfigurationCommon.getCommonStyle();
 
-  aboutToAppear(){
-    Log.showInfo(TAG,'aboutToAppear Start');
+  aboutToAppear() {
+    Log.showInfo(TAG, 'aboutToAppear Start');
   }
 
-  aboutToDisappear(){
-    Log.showInfo(TAG,'aboutToDisappear');
+  aboutToDisappear() {
+    Log.showInfo(TAG, 'aboutToDisappear');
   }
 
   build() {

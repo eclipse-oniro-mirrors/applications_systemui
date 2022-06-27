@@ -14,18 +14,19 @@
  */
 
 import StyleManager from '../../../../../../../../common/src/main/ets/default/StyleManager';
-import Constants from './Constants';
 
 const TAG = 'location-StyleConfiguration';
 
+export class StartsBarLocationComponentStyle {
+  statusBarLocationWidth: Length = $r('app.float.status_bar_location_width');
+  statusBarLocationHeight: Length = $r('app.float.status_bar_location_height');
+}
+
 export default class StyleConfiguration {
-  static getStartsBarLocationComponentStyle() {
-    const key: string = TAG + "-startsBarLocation";
+  static getStartsBarLocationComponentStyle(): StartsBarLocationComponentStyle {
+    const key: string = TAG + '-startsBarLocation';
     return StyleManager.getStyle(key, () => {
-      return {
-        statusBarLocationWidth:$r('app.float.status_bar_location_width'),
-        statusBarLocationHeight: $r('app.float.status_bar_location_height'),
-      };
+      return new StartsBarLocationComponentStyle();
     });
   }
 }

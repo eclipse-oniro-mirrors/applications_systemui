@@ -14,43 +14,39 @@
  */
 
 import Log from '../default/Log';
-import StyleConfiguration from './common/StyleConfiguration'
+import StyleConfiguration, { IconComponentStyle } from './common/StyleConfiguration'
 
 const TAG = 'iconComponent'
 
 @Component
-export default
-struct iconComponent {
-
+export default struct iconComponent {
   @State iconOff: any = ""
   @State iconOn: any = ""
   @Prop iconOffStr: string
   @Prop iconOnStr: string
   private useIconStr = false
-
   @State mIconIsHover: boolean = false
-
   @Link changeSwitch: boolean
-  @State style: any = StyleConfiguration.getIconComponentStyle()
+  @State style: IconComponentStyle = StyleConfiguration.getIconComponentStyle()
 
   aboutToAppear() {
     Log.showInfo(TAG,`aboutToAppear, ${this.changeSwitch} ${JSON.stringify(this.iconOff)} ${JSON.stringify(this.iconOn)} , useIconStr: ${this.useIconStr}`)
   }
 
-  aboutToDisappear () {
-    Log.showInfo(TAG,'aboutToDisappear')
+  aboutToDisappear() {
+    Log.showInfo(TAG, 'aboutToDisappear')
   }
 
   build() {
     Column() {
       Stack() {
         Flex()
-          .backgroundColor(this.changeSwitch? this.style.iconOnBG: this.style.iconOffBG)
+          .backgroundColor(this.changeSwitch ? this.style.iconOnBG : this.style.iconOffBG)
           .clip(new Circle({ width: this.style.circleWidth, height: this.style.circleHeight }))
           .width(this.style.circleWidth)
           .height(this.style.circleHeight)
         Flex()
-          .backgroundColor(this.mIconIsHover? this.style.hoverColor: this.style.transparentColor)
+          .backgroundColor(this.mIconIsHover ? this.style.hoverColor : this.style.transparentColor)
           .clip(new Circle({ width: this.style.circleWidth, height: this.style.circleHeight }))
           .width(this.style.circleWidth)
           .height(this.style.circleHeight)

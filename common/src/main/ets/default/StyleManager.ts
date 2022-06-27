@@ -18,24 +18,24 @@ import Log from './Log';
 const TAG = 'Common-StyleManager';
 
 export class StyleManager {
-    mAbilityPageName: string = '';
+  mAbilityPageName = '';
 
-    setAbilityPageName(name: string): void{
-        Log.showInfo(TAG, `setAbilityPageName, name: ${name}`);
-        this.mAbilityPageName = name;
-    }
+  setAbilityPageName(name: string): void{
+    Log.showInfo(TAG, `setAbilityPageName, name: ${name}`);
+    this.mAbilityPageName = name;
+  }
 
-    getStyle(key: string, generateDefaultFunction: Function) {
-        let newKey = this.mAbilityPageName + '-' + key;
-        if (!AppStorage.Has(newKey)) {
-            let defaultStyle = generateDefaultFunction();
-            AppStorage.SetOrCreate(newKey, defaultStyle);
-            Log.showInfo(TAG, `Create storageKey of ${newKey}`);
-        }
-        return AppStorage.Get(newKey);
+  getStyle<T>(key: string, generateDefaultFunction: () => T): T {
+    let newKey = this.mAbilityPageName + '-' + key;
+    if (!AppStorage.Has(newKey)) {
+      let defaultStyle = generateDefaultFunction();
+      AppStorage.SetOrCreate(newKey, defaultStyle);
+      Log.showInfo(TAG, `Create storageKey of ${newKey}`);
     }
+    return AppStorage.Get(newKey) as T;
+  }
 }
 
 let styleManager = new StyleManager();
 
-export default styleManager as StyleManager;
+export default styleManager;

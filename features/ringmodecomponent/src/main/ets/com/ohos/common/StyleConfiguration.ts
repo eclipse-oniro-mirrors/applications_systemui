@@ -13,28 +13,31 @@
  * limitations under the License.
  */
 
-import StyleManager from '../../../../../../../../common/src/main/ets/default/StyleManager'
-import Constants from './Constants'
+import StyleManager from '../../../../../../../../common/src/main/ets/default/StyleManager';
 
 const TAG = 'capsule-StyleConfiguration';
 
+export class StatusRingModeComponentStyle {
+  statusBarRingModeWidth: Length = $r('app.float.status_bar_ring_mode_width');
+  statusBarRingModeHeight: Length = $r('app.float.status_bar_ring_mode_height');
+}
+
+export class ControlCenterRingModeComponentStyle {
+  onBgColor: ResourceStr = $r('app.color.control_center_complex_toggle_ring_mode_on_bg_color');
+}
+
 export default class StyleConfiguration {
-  static getStatusRingModeComponentStyle() {
-    const key: string = TAG + "-StatusRingMode";
+  static getStatusRingModeComponentStyle(): StatusRingModeComponentStyle {
+    const key: string = TAG + '-StatusRingMode';
     return StyleManager.getStyle(key, () => {
-      return {
-        statusBarRingModeWidth: $r('app.float.status_bar_ring_mode_width'),
-        statusBarRingModeHeight: $r('app.float.status_bar_ring_mode_height')
-      };
+      return new StatusRingModeComponentStyle();
     });
   }
 
-  static getControlCenterRingModeComponentStyle() {
-    const key: string = TAG + "-ControlCenterRingMode";
+  static getControlCenterRingModeComponentStyle(): ControlCenterRingModeComponentStyle {
+    const key: string = TAG + '-ControlCenterRingMode';
     return StyleManager.getStyle(key, () => {
-      return {
-        onBgColor: $r('app.color.control_center_complex_toggle_ring_mode_on_bg_color')
-      };
+      return new ControlCenterRingModeComponentStyle();
     });
   }
 }

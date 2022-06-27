@@ -12,53 +12,54 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import ServiceExtension from '@ohos.application.ServiceExtensionAbility'
-import Log from '../../../../../../common/src/main/ets/default/Log'
-import AbilityManager from '../../../../../../common/src/main/ets/default/abilitymanager/abilityManager'
-import initSystemUi from '../../../../../../common/src/main/ets/default/InitSystemUi'
+import ServiceExtension from '@ohos.application.ServiceExtensionAbility';
+import Want from '@ohos.application.Want';
+import Log from '../../../../../../common/src/main/ets/default/Log';
+import AbilityManager from '../../../../../../common/src/main/ets/default/abilitymanager/abilityManager';
+import initSystemUi from '../../../../../../common/src/main/ets/default/InitSystemUi';
 
-const TAG = "SystemUI_ServiceExtAbility"
+const TAG = 'SystemUI_ServiceExtAbility';
 
 var statusBarWant = {
-    "bundleName": "com.ohos.systemui",
-    "abilityName": "com.ohos.systemui.statusbar.ServiceExtAbility"
-}
+  'bundleName': 'com.ohos.systemui',
+  'abilityName': 'com.ohos.systemui.statusbar.ServiceExtAbility'
+};
 
 var navigationBarWant = {
-    "bundleName": "com.ohos.systemui",
-    "abilityName": "com.ohos.systemui.navigationbar.ServiceExtAbility"
-}
+  'bundleName': 'com.ohos.systemui',
+  'abilityName': 'com.ohos.systemui.navigationbar.ServiceExtAbility'
+};
 
 var volumePanelWant = {
-    "bundleName": "com.ohos.systemui",
-    "abilityName": "com.ohos.systemui.volumepanel.ServiceExtAbility"
-}
+  'bundleName': 'com.ohos.systemui',
+  'abilityName': 'com.ohos.systemui.volumepanel.ServiceExtAbility'
+};
 
 var controlPanelWant = {
-    "bundleName": "com.ohos.systemui",
-    "abilityName": "com.ohos.systemui.controlpanel.ServiceExtAbility"
-}
+  'bundleName': 'com.ohos.systemui',
+  'abilityName': 'com.ohos.systemui.controlpanel.ServiceExtAbility'
+};
 
 var notificationPanelWant = {
-    "bundleName": "com.ohos.systemui",
-    "abilityName": "com.ohos.systemui.notificationpanel.ServiceExtAbility"
-}
+  'bundleName': 'com.ohos.systemui',
+  'abilityName': 'com.ohos.systemui.notificationpanel.ServiceExtAbility'
+};
 
 class ServiceExtAbility extends ServiceExtension {
-    onCreate(want) {
-        Log.showInfo(TAG, `onCreate, want: ${JSON.stringify(want)}`)
-        initSystemUi(this.context);
-        AbilityManager.setContext(AbilityManager.ABILITY_NAME_ENTRY, this.context)
-        AbilityManager.startAbility(statusBarWant)
-        AbilityManager.startAbility(navigationBarWant)
-        AbilityManager.startAbility(volumePanelWant)
-        AbilityManager.startAbility(controlPanelWant)
-        AbilityManager.startAbility(notificationPanelWant)
-    }
+  onCreate(want: Want): void {
+    Log.showInfo(TAG, `onCreate, want: ${JSON.stringify(want)}`);
+    initSystemUi(this.context);
+    AbilityManager.setContext(AbilityManager.ABILITY_NAME_ENTRY, this.context);
+    AbilityManager.startAbility(statusBarWant);
+    AbilityManager.startAbility(navigationBarWant);
+    AbilityManager.startAbility(volumePanelWant);
+    AbilityManager.startAbility(controlPanelWant);
+    AbilityManager.startAbility(notificationPanelWant);
+  }
 
-    onDestroy() {
-        Log.showInfo(TAG, 'onDestroy')
-    }
+  onDestroy(): void {
+    Log.showInfo(TAG, 'onDestroy');
+  }
 }
 
-export default ServiceExtAbility
+export default ServiceExtAbility;

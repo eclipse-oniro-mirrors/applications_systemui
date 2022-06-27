@@ -14,60 +14,68 @@
  */
 
 import StyleManager from '../../../../../../../../common/src/main/ets/default/stylemanager';
-import Constants from './constants'
+import Constants from './constants';
 
 const TAG = 'DropdownPanel-StyleConfiguration';
 
+export class ControlStyle {
+  statusBarHeight: Length = $r('app.float.status_bar_height');
+}
+
+export class NotificationStyle {
+  statusBarHeight: Length = $r('app.float.status_bar_height');
+  deleteAllImageWidth: Length = $r('app.float.delete_all_image_width');
+  deleteAllImageHeight: Length = $r('app.float.delete_all_image_height');
+  deleteAllImageBorderRadius: Length = $r('app.float.delete_all_image_border_radius');
+  deleteAllImageOpacity: Length = $r('app.float.delete_all_image_opacity');
+}
+
+export class QuicklySettingStyle {
+  quicklySetTimeFontSize: Length = $r('app.float.quickly_setting_time_font_size');
+  quicklySetTimeFontColor: ResourceColor = $r('app.color.quickly_setting_time_font_color');
+  quicklyDateFontColor: ResourceColor = $r('app.color.quickly_setting_date_font_color');
+  quicklyDateFontSize: Length = $r('app.float.quickly_setting_date_font_size');
+  quicklySetTextFlexMarginLeft: Length = $r('app.float.quickly_setting_text_flex_margin_left');
+  quicklySetImageWidth: Length = $r('app.float.quickly_setting_image_width');
+  quicklySttImageHeight: Length = $r('app.float.quickly_setting_image_height');
+  quicklySetImageMarginRight: Length = $r('app.float.quickly_setting_image_margin_right');
+  quickLySettingBorderRadius: Length = $r('app.float.quickly_setting_border_radius');
+  quickLySettingMarginLeft: Length = $r('app.float.quickly_setting_margin_left');
+  quickLySettingMarginRight: Length = $r('app.float.quickly_setting_margin_right');
+  quickSettingH: Length = Constants.QUICKLY_SETTING_H;
+}
+
+export class DateItemStyle {
+  quicklySetDateItemFontSize: Length = $r('app.float.quickly_setting_date_font_size');
+  quicklySetDateItemFontColor: ResourceColor = $r('app.color.quickly_setting_date_font_color');
+}
+
 export default class StyleConfiguration {
-    static getControlStyle() {
-        const key: string = TAG + "-Control";
-        return StyleManager.getStyle(key, () => {
-            return {
-                statusBarHeight: $r("app.float.status_bar_height")
-            };
-        });
-    }
+  static getControlStyle(): ControlStyle {
+    const key: string = TAG + '-Control';
+    return StyleManager.getStyle(key, () => {
+      return new ControlStyle();
+    });
+  }
 
-    static getNotificationStyle() {
-        const key: string = TAG + "-Notification";
-        return StyleManager.getStyle(key, () => {
-            return {
-                statusBarHeight: $r("app.float.status_bar_height"),
-                deleteAllImageWidth: $r("app.float.delete_all_image_width"),
-                deleteAllImageHeight: $r("app.float.delete_all_image_height"),
-                deleteAllImageBorderRadius: $r("app.float.delete_all_image_border_radius"),
-                deleteAllImageOpacity: $r("app.float.delete_all_image_opacity"),
-            };
-        });
-    }
+  static getNotificationStyle(): NotificationStyle {
+    const key: string = TAG + '-Notification';
+    return StyleManager.getStyle(key, () => {
+      return new NotificationStyle();
+    });
+  }
 
-    static getQuicklySettingStyle() {
-        const key: string = TAG + "-QuicklySetting";
-        return StyleManager.getStyle(key, () => {
-            return {
-                quicklySetTimeFontSize: $r("app.float.quickly_setting_time_font_size"),
-                quicklySetTimeFontColor: $r('app.color.quickly_setting_time_font_color'),
-                quicklyDateFontColor: $r('app.color.quickly_setting_date_font_color'),
-                quicklyDateFontSize: $r("app.float.quickly_setting_date_font_size"),
-                quicklySetTextFlexMarginLeft: $r("app.float.quickly_setting_text_flex_margin_left"),
-                quicklySetImageWidth: $r("app.float.quickly_setting_image_width"),
-                quicklySttImageHeight: $r("app.float.quickly_setting_image_height"),
-                quicklySetImageMarginRight: $r("app.float.quickly_setting_image_margin_right"),
-                quickLySettingBorderRadius: $r("app.float.quickly_setting_border_radius"),
-                quickLySettingMarginLeft: $r("app.float.quickly_setting_margin_left"),
-                quickLySettingMarginRight: $r("app.float.quickly_setting_margin_right"),
-                quickSettingH: Constants.QUICKLY_SETTING_H,
-            };
-        });
-    }
+  static getQuicklySettingStyle(): QuicklySettingStyle {
+    const key: string = TAG + '-QuicklySetting';
+    return StyleManager.getStyle(key, () => {
+      return new QuicklySettingStyle();
+    });
+  }
 
-    static getDateItemStyle() {
-        const key: string = TAG + "-DateItem";
-        return StyleManager.getStyle(key, () => {
-            return {
-                quicklySetDateItemFontSize: $r("app.float.quickly_setting_date_font_size"),
-                quicklySetDateItemFontColor: $r('app.color.quickly_setting_date_font_color'),
-            };
-        });
-    }
+  static getDateItemStyle(): DateItemStyle {
+    const key: string = TAG + '-DateItem';
+    return StyleManager.getStyle(key, () => {
+      return new DateItemStyle();
+    });
+  }
 }

@@ -14,33 +14,34 @@
  */
 
 import Log from '../../../../../../../../common/src/main/ets/default/Log';
-import {FASlotName} from '../../../../../../../../common/src/main/ets/default/Constants';
-import {TintContentInfo, getOrCreateTintContentInfo} from '../../../../../../../../common/src/main/ets/default/TintStateManager';
+import { FASlotName } from '../../../../../../../../common/src/main/ets/default/Constants';
+import { TintContentInfo, getOrCreateTintContentInfo
+} from '../../../../../../../../common/src/main/ets/default/TintStateManager';
 import createOrGet from '../../../../../../../../common/src/main/ets/default/SingleInstanceHelper';
-import {AudioRingMode} from '../common/Constants'
+import { AudioRingMode } from '../common/Constants';
 import RingModeService from '../model/RingModeService';
 
-export const RingModeComponentModeKey = "RingModeComponentMode";
+export const RING_MODE_COMPONENT_MODE_KEY = 'RingModeComponentMode';
 
 const TAG = 'RingModeVM';
 
 export class RingModeVM {
-  mIsStart: boolean = false;
-  mRingModeComponentMode: any;
+  mIsStart = false;
+  mRingModeComponentMode: SubscribedAbstractProperty<AudioRingMode>;
   mTintContentInfo: TintContentInfo = getOrCreateTintContentInfo(FASlotName.RING_MODE);
 
   constructor() {
-    Log.showInfo(TAG, `constructor`);
+    Log.showInfo(TAG, 'constructor');
   }
 
-  initViewModel() {
+  initViewModel(): void {
     if (this.mIsStart) {
       return;
     }
-    Log.showInfo(TAG, `initViewModel `);
+    Log.showInfo(TAG, 'initViewModel ');
     this.mIsStart = true;
 
-    this.mRingModeComponentMode = AppStorage.SetAndLink(RingModeComponentModeKey, AudioRingMode.RINGER_MODE_NORMAL);
+    this.mRingModeComponentMode = AppStorage.SetAndLink(RING_MODE_COMPONENT_MODE_KEY, AudioRingMode.RINGER_MODE_NORMAL);
 
     RingModeService.registerListener({
       'updateRingerMode': this.updateRingerMode.bind(this)
@@ -48,12 +49,12 @@ export class RingModeVM {
     RingModeService.startService();
   }
 
-  updateRingerMode(mode) {
+  updateRingerMode(mode: AudioRingMode): void {
     Log.showInfo(TAG, `updateRingerMode, mode: ${JSON.stringify(mode)} `);
     this.mRingModeComponentMode.set(mode);
   }
 
-  setRingerMode(mode) {
+  setRingerMode(mode: AudioRingMode): void {
     Log.showInfo(TAG, `setRingerMode, mode: ${JSON.stringify(mode)} `);
     RingModeService.setRingerMode(mode);
   }
@@ -65,4 +66,4 @@ export class RingModeVM {
 
 let sRingModeVM = createOrGet(RingModeVM, TAG);
 
-export default sRingModeVM as RingModeVM;
+export default sRingModeVM;

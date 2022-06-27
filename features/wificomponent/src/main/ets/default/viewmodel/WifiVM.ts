@@ -14,8 +14,9 @@
  */
 
 import Log from '../../../../../../../common/src/main/ets/default/Log';
-import {FASlotName} from '../../../../../../../common/src/main/ets/default/Constants';
-import {TintContentInfo, getOrCreateTintContentInfo} from '../../../../../../../common/src/main/ets/default/TintStateManager';
+import { FASlotName } from '../../../../../../../common/src/main/ets/default/Constants';
+import { TintContentInfo, getOrCreateTintContentInfo
+} from '../../../../../../../common/src/main/ets/default/TintStateManager';
 import createOrGet from '../../../../../../../common/src/main/ets/default/SingleInstanceHelper';
 
 const TAG = 'WifiVM';
@@ -24,7 +25,7 @@ export class WifiVM {
   mTintContentInfo: TintContentInfo = getOrCreateTintContentInfo(FASlotName.WIFI);
 
   constructor() {
-    Log.showInfo(TAG, `constructor`);
+    Log.showInfo(TAG, 'constructor');
   }
 
   getTintContentInfo(): TintContentInfo {
@@ -34,4 +35,4 @@ export class WifiVM {
 
 let sWifiVM = createOrGet(WifiVM, TAG);
 
-export default sWifiVM as WifiVM;
+export default sWifiVM;

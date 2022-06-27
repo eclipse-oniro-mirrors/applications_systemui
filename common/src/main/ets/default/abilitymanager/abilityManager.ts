@@ -13,30 +13,32 @@
  * limitations under the License.
  */
 
+import { BusinessError } from 'basic';
+import ServiceExtensionContext from 'application/ServiceExtensionContext';
+import Want from '@ohos.application.Want';
 import Log from '../Log';
 
 const TAG = 'AbilityManager';
 
 export default class AbilityManager {
-  static ABILITY_NAME_ENTRY = 'SystemUi_Entry';
-  static ABILITY_NAME_STATUS_BAR = 'SystemUi_StatusBar';
-  static ABILITY_NAME_NAVIGATION_BAR = 'SystemUi_NavigationBar';
-  static ABILITY_NAME_VOLUME_PANEL = 'SystemUi_VolumePanel';
-  static ABILITY_NAME_NOTIFICATION_MANAGEMENT = 'SystemUi_NotificationManagement';
-  static ABILITY_NAME_DROPDOWN_PANEL = 'SystemUi_DropdownPanel';
-  static ABILITY_NAME_NOTIFICATION_PANEL = 'SystemUi_NotificationPanel';
-  static ABILITY_NAME_CONTROL_PANEL = 'SystemUi_ControlPanel';
-  static ABILITY_NAME_BANNER_NOTICE = 'SystemUi_BannerNotice';
-  static ABILITY_NAME_APP_LIST = 'SystemUi_AppList';
+  static readonly ABILITY_NAME_ENTRY = 'SystemUi_Entry';
+  static readonly ABILITY_NAME_STATUS_BAR = 'SystemUi_StatusBar';
+  static readonly ABILITY_NAME_NAVIGATION_BAR = 'SystemUi_NavigationBar';
+  static readonly ABILITY_NAME_VOLUME_PANEL = 'SystemUi_VolumePanel';
+  static readonly ABILITY_NAME_NOTIFICATION_MANAGEMENT = 'SystemUi_NotificationManagement';
+  static readonly ABILITY_NAME_DROPDOWN_PANEL = 'SystemUi_DropdownPanel';
+  static readonly ABILITY_NAME_NOTIFICATION_PANEL = 'SystemUi_NotificationPanel';
+  static readonly ABILITY_NAME_CONTROL_PANEL = 'SystemUi_ControlPanel';
+  static readonly ABILITY_NAME_BANNER_NOTICE = 'SystemUi_BannerNotice';
+  static readonly ABILITY_NAME_APP_LIST = 'SystemUi_AppList';
+  static readonly ABILITY_NAME_OWNER_WANT = 'Owner_Want';
 
-  static ABILITY_NAME_OWNER_WANT = 'Owner_Want';
-
-  static setContext(abilityName: string, context) {
+  static setContext(abilityName: string, context: ServiceExtensionContext): void {
     Log.showDebug(TAG, `setContext, abilityName: ${abilityName}`);
     globalThis[abilityName + '_Context'] = context;
   }
 
-  static getContext(abilityName?: string) {
+  static getContext(abilityName?: string): ServiceExtensionContext {
     Log.showDebug(TAG, `getContext, abilityName: ${abilityName}`);
     if (!abilityName) {
       abilityName = AbilityManager.ABILITY_NAME_ENTRY;
@@ -44,27 +46,29 @@ export default class AbilityManager {
     return globalThis[abilityName + '_Context'];
   }
 
-  static setAbilityData(abilityName, key, data) {
+  static setAbilityData(abilityName: string, key: string, data: any): void {
     Log.showDebug(TAG, `setAbilityData, abilityName: ${abilityName} key: ${key} data: ${JSON.stringify(data)}`);
     globalThis[abilityName + '_data_' + key] = data;
   }
 
-  static getAbilityData(abilityName, key) {
+  static getAbilityData(abilityName: string, key: string): any {
     Log.showDebug(TAG, `getAbilityData, abilityName: ${abilityName} key: ${key} `);
     return globalThis[abilityName + '_data_' + key];
   }
 
-  static startAbility(want, callback?: Function) {
+  static startAbility(want: Want, callback?: (error?: BusinessError) => void): void {
     Log.showDebug(TAG, `startAbility, want: ${JSON.stringify(want)}`);
-    let context = AbilityManager.getContext();
+    let context: ServiceExtensionContext = AbilityManager.getContext();
     context.startAbility(want).then(() => {
-      Log.showInfo(TAG, `startAbility, then`);
+      Log.showInfo(TAG, 'startAbility, then');
       if (callback) {
-        callback(null);
+        callback();
       }
-    }).catch((error) => {
+    }).catch((error: BusinessError) => {
       Log.showError(TAG, `startAbility, error: ${JSON.stringify(error)}`);
-      callback(error);
-    })
+      if (callback) {
+        callback(error);
+      }
+    });
   }
 }

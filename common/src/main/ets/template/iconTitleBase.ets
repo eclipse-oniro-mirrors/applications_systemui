@@ -14,15 +14,13 @@
  */
 
 import Log from '../default/Log';
-import StyleConfiguration from './common/StyleConfiguration'
+import StyleConfiguration, { IconTitleBaseStyle } from './common/StyleConfiguration'
 import iconComponent from './iconComponent'
 
-const TAG= 'iconTitleBase'
+const TAG = 'iconTitleBase'
 
 @Component
-export default
-struct iconBaseComponent {
-
+export default struct iconBaseComponent {
   private iconOn: any
   private iconOff: any
   @State iconOffStr: string = ""
@@ -33,18 +31,16 @@ struct iconBaseComponent {
   private useTitleStr = false
   private mClickEvent: Function
   private mLongClickEvent: Function
-
   @State mTextIsHover: boolean = false
-
   @Link changeSwitch: boolean
-  @State style: any = StyleConfiguration.getIconTitleBaseStyle()
+  @State style: IconTitleBaseStyle = StyleConfiguration.getIconTitleBaseStyle()
 
   aboutToAppear() {
-    Log.showInfo(TAG,'aboutToAppear')
+    Log.showInfo(TAG, 'aboutToAppear')
   }
 
-  aboutToDisappear () {
-    Log.showInfo(TAG,'aboutToDisappear')
+  aboutToDisappear() {
+    Log.showInfo(TAG, 'aboutToDisappear')
   }
 
   build() {
@@ -71,8 +67,9 @@ struct iconBaseComponent {
       }
       .height('100%')
       .layoutWeight(0)
+
       Column().width(this.style.componentGap).height('100%').layoutWeight(0)
-      Row(){
+      Row() {
         Row() {
           Column().width(this.style.textMargin).height('100%').layoutWeight(0)
           Text(this.useTitleStr ? this.mTitleStr : this.mTitle)
@@ -89,11 +86,12 @@ struct iconBaseComponent {
         .width('100%')
         .height(this.style.textHoverHeight)
         .width(this.style.textHoverWidth)
-        .backgroundColor(this.mTextIsHover? this.style.hoverColor: this.style.transparentColor)
+        .backgroundColor(this.mTextIsHover ? this.style.hoverColor : this.style.transparentColor)
         .borderRadius(this.style.textHoverRadius)
         .clip(true)
       }.height('100%')
       .layoutWeight(1)
+
       Column().width(this.style.marginRight).height('100%').layoutWeight(0)
     }
     .borderRadius(this.style.borderRadius)

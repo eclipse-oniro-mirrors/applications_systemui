@@ -13,39 +13,43 @@
  * limitations under the License.
  */
 
-import ServiceExtension from '@ohos.application.ServiceExtensionAbility'
-import Log from '../../../../../../../common/src/main/ets/default/Log'
-import WindowManager, { WindowType } from '../../../../../../../common/src/main/ets/default/WindowManager'
-import AbilityManager from '../../../../../../../common/src/main/ets/default/abilitymanager/abilityManager'
+import ServiceExtension from '@ohos.application.ServiceExtensionAbility';
+import Log from '../../../../../../../common/src/main/ets/default/Log';
+import WindowManager, { WindowType } from '../../../../../../../common/src/main/ets/default/WindowManager';
+import AbilityManager from '../../../../../../../common/src/main/ets/default/abilitymanager/abilityManager';
 import StatusBarConfiguration from '../../../../../../../features/statusbarcomponent/src/main/ets/com/ohos/common/StatusBarConfiguration';
 import StatusBarConstants from '../../../../../../../features/statusbarcomponent/src/main/ets/com/ohos/common/Constants';
+import { Want } from 'ability/want';
 
-const TAG = "StatusBar_ServiceExtAbility"
+
+const TAG = 'StatusBar_ServiceExtAbility';
 
 class ServiceExtAbility extends ServiceExtension {
-    async onCreate(want) {
-        Log.showInfo(TAG, `onCreate, want: ${JSON.stringify(want)}`);
-        AbilityManager.setContext(AbilityManager.ABILITY_NAME_STATUS_BAR, this.context)
-        globalThis[StatusBarConstants.PLUGIN_COMPONENT_OWNER_WANT_KEY] = want;
+  async onCreate(want: Want): Promise<void> {
+    Log.showInfo(TAG, `onCreate, want: ${JSON.stringify(want)}`);
+    AbilityManager.setContext(AbilityManager.ABILITY_NAME_STATUS_BAR, this.context);
+    globalThis[StatusBarConstants.PLUGIN_COMPONENT_OWNER_WANT_KEY] = want;
 
-        let configInfo = await StatusBarConfiguration.getConfiguration();
-        AbilityManager.setAbilityData(AbilityManager.ABILITY_NAME_STATUS_BAR, 'config', configInfo)
-        Log.showDebug(TAG, `onCreate, configInfo: ${JSON.stringify(configInfo)}`)
+    let configInfo = await StatusBarConfiguration.getConfiguration();
+    AbilityManager.setAbilityData(AbilityManager.ABILITY_NAME_STATUS_BAR, 'config', configInfo);
+    Log.showDebug(TAG, `onCreate, configInfo: ${JSON.stringify(configInfo)}`);
 
-        let statusBarRect = {
-            left: configInfo.xCoordinate,
-            top: configInfo.yCoordinate,
-            width: configInfo.realWidth,
-            height: configInfo.realHeight
-        }
-        WindowManager.createWindow(this.context, WindowType.STATUS_BAR, statusBarRect, "pages/index").then(() =>
-            WindowManager.showWindow(WindowType.STATUS_BAR)
-        );
-    }
+    let statusBarRect = {
+      left: configInfo.xCoordinate,
+      top: configInfo.yCoordinate,
+      width: configInfo.realWidth,
+      height: configInfo.realHeight
+    };
+    WindowManager.createWindow(this.context, WindowType.STATUS_BAR, statusBarRect, 'pages/index').then(async () =>
+    WindowManager.showWindow(WindowType.STATUS_BAR)
+    ).then(() => {
+    }).catch((err) => {
+    });
+  }
 
-    onDestroy() {
-        Log.showInfo(TAG, 'onDestroy');
-    }
+  onDestroy(): void {
+    Log.showInfo(TAG, 'onDestroy');
+  }
 }
 
-export default ServiceExtAbility
+export default ServiceExtAbility;

@@ -13,15 +13,18 @@
  * limitations under the License.
  */
 
-import StyleManager from '../../../../../../../common/src/main/ets/default/stylemanager';
+import StyleManager from '../../../../../../../common/src/main/ets/default/StyleManager';
 
 const TAG = 'VolumePanel-StyleConfiguration';
 
+export class IndexStyle {
+}
+
 export default class StyleConfiguration {
-    static getIndexStyle() {
-        const key: string = TAG + "-Index";
-        return StyleManager.getStyle(key, () => {
-            return {};
-        });
-    }
+  static getIndexStyle(): IndexStyle {
+    const key: string = TAG + '-Index';
+    return StyleManager.getStyle(key, () => {
+      return new IndexStyle();
+    });
+  }
 }

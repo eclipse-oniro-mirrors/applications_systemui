@@ -15,9 +15,9 @@
 
 import Log from '../../../../../../../../common/src/main/ets/default/Log';
 import EventManager from "../../../../../../../../common/src/main/ets/default/event/EventManager";
-import {obtainStartAbility} from "../../../../../../../../common/src/main/ets/default/event/EventUtil";
+import { obtainStartAbility } from "../../../../../../../../common/src/main/ets/default/event/EventUtil";
 import Constants from '../common/Constants';
-import StyleConfiguration from '../common/StyleConfiguration';
+import StyleConfiguration, { ControlCenterUpTitleStyle } from '../common/StyleConfiguration';
 
 const TAG = 'Control-UpTitle';
 
@@ -31,7 +31,7 @@ export default struct UpTitle {
   @State moveY: number = 0;
   @State mSettingIsHover: boolean = false;
   @State mEditIsHover: boolean = false;
-  @State style: any = StyleConfiguration.getControlCenterUpTitleStyle();
+  @State style: ControlCenterUpTitleStyle = StyleConfiguration.getControlCenterUpTitleStyle();
 
   aboutToAppear() {
     Log.showInfo(TAG, 'aboutToAppear');

@@ -16,7 +16,7 @@
 import Log from '../../../../../../../../common/src/main/ets/default/Log';
 import createOrGet from '../../../../../../../../common/src/main/ets/default/SingleInstanceHelper';
 import AutoRotateService from '../model/AutoRotateService';
-import {AutoRotateData} from '../common/Constants';
+import { AutoRotateData } from '../common/Constants';
 
 const TAG = 'AutoRotateVM';
 
@@ -26,14 +26,14 @@ export class AutoRotateVM {
   };
 
   constructor() {
-    Log.showDebug(TAG, `constructor`);
+    Log.showDebug(TAG, 'constructor');
     this.mAutoRotateData = AppStorage.SetAndLink(TAG + '_AutoRotateData', this.mAutoRotateData).get();
     AutoRotateService.registerListener(this);
     AutoRotateService.startService();
   }
 
   getAutoRotateData(): AutoRotateData {
-    Log.showDebug(TAG, `getAutoRotateData`);
+    Log.showDebug(TAG, 'getAutoRotateData');
     return this.mAutoRotateData;
   }
 
@@ -44,10 +44,12 @@ export class AutoRotateVM {
 
   processAutoRotateSwitchStatusChange(status: boolean): void{
     Log.showDebug(TAG, `processAutoRotateSwitchStatusChange, status: ${status}`);
-    AutoRotateService.changeSwitch(status);
+    AutoRotateService.changeSwitch(status).then(() => {
+    }).catch((err) => {
+    });
   }
 }
 
 let sAutoRotateVM = createOrGet(AutoRotateVM, TAG);
 
-export default sAutoRotateVM as AutoRotateVM;
+export default sAutoRotateVM;

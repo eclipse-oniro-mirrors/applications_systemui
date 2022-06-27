@@ -15,28 +15,28 @@
 
 import Log from '../../../../../../../../common/src/main/ets/default/Log';
 import createOrGet from '../../../../../../../../common/src/main/ets/default/SingleInstanceHelper';
-import {ControlComponentData} from '../common/Constants';
+import { ControlComponentData, ControlCenterConfig } from '../common/Constants';
 import ControlCenterService from '../model/ControlCenterService';
 
-export const ControlCenterComplexToggleLayoutKey = "ControlCenterComplexToggleLayout";
+export const CONTROL_CENTER_COMPLEX_TOGGLE_LAYOUT_KEY = 'ControlCenterComplexToggleLayout';
 
-export const ControlCenterSimpleToggleLayoutKey = "ControlCenterSimpleToggleLayout";
+export const CONTROL_CENTER_SIMPLE_TOGGLE_LAYOUT_KEY = 'ControlCenterSimpleToggleLayout';
 
 const TAG = 'ControlCenterVM';
 
 export class ControlCenterVM {
-  mIsStart: boolean = false;
-  mComplexToggleLayout: any;
-  mSimpleToggleLayout: any;
+  mIsStart = false;
+  mComplexToggleLayout: SubscribedAbstractProperty<string[]>;
+  mSimpleToggleLayout: SubscribedAbstractProperty<string[]>;
 
   constructor() {
-    Log.showDebug(TAG, `constructor`);
-    this.mComplexToggleLayout = AppStorage.SetAndLink(ControlCenterComplexToggleLayoutKey, []);
-    this.mSimpleToggleLayout = AppStorage.SetAndLink(ControlCenterSimpleToggleLayoutKey, []);
+    Log.showDebug(TAG, 'constructor');
+    this.mComplexToggleLayout = AppStorage.SetAndLink(CONTROL_CENTER_COMPLEX_TOGGLE_LAYOUT_KEY, new Array<string>());
+    this.mSimpleToggleLayout = AppStorage.SetAndLink(CONTROL_CENTER_SIMPLE_TOGGLE_LAYOUT_KEY, new Array<string>());
     ControlCenterService.registerListener(this);
   }
 
-  initViewModel(config, moduleName) {
+  initViewModel(config: ControlCenterConfig, moduleName: string): void {
     if (this.mIsStart) {
       return;
     }
@@ -68,7 +68,7 @@ export class ControlCenterVM {
     if (itemData) {
       AppStorage.SetOrCreate(storageKey, itemData);
     } else {
-      let deleteRs: boolean = AppStorage.Delete(storageKey);
+      let deleteRs = AppStorage.Delete(storageKey);
       Log.showDebug(TAG, `setItemData, AppStorage.Delete rs: ${deleteRs} `);
     }
   }
@@ -80,12 +80,12 @@ export class ControlCenterVM {
   }
 
   getHidingSimpleToggles(): string[] {
-    Log.showDebug(TAG, `getHidingSimpleToggles`);
+    Log.showDebug(TAG, 'getHidingSimpleToggles');
     return ControlCenterService.getHidingSimpleToggles();
   }
 
-  getDefaultSimpleToggleLayout() {
-    Log.showDebug(TAG, `getDefaultSimpleToggleLayout`);
+  getDefaultSimpleToggleLayout(): string[] {
+    Log.showDebug(TAG, 'getDefaultSimpleToggleLayout');
     return ControlCenterService.getDefaultSimpleToggleLayout();
   }
 
@@ -97,4 +97,4 @@ export class ControlCenterVM {
 
 let sControlCenterVM = createOrGet(ControlCenterVM, TAG);
 
-export default sControlCenterVM as ControlCenterVM;
+export default sControlCenterVM;

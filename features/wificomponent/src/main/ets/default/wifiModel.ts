@@ -14,31 +14,31 @@
  */
 
 import wifi from '@ohos.wifi';
-import Constants, {WifiState, WifiConnectionState} from './common/constants'
-import Log from "../../../../../../common/src/main/ets/default/Log";
+import Constants, { WifiState, WifiConnectionState } from './common/constants';
+import Log from '../../../../../../common/src/main/ets/default/Log';
 
 const TAG = 'WifiComponent-WifiModel';
 
-var mWifiInfo;
-var mWifiStatus;
-var mWifiOpenStatus;
-var mWifiName;
+let mWifiInfo: SubscribedAbstractProperty<number>;
+let mWifiStatus: SubscribedAbstractProperty<boolean>;
+let mWifiOpenStatus: SubscribedAbstractProperty<boolean>;
+let mWifiName: SubscribedAbstractProperty<string>;
 
 export class WifiModel {
-  mIsStart: boolean = false;
+  mIsStart = false;
   mListener= null;
 
-  initWifiModel() {
+  initWifiModel(): void {
     if (this.mIsStart) {
       return;
     }
-    Log.showInfo(TAG, `initWifiModel`);
+    Log.showInfo(TAG, 'initWifiModel');
     this.mIsStart = true;
 
-    mWifiInfo = AppStorage.SetAndLink("wifiInfo", Constants.DEFAULT_WIFI_INFO);
-    mWifiStatus = AppStorage.SetAndLink("wifiStatus", Constants.DEFAULT_WIFI_STATUS);
-    mWifiName = AppStorage.SetAndLink("wifiName", Constants.DEFAULT_WIFI_NAME)
-    mWifiOpenStatus = AppStorage.SetAndLink("wifiOpenStatus", Constants.DEFAULT_WIFI_OPEN_STATUS);
+    mWifiInfo = AppStorage.SetAndLink('wifiInfo', Constants.DEFAULT_WIFI_INFO);
+    mWifiStatus = AppStorage.SetAndLink('wifiStatus', Constants.DEFAULT_WIFI_STATUS);
+    mWifiName = AppStorage.SetAndLink('wifiName', Constants.DEFAULT_WIFI_NAME);
+    mWifiOpenStatus = AppStorage.SetAndLink('wifiOpenStatus', Constants.DEFAULT_WIFI_OPEN_STATUS);
 
     this.getWifiInfo();
 
@@ -47,20 +47,20 @@ export class WifiModel {
     wifi.on('wifiRssiChange', this.onWifiRssiChange.bind(this));
   }
 
-  uninitWifiModel() {
+  uninitWifiModel(): void {
     if (!this.mIsStart) {
       return;
     }
-    Log.showInfo(TAG, `uninitWifiModel`);
+    Log.showInfo(TAG, 'uninitWifiModel');
     this.mIsStart = false;
 
-    this.mListener.off('wifiRssiChange', (data) => {
+    this.mListener.off('wifiRssiChange', (data: number) => {
       Log.showInfo(TAG, `uninitWifiModel->wifiRssiChange, data: ${JSON.stringify(data)}`);
     });
-    this.mListener.off('wifiConnectionChange', (data) => {
+    this.mListener.off('wifiConnectionChange', (data: number) => {
       Log.showInfo(TAG, `uninitWifiModel->wifiConnectionChange, data: ${JSON.stringify(data)}`);
     });
-    this.mListener.off('wifiStateChange', (data) => {
+    this.mListener.off('wifiStateChange', (data: number) => {
       Log.showInfo(TAG, `uninitWifiModel->wifiStateChange, data: ${JSON.stringify(data)}`);
     });
     this.mListener = null;
@@ -68,7 +68,7 @@ export class WifiModel {
     this.setDisconnectedStatus();
   }
 
-  onWifiStateChange(data) {
+  onWifiStateChange(data: WifiState): void {
     Log.showInfo(TAG, `onWifiStateChange, data: ${JSON.stringify(data)}`);
 
     let isWifiInactive = data == WifiState.STATE_OFF;
@@ -80,7 +80,7 @@ export class WifiModel {
     }
   }
 
-  onWifiConnectionChange(data) {
+  onWifiConnectionChange(data: WifiConnectionState): void {
     Log.showInfo(TAG, `onWifiConnectionChange, data: ${JSON.stringify(data)}`);
 
     if (data == WifiConnectionState.CONNECTED) {
@@ -90,12 +90,12 @@ export class WifiModel {
     }
   }
 
-  onWifiRssiChange(data) {
+  onWifiRssiChange(data: number): void {
     Log.showInfo(TAG, `onWifiRssiChange, data: ${JSON.stringify(data)}`);
     this.getLinkedInfo();
   }
 
-  getWifiInfo() {
+  getWifiInfo(): void {
     let isWifiActive = wifi.isWifiActive();
     Log.showInfo(TAG, `getWifiInfo, isWifiActive: ${isWifiActive}`);
     mWifiOpenStatus.set(isWifiActive);
@@ -106,7 +106,7 @@ export class WifiModel {
     }
   }
 
-  getWifiConnectInfo() {
+  getWifiConnectInfo(): void {
     let isConnected = wifi.isConnected();
     Log.showInfo(TAG, `getWifiConnectInfo, isConnected: ${isConnected}`);
     if (isConnected) {
@@ -117,8 +117,8 @@ export class WifiModel {
     }
   }
 
-  getLinkedInfo() {
-    Log.showInfo(TAG, `getLinkedInfo`);
+  getLinkedInfo(): void {
+    Log.showInfo(TAG, 'getLinkedInfo');
     wifi.getLinkedInfo((err, data) => {
       if (wifi.isConnected()) {
         mWifiStatus.set(true);
@@ -132,19 +132,19 @@ export class WifiModel {
     });
   }
 
-  setDisconnectedStatus() {
-    Log.showInfo(TAG, `setDisconnectedStatus`);
+  setDisconnectedStatus(): void {
+    Log.showInfo(TAG, 'setDisconnectedStatus');
     mWifiStatus.set(Constants.DEFAULT_WIFI_STATUS);
     mWifiInfo.set(Constants.DEFAULT_WIFI_INFO);
     mWifiName.set(Constants.DEFAULT_WIFI_NAME);
   }
 
-  enableWifi() {
+  enableWifi(): void {
     let result = wifi.enableWifi();
     Log.showInfo(TAG, `enableWifi, result: ${result}`);
   }
 
-  disableWifi() {
+  disableWifi(): void {
     let result = wifi.disableWifi();
     Log.showInfo(TAG, `disableWifi, result: ${result}`);
   }
@@ -152,4 +152,4 @@ export class WifiModel {
 
 let mWifiModel = new WifiModel();
 
-export default mWifiModel as WifiModel;
+export default mWifiModel;

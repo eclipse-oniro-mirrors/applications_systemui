@@ -14,10 +14,10 @@
  */
 
 export default class Constants {
-  static TOUCHTYPE_DOWN = 0;
-  static TOUCHTYPE_UP = 1;
-  static TOUCHTYPE_MOVE = 2;
-  static WEEKDAY_LIST = [
+  static readonly TOUCHTYPE_DOWN = 0;
+  static readonly TOUCHTYPE_UP = 1;
+  static readonly TOUCHTYPE_MOVE = 2;
+  static readonly WEEKDAY_LIST = [
     $r('app.string.sunday'),
     $r('app.string.monday'),
     $r('app.string.tuesday'),
@@ -25,9 +25,9 @@ export default class Constants {
     $r('app.string.thursday'),
     $r('app.string.friday'),
     $r('app.string.saturday')
-  ]
-  static DIGITS = 10;
-  static MARK_MONTH = 0;
-  static MARK_DAY = 1;
-  static QUICKLY_SETTING_H = 83;
+  ];
+  static readonly DIGITS = 10;
+  static readonly MARK_MONTH = 0;
+  static readonly MARK_DAY = 1;
+  static readonly QUICKLY_SETTING_H = 83;
 }

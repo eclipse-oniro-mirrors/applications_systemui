@@ -14,30 +14,31 @@
  */
 
 import Log from '../../../../../../../../common/src/main/ets/default/Log';
-import {FASlotName} from '../../../../../../../../common/src/main/ets/default/Constants';
-import {TintContentInfo, getOrCreateTintContentInfo} from '../../../../../../../../common/src/main/ets/default/TintStateManager';
+import { FASlotName } from '../../../../../../../../common/src/main/ets/default/Constants';
+import { TintContentInfo, getOrCreateTintContentInfo
+} from '../../../../../../../../common/src/main/ets/default/TintStateManager';
 import createOrGet from '../../../../../../../../common/src/main/ets/default/SingleInstanceHelper';
-import {LocationData} from '../common/Constants';
+import { LocationData } from '../common/Constants';
 import LocationService from '../model/LocationService';
 
 const TAG = 'LocationVM';
 
 export class LocationVM {
-  mIsStart: boolean = false;
+  mIsStart = false;
   mLocationData: LocationData = {
     ...new LocationData()
-  }
+  };
   mTintContentInfo: TintContentInfo = getOrCreateTintContentInfo(FASlotName.LOCATION);
 
   constructor() {
-    Log.showDebug(TAG, `constructor`);
+    Log.showDebug(TAG, 'constructor');
   }
 
-  initViewModel() {
+  initViewModel(): void {
     if (this.mIsStart) {
       return;
     };
-    Log.showInfo(TAG, `initViewModel `);
+    Log.showInfo(TAG, 'initViewModel ');
     this.mIsStart = true;
     this.mLocationData = AppStorage.SetAndLink(TAG + '_LocationData', this.mLocationData).get();
     LocationService.registerListener(this);
@@ -45,22 +46,22 @@ export class LocationVM {
   }
 
   getLocationData(): LocationData {
-    Log.showDebug(TAG, `getLocationData`);
+    Log.showDebug(TAG, 'getLocationData');
     return this.mLocationData;
   }
 
-  updateServiceState(state) {
+  updateServiceState(state: boolean): void {
     Log.showInfo(TAG, `updateServiceState, state: ${state} `);
     this.mLocationData.isEnabled = state;
   }
 
-  enableLocation() {
-    Log.showInfo(TAG, `enableLocation`);
+  enableLocation(): void {
+    Log.showInfo(TAG, 'enableLocation');
     LocationService.enableLocation();
   }
 
-  disableLocation() {
-    Log.showInfo(TAG, `disableLocation`);
+  disableLocation(): void {
+    Log.showInfo(TAG, 'disableLocation');
     LocationService.disableLocation();
   }
 
@@ -71,4 +72,4 @@ export class LocationVM {
 
 let sLocationVM = createOrGet(LocationVM, TAG);
 
-export default sLocationVM as LocationVM;
+export default sLocationVM;

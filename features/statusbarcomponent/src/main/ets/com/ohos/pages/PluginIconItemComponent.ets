@@ -16,8 +16,9 @@
 import Log from '../../../../../../../../common/src/main/ets/default/Log'
 import { TintContentInfo } from '../../../../../../../../common/src/main/ets/default/TintStateManager'
 import { PluginComponentData } from "../../../../../../../../common/src/main/ets/plugindatasource/common/Constants"
-import StyleConfigurationCommon from '../../../../../../../../common/src/main/ets/default/StyleConfiguration'
-import StyleConfiguration from '../common/StyleConfiguration'
+import StyleConfigurationCommon, { CommonStyle
+} from '../../../../../../../../common/src/main/ets/default/StyleConfiguration'
+import StyleConfiguration, { PluginIconItemComponentStyle } from '../common/StyleConfiguration'
 import ViewModel from '../viewmodel/StatusBarVM'
 
 const TAG = 'PluginIconItemComponent'
@@ -27,8 +28,8 @@ export default struct PluginIconItemComponent {
   private keyId: string
   @State @Watch('onPluginDataChange') mPluginData: PluginComponentData = new PluginComponentData()
   @State @Watch('onTintContentChange') mTintContentInfo: TintContentInfo = new TintContentInfo()
-  @State style: any = StyleConfiguration.getPluginIconItemComponentStyle()
-  @State @Watch('onCommonStyleChange') styleCommon: any = StyleConfigurationCommon.getCommonStyle()
+  @State style: PluginIconItemComponentStyle = StyleConfiguration.getPluginIconItemComponentStyle()
+  @State @Watch('onCommonStyleChange') styleCommon: CommonStyle = StyleConfigurationCommon.getCommonStyle()
 
   aboutToAppear() {
     Log.showInfo(TAG, `aboutToAppear Start, keyId: ${this.keyId}`)

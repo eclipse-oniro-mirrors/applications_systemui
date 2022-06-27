@@ -91,7 +91,7 @@ export default struct BatchSetEnable {
 
   aboutToAppear(): void{
     Log.showInfo(TAG, `aboutToAppear`)
-    this.mViewModel.ViewModelInit();
+    this.mViewModel.viewModelInit();
   }
 
   onBackPress() {

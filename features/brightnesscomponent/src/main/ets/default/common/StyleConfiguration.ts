@@ -17,25 +17,27 @@ import StyleManager from '../../../../../../../common/src/main/ets/default/Style
 
 const TAG = 'brightness-StyleConfiguration';
 
+export class BrightnessComponentStyle {
+  marginLeft: Length = $r('app.float.brightness_margin_left');
+  marginRight: Length = $r('app.float.brightness_margin_right');
+  componentGap: Length = $r('app.float.brightness_component_gap');
+  brightnessIconColor: ResourceColor = $r('sys.color.ohos_id_color_secondary');
+  brightnessReduceWidth: Length = $r('app.float.brightness_reduce_width');
+  brightnessReduceHeight: Length = $r('app.float.brightness_reduce_height');
+  brightnessPlusWidth: Length = $r('app.float.brightness_plus_width');
+  brightnessPlusHeight: Length = $r('app.float.brightness_plus_height');
+  brightnessHeight: Length = $r('app.float.brightness_height');
+  sliderHeight: Length = $r('app.float.brightness_slider_height');
+  sliderBlockColor: ResourceColor = $r('app.color.brightness_slider_block_color');
+  sliderTrackColor: ResourceColor = $r('app.color.brightness_slider_track_color');
+  sliderSelectedColor: ResourceColor = $r('app.color.brightness_slider_selected_color');
+}
+
 export default class StyleConfiguration {
-    static getBrightnessComponentStyle() {
-        const key: string = TAG + "-BrightnessComponent";
-        return StyleManager.getStyle(key, () => {
-            return {
-                marginLeft: $r('app.float.brightness_margin_left'),
-                marginRight: $r('app.float.brightness_margin_right'),
-                componentGap: $r('app.float.brightness_component_gap'),
-                brightnessIconColor: $r("sys.color.ohos_id_color_secondary"),
-                brightnessReduceWidth: $r('app.float.brightness_reduce_width'),
-                brightnessReduceHeight: $r('app.float.brightness_reduce_height'),
-                brightnessPlusWidth: $r('app.float.brightness_plus_width'),
-                brightnessPlusHeight: $r('app.float.brightness_plus_height'),
-                brightnessHeight: $r('app.float.brightness_height'),
-                sliderHeight: $r('app.float.brightness_slider_height'),
-                sliderBlockColor: $r('app.color.brightness_slider_block_color'),
-                sliderTrackColor: $r('app.color.brightness_slider_track_color'),
-                sliderSelectedColor: $r('app.color.brightness_slider_selected_color')
-            };
-        });
-    }
+  static getBrightnessComponentStyle(): BrightnessComponentStyle {
+    const key: string = TAG + '-BrightnessComponent';
+    return StyleManager.getStyle(key, () => {
+      return new BrightnessComponentStyle();
+    });
+  }
 }

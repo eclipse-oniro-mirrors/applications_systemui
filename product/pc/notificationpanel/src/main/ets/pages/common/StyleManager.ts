@@ -15,38 +15,38 @@
 
 import Log from '../../../../../../../../common/src/main/ets/default/log';
 import AbilityManager from '../../../../../../../../common/src/main/ets/default/abilitymanager/abilitymanager';
-import IndexStyleConfiguration from './styleconfiguration'
+import IndexStyleConfiguration from './styleconfiguration';
 
 const TAG = 'NotificationPanel-StyleManager';
 
 export default class StyleManager {
-    static STANDARD_DISPLAY_WIDTH: number = 1280;
-    static STANDARD_DISPLAY_HEIGHT: number = 800;
-    static maxWidth: number = StyleManager.STANDARD_DISPLAY_WIDTH;
+  static readonly STANDARD_DISPLAY_WIDTH = 1280;
+  static readonly STANDARD_DISPLAY_HEIGHT = 800;
+  static maxWidth: number = StyleManager.STANDARD_DISPLAY_WIDTH;
 
-    static setStyle() {
-        Log.showDebug(TAG, `setStyle`)
+  static setStyle(): void {
+    Log.showDebug(TAG, 'setStyle');
 
-        let dis = AbilityManager.getAbilityData(AbilityManager.ABILITY_NAME_NOTIFICATION_PANEL, 'dis');
-        StyleManager.maxWidth = dis.width;
+    let dis = AbilityManager.getAbilityData(AbilityManager.ABILITY_NAME_NOTIFICATION_PANEL, 'dis');
+    StyleManager.maxWidth = dis.width;
 
-        // Index
-        {
-            let style: any = IndexStyleConfiguration.getIndexStyle();
-            style.borderRadius = StyleManager.calcScaleSizePx(24);
-        }
-
+    // Index
+    {
+      let style = IndexStyleConfiguration.getIndexStyle();
+      style.borderRadius = StyleManager.calcScaleSizePx(24);
     }
 
-    static number2px(n: number): string {
-        return n.toString() + 'px';
-    }
+  }
 
-    static calcScaleSize(n: number): number {
-        return n * StyleManager.maxWidth / StyleManager.STANDARD_DISPLAY_WIDTH;
-    }
+  static number2px(n: number): string {
+    return n.toString() + 'px';
+  }
 
-    static calcScaleSizePx(n: number): string {
-        return StyleManager.number2px(StyleManager.calcScaleSize(n));
-    }
+  static calcScaleSize(n: number): number {
+    return n * StyleManager.maxWidth / StyleManager.STANDARD_DISPLAY_WIDTH;
+  }
+
+  static calcScaleSizePx(n: number): string {
+    return StyleManager.number2px(StyleManager.calcScaleSize(n));
+  }
 }

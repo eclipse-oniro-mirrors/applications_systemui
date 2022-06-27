@@ -13,17 +13,19 @@
  * limitations under the License.
  */
 
-import EventManager from "./event/EventManager";
-import Log from "./Log";
-import ScreenLockManager from "./ScreenLockManager";
-import ServiceExtensionContext from "application/ServiceExtensionContext";
-import TimeManager from "./TimeManager";
+import EventManager from './event/EventManager';
+import Log from './Log';
+import ScreenLockManager from './ScreenLockManager';
+import ServiceExtensionContext from 'application/ServiceExtensionContext';
+import TimeManager from './TimeManager';
 
-const TAG = "initSystemui";
+const TAG = 'initSystemui';
 
-export default function initSystemUi(context: ServiceExtensionContext) {
+export default function initSystemUi(context: ServiceExtensionContext): void {
   EventManager.setContext(context);
-  ScreenLockManager.init();
+  ScreenLockManager.init().then(() => {
+  }).catch(err => {
+  });
   TimeManager.init(context);
   Log.showDebug(TAG, `init done, ctx: ${context}`);
 }

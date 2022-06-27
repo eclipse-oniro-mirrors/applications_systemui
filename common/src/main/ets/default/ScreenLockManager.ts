@@ -13,16 +13,17 @@
  * limitations under the License.
  */
 
-import commonEvent from "@ohos.commonEvent";
-import { CommonEventSubscriber } from "commonEvent/commonEventSubscriber";
-import createOrGet from "./SingleInstanceHelper";
-import EventManager from "./event/EventManager";
-import Log from "./Log";
-import { obtainLocalEvent } from "./event/EventUtil";
-import { debounce } from "./Decorators";
-export const SCREEN_CHANGE_EVENT = "screenChangeEvent";
+import commonEvent from '@ohos.commonEvent';
+import { CommonEventSubscriber } from 'commonEvent/commonEventSubscriber';
+import createOrGet from './SingleInstanceHelper';
+import EventManager from './event/EventManager';
+import Log from './Log';
+import { obtainLocalEvent } from './event/EventUtil';
+import { debounce } from './Decorators';
 
-const TAG = "ScreenLockManager";
+export const SCREEN_CHANGE_EVENT = 'screenChangeEvent';
+
+const TAG = 'ScreenLockManager';
 const SCREEN_COMMON_EVENT_INFO = {
   events: [commonEvent.Support.COMMON_EVENT_SCREEN_OFF, commonEvent.Support.COMMON_EVENT_SCREEN_ON],
 };
@@ -31,7 +32,7 @@ const debounceTimeout = 500;
 class ScreenLockManager {
   mSubscriber: CommonEventSubscriber | undefined;
 
-  async init() {
+  async init(): Promise<void> {
     this.mSubscriber = await commonEvent.createSubscriber(SCREEN_COMMON_EVENT_INFO);
     commonEvent.subscribe(this.mSubscriber, (err, data) => {
       if (err.code != 0) {
@@ -47,17 +48,18 @@ class ScreenLockManager {
           this.notifyScreenEvent(true);
           break;
         default:
-          Log.showError(TAG, `unknow event`);
+          Log.showError(TAG, 'unknow event');
       }
     });
   }
 
   @debounce(debounceTimeout)
-  notifyScreenEvent(isScreenOn: boolean) {
+  notifyScreenEvent(isScreenOn: boolean): void {
     EventManager.publish(obtainLocalEvent(SCREEN_CHANGE_EVENT, isScreenOn));
-    Log.showDebug(TAG, `publish ${SCREEN_CHANGE_EVENT} screenState: ${isScreenOn}`);
+    Log.showDebug(TAG, `publish ${SCREEN_CHANGE_EVENT} screenState: ${isScreenOn ? 'true' : 'false'}`);
   }
 }
 
 let sScreenLockManager = createOrGet(ScreenLockManager, TAG);
-export default sScreenLockManager as ScreenLockManager;
+
+export default sScreenLockManager;

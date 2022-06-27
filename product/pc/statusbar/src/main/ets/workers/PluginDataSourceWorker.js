@@ -13,85 +13,85 @@
  * limitations under the License.
  */
 
-import worker from "@ohos.worker";
-import Log from "../../../../../../../common/src/main/ets/default/log";
-import PluginDataSourceManager
-from "../../../../../../../common/src/main/ets/plugindatasource/plugindatasourcemanager";
-import Constants, { obtainMsg } from "../../../../../../../common/src/main/ets/plugindatasource/common/constants";
+import worker from '@ohos.worker';
+import Log from '../../../../../../../common/src/main/ets/default/log';
+import PluginDataSourceManager from '../../../../../../../common/src/main/ets/plugindatasource/plugindatasourcemanager';
+import Constants, { obtainMsg } from '../../../../../../../common/src/main/ets/plugindatasource/common/constants';
 
 const parentPort = worker.parentPort;
 const TAG = `${parentPort.name} Worker`;
-Log.showInfo(TAG, `Start.`);
+Log.showInfo(TAG, 'Start.');
 
 var sManager;
 
 parentPort.onmessage = (msg) => {
-    Log.showInfo(TAG, `onMessage, msg = ${JSON.stringify(msg)}`);
-    let data = msg.data;
-    switch (data.action) {
-        case Constants.INIT_CONFIG:
-            initConfig(data.data);
-            break;
-        case Constants.CLEAR_ALL:
-            clearAll();
-            break;
-        case Constants.LOAD_DATA:
-            loadData(data.data);
-            break;
-        case Constants.UPDATE_PLUGIN_COMPONENT_DATA:
-            updatePluginComponentData(data.data);
-            break;
-        default:
-            Log.showError(TAG, `onMessage, unknown action type.`);
-    }
+  Log.showInfo(TAG, `onMessage, msg = ${JSON.stringify(msg)}`);
+  let data = msg.data;
+  switch (data.action) {
+    case Constants.INIT_CONFIG:
+      initConfig(data.data);
+      break;
+    case Constants.CLEAR_ALL:
+      clearAll();
+      break;
+    case Constants.LOAD_DATA:
+      loadData(data.data);
+      break;
+    case Constants.UPDATE_PLUGIN_COMPONENT_DATA:
+      updatePluginComponentData(data.data);
+      break;
+    default:
+      Log.showError(TAG, 'onMessage, unknown action type.');
+  }
 };
 
 function initConfig(config) {
-    Log.showDebug(TAG, `initConfig, config = ${JSON.stringify(config)}`);
-    sManager = new PluginDataSourceManager({
-        onItemAdd: (itemData) => {
-            Log.showInfo(TAG, `sManager.onItemAdd, itemData = ${JSON.stringify(itemData)}`);
-            itemData.label && (itemData.label = encodeURIComponent(itemData.label));
-            parentPort.postMessage(obtainMsg(Constants.ADD_ITEM, itemData));
-        },
-        onItemRemove: (itemData) => {
-            Log.showInfo(TAG, `sManager.onItemRemove, itemData = ${JSON.stringify(itemData)}`);
-            parentPort.postMessage(obtainMsg(Constants.REMOVE_ITEM, itemData));
-        },
-        onLoadPluginComponentData: (itemData) => {
-            Log.showInfo(TAG, `sManager.onLoadPluginComponentData, itemData = ${JSON.stringify(itemData)}`);
-            parentPort.postMessage(obtainMsg(Constants.LOAD_PLUGIN_COMPONENT_DATA, itemData));
-        },
-    });
-    sManager.initDataSource(config);
-    parentPort.postMessage(obtainMsg(Constants.INIT_FINISH, {}));
+  Log.showDebug(TAG, `initConfig, config = ${JSON.stringify(config)}`);
+  sManager = new PluginDataSourceManager({
+    onItemAdd: (itemData) => {
+      Log.showInfo(TAG, `sManager.onItemAdd, itemData = ${JSON.stringify(itemData)}`);
+      itemData.label && (itemData.label = encodeURIComponent(itemData.label));
+      parentPort.postMessage(obtainMsg(Constants.ADD_ITEM, itemData));
+    },
+    onItemRemove: (itemData) => {
+      Log.showInfo(TAG, `sManager.onItemRemove, itemData = ${JSON.stringify(itemData)}`);
+      parentPort.postMessage(obtainMsg(Constants.REMOVE_ITEM, itemData));
+    },
+    onLoadPluginComponentData: (itemData) => {
+      Log.showInfo(TAG, `sManager.onLoadPluginComponentData, itemData = ${JSON.stringify(itemData)}`);
+      parentPort.postMessage(obtainMsg(Constants.LOAD_PLUGIN_COMPONENT_DATA, itemData));
+    },
+  });
+  sManager.initDataSource(config);
+  parentPort.postMessage(obtainMsg(Constants.INIT_FINISH, {}));
 }
 
 function clearAll() {
-    Log.showDebug(TAG, `clearAll `);
-    sManager?.clearAll();
+  Log.showDebug(TAG, 'clearAll ');
+  sManager?.clearAll();
 }
 
 function loadData(userId) {
-    Log.showDebug(TAG, `loadData `);
-    sManager?.loadData(userId);
+  Log.showDebug(TAG, 'loadData ');
+  sManager?.loadData(userId);
 }
 
 function updatePluginComponentData(pluginComponentData) {
-    Log.showDebug(TAG, 'updatePluginComponentData ');
-    sManager?.updatePluginComponentData(pluginComponentData);
+  Log.showDebug(TAG, 'updatePluginComponentData ');
+  sManager?.updatePluginComponentData(pluginComponentData);
 }
 
 parentPort.onclose = function () {
-    Log.showDebug(TAG, `onclose`);
+  Log.showDebug(TAG, 'onclose');
 };
 
 parentPort.onmessageerror = function () {
-    Log.showError(TAG, `onmessageerror`);
+  Log.showError(TAG, 'onmessageerror');
 };
 
 parentPort.onerror = function (data) {
-    Log.showError(TAG,
-        `onerror, lineno = ${data.lineno}, msg = ${data.message}, filename = ${data.filename}, col = ${data.colno}`
-    );
+  Log.showError(
+    TAG,
+    `onerror, lineno = ${data.lineno}, msg = ${data.message}, filename = ${data.filename}, col = ${data.colno}`
+  );
 };

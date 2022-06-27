@@ -25,7 +25,7 @@ const DEFAULT_INFO = {
 };
 
 export default class CommonUtil {
-  static startWant(want, triggerInfo?: any) {
+  static startWant(want, triggerInfo?: any): void {
     let info = (triggerInfo) ? triggerInfo : DEFAULT_INFO;
     Log.showDebug(TAG, `startWant ${JSON.stringify(want)}, info ${JSON.stringify(info)}`);
     WantAgent.trigger(want, info, ((data) => {
@@ -34,7 +34,7 @@ export default class CommonUtil {
   }
 
   static checkVisibilityByUser(notificationUser: number, currentUser: number): boolean{
-    return (0 <= notificationUser && notificationUser < 100) || notificationUser == currentUser
+    return (0 <= notificationUser && notificationUser < 100) || notificationUser == currentUser;
   }
 }
 

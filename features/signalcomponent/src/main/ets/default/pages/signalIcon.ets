@@ -16,23 +16,23 @@
 import Constants from '../common/constants';
 import mSignalModel from '../SignalModel';
 import Log from '../../../../../../../common/src/main/ets/default/Log'
-import {TintContentInfo} from '../../../../../../../common/src/main/ets/default/TintStateManager'
-import StyleConfigurationCommon from '../../../../../../../common/src/main/ets/default/StyleConfiguration'
-import StyleConfiguration from '../common/StyleConfiguration'
+import { TintContentInfo } from '../../../../../../../common/src/main/ets/default/TintStateManager'
+import StyleConfigurationCommon, { CommonStyle
+} from '../../../../../../../common/src/main/ets/default/StyleConfiguration'
+import StyleConfiguration, { SignalComponentStyle } from '../common/StyleConfiguration'
 import ViewModel from '../viewmodel/SignalVM'
 
 const TAG = 'SignalComponent-SignalIcon'
 
 @Component
-export default
-struct SignalIcon {
-  @StorageLink('cellularLevel') cellularLevel : number = Constants.CELLULAR_NO_SIM_CARD
-  @StorageLink('cellularType') cellularType : number = Constants.NETWORK_TYPE_UNKNOWN
-  @StorageLink('networkState') networkState : string = Constants.NET_NULL
-  @StorageLink('signalObserved') signalObserved:boolean = false
+export default struct SignalIcon {
+  @StorageLink('cellularLevel') cellularLevel: number = Constants.CELLULAR_NO_SIM_CARD
+  @StorageLink('cellularType') cellularType: number = Constants.NETWORK_TYPE_UNKNOWN
+  @StorageLink('networkState') networkState: string = Constants.NET_NULL
+  @StorageLink('signalObserved') signalObserved: boolean = false
   @State mTintContentInfo: TintContentInfo = ViewModel.getTintContentInfo()
-  @State styleCommon: any = StyleConfigurationCommon.getCommonStyle()
-  @State style: any = StyleConfiguration.getSignalComponentStyle()
+  @State styleCommon: CommonStyle = StyleConfigurationCommon.getCommonStyle()
+  @State style: SignalComponentStyle = StyleConfiguration.getSignalComponentStyle()
 
   aboutToAppear() {
     Log.showInfo(TAG, 'aboutToAppear');
@@ -82,14 +82,14 @@ struct SignalIcon {
     .opacity($r("app.float.icon_component_opacity"))
   }
 
-/**
-     * Get the string of cellular type
-     *
-     * @param {number} type - number of cellular type
-     * @return {string} typeString type of cellular type
-     */
-  private updateCellularType(signalType) : string {
-    Log.showInfo(TAG, `updateCellularType, signalType: ${ signalType }`);
+  /**
+   * Get the string of cellular type
+   *
+   * @param {number} type - number of cellular type
+   * @return {string} typeString type of cellular type
+   */
+  private updateCellularType(signalType): string {
+    Log.showInfo(TAG, `updateCellularType, signalType: ${signalType}`);
     let typeString;
     switch (signalType) {
       case Constants.NETWORK_TYPE_UNKNOWN:
@@ -114,12 +114,12 @@ struct SignalIcon {
     return typeString;
   }
 
-/**
-     * Get the cellular signal image
-     *
-     * @param {number} level - signal level from signalModel
-     * @return {string} cellularImage image of cellular signal
-     */
+  /**
+   * Get the cellular signal image
+   *
+   * @param {number} level - signal level from signalModel
+   * @return {string} cellularImage image of cellular signal
+   */
   private updateCellularImage(level) {
     Log.showInfo(TAG, `updateCellularImage, level: ${level}`);
     let cellularImage;
@@ -151,18 +151,18 @@ struct SignalIcon {
     return cellularImage;
   }
 
-/**
-     * Get the NetworkState signal name
-     *
-     * @param {string} netWorkState - network state from signal model
-     * @return {string} vendor's name or signal state
-     */
+  /**
+   * Get the NetworkState signal name
+   *
+   * @param {string} netWorkState - network state from signal model
+   * @return {string} vendor's name or signal state
+   */
   private updateNetworkState(netWorkState) {
     Log.showInfo(TAG, `updateNetworkState, netWorkState: ${netWorkState}`);
     let networkStateName;
-    if(netWorkState == Constants.NET_NULL){
+    if (netWorkState == Constants.NET_NULL) {
       networkStateName = $r('app.string.net_null');
-    }else {
+    } else {
       networkStateName = netWorkState;
     }
     return networkStateName;

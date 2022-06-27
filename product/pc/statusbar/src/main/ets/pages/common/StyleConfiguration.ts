@@ -17,11 +17,14 @@ import StyleManager from '../../../../../../../../common/src/main/ets/default/st
 
 const TAG = 'StatusBar-StyleConfiguration';
 
+export class IndexStyle {
+}
+
 export default class StyleConfiguration {
-    static getIndexStyle() {
-        const key: string = TAG + "-Index";
-        return StyleManager.getStyle(key, () => {
-            return {};
-        });
-    }
+  static getIndexStyle(): IndexStyle {
+    const key: string = TAG + '-Index';
+    return StyleManager.getStyle(key, () => {
+      return new IndexStyle();
+    });
+  }
 }

@@ -13,16 +13,16 @@
  * limitations under the License.
  */
 
-export default class constants {
-  static DEFAULT_WIFI_OPEN_STATUS: boolean = false;
-  static DEFAULT_WIFI_NAME: string = 'WLAN';
-  static DEFAULT_WIFI_INFO: number = 0;
-  static DEFAULT_WIFI_STATUS: boolean = false;
-  static WIFI_SIGNAL_NO: number = 0;
-  static WIFI_SIGNAL_LOW: number = 1;
-  static WIFI_SIGNAL_MID: number = 2;
-  static WIFI_SIGNAL_HIGH: number = 3;
-  static WIFI_SIGNAL_FULL: number = 4;
+export default class Constants {
+  static readonly DEFAULT_WIFI_OPEN_STATUS: boolean = false;
+  static readonly DEFAULT_WIFI_NAME: string = 'WLAN';
+  static readonly DEFAULT_WIFI_INFO: number = 0;
+  static readonly DEFAULT_WIFI_STATUS: boolean = false;
+  static readonly WIFI_SIGNAL_NO: number = 0;
+  static readonly WIFI_SIGNAL_LOW: number = 1;
+  static readonly WIFI_SIGNAL_MID: number = 2;
+  static readonly WIFI_SIGNAL_HIGH: number = 3;
+  static readonly WIFI_SIGNAL_FULL: number = 4;
 }
 
 export enum WifiState {

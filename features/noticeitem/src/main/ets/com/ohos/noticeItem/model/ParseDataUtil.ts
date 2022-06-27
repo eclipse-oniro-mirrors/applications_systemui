@@ -38,7 +38,7 @@ type NotificationContent = {
   picture?: any
 }
 
-async function getUserId(uid) {
+async function getUserId(uid): Promise<any> {
   let userId = await AccountManager.getAccountManager().getOsAccountLocalIdFromUid(uid);
   Log.showInfo(TAG, `getOsAccountLocalIdFromUid uid = ${uid}, userId = ${userId}`);
   return userId;
@@ -48,7 +48,7 @@ async function getUserId(uid) {
  * parse data util class.
  */
 export default class ParseDataUtil {
-  static async parseData(request, sortingMap?) {
+  static async parseData(request, sortingMap?): Promise<NotificationItemData> {
     if (!request) {
       return Promise.reject('consumeCallback request is empty');
     }
@@ -60,7 +60,7 @@ export default class ParseDataUtil {
       userId: userId,
       uid: request.creatorUid,
       hashcode: request.hashCode,
-      contentType: request?.content?.contentType + '',
+      contentType: `${request?.content?.contentType}`,
       timestamp: request.deliveryTime,
       time: ParseDataUtil.getStandardTime(request.deliveryTime),
       appName: appMessage.appName,
@@ -86,7 +86,7 @@ export default class ParseDataUtil {
     Log.showInfo(TAG, `notificationItem construct over`);
     notificationItem = {
       ...notificationItem, ...ParseDataUtil.getContentByType(request?.content?.contentType, request)
-    }
+    };
     return notificationItem;
   }
 
@@ -96,10 +96,10 @@ export default class ParseDataUtil {
    * @param {string} bundleName - BundleName of the target app.
    * @return {object} appData
    */
-  static async getAppData(bundleName, userId) {
+  static async getAppData(bundleName, userId): Promise<any> {
     Log.showInfo(TAG, `getAppName start by ${bundleName}`);
     if (appDataMap.has(bundleName)) {
-      Log.showInfo(TAG, `getAppData success.`);
+      Log.showInfo(TAG, 'getAppData success.');
       return appDataMap.get(bundleName);
     }
     let data = await BundleManager.getBundleInfo(TAG, bundleName, 0, userId);
@@ -122,52 +122,52 @@ export default class ParseDataUtil {
    *
    * @param {number} timestamp - Target timestamp.
    */
-  static getStandardTime(timestamp) {
+  static getStandardTime(timestamp): string {
     if (timestamp == 0 || timestamp == undefined || timestamp == null) {
       return '';
     }
     mDate.setTime(timestamp);
     let hoursNumber = mDate.getHours();
     let minutesNumber = mDate.getMinutes();
-    let hours = hoursNumber < 10 ? '0' + hoursNumber : hoursNumber;
-    let minutes = minutesNumber < 10 ? '0' + minutesNumber : minutesNumber;
-    return hours + ':' + minutes;
+    let hours = hoursNumber < 10 ? `0${hoursNumber}` : hoursNumber;
+    let minutes = minutesNumber < 10 ? `0${minutesNumber}` : minutesNumber;
+    return `${hours}:${minutes}`;
   }
 
   static getContentByType(notificationType, request): NotificationContent {
     let content = {
       title: '', text: '', additionalText: ''
-    }
+    };
 
-    function getContentByKey(keysAndDefault, source) {
+    function getContentByKey(keysAndDefault, source): void {
       if (source) {
         keysAndDefault.forEach(([key, defualt]) => {
-          content[key] = source[key] ?? defualt
-        })
+          content[key] = source[key] ?? defualt;
+        });
       }
     }
 
     switch (notificationType) {
-      case NotificationManager.TYPE_BASIC:
-        getContentByKey([['title', ''], ['text', ''], ['additionalText', '']], request.content.normal)
-        break;
-      case NotificationManager.TYPE_LONG:
-        getContentByKey([['title', ''], ['text', ''], ['additionalText', []], ['briefText', ''],
-        ['expandedTitle', ''], ['longText', '']], request.content.longText)
-        break;
-      case NotificationManager.TYPE_MULTI:
-        getContentByKey([['title', ''], ['text', ''], ['additionalText', []], ['briefText', ''],
-        ['longTitle', ''], ['lines', []]], request.content.multiLine)
-        break;
-      case NotificationManager.TYPE_PICTURE:
-        getContentByKey([['title', ''], ['text', ''], ['additionalText', []], ['briefText', ''],
-        ['expandedTitle', ''], ['picture', '']], request.content.picture)
-        break;
-      default:
-        Log.showInfo(TAG, 'no match content type');
-        break;
+    case NotificationManager.TYPE_BASIC:
+      getContentByKey([['title', ''], ['text', ''], ['additionalText', '']], request.content.normal);
+      break;
+    case NotificationManager.TYPE_LONG:
+      getContentByKey([['title', ''], ['text', ''], ['additionalText', []], ['briefText', ''],
+        ['expandedTitle', ''], ['longText', '']], request.content.longText);
+      break;
+    case NotificationManager.TYPE_MULTI:
+      getContentByKey([['title', ''], ['text', ''], ['additionalText', []], ['briefText', ''],
+        ['longTitle', ''], ['lines', []]], request.content.multiLine);
+      break;
+    case NotificationManager.TYPE_PICTURE:
+      getContentByKey([['title', ''], ['text', ''], ['additionalText', []], ['briefText', ''],
+        ['expandedTitle', ''], ['picture', '']], request.content.picture);
+      break;
+    default:
+      Log.showInfo(TAG, 'no match content type');
+      break;
     }
     Log.showInfo(TAG, `notificationType = ${notificationType}, content = ${JSON.stringify(content)}`);
-    return content
+    return content;
   }
 }

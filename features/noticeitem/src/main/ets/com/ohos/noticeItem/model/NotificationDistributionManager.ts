@@ -17,46 +17,44 @@ import Log from '../../../../../../../../../common/src/main/ets/default/Log';
 import DeviceManager from '@ohos.distributedHardware.deviceManager';
 import DeviceInfo from '@ohos.deviceInfo';
 
-const TAG = `NotificationDistributionManager`;
+const TAG = 'NotificationDistributionManager';
 
 let distributionManager = null;
 
 export default class NotificationDistributionManager {
-  deviceManager = null
+  deviceManager = null;
 
-  static getInstance() {
+  static getInstance(): any {
     if (distributionManager == null) {
-      Log.showInfo(TAG, `getInstance distributionManager new`);
+      Log.showInfo(TAG, 'getInstance distributionManager new');
       distributionManager = new NotificationDistributionManager();
       distributionManager.initDeviceManager();
       return distributionManager;
     }
-    Log.showInfo(TAG, `getInstance return distributionManager`);
+    Log.showInfo(TAG, 'getInstance return distributionManager');
     return distributionManager;
   }
 
   constructor() {
-    Log.showInfo(TAG, `constructor`);
+    Log.showInfo(TAG, 'constructor');
   }
 
-  initDeviceManager() {
-    Log.showInfo(TAG, `initDeviceManager`);
-    DeviceManager.createDeviceManager("com.ohos.systemui", (err, data) => {
-      if (err) {
-        Log.showError(TAG, "createDeviceManager err:" + JSON.stringify(err));
-        return;
+  initDeviceManager(): void {
+    Log.showInfo(TAG, 'initDeviceManager');
+    DeviceManager.createDeviceManager('com.ohos.systemui', (err, data) => {
+      Log.showInfo(TAG, `initDeviceManager createDeviceManager err:${JSON.stringify(err)} data:${JSON.stringify(data)}`);
+      if (data) {
+        this.deviceManager = data;
       }
-      Log.showInfo(TAG, "createDeviceManager success");
-      this.deviceManager = data;
     });
   }
 
-  getTrustedDeviceDeviceName(deviceId) {
+  getTrustedDeviceDeviceName(deviceId: string): string {
     Log.showInfo(TAG, `getTrustedDeviceDeviceName deviceId:${deviceId}`);
     let deviceName = '';
-    let deviceArr:any[] = this.getTrustedDeviceListSync();
+    let deviceArr: any[] = this.getTrustedDeviceListSync();
     Log.showDebug(TAG, `getTrustedDeviceDeviceName deviceArr:${JSON.stringify(deviceArr)}`);
-    if (deviceArr && deviceArr.length > 0) {
+    if (deviceArr.length > 0) {
       for (let item of deviceArr) {
         if (item.deviceId == deviceId) {
           deviceName = item.deviceName;
@@ -67,17 +65,17 @@ export default class NotificationDistributionManager {
     return deviceName;
   }
 
-  getTrustedDeviceListSync(): Array<any>{
-    Log.showInfo(TAG, `getTrustedDeviceListSync`);
+  getTrustedDeviceListSync(): any[] {
+    Log.showInfo(TAG, 'getTrustedDeviceListSync');
     return this.deviceManager.getTrustedDeviceListSync();
   }
 
-  getLocalDeviceInfoSync() {
-    Log.showInfo(TAG, `getLocalDeviceInfoSync`);
+  getLocalDeviceInfoSync(): any {
+    Log.showInfo(TAG, 'getLocalDeviceInfoSync');
     return this.deviceManager.getLocalDeviceInfoSync();
   }
 
-  release() {
+  release(): void {
     this.deviceManager.release();
   }
 }

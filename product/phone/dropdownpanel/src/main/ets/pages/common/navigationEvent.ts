@@ -14,7 +14,7 @@
  */
 
 import commonEvent from '@ohos.commonEvent';
-import Log from '../../../../../../../../common/src/main/ets/default/log'
+import Log from '../../../../../../../../common/src/main/ets/default/log';
 
 const TAG = 'navigationEvent';
 
@@ -27,7 +27,7 @@ let commonEventSubscriber = null;
 export class navigationEvent {
   mCallback: any;
 
-  registerCallback(callback) {
+  registerCallback(callback): void {
     Log.showDebug(TAG, 'registerCallback');
     this.mCallback = callback;
     if (commonEventSubscriber == null) {
@@ -38,7 +38,7 @@ export class navigationEvent {
     }
   }
 
-  createCapsuleSubscriberCallBack(err, data) {
+  createCapsuleSubscriberCallBack(err, data): void {
     Log.showDebug(TAG, `createCapsuleSubscriberCallBack err: ${JSON.stringify(err)} data: ${JSON.stringify(data)}`);
     commonEventSubscriber = data;
     commonEvent.subscribe(data, (err, data) => {
@@ -55,7 +55,7 @@ export class navigationEvent {
     });
   }
 
-  unregisterCallback() {
+  unregisterCallback(): void {
     if (commonEventSubscriber != null) {
       commonEvent.unsubscribe(commonEventSubscriber, () => {
         Log.showInfo(TAG, 'Subscriberregister unregister Capsule Status Listener ===============');

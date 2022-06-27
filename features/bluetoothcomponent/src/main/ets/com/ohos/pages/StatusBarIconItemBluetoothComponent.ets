@@ -14,9 +14,10 @@
  */
 
 import Log from '../../../../../../../../common/src/main/ets/default/Log';
-import {TintContentInfo} from '../../../../../../../../common/src/main/ets/default/TintStateManager';
-import StyleConfigurationCommon from '../../../../../../../../common/src/main/ets/default/StyleConfiguration';
-import StyleConfiguration from '../common/StyleConfiguration';
+import { TintContentInfo } from '../../../../../../../../common/src/main/ets/default/TintStateManager';
+import StyleConfigurationCommon, { CommonStyle
+} from '../../../../../../../../common/src/main/ets/default/StyleConfiguration';
+import StyleConfiguration, { StatusBarBluetoothComponentStyle } from '../common/StyleConfiguration';
 import Constants from '../common/Constants';
 import ViewModel from '../viewmodel/BluetoothVM';
 
@@ -26,8 +27,8 @@ const TAG = 'bluetooth-StatusBarIconItemBluetoothComponent';
 export default struct StatusBarIconItemBluetoothComponent {
   @StorageLink('BluetoothOpenStatus') BluetoothOpenStatus: boolean = false;
   @State mTintContentInfo: TintContentInfo = ViewModel.getTintContentInfo();
-  @State styleCommon: any = StyleConfigurationCommon.getCommonStyle();
-  @State style: any = StyleConfiguration.getStatusBarBluetoothComponentStyle();
+  @State styleCommon: CommonStyle = StyleConfigurationCommon.getCommonStyle();
+  @State style: StatusBarBluetoothComponentStyle = StyleConfiguration.getStatusBarBluetoothComponentStyle();
 
   aboutToAppear() {
     Log.showInfo(TAG, 'aboutToAppear');

@@ -13,13 +13,12 @@
  * limitations under the License.
  */
 
-import notification from '@ohos.notification';
 import Log from '../../../../../../../../../common/src/main/ets/default/Log';
 import NotificationManager from './NotificationManager';
 import ParseDataUtil from './ParseDataUtil';
 import RuleController from './rule/RuleController';
 import CommonUtil from '../common/CommonUtil';
-import createOrGet from "../../../../../../../../../common/src/main/ets/default/SingleInstanceHelper";
+import createOrGet from '../../../../../../../../../common/src/main/ets/default/SingleInstanceHelper';
 import DistributionManager from './NotificationDistributionManager';
 import AbilityManager from '../../../../../../../../../common/src/main/ets/default/abilitymanager/abilityManager';
 
@@ -28,7 +27,7 @@ const TAG = 'NotificationService';
 interface NotificationListener {
   userId: number;
   onNotificationConsume: Function;
-  onNotificationCancel: (hashcode: number) => void;
+  onNotificationCancel(hashcode: number): void;
 }
 
 /**
@@ -41,32 +40,32 @@ export class NotificationService {
 
   constructor() {
     this.subscribeNotification(this.getSubscriber());
-    this.loadNotificationTemplate()
+    this.loadNotificationTemplate();
   }
 
-  public register(listener: NotificationListener) {
+  register(listener: NotificationListener): void {
     let res = this.mListeners.add(listener);
     Log.showInfo(TAG, `register, listener size: ${res.size}`);
   }
 
-  public unRegister(listener: NotificationListener) {
+  unRegister(listener: NotificationListener): void {
     let res = this.mListeners.delete(listener);
     Log.showInfo(TAG, `unRegister, res: ${res}`);
   }
 
-  public removeAll() {
+  removeAll(): void {
     NotificationManager.removeAll(TAG, (data) => {
       Log.showInfo(TAG, `removeAll => data: ${JSON.stringify(data)}`);
     });
   }
 
-  public remove(code: string) {
+  remove(code: string): void {
     NotificationManager.remove(TAG, code, (data) => {
       Log.showInfo(TAG, `removeNotificationItem ==> data: ${JSON.stringify(data)}`);
-    })
+    });
   }
 
-  public loadAllNotifications() {
+  loadAllNotifications(): void {
     NotificationManager.getAllActiveNotifications(TAG, (err, requestsArr) => {
       Log.showInfo(TAG, `getAllActiveNotifications error:${err}}, requestsArr: ${JSON.stringify(requestsArr)}`);
       if (Array.isArray(requestsArr)) {
@@ -74,26 +73,26 @@ export class NotificationService {
           this.handleNotificationAdd(requestsArr[i]);
         }
       }
-    })
+    });
   }
 
-  getSubscriber() {
+  getSubscriber(): any {
     if (!this.mSubscriber) {
       this.mSubscriber = {
         onConsume: this.handleNotificationAddAndSortMap.bind(this),
         onCancel: this.handleNotificationCancel.bind(this),
-      }
+      };
     }
     return this.mSubscriber;
   }
 
-  handleNotificationAddAndSortMap(data) {
+  handleNotificationAddAndSortMap(data): void {
     Log.showDebug(TAG, 'handleNotificationAddAndSortMap, sortingMap' + JSON.stringify(data.sortingMap || {}));
     this.mSortingMap = { ...this.mSortingMap, ...data?.sortingMap };
     this.handleNotificationAdd(data?.request);
   }
 
-  handleNotificationAdd(request) {
+  handleNotificationAdd(request): void {
     ParseDataUtil.parseData(request, this.mSortingMap).then((intermediateData) => {
       Log.showInfo(TAG, `parseData after = ${JSON.stringify(intermediateData)}`);
       RuleController.getNotificationData(intermediateData, (finalItemData) => {
@@ -103,12 +102,12 @@ export class NotificationService {
           if (CommonUtil.checkVisibilityByUser(finalItemData.userId, listener.userId)) {
             listener.onNotificationConsume(finalItemData);
           }
-        })
+        });
       });
     }).catch(errorInfo => Log.showError(TAG, `error: ${JSON.stringify(errorInfo)}`));
   }
 
-  handleNotificationCancel(data) {
+  handleNotificationCancel(data): void {
     Log.showDebug(TAG, `handleNotificationCancel hashCode: ${JSON.stringify(data?.request?.hashCode)}`);
     this.mSortingMap = { ...this.mSortingMap, ...data?.sortingMap };
     const hashCode = data?.request?.hashCode;
@@ -119,36 +118,36 @@ export class NotificationService {
     this.mListeners.forEach((listener) => listener.onNotificationCancel(hashCode));
   }
 
-  subscribeNotification(subscriber) {
+  subscribeNotification(subscriber): void {
     let callback = (err, data) => {
       Log.showInfo(TAG, `subscribeCallback finished err: ${JSON.stringify(err)} data: ${JSON.stringify(data)}`);
     };
     NotificationManager.subscribeNotification(TAG, subscriber, callback);
   }
 
-  loadNotificationTemplate() {
+  loadNotificationTemplate(): void {
     Log.showInfo(TAG, 'loadNotificationTemplate start');
     NotificationManager.initNotificationTemplateMap(TAG, globalThis[AbilityManager.ABILITY_NAME_OWNER_WANT]);
   }
 
-  getPluginTempLate(templateName) {
+  getPluginTempLate(templateName: string): any {
     Log.showInfo(TAG, `getPluginTempLate param:${templateName}`);
     let pluginTempLate = null;
-    if (NotificationManager.NotificationTemplateMap !== null) {
-      pluginTempLate = NotificationManager.NotificationTemplateMap.get(templateName);
+    if (NotificationManager.notificationTemplateMap !== null) {
+      pluginTempLate = NotificationManager.notificationTemplateMap.get(templateName);
     }
     Log.showInfo(TAG, `getPluginTempLate pluginTempLate:${JSON.stringify(pluginTempLate)}`);
     return pluginTempLate;
   }
 
-  enableNotification(bundleOption, data) {
+  enableNotification(bundleOption, data: boolean): void {
     Log.showDebug(TAG, `enableNotification bundleOption:${JSON.stringify(bundleOption)} data:${JSON.stringify(data)} `);
-    NotificationManager.enableNotification(TAG, bundleOption, data, (result) => {
-      Log.showInfo(TAG, `enableNotification ==> result: ${JSON.stringify(result)}`);
+    NotificationManager.enableNotification(TAG, bundleOption, data, () => {
+      Log.showInfo(TAG, 'enableNotification succeed');
     });
   }
 
-  getTrustedDeviceDeviceName(deviceId) {
+  getTrustedDeviceDeviceName(deviceId: string): string {
     Log.showInfo(TAG, `getTrustedDeviceDeviceName deviceId:${JSON.stringify(deviceId)} `);
     return DistributionManager.getInstance().getTrustedDeviceDeviceName(deviceId);
   }
@@ -156,4 +155,4 @@ export class NotificationService {
 
 let notificationService = createOrGet(NotificationService, TAG);
 
-export default notificationService as NotificationService;
+export default notificationService ;

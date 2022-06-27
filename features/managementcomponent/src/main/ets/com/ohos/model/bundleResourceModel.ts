@@ -12,65 +12,70 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import Log from '../../../../../../../../common/src/main/ets/default/Log'
-import AbilityManager from '../../../../../../../../common/src/main/ets/default/abilitymanager/abilityManager'
+import Log from '../../../../../../../../common/src/main/ets/default/Log';
+import AbilityManager from '../../../../../../../../common/src/main/ets/default/abilitymanager/abilityManager';
 import Bundle from '@ohos.bundle';
+import { BundleInfo } from 'bundle/bundleInfo';
 import ResMgr from '@ohos.resourceManager';
-import SwitchUserManager from '../../../../../../../../common/src/main/ets/default/SwitchUserManager'
+import {BusinessError} from 'basic';
+import SwitchUserManager from '../../../../../../../../common/src/main/ets/default/SwitchUserManager';
 
 const INDEX = 0;
 const IS_INCLUDE_ABILITY_INFO = 0;
 
 const TAG = 'NotificationManagenment-BundleResourceModel';
 
-export default class BundleResourceModel {
-  private mBundleInfoList: any[]= [];
+export interface BundleItemData {
+  appIcon?: string;
+  appTitle?: string;
+  appValue?: string;
+  appArrow?: string|Resource;
+  appSummary?: string;
+  appBundleName?: string;
+  appIconId?: string;
+  appUri?: string;
+  appUid?: number;
+  systemApp?: boolean;
+}
 
-  async getAllBundleInfos() {
+export default class BundleResourceModel {
+  private readonly mBundleInfoList: BundleItemData[] = [];
+
+  async getAllBundleInfos(): Promise<void> {
     let userId =(await SwitchUserManager.getInstance().getCurrentUserInfo()).userId;
-    Bundle.getAllBundleInfo(IS_INCLUDE_ABILITY_INFO, userId)
-      .then((data) => {
-        this.getIconItem(INDEX, data.length, data);
-      });
+    await Bundle.getAllBundleInfo(IS_INCLUDE_ABILITY_INFO, userId).then((data: BundleInfo[]) => {
+      void this.getIconItem(INDEX, data.length, data);
+    });
     Log.showInfo(TAG, 'getAllBundleInfos end');
   }
 
-  async getIconItem(index, count, data) {
-    Log.showInfo(TAG, 'getIconItem data.length' + data.length);
-    let imageValue = '';
+  async getIconItem(index: number, count: number, data: BundleInfo[]): Promise<void> {
+    Log.showInfo(TAG, `getIconItem data.length ${data.length}`);
     let label = '';
     let that = this;
-    Log.showDebug(TAG, 'getIconItem data[index].name :' + data[index].name);
     try {
       let bundleContext = await AbilityManager.getContext().createBundleContext(data[index].name);
       let bundleResourceManager = await bundleContext.resourceManager;
-
       let appInfo = data[index].appInfo;
-      if (appInfo.labelId > 0) {
-        bundleResourceManager.getString(appInfo.labelId, (error, value) => {
-          if (value != null) {
-            Log.showDebug(TAG, 'getIconItem ResMgr.getResourceManager getString() value:' + value);
+      if (parseInt(appInfo.labelId) > 0) {
+        bundleResourceManager.getString(parseInt(appInfo.labelId), (error: BusinessError, value: string) => {
+          if (value) {
             label = value;
-          } else {
-            Log.showError(TAG, 'getIconItem ResMgr.getResourceManager getString() error:' + error);
           }
         });
       } else {
         label = appInfo.label;
       }
       Log.showDebug(TAG, 'getIconItem ResMgr.getResourceManager finish label:' + label);
-      if (appInfo.iconId <= 0) {
-        this.nextIconItem(index, count, data, this.mBundleInfoList, that)
-        return
+      if (parseInt(appInfo.iconId) <= 0) {
+        this.nextIconItem(index, count, data, this.mBundleInfoList, that);
+        return;
       }
-      bundleResourceManager.getMediaBase64(appInfo.iconId, (error, value) => {
-        if (error === undefined) {
-          Log.showDebug(TAG, 'getIconItem ResMgr.getMediaBase64() value:' + value.length);
-          if (value.length > 0) {
-            imageValue = value;
-          }
-          this.mBundleInfoList.push({
-            appIcon: imageValue,
+      bundleResourceManager.getMediaBase64(parseInt(appInfo.iconId), (error: BusinessError, value: string) => {
+        if (value) {
+          Log.showInfo(TAG, `getIconItem ResMgr.getMediaBase64() imageValue:${value}` );
+          let bundleItemData: BundleItemData = {
+            appIcon: value,
             appTitle: label,
             appValue: '',
             appArrow: $r('app.media.ic_settings_arrow'),
@@ -80,70 +85,67 @@ export default class BundleResourceModel {
             appUri: 'pages/setEnable',
             appUid: data[index].uid,
             systemApp: appInfo.systemApp
-          });
+          };
+          this.mBundleInfoList.push(bundleItemData);
         }
-        Log.showInfo(TAG, 'getIconItem ResMgr.getMediaBase64() end');
-        this.nextIconItem(index, count, data, this.mBundleInfoList, that)
+        this.nextIconItem(index, count, data, this.mBundleInfoList, that);
       });
     } catch (error) {
-      Log.showError(TAG, `getMediaBase64 err:${JSON.stringify(error)}`);
+      Log.showError(TAG, `getIconItem catch error: ${JSON.stringify(error)}`);
     }
   }
 
-  nextIconItem(index, count, data, bundleInfoList, that) {
+  nextIconItem(index: number, count: number, data: BundleInfo[], bundleInfoList: BundleItemData[], that: BundleResourceModel): void {
     Log.showInfo(TAG, 'nextIconItem index:' + index + ' | count:' + count);
     if (count - 1 > index) {
       index = index + 1;
-      that.getIconItem(index, count, data);
+      void that.getIconItem(index, count, data);
     } else {
       AppStorage.SetOrCreate('appManagementList', bundleInfoList);
     }
   }
 
-  async getBundleInfo(bundleName, callback) {
-    let mBundleInfo: any = {};
+  async getBundleInfo(bundleName: string, callback: {(data: BundleItemData): void}): Promise<void> {
+    let mBundleInfo: BundleItemData = {};
     let label = '';
-
     let userInfo = await SwitchUserManager.getInstance().getCurrentUserInfo();
 
-    Bundle.getBundleInfo(bundleName, IS_INCLUDE_ABILITY_INFO, {
+    await Bundle.getBundleInfo(bundleName, IS_INCLUDE_ABILITY_INFO, {
       userId: userInfo.userId
     }).then((data) => {
       Log.showInfo(TAG, `getBundleInfo bundleInfo:${JSON.stringify(data)}`);
-      ResMgr.getResourceManager(data.name, (error, item) => {
+      ResMgr.getResourceManager(data.name, (error: Error, item) => {
         let appInfo = data.appInfo;
         if (parseInt(appInfo.labelId) > 0) {
-          item.getString(parseInt(appInfo.labelId), (error, value) => {
-            if (value != null) {
-              Log.showDebug(TAG, `getBundleInfo getResourceManager getString() value: ` + value);
-              mBundleInfo.appTitle = value
+          item.getString(parseInt(appInfo.labelId), (error: Error, value: string) => {
+            if (value) {
+              Log.showDebug(TAG, `getBundleInfo getResourceManager getString() value:${JSON.stringify(value)}`);
+              mBundleInfo.appTitle = value;
             } else {
               Log.showError(TAG, `getBundleInfo getResourceManager getString() error:${JSON.stringify(error)}`);
             }
           });
         }
         mBundleInfo.appTitle = appInfo.label;
-        mBundleInfo.appValue = ''
-        mBundleInfo.appArrow = $r('app.media.ic_settings_arrow')
-        mBundleInfo.appSummary = data.versionName
-        mBundleInfo.appBundleName = data.name
-        mBundleInfo.appIconId = appInfo.iconId
-        mBundleInfo.appUri = ''
-        mBundleInfo.appUid = data.uid
-        mBundleInfo.systemApp = appInfo.systemApp
-
+        mBundleInfo.appValue = '';
+        mBundleInfo.appArrow = $r('app.media.ic_settings_arrow');
+        mBundleInfo.appSummary = data.versionName;
+        mBundleInfo.appBundleName = data.name;
+        mBundleInfo.appIconId = appInfo.iconId;
+        mBundleInfo.appUri = '';
+        mBundleInfo.appUid = data.uid;
+        mBundleInfo.systemApp = appInfo.systemApp;
         Log.showDebug(TAG, 'getBundleInfo getResourceManager label:' + label);
         if (parseInt(appInfo.iconId) > 0) {
-          item.getMediaBase64(parseInt(appInfo.iconId), (error, imageValue) => {
+          item.getMediaBase64(parseInt(appInfo.iconId), (error: Error, imageValue: string) => {
             if (!!imageValue) {
-              mBundleInfo.appIcon = imageValue
+              mBundleInfo.appIcon = imageValue;
             }
             callback(mBundleInfo);
           });
         } else {
           callback(mBundleInfo);
         }
-
       });
     });
     Log.showInfo(TAG, 'getBundleInfo end');

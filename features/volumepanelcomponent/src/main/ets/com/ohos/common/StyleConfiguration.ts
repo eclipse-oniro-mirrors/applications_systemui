@@ -14,37 +14,38 @@
  */
 
 import StyleManager from '../../../../../../../../common/src/main/ets/default/StyleManager';
-import Constants from './Constants'
+import Constants from './Constants';
 
 const TAG = 'volumepanel-StyleConfiguration';
 
-export default class StyleConfiguration {
-  static getVolumePanelComponentStyle() {
-    const key: string = TAG + "-VolumePanelComponent";
-    return StyleManager.getStyle(key, () => {
-      return {
-        volumePanelSliderMarginTop: $r('app.float.volume_panel_component_slider_margin_top'),
-        volumePanSliderWidth: $r('app.float.volume_panel_component_slider_width'),
-        volumePanSliderHeight: $r('app.float.volume_panel_component_slider_height'),
-        volumePanelSliderMarginBottom: $r('app.float.volume_panel_component_slider_margin_bottom'),
-        volumePanelMutBtnIconSize: $r('app.float.volume_panel_component_mute_btn_icon_size'),
-        volumePanelMutBtnIconMarginBottom: $r('app.float.volume_panel_component_mute_btn_icon_margin_bottom'),
-        volumePanelMuteBtnHeight: $r('app.float.volume_panel_component_mute_btn_height'),
-        volumePanelSettingIconSize: $r('app.float.volume_panel_component_setting_icon_size'),
-        volumePanelBackground: $r('app.color.panel_background'),
-        volumePanelSliderBlockColor: $r('app.color.volume_slider_block_color'),
-        volumePanelDividerHeight: $r('app.float.volume_panel_divider_height'),
-        volumePanelBorderRadius: $r('app.float.volume_panel_border_radius'),
-        volumeDividerWidth: $r('app.float.volume_divider_width'),
-        volumeSliderTrackColor: $r('app.color.volume_slider_track_color'),
-        volumeSelectedColor: $r('app.color.volume_slider_selected_color'),
-        volumeButtonBackgroundColor: $r('app.color.volume_button_background_color'),
-        volumePanelRingModeColor: $r('app.color.volume_ring_mode_color'),
-        volumePanelDividerColor:$r('app.color.volume_divider_color'),
-        volumePanelSettingColor: $r('sys.color.ohos_id_color_secondary'),
-        volumePanelSettingButtonSize: $r('app.float.volume_panel_component_setting_btn_icon_size')
+export class VolumePanelComponentStyle {
+  volumePanelSliderMarginTop: Length = $r('app.float.volume_panel_component_slider_margin_top');
+  volumePanSliderWidth: Length = $r('app.float.volume_panel_component_slider_width');
+  volumePanSliderHeight: Length = $r('app.float.volume_panel_component_slider_height');
+  volumePanelSliderMarginBottom: Length = $r('app.float.volume_panel_component_slider_margin_bottom');
+  volumePanelMutBtnIconSize: Length = $r('app.float.volume_panel_component_mute_btn_icon_size');
+  volumePanelMutBtnIconMarginBottom: Length = $r('app.float.volume_panel_component_mute_btn_icon_margin_bottom');
+  volumePanelMuteBtnHeight: Length = $r('app.float.volume_panel_component_mute_btn_height');
+  volumePanelSettingIconSize: Length = $r('app.float.volume_panel_component_setting_icon_size');
+  volumePanelBackground: ResourceColor = $r('app.color.panel_background');
+  volumePanelSliderBlockColor: ResourceColor = $r('app.color.volume_slider_block_color');
+  volumePanelDividerHeight: number | string = Constants.VOLUME_PANEL_DIVIDER_HEIGHT;
+  volumePanelBorderRadius: Length = $r('app.float.volume_panel_border_radius');
+  volumeDividerWidth: Length = $r('app.float.volume_divider_width');
+  volumeSliderTrackColor: ResourceColor = $r('app.color.volume_slider_track_color');
+  volumeSelectedColor: ResourceColor = $r('app.color.volume_slider_selected_color');
+  volumeButtonBackgroundColor: ResourceColor = $r('app.color.volume_button_background_color');
+  volumePanelRingModeColor: ResourceColor = $r('app.color.volume_ring_mode_color');
+  volumePanelDividerColor: ResourceColor = $r('app.color.volume_divider_color');
+  volumePanelSettingColor: ResourceColor = $r('sys.color.ohos_id_color_secondary');
+  volumePanelSettingButtonSize: Length = $r('app.float.volume_panel_component_setting_btn_icon_size');
+}
 
-      };
+export default class StyleConfiguration {
+  static getVolumePanelComponentStyle(): VolumePanelComponentStyle {
+    const key: string = TAG + '-VolumePanelComponent';
+    return StyleManager.getStyle(key, () => {
+      return new VolumePanelComponentStyle();
     });
   }
 }

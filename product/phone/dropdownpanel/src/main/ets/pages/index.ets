@@ -25,10 +25,10 @@ import RingModeIcon from '../../../../../../../features/ringmodecomponent/src/ma
 import image from "@ohos.multimedia.image"
 import Log from '../../../../../../../common/src/main/ets/default/Log'
 import Trace from '../../../../../../../common/src/main/ets/default/Trace'
-import WindowManager,
-{WindowType, WINDOW_SHOW_HIDE_EVENT} from '../../../../../../../common/src/main/ets/default/WindowManager'
-import EventManager, {unsubscribe} from "../../../../../../../common/src/main/ets/default/event/EventManager"
-import {START_ABILITY_EVENT} from "../../../../../../../common/src/main/ets/default/event/EventUtil"
+import WindowManager, { WindowType, WINDOW_SHOW_HIDE_EVENT
+} from '../../../../../../../common/src/main/ets/default/WindowManager'
+import EventManager, { unsubscribe } from "../../../../../../../common/src/main/ets/default/event/EventManager"
+import { START_ABILITY_EVENT } from "../../../../../../../common/src/main/ets/default/event/EventUtil"
 import CommonStyleManager from '../../../../../../../common/src/main/ets/default/StyleManager'
 import MultimodalInputManager from '../../../../../../../common/src/main/ets/default/MultimodalInputManager'
 import AbilityManager from '../../../../../../../common/src/main/ets/default/abilitymanager/abilityManager'
@@ -69,7 +69,6 @@ struct Index {
   @State showComponentName: string = undefined
   @State componentOptAreaHeightPX: number = 0
   @StorageLink('StatusCoefficient') StatusCoefficient: number = 1.0
-  @State controlCenterComponentConfig: any = {};
   mCallback: any;
   mClearCallbacks: unsubscribe[]
   settingDataKey = 'settings.display.navigationbar_status';

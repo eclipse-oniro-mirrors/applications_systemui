@@ -16,7 +16,7 @@
 import ReadConfigUtil from '../../../../../../../../../common/src/main/ets/default/ReadConfigUtil';
 import Log from '../../../../../../../../../common/src/main/ets/default/Log';
 
-const TAG = 'NotificationConfig'
+const TAG = 'NotificationConfig';
 /**
  * Notification Flow Config：
  * limitTotal:Total number of notifications that can be displayed.Beyond the range will not be displayed.
@@ -27,23 +27,23 @@ const TAG = 'NotificationConfig'
  *   --limit:Specifies the total number of notifications that the application can display.
  *     Beyond the range will not be displayed.
  */
-const Config = {
-    "limitTotal": 10000,
-    "app":
+const conFig = {
+  'limitTotal': 10000,
+  'app':
     [
-        { "bundleName": "com.ohos.publishnotifications", "canShow": true, "limit": 100 },
-        { "bundleName": "com.ohos.app2", "canShow": true, "limit": 100 }
+      { 'bundleName': 'com.ohos.publishnotifications', 'canShow': true, 'limit': 100 },
+      { 'bundleName': 'com.ohos.app2', 'canShow': true, 'limit': 100 }
     ]
-}
+};
 
 export class NotificationConfig {
-    static USE_NOTIFICATION_ICON = true;
+  static readonly USE_NOTIFICATION_ICON = true;
 
-    readNotificationConfig(deviceType?: string): any{
-        return Config
-    }
+  readNotificationConfig(deviceType?: string): { limitTotal: number; app: { bundleName: string; canShow: boolean; limit: number; }[]; } {
+    return conFig;
+  }
 }
 
 let notificationConfig = new NotificationConfig();
 
-export default notificationConfig as NotificationConfig;
+export default notificationConfig ;

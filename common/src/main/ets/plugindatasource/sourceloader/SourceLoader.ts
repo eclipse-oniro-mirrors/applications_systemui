@@ -13,46 +13,46 @@
  * limitations under the License.
  */
 
-import Log from "../../default/Log";
-import { ItemComponentData, LoaderConfigInfo } from "../common/Constants";
-import { AbilityInfoWithId } from "../common/BundleParseUtil";
+import Log from '../../default/Log';
+import { ItemComponentData, LoaderConfigInfo } from '../common/Constants';
+import { AbilityInfoWithId } from '../common/BundleParseUtil';
 
-const TAG = "SourceLoader";
+const TAG = 'SourceLoader';
 
 export type LoaderChannel = {
-    add: (item: ItemComponentData) => void;
-    remove: (item: ItemComponentData) => void;
-    onLoadPluginComponentData: (item: ItemComponentData) => void;
+  add: (item: ItemComponentData) => void;
+  remove: (item: ItemComponentData) => void;
+  onLoadPluginComponentData: (item: ItemComponentData) => void;
 };
 
 export default abstract class SourceLoader {
-    mChannel: LoaderChannel | undefined;
+  mChannel: LoaderChannel | undefined;
 
-    constructor(config: LoaderConfigInfo) {
-        Log.showDebug(TAG, `constructor`);
-    }
+  constructor(config: LoaderConfigInfo) {
+    Log.showDebug(TAG, 'constructor');
+  }
 
-    public setChannel(channel: LoaderChannel) {
-        this.mChannel = channel;
-    }
+  setChannel(channel: LoaderChannel): void {
+    this.mChannel = channel;
+  }
 
-    protected getChannel(): LoaderChannel {
-        return this.mChannel;
-    }
+  protected getChannel(): LoaderChannel | undefined {
+    return this.mChannel;
+  }
 
-    protected addItem(itemData: ItemComponentData) {
-        this.mChannel?.add(itemData);
-    }
+  protected addItem(itemData: ItemComponentData): void {
+    this.mChannel?.add(itemData);
+  }
 
-    protected removeItem(itemData: ItemComponentData) {
-        this.mChannel?.remove(itemData);
-    }
+  protected removeItem(itemData: ItemComponentData): void {
+    this.mChannel?.remove(itemData);
+  }
 
-    abstract clearData(): void;
+  abstract clearData(): void;
 
-    abstract onBundleRemove(bundleName: string): void;
+  abstract onBundleRemove(bundleName: string): void;
 
-    abstract reloadData(userId: number): void;
+  abstract reloadData(userId: number): void;
 
-    abstract onAbilityAdd(abilityInfo: AbilityInfoWithId): void;
+  abstract onAbilityAdd(abilityInfo: AbilityInfoWithId): void;
 }

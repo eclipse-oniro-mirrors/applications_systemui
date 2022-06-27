@@ -12,38 +12,39 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import Ability from '@ohos.application.Ability'
-import Log from '../../../../../../../common/src/main/ets/default/Log'
-import AbilityManager from '../../../../../../../common/src/main/ets/default/abilitymanager/abilityManager'
-import display from "@ohos.display";
+import Ability from '@ohos.application.Ability';
+import Want from '@ohos.application.Want';
+import AbilityConstant from "@ohos.application.AbilityConstant";
+import Log from '../../../../../../../common/src/main/ets/default/Log';
+import AbilityManager from '../../../../../../../common/src/main/ets/default/abilitymanager/abilityManager';
+import display from '@ohos.display';
 
-const TAG = "NotificationManagement-MainAbility"
+const TAG = 'NotificationManagement-MainAbility';
 
 export default class MainAbility extends Ability {
-  onCreate(want, launchParam) {
-    Log.showInfo(TAG, "MainAbility onCreate")
+  onCreate(want: Want, launchParam: AbilityConstant.LaunchParam): void {
+    Log.showInfo(TAG, 'MainAbility onCreate');
     globalThis[AbilityManager.ABILITY_NAME_NOTIFICATION_MANAGEMENT + '_want'] = want;
   }
 
-  onDestroy() {
-    Log.showInfo(TAG, "MainAbility onDestroy")
+  onDestroy(): void {
+    Log.showInfo(TAG, 'MainAbility onDestroy');
   }
 
-  onWindowStageCreate(windowStage) {
-    Log.showInfo(TAG, "MainAbility onWindowStageCreate")
-    AbilityManager.setContext(AbilityManager.ABILITY_NAME_NOTIFICATION_MANAGEMENT, this.context)
-    windowStage.setUIContent(this.context, "pages/notificationManagenment", null)
+  onWindowStageCreate(windowStage): void {
+    Log.showInfo(TAG, 'MainAbility onWindowStageCreate');
+    windowStage.setUIContent(this.context, 'pages/notificationManagenment', null);
   }
 
-  onWindowStageDestroy() {
-    Log.showInfo(TAG, "MainAbility onWindowStageDestroy")
+  onWindowStageDestroy(): void {
+    Log.showInfo(TAG, 'MainAbility onWindowStageDestroy');
   }
 
-  onForeground() {
-    Log.showInfo(TAG, "MainAbility onForeground")
+  onForeground(): void {
+    Log.showInfo(TAG, 'MainAbility onForeground');
   }
 
-  onBackground() {
-    Log.showInfo(TAG, "MainAbility onBackground")
+  onBackground(): void {
+    Log.showInfo(TAG, 'MainAbility onBackground');
   }
 };

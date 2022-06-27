@@ -14,18 +14,19 @@
  */
 
 import StyleManager from '../../../../../../../../common/src/main/ets/default/StyleManager';
-import Constants from './Constants';
 
 const TAG = 'bluetooth-StyleConfiguration';
 
+export class StatusBarBluetoothComponentStyle {
+  staticBarBluetoothWidth: Length = $r('app.float.status_bar_bluetooth_width');
+  staticBarBluetoothHeight: Length = $r('app.float.status_bar_bluetooth_height');
+}
+
 export default class StyleConfiguration {
-  static getStatusBarBluetoothComponentStyle() {
-    const key: string = TAG + "-StatusBarBluetoothComponent";
+  static getStatusBarBluetoothComponentStyle(): StatusBarBluetoothComponentStyle {
+    const key: string = TAG + '-StatusBarBluetoothComponent';
     return StyleManager.getStyle(key, () => {
-      return {
-        staticBarBluetoothWidth: $r('app.float.status_bar_bluetooth_width'),
-        staticBarBluetoothHeight: $r('app.float.status_bar_bluetooth_height')
-      };
+      return new StatusBarBluetoothComponentStyle();
     });
   }
 }

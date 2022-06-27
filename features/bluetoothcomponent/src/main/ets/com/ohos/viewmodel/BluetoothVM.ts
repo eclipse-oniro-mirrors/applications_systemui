@@ -13,38 +13,38 @@
  * limitations under the License.
  */
 
-import bluetooth from '@ohos.bluetooth';
 import Log from '../../../../../../../../common/src/main/ets/default/Log';
-import {FASlotName} from '../../../../../../../../common/src/main/ets/default/Constants';
-import {TintContentInfo, getOrCreateTintContentInfo} from '../../../../../../../../common/src/main/ets/default/TintStateManager';
+import { FASlotName } from '../../../../../../../../common/src/main/ets/default/Constants';
+import { TintContentInfo, getOrCreateTintContentInfo
+} from '../../../../../../../../common/src/main/ets/default/TintStateManager';
 import createOrGet from '../../../../../../../../common/src/main/ets/default/SingleInstanceHelper';
 import BluetoothService from '../model/BluetoothService';
 
-export const BluetoothOpenStatusKey = "BluetoothOpenStatus";
+export const BLUETOOTH_OPEN_STATUS_KEY = 'BluetoothOpenStatus';
 
 const TAG = 'BluetoothVM';
 
 export class BluetoothVM {
-  mIsStart: boolean = false;
-  mBluetoothOpenStatus: any;
+  mIsStart = false;
+  mBluetoothOpenStatus: SubscribedAbstractProperty<boolean>;
   mTintContentInfo: TintContentInfo = getOrCreateTintContentInfo(FASlotName.BLUETOOTH);
 
   constructor() {
-    Log.showDebug(TAG, `constructor`);
+    Log.showDebug(TAG, 'constructor');
   }
 
-  initViewModel() {
+  initViewModel(): void {
     if (this.mIsStart) {
       return;
     }
-    Log.showDebug(TAG, `initViewModel `)
+    Log.showDebug(TAG, 'initViewModel ');
     this.mIsStart = true;
-    this.mBluetoothOpenStatus = AppStorage.SetAndLink(BluetoothOpenStatusKey, false);
+    this.mBluetoothOpenStatus = AppStorage.SetAndLink(BLUETOOTH_OPEN_STATUS_KEY, false);
     BluetoothService.startService();
     BluetoothService.registerListener(this);
   }
 
-  updateState(state: boolean) {
+  updateState(state: boolean): void {
     Log.showInfo(TAG, `updateState, state: ${state} this.mBluetoothOpenStatus ${this.mBluetoothOpenStatus}`);
     this.mBluetoothOpenStatus.set(state);
   }
@@ -64,4 +64,4 @@ export class BluetoothVM {
 
 let sBluetoothVM = createOrGet(BluetoothVM, TAG);
 
-export default sBluetoothVM as BluetoothVM;
+export default sBluetoothVM;

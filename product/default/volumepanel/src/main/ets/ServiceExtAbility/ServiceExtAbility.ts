@@ -13,43 +13,46 @@
  * limitations under the License.
  */
 
-import ServiceExtension from '@ohos.application.ServiceExtensionAbility'
-import display from "@ohos.display";
-import Log from "../../../../../../../common/src/main/ets/default/Log";
-import WindowManager, { WindowType } from "../../../../../../../common/src/main/ets/default/WindowManager";
-import AbilityManager from "../../../../../../../common/src/main/ets/default/abilitymanager/abilityManager";
-import VolumeWindowController from "../../../../../../../features/volumepanelcomponent/src/main/ets/com/ohos/common/VolumeWindowController";
+import ServiceExtension from '@ohos.application.ServiceExtensionAbility';
+import Want from '@ohos.application.Want';
+import display from '@ohos.display';
+import Log from '../../../../../../../common/src/main/ets/default/Log';
+import WindowManager, { WindowType } from '../../../../../../../common/src/main/ets/default/WindowManager';
+import AbilityManager from '../../../../../../../common/src/main/ets/default/abilitymanager/abilityManager';
+import VolumeWindowController from '../../../../../../../features/volumepanelcomponent/src/main/ets/com/ohos/common/VolumeWindowController';
 
-const TAG = "VolumePanel_ServiceExtAbility";
+const TAG = 'VolumePanel_ServiceExtAbility';
 
 class ServiceExtAbility extends ServiceExtension {
-    onCreate(want) {
-        Log.showInfo(TAG, "onCreate, want:" + want.abilityName);
-        AbilityManager.setContext(AbilityManager.ABILITY_NAME_VOLUME_PANEL, this.context);
-        display.getDefaultDisplay().then((dis) => {
-            let volumeRect = {
-                left: 0,
-                top: 0,
-                width: dis.width,
-                height: dis.height,
-            };
+  onCreate(want: Want): void {
+    Log.showInfo(TAG, `onCreate, want:${want.abilityName}`);
+    AbilityManager.setContext(AbilityManager.ABILITY_NAME_VOLUME_PANEL, this.context);
+    display.getDefaultDisplay().then((dis) => {
+      let volumeRect = {
+        left: 0,
+        top: 0,
+        width: dis.width,
+        height: dis.height,
+      };
 
-            AbilityManager.setAbilityData(AbilityManager.ABILITY_NAME_VOLUME_PANEL, "dis", {
-                width: dis.width,
-                height: dis.height,
-            });
-            WindowManager.createWindow(this.context, WindowType.VOLUME_PANEL, volumeRect, "pages/index")
-                .then((win) => {
-                    Log.showInfo(TAG, `onCreate, createWindow callback`);
-                    VolumeWindowController.getInstance().setWindowHandle(win);
-                })
-                .catch((err) => Log.showError(TAG, `Can't create window, err:${err}`));
-        });
-    }
+      AbilityManager.setAbilityData(AbilityManager.ABILITY_NAME_VOLUME_PANEL, 'dis', {
+        width: dis.width,
+        height: dis.height,
+      });
+      WindowManager.createWindow(this.context, WindowType.VOLUME_PANEL, volumeRect, 'pages/index')
+        .then((win) => {
+          Log.showInfo(TAG, 'onCreate, createWindow callback');
+          VolumeWindowController.getInstance().setWindowHandle(win);
+        })
+        .catch((err) => Log.showError(TAG, `Can't create window, err:${JSON.stringify(err)}`));
+    }).then(() => {
+    }).catch((err) => {
+    });
+  }
 
-    onDestroy() {
-        Log.showInfo(TAG, "onDestroy");
-    }
+  onDestroy(): void {
+    Log.showInfo(TAG, 'onDestroy');
+  }
 }
 
 export default ServiceExtAbility;

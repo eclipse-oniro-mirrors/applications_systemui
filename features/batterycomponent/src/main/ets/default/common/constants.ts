@@ -14,6 +14,6 @@
  */
 
 export default class Constants {
-  static BATTERY_LEVEL_LOW = 20;
-  static PERCENT_NUMBER = 100;
+  static readonly BATTERY_LEVEL_LOW = 20;
+  static readonly PERCENT_NUMBER = 100;
 }

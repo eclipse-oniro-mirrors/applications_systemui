@@ -12,38 +12,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import {FASlotName} from '../../../../../../../../common/src/main/ets/default/constants';
+import { FASlotName } from '../../../../../../../../common/src/main/ets/default/constants';
+import { StatusBarConfig
+} from '../../../../../../../../features/statusbarcomponent/src/main/ets/com/ohos/common/Constants';
 
-type LayoutGroup = {
-  id: number;
-  Components: Array<string>;
-};
-type pluginIconData = {
-  id: string;
-  bundleName: string;
-  abilityName: string;
-};
-type DropdownRange = {
-  startPosition: number;
-  endPosition: number;
-};
-type Config = {
-  LayoutGroups: Array<LayoutGroup>;
-  LocalSlots: Array<string>;
-  MetaSlots: Array<pluginIconData>;
-  emptyPosition: {
-    x1: number;
-    x2: number;
-    y1: number;
-    y2: number
-  };
-  dropdownRanges: {
-    notification: DropdownRange;
-    control: DropdownRange
-  }
-};
-
-const StatusbarConfig: Config = {
+const statusbarConfig: StatusBarConfig = {
   LayoutGroups: [
     {
       id: 1,
@@ -112,4 +85,4 @@ const StatusbarConfig: Config = {
   }
 };
 
-export default StatusbarConfig;
+export default statusbarConfig;

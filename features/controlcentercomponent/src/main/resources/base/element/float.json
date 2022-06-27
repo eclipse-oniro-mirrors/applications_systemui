@@ -73,18 +73,6 @@
       "value": "48vp"
     },
     {
-      "name": "control_center_title_icon_hover_width",
-      "value": "64vp"
-    },
-    {
-      "name": "control_center_title_icon_hover_height",
-      "value": "64vp"
-    },
-    {
-      "name": "control_center_title_icon_hover_radius",
-      "value": "16vp"
-    },
-    {
       "name": "control_center_title_margin_left",
       "value": "72vp"
     },
@@ -231,10 +219,6 @@
     {
       "name": "simple_toggle_edit_dialog_divider_height",
       "value": "36vp"
-    },
-    {
-      "name": "simple_toggle_edit_dialog_divider_width",
-      "value": "1vp"
     },
     {
       "name": "simple_toggle_edit_dialog_btn_margin_lf",

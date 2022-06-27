@@ -19,35 +19,35 @@ import NoDisturbingModel from '../../../../../../../features/managementcomponent
 import NoDisturbComponentViewModel from '../../../../../../../features/managementcomponent/src/main/ets/com/ohos/vm/nodisturbcomponentviewmodel';
 import FeaturesConfigData, {DoNotDisturbType} from '../../../../../../../features/managementcomponent/src/main/ets/com/ohos/common/constants';
 
-const TAG = 'NotificationManagement-NoDisturbViewModel'
-const CONST_DAY_LENGTH = 24*3600*1000
+const TAG = 'NotificationManagement-NoDisturbViewModel';
+const CONST_DAY_LENGTH = 24*3600*1000;
 
 export default class NoDisturbViewModel extends NoDisturbComponentViewModel {
 
-  startDateClue: string = ''
-  startTimeClue: string = ''
-  endDateClue: string = ''
-  endTimeClue: string = ''
+  startDateClue = '';
+  startTimeClue = '';
+  endDateClue = '';
+  endTimeClue = '';
 
-  ViewModelInit(): void{
+  viewModelInit(): void{
     Log.showDebug(TAG, 'ViewModelInit');
-    this.getNextDayLabel();
-    this.getNoDisturbingDate.bind(this)()
+    void this.getNextDayLabel();
+    this.getNoDisturbingDate.bind(this)();
   }
-  getNoDisturbingDate() {
+  getNoDisturbingDate(): void {
     Log.showDebug(TAG, 'getNoDisturbingDate');
     NoDisturbingModel.getNoDisturbingDate((data) => {
       Log.showInfo(TAG, 'getNoDisturbingDate data:' + JSON.stringify(data));
-      this.repeatMode = data.type
-      this.startTime = data.begin
-      this.endTime = data.end
+      this.repeatMode = data.type??0;
+      this.startTime = data.begin??'';
+      this.endTime = data.end??'';
       Log.showInfo(TAG, `getNoDisturbingDate this.repeatMode : ${this.repeatMode}, this.startTime : ${this.startTime}, this.endTime : ${this.endTime}`)
-      this.setClues.bind(this)()
-    })
+      this.setClues.bind(this)();
+    });
   }
 
-  setClues() {
-    Log.showDebug(TAG, `setClues`)
+  setClues(): void {
+    Log.showDebug(TAG, 'setClues');
     if (this.repeatMode == DoNotDisturbType.TYPE_DAILY ||
       this.repeatMode == DoNotDisturbType.TYPE_ONCE ||
       this.repeatMode == DoNotDisturbType.TYPE_CLEARLY) {
@@ -81,35 +81,35 @@ export default class NoDisturbViewModel extends NoDisturbComponentViewModel {
     this.repeatName = this.refreshRepeatName(this.repeatMode);
   }
 
-  onStartTimeAccept(data) {
-    Log.showDebug(TAG, `onStartTimeAccept`)
-    this.startTime = data
+  onStartTimeAccept(data: string): void {
+    Log.showDebug(TAG, 'onStartTimeAccept');
+    this.startTime = data;
     if (this.repeatMode == DoNotDisturbType.TYPE_CLEARLY) {
       let tmpDateTime = this.getDateByDateTime(this.startTime);
       if (this.defaultEndTime.getTime() < tmpDateTime.getTime()) {
-        this.startTime = this.endTime
+        this.startTime = this.endTime;
       }
     }
     this.setClues();
-    this.setNoDisturbingDate()
+    this.setNoDisturbingDate();
 
   }
 
-  onEndTimeAccept(data) {
-    Log.showDebug(TAG, `onEndTimeAccept`)
-    this.endTime = data
+  onEndTimeAccept(data: string): void {
+    Log.showDebug(TAG, 'onEndTimeAccept');
+    this.endTime = data;
     if (this.repeatMode == DoNotDisturbType.TYPE_CLEARLY) {
       let tmpDateTime = this.getDateByDateTime(this.endTime);
       if (tmpDateTime.getTime() < this.defaultStartTime.getTime()) {
-        this.endTime = this.startTime
+        this.endTime = this.startTime;
       }
     }
     this.setClues();
-    this.setNoDisturbingDate()
+    this.setNoDisturbingDate();
   }
 
-  onRepeatModeAccect(data) {
-    Log.showDebug(TAG, `onRepeatModeAccect`)
+  onRepeatModeAccect(data: number): void {
+    Log.showDebug(TAG, 'onRepeatModeAccect');
     this.repeatMode = data;
     if (this.repeatMode == DoNotDisturbType.TYPE_CLEARLY) {
       let dateSource = new Date();
@@ -123,17 +123,17 @@ export default class NoDisturbViewModel extends NoDisturbComponentViewModel {
     this.setNoDisturbingDate();
   }
 
-  setDateIntoDateTime(dateSource: Date, inputData:string): string {
+  setDateIntoDateTime(dateSource: Date, inputData: string): string {
     let result = inputData + ' ' + NoDisturbingModel.formatTime(dateSource);
     return result;
   }
 
-  setTimeIntoDateTime(dateSource: Date, inputData:string): string {
+  setTimeIntoDateTime(dateSource: Date, inputData: string): string {
     let result = NoDisturbingModel.formatDate(dateSource) + ' ' + inputData;
     return result;
   }
 
-  onCancel() {
-    Log.showDebug(TAG, `onCancel`)
+  onCancel(): void {
+    Log.showDebug(TAG, 'onCancel');
   }
 }

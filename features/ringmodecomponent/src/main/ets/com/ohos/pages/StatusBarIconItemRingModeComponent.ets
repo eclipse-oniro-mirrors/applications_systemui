@@ -14,10 +14,11 @@
  */
 
 import Log from '../../../../../../../../common/src/main/ets/default/Log'
-import {TintContentInfo} from '../../../../../../../../common/src/main/ets/default/TintStateManager'
-import StyleConfigurationCommon from '../../../../../../../../common/src/main/ets/default/StyleConfiguration'
-import StyleConfiguration from '../common/StyleConfiguration'
-import Constants, {AudioRingMode} from '../common/Constants'
+import { TintContentInfo } from '../../../../../../../../common/src/main/ets/default/TintStateManager'
+import StyleConfigurationCommon, { CommonStyle
+} from '../../../../../../../../common/src/main/ets/default/StyleConfiguration'
+import StyleConfiguration, { StatusRingModeComponentStyle } from '../common/StyleConfiguration'
+import Constants, { AudioRingMode } from '../common/Constants'
 import ViewModel from '../viewmodel/RingModeVM'
 
 const TAG = 'ringmode-StatusBarIconItemRingModeComponent'
@@ -26,8 +27,8 @@ const TAG = 'ringmode-StatusBarIconItemRingModeComponent'
 export default struct StatusBarIconItemRingModeComponent {
   @StorageLink('RingModeComponentMode') RingModeComponentMode: AudioRingMode = AudioRingMode.RINGER_MODE_NORMAL
   @State mTintContentInfo: TintContentInfo = ViewModel.getTintContentInfo()
-  @State styleCommon: any = StyleConfigurationCommon.getCommonStyle()
-  @State style: any = StyleConfiguration.getStatusRingModeComponentStyle()
+  @State styleCommon: CommonStyle = StyleConfigurationCommon.getCommonStyle()
+  @State style: StatusRingModeComponentStyle = StyleConfiguration.getStatusRingModeComponentStyle()
   private ringModeIcons: any
 
   aboutToAppear() {

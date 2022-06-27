@@ -14,5 +14,5 @@
  */
 
 export default class Constants {
-  static DEFAULT_SIMPLE_TOGGLE_COLUMN_COUNT = 5;
+  static readonly DEFAULT_SIMPLE_TOGGLE_COLUMN_COUNT = 5;
 }

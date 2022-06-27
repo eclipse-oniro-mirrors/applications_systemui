@@ -14,22 +14,23 @@
  */
 
 import StyleManager from '../../../../../../../common/src/main/ets/default/StyleManager';
-import Constants from './Constants'
 
 const TAG = 'signal-StyleConfiguration';
 
+export class SignalComponentStyle {
+  cellularImageWidth: Length = $r('app.float.signal_component_icon_width');
+  cellularImageHeight: Length = $r('app.float.signal_component_icon_height');
+  statusBarSignalTypeFontSize: Length = $r('app.float.status_bar_signal_type_font_size');
+  statusBarSignalUnknownFontSize: Length = $r('app.float.status_bar_signal_unknown_font_size');
+  signalTextMaxWeight: Length = $r('app.float.signal_text_max_width');
+  netSignalTextMaxWidth: Length = $r('app.float.status_bar_signal_net_signal_text_max_width');
+}
+
 export default class StyleConfiguration {
-    static getSignalComponentStyle() {
-        const key: string = TAG + "-SignalComponent";
-        return StyleManager.getStyle(key, () => {
-            return {
-                cellularImageWidth: $r('app.float.signal_component_icon_width'),
-                cellularImageHeight: $r('app.float.signal_component_icon_height'),
-                statusBarSignalTypeFontSize: $r('app.float.status_bar_signal_type_font_size'),
-                statusBarSignalUnknownFontSize: $r('app.float.status_bar_signal_unknown_font_size'),
-                signalTextMaxWeight: $r('app.float.signal_text_max_width'),
-                netSignalTextMaxWidth: $r('app.float.status_bar_signal_net_signal_text_max_width'),
-            };
-        });
-    }
+  static getSignalComponentStyle(): SignalComponentStyle {
+    const key: string = TAG + '-SignalComponent';
+    return StyleManager.getStyle(key, () => {
+      return new SignalComponentStyle();
+    });
+  }
 }

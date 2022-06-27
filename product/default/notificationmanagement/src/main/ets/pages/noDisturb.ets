@@ -261,7 +261,7 @@ export default struct NoDisturb {
 
   aboutToAppear(): void{
     Log.showInfo(TAG, `aboutToAppear`)
-    this.mViewModel.ViewModelInit()
+    this.mViewModel.viewModelInit()
     this.mRefreshCnt++;
 
   }

@@ -16,8 +16,9 @@
 import Constants from '../common/constants'
 import CapsuleViewModel, { VIEW_MODEL_ID, CallState } from '../viewmodel/CapsuleViewModel'
 import Log from '../../../../../../../common/src/main/ets/default/Log'
-import StyleConfigurationCommon from '../../../../../../../common/src/main/ets/default/StyleConfiguration'
-import StyleConfiguration from '../common/StyleConfiguration'
+import StyleConfigurationCommon, { CommonStyle
+} from '../../../../../../../common/src/main/ets/default/StyleConfiguration'
+import StyleConfiguration, { CapsuleComponentStyle } from '../common/StyleConfiguration'
 
 const TAG = "CapsuleIcon";
 
@@ -28,8 +29,8 @@ export default struct CapsuleIcon {
   startY: number = 0;
   moveX: number = 0;
   moveY: number = 0;
-  @State style: any = StyleConfiguration.getCapsuleComponentStyle();
-  @State styleCommon: any = StyleConfigurationCommon.getCommonStyle();
+  @State style: CapsuleComponentStyle = StyleConfiguration.getCapsuleComponentStyle();
+  @State styleCommon: CommonStyle = StyleConfigurationCommon.getCommonStyle();
 
   aboutToAppear() {
     this.mCapsuleViewModel.initViewModel();
