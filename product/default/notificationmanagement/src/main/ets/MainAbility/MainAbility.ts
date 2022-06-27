@@ -23,12 +23,6 @@ export default class MainAbility extends Ability {
   onCreate(want, launchParam) {
     Log.showInfo(TAG, "MainAbility onCreate")
     globalThis[AbilityManager.ABILITY_NAME_NOTIFICATION_MANAGEMENT + '_want'] = want;
-    display.getDefaultDisplay().then((dis) => {
-      AbilityManager.setAbilityData(AbilityManager.ABILITY_NAME_APP_LIST, "dis", {
-        width: dis.width,
-        height: dis.height,
-      });
-    });
   }
 
   onDestroy() {
