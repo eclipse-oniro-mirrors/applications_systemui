@@ -17,71 +17,77 @@ import StyleManager from '../../default/StyleManager';
 
 const TAG = 'CommonTemplate-StyleConfiguration';
 
+export class IconTitleBaseStyle {
+  marginLeft: Length = '24vp';
+  marginRight: Length = '16vp';
+  componentGap: Length = '8vp';
+  titleSize: Length = '24vp';
+  titleColor: ResourceColor = $r('sys.color.ohos_id_color_text_secondary');
+  borderRadius: Length= '48vp';
+  backgroundColor: ResourceColor= '#ffffff';
+  textMargin: Length = '8vp';
+  textHoverHeight: Length = '52vp';
+  textHoverWidth: Length = '136vp';
+  textHoverRadius: Length = '8vp';
+  hoverColor: ResourceColor = 'rgba(0, 0, 0, 0.05)';
+  transparentColor: ResourceColor = 'rgba(255, 255, 255, 0)';
+}
+
+export class IconComponentStyle {
+  circleWidth: number | string = '96vp';
+  circleHeight: number | string = '96vp';
+  iconWidth: Length = '48vp';
+  iconHeight: Length = '48vp';
+  iconOffBG: ResourceColor = '#1A000000';
+  iconOnBG: ResourceColor = '#FF007DFF';
+  iconOnColor: ResourceColor = '#FFFFFFFF';
+  iconOffColor: ResourceColor = $r('sys.color.ohos_id_color_secondary');
+  hoverColor: ResourceColor = 'rgba(0, 0, 0, 0.05)';
+  transparentColor: ResourceColor = 'rgba(255, 255, 255, 0)';
+}
+
+export class SimpleToggleBaseStyle {
+  circleWidth: number | string = '96vp';
+  circleHeight: number | string = '96vp';
+  iconWidth: Length = '48vp';
+  iconHeight: Length = '48vp';
+  dragCircleWidth: number | string = '120vp';
+  dragCircleHeight: number | string = '120vp';
+  dragIconWidth: Length = '72vp';
+  dragIconHeight: Length = '72vp';
+  iconOffBG: ResourceColor = '#1A000000';
+  iconOnBG: ResourceColor = '#FF007DFF';
+  iconOnColor: ResourceColor = '#FFFFFFFF';
+  iconOffColor: ResourceColor = $r('sys.color.ohos_id_color_secondary');
+  componentGap: Length = '10vp';
+  titleSize: Length = '24fp';
+  titleColor: ResourceColor = $r('sys.color.ohos_id_color_text_secondary');
+  textHoverWidth: number | string = '136vp';
+  textHoverHeight: number | string = '36vp';
+  textHoverRadius: number | string = '8vp';
+  hoverColor: ResourceColor = 'rgba(0, 0, 0, 0.05)';
+  transparentColor: ResourceColor = 'rgba(255, 255, 255, 0)';
+}
+
 export default class StyleConfiguration {
-    static getIconTitleBaseStyle() {
-        const key: string = TAG + "-IconTitleBase";
-        return StyleManager.getStyle(key, () => {
-            return {
-                marginLeft: '24vp',
-                marginRight: '16vp',
-                componentGap: '8vp',
-                titleSize: '24vp',
-                titleColor:$r("sys.color.ohos_id_color_text_secondary"),
-                borderRadius: '48vp',
-                backgroundColor: '#ffffff',
-                textMargin: '8vp',
-                textHoverHeight: '52vp',
-                textHoverWidth: '136vp',
-                textHoverRadius: '8vp',
-                hoverColor: 'rgba(0, 0, 0, 0.05)',
-                transparentColor: 'rgba(255, 255, 255, 0)',
-            };
-        });
-    }
+  static getIconTitleBaseStyle(): IconTitleBaseStyle {
+    const key: string = TAG + '-IconTitleBase';
+    return StyleManager.getStyle(key, () => {
+      return new IconTitleBaseStyle();
+    });
+  }
 
-    static getIconComponentStyle() {
-        const key: string = TAG + "-IconComponent";
-        return StyleManager.getStyle(key, () => {
-            return {
-                circleWidth: '96vp',
-                circleHeight: '96vp',
-                iconWidth: '48vp',
-                iconHeight: '48vp',
-                iconOffBG: '#1A000000',
-                iconOnBG: '#FF007DFF',
-                iconOnColor: '#FFFFFFFF',
-                iconOffColor: $r("sys.color.ohos_id_color_secondary"),
-                hoverColor: 'rgba(0, 0, 0, 0.05)',
-                transparentColor: 'rgba(255, 255, 255, 0)',
-            };
-        });
-    }
+  static getIconComponentStyle(): IconComponentStyle {
+    const key: string = TAG + '-IconComponent';
+    return StyleManager.getStyle(key, () => {
+      return new IconComponentStyle();
+    });
+  }
 
-    static getSimpleToggleBaseStyle() {
-        const key: string = TAG + "-SimpleToggleBase";
-        return StyleManager.getStyle(key, () => {
-            return {
-                circleWidth: '96vp',
-                circleHeight: '96vp',
-                iconWidth: '48vp',
-                iconHeight: '48vp',
-                dragCircleWidth: '120vp',
-                dragCircleHeight: '120vp',
-                dragIconWidth: '72vp',
-                dragIconHeight: '72vp',
-                iconOffBG: '#1A000000',
-                iconOnBG: '#FF007DFF',
-                iconOnColor: '#FFFFFFFF',
-                iconOffColor: $r("sys.color.ohos_id_color_secondary"),
-                componentGap: '10vp',
-                titleSize: '24fp',
-                titleColor: $r("sys.color.ohos_id_color_text_secondary"),
-                textHoverWidth: '136vp',
-                textHoverHeight: '36vp',
-                textHoverRadius: '8vp',
-                hoverColor: 'rgba(0, 0, 0, 0.05)',
-                transparentColor: 'rgba(255, 255, 255, 0)',
-            };
-        });
-    }
+  static getSimpleToggleBaseStyle(): SimpleToggleBaseStyle {
+    const key: string = TAG + '-SimpleToggleBase';
+    return StyleManager.getStyle(key, () => {
+      return new SimpleToggleBaseStyle();
+    });
+  }
 }

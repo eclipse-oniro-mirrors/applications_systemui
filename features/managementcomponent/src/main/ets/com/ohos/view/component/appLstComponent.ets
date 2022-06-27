@@ -26,7 +26,7 @@ export default struct AppLstComponent {
 
   aboutToAppear(): void{
     Log.showInfo(TAG, `aboutToAppear`);
-    ViewModel.ViewModelInit();
+    ViewModel.viewModelInit();
   }
 
   aboutToDisappear(): void{

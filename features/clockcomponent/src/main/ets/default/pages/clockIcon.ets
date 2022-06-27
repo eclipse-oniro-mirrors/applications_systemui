@@ -15,8 +15,9 @@
 
 import Log from '../../../../../../../common/src/main/ets/default/Log'
 import { TintContentInfo } from '../../../../../../../common/src/main/ets/default/TintStateManager'
-import StyleConfiguration from '../common/StyleConfiguration'
-import StyleConfigurationCommon from '../../../../../../../common/src/main/ets/default/StyleConfiguration'
+import StyleConfiguration, { ClockComponentStyle } from '../common/StyleConfiguration'
+import StyleConfigurationCommon, { CommonStyle
+} from '../../../../../../../common/src/main/ets/default/StyleConfiguration'
 import ViewModel from '../viewmodel/ClockVM'
 import TimeManager, {
   TimeEventArgs,
@@ -30,8 +31,8 @@ const TAG = 'ClockComponent-clockIcon';
 export default struct ClockIcon {
   @State mTime: string = '16:01';
   @State mTintContentInfo: TintContentInfo = ViewModel.getTintContentInfo();
-  @State style: any = StyleConfiguration.getClockComponentStyle();
-  @State styleCommon: any = StyleConfigurationCommon.getCommonStyle();
+  @State style: ClockComponentStyle = StyleConfiguration.getClockComponentStyle();
+  @State styleCommon: CommonStyle = StyleConfigurationCommon.getCommonStyle();
   unSubscriber?: unsubscribe;
 
   aboutToAppear() {

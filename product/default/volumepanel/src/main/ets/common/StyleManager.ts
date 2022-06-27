@@ -13,61 +13,59 @@
  * limitations under the License.
  */
 
-import Log from '../../../../../../../common/src/main/ets/default/log';
-import AbilityManager from '../../../../../../../common/src/main/ets/default/abilitymanager/abilitymanager';
-import StyleConfiguration from '../../../../../../../features/volumepanelcomponent/src/main/ets/com/ohos/common/styleconfiguration'
+import Log from '../../../../../../../common/src/main/ets/default/Log';
+import AbilityManager from '../../../../../../../common/src/main/ets/default/abilitymanager/abilityManager';
+import StyleConfiguration from '../../../../../../../features/volumepanelcomponent/src/main/ets/com/ohos/common/StyleConfiguration';
 
 const TAG = 'VolumePanel-StyleManager';
 
 export default class StyleManager {
-    static STANDARD_DISPLAY_WIDTH: number = 2560;
-    static STANDARD_DISPLAY_HEIGHT: number = 1600;
-    static maxWidth: number = StyleManager.STANDARD_DISPLAY_WIDTH;
+  static readonly STANDARD_DISPLAY_WIDTH: number = 2560;
+  static readonly STANDARD_DISPLAY_HEIGHT: number = 1600;
+  static maxWidth: number = StyleManager.STANDARD_DISPLAY_WIDTH;
 
-    static setStyle() {
-        Log.showDebug(TAG, `setStyle`)
+  static setStyle(): void {
+    Log.showDebug(TAG, 'setStyle');
 
-        let config = AbilityManager.getAbilityData(AbilityManager.ABILITY_NAME_VOLUME_PANEL, 'dis');
-        StyleManager.maxWidth = config.width;
+    let config = AbilityManager.getAbilityData(AbilityManager.ABILITY_NAME_VOLUME_PANEL, 'dis');
+    StyleManager.maxWidth = config.width;
 
-        // Pad、PC Mode
-        {
-            let style: any = StyleConfiguration.getVolumePanelComponentStyle();
-            style.volumePanelSliderMarginTop = StyleManager.calcScaleSizePx(40);
-            style.volumePanSliderWidth = px2vp(StyleManager.calcScaleSize(8)) + 'vp';
-            style.volumePanSliderHeight = StyleManager.calcScaleSizePx(320);
-            style.volumePanelSliderMarginBottom = StyleManager.calcScaleSizePx(40);
-            style.volumePanelMutBtnIconSize = StyleManager.calcScaleSizePx(48);
-            style.volumePanelMutBtnIconMarginBottom = StyleManager.calcScaleSizePx(24);
-            style.volumePanelMuteBtnHeight = StyleManager.calcScaleSizePx(72);
-            style.volumePanelSettingIconSize = StyleManager.calcScaleSizePx(48);
-            style.volumePanelSettingButtonSize = StyleManager.calcScaleSizePx(96);
-            style.volumePanelBackground = '#99FFFFFF'
-            style.volumePanelSliderBlockColor = '#FFFFFFFF'
-            style.volumePanelDividerHeight = StyleManager.calcScaleSizePx(1);
-            style.volumePanelDefaultMin = StyleManager.calcScaleSizePx(0);
-            style.volumePanelBorderRadius = StyleManager.calcScaleSizePx(48);
-            style.volumeDividerWidth = StyleManager.calcScaleSizePx(60);
-            style.volumeSliderTrackColor = '#FFAEE6E6';
-            style.volumeSelectedColor = '#FF007DFF';
-            style.volumeButtonBackgroundColor = '#00000000';
-            style.volumePanelRingModeColor = '#FF007DFF';
-            style.volumePanelDividerColor = '#FF9BCECE'
-            style.volumePanelSettingColor = '#FF4D6666'
-
-        }
-
+    // Pad、PC Mode
+    {
+      let style = StyleConfiguration.getVolumePanelComponentStyle();
+      style.volumePanelSliderMarginTop = StyleManager.calcScaleSizePx(40);
+      style.volumePanSliderWidth = px2vp(StyleManager.calcScaleSize(8)).toString() + 'vp';
+      style.volumePanSliderHeight = StyleManager.calcScaleSizePx(320);
+      style.volumePanelSliderMarginBottom = StyleManager.calcScaleSizePx(40);
+      style.volumePanelMutBtnIconSize = StyleManager.calcScaleSizePx(48);
+      style.volumePanelMutBtnIconMarginBottom = StyleManager.calcScaleSizePx(24);
+      style.volumePanelMuteBtnHeight = StyleManager.calcScaleSizePx(72);
+      style.volumePanelSettingIconSize = StyleManager.calcScaleSizePx(48);
+      style.volumePanelSettingButtonSize = StyleManager.calcScaleSizePx(96);
+      style.volumePanelBackground = '#99FFFFFF';
+      style.volumePanelSliderBlockColor = '#FFFFFFFF';
+      style.volumePanelDividerHeight = StyleManager.calcScaleSizePx(1);
+      style.volumePanelBorderRadius = StyleManager.calcScaleSizePx(48);
+      style.volumeDividerWidth = StyleManager.calcScaleSizePx(60);
+      style.volumeSliderTrackColor = '#FFAEE6E6';
+      style.volumeSelectedColor = '#FF007DFF';
+      style.volumeButtonBackgroundColor = '#00000000';
+      style.volumePanelRingModeColor = '#FF007DFF';
+      style.volumePanelDividerColor = '#FF9BCECE';
+      style.volumePanelSettingColor = '#FF4D6666';
     }
 
-    static number2px(n: number): string {
-        return n.toString() + 'px';
-    }
+  }
 
-    static calcScaleSize(n: number): number {
-        return n * StyleManager.maxWidth / StyleManager.STANDARD_DISPLAY_WIDTH;
-    }
+  static number2px(n: number): string {
+    return n.toString() + 'px';
+  }
 
-    static calcScaleSizePx(n: number): string {
-        return StyleManager.number2px(StyleManager.calcScaleSize(n));
-    }
+  static calcScaleSize(n: number): number {
+    return n * StyleManager.maxWidth / StyleManager.STANDARD_DISPLAY_WIDTH;
+  }
+
+  static calcScaleSizePx(n: number): string {
+    return StyleManager.number2px(StyleManager.calcScaleSize(n));
+  }
 }

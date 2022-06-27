@@ -14,11 +14,12 @@
  */
 
 import Log from '../../../../../../../../common/src/main/ets/default/Log'
-import {TintContentInfo} from '../../../../../../../../common/src/main/ets/default/TintStateManager'
+import { TintContentInfo } from '../../../../../../../../common/src/main/ets/default/TintStateManager'
 import CheckEmptyUtils from '../../../../../../../../common/src/main/ets/default/CheckEmptyUtils'
 import ViewModel from '../viewmodel/StatusBarVM'
-import StyleConfigurationCommon from '../../../../../../../../common/src/main/ets/default/StyleConfiguration'
-import StyleConfiguration from '../common/StyleConfiguration'
+import StyleConfigurationCommon, { CommonStyle
+} from '../../../../../../../../common/src/main/ets/default/StyleConfiguration'
+import StyleConfiguration, { IconItemComponentStyle } from '../common/StyleConfiguration'
 
 const TAG = 'MetaIconItemComponent'
 
@@ -27,8 +28,8 @@ export default struct MetaIconItemComponent {
   private keyId: string
   @State mItemData: any = {}
   @State mTintContentInfo: TintContentInfo = new TintContentInfo()
-  @State style: any = StyleConfiguration.getIconItemComponentStyle()
-  @State styleCommon: any = StyleConfigurationCommon.getCommonStyle()
+  @State style: IconItemComponentStyle = StyleConfiguration.getIconItemComponentStyle()
+  @State styleCommon: CommonStyle = StyleConfigurationCommon.getCommonStyle()
 
   aboutToAppear() {
     Log.showInfo(TAG, `aboutToAppear Start, keyId: ${this.keyId}`);

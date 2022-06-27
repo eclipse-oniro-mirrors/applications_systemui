@@ -14,25 +14,26 @@
  */
 
 import StyleManager from '../../../../../../../common/src/main/ets/default/StyleManager';
-import Constants from './Constants';
+import Constants from './constants';
 
 const TAG = 'capsule-StyleConfiguration';
 
+export class CapsuleComponentStyle {
+  greenCapsulePhoneWidth: Length = $r('app.float.green_capsule_phone_width');
+  greenCapsulePhoneHeight: Length = $r('app.float.green_capsule_phone_height');
+  greenCapsuleHeight: Length = $r('app.float.green_capsule_height');
+  greenCapsuleTextColor: Length = $r('app.color.green_capsule_text_color');
+  greenCapsuleTextMarginLeftRight: Length = $r('app.float.green_capsule_text_left_right');
+  greenCapsuleRadius: Length = $r('app.float.green_capsule_radius');
+  greenCapsuleBackgroundColor: ResourceStr = $r('app.color.capsule_background_color');
+  maxLines: number = Constants.DEFAULT_MAX_LINES;
+}
+
 export default class StyleConfiguration {
-  static getCapsuleComponentStyle() {
-    const key: string = TAG + "-CapsuleComponent";
+  static getCapsuleComponentStyle(): CapsuleComponentStyle {
+    const key: string = TAG + '-CapsuleComponent';
     return StyleManager.getStyle(key, () => {
-      return {
-        greenCapsulePhoneWidth: $r('app.float.green_capsule_phone_width'),
-        greenCapsulePhoneHeight: $r('app.float.green_capsule_phone_height'),
-        greenCapsuleHeight: $r('app.float.green_capsule_height'),
-        greenCapsuleTextColor: $r('app.color.green_capsule_text_color'),
-        greenCapsuleTextMarginLeftRight: $r('app.float.green_capsule_text_left_right'),
-        greenCapsuleRadius: $r('app.float.green_capsule_radius'),
-        greenCapsuleBackgroundColor: $r('app.color.capsule_background_color'),
-        maxLines:Constants.DEFAULT_MAX_LINES
-      };
+      return new CapsuleComponentStyle();
     });
   }
-
 }

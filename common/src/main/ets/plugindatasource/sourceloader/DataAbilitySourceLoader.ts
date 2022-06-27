@@ -13,21 +13,28 @@
  * limitations under the License.
  */
 
-import Log from "../../default/Log";
-import { AbilityInfoWithId } from "../common/BundleParseUtil";
-import { LoaderConfigInfo } from "../common/Constants";
-import SourceLoader from "./SourceLoader";
+import Log from '../../default/Log';
+import { AbilityInfoWithId } from '../common/BundleParseUtil';
+import { LoaderConfigInfo } from '../common/Constants';
+import SourceLoader from './SourceLoader';
 
-const TAG = "DataAbilitySourceLoader";
+const TAG = 'DataAbilitySourceLoader';
 
 export default class DataAbilitySourceLoader extends SourceLoader {
-    constructor(config: LoaderConfigInfo) {
-        super(config);
-        Log.showDebug(TAG, `constructor`);
-    }
+  constructor(config: LoaderConfigInfo) {
+    super(config);
+    Log.showDebug(TAG, 'constructor');
+  }
 
-    clearData(): void {}
-    reloadData(userId: number): void {}
-    onAbilityAdd(abilityInfo: AbilityInfoWithId): void {}
-    onBundleRemove(bundleName: string): void {}
+  clearData(): void {
+  }
+
+  reloadData(userId: number): void {
+  }
+
+  onAbilityAdd(abilityInfo: AbilityInfoWithId): void {
+  }
+
+  onBundleRemove(bundleName: string): void {
+  }
 }

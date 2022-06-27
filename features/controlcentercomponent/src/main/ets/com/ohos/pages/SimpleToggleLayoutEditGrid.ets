@@ -15,7 +15,7 @@
 
 import Log from '../../../../../../../../common/src/main/ets/default/Log';
 import SimpleToggleLoadComponent from './SimpleToggleLoadComponent';
-import StyleConfiguration from '../common/StyleConfiguration';
+import StyleConfiguration, { SimpleToggleLayoutEditGridStyle } from '../common/StyleConfiguration';
 
 const TAG = 'Control-SimpleToggleLayoutEditGrid';
 
@@ -30,7 +30,7 @@ export default struct SimpleToggleLayoutEditGrid {
   private logTag: string = '';
   private onItemDragStart: (toggleName: string) => void;
   private onItemDrop: (status: string) => void;
-  @State style: any = StyleConfiguration.getSimpleToggleLayoutEditGridStyle();
+  @State style: SimpleToggleLayoutEditGridStyle = StyleConfiguration.getSimpleToggleLayoutEditGridStyle();
   private mCurrentDragToggleName: string = '';
 
   @Builder DragComponent() {

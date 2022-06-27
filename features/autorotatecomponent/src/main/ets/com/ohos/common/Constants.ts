@@ -17,5 +17,5 @@ export default class Constants {
 }
 
 export class AutoRotateData {
-  switchStatus: boolean = false;
+  switchStatus = false;
 }

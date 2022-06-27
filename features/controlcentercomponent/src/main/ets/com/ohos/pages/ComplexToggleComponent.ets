@@ -16,7 +16,6 @@
 import Log from '../../../../../../../../common/src/main/ets/default/Log';
 import EventManager from '../../../../../../../../common/src/main/ets/default/event/EventManager';
 import iconTitleBase from '../../../../../../../../common/src/main/ets/template/iconTitleBase';
-import Constants from '../common/Constants';
 
 const TAG = 'ComplexToggleComponent';
 

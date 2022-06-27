@@ -14,19 +14,21 @@
  */
 
 export default class Constants {
-  static DEFAULT_MAX_VOLUME = 15;
-  static DEFAULT_MIN_VOLUME = 0;
-  static DEFAULT_MUTE_STATUS = false;
-  static DEFAULT_SHOW_STATUS = true;
-  static HOLD_SHOW = false;
-  static HOLD_TIME = 2000;
+  static readonly DEFAULT_MAX_VOLUME = 15;
+  static readonly DEFAULT_MIN_VOLUME = 0;
+  static readonly DEFAULT_MUTE_STATUS = false;
+  static readonly DEFAULT_SHOW_STATUS = true;
+  static readonly HOLD_SHOW = false;
+  static readonly HOLD_TIME = 2000;
+  static readonly VOLUME_PANEL_DIVIDER_HEIGHT = 1;
 }
 
 export enum AudioVolumeType {
   VOICE_CALL = 0,
   RINGTONE = 2,
   MEDIA = 3,
-  VOICE_ASSISTANT = 9
+  VOICE_ASSISTANT = 9,
+  ALL = 100,
 }
 
 export interface VolumeInfo {

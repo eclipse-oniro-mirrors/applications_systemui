@@ -13,84 +13,84 @@
  * limitations under the License.
  */
 
-import Log from "../../default/Log";
-import SourceLoader from "./SourceLoader";
-import Constants, { PluginType, ItemComponentData, LoaderConfigInfo } from "../common/Constants";
-import { AbilityInfoWithId, filterAbilityInfo, PluginData } from "../common/BundleParseUtil";
-import { parseEventString } from "../../default/Event/EventUtil";
+import Log from '../../default/Log';
+import SourceLoader from './SourceLoader';
+import Constants, { PluginType, ItemComponentData, LoaderConfigInfo } from '../common/Constants';
+import { AbilityInfoWithId, filterAbilityInfo, PluginData } from '../common/BundleParseUtil';
+import { parseEventString } from '../../default/event/EventUtil';
 
-const TAG = "MetaSourceLoader";
+const TAG = 'MetaSourceLoader';
 
 export default class MetaSourceLoader extends SourceLoader {
-    mPluginFilter: string = "";
-    mPermission: string = "";
-    mItemDatas: ItemComponentData[] = [];
+  mPluginFilter = '';
+  mPermission = '';
+  mItemDatas: ItemComponentData[] = [];
 
-    constructor(config: LoaderConfigInfo) {
-        super(config);
-        this.mPluginFilter = config.action;
-        this.mPermission = config.permission;
-        Log.showDebug(TAG, `init loader, mPluginFilter: ${this.mPluginFilter}, mPermission: ${this.mPermission}`);
-    }
+  constructor(config: LoaderConfigInfo) {
+    super(config);
+    this.mPluginFilter = config.action as string;
+    this.mPermission = config.permission as string;
+    Log.showDebug(TAG, `init loader, mPluginFilter: ${this.mPluginFilter}, mPermission: ${this.mPermission}`);
+  }
 
-    onAbilityAdd(abilityInfo: AbilityInfoWithId): void {
-        let pluginData: PluginData | undefined = filterAbilityInfo(abilityInfo, this.mPluginFilter);
-        if (pluginData) {
-            let itemData = parseData(abilityInfo, pluginData);
-            if (!itemData) {
-                return;
-            }
-            this.mItemDatas.push(itemData);
-            this.addItem(itemData);
-            Log.showDebug(TAG, `item[${itemData.id}] add success, name: ${abilityInfo.name}`);
-            return;
-        }
-        Log.showDebug(TAG, `Can't filter ${abilityInfo.name}.`);
+  onAbilityAdd(abilityInfo: AbilityInfoWithId): void {
+    let pluginData: PluginData | undefined = filterAbilityInfo(abilityInfo, this.mPluginFilter);
+    if (pluginData) {
+      let itemData = parseData(abilityInfo, pluginData);
+      if (!itemData) {
+        return;
+      }
+      this.mItemDatas.push(itemData);
+      this.addItem(itemData);
+      Log.showDebug(TAG, `item[${itemData.id}] add success, name: ${abilityInfo.name}`);
+      return;
     }
+    Log.showDebug(TAG, `Can't filter ${abilityInfo.name}.`);
+  }
 
-    onBundleRemove(bundleName: string): void {
-        for (let i = this.mItemDatas.length - 1; i >= 0; i--) {
-            if (bundleName == this.mItemDatas[i].bundleName) {
-                Log.showDebug(TAG, `remove item index: ${i}, abilityname: ${this.mItemDatas[i].abilityName}`);
-                this.removeItem(this.mItemDatas[i]);
-                this.mItemDatas.splice(i, 1);
-            }
-        }
+  onBundleRemove(bundleName: string): void {
+    for (let i = this.mItemDatas.length - 1; i >= 0; i--) {
+      if (bundleName == this.mItemDatas[i].bundleName) {
+        Log.showDebug(TAG, `remove item index: ${i}, abilityname: ${this.mItemDatas[i].abilityName}`);
+        this.removeItem(this.mItemDatas[i]);
+        this.mItemDatas.splice(i, 1);
+      }
     }
+  }
 
-    clearData(): void {
-        Log.showDebug(TAG, `clear all, size: ${this.mItemDatas.length}`);
-        this.mItemDatas.forEach((data) => this.removeItem(data));
-        this.mItemDatas.length = 0;
-    }
+  clearData(): void {
+    Log.showDebug(TAG, `clear all, size: ${this.mItemDatas.length}`);
+    this.mItemDatas.forEach((data) => this.removeItem(data));
+    this.mItemDatas.length = 0;
+  }
 
-    reloadData(userId: number): void {
-        Log.showDebug(TAG, `reloadData userId: ${userId}`);
-    }
+  reloadData(userId: number): void {
+    Log.showDebug(TAG, `reloadData userId: ${userId}`);
+  }
 }
 
 function parseData(info: AbilityInfoWithId, data: PluginData): ItemComponentData {
-    let { label, pluginType, icon, template, clickAction, longClickAction, launchType, ...extra } = data;
-    if (pluginType.toString() != PluginType.META.toString()) {
-        return undefined;
-    }
-    let itemData: ItemComponentData = {
-        id: info.itemId,
-        pluginType: PluginType.META,
-        deviceId: Constants.LOCAL_DEVICE,
-        bundleName: info.bundleName,
-        abilityName: info.name,
-        abilityLabelId: info.labelId,
-        abilityIconId: info.iconId,
-        label: label,
-        iconUrl: icon,
-        template: template,
-        actionData: {
-            clickAction: parseEventString(clickAction),
-            longClickAction: parseEventString(longClickAction),
-            launchType: launchType,
-            extra: extra,
-        },
-    };
-    return itemData;
+  let { label, pluginType, icon, template, clickAction, longClickAction, launchType, ...extra } = data;
+  if (pluginType == undefined || pluginType == null || pluginType.toString() != PluginType.META.toString()) {
+    return undefined;
+  }
+  let itemData: ItemComponentData = {
+    id: info.itemId,
+    pluginType: PluginType.META,
+    deviceId: Constants.LOCAL_DEVICE,
+    bundleName: info.bundleName,
+    abilityName: info.name,
+    abilityLabelId: info.labelId,
+    abilityIconId: info.iconId,
+    label: label,
+    iconUrl: icon,
+    template: template,
+    actionData: {
+      clickAction: parseEventString(clickAction),
+      longClickAction: parseEventString(longClickAction),
+      launchType: launchType,
+      extra: extra,
+    },
+  };
+  return itemData;
 }

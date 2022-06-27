@@ -16,9 +16,10 @@
 import Constants from '../common/constants'
 import mWifiModel from '../WifiModel'
 import Log from '../../../../../../../common/src/main/ets/default/Log'
-import {TintContentInfo} from '../../../../../../../common/src/main/ets/default/TintStateManager'
-import StyleConfigurationCommon from '../../../../../../../common/src/main/ets/default/StyleConfiguration'
-import StyleConfiguration from '../common/StyleConfiguration'
+import { TintContentInfo } from '../../../../../../../common/src/main/ets/default/TintStateManager'
+import StyleConfigurationCommon, { CommonStyle
+} from '../../../../../../../common/src/main/ets/default/StyleConfiguration'
+import StyleConfiguration, { StartsBarWifiComponentStyle } from '../common/StyleConfiguration'
 import ViewModel from '../viewmodel/WifiVM'
 
 const TAG = 'WifiComponent-WifiIcon'
@@ -28,8 +29,8 @@ export default struct WifiIcon {
   @StorageLink('wifiInfo') wifiInfo: number = Constants.DEFAULT_WIFI_INFO
   @StorageLink('wifiStatus') wifiStatus: boolean = Constants.DEFAULT_WIFI_STATUS
   @State mTintContentInfo: TintContentInfo = ViewModel.getTintContentInfo()
-  @State styleCommon: any = StyleConfigurationCommon.getCommonStyle()
-  @State style: any = StyleConfiguration.getStartsBarWifiComponentStyle()
+  @State styleCommon: CommonStyle = StyleConfigurationCommon.getCommonStyle()
+  @State style: StartsBarWifiComponentStyle = StyleConfiguration.getStartsBarWifiComponentStyle()
 
   aboutToAppear() {
     Log.showDebug(TAG, `aboutToAppear`);

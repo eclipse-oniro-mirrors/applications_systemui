@@ -187,7 +187,7 @@ export default struct notificationManagenment {
 
   aboutToAppear(): void{
     Log.showDebug(TAG, `aboutToAppear`)
-    this.mViewModel.ViewModelInit();
+    this.mViewModel.viewModelInit();
   }
 
   aboutToDisappear(): void{
@@ -196,7 +196,7 @@ export default struct notificationManagenment {
 
   onPageShow(): void{
     Log.showDebug(TAG, `onPageShow`)
-    this.mViewModel.RefreshNoDisturbState();
+    this.mViewModel.refreshNoDisturbState();
   }
 
   onBackPress() {

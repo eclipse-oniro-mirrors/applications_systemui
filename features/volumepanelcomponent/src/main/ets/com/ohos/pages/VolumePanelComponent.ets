@@ -15,7 +15,7 @@
 
 import Log from '../../../../../../../../common/src/main/ets/default/Log'
 import AbilityManager from '../../../../../../../../common/src/main/ets/default/abilitymanager/abilityManager'
-import StyleConfiguration from '../common/StyleConfiguration'
+import StyleConfiguration, { VolumePanelComponentStyle } from '../common/StyleConfiguration'
 import Constants from '../common/Constants'
 import ViewModel from '../viewmodel/VolumePanelVM'
 import VolumeWindowController from '../common/VolumeWindowController'
@@ -28,7 +28,7 @@ export default struct VolumePanelComponent {
   @StorageLink('VolumePanelMinVolume') VolumePanelMinVolume: number = Constants.DEFAULT_MIN_VOLUME
   @StorageLink('VolumePanelVolumeValue') VolumePanelVolumeValue: number = Constants.DEFAULT_MIN_VOLUME
   @StorageLink('VolumePanelIsMute') VolumePanelIsMute: boolean = Constants.DEFAULT_MUTE_STATUS
-  @State style: any = StyleConfiguration.getVolumePanelComponentStyle()
+  @State style: VolumePanelComponentStyle = StyleConfiguration.getVolumePanelComponentStyle()
 
   aboutToAppear() {
     Log.showInfo(TAG, 'aboutToAppear');

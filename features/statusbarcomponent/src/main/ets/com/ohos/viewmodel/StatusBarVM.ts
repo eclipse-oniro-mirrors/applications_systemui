@@ -15,31 +15,31 @@
 
 import Log from '../../../../../../../../common/src/main/ets/default/Log';
 import createOrGet from '../../../../../../../../common/src/main/ets/default/SingleInstanceHelper';
-import WindowManager, {WindowType} from '../../../../../../../../common/src/main/ets/default/WindowManager';
-import TintStateManager, {TintState, TintContentInfo, getOrCreateTintContentInfo
+import WindowManager, { WindowType } from '../../../../../../../../common/src/main/ets/default/WindowManager';
+import TintStateManager, { TintState, TintContentInfo, getOrCreateTintContentInfo
 } from '../../../../../../../../common/src/main/ets/default/TintStateManager';
-import {FASlotName, Rect} from '../../../../../../../../common/src/main/ets/default/Constants';
+import { FASlotName, Rect } from '../../../../../../../../common/src/main/ets/default/Constants';
 import { PluginType, PluginComponentData
 } from '../../../../../../../../common/src/main/ets/plugindatasource/common/Constants';
 import StyleConfigurationCommon from '../../../../../../../../common/src/main/ets/default/StyleConfiguration';
-import Constants, {StatusBarData, StatusBarBackgroundData, StatusBarComponentGroupContentData, StatusBarComponentData
-} from '../common/Constants';
+import { StatusBarData, StatusBarBackgroundData, StatusBarComponentGroupContentData, StatusBarComponentData,
+  StatusBarConfig } from '../common/Constants';
 import StatusBarService from '../model/StatusBarService';
 
-export const StatusBarLayoutKey = "StatusBarLayout";
+export const STATUS_BAR_LAYOUT_KEY = 'StatusBarLayout';
 
-export const StatusBarEmptyWidthKey = "StatusBarEmptyWidth";
+export const STATUS_BAR_EMPTY_WIDTH_KEY = 'StatusBarEmptyWidth';
 
 const TAG = 'StatusBarVM';
 
 export class StatusBarVM {
-  mIsStart: boolean = false;
+  mIsStart = false;
   mStatusBarLayout: string[][] = [[], [], []];
-  mStatusBarEmptyWidth: any;
+  mStatusBarEmptyWidth;
   mUseCount = 0;
-  mStatusBarEnable: boolean = true;
+  mStatusBarEnable = true;
   mBackgroundDatas: StatusBarBackgroundData[];
-  mStatusBarData: StatusBarData = { ...new StatusBarData() }
+  mStatusBarData: StatusBarData = { ...new StatusBarData() };
   mComponentAreaMap: Map<string, Rect> = new Map();
   mComponentGroupContentDatas: StatusBarComponentGroupContentData[] = [
     new StatusBarComponentGroupContentData(), new StatusBarComponentGroupContentData(), new StatusBarComponentGroupContentData()];
@@ -48,12 +48,12 @@ export class StatusBarVM {
   mUseInWindowName: WindowType = WindowType.STATUS_BAR;
 
   constructor() {
-    Log.showInfo(TAG, `constructor`);
+    Log.showInfo(TAG, 'constructor');
     this.mStatusBarData = AppStorage.SetAndLink(TAG + '_StatusBarData', this.mStatusBarData).get();
     StatusBarService.setStatusBarData(this.mStatusBarData);
 
-    this.mStatusBarLayout = AppStorage.SetAndLink(StatusBarLayoutKey, this.mStatusBarLayout).get();
-    this.mStatusBarEmptyWidth = AppStorage.SetAndLink(StatusBarEmptyWidthKey, 0);
+    this.mStatusBarLayout = AppStorage.SetAndLink(STATUS_BAR_LAYOUT_KEY, this.mStatusBarLayout).get();
+    this.mStatusBarEmptyWidth = AppStorage.SetAndLink(STATUS_BAR_EMPTY_WIDTH_KEY, 0);
 
     let defaultBackgroundDatas: StatusBarBackgroundData[] = [];
     defaultBackgroundDatas.push(new StatusBarBackgroundData());
@@ -69,7 +69,7 @@ export class StatusBarVM {
     StatusBarService.registerListener(this);
   }
 
-  install() {
+  install(): void {
     Log.showInfo(TAG, `install, useCount: ${this.mUseCount}`);
     if (!this.mUseCount) {
       TintStateManager.getInstance().registerListener('status', this);
@@ -77,7 +77,7 @@ export class StatusBarVM {
     this.mUseCount++;
   }
 
-  uninstall() {
+  uninstall(): void {
     Log.showInfo(TAG, `uninstall, useCount: ${this.mUseCount}`);
     this.mUseCount--;
     if (this.mUseCount) {
@@ -85,7 +85,7 @@ export class StatusBarVM {
     }
   }
 
-  initViewModel(config, moduleName) {
+  initViewModel(config: StatusBarConfig, moduleName: string): void {
     if (this.mIsStart) {
       return;
     }
@@ -129,15 +129,7 @@ export class StatusBarVM {
       if (itemData.actionData.pluginData && itemData.actionData.pluginData.data) {
         data = JSON.parse(JSON.stringify(itemData.actionData.pluginData.data));
         if (Object.keys(data).length > 0) {
-          if (!data['fontSize']) {
-            data['fontSize'] = (StyleConfigurationCommon.getCommonStyle() as any).statusBarFontSize;
-          }
-          if (!data['fontColor']) {
-            if (!this.mComponentAreaMap.get(id)) {
-              this.changeComponentContent(id, { left: 0, top: 0, width: 0, height: 0 });
-            }
-            data['fontColor'] = this.getPluginTintContentInfo(id).contentColor;
-          }
+          this.setPluginDataFontColorSize(id, data);
         }
       }
       let pluginData = this.getPluginData(id);
@@ -162,7 +154,19 @@ export class StatusBarVM {
     return AppStorage.Get(storageKey);
   }
 
-  onTintStateChange(tintState: TintState) {
+  setPluginDataFontColorSize(id: string, data): void {
+    if (!data['fontSize']) {
+      data['fontSize'] = StyleConfigurationCommon.getCommonStyle().statusBarFontSize;
+    }
+    if (!data['fontColor']) {
+      if (!this.mComponentAreaMap.get(id)) {
+        this.changeComponentContent(id, { left: 0, top: 0, width: 0, height: 0 });
+      }
+      data['fontColor'] = this.getPluginTintContentInfo(id).contentColor;
+    }
+  }
+
+  onTintStateChange(tintState: TintState): void {
     Log.showInfo(TAG, `onTintStateChange, tintState: ${JSON.stringify(tintState)}`);
     if (typeof (tintState.isEnable) == 'boolean') {
       this.setStatusBarEnable(tintState.isEnable);
@@ -175,13 +179,17 @@ export class StatusBarVM {
     }
   }
 
-  setStatusBarEnable(isEnable: boolean) {
+  setStatusBarEnable(isEnable: boolean): void {
     Log.showInfo(TAG, `setStatusBarEnable, isEnable ${isEnable}`);
     if (this.mStatusBarEnable == isEnable) {
       return;
     }
     this.mStatusBarEnable = isEnable;
-    this.mStatusBarEnable ? WindowManager.showWindow(WindowType.STATUS_BAR) : WindowManager.hideWindow(WindowType.STATUS_BAR);
+    this.mStatusBarEnable ? WindowManager.showWindow(WindowType.STATUS_BAR).then(() => {
+    }).catch((err) => {
+    }) : WindowManager.hideWindow(WindowType.STATUS_BAR).then(() => {
+    }).catch((err) => {
+    });
   }
 
   changeBackground(tintState: TintState): void{
@@ -352,4 +360,4 @@ export class StatusBarVM {
 
 let sStatusBarVM = createOrGet(StatusBarVM, TAG);
 
-export default sStatusBarVM as StatusBarVM;
+export default sStatusBarVM;

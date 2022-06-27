@@ -13,23 +13,38 @@
  * limitations under the License.
  */
 
-import {ItemComponentData} from "../../../../../../../../common/src/main/ets/plugindatasource/common/Constants";
+import { ItemComponentData, FilterData
+} from '../../../../../../../../common/src/main/ets/plugindatasource/common/Constants';
 
 export default class Constants {
-  static TOUCHTYPE_DOWN = 0;
-  static TOUCHTYPE_UP = 1;
-  static TOUCHTYPE_MOVE = 2;
-  static TOGGLE_TYPE_COMPLEX = "complex";
-  static TOGGLE_TYPE_SIMPLE = "simple";
-  static COMPLEX_TOGGLE_GRID_ROW_HEIGHT = vp2px(132);
-  static COMPLEX_TOGGLE_GRID_ROW_GAP = vp2px(24);
-  static SIMPLE_TOGGLE_GRID_ROW_HEIGHT = vp2px(162);
-  static SIMPLE_TOGGLE_GRID_ROW_GAP = vp2px(0);
-  static DEFAULT_SIMPLE_TOGGLE_COLUMN_COUNT = 4;
-  static SIMPLE_TOGGLE_LAYOUT_MAX_TOGGLE_COUNT = 12;
-  static SIMPLE_TOGGLE_LAYOUT_MIN_TOGGLE_COUNT = 1;
+  static readonly TOUCHTYPE_DOWN = 0;
+  static readonly TOUCHTYPE_UP = 1;
+  static readonly TOUCHTYPE_MOVE = 2;
+  static readonly TOGGLE_TYPE_COMPLEX = 'complex';
+  static readonly TOGGLE_TYPE_SIMPLE = 'simple';
+  static readonly COMPLEX_TOGGLE_GRID_ROW_HEIGHT = vp2px(132);
+  static readonly COMPLEX_TOGGLE_GRID_ROW_GAP = vp2px(24);
+  static readonly SIMPLE_TOGGLE_GRID_ROW_HEIGHT = vp2px(162);
+  static readonly SIMPLE_TOGGLE_GRID_ROW_GAP = vp2px(0);
+  static readonly DEFAULT_SIMPLE_TOGGLE_COLUMN_COUNT = 4;
+  static readonly SIMPLE_TOGGLE_LAYOUT_MAX_TOGGLE_COUNT = 12;
+  static readonly SIMPLE_TOGGLE_LAYOUT_MIN_TOGGLE_COUNT = 1;
+  static readonly CONTROL_CENTER_TITLE_ICON_HOVER_WIDTH = '64vp';
+  static readonly CONTROL_CENTER_TITLE_ICON_HOVER_HEIGHT = '64vp';
+  static readonly CONTROL_CENTER_TITLE_ICON_HOVER_RADIUS = '16vp';
+  static readonly SIMPLE_TOGGLE_EDIT_DIALOG_DIVIDER_WIDTH = '1vp';
 }
 
 export type ControlComponentData = ItemComponentData & {
   toggleType: string;
+}
+
+export interface ControlCenterConfig {
+  ComplexToggleLayout: string[];
+  DefaultSimpleToggleLayout: string[];
+  LocalToggles: {
+    ComplexToggles: string[];
+    SimpleToggles: string[];
+  };
+  MetaToggles: FilterData[];
 }

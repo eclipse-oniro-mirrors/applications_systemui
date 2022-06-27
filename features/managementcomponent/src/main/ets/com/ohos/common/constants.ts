@@ -14,21 +14,21 @@
  */
 
 export default class Constants {
-    static WH_45_100 = '45%';
-    static WH_50_100 = '50%';
-    static WH_60_100 = '60%';
-    static WH_70_100 = '70%';
-    static WH_90_100 = '90%';
-    static WH_100_100 = '100%';
-    static MAX_LINES_1 = 1;
-    static MAX_LINES_2 = 2;
-    static MAX_LINES_3 = 3;
-    static TIME_EMPTY = '00:00';
-    static DATE_YEAR_IDX = 0;
-    static DATE_MONTH_IDX = 1;
-    static DATE_DAY_IDX = 2;
-    static DATE_HOUR_IDX = 3;
-    static DATE_MINUTE_IDX = 4;
+  static readonly WH_45_100 = '45%';
+  static readonly WH_50_100 = '50%';
+  static readonly WH_60_100 = '60%';
+  static readonly WH_70_100 = '70%';
+  static readonly WH_90_100 = '90%';
+  static readonly WH_100_100 = '100%';
+  static readonly MAX_LINES_1 = 1;
+  static readonly MAX_LINES_2 = 2;
+  static readonly MAX_LINES_3 = 3;
+  static readonly TIME_EMPTY = '00:00';
+  static readonly DATE_YEAR_IDX = 0;
+  static readonly DATE_MONTH_IDX = 1;
+  static readonly DATE_DAY_IDX = 2;
+  static readonly DATE_HOUR_IDX = 3;
+  static readonly DATE_MINUTE_IDX = 4;
 }
 
 /**

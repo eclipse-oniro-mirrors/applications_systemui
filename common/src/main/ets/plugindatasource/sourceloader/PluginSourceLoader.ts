@@ -27,8 +27,8 @@ export default class PluginSourceLoader extends SourceLoader {
 
   constructor(config: LoaderConfigInfo) {
     super(config);
-    this.mPluginFilter = config.action;
-    this.mPermission = config.permission;
+    this.mPluginFilter = config.action as string;
+    this.mPermission = config.permission as string;
     Log.showDebug(TAG, `init loader, mPluginFilter: ${this.mPluginFilter}, mPermission: ${this.mPermission}`);
   }
 
@@ -91,7 +91,7 @@ export default class PluginSourceLoader extends SourceLoader {
 
 function parseData(info: AbilityInfoWithId, data: PluginData): ItemComponentData | undefined {
   let { label, pluginType, icon, template, launchType, ...extra } = data;
-  if (pluginType.toString() != PluginType.PLUGIN_COMPONENT.toString()) {
+  if (pluginType == undefined || pluginType == null || pluginType.toString() != PluginType.PLUGIN_COMPONENT.toString()) {
     return undefined;
   }
   let itemData: ItemComponentData = {

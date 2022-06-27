@@ -14,13 +14,14 @@
  */
 
 import Log from '../../../../../../../../common/src/main/ets/default/Log'
-import EventManager, {unsubscribe} from '../../../../../../../../common/src/main/ets/default/event/EventManager'
+import EventManager, { unsubscribe } from '../../../../../../../../common/src/main/ets/default/event/EventManager'
 import CheckEmptyUtils from '../../../../../../../../common/src/main/ets/default/CheckEmptyUtils'
-import {WINDOW_SHOW_HIDE_EVENT} from '../../../../../../../../common/src/main/ets/default/WindowManager'
-import {PluginType} from "../../../../../../../../common/src/main/ets/plugindatasource/common/Constants"
+import { WINDOW_SHOW_HIDE_EVENT } from '../../../../../../../../common/src/main/ets/default/WindowManager'
+import { PluginType } from "../../../../../../../../common/src/main/ets/plugindatasource/common/Constants"
 import ViewModel from '../viewmodel/StatusBarVM'
-import StyleConfigurationCommon from '../../../../../../../../common/src/main/ets/default/StyleConfiguration'
-import StyleConfiguration from '../common/StyleConfiguration'
+import StyleConfigurationCommon, { CommonStyle
+} from '../../../../../../../../common/src/main/ets/default/StyleConfiguration'
+import StyleConfiguration, { IconItemComponentStyle } from '../common/StyleConfiguration'
 import MetaIconItemComponent from './MetaIconItemComponent'
 import PluginIconItemComponent from './PluginIconItemComponent'
 
@@ -34,8 +35,8 @@ export default struct IconItemComponent {
     selected: false
   }
   mClearCallback: unsubscribe | undefined
-  @State style: any = StyleConfiguration.getIconItemComponentStyle()
-  @State styleCommon: any = StyleConfigurationCommon.getCommonStyle()
+  @State style: IconItemComponentStyle = StyleConfiguration.getIconItemComponentStyle()
+  @State styleCommon: CommonStyle = StyleConfigurationCommon.getCommonStyle()
   @State mHasMarginLR: boolean = false
 
   aboutToAppear() {

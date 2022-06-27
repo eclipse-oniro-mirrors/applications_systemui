@@ -13,18 +13,17 @@
  * limitations under the License.
  */
 
-import ServiceExtension from '@ohos.application.ServiceExtensionAbility'
-import display from "@ohos.display";
-import Log from "../../../../../../../common/src/main/ets/default/Log";
-import WindowManager, {
-    WindowType
-} from "../../../../../../../common/src/main/ets/default/WindowManager";
-import AbilityManager from "../../../../../../../common/src/main/ets/default/abilitymanager/abilityManager";
+import ServiceExtension from '@ohos.application.ServiceExtensionAbility';
+import display from '@ohos.display';
+import Log from '../../../../../../../common/src/main/ets/default/Log';
+import WindowManager, { WindowType } from '../../../../../../../common/src/main/ets/default/WindowManager';
+import AbilityManager from '../../../../../../../common/src/main/ets/default/abilitymanager/abilityManager';
+import { Want } from 'ability/want';
 
-const TAG = "ControlPanel_ServiceExtAbility";
+const TAG = 'ControlPanel_ServiceExtAbility';
 
 class ServiceExtAbility extends ServiceExtension {
-  async onCreate(want) {
+  async onCreate(want: Want): Promise<void> {
     Log.showInfo(TAG, `onCreate, want: ${JSON.stringify(want)}`);
     AbilityManager.setContext(AbilityManager.ABILITY_NAME_CONTROL_PANEL, this.context);
 
@@ -37,18 +36,20 @@ class ServiceExtAbility extends ServiceExtension {
       height: (310 * dis.width) / 1280,
     };
 
-    AbilityManager.setAbilityData(AbilityManager.ABILITY_NAME_CONTROL_PANEL, "rect", rect);
-    AbilityManager.setAbilityData(AbilityManager.ABILITY_NAME_CONTROL_PANEL, "dis", {
+    AbilityManager.setAbilityData(AbilityManager.ABILITY_NAME_CONTROL_PANEL, 'rect', rect);
+    AbilityManager.setAbilityData(AbilityManager.ABILITY_NAME_CONTROL_PANEL, 'dis', {
       width: dis.width,
       height: dis.height,
     });
-    WindowManager.createWindow(this.context, WindowType.CONTROL_PANEL, rect, "pages/index").then(() => {
-      Log.showDebug(TAG, `createWindow success.`);
+    WindowManager.createWindow(this.context, WindowType.CONTROL_PANEL, rect, 'pages/index').then(() => {
+      Log.showDebug(TAG, 'createWindow success.');
+    }).then(() => {
+    }).catch((err) => {
     });
   }
 
-  onDestroy() {
-    Log.showInfo(TAG, "onDestroy");
+  onDestroy(): void {
+    Log.showInfo(TAG, 'onDestroy');
   }
 }
 

@@ -17,13 +17,15 @@ import StyleManager from '../../../../../../../common/src/main/ets/default/Style
 
 const TAG = 'clock-StyleConfiguration';
 
+export class ClockComponentStyle {
+  statusBarClockMaxWidth: Length = $r('app.float.status_bar_clock_width');
+}
+
 export default class StyleConfiguration {
-  static getClockComponentStyle() {
-    const key: string = TAG + "-ClockComponent";
+  static getClockComponentStyle(): ClockComponentStyle {
+    const key: string = TAG + '-ClockComponent';
     return StyleManager.getStyle(key, () => {
-      return {
-        statusBarClockMaxWidth: $r('app.float.status_bar_clock_width')
-      };
+      return new ClockComponentStyle();
     });
   }
 }

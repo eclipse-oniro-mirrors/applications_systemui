@@ -14,21 +14,21 @@
  */
 
 export default class Constants {
-  static NETWORK_TYPE_UNKNOWN = 0;
-  static NETWORK_TYPE_GSM = 1;
-  static NETWORK_TYPE_CDMA = 2;
-  static NETWORK_TYPE_W_CDMA = 3;
-  static NETWORK_TYPE_TDS_CDMA = 4;
-  static NETWORK_TYPE_LTE = 5;
-  static NETWORK_TYPE_NR = 6;
+  static readonly NETWORK_TYPE_UNKNOWN = 0;
+  static readonly NETWORK_TYPE_GSM = 1;
+  static readonly NETWORK_TYPE_CDMA = 2;
+  static readonly NETWORK_TYPE_W_CDMA = 3;
+  static readonly NETWORK_TYPE_TDS_CDMA = 4;
+  static readonly NETWORK_TYPE_LTE = 5;
+  static readonly NETWORK_TYPE_NR = 6;
 
-  static CELLULAR_SIGNAL_NO = 0;
-  static CELLULAR_SIGNAL_MIN = 1;
-  static CELLULAR_SIGNAL_LOW = 2;
-  static CELLULAR_SIGNAL_HALF = 3;
-  static CELLULAR_SIGNAL_HIGH = 4;
-  static CELLULAR_SIGNAL_FULL = 5;
-  static CELLULAR_NO_SIM_CARD = -1;
+  static readonly CELLULAR_SIGNAL_NO = 0;
+  static readonly CELLULAR_SIGNAL_MIN = 1;
+  static readonly CELLULAR_SIGNAL_LOW = 2;
+  static readonly CELLULAR_SIGNAL_HALF = 3;
+  static readonly CELLULAR_SIGNAL_HIGH = 4;
+  static readonly CELLULAR_SIGNAL_FULL = 5;
+  static readonly CELLULAR_NO_SIM_CARD = -1;
 
-  static NET_NULL = 'NULL';
+  static readonly NET_NULL = 'NULL';
 }

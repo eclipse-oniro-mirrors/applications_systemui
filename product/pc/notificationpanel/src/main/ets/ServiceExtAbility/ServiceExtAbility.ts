@@ -13,19 +13,17 @@
  * limitations under the License.
  */
 
-import ServiceExtension from "@ohos.application.ServiceExtensionAbility";
-import display from "@ohos.display";
-import Log from "../../../../../../../common/src/main/ets/default/Log";
-import WindowManager, {
-    WindowType
-} from "../../../../../../../common/src/main/ets/default/WindowManager";
-import AbilityManager from "../../../../../../../common/src/main/ets/default/abilitymanager/abilityManager";
+import ServiceExtension from '@ohos.application.ServiceExtensionAbility';
+import Want from '@ohos.application.Want';
+import display from '@ohos.display';
+import Log from '../../../../../../../common/src/main/ets/default/Log';
+import WindowManager, { WindowType } from '../../../../../../../common/src/main/ets/default/WindowManager';
+import AbilityManager from '../../../../../../../common/src/main/ets/default/abilitymanager/abilityManager';
 
-const TAG = "NotificationPanel_ServiceExtAbility";
+const TAG = 'NotificationPanel_ServiceExtAbility';
 
 class ServiceExtAbility extends ServiceExtension {
-
-  async onCreate(want) {
+  async onCreate(want: Want): Promise<void> {
     Log.showInfo(TAG, `onCreate, want: ${JSON.stringify(want)}`);
     AbilityManager.setContext(AbilityManager.ABILITY_NAME_NOTIFICATION_PANEL, this.context);
     globalThis[AbilityManager.ABILITY_NAME_OWNER_WANT] = want;
@@ -38,14 +36,16 @@ class ServiceExtAbility extends ServiceExtension {
       width: (402 * dis.width) / 1280,
       height: (381 * dis.width) / 1280,
     };
-    AbilityManager.setAbilityData(AbilityManager.ABILITY_NAME_NOTIFICATION_PANEL, "rect", rect);
-    AbilityManager.setAbilityData(AbilityManager.ABILITY_NAME_NOTIFICATION_PANEL, "dis", {
+    AbilityManager.setAbilityData(AbilityManager.ABILITY_NAME_NOTIFICATION_PANEL, 'rect', rect);
+    AbilityManager.setAbilityData(AbilityManager.ABILITY_NAME_NOTIFICATION_PANEL, 'dis', {
       width: dis.width,
       height: dis.height,
     });
 
-    WindowManager.createWindow(this.context, WindowType.NOTIFICATION_PANEL, rect, "pages/index").then(() => {
-      Log.showInfo(TAG, `onCreate, createWindow callback`);
+    WindowManager.createWindow(this.context, WindowType.NOTIFICATION_PANEL, rect, 'pages/index').then(() => {
+      Log.showInfo(TAG, 'onCreate, createWindow callback');
+    }).catch(err => {
+      Log.showError(TAG, `Can't create window, err:${JSON.stringify(err)}`);
     });
 
     AbilityManager.setContext(AbilityManager.ABILITY_NAME_BANNER_NOTICE, this.context);
@@ -54,17 +54,17 @@ class ServiceExtAbility extends ServiceExtension {
       top: 44 * dis.width / 1280,
       width: 402 * dis.width / 1280,
       height: 100 * dis.width / 1280
-    }
+    };
     AbilityManager.setAbilityData(AbilityManager.ABILITY_NAME_BANNER_NOTICE, 'bannerRect', bannerRect);
     WindowManager.createWindow(this.context, WindowType.BANNER_NOTICE, bannerRect, 'pages/bannerNotification')
       .then((win) => {
-        Log.showInfo(TAG, `onCreate, createWindow callback`);
+        Log.showInfo(TAG, 'onCreate, createWindow callback');
       })
-      .catch((err) => Log.showError(TAG, `Can't create window, err:${err}`));
+      .catch((err) => Log.showError(TAG, `Can't create window, err:${JSON.stringify(err)}`));
   }
 
-  onDestroy() {
-    Log.showInfo(TAG, "onDestroy");
+  onDestroy(): void {
+    Log.showInfo(TAG, 'onDestroy');
   }
 }
 

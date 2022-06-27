@@ -16,8 +16,9 @@
 import UpTitle from './UpTitle';
 import MyBrightness from '../../../../../../../brightnesscomponent/src/main/ets/default/pages/brightnessComponent';
 import Log from '../../../../../../../../common/src/main/ets/default/Log';
-import Constants from '../common/Constants';
-import StyleConfiguration from '../common/StyleConfiguration';
+import Constants, { ControlCenterConfig } from '../common/Constants';
+import StyleConfiguration, { ControlCenterComponentStyle, ControlCenterComplexToggleLayoutStyle,
+  ControlCenterSimpleToggleLayoutStyle } from '../common/StyleConfiguration';
 import ViewModel from '../viewmodel/ControlCenterVM';
 import ComplexToggleLoadComponent from './ComplexToggleLoadComponent';
 import SimpleToggleLoadComponent from './SimpleToggleLoadComponent';
@@ -34,9 +35,9 @@ export default struct ControlCenterComponent {
   private touchMoveCallback: Function;
   private modeChangeCallback: Function;
   @State mSimpleToggleColumnCount: number = Constants.DEFAULT_SIMPLE_TOGGLE_COLUMN_COUNT;
-  private mControlCenterComponentConfig: any = {};
+  private mControlCenterComponentConfig: ControlCenterConfig;
   @State mIsEditSimpleToggleLayout: boolean = false;
-  @State style: any = StyleConfiguration.getControlCenterComponentStyle();
+  @State style: ControlCenterComponentStyle = StyleConfiguration.getControlCenterComponentStyle();
   private mWidthPx: number = 0;
   private mDisplayingSimpleToggles: string[] = [];
   private mHidingSimpleToggles: string[] = [];
@@ -172,7 +173,7 @@ export default struct ControlCenterComponent {
 @Component
 struct ControlCenterComplexToggleLayout {
   @StorageLink('ControlCenterComplexToggleLayout') mComplexToggleLayout: string[] = [];
-  @State style: any = StyleConfiguration.getControlCenterComplexToggleLayoutStyle();
+  @State style: ControlCenterComplexToggleLayoutStyle = StyleConfiguration.getControlCenterComplexToggleLayoutStyle();
 
   aboutToAppear() {
     Log.showInfo(TAG_ControlCenterComplexToggleLayout, `aboutToAppear, mComplexToggleLayout: ${this.mComplexToggleLayout} `)
@@ -227,7 +228,7 @@ struct ControlCenterComplexToggleLayout {
 struct ControlCenterSimpleToggleLayout {
   @Prop mColumnCount: number;
   @StorageLink('ControlCenterSimpleToggleLayout') mSimpleToggleLayout: string[] = [];
-  @State style: any = StyleConfiguration.getControlCenterSimpleToggleLayoutStyle();
+  @State style: ControlCenterSimpleToggleLayoutStyle = StyleConfiguration.getControlCenterSimpleToggleLayoutStyle();
 
   aboutToAppear() {
     Log.showInfo(TAG_ControlCenterSimpleToggleLayout, `aboutToAppear, mSimpleToggleLayout: ${this.mSimpleToggleLayout} `);

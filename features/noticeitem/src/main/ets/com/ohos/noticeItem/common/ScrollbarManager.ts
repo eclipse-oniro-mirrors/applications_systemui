@@ -17,33 +17,33 @@ import Log from '../../../../../../../../../common/src/main/ets/default/Log';
 const TAG = 'ScrollbarManager';
 
 export default class ScrollbarManager {
-  static NotificationScrollBar = new Set<Scroller>();
+  static notificationScrollBar = new Set<Scroller>();
 
-  static add(scroller) {
-    let res = ScrollbarManager.NotificationScrollBar.add(scroller);
+  static add(scroller: Scroller): void {
+    let res = ScrollbarManager.notificationScrollBar.add(scroller);
     Log.showInfo(TAG, `add set's size:${res.size}`);
   }
 
-  static delete(scroller) {
-    Log.showInfo(TAG, `delete`);
-    ScrollbarManager.NotificationScrollBar.delete(scroller);
+  static delete(scroller: Scroller): void {
+    Log.showInfo(TAG, 'delete');
+    ScrollbarManager.notificationScrollBar.delete(scroller);
   }
 
-  static clear() {
-    Log.showInfo(TAG, `clear`);
-    ScrollbarManager.NotificationScrollBar.clear();
+  static clear(): void {
+    Log.showInfo(TAG, 'clear');
+    ScrollbarManager.notificationScrollBar.clear();
   }
 
-  static restoreOtherScroll(scroller) {
-    Log.showInfo(TAG, `restoreOtherScroll`);
+  static restoreOtherScroll(scroller: Scroller): void {
+    Log.showInfo(TAG, 'restoreOtherScroll');
     if (scroller.currentOffset().xOffset > 0) {
-      ScrollbarManager.NotificationScrollBar.forEach((item) => {
+      ScrollbarManager.notificationScrollBar.forEach((item) => {
         if (item !== scroller && item.currentOffset().xOffset > 0) {
-          item.scrollEdge(Edge.Start)
+          item.scrollEdge(Edge.Start);
         }
-      })
+      });
       ScrollbarManager.clear();
-      ScrollbarManager.NotificationScrollBar.add(scroller);
+      ScrollbarManager.notificationScrollBar.add(scroller);
     }
   }
 }

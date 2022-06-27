@@ -18,51 +18,59 @@ import Constants from './Constants';
 
 const TAG = 'statusBar-StyleConfiguration';
 
+export class VerticalStatusBarItemLoadComponentStyle {
+  statusBarVerticalComponentHeight: number = vp2px(Constants.VERTICAL_COMPONENT_HEIGHT_VP);
+}
+
+export class StatusBarNotificationIconStyle {
+  iconWidth: Length = $r('app.float.status_bar_notification_icon_width');
+  iconHeight: Length = $r('app.float.status_bar_notification_icon_height');
+  iconSpace: Length = $r('app.float.status_bar_notification_icon_space');
+}
+
+export class IconItemComponentStyle {
+  stackHeight: Length = $r('app.float.status_bar_icon_item_stack_height');
+  stackPadding: Length = $r('app.float.status_bar_icon_item_stack_padding');
+  stackBorderRadius: Length = $r('app.float.status_bar_icon_item_stack_border_radius');
+  stackBgColorSelected: ResourceColor = $r('app.color.status_bar_icon_item_stack_bg_color_selected');
+  stackBgColorUnSelected: ResourceColor = $r('app.color.status_bar_icon_item_stack_bg_color_un_selected');
+  componentSpace: Length = $r('app.float.status_bar_icon_item_component_space');
+  iconWidth: Length = $r('app.float.status_bar_icon_item_icon_width');
+  iconHeight: Length = $r('app.float.status_bar_icon_item_icon_height');
+  marginLeft: Length = $r('app.float.status_bar_icon_item_margin_left');
+  marginRight: Length = $r('app.float.status_bar_icon_item_margin_right');
+}
+
+export class PluginIconItemComponentStyle {
+  iconWidth: number = vp2px(Constants.PLUGIN_COMPONENT_ICON_WIDTH);
+}
+
 export default class StyleConfiguration {
-    static getVerticalStatusBarItemLoadComponentStyle() {
-        const key: string = TAG + "-VerticalStatusBarItemLoadComponent";
-        return StyleManager.getStyle(key, () => {
-            return {
-                statusBarVerticalComponentHeight: vp2px(Constants.VERTICAL_COMPONENT_HEIGHT_VP),
-            };
-        });
-    }
+  static getVerticalStatusBarItemLoadComponentStyle(): VerticalStatusBarItemLoadComponentStyle {
+    const key: string = TAG + '-VerticalStatusBarItemLoadComponent';
+    return StyleManager.getStyle(key, () => {
+      return new VerticalStatusBarItemLoadComponentStyle();
+    });
+  }
 
-    static getStatusBarNotificationIconStyle() {
-        const key: string = TAG + "-StatusBarNotificationIcon";
-        return StyleManager.getStyle(key, () => {
-            return {
-                iconWidth: $r('app.float.status_bar_notification_icon_width'),
-                iconHeight: $r('app.float.status_bar_notification_icon_height'),
-                iconSpace: $r('app.float.status_bar_notification_icon_space'),
-            };
-        });
-    }
+  static getStatusBarNotificationIconStyle(): StatusBarNotificationIconStyle {
+    const key: string = TAG + '-StatusBarNotificationIcon';
+    return StyleManager.getStyle(key, () => {
+      return new StatusBarNotificationIconStyle();
+    });
+  }
 
-    static getIconItemComponentStyle() {
-        const key: string = TAG + "-IconItemComponent";
-        return StyleManager.getStyle(key, () => {
-            return {
-                stackHeight: $r('app.float.status_bar_icon_item_stack_height'),
-                stackPadding: $r('app.float.status_bar_icon_item_stack_padding'),
-                stackBorderRadius: $r('app.float.status_bar_icon_item_stack_border_radius'),
-                stackBgColorSelected: $r('app.color.status_bar_icon_item_stack_bg_color_selected'),
-                stackBgColorUnSelected: $r('app.color.status_bar_icon_item_stack_bg_color_un_selected'),
-                componentSpace: $r('app.float.status_bar_icon_item_component_space'),
-                iconWidth: $r('app.float.status_bar_icon_item_icon_width'),
-                iconHeight: $r('app.float.status_bar_icon_item_icon_height'),
-                marginLeft: $r('app.float.status_bar_icon_item_margin_left'),
-                marginRight: $r('app.float.status_bar_icon_item_margin_right'),
-            };
-        });
-    }
+  static getIconItemComponentStyle(): IconItemComponentStyle {
+    const key: string = TAG + '-IconItemComponent';
+    return StyleManager.getStyle(key, () => {
+      return new IconItemComponentStyle();
+    });
+  }
 
-    static getPluginIconItemComponentStyle() {
-        const key: string = TAG + '-PluginIconItemComponent';
-        return StyleManager.getStyle(key, () => {
-            return {
-                iconWidth : vp2px(Constants.PLUGIN_COMPONENT_ICON_WIDTH),
-            };
-        });
-    }
+  static getPluginIconItemComponentStyle(): PluginIconItemComponentStyle {
+    const key: string = TAG + '-PluginIconItemComponent';
+    return StyleManager.getStyle(key, () => {
+      return new PluginIconItemComponentStyle();
+    });
+  }
 }

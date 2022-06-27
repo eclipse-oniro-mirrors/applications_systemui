@@ -17,18 +17,18 @@ import Log from '../../../../../../../../common/src/main/ets/default/Log';
 import BundleResourceModel from '../model/bundleResourceModel';
 
 
-const TAG = 'ManagementComponent-AppLstComponentViewModel'
+const TAG = 'ManagementComponent-AppLstComponentViewModel';
 
 export class AppLstComponentViewModel {
-  bundleInfoList: any[]= [];
+  bundleInfoList = [];
 
-  ViewModelInit(): void{
+  viewModelInit(): void{
     Log.showInfo(TAG, 'ViewModelInit');
-    let dataModel:BundleResourceModel = new BundleResourceModel()
-    dataModel.getAllBundleInfos()
+    let dataModel: BundleResourceModel = new BundleResourceModel();
+    void dataModel.getAllBundleInfos();
   }
 }
 
 let appLstComponentViewModel = new AppLstComponentViewModel();
 
-export default appLstComponentViewModel as AppLstComponentViewModel;
+export default appLstComponentViewModel ;

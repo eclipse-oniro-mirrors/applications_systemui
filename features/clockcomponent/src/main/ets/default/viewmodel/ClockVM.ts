@@ -14,8 +14,9 @@
  */
 
 import Log from '../../../../../../../common/src/main/ets/default/Log';
-import {FASlotName} from '../../../../../../../common/src/main/ets/default/Constants';
-import {TintContentInfo, getOrCreateTintContentInfo} from '../../../../../../../common/src/main/ets/default/TintStateManager';
+import { FASlotName } from '../../../../../../../common/src/main/ets/default/Constants';
+import { TintContentInfo, getOrCreateTintContentInfo
+} from '../../../../../../../common/src/main/ets/default/TintStateManager';
 import createOrGet from '../../../../../../../common/src/main/ets/default/SingleInstanceHelper';
 
 const TAG = 'ClockVM';
@@ -24,7 +25,7 @@ export class ClockVM {
   mTintContentInfo: TintContentInfo = getOrCreateTintContentInfo(FASlotName.CLOCK);
 
   constructor() {
-    Log.showDebug(TAG, `constructor`);
+    Log.showDebug(TAG, 'constructor');
   }
 
   getTintContentInfo(): TintContentInfo {
@@ -34,4 +35,4 @@ export class ClockVM {
 
 let sClockVM = createOrGet(ClockVM, TAG);
 
-export default sClockVM as ClockVM;
+export default sClockVM;

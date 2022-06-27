@@ -22,7 +22,7 @@ import LocationIcon from '../../../../../../../features/locationcomponent/src/ma
 import RingModeIcon from '../../../../../../../features/ringmodecomponent/src/main/ets/com/ohos/pages/StatusBarIconItemRingModeComponent'
 import Log from '../../../../../../../common/src/main/ets/default/Log'
 import Constants from './common/constants'
-import StyleConfiguration from './common/StyleConfiguration'
+import StyleConfiguration, { ControlStyle } from './common/StyleConfiguration'
 import ControlCenterConfig from './common/ControlCenterConfig';
 
 const TAG = 'DropdownPanel-Control';
@@ -34,7 +34,7 @@ export default struct Control {
   startY: number = 0
   @State moveX: number = 0
   @State moveY: number = 0
-  @State style: any = StyleConfiguration.getControlStyle()
+  @State style: ControlStyle = StyleConfiguration.getControlStyle()
 
   aboutToAppear() {
     Log.showInfo(TAG, `aboutToAppear Start`)

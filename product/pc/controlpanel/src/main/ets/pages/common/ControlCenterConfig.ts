@@ -12,37 +12,24 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import {FASlotName} from '../../../../../../../../common/src/main/ets/default/Constants';
+import { FASlotName } from '../../../../../../../../common/src/main/ets/default/Constants';
+import { ControlCenterConfig
+} from '../../../../../../../../features/controlcentercomponent/src/main/ets/com/ohos/common/Constants';
 
-type pluginIconData = {
-  id: string;
-  bundleName: string;
-  abilityName: string;
-};
-type Config = {
-  ComplexToggleLayout: Array<string>;
-  DefaultSimpleToggleLayout: Array<string>;
-  LocalToggles: {
-    ComplexToggles: Array<string>;
-    SimpleToggles: Array<string>;
-  };
-  MetaToggles: Array<pluginIconData>;
-};
-
-const ControlCenterConfig: Config = {
+const controlCenterConfig: ControlCenterConfig = {
   ComplexToggleLayout: [FASlotName.WIFI, FASlotName.BLUETOOTH],
-  DefaultSimpleToggleLayout: ["screenshot", FASlotName.RING_MODE, FASlotName.LOCATION],
+  DefaultSimpleToggleLayout: ['screenshot', FASlotName.RING_MODE, FASlotName.LOCATION],
   LocalToggles: {
     ComplexToggles: [FASlotName.AIR_PLANE, FASlotName.BLUETOOTH, FASlotName.WIFI],
     SimpleToggles: [FASlotName.LOCATION, FASlotName.RING_MODE],
   },
   MetaToggles: [
     {
-      id: "screenshot",
-      bundleName: "com.ohos.screenshot",
-      abilityName: "com.ohos.screenshot.ServiceExtAbility",
+      id: 'screenshot',
+      bundleName: 'com.ohos.screenshot',
+      abilityName: 'com.ohos.screenshot.ServiceExtAbility',
     },
   ],
 };
 
-export default ControlCenterConfig;
+export default controlCenterConfig;

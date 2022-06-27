@@ -15,11 +15,11 @@
 
 import Log from '../../../../../../../../common/src/main/ets/default/Log'
 import EventManager from "../../../../../../../../common/src/main/ets/default/event/EventManager"
-import {obtainStartAbility} from "../../../../../../../../common/src/main/ets/default/event/EventUtil"
-import {AudioRingMode} from '../common/Constants'
+import { obtainStartAbility } from "../../../../../../../../common/src/main/ets/default/event/EventUtil"
+import { AudioRingMode } from '../common/Constants'
 import ViewModel from '../viewmodel/RingModeVM'
 import SimpleToggleBase from '../../../../../../../../common/src/main/ets/template/SimpleToggleBase'
-import StyleConfiguration from '../common/StyleConfiguration'
+import StyleConfiguration, { ControlCenterRingModeComponentStyle } from '../common/StyleConfiguration'
 
 const TAG = 'ringmode-ControlCenterSimpleToggleRingModeComponent'
 
@@ -32,7 +32,7 @@ export default struct ControlCenterSimpleToggleRingModeComponent {
   @State mLabel: Resource = $r("app.string.control_center_complex_toggle_ring_mode_title_on")
   @State mDefaultChangeSwitch: boolean  = true
   @StorageLink('RingModeComponentMode') @Watch('onRingModeUpdated') RingModeComponentMode: AudioRingMode = AudioRingMode.RINGER_MODE_NORMAL
-  @State style: any = StyleConfiguration.getControlCenterRingModeComponentStyle()
+  @State style: ControlCenterRingModeComponentStyle = StyleConfiguration.getControlCenterRingModeComponentStyle()
 
   aboutToAppear() {
     Log.showInfo(TAG, 'aboutToAppear');

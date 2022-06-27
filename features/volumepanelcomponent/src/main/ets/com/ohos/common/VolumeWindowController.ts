@@ -16,11 +16,11 @@
 import Log from '../../../../../../../../common/src/main/ets/default/Log';
 import getSingleInstance from '../../../../../../../../common/src/main/ets/default/SingleInstanceHelper';
 import VolumePanelService from '../model/VolumePanelService';
-import {VolumeInfo} from '../common/Constants';
+import { VolumeInfo } from '../common/Constants';
 
-const TAG = 'VolumeWindowController'
-const SINGLE_STANCE_KEY = 'VolumeWindowController'
-const INTERVAL = 3 * 1000
+const TAG = 'VolumeWindowController';
+const SINGLE_STANCE_KEY = 'VolumeWindowController';
+const INTERVAL = 3 * 1000;
 
 export default class VolumeWindowController {
   mWindowHandle: any;
@@ -29,25 +29,25 @@ export default class VolumeWindowController {
   mIsWindowShown: boolean;
 
   static getInstance(): VolumeWindowController{
-    return getSingleInstance(VolumeWindowController, SINGLE_STANCE_KEY)
+    return getSingleInstance(VolumeWindowController, SINGLE_STANCE_KEY);
   }
 
   constructor() {
     VolumePanelService.startService();
     VolumePanelService.registerListener(this);
-    Log.showInfo(TAG, `constructor done.`);
+    Log.showInfo(TAG, 'constructor done.');
   }
 
-  setInterval(interval) {
+  setInterval(interval: number): void {
     this.mInterval = interval;
   }
 
-  setWindowHandle(windowHandle) {
-    Log.showInfo(TAG, `setWindowHandle windowHandle：${windowHandle}`);
+  setWindowHandle(windowHandle): void {
+    Log.showInfo(TAG, `setWindowHandle windowHandle:${windowHandle}`);
     this.mWindowHandle = windowHandle;
   }
 
-  updateVolumeInfo(volumeInfo: VolumeInfo) {
+  updateVolumeInfo(volumeInfo: VolumeInfo): void {
     Log.showDebug(TAG, `updateVolumeInfo, volumeInfo: ${JSON.stringify(volumeInfo)} `);
     if (volumeInfo && !volumeInfo.updateUi && !this.mIsWindowShown) {
       return;
@@ -55,14 +55,14 @@ export default class VolumeWindowController {
     this.setWindowState(true);
     this.mLastActionTime = (new Date()).getTime();
     setTimeout(() => {
-      Log.showInfo(TAG, `check need hide window or not.`);
+      Log.showInfo(TAG, 'check need hide window or not.');
       if ((new Date()).getTime() - this.mLastActionTime >= this.mInterval) {
         this.setWindowState(false);
       }
     }, this.mInterval);
   }
 
-  setWindowState(isShow: boolean) {
+  setWindowState(isShow: boolean): void {
     Log.showInfo(TAG, `setWindowState ${isShow}.`);
     if (this.mIsWindowShown == isShow) {
       Log.showInfo(TAG, `Neen't set volueme window state.`);

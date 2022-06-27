@@ -15,7 +15,8 @@
 
 import Log from '../../../../../../../../common/src/main/ets/default/Log';
 import Constants from '../common/Constants';
-import StyleConfiguration from '../common/StyleConfiguration';
+import StyleConfiguration, { SimpleToggleLayoutEditComponentStyle, SimpleToggleLayoutEditUpTitleStyle,
+  SimpleToggleLayoutEditOptMsgStyle } from '../common/StyleConfiguration';
 import SimpleToggleLayoutEditGrid from './SimpleToggleLayoutEditGrid';
 import SimpleToggleLayoutEditDialogComponent from './SimpleToggleLayoutEditDialogComponent';
 
@@ -33,7 +34,7 @@ export default struct SimpleToggleLayoutEditComponent {
   private onSaveDisplayingToggles: (toggles: string[]) => void;
   @State mNewDisplayingToggles: string[] = [];
   @State mNewHidingToggles: string[] = [];
-  @State style: any = StyleConfiguration.getSimpleToggleLayoutEditComponentStyle();
+  @State style: SimpleToggleLayoutEditComponentStyle = StyleConfiguration.getSimpleToggleLayoutEditComponentStyle();
   @State mOptMsg: Resource = $r('app.string.control_center_simple_toggle_layout_edit_opt_desc');
   private mDisplayingTogglesMaxCount: number = Constants.SIMPLE_TOGGLE_LAYOUT_MAX_TOGGLE_COUNT;
   private mDisplayingTogglesMinCount: number = Constants.SIMPLE_TOGGLE_LAYOUT_MIN_TOGGLE_COUNT;
@@ -364,8 +365,8 @@ export default struct SimpleToggleLayoutEditComponent {
 
 @Component
 struct SimpleToggleLayoutEditUpTitle {
-  private simpleToggleLayoutEditEndCallback: Function
-  @State style: any = StyleConfiguration.getSimpleToggleLayoutEditUpTitleStyle()
+  private simpleToggleLayoutEditEndCallback: Function;
+  @State style: SimpleToggleLayoutEditUpTitleStyle = StyleConfiguration.getSimpleToggleLayoutEditUpTitleStyle();
 
   aboutToAppear() {
     Log.showInfo(TAG_SimpleToggleLayoutEditUpTitle, 'aboutToAppear');
@@ -406,7 +407,7 @@ struct SimpleToggleLayoutEditUpTitle {
 @Component
 struct SimpleToggleLayoutEditOptMsg {
   @Link mOptMsg: Resource;
-  @State style: any = StyleConfiguration.getSimpleToggleLayoutEditOptMsgStyle();
+  @State style: SimpleToggleLayoutEditOptMsgStyle = StyleConfiguration.getSimpleToggleLayoutEditOptMsgStyle();
 
   aboutToAppear() {
     Log.showInfo(TAG_SimpleToggleLayoutEditOptMsg, 'aboutToAppear');

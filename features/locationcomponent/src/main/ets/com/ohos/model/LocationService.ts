@@ -19,62 +19,71 @@ import createOrGet from '../../../../../../../../common/src/main/ets/default/Sin
 
 const TAG = 'LocationModel';
 
-export class LocationService {
-  mIsStart: boolean = false;
-  mListener: any;
+export interface LocationStatrListener {
+  updateServiceState(status: boolean): void;
+}
 
-  startService() {
+export class LocationService {
+  mIsStart = false;
+  mListener: LocationStatrListener;
+
+  startService(): void {
     if (this.mIsStart) {
       return;
     }
-    Log.showInfo(TAG, `startService`);
+    Log.showInfo(TAG, 'startService');
     this.mIsStart = true;
     this.getServiceState();
-    geolocation.on('locationServiceState', (state) => {
+    geolocation.on('locationServiceState', (state: boolean) => {
       Log.showInfo(TAG, `startService locationChange, state: ${JSON.stringify(state)}`);
       this.getServiceState();
     });
   }
 
-  stopService() {
+  stopService(): void {
     if (!this.mIsStart) {
       return;
     };
-    Log.showInfo(TAG, `stopService`);
+    Log.showInfo(TAG, 'stopService');
     this.mIsStart = false;
-    geolocation.off('locationServiceState', (state) => {
+    geolocation.off('locationServiceState', (state: boolean) => {
       Log.showInfo(TAG, `stopService locationChange, state: ${JSON.stringify(state)}`)
     });
   }
 
-  registerListener(listener: {
-    'updateServiceState': Function,
-  }) {
+  registerListener(listener: LocationStatrListener): void {
     Log.showInfo(TAG, `registerListener, listener: ${listener}`);
     this.mListener = listener;
   }
 
-  getServiceState() {
-    Log.showDebug(TAG, `getServiceState`);
+  getServiceState(): void {
+    Log.showDebug(TAG, 'getServiceState');
     geolocation.isLocationEnabled().then((data) => {
       Log.showInfo(TAG, `getServiceState isLocationEnabled, data: ${JSON.stringify(data)}`);
       this.mListener?.updateServiceState(data);
+    }).then(() => {
+    }).catch((err) => {
     });
   }
 
-  enableLocation() {
-    Log.showInfo(TAG, `enableLocation`);
+  enableLocation(): void {
+    Log.showInfo(TAG, 'enableLocation');
     geolocation.enableLocation()
-      .then((res) => Log.showInfo(TAG, `enableLocation, result: ${JSON.stringify(res)}`));
+      .then((res) => Log.showInfo(TAG, `enableLocation, result: ${JSON.stringify(res)}`))
+      .then(() => {
+      }).catch((err) => {
+    });
   }
 
-  disableLocation() {
-    Log.showInfo(TAG, `disableLocation`);
+  disableLocation(): void {
+    Log.showInfo(TAG, 'disableLocation');
     geolocation.disableLocation()
-      .then((res) => Log.showInfo(TAG, `disableLocation, result: ${JSON.stringify(res)}`));
+      .then((res) => Log.showInfo(TAG, `disableLocation, result: ${JSON.stringify(res)}`)).then(() => {
+    }).catch((err) => {
+    });
   }
 }
 
 let sLocationService = createOrGet(LocationService, TAG);
 
-export default sLocationService as LocationService;
+export default sLocationService;

@@ -13,18 +13,18 @@
  * limitations under the License.
  */
 
-import {Event} from "../../../../../../../../common/src/main/ets/default/event/EventUtil";
-import {ItemComponentData, ActionData}
-from "../../../../../../../../common/src/main/ets/plugindatasource/common/Constants";
+import { Event } from '../../../../../../../../common/src/main/ets/default/event/EventUtil';
+import { ItemComponentData, ActionData, FilterData
+} from '../../../../../../../../common/src/main/ets/plugindatasource/common/Constants';
 
 export default class Constants {
-  static EMPTY_AREA_POSITION_LEFT = 'left';
-  static EMPTY_AREA_POSITION_CENTER = 'center';
-  static EMPTY_AREA_POSITION_RIGHT = 'right';
-  static GROUP_ID_LEFT = 1;
-  static GROUP_ID_CENTER = 2;
-  static GROUP_ID_RIGHT = 3;
-  static VERTICAL_COMPONENT_HEIGHT_VP = 58;
+  static readonly EMPTY_AREA_POSITION_LEFT = 'left';
+  static readonly EMPTY_AREA_POSITION_CENTER = 'center';
+  static readonly EMPTY_AREA_POSITION_RIGHT = 'right';
+  static readonly GROUP_ID_LEFT = 1;
+  static readonly GROUP_ID_CENTER = 2;
+  static readonly GROUP_ID_RIGHT = 3;
+  static readonly VERTICAL_COMPONENT_HEIGHT_VP = 58;
   static readonly PLUGIN_COMPONENT_ICON_WIDTH = 32;
   static readonly PLUGIN_COMPONENT_OWNER_WANT_KEY = 'StatusBar_PluginComponentOwnerWant';
 }
@@ -51,11 +51,37 @@ export class StatusBarData {
 }
 
 export class StatusBarBackgroundData {
-  backgroundColor: string = "#FFFF0000";
-  width: number = 0;
+  backgroundColor = '#FFFF0000';
+  width = 0;
 }
 
 export class StatusBarComponentGroupContentData {
-  contentColor: string = "#FFFFFFFF";
-  width: number = 0;
+  contentColor = '#FFFFFFFF';
+  width = 0;
+}
+
+export interface LayoutGroup {
+  id: number;
+  Components: string[];
+}
+
+export interface DropdownRange {
+  startPosition: number;
+  endPosition: number;
+}
+
+export interface StatusBarConfig {
+  LayoutGroups: LayoutGroup[];
+  LocalSlots: string[];
+  MetaSlots: FilterData[];
+  emptyPosition: {
+    x1: number;
+    x2: number;
+    y1: number;
+    y2: number
+  };
+  dropdownRanges?: {
+    notification: DropdownRange;
+    control: DropdownRange
+  }
 }

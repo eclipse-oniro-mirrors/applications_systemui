@@ -15,39 +15,40 @@
 
 import keyCodeEvent from '../../../../../../../features/navigationservice/src/main/ets/com/ohos/navigationservice/KeyCodeEvent';
 import Log from '../../../../../../../common/src/main/ets/default/Log';
-import Constants from '../common/constants'
-import StyleConfiguration from '../common/StyleConfiguration'
+import Constants from '../common/constants';
+import StyleConfiguration, { KeyButtonStyle } from '../common/StyleConfiguration';
 import NavigationBarViewModel from '../viewmodel/NavigationBarViewModel';
-import {NavigationBarComponentData} from '../common/constants'
+import { NavigationBarComponentData } from '../common/constants';
 
 const TAG = 'NavigationBar-KeyButton';
 
 @Component
 export default struct keyButton {
-
   private uri: any;
   @Prop keyCode: number;
   @State backGroundColor: any = $r('app.color.button_default_background');
   @StorageLink("showNavHorizontal") showNavHorizontal: boolean = AppStorage.SetAndLink("showNavHorizontal", true).get();
   @State mNavigationBarComponentData: NavigationBarComponentData = NavigationBarViewModel.getInstance()
     .getNavigationBarComponentData()
-  @State style: any = StyleConfiguration.getKeyButtonStyle()
+  @State style: KeyButtonStyle = StyleConfiguration.getKeyButtonStyle()
 
   aboutToAppear() {
     Log.showInfo(TAG, `aboutToAppear Start`)
   }
 
-  aboutToDisappear(){
+  aboutToDisappear() {
     Log.showInfo(TAG, `aboutToDisAppear`)
   }
 
   build() {
     Stack({ alignContent: Alignment.Center }) {
-      Flex() {}
+      Flex() {
+      }
       .borderRadius(this.style.buttonBorderRadius)
       .width('100%')
       .height('100%')
       .backgroundColor(this.backGroundColor)
+
       Image(this.uri)
         .objectFit(ImageFit.Contain)
         .size({
@@ -61,12 +62,12 @@ export default struct keyButton {
     .height(this.showNavHorizontal ? this.style.buttonHeight : this.style.buttonWidth)
   }
 
-  private onKeyTouch(event:TouchEvent) {
+  private onKeyTouch(event: TouchEvent) {
     Log.showDebug(TAG, `onKeyTouch event: ${ event }`)
     let eventType = event.type;
-    switch(eventType) {
+    switch (eventType) {
       case Constants.KEY_DOWN:
-        this.backGroundColor =$r('app.color.button_click_background')
+        this.backGroundColor = $r('app.color.button_click_background')
         break;
       case Constants.KEY_UP:
         this.backGroundColor = $r('app.color.button_default_background')

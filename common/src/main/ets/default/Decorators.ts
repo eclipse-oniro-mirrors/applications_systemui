@@ -13,33 +13,33 @@
  * limitations under the License.
  */
 
-import Log from "./Log";
+import Log from './Log';
 
-const TAG = "Decorators";
+const TAG = 'Decorators';
 
 export function debounce(timeout: number) {
-    return function inner(target: any, propKey: string, descriptor: PropertyDescriptor) {
-        let curFunc: number = 0;
-        const original = descriptor.value;
-        descriptor.value = function (...args: string[]) {
-            Log.showInfo(TAG, `debounce invoke ${propKey} curFunc: ${curFunc}`);
-            curFunc && clearTimeout(curFunc);
-            curFunc = setTimeout(() => original.call(this, ...args), timeout);
-        };
+  return function inner(target: any, propKey: string, descriptor: PropertyDescriptor) {
+    let curFunc = 0;
+    const original = descriptor.value;
+    descriptor.value = function (...args: string[]) {
+      Log.showInfo(TAG, `debounce invoke ${propKey} curFunc: ${curFunc}`);
+      curFunc && clearTimeout(curFunc);
+      curFunc = setTimeout(() => original.call(this, ...args), timeout);
     };
+  };
 }
 
 export function throttle(waitTime: number) {
-    return function inner(target: any, propKey: string, descriptor: PropertyDescriptor) {
-        let lastTime: number = 0;
-        const original = descriptor.value;
-        descriptor.value = function (...args: string[]) {
-            let curTime = Date.now();
-            Log.showInfo(TAG, `throttle invoke ${propKey} timeInterval: ${curTime - lastTime}`);
-            if (curTime - lastTime >= waitTime) {
-                original.call(this, ...args);
-                lastTime = curTime;
-            }
-        };
+  return function inner(target: any, propKey: string, descriptor: PropertyDescriptor) {
+    let lastTime = 0;
+    const original = descriptor.value;
+    descriptor.value = function (...args: string[]) {
+      let curTime = Date.now();
+      Log.showInfo(TAG, `throttle invoke ${propKey} timeInterval: ${curTime - lastTime}`);
+      if (curTime - lastTime >= waitTime) {
+        original.call(this, ...args);
+        lastTime = curTime;
+      }
     };
+  };
 }

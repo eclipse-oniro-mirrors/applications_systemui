@@ -14,9 +14,9 @@
  */
 
 export default class Constants {
-  static WH_50_100 = '50%';
-  static WH_70_100 = '70%';
-  static WH_90_100 = '90%';
-  static WH_100_100 = '100%';
-  static TOPMOST_INDEX = 999
+  static readonly WH_50_100 = '50%';
+  static readonly WH_70_100 = '70%';
+  static readonly WH_90_100 = '90%';
+  static readonly WH_100_100 = '100%';
+  static readonly TOPMOST_INDEX = 999;
 }

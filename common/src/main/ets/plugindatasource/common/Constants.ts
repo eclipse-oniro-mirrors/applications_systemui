@@ -13,72 +13,75 @@
  * limitations under the License.
  */
 
-import { Event } from "../../default/Event/EventUtil";
+import { Event } from '../../default/event/EventUtil';
 
 export default class Constants {
-    static INIT_CONFIG = "initConfig";
-    static INIT_FINISH = "initFinish";
-    static CLEAR_ALL = "clearAll";
-    static ADD_ITEM = "addItem";
-    static REMOVE_ITEM = "removeItem";
-    static LOCAL_DEVICE = "local";
-    static LOAD_DATA = "loadData";
-    static readonly LOAD_PLUGIN_COMPONENT_DATA = 'loadPluginComponentData';
-    static readonly UPDATE_PLUGIN_COMPONENT_DATA = 'updatePluginComponentData';
+  static readonly INIT_CONFIG = 'initConfig';
+  static readonly INIT_FINISH = 'initFinish';
+  static readonly CLEAR_ALL = 'clearAll';
+  static readonly ADD_ITEM = 'addItem';
+  static readonly REMOVE_ITEM = 'removeItem';
+  static readonly LOCAL_DEVICE = 'local';
+  static readonly LOAD_DATA = 'loadData';
+  static readonly LOAD_PLUGIN_COMPONENT_DATA = 'loadPluginComponentData';
+  static readonly UPDATE_PLUGIN_COMPONENT_DATA = 'updatePluginComponentData';
 }
 
 export type FilterData = {
-    id: string;
-    bundleName: string;
-    abilityName: string;
+  id: string;
+  bundleName: string;
+  abilityName: string;
 };
 
 export type RootConfigInfo = {
-    action: string;
-    filterDatas: FilterData[];
-    loaderConfig: {
-        [key in any]: LoaderConfigInfo;
-    };
+  action: string;
+  filterDatas: FilterData[];
+  loaderConfig: {
+    [key in any]: LoaderConfigInfo;
+  };
 };
 
 export type LoaderConfigInfo = {
-    [key: string]: any;
+  [key: string]: any;
 };
 
 export enum PluginType {
-    META = 1,
-    DATA_ABILITY = 2,
-    PLUGIN_COMPONENT = 3,
+  META = 1,
+  DATA_ABILITY = 2,
+  PLUGIN_COMPONENT = 3,
 }
 
-export function obtainMsg(action: string, data: any) {
-    return { action: action, data: data };
+export function obtainMsg(action: string, data: any): {
+  action: string,
+  data: any
+} {
+  return { action: action, data: data };
 }
 
 export type ItemComponentData = {
-    id: string;
-    pluginType: number;
-    deviceId: string;
-    bundleName: string;
-    abilityName: string;
-    abilityLabelId: number;
-    abilityIconId: number;
-    label?: string;
-    iconUrl?: Resource | string;
-    template?: string;
-    state?: any;
-    actionData?: ActionData;
+  id: string;
+  pluginType: number;
+  deviceId: string;
+  bundleName: string;
+  abilityName: string;
+  abilityLabelId: number;
+  abilityIconId: number;
+  label?: string;
+  iconUrl?: Resource | string;
+  template?: string;
+  state?: any;
+  actionData?: ActionData;
 }
 
 export class ActionData {
-    clickAction?: Event;
-    longClickAction?: Event;
-    launchType?: number;
-    pluginData?: PluginComponentData;
-    extra?: any;
+  clickAction?: Event;
+  longClickAction?: Event;
+  launchType?: number;
+  pluginData?: PluginComponentData;
+  extra?: any;
 }
 
 export class PluginComponentData {
-    template;
-    data;
+  template;
+  data;
 }

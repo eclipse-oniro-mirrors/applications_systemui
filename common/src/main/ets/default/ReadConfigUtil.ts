@@ -21,14 +21,14 @@ const CHAR_CODE_AT_INDEX = 0;
 const TAG = 'ReadConfigUtil';
 
 export class ReadConfigUtil {
-  ReadConfigFile(fileName) {
+  readConfigFile(fileName: string): any {
     Log.showDebug(TAG, `readConfigFile fileName:${fileName}`);
     try {
       let stream = FileIo.createStreamSync(fileName, 'r');
-      Log.showDebug(TAG, `readConfigFile stream:` + stream);
+      Log.showDebug(TAG, `readConfigFile stream:${JSON.stringify(stream)}`);
       let buf = new ArrayBuffer(DFAULT_SIZE);
       let len = stream.readSync(buf);
-      Log.showDebug(TAG, `readConfigFile len:` + len);
+      Log.showDebug(TAG, `readConfigFile len:${len}`);
       let arr = new Uint8Array(buf);
       let charAt = ' '.charCodeAt(CHAR_CODE_AT_INDEX);
       for (let i = len;i < DFAULT_SIZE; i++) {
@@ -36,14 +36,14 @@ export class ReadConfigUtil {
       }
       let content = String.fromCharCode.apply(null, arr);
       stream.closeSync();
-      Log.showDebug(TAG, `readConfigFile content:` + JSON.stringify(content));
+      Log.showDebug(TAG, `readConfigFile content:${JSON.stringify(content)}`);
       return JSON.parse(content);
     } catch (error) {
-      Log.showError(TAG, `readConfigFile error:` + JSON.stringify(error));
+      Log.showError(TAG, `readConfigFile error:${JSON.stringify(error)}`);
     }
   }
 }
 
 let readConfigUtil = new ReadConfigUtil();
 
-export default readConfigUtil as ReadConfigUtil
+export default readConfigUtil;

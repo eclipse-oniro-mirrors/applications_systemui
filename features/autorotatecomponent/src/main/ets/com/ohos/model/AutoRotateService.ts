@@ -19,46 +19,54 @@ import createOrGet from '../../../../../../../../common/src/main/ets/default/Sin
 
 const TAG = 'AutoRotateModel';
 
+export interface AutoRotateSwitchStatusListener {
+  updateAutoRotateSwitchStatus(status: boolean): void;
+}
+
 export class AutoRotateService {
-  mIsStart: boolean = false;
-  mListener: any;
+  mIsStart = false;
+  mListener: AutoRotateSwitchStatusListener;
 
   constructor() {
   }
 
-  registerListener(listener: {
-    'updateAutoRotateSwitchStatus': Function,
-  }) {
+  registerListener(listener: AutoRotateSwitchStatusListener): void {
     Log.showInfo(TAG, `registerListener, listener: ${listener}`);
     this.mListener = listener;
   }
 
-  startService() {
+  startService(): void {
     if (this.mIsStart) {
       return;
     }
-    Log.showInfo(TAG, `startService`);
+    Log.showInfo(TAG, 'startService');
     this.mIsStart = true;
-    this.asyncStartService();
+    this.asyncStartService().then(() => {
+    }).catch((err) => {
+    });
   }
 
   async asyncStartService(): Promise<void> {
-    Log.showInfo(TAG, `asyncStartService`);
-    this.getOrientation();
+    Log.showInfo(TAG, 'asyncStartService');
+    this.getOrientation().then(() => {
+    }).catch((err) => {
+    });
     screen.on('change', this.onOrientationChange.bind(this));
   }
 
-  stopService() {
+  stopService(): void {
     if (!this.mIsStart) {
       return;
     }
-    Log.showInfo(TAG, `stopService`);
+    Log.showInfo(TAG, 'stopService');
     this.mIsStart = false;
-    this.asyncStopService();
+    this.asyncStopService().then(() => {
+    }).catch((err) => {
+    });
   }
 
   async asyncStopService(): Promise<void> {
-    Log.showInfo(TAG, `asyncStopService`);
+    Log.showInfo(TAG, 'asyncStopService');
     screen.off('change', (value: number) => {
       Log.showInfo(TAG, `asyncStopService, off change value: ${value}`);
     });
@@ -66,11 +74,13 @@ export class AutoRotateService {
 
   onOrientationChange(value: number): void{
     Log.showDebug(TAG, `onOrientationChange, value: ${value}`);
-    this.getOrientation();
+    this.getOrientation().then(() => {
+    }).catch((err) => {
+    });
   }
 
   async getOrientation(): Promise<void> {
-    Log.showDebug(TAG, `getOrientation`);
+    Log.showDebug(TAG, 'getOrientation');
     let mScreen = await this.getScreen();
     this.updateAutoRotateSwitchStatus(mScreen.orientation);
   }
@@ -93,7 +103,7 @@ export class AutoRotateService {
   }
 
   async getScreen(): Promise<any> {
-    Log.showDebug(TAG, `getScreen`);
+    Log.showDebug(TAG, 'getScreen');
     let screens = await screen.getAllScreen();
     return screens[0];
   }
@@ -102,4 +112,4 @@ export class AutoRotateService {
 
 let sAutoRotateService = createOrGet(AutoRotateService, TAG);
 
-export default sAutoRotateService as AutoRotateService;
+export default sAutoRotateService;

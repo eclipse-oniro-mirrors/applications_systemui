@@ -18,162 +18,180 @@ import Constants from './Constants';
 
 const TAG = 'ControlCenter-StyleConfiguration';
 
+export class ControlCenterComponentStyle {
+  marginLeft: Length = $r('app.float.control_center_margin_left');
+  marginRight: Length = $r('app.float.control_center_margin_right');
+  marginTop: Length = $r('app.float.control_center_margin_top');
+  titleMarginBottom: Length = $r('app.float.control_center_title_margin_bottom');
+  upTitleHeight: Length = $r('app.float.control_center_title_height');
+  toggleAreaGap: Length = $r('app.float.control_center_toggle_area_gap');
+  simpleToggleLayoutMarginTop: Length = $r('app.float.control_center_simple_toggle_layout_margin_top');
+  simpleToggleLayoutMarginBottom: Length = $r('app.float.control_center_simple_toggle_layout_margin_bottom');
+  brightnessMarginBottom: Length = $r('app.float.control_center_brightness_margin_bottom');
+  componentBorderRadius: Length = $r('app.float.control_center_component_border_radius');
+  componentBackgroundColor: ResourceColor = $r('app.color.control_center_component_background');
+}
+
+export class ControlCenterUpTitleStyle {
+  marginLeft: Length = $r('app.float.control_center_title_margin_left');
+  marginRight: Length = $r('app.float.control_center_title_margin_right');
+  fontSize: Length = $r('app.float.control_center_title_font_size');
+  fontColor: ResourceColor = $r('app.color.control_center_title_font_color');
+  titleImageColor: ResourceColor = $r('app.color.control_center_title_image_color');
+  imageWidth: Length = $r('app.float.control_center_title_icon_width');
+  imageHeight: Length = $r('app.float.control_center_title_icon_height');
+  imageHoverWidth: number | string = Constants.CONTROL_CENTER_TITLE_ICON_HOVER_WIDTH;
+  imageHoverHeight: number | string = Constants.CONTROL_CENTER_TITLE_ICON_HOVER_HEIGHT;
+  imageHoverRadius: number | string = Constants.CONTROL_CENTER_TITLE_ICON_HOVER_RADIUS;
+  imageHoverColor: ResourceColor = $r('app.color.control_center_title_icon_hover_color');
+  imageTransparentColor: ResourceColor = $r('app.color.control_center_title_icon_transparent_color');
+  upTitleSpace: Length = $r('app.float.control_center_title_space');
+}
+
+export class ControlCenterComplexToggleLayoutStyle {
+  columnGap: Length = $r('app.float.control_center_complex_toggle_column_gap');
+  rowGap: Length = Constants.COMPLEX_TOGGLE_GRID_ROW_GAP;
+  rowHeight: Length = Constants.COMPLEX_TOGGLE_GRID_ROW_HEIGHT;
+}
+
+export class ControlCenterSimpleToggleLayoutStyle {
+  marginLeft: Length = $r('app.float.control_center_simple_toggle_layout_margin_left');
+  marginRight: Length = $r('app.float.control_center_simple_toggle_layout_margin_right');
+  columnGap: Length = $r('app.float.control_center_simple_toggle_column_gap');
+  rowGap: Length = Constants.SIMPLE_TOGGLE_GRID_ROW_GAP;
+  rowHeight: Length = Constants.SIMPLE_TOGGLE_GRID_ROW_HEIGHT;
+}
+
+export class SimpleToggleLayoutEditComponentStyle {
+  marginLeft: Length = $r('app.float.simple_toggle_edit_margin_left');
+  marginRight: Length = $r('app.float.simple_toggle_edit_margin_right');
+  marginTop: Length = $r('app.float.simple_toggle_edit_margin_top');
+  titleHeight: Length = $r('app.float.simple_toggle_edit_title_height');
+  titleMarginBottom: Length = $r('app.float.simple_toggle_edit_title_margin_bottom');
+  upGridMarginTop: Length = $r('app.float.simple_toggle_edit_up_grid_margin_top');
+  upGridMarginBottom: Length = $r('app.float.simple_toggle_edit_up_grid_margin_bottom');
+  gridMarginLeft: Length = $r('app.float.simple_toggle_edit_grid_margin_left');
+  gridMarginRight: Length = $r('app.float.simple_toggle_edit_grid_margin_right');
+  msgMarginTop: Length = $r('app.float.simple_toggle_edit_msg_margin_top');
+  msgMarginBottom: Length = $r('app.float.simple_toggle_edit_msg_margin_bottom');
+  btnMarginTop: Length = $r('app.float.simple_toggle_edit_btn_margin_top');
+  btnMarginBottom: Length = $r('app.float.simple_toggle_edit_btn_margin_bottom');
+  borderRadius: Length = $r('app.float.simple_toggle_edit_border_radius');
+  upAreaBgColor: ResourceColor = $r('app.color.center_edit_up_area_bg_color');
+  downAreaBgColor: ResourceColor = $r('app.color.center_edit_down_area_bg_color');
+  editBtnFontColor: ResourceColor = $r('app.color.simple_toggle_edit_btn_font_color');
+  editBtnFontSize: Length = $r('sys.float.ohos_id_text_size_button1');
+  editBtnBgColor: ResourceColor = $r('app.color.simple_toggle_edit_btn_bg_color');
+  editBtnMarginLeft: Length = $r('app.float.simple_toggle_edit_btn_margin_left');
+  editBtnMarginRight: Length = $r('app.float.simple_toggle_edit_btn_margin_right');
+  editBtnHeight: Length = $r('app.float.simple_toggle_edit_btn_height');
+  editBtnSpace: Length = $r('app.float.simple_toggle_edit_btn_space');
+}
+
+export class SimpleToggleLayoutEditUpTitleStyle {
+  marginLeft: Length = $r('app.float.simple_toggle_edit_title_margin_left');
+  imageWidth: Length = $r('app.float.simple_toggle_edit_title_icon_width');
+  imageHeight: Length = $r('app.float.simple_toggle_edit_title_icon_height');
+  fontColor: ResourceColor = $r('app.color.simple_toggle_edit_title_font_color');
+  editTitleSpace: Length = $r('app.float.simple_toggle_edit_icon_width');
+  titleFontSize: Length = $r('app.float.simple_toggle_edit_title_font_size');
+}
+
+export class SimpleToggleLayoutEditOptMsgStyle {
+  fontSize: Length = $r('app.float.simple_toggle_edit_opt_msg_font_size');
+  fontColor: ResourceColor = $r('sys.color.ohos_id_color_text_secondary');
+  height: Length = $r('app.float.simple_toggle_edit_opt_msg_height');
+  marginLeftRight: Length = $r('app.float.simple_toggle_edit_opt_msg_margin_left_right');
+}
+
+export class SimpleToggleLayoutEditGridStyle {
+  columnGap: Length = $r('app.float.simple_toggle_edit_grid_column_gap');
+  rowGap: number = Constants.SIMPLE_TOGGLE_GRID_ROW_GAP;
+  rowHeight: number = Constants.SIMPLE_TOGGLE_GRID_ROW_HEIGHT;
+  dragBgSize: Length = $r('app.float.simple_toggle_edit_grid_drag_bg_size');
+}
+
+export class ControlEditDialogStyle {
+  editDialogHeight: Length = $r('app.float.simple_toggle_edit_dialog_height');
+  editDialogWidth: Length = $r('app.float.simple_toggle_edit_dialog_width');
+  editDialogFontSize: Length = $r('app.float.simple_toggle_edit_dialog_font_size');
+  editDialogBtnMarginLF: Length = $r('app.float.simple_toggle_edit_dialog_btn_margin_lf');
+  editDialogFontHeight: Length = $r('app.float.simple_toggle_edit_dialog_font_height');
+  editDialogBtnMarginTop: Length = $r('app.float.simple_toggle_edit_dialog_btn_margin_top');
+  editDialogButtonSize: Length = $r('app.float.simple_toggle_edit_dialog_btn_font_size');
+  editDialogDividerHeight: Length = $r('app.float.simple_toggle_edit_dialog_divider_height');
+  editDialogButtonHeight: Length = $r('app.float.simple_toggle_edit_dialog_btn_height');
+  editDialogRadius: Length = $r('app.float.simple_toggle_edit_dialog_radius');
+  editDialogBtnWidth: Length = $r('app.float.simple_toggle_edit_dialog_btn_width');
+  editDialogColor: ResourceColor = $r('app.color.center_edit_dialog_color');
+  editDialogBtnFontColor: ResourceStr = $r('app.color.center_edit_dialog_btn_font_color');
+  editDialogBtnBgColor: ResourceColor = $r('app.color.center_edit_dialog_btn_bg_color');
+  editDialogDividerColor: ResourceColor = $r('sys.color.ohos_id_color_secondary');
+  editDialogFontMarginTop: Length = $r('app.float.simple_toggle_edit_dialog_font_margin_top');
+  editDialogDividerWidth: number | string = Constants.SIMPLE_TOGGLE_EDIT_DIALOG_DIVIDER_WIDTH;
+}
+
 export default class StyleConfiguration {
-    static getControlCenterComponentStyle() {
-        const key: string = TAG + "-ControlCenterComponent";
-        return StyleManager.getStyle(key, () => {
-            return {
-                marginLeft: $r('app.float.control_center_margin_left'),
-                marginRight: $r('app.float.control_center_margin_right'),
-                marginTop: $r('app.float.control_center_margin_top'),
-                titleMarginBottom: $r('app.float.control_center_title_margin_bottom'),
-                upTitleHeight: $r('app.float.control_center_title_height'),
-                toggleAreaGap: $r('app.float.control_center_toggle_area_gap'),
-                simpleToggleLayoutMarginTop: $r('app.float.control_center_simple_toggle_layout_margin_top'),
-                simpleToggleLayoutMarginBottom: $r('app.float.control_center_simple_toggle_layout_margin_bottom'),
-                brightnessMarginBottom: $r('app.float.control_center_brightness_margin_bottom'),
-                componentBorderRadius: $r('app.float.control_center_component_border_radius'),
-                componentBackgroundColor: $r('app.color.control_center_component_background')
-            };
-        });
-    }
+  static getControlCenterComponentStyle(): ControlCenterComponentStyle {
+    const key: string = TAG + '-ControlCenterComponent';
+    return StyleManager.getStyle(key, () => {
+      return new ControlCenterComponentStyle();
+    });
+  }
 
-    static getControlCenterUpTitleStyle() {
-        const key: string = TAG + "-ControlCenterUpTitle";
-        return StyleManager.getStyle(key, () => {
-            return {
-                marginLeft: $r('app.float.control_center_title_margin_left'),
-                marginRight: $r('app.float.control_center_title_margin_right'),
-                fontSize: $r('app.float.control_center_title_font_size'),
-                fontColor: $r("app.color.control_center_title_font_color"),
-                titleImageColor: $r("app.color.control_center_title_image_color"),
-                imageWidth: $r('app.float.control_center_title_icon_width'),
-                imageHeight: $r('app.float.control_center_title_icon_height'),
-                imageHoverWidth: $r('app.float.control_center_title_icon_hover_width'),
-                imageHoverHeight: $r('app.float.control_center_title_icon_hover_height'),
-                imageHoverRadius: $r('app.float.control_center_title_icon_hover_radius'),
-                imageHoverColor: $r('app.color.control_center_title_icon_hover_color'),
-                imageTransparentColor: $r('app.color.control_center_title_icon_transparent_color'),
-                upTitleSpace: $r("app.float.control_center_title_space"),
-            };
-        });
-    }
+  static getControlCenterUpTitleStyle(): ControlCenterUpTitleStyle {
+    const key: string = TAG + '-ControlCenterUpTitle';
+    return StyleManager.getStyle(key, () => {
+      return new ControlCenterUpTitleStyle();
+    });
+  }
 
-    static getControlCenterComplexToggleLayoutStyle() {
-        const key: string = TAG + "-ControlCenterComplexToggleLayout";
-        return StyleManager.getStyle(key, () => {
-            return {
-                columnGap: $r("app.float.control_center_complex_toggle_column_gap"),
-                rowGap: Constants.COMPLEX_TOGGLE_GRID_ROW_GAP,
-                rowHeight: Constants.COMPLEX_TOGGLE_GRID_ROW_HEIGHT
-            };
-        });
-    }
+  static getControlCenterComplexToggleLayoutStyle(): ControlCenterComplexToggleLayoutStyle {
+    const key: string = TAG + '-ControlCenterComplexToggleLayout';
+    return StyleManager.getStyle(key, () => {
+      return new ControlCenterComplexToggleLayoutStyle();
+    });
+  }
 
-    static getControlCenterSimpleToggleLayoutStyle() {
-        const key: string = TAG + "-ControlCenterSimpleToggleLayout";
-        return StyleManager.getStyle(key, () => {
-            return {
-                marginLeft: $r("app.float.control_center_simple_toggle_layout_margin_left"),
-                marginRight: $r("app.float.control_center_simple_toggle_layout_margin_right"),
-                columnGap: $r("app.float.control_center_simple_toggle_column_gap"),
-                rowGap: Constants.SIMPLE_TOGGLE_GRID_ROW_GAP,
-                rowHeight: Constants.SIMPLE_TOGGLE_GRID_ROW_HEIGHT
-            };
-        });
-    }
+  static getControlCenterSimpleToggleLayoutStyle(): ControlCenterSimpleToggleLayoutStyle {
+    const key: string = TAG + '-ControlCenterSimpleToggleLayout';
+    return StyleManager.getStyle(key, () => {
+      return new ControlCenterSimpleToggleLayoutStyle();
+    });
+  }
 
-    static getSimpleToggleLayoutEditComponentStyle() {
-        const key: string = TAG + "-SimpleToggleLayoutEditComponent";
-        return StyleManager.getStyle(key, () => {
-            return {
-                marginLeft: $r('app.float.simple_toggle_edit_margin_left'),
-                marginRight: $r('app.float.simple_toggle_edit_margin_right'),
-                marginTop: $r("app.float.simple_toggle_edit_margin_top"),
-                titleHeight: $r("app.float.simple_toggle_edit_title_height"),
-                titleMarginBottom: $r("app.float.simple_toggle_edit_title_margin_bottom"),
-                upGridMarginTop: $r('app.float.simple_toggle_edit_up_grid_margin_top'),
-                upGridMarginBottom: $r('app.float.simple_toggle_edit_up_grid_margin_bottom'),
-                gridMarginLeft: $r("app.float.simple_toggle_edit_grid_margin_left"),
-                gridMarginRight: $r("app.float.simple_toggle_edit_grid_margin_right"),
-                msgMarginTop: $r('app.float.simple_toggle_edit_msg_margin_top'),
-                msgMarginBottom: $r('app.float.simple_toggle_edit_msg_margin_bottom'),
-                btnMarginTop: $r('app.float.simple_toggle_edit_btn_margin_top'),
-                btnMarginBottom: $r('app.float.simple_toggle_edit_btn_margin_bottom'),
-                borderRadius: $r('app.float.simple_toggle_edit_border_radius'),
-                upAreaBgColor: $r("app.color.center_edit_up_area_bg_color"),
-                downAreaBgColor: $r("app.color.center_edit_down_area_bg_color"),
-                editBtnFontColor: $r("app.color.simple_toggle_edit_btn_font_color"),
-                editBtnFontSize: $r("sys.float.ohos_id_text_size_button1"),
-                editBtnBgColor: $r("app.color.simple_toggle_edit_btn_bg_color"),
-                editBtnMarginLeft: $r('app.float.simple_toggle_edit_btn_margin_left'),
-                editBtnMarginRight: $r('app.float.simple_toggle_edit_btn_margin_right'),
-                editBtnHeight: $r('app.float.simple_toggle_edit_btn_height'),
-                editBtnSpace: $r('app.float.simple_toggle_edit_btn_space')
-            };
-        });
-    }
+  static getSimpleToggleLayoutEditComponentStyle(): SimpleToggleLayoutEditComponentStyle {
+    const key: string = TAG + '-SimpleToggleLayoutEditComponent';
+    return StyleManager.getStyle(key, () => {
+      return new SimpleToggleLayoutEditComponentStyle();
+    });
+  }
 
-    static getSimpleToggleLayoutEditUpTitleStyle() {
-        const key: string = TAG + "-SimpleToggleLayoutEditUpTitle";
-        return StyleManager.getStyle(key, () => {
-            return {
-                marginLeft: $r('app.float.simple_toggle_edit_title_margin_left'),
-                imageWidth: $r('app.float.simple_toggle_edit_title_icon_width'),
-                imageHeight: $r('app.float.simple_toggle_edit_title_icon_height'),
-                fontColor: $r('app.color.simple_toggle_edit_title_font_color'),
-                editTitleSpace: $r('app.float.simple_toggle_edit_icon_width'),
-                titleFontSize: $r('app.float.simple_toggle_edit_title_font_size')
-            };
-        });
-    }
+  static getSimpleToggleLayoutEditUpTitleStyle(): SimpleToggleLayoutEditUpTitleStyle {
+    const key: string = TAG + '-SimpleToggleLayoutEditUpTitle';
+    return StyleManager.getStyle(key, () => {
+      return new SimpleToggleLayoutEditUpTitleStyle();
+    });
+  }
 
-    static getSimpleToggleLayoutEditOptMsgStyle() {
-        const key: string = TAG + "-SimpleToggleLayoutEditOptMsg";
-        return StyleManager.getStyle(key, () => {
-            return {
-                fontSize: $r('app.float.simple_toggle_edit_opt_msg_font_size'),
-                fontColor: $r('sys.color.ohos_id_color_text_secondary'),
-                height: $r('app.float.simple_toggle_edit_opt_msg_height'),
-                marginLeftRight: $r('app.float.simple_toggle_edit_opt_msg_margin_left_right'),
-            };
-        });
-    }
+  static getSimpleToggleLayoutEditOptMsgStyle(): SimpleToggleLayoutEditOptMsgStyle {
+    const key: string = TAG + '-SimpleToggleLayoutEditOptMsg';
+    return StyleManager.getStyle(key, () => {
+      return new SimpleToggleLayoutEditOptMsgStyle();
+    });
+  }
 
-    static getSimpleToggleLayoutEditGridStyle() {
-        const key: string = TAG + "-SimpleToggleLayoutEditGrid";
-        return StyleManager.getStyle(key, () => {
-            return {
-                columnGap: $r("app.float.simple_toggle_edit_grid_column_gap"),
-                rowGap: Constants.SIMPLE_TOGGLE_GRID_ROW_GAP,
-                rowHeight: Constants.SIMPLE_TOGGLE_GRID_ROW_HEIGHT,
-                dragBgSize: $r("app.float.simple_toggle_edit_grid_drag_bg_size")
-            };
-        });
-    }
+  static getSimpleToggleLayoutEditGridStyle(): SimpleToggleLayoutEditGridStyle {
+    const key: string = TAG + '-SimpleToggleLayoutEditGrid';
+    return StyleManager.getStyle(key, () => {
+      return new SimpleToggleLayoutEditGridStyle();
+    });
+  }
 
-    static getControlEditDialogStyle() {
-        const key: string = TAG + "-ControlEditDialog";
-        return StyleManager.getStyle(key, () => {
-            return {
-                editDialogHeight: $r("app.float.simple_toggle_edit_dialog_height"),
-                editDialogWidth: $r("app.float.simple_toggle_edit_dialog_width"),
-                editDialogFontSize: $r("app.float.simple_toggle_edit_dialog_font_size"),
-                editDialogBtnMarginLF: $r("app.float.simple_toggle_edit_dialog_btn_margin_lf"),
-                editDialogFontHeight: $r("app.float.simple_toggle_edit_dialog_font_height"),
-                editDialogBtnMarginTop: $r("app.float.simple_toggle_edit_dialog_btn_margin_top"),
-                editDialogButtonSize: $r("app.float.simple_toggle_edit_dialog_btn_font_size"),
-                editDialogDividerHeight: $r("app.float.simple_toggle_edit_dialog_divider_height"),
-                editDialogButtonHeight: $r("app.float.simple_toggle_edit_dialog_btn_height"),
-                editDialogRadius: $r("app.float.simple_toggle_edit_dialog_radius"),
-                editDialogBtnWidth: $r("app.float.simple_toggle_edit_dialog_btn_width"),
-                editDialogColor: $r("app.color.center_edit_dialog_color"),
-                editDialogBtnFontColor: $r("app.color.center_edit_dialog_btn_font_color"),
-                editDialogBtnBgColor: $r("app.color.center_edit_dialog_btn_bg_color"),
-                editDialogDividerColor: $r("sys.color.ohos_id_color_secondary"),
-                editDialogFontMarginTop: $r("app.float.simple_toggle_edit_dialog_font_margin_top"),
-                editDialogDividerWidth: $r("app.float.simple_toggle_edit_dialog_divider_width")
-            };
-        });
-    }
+  static getControlEditDialogStyle(): ControlEditDialogStyle {
+    const key: string = TAG + '-ControlEditDialog';
+    return StyleManager.getStyle(key, () => {
+      return new ControlEditDialogStyle();
+    });
+  }
 }

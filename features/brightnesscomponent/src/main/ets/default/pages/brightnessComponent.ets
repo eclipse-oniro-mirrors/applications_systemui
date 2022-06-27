@@ -15,7 +15,7 @@
 
 import brightness from '@ohos.brightness';
 import mBrightnessManager from '../brightnessManager';
-import StyleConfiguration from '../common/StyleConfiguration';
+import StyleConfiguration, { BrightnessComponentStyle } from '../common/StyleConfiguration';
 import Log from '../../../../../../../common/src/main/ets/default/Log';
 
 const TAG = 'Control-brightnessComponent';
@@ -23,7 +23,7 @@ const TAG = 'Control-brightnessComponent';
 @Component
 export default struct MyBrightness {
   @StorageLink('BrightnessValue') brightnessValue: number = 0;
-  @State style: any = StyleConfiguration.getBrightnessComponentStyle();
+  @State style: BrightnessComponentStyle = StyleConfiguration.getBrightnessComponentStyle();
   @State brightnessItem: any = {
     min: mBrightnessManager.getMin(),
     max: mBrightnessManager.getMax(),
@@ -41,7 +41,7 @@ export default struct MyBrightness {
     mBrightnessManager.unRegisterBrightness();
   }
 
-  setBrightness(value, sliderChangeMode:number) {
+  setBrightness(value, sliderChangeMode: number) {
     Log.showInfo(TAG, `setBrightness = ${value}`);
     mBrightnessManager.setValue(value, sliderChangeMode);
   }

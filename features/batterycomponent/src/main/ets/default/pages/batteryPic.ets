@@ -16,7 +16,7 @@
 import Constants from '../common/constants'
 import Log from '../../../../../../../common/src/main/ets/default/Log'
 import { TintContentInfo } from '../../../../../../../common/src/main/ets/default/TintStateManager'
-import StyleConfiguration from '../common/StyleConfiguration'
+import StyleConfiguration, { BatteryPicStyle } from '../common/StyleConfiguration'
 import ViewModel from '../viewmodel/BatteryVM'
 
 const TAG = 'BatteryComponent-batteryPic';
@@ -26,7 +26,7 @@ export default struct BatteryPic {
   @StorageLink('batterySoc') batterySoc: number = 100
   @StorageLink('batteryCharging') batteryCharging: boolean = false
   @State mTintContentInfo: TintContentInfo = ViewModel.getTintContentInfo()
-  @State style: any = StyleConfiguration.getBatteryPicStyle()
+  @State style: BatteryPicStyle = StyleConfiguration.getBatteryPicStyle()
 
   aboutToAppear() {
     Log.showInfo(TAG, 'aboutToAppear Start');

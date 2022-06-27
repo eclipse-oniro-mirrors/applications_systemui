@@ -14,9 +14,8 @@
  */
 
 export default class Constants {
-
 }
 
 export class LocationData {
-  isEnabled: boolean;
+  isEnabled = false;
 }

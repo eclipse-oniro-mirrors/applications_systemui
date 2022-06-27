@@ -14,31 +14,35 @@
  * limitations under the License.
  */
 
-import Window from "@ohos.window";
-import Log from "./Log";
-import EventManager from "./event/EventManager";
-import { obtainLocalEvent } from "./event/EventUtil";
-import { Rect } from "./Constants";
-import createOrGet from "./SingleInstanceHelper";
+import Window from '@ohos.window';
+import ServiceExtensionContext from 'application/ServiceExtensionContext';
+import Log from './Log';
+import EventManager from './event/EventManager';
+import { obtainLocalEvent } from './event/EventUtil';
+import { Rect } from './Constants';
+import createOrGet from './SingleInstanceHelper';
 
 export type WindowInfo = {
   visibility: boolean;
   rect: Rect;
 };
+
 export enum WindowType {
-  STATUS_BAR = "SystemUi_StatusBar",
-  NAVIGATION_BAR = "SystemUi_NavigationBar",
-  DROPDOWN_PANEL = "SystemUi_DropdownPanel",
-  NOTIFICATION_PANEL = "SystemUi_NotificationPanel",
-  CONTROL_PANEL = "SystemUi_ControlPanel",
-  VOLUME_PANEL = "SystemUi_VolumePanel",
+  STATUS_BAR = 'SystemUi_StatusBar',
+  NAVIGATION_BAR = 'SystemUi_NavigationBar',
+  DROPDOWN_PANEL = 'SystemUi_DropdownPanel',
+  NOTIFICATION_PANEL = 'SystemUi_NotificationPanel',
+  CONTROL_PANEL = 'SystemUi_ControlPanel',
+  VOLUME_PANEL = 'SystemUi_VolumePanel',
   BANNER_NOTICE = 'SystemUi_BannerNotice'
 }
 
-export const WINDOW_SHOW_HIDE_EVENT = "WindowShowHideEvent";
-export const WINDOW_RESIZE_EVENT = "WindowResizeEvent";
+export const WINDOW_SHOW_HIDE_EVENT = 'WindowShowHideEvent';
+
+export const WINDOW_RESIZE_EVENT = 'WindowResizeEvent';
 
 const TAG = "WindowManager";
+
 const SYSTEM_WINDOW_TYPE_MAP: { [key in WindowType]: Window.WindowType } = {
   SystemUi_StatusBar: Window.WindowType.TYPE_STATUS_BAR,
   SystemUi_NavigationBar: Window.WindowType.TYPE_NAVIGATION_BAR,
@@ -48,6 +52,7 @@ const SYSTEM_WINDOW_TYPE_MAP: { [key in WindowType]: Window.WindowType } = {
   SystemUi_VolumePanel: Window.WindowType.TYPE_VOLUME_OVERLAY,
   SystemUi_BannerNotice: Window.WindowType.TYPE_VOLUME_OVERLAY,
 };
+
 const DEFAULT_WINDOW_INFO: WindowInfo = {
   visibility: false,
   rect: { left: 0, top: 0, width: 0, height: 0 },
@@ -59,7 +64,7 @@ const DEFAULT_WINDOW_INFO: WindowInfo = {
 class WindowManager {
   mWindowInfos: Map<WindowType, WindowInfo> = new Map();
 
-  async createWindow(context: any, name: WindowType, rect: Rect, loadContent: string): Promise<Window.Window> {
+  async createWindow(context: ServiceExtensionContext, name: WindowType, rect: Rect, loadContent: string): Promise<Window.Window> {
     Log.showInfo(TAG, `createWindow name: ${name}, rect: ${JSON.stringify(rect)}, url: ${loadContent}`);
     let winHandle = await Window.create(context, name, SYSTEM_WINDOW_TYPE_MAP[name]);
     await winHandle.moveTo(rect.left, rect.top);
@@ -76,10 +81,10 @@ class WindowManager {
     await window.resetSize(rect.width, rect.height);
     this.mWindowInfos.set(name, { ...(this.mWindowInfos.get(name) ?? DEFAULT_WINDOW_INFO), rect });
     EventManager.publish(
-      obtainLocalEvent(WINDOW_RESIZE_EVENT, {
-        windowName: name,
-        rect,
-      })
+    obtainLocalEvent(WINDOW_RESIZE_EVENT, {
+      windowName: name,
+      rect,
+    })
     );
     Log.showInfo(TAG, `resize window[${name}] success, rect: ${JSON.stringify(rect)}.`);
   }
@@ -89,10 +94,10 @@ class WindowManager {
     await window.show();
     this.mWindowInfos.set(name, { ...(this.mWindowInfos.get(name) ?? DEFAULT_WINDOW_INFO), visibility: true });
     EventManager.publish(
-      obtainLocalEvent(WINDOW_SHOW_HIDE_EVENT, {
-        windowName: name,
-        isShow: true,
-      })
+    obtainLocalEvent(WINDOW_SHOW_HIDE_EVENT, {
+      windowName: name,
+      isShow: true,
+    })
     );
     Log.showInfo(TAG, `show window[${name}] success.`);
   }
@@ -102,10 +107,10 @@ class WindowManager {
     await window.hide();
     this.mWindowInfos.set(name, { ...(this.mWindowInfos.get(name) ?? DEFAULT_WINDOW_INFO), visibility: false });
     EventManager.publish(
-      obtainLocalEvent(WINDOW_SHOW_HIDE_EVENT, {
-        windowName: name,
-        isShow: false,
-      })
+    obtainLocalEvent(WINDOW_SHOW_HIDE_EVENT, {
+      windowName: name,
+      isShow: false,
+    })
     );
     Log.showInfo(TAG, `hide window[${name}] success.`);
   }
@@ -116,4 +121,5 @@ class WindowManager {
 }
 
 let sWindowManager = createOrGet(WindowManager, TAG);
-export default sWindowManager as WindowManager;
+
+export default sWindowManager;

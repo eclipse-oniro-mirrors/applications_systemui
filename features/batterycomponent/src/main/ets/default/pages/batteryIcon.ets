@@ -18,8 +18,9 @@ import BatteryPic from './batteryPic';
 import BatterySoc from './batterySoc';
 import Constants from '../common/constants';
 import Log from '../../../../../../../common/src/main/ets/default/Log';
-import StyleConfigurationCommon from '../../../../../../../common/src/main/ets/default/StyleConfiguration';
-import StyleConfiguration from '../common/StyleConfiguration';
+import StyleConfigurationCommon, { CommonStyle
+} from '../../../../../../../common/src/main/ets/default/StyleConfiguration'
+import StyleConfiguration, { BatteryComponentStyle } from '../common/StyleConfiguration'
 
 const TAG = 'BatteryComponent-batteryIcon';
 
@@ -27,8 +28,8 @@ const TAG = 'BatteryComponent-batteryIcon';
 export default struct BatteryIcon {
   @StorageLink('batterySoc') batterySoc: number = 100;
   @StorageLink('StatusCoefficient') StatusCoefficient: number = 1.0;
-  @State style: any = StyleConfiguration.getBatteryComponentStyle();
-  @State styleCommon: any = StyleConfigurationCommon.getCommonStyle();
+  @State style: BatteryComponentStyle = StyleConfiguration.getBatteryComponentStyle();
+  @State styleCommon: CommonStyle = StyleConfigurationCommon.getCommonStyle();
 
   aboutToAppear() {
     mBatteryModel.initBatteryModel();

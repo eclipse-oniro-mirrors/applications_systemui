@@ -14,8 +14,8 @@
  */
 
 export default class Constants {
-  static DIGITS = 10;
-  static MARK_MONTH = 0;
-  static MARK_DAY = 1;
-  static QUICKLY_SETTING_H = 83;
+  static readonly DIGITS = 10;
+  static readonly MARK_MONTH = 0;
+  static readonly MARK_DAY = 1;
+  static readonly QUICKLY_SETTING_H = 83;
 }

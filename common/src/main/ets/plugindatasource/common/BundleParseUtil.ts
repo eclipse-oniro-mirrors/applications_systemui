@@ -13,14 +13,16 @@
  * limitations under the License.
  */
 
-import bundleManager from "@ohos.bundle";
-import { ExtensionAbilityInfo } from "bundle/extensionAbilityInfo";
-import commonEvent from "@ohos.commonEvent";
-import { AbilityInfo } from "bundle/abilityInfo";
-import Log from "../../default/Log";
-import switchUserManager from "../../default/SwitchUserManager"
+import bundleManager from '@ohos.bundle';
+import commonEvent from '@ohos.commonEvent';
+import { AbilityInfo } from 'bundle/abilityInfo';
+import { ExtensionAbilityInfo } from 'bundle/extensionAbilityInfo';
+import { CustomizeData } from 'bundle/customizeData';
+import { Metadata } from 'bundle/metadata';
+import Log from '../../default/Log';
+import switchUserManager from '../../default/SwitchUserManager';
 
-export type AbilityInfoWithId = AbilityInfo & { itemId: string };
+export type AbilityInfoWithId = (AbilityInfo | ExtensionAbilityInfo) & { itemId: string };
 export type BundleListener = {
   onBundleNotify: (bundleName: string, event: BundleEventType) => void;
 };
@@ -38,7 +40,7 @@ export enum BundleEventType {
   UNKNOWN_EVENT,
 }
 
-const TAG = "SourceLoader-BundleParseUtil";
+const TAG = 'SourceLoader-BundleParseUtil';
 const DEFAULT_BUNDLE_FLAG =
   bundleManager.BundleFlag.GET_ABILITY_INFO_WITH_METADATA | bundleManager.BundleFlag.GET_ABILITY_INFO_WITH_PERMISSION;
 const EXTENSIONTYPE = 20;
@@ -51,67 +53,78 @@ const BUNDLE_SUBSCRIBE_INFO = {
   ],
 };
 
-export async function queryAbility(action: string, userId: number, bundleName?: string): Promise<Array<AbilityInfo | ExtensionAbilityInfo>> {
+export async function queryAbility(action: string, userId: number, bundleName?: string): Promise<(AbilityInfo | ExtensionAbilityInfo)[]> {
   Log.showDebug(TAG, `queryAbility, action: ${action} , userId: ${userId}`);
   if (bundleName) {
     Log.showDebug(TAG, `queryAbility, bundleName: ${bundleName}`);
-    let abilitys = [];
-    try {
-      abilitys = await bundleManager.queryAbilityByWant(
-        {
-          action: action,
-          bundleName: bundleName,
-        },
-        DEFAULT_BUNDLE_FLAG,
-        userId
-      );
-    } catch (error) {
-      Log.showError(TAG, `queryAbility, queryAbilityByWant error: ${JSON.stringify(error)}`);
-    }
-    let extensionAbilitys = [];
-    try {
-      extensionAbilitys = await bundleManager.queryExtensionAbilityInfos(
-        {
-          action: action,
-          bundleName: bundleName,
-        },
-        EXTENSIONTYPE,
-        DEFAULT_BUNDLE_FLAG,
-        userId
-      );
-    } catch (error) {
-      Log.showError(TAG, `queryAbility, queryExtensionAbilityInfos error: ${JSON.stringify(error)}`);
-    }
-    Log.showDebug(TAG, `queryAbility, end`);
-    let rets = [...abilitys, ...extensionAbilitys];
-    Log.showDebug(TAG, `queryAbility, rets: ${JSON.stringify(rets)}`);
-    return rets;
+    return await queryAbilityWithBundleName(action, userId, bundleName);
   }
-  let abilitys = [];
+  return await queryAbilityWithoutBundleName(action, userId);
+}
+
+async function queryAbilityWithBundleName(action: string, userId: number, bundleName: string): Promise<(AbilityInfo | ExtensionAbilityInfo)[]> {
+  Log.showInfo(TAG, `queryAbilityWithBundleName, action: ${action} bundleName: ${bundleName}`);
+  let abilitys: AbilityInfo[] = [];
   try {
-    abilitys = await bundleManager.queryAbilityByWant({ action: action }, DEFAULT_BUNDLE_FLAG, userId);
+    abilitys = await bundleManager.queryAbilityByWant(
+      {
+        action: action,
+        bundleName: bundleName,
+      },
+      DEFAULT_BUNDLE_FLAG,
+      userId
+    );
   } catch (error) {
-    Log.showError(TAG, `queryAbility, queryAbilityByWant error: ${JSON.stringify(error)}`);
+    Log.showError(TAG, `queryAbilityWithBundleName, queryAbilityByWant error: ${JSON.stringify(error)}`);
   }
-  let extensionAbilitys = [];
+  let extensionAbilitys: ExtensionAbilityInfo[] = [];
   try {
-    extensionAbilitys = await bundleManager.queryExtensionAbilityInfos({ action: action }, EXTENSIONTYPE, DEFAULT_BUNDLE_FLAG, userId);
+    extensionAbilitys = await bundleManager.queryExtensionAbilityInfos(
+      {
+        action: action,
+        bundleName: bundleName,
+      },
+      EXTENSIONTYPE,
+      DEFAULT_BUNDLE_FLAG,
+      userId
+    );
   } catch (error) {
-    Log.showError(TAG, `queryAbility, queryExtensionAbilityInfos error: ${JSON.stringify(error)}`);
+    Log.showError(TAG, `queryAbilityWithBundleName, queryExtensionAbilityInfos error: ${JSON.stringify(error)}`);
   }
-  Log.showDebug(TAG, `queryAbility, end`);
+  Log.showDebug(TAG, 'queryAbilityWithBundleName, end');
   let rets = [...abilitys, ...extensionAbilitys];
-  Log.showDebug(TAG, `queryAbility, rets: ${JSON.stringify(rets)}`);
+  Log.showDebug(TAG, `queryAbilityWithBundleName, rets: ${JSON.stringify(rets)}`);
   return rets;
 }
 
+async function queryAbilityWithoutBundleName(action: string, userId: number): Promise<(AbilityInfo | ExtensionAbilityInfo)[]> {
+  Log.showInfo(TAG, `queryAbilityWithoutBundleName, action: ${action}`);
+  let abilitys: AbilityInfo[] = [];
+  try {
+    abilitys = await bundleManager.queryAbilityByWant({ action: action }, DEFAULT_BUNDLE_FLAG, userId);
+  } catch (error) {
+    Log.showError(TAG, `queryAbilityWithoutBundleName, queryAbilityByWant error: ${JSON.stringify(error)}`);
+  }
+  let extensionAbilitys: ExtensionAbilityInfo[] = [];
+  try {
+    extensionAbilitys = await bundleManager.queryExtensionAbilityInfos({
+      action: action
+    }, EXTENSIONTYPE, DEFAULT_BUNDLE_FLAG, userId);
+  } catch (error) {
+    Log.showError(TAG, `queryAbilityWithoutBundleName, queryExtensionAbilityInfos error: ${JSON.stringify(error)}`);
+  }
+  Log.showDebug(TAG, 'queryAbilityWithoutBundleName, end');
+  let rets = [...abilitys, ...extensionAbilitys];
+  Log.showDebug(TAG, `queryAbilityWithoutBundleName, rets: ${JSON.stringify(rets)}`);
+  return rets;
+}
 
 export function filterAbilityInfo(info: AbilityInfoWithId, filterKey: string): PluginData | undefined {
   Log.showInfo(TAG, `filterAbilityInfo, info: ${JSON.stringify(info)} filterKey: ${filterKey}`);
-  let pluginDatas = [];
-  if(info.metaData && info.metaData.length){
+  let pluginDatas: (CustomizeData | Metadata)[] = [];
+  if (info.metaData && info.metaData.length) {
     pluginDatas = info.metaData.filter((data) => data.name == filterKey);
-  } else if(info.metadata && info.metadata.length){
+  } else if (info.metadata && info.metadata.length) {
     pluginDatas = info.metadata.filter((data) => data.name == filterKey);
   }
   Log.showInfo(TAG, `filterAbilityInfo, pluginDatas: ${JSON.stringify(pluginDatas)}`);
@@ -119,11 +132,11 @@ export function filterAbilityInfo(info: AbilityInfoWithId, filterKey: string): P
     Log.showDebug(TAG, `filterKey: ${filterKey}, metadata: ${JSON.stringify(info.metadata.values)}`);
     return undefined;
   }
-  let pluginData;
-  if(pluginDatas[0].value && pluginDatas[0].value.length > 0){
-    pluginData = JSON.parse("{" + pluginDatas[0].value + "}");
-  } else if(pluginDatas[0].extra && pluginDatas[0].extra.length > 0){
-    pluginData = JSON.parse("{" + pluginDatas[0].extra + "}");
+  let pluginData: PluginData;
+  if (pluginDatas[0].value && pluginDatas[0].value.length > 0) {
+    pluginData = JSON.parse('{' + pluginDatas[0].value + '}') as PluginData;
+  } else if (pluginDatas[0].extra && pluginDatas[0].extra.length > 0) {
+    pluginData = JSON.parse('{' + pluginDatas[0].extra + '}') as PluginData;
   }
   if (!pluginData) {
     Log.showError(TAG, `Can't parse pluginData: ${pluginDatas[0]}, filterKey: ${filterKey}`);
@@ -133,7 +146,7 @@ export function filterAbilityInfo(info: AbilityInfoWithId, filterKey: string): P
   return pluginData;
 }
 
-export function registerBundleListener(listener: BundleListener, callback: (handle: ListenerHandle) => void) {
+export function registerBundleListener(listener: BundleListener, callback: (handle: ListenerHandle) => void): void {
   commonEvent.createSubscriber(BUNDLE_SUBSCRIBE_INFO, (err, handle) => {
     Log.showDebug(TAG, `registerBundleListener, err: ${JSON.stringify(err)}, handle: ${handle}`);
     if (err.code != 0) {
@@ -150,7 +163,7 @@ export function registerBundleListener(listener: BundleListener, callback: (hand
       switchUserManager.getInstance()
         .getCurrentUserInfo()
         .then((userInfo) => {
-          if(data.parameters.userId != userInfo.userId) {
+          if (data.parameters.userId != userInfo.userId) {
             return;
           } else {
             let event = BundleEventType.UNKNOWN_EVENT;
@@ -167,7 +180,7 @@ export function registerBundleListener(listener: BundleListener, callback: (hand
               default:
                 Log.showError(TAG, `unknow event: ${event}`);
             }
-            listener.onBundleNotify(data.bundleName ?? "unkown", event);
+            listener.onBundleNotify(data.bundleName ?? 'unkown', event);
           }
         });
     });

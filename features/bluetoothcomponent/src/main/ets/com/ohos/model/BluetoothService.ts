@@ -19,31 +19,35 @@ import createOrGet from '../../../../../../../../common/src/main/ets/default/Sin
 
 const TAG = 'BluetoothModel';
 
-function isBluetoothOpen(state) {
+export interface BlueupdateStateListener {
+  updateState(state: boolean): void;
+}
+
+function isBluetoothOpen(state: number): boolean {
   Log.showInfo(TAG, `BluetoothState is: ${state}`);
   return state == bluetooth.BluetoothState.STATE_ON || state == bluetooth.BluetoothState.STATE_BLE_ON
   || state == bluetooth.BluetoothState.STATE_TURNING_ON || state == bluetooth.BluetoothState.STATE_BLE_TURNING_ON;
 }
 
 export class BluetoothService {
-  mIsStart: boolean = false;
-  mListener: any;
-  mIsBluetoothOpen: boolean = false;
+  mIsStart = false;
+  mListener: BlueupdateStateListener;
+  mIsBluetoothOpen = false;
 
   constructor() {
-    Log.showDebug(TAG, `constructor`);
+    Log.showDebug(TAG, 'constructor');
   }
 
-  startService() {
+  startService(): void {
     if (this.mIsStart) {
       return;
     }
     this.mIsStart = true;
     this.mIsBluetoothOpen = isBluetoothOpen(bluetooth.getState());
-    bluetooth.on('stateChange', (state) => {
-      let isOpen = isBluetoothOpen(state)
+    bluetooth.on('stateChange', (state): void => {
+      let isOpen = isBluetoothOpen(state);
       if (this.mIsBluetoothOpen != isOpen) {
-        Log.showInfo(TAG, `state change: ${isOpen}`)
+        Log.showInfo(TAG, `state change: ${isOpen}`);
         this.mIsBluetoothOpen = isOpen;
         this.mListener?.updateState(this.mIsBluetoothOpen);
       }
@@ -51,18 +55,16 @@ export class BluetoothService {
     Log.showInfo(TAG, `startService, mIsBluetoothOpen: ${this.mIsBluetoothOpen}`);
   }
 
-  stopService() {
+  stopService(): void {
     if (!this.mIsStart) {
       return;
     }
-    Log.showInfo(TAG, `stopService`);
+    Log.showInfo(TAG, 'stopService');
     this.mIsStart = false;
     bluetooth.off('stateChange');
   }
 
-  registerListener(listener: {
-    'updateState': Function
-  }) {
+  registerListener(listener: BlueupdateStateListener): void {
     Log.showInfo(TAG, `registerListener, listener: ${listener}`);
     this.mListener = listener;
     this.mListener.updateState(this.mIsBluetoothOpen);
@@ -73,14 +75,14 @@ export class BluetoothService {
   }
 
   enableBluetooth(): boolean{
-    Log.showInfo(TAG, `enableBluetooth`);
+    Log.showInfo(TAG, 'enableBluetooth');
     let result = bluetooth.enableBluetooth();
     Log.showInfo(TAG, `enableBluetooth, result: ${result}`);
     return result;
   }
 
   disableBluetooth(): boolean{
-    Log.showInfo(TAG, `disableBluetooth`);
+    Log.showInfo(TAG, 'disableBluetooth');
     let result = bluetooth.disableBluetooth();
     Log.showInfo(TAG, `disableBluetooth, result: ${result}`);
     return result;
@@ -89,4 +91,4 @@ export class BluetoothService {
 
 let sBluetoothService = createOrGet(BluetoothService, TAG);
 
-export default sBluetoothService as BluetoothService;
+export default sBluetoothService;

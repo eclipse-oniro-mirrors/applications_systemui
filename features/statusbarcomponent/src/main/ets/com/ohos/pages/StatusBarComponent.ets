@@ -14,11 +14,13 @@
  */
 
 import Log from '../../../../../../../../common/src/main/ets/default/Log'
-import {StatusBarData, StatusBarBackgroundData} from '../common/Constants'
-import {FASlotName} from '../../../../../../../../common/src/main/ets/default/Constants'
-import {TintContentInfo} from '../../../../../../../../common/src/main/ets/default/TintStateManager'
-import StyleConfigurationCommon from '../../../../../../../../common/src/main/ets/default/StyleConfiguration'
-import StyleConfiguration from '../common/StyleConfiguration'
+import { StatusBarData, StatusBarBackgroundData, StatusBarConfig } from '../common/Constants'
+import { FASlotName } from '../../../../../../../../common/src/main/ets/default/Constants'
+import { TintContentInfo } from '../../../../../../../../common/src/main/ets/default/TintStateManager'
+import StyleConfigurationCommon, { CommonStyle
+} from '../../../../../../../../common/src/main/ets/default/StyleConfiguration'
+import StyleConfiguration, { StatusBarNotificationIconStyle, VerticalStatusBarItemLoadComponentStyle
+} from '../common/StyleConfiguration'
 import ViewModel from '../viewmodel/StatusBarVM'
 import IconItemComponent from './IconItemComponent'
 import BatteryIcon from '../../../../../../../batterycomponent/src/main/ets/default/pages/batteryIcon'
@@ -40,7 +42,7 @@ const TAG_StatusBarBackground = 'StatusBarBackground'
 
 @Component
 export default struct StatusBarComponent {
-  private mStatusBarComponentConfig: any = {}
+  private mStatusBarComponentConfig: StatusBarConfig
   @StorageLink('StatusBarLayout') mStatusBarLayout: any = [[], [], []]
   @State mStatusBarData: StatusBarData = ViewModel.getStatusBarData()
   private moduleName: string = ''
@@ -54,7 +56,7 @@ export default struct StatusBarComponent {
     Log.showInfo(TAG, `aboutToDisappear`);
   }
 
-  initViewModel(moduleName) {
+  initViewModel(moduleName: string) {
     Log.showInfo(TAG, `initViewModel`);
     ViewModel.initViewModel(this.mStatusBarComponentConfig, moduleName);
   }
@@ -207,7 +209,7 @@ struct StatusBarGroup {
 struct VerticalStatusBarItemLoadComponent {
   private mComponentName: string
   @State mComponentHeight: number = 0
-  @State style: any = StyleConfiguration.getVerticalStatusBarItemLoadComponentStyle()
+  @State style: VerticalStatusBarItemLoadComponentStyle = StyleConfiguration.getVerticalStatusBarItemLoadComponentStyle()
 
   aboutToAppear() {
     Log.showInfo(TAG_VerticalStatusBarItemLoadComponent, `aboutToAppear, mComponentName: ${this.mComponentName}`);
@@ -301,8 +303,8 @@ struct StatusBarNotificationIcon {
   @StorageLink('notificationList') notificationList: any = []
   @StorageLink('StatusCoefficient') StatusCoefficient: number = 1.0
   @State mTintContentInfo: TintContentInfo = ViewModel.getNotificationTintContentInfo()
-  @State styleCommon: any = StyleConfigurationCommon.getCommonStyle()
-  @State style: any = StyleConfiguration.getStatusBarNotificationIconStyle()
+  @State styleCommon: CommonStyle = StyleConfigurationCommon.getCommonStyle()
+  @State style: StatusBarNotificationIconStyle = StyleConfiguration.getStatusBarNotificationIconStyle()
 
   aboutToAppear() {
     Log.showInfo(TAG_StatusBarNotificationIcon, `aboutToAppear`);

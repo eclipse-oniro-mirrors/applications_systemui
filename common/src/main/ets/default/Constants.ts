@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import Window from "@ohos.window";
+import Window from '@ohos.window';
 
 export interface Rect {
   left: number;
@@ -24,7 +24,7 @@ export interface Rect {
 
 export type WindowType = 'status' | 'navigation' | 'volume';
 
-export function getWindowName(windowType): WindowType{
+export function getWindowName(windowType): WindowType {
   switch (windowType) {
     case Window.WindowType.TYPE_NAVIGATION_BAR:
       return 'navigation';
@@ -36,20 +36,20 @@ export function getWindowName(windowType): WindowType{
 }
 
 export default class Constants {
-  static URI_VAR: string = 'dataability:///com.ohos.settingsdata.DataAbility';
+  static readonly URI_VAR = 'dataability:///com.ohos.settingsdata.DataAbility';
 }
 
 export enum FASlotName {
-  AUTO_ROTATE = "auto_rotate",
-  AIR_PLANE = "air_plane",
+  AUTO_ROTATE = 'auto_rotate',
+  AIR_PLANE = 'air_plane',
   BATTERY = 'battery',
-  BLUETOOTH  = 'bluetooth',
+  BLUETOOTH = 'bluetooth',
   CAPSULE = 'capsule',
   CLOCK = 'clock',
-  EMPTY  = 'empty',
+  EMPTY = 'empty',
   LOCATION = 'location',
   NOTIFICATION = 'notification',
   RING_MODE = 'ring_mode',
   SIGNAL = 'signal',
-  WIFI  = 'wifi',
+  WIFI = 'wifi',
 }

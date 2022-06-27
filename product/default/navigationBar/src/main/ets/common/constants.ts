@@ -13,21 +13,20 @@
  * limitations under the License.
  */
 
-export default
-class Constants{
-  static KEY_DOWN: number = 0;
-  static KEY_UP: number = 1;
-  static KEYCODE_BACK: number = 1;
-  static KEYCODE_HOME: number = 2;
-  static KEYCODE_RECENT: number = 3;
-  static ONE_TEMPLATE: string = '1fr';
-  static THREE_TEMPLATE: string = '1fr 1fr 1fr';
-  static ONE_ICON_LAYOUT: number = 1;
-  static THREE_ICON_LAYOUT: number = 3;
+export default class Constants {
+  static readonly KEY_DOWN: number = 0;
+  static readonly KEY_UP: number = 1;
+  static readonly KEYCODE_BACK: number = 1;
+  static readonly KEYCODE_HOME: number = 2;
+  static readonly KEYCODE_RECENT: number = 3;
+  static readonly ONE_TEMPLATE: string = '1fr';
+  static readonly THREE_TEMPLATE: string = '1fr 1fr 1fr';
+  static readonly ONE_ICON_LAYOUT: number = 1;
+  static readonly THREE_ICON_LAYOUT: number = 3;
 }
 
 export class NavigationBarComponentData {
-  isEnable: boolean = true;
-  backgroundColor: string = "#00000000";
-  contentColor: string = "#FFFFFFFF";
+  isEnable = true;
+  backgroundColor = '#00000000';
+  contentColor = '#FFFFFFFF';
 }

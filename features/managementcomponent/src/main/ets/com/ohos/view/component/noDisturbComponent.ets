@@ -31,14 +31,14 @@ export default struct NoDisturbComponent {
 
   aboutToAppear(): void{
     Log.showInfo(TAG, `aboutToAppear`);
-    this.mViewModel.ViewModelInit();
+    this.mViewModel.viewModelInit();
     this.mPrevGetCnt = 0;
     this.mRefreshCnt++;
   }
 
   onRefresh(propName: string): void {
     Log.showInfo(TAG, `onRefresh`);
-    this.mViewModel.ViewModelInit();
+    this.mViewModel.viewModelInit();
     this.mPrevGetCnt = 0;
     this.mRefreshCnt++;
   }

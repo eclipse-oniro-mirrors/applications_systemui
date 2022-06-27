@@ -14,7 +14,7 @@
  */
 
 import Log from '../default/Log'
-import StyleConfiguration from './common/StyleConfiguration'
+import StyleConfiguration, { SimpleToggleBaseStyle } from './common/StyleConfiguration'
 
 const TAG = 'SimpleToggleBase'
 
@@ -36,7 +36,7 @@ export default struct SimpleToggleBase {
   private mLongClickEvent: Function
   @State mIconIsHover: boolean = false
   @State mTextIsHover: boolean = false
-  @State style: any = StyleConfiguration.getSimpleToggleBaseStyle()
+  @State style: SimpleToggleBaseStyle = StyleConfiguration.getSimpleToggleBaseStyle()
 
   aboutToAppear() {
     Log.showInfo(TAG, `aboutToAppear, mToggleId: ${this.mToggleId}, mLabel: ${JSON.stringify(this.mLabel)}, mEditMode: ${this.mEditMode} mDragMode: ${this.mDragMode} `)

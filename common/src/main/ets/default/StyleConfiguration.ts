@@ -17,19 +17,19 @@ import StyleManager from './StyleManager';
 import deviceInfo from '@ohos.deviceInfo';
 
 const TAG = 'Common-StyleConfiguration';
-const deviceTypeInfo = deviceInfo.deviceType
+const deviceTypeInfo = deviceInfo.deviceType;
+
+export class CommonStyle {
+  statusBarFontSize: Length = deviceTypeInfo === 'phone' ? '12fp' : '16fp';
+  statusBarIconWidth: Length = '24vp';
+  statusBarIconHeight: Length = '24vp';
+  statusBarMarginLeftRight: Length = deviceTypeInfo === 'phone' ? '0vp' : '5vp';
+  deviceTypeInfo = deviceTypeInfo;
+}
 
 export default class StyleConfiguration {
-    static getCommonStyle() {
-        const key: string = TAG + "-Common";
-        return StyleManager.getStyle(key, () => {
-            return {
-                statusBarFontSize: deviceTypeInfo === 'phone' ? '12fp' : '16fp',
-                statusBarIconWidth: '24vp',
-                statusBarIconHeight: '24vp',
-                statusBarMarginLeftRight: deviceTypeInfo === 'phone' ? '0vp' : '5vp',
-                deviceTypeInfo : deviceTypeInfo
-            };
-        });
-    }
+  static getCommonStyle(): CommonStyle {
+    const key: string = TAG + '-Common';
+    return StyleManager.getStyle(key, () => new CommonStyle());
+  }
 }

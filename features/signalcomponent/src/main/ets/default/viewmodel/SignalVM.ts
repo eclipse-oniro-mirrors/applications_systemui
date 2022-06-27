@@ -14,8 +14,9 @@
  */
 
 import Log from '../../../../../../../common/src/main/ets/default/Log';
-import {FASlotName} from '../../../../../../../common/src/main/ets/default/Constants';
-import {TintContentInfo, getOrCreateTintContentInfo} from '../../../../../../../common/src/main/ets/default/TintStateManager';
+import { FASlotName } from '../../../../../../../common/src/main/ets/default/Constants';
+import { TintContentInfo, getOrCreateTintContentInfo
+} from '../../../../../../../common/src/main/ets/default/TintStateManager';
 import createOrGet from '../../../../../../../common/src/main/ets/default/SingleInstanceHelper';
 
 const TAG = 'SignalVM';
@@ -24,7 +25,7 @@ export class SignalVM {
   mTintContentInfo: TintContentInfo = getOrCreateTintContentInfo(FASlotName.SIGNAL);
 
   constructor() {
-    Log.showInfo(TAG, `constructor`);
+    Log.showInfo(TAG, 'constructor');
   }
 
   getTintContentInfo(): TintContentInfo {
@@ -34,4 +35,4 @@ export class SignalVM {
 
 let sSignalVM = createOrGet(SignalVM, TAG);
 
-export default sSignalVM as SignalVM;
+export default sSignalVM;

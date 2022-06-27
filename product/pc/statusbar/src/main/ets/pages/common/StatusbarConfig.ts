@@ -12,25 +12,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import {FASlotName} from '../../../../../../../../common/src/main/ets/default/constants';
+import { FASlotName } from '../../../../../../../../common/src/main/ets/default/constants';
+import { StatusBarConfig
+} from '../../../../../../../../features/statusbarcomponent/src/main/ets/com/ohos/common/Constants';
 
-type LayoutGroup = {
-  id: number;
-  Components: Array<string>;
-};
-type pluginIconData = {
-  id: string;
-  bundleName: string;
-  abilityName: string;
-};
-type Config = {
-  LayoutGroups: Array<LayoutGroup>;
-  LocalSlots: Array<string>;
-  MetaSlots: Array<pluginIconData>;
-  emptyPosition: { x1: number; x2: number; y1: number; y2: number };
-};
-
-const StatusbarConfig: Config = {
+const statusbarConfig: StatusBarConfig = {
   LayoutGroups: [
     {
       id: 1,
@@ -53,8 +39,8 @@ const StatusbarConfig: Config = {
         FASlotName.RING_MODE,
         FASlotName.BATTERY,
         FASlotName.CLOCK,
-        "systemui_notificationpanel",
-        "systemui_controlpanel",
+        'systemui_notificationpanel',
+        'systemui_controlpanel',
       ],
     },
   ],
@@ -71,14 +57,14 @@ const StatusbarConfig: Config = {
   ],
   MetaSlots: [
     {
-      id: "systemui_notificationpanel",
-      bundleName: "com.ohos.systemui",
-      abilityName: "com.ohos.systemui.notificationpanel.ServiceExtAbility",
+      id: 'systemui_notificationpanel',
+      bundleName: 'com.ohos.systemui',
+      abilityName: 'com.ohos.systemui.notificationpanel.ServiceExtAbility',
     },
     {
-      id: "systemui_controlpanel",
-      bundleName: "com.ohos.systemui",
-      abilityName: "com.ohos.systemui.controlpanel.ServiceExtAbility",
+      id: 'systemui_controlpanel',
+      bundleName: 'com.ohos.systemui',
+      abilityName: 'com.ohos.systemui.controlpanel.ServiceExtAbility',
     },
   ],
   emptyPosition: {
@@ -89,4 +75,4 @@ const StatusbarConfig: Config = {
   },
 };
 
-export default StatusbarConfig;
+export default statusbarConfig;

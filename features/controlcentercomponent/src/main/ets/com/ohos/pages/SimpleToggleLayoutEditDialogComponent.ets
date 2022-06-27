@@ -14,7 +14,7 @@
  */
 
 import Log from '../../../../../../../../common/src/main/ets/default/Log';
-import StyleConfiguration from '../common/StyleConfiguration';
+import StyleConfiguration, { ControlEditDialogStyle } from '../common/StyleConfiguration';
 
 const TAG = 'Control-SimpleToggleLayoutEditDialogComponent';
 
@@ -26,7 +26,7 @@ export default struct SimpleToggleLayoutEditDialogComponent {
   private controller: CustomDialogController;
   private leftAction: () => void;
   private rightAction: () => void;
-  @State style: any = StyleConfiguration.getControlEditDialogStyle();
+  @State style: ControlEditDialogStyle = StyleConfiguration.getControlEditDialogStyle();
 
   aboutToAppear() {
     Log.showInfo(TAG, 'aboutToAppear');
@@ -72,7 +72,7 @@ export default struct SimpleToggleLayoutEditDialogComponent {
 
           Divider()
             .vertical(true)
-            .color(this.style.editDialogDividerColor)
+            .backgroundColor(this.style.editDialogDividerColor)
             .strokeWidth(this.style.editDialogDividerWidth)
             .height(this.style.editDialogDividerHeight)
 

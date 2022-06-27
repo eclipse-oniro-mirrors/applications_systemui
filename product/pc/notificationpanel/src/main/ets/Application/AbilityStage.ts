@@ -12,12 +12,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import AbilityStage from "@ohos.application.AbilityStage"
-import Log from '../../../../../../../common/src/main/ets/default/log'
+import AbilityStage from '@ohos.application.AbilityStage';
+import Log from '../../../../../../../common/src/main/ets/default/Log';
 
-const TAG = "NotificationPanel_AbilityStage"
+const TAG = 'NotificationPanel_AbilityStage';
+
 export default class MainAbilityStage extends AbilityStage {
-    onCreate() {
-        Log.showInfo(TAG, "onCreate")
-    }
+  onCreate(): void {
+    Log.showInfo(TAG, 'onCreate');
+  }
 }

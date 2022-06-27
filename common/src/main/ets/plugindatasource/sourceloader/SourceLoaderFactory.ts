@@ -13,37 +13,37 @@
  * limitations under the License.
  */
 
-import Log from "../../default/Log";
-import SourceLoader, { LoaderChannel } from "./SourceLoader";
-import DataAbilitySourceLoader from "./DataAbilitySourceLoader";
-import MetaSourceLoader from "./MetaSourceLoader";
-import PluginSourceLoader from "./PluginSourceLoader";
-import { LoaderConfigInfo } from "../common/Constants";
+import Log from '../../default/Log';
+import SourceLoader, { LoaderChannel } from './SourceLoader';
+import DataAbilitySourceLoader from './DataAbilitySourceLoader';
+import MetaSourceLoader from './MetaSourceLoader';
+import PluginSourceLoader from './PluginSourceLoader';
+import { LoaderConfigInfo } from '../common/Constants';
 
-const TAG = "SourceLoaderFactory";
+const TAG = 'SourceLoaderFactory';
 
 const classMap: { [key: string]: any } = {
-    MetaSource: MetaSourceLoader,
-    PluginSourceLoader: PluginSourceLoader,
-    DataAbilitySourceLoader: DataAbilitySourceLoader,
+  MetaSource: MetaSourceLoader,
+  PluginSourceLoader: PluginSourceLoader,
+  DataAbilitySourceLoader: DataAbilitySourceLoader,
 };
 
 export default class SourceLoaderFactory {
-    mChannel: LoaderChannel;
+  mChannel: LoaderChannel;
 
-    constructor(channel: LoaderChannel) {
-        Log.showDebug(TAG, `constructor, channel: ${channel}`);
-        this.mChannel = channel;
-    }
+  constructor(channel: LoaderChannel) {
+    Log.showDebug(TAG, `constructor, channel: ${channel}`);
+    this.mChannel = channel;
+  }
 
-    getSourceLoader(pluginType: string, config: LoaderConfigInfo): null | SourceLoader {
-        let clz = classMap[pluginType];
-        if (!clz) {
-            Log.showError(TAG, `Can't find pluginType: ${pluginType}`);
-            return null;
-        }
-        let loader: SourceLoader = new clz(config);
-        loader.setChannel(this.mChannel);
-        return loader;
+  getSourceLoader(pluginType: string, config: LoaderConfigInfo): null | SourceLoader {
+    let clz = classMap[pluginType];
+    if (!clz) {
+      Log.showError(TAG, `Can't find pluginType: ${pluginType}`);
+      return null;
     }
+    let loader: SourceLoader = new clz(config);
+    loader.setChannel(this.mChannel);
+    return loader;
+  }
 }

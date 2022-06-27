@@ -13,19 +13,20 @@
  * limitations under the License.
  */
 
-import StyleManager from '../../../../../../../common/src/main/ets/default/StyleManager'
-import Constants from './Constants'
+import StyleManager from '../../../../../../../common/src/main/ets/default/StyleManager';
 
 const TAG = 'wifi-StyleConfiguration';
 
+export class StartsBarWifiComponentStyle {
+  statusBarWifiWidth: Length = $r('app.float.status_bar_wifi_width');
+  statusBarWifiHeight: Length = $r('app.float.status_bar_wifi_height');
+}
+
 export default class StyleConfiguration {
-  static getStartsBarWifiComponentStyle() {
-    const key: string = TAG + "-startsBarWifi";
+  static getStartsBarWifiComponentStyle(): StartsBarWifiComponentStyle {
+    const key: string = TAG + '-startsBarWifi';
     return StyleManager.getStyle(key, () => {
-      return {
-        statusBarWifiWidth: $r('app.float.status_bar_wifi_width'),
-        statusBarWifiHeight: $r('app.float.status_bar_wifi_height')
-      };
+      return new StartsBarWifiComponentStyle();
     });
   }
 }

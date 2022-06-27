@@ -14,18 +14,18 @@
  */
 
 import Log from '../../../../../../../../../common/src/main/ets/default/Log';
-import EventManager from "../../../../../../../../../common/src/main/ets/default/event/EventManager";
-import {obtainLocalEvent} from "../../../../../../../../../common/src/main/ets/default/event/EventUtil";
+import EventManager from '../../../../../../../../../common/src/main/ets/default/event/EventManager';
+import {obtainLocalEvent} from '../../../../../../../../../common/src/main/ets/default/event/EventUtil';
 
-const TAG = `NotificationWindowManager`;
+const TAG = 'NotificationWindowManager';
 
 class NotificationWindowManager {
 
-  showNotificationWindow() {
+  showNotificationWindow(): void {
     // todo show Notification window
   }
 
-  hideNotificationWindow() {
+  hideNotificationWindow(): void {
     Log.showInfo(TAG, 'hide Notification window');
     EventManager.publish(obtainLocalEvent('hideNotificationWindowEvent', ''));
   }
@@ -33,4 +33,4 @@ class NotificationWindowManager {
 
 let sNotificationWindowManager = new NotificationWindowManager();
 
-export default sNotificationWindowManager as NotificationWindowManager;
+export default sNotificationWindowManager ;
