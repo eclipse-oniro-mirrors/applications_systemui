@@ -14,8 +14,9 @@
  */
 
 import Log from '../../../../../../../common/src/main/ets/default/log';
-import AbilityManager from '../../../../../../../common/src/main/ets/default/abilitymanager/abilitymanager'
+import AbilityManager from '../../../../../../../common/src/main/ets/default/abilitymanager/abilitymanager';
 import BundleResourceModel from '../../../../../../../features/managementcomponent/src/main/ets/com/ohos/model/bundleresourcemodel';
+import display from '@ohos.display';
 import NoDisturbComponentViewModel from '../../../../../../../features/managementcomponent/src/main/ets/com/ohos/vm/nodisturbcomponentviewmodel';
 import Router from '@system.router';
 
@@ -58,9 +59,9 @@ export default class NotificationManagenmentViewModel extends NoDisturbComponent
     globalThis[AbilityManager.ABILITY_NAME_NOTIFICATION_MANAGEMENT + '_want'] = null;
   }
 
-  judgeDeviceType(){
+  async judgeDeviceType(){
     Log.showDebug(TAG, "judgeDeviceType");
-    let configInfo = AbilityManager.getAbilityData(AbilityManager.ABILITY_NAME_APP_LIST, 'dis');
+    let configInfo = await display.getDefaultDisplay();
     Log.showDebug(TAG, `judgeDeviceType, configInfo: ${configInfo} `);
     if (configInfo.width < configInfo.height) {
       this.isPhone = true;
