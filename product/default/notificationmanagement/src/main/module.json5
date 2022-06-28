@@ -22,8 +22,8 @@
         "description": "$string:mainability_description",
         "label": "$string:app_name",
         "launchType": "singleton",
-        "startWindowIcon": "$media:icon",
-        "startWindowBackground": "$color:color_1"
+        "startWindowIcon": "$media:startWindowIcon",
+        "startWindowBackground": "$color:startWindowBackground"
       }
     ]
   }
