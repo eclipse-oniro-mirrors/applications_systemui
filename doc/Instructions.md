@@ -1,23 +1,22 @@
 # SystemUI 使用说明
 ## 代码使用
 ### 代码下载
-#### 配置码云ssh  
-1. 打开本地git bash窗口
-2. 进入到.ssh 目录：cd ~/.ssh 
-3. 找到id_rsa.pub文件：ls
-4. 查看公钥：cat id_rsa.pub
-5. 在码云个人设置-安全设置-ssh公钥中配置公钥  
+#### 配置码云ssh 
+1. 安装Git
+2. 生成公钥，[参考链接](https://gitee.com/help/articles/4181#article-header0)
+3. 在码云个人设置-安全设置-ssh公钥中配置公钥  
    
 #### 下载代码
- 1. 打开码云SystemUI地址（[下载地址](https://gitee.com/openharmony/applications_systemui)）。
- 2. 选择克隆/下载 - ssh方式 -复制下载地址
+ 1. 打开码云SystemUI地址，[下载地址](https://gitee.com/openharmony/applications_systemui)
+ 2. 选择克隆/下载 - https方式 -复制下载地址
  3. 本机git bash 中执行：
  ```
  git clone '复制的下载地址'
  ```
 
 ### 环境搭建
-安装DevEco Studio
+1. 安装DevEco Studio
+2. 按照操作指引安装OpenHarmony SDK
     
 ## 基础开发说明
 ### 系统接口调用
@@ -86,46 +85,17 @@ this.title = this.$r('app.string.hello_world');
 ## 签名打包
 ### 签名
 #### 签名文件的获取
-1. 拷贝OpenHarmony标准版 工程的 prebuilts\signcenter 目录到操作目录
+1. 拷贝OpenHarmony标准版 工程的 OpenHarmony\signcenter_tool 目录到操作目录
 2. 拷贝SystemUI 工程的 signature\systemui.p7b 到该目录下
 #### 签名文件的配置
 打开项目工程，选择 File → Project Structure
 
 ![](../figures/signature_1.png)
 
-选择 Modules → Signing Configs，将对应的签名文件配置如下，完成后点击Apply，再点击OK。
+选择 Project → Signing Configs，将对应的签名文件配置如下，完成后点击Apply，再点击OK。
 
 ![](../figures/signature_2.png)
 
-### 打包
-DevEco Studio 支持 debug 与 release 两种打包类型。可以在 OhosBuild Variants 窗口中进行切换。
-
- ![](../figures/ds_ohosbuild_variants.png)
-
-#### debug打包
-1. 代码准备完成后，在 OhosBuild Variants 窗口的 Selected Variant 中选择 debug。   
-   
-   ![](../figures/ds_ohosbuild_variants_debug.png)
-
-2. 选择Build → Build Haps(s)/APP(s) → Build Hap(s)
-
-   ![](../figures/ds_build_haps.png)
-
-3. 编译完成后，hap包会生成在工程目录下的 `\build\outputs\hap\debug\phone\`路径下（如果没有配置签名，则只会生成未签名的hap包）
-
-   ![](../figures/ds_ohosbuild_output_dir_debug.png)
-#### release打包
-1. 代码准备完成后，在 OhosBuild Variants 窗口的 Selected Variant 中选择 release   
-   
-    ![](../figures/ds_ohosbuild_variants_release.png)
-
-2. 选择Build → Build Haps(s)/APP(s) → Build Hap(s)
-
-   ![](../figures/ds_build_haps.png)
-
-3. 编译完成后，hap包会生成在工程目录下的 `\build\outputs\hap\release\phone\`路径下（配置好签名后，生成的hap包会显示signed）
-   
-   ![](../figures/ds_ohosbuild_output_dir_release.png)
 ## 安装、运行、调试
 ## 应用安装
 配置 hdc：
@@ -219,7 +189,7 @@ hilog │ grep Label
 3. Fork 成功之后，会在自己的账号下看见 fork 的代码仓库。
 
 ### 提交代码
-1. 访问我们自己在码云账号上 fork 的代码仓库，点击“克隆/下载”按钮，选择 SSH，点击“复制”按钮。
+1. 访问我们自己在码云账号上 fork 的代码仓库，点击“克隆/下载”按钮，选择 SSH/HTTPS，点击“复制”按钮。
 
 2. 在本地新建 SystemUI 目录，在 SystemUI 目录中执行如下命令
    ```
