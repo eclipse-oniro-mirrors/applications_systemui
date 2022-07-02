@@ -39,7 +39,10 @@ export default struct Notification {
 
   build() {
     Flex({ direction: FlexDirection.Column, alignItems: ItemAlign.Start, justifyContent: FlexAlign.Start }) {
-      CenterTitle()
+      Column() {
+        CenterTitle()
+      }
+      .flexShrink(0)
       if (this.notificationList.length == 0) {
         Text($r("app.string.no_notification"))
           .fontColor($r("sys.color.ohos_id_color_text_primary"))
@@ -51,7 +54,7 @@ export default struct Notification {
         Column() {
           NotificationListComponent({ config: { itemMargin: NOTIFICATION_ITEM_MARGIN } })
         }
-        .flexGrow(1)
+        .flexShrink(1)
       }
     }.padding({ left: NOTIFICATION_TOTAL_MARGIN, right: NOTIFICATION_TOTAL_MARGIN })
     .width('100%')
