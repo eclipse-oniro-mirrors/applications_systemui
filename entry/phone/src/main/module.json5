@@ -68,6 +68,9 @@
       },
       {
         "name": "ohos.permission.MODIFY_AUDIO_SETTINGS"
+      },
+      {
+        "name": "ohos.permission.DISTRIBUTED_DATASYNC"
       }
     ]
   }
