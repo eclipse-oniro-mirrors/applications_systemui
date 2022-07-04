@@ -43,9 +43,7 @@ export class RingModeVM {
 
     this.mRingModeComponentMode = AppStorage.SetAndLink(RING_MODE_COMPONENT_MODE_KEY, AudioRingMode.RINGER_MODE_NORMAL);
 
-    RingModeService.registerListener({
-      'updateRingerMode': this.updateRingerMode.bind(this)
-    });
+    RingModeService.registerListener(this);
     RingModeService.startService();
   }
 

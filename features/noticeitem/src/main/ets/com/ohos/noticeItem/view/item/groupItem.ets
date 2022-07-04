@@ -59,15 +59,19 @@ export default struct GroupItem {
                 distributedDeviceName: this.distributedDeviceName,
                 clickTitleAction: () => null
               })
-            }.backgroundColor($r('app.color.notificationitem_background'))
+            }
+            .flexShrink(0)
+            .backgroundColor($r('app.color.notificationitem_background'))
             .width(Constants.FULL_CONTAINER_WIDTH)
 
             if (this.toExpand) {
-              Row().height($r("app.float.notice_divider")).width('100%')
+              Row().height($r("app.float.notice_divider")).width('100%').flexShrink(0)
             }
-            Row() {
+            Column() {
               ContentList({ groupData: this.groupData, toExpand: this.toExpand })
-            }.width(Constants.FULL_CONTAINER_WIDTH)
+            }
+            .flexShrink(1)
+            .width(Constants.FULL_CONTAINER_WIDTH)
             .enabled(!this.mEdgeEnd)
           }
           .borderRadius($r("sys.float.ohos_id_corner_radius_default_l"))
@@ -100,7 +104,6 @@ export default struct GroupItem {
     this.mScroller.scrollEdge(this.mEdgeEnd ? Edge.End : Edge.Start)
   }
 }
-
 
 @Component
 struct ContentList {
@@ -182,7 +185,7 @@ struct ContentList {
           strokeWidth: 1,
           color: $r('app.color.device_divider_color')
         })
-        .flexShrink(1)
+        .align(Alignment.Top)
       }
     }
     .alignItems(HorizontalAlign.Start)

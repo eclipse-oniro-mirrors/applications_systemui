@@ -28,7 +28,7 @@ export interface RingModeStatusListener {
 
 export class RingModeService {
   mIsStart = false;
-  mListener: RingModeStatusListener;
+  mListeners = new Set<RingModeStatusListener>();
   mAudioManager: any;
 
   startService(): void {
@@ -44,7 +44,7 @@ export class RingModeService {
 
     this.mAudioManager.on('ringerModeChange', (data: AudioRingMode) => {
       Log.showInfo(TAG, `startService->ringerModeChange, data: ${JSON.stringify(data)}`);
-      this.mListener?.updateRingerMode(data);
+      this.mListeners.forEach(listener => listener.updateRingerMode(data));
     });
   }
 
@@ -59,8 +59,13 @@ export class RingModeService {
   }
 
   registerListener(listener: RingModeStatusListener): void {
-    Log.showInfo(TAG, `registerListener, listener: ${listener}`);
-    this.mListener = listener;
+    let res = this.mListeners.add(listener);
+    Log.showInfo(TAG, `registser ringMode Listener ${res}`);
+  }
+
+  unregisterListener(listener: RingModeStatusListener): void {
+    let res = this.mListeners.delete(listener);
+    Log.showInfo(TAG, `unregistser ringMode Listener ${res}`);
   }
 
   getRingerMode(): void {
@@ -69,7 +74,7 @@ export class RingModeService {
       if (error) {
         return;
       }
-      this.mListener?.updateRingerMode(action);
+      this.mListeners.forEach(listener => listener.updateRingerMode(action));
     });
   }
 

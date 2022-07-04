@@ -57,7 +57,7 @@ export default struct NotificationListComponent {
         }
       }, (list: any) => JSON.stringify(list.map((item) => item.hashcode)))
     }
+    .align(Alignment.Top)
     .width('100%')
-    .flexShrink(1)
   }
 }
