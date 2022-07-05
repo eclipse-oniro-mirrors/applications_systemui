@@ -16,6 +16,8 @@
 import Log from '../../../../../../../../common/src/main/ets/default/Log';
 import EventManager from '../../../../../../../../common/src/main/ets/default/event/EventManager';
 import SimpleToggleBase from '../../../../../../../../common/src/main/ets/template/SimpleToggleBase';
+import PluginIconItemComponent from './PluginIconItemComponent';
+import {PluginType} from "../../../../../../../../common/src/main/ets/plugindatasource/common/Constants"
 
 const TAG = 'SimpleToggleComponent';
 
@@ -46,21 +48,33 @@ export default struct SimpleToggleComponent {
 
   build() {
     Column() {
-      SimpleToggleBase({
-        mToggleId: this.keyId,
-        mIcon: $mDefaultIcon,
-        mIconStr: this.mItemData.get().iconUrl,
-        mUseIconStr: true,
-        mChangeSwitch: this.mDefaultChangeSwitch,
-        mLabel: $mDefaultLabel,
-        mLabelStr: this.mItemData.get().label,
-        mUseLabelStr: true,
-        mEditMode: this.mEditMode,
-        mDragMode: this.mDragMode,
-        mClickEvent: () => this.onIconItemClick(),
-        mLongClickEvent: () => this.onIconItemLongPressGesture()
-      })
-    }.width('100%')
+      if (this.mItemData.get().pluginType == PluginType.META) {
+        SimpleToggleBase({
+          mToggleId: this.keyId,
+          mIcon: $mDefaultIcon,
+          mIconStr: this.mItemData.get().iconUrl,
+          mUseIconStr: true,
+          mChangeSwitch: this.mDefaultChangeSwitch,
+          mLabel: $mDefaultLabel,
+          mLabelStr: this.mItemData.get().label,
+          mUseLabelStr: true,
+          mEditMode: this.mEditMode,
+          mDragMode: this.mDragMode,
+          mClickEvent: () => this.onIconItemClick(),
+          mLongClickEvent: () => this.onIconItemLongPressGesture()
+        })
+      } else if (this.mItemData.get().pluginType == PluginType.DATA_ABILITY) {
+        // TODO:
+      } else if (this.mItemData.get().pluginType == PluginType.PLUGIN_COMPONENT) {
+        PluginIconItemComponent({
+          keyId: this.keyId,
+          mEditMode: this.mEditMode,
+          mDragMode: this.mDragMode
+        })
+      }
+
+    }
+    .width('100%')
     .height('100%')
   }
 

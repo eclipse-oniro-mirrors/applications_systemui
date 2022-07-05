@@ -19,6 +19,7 @@ import Log from '../../../../../../../common/src/main/ets/default/Log';
 import WindowManager, { WindowType } from '../../../../../../../common/src/main/ets/default/WindowManager';
 import AbilityManager from '../../../../../../../common/src/main/ets/default/abilitymanager/abilityManager';
 import { Want } from 'ability/want';
+import ControlCenterConstants from '../../../../../../../features/controlcentercomponent/src/main/ets/com/ohos/common/Constants';
 
 const TAG = 'ControlPanel_ServiceExtAbility';
 
@@ -26,6 +27,7 @@ class ServiceExtAbility extends ServiceExtension {
   async onCreate(want: Want): Promise<void> {
     Log.showInfo(TAG, `onCreate, want: ${JSON.stringify(want)}`);
     AbilityManager.setContext(AbilityManager.ABILITY_NAME_CONTROL_PANEL, this.context);
+    globalThis[ControlCenterConstants.PLUGIN_COMPONENT_OWNER_WANT_KEY] = want;
 
     let dis = await display.getDefaultDisplay();
     Log.showDebug(TAG, `onCreate, dis: ${JSON.stringify(dis)}`);
