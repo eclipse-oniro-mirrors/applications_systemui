@@ -36,12 +36,10 @@ export default struct NotificationItem {
 
   build() {
     Stack() {
-      IconListComponent({ iconAlpha: this.mIconAlpha, itemData: this.itemData })
-
       Scroll(this.mScroller) {
         Row() {
           FrontItem({ itemData: this.itemData, isSubItem: this.isSubItem })
-          IconListComponent({ iconAlpha: 0, itemData: this.itemData })
+          IconListComponent({ iconAlpha: this.mIconAlpha, itemData: this.itemData })
         }
       }
       .scrollable(ScrollDirection.Horizontal)

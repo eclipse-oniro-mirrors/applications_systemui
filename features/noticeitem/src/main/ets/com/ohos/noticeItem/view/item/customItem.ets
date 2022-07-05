@@ -65,7 +65,6 @@ export default struct CustomItem {
             .opacity(0.5)
         }.margin(10)
       }
-
     }
     .borderRadius(!this.isSubItem ? $r('app.float.item_borderradius') : 0)
     .clip(true)

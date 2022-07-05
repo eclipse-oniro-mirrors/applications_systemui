@@ -90,14 +90,16 @@ export default struct BannerNotificationItem {
                   clickTitleAction: () => this.refreshLastActionTime()
                 })
               }
-              Row() {
-                Image($r('app.media.ic_close'))
-                  .objectFit(ImageFit.Contain)
-                  .width(Layout.TITLE_IMAGE_SIZE)
-                  .height(Layout.TITLE_IMAGE_SIZE)
-                  .margin({ left: Layout.ICON_MARGIN })
-                  .visibility(this.mCloseEnableFlg ? Visibility.Visible : Visibility.None)
-                  .onClick(this.clickCloseIcon.bind(this))
+
+              if (this.mCloseEnableFlg) {
+                Row() {
+                  Image($r('app.media.ic_close'))
+                    .objectFit(ImageFit.Contain)
+                    .width(Layout.TITLE_IMAGE_SIZE)
+                    .height(Layout.TITLE_IMAGE_SIZE)
+                    .margin({ left: Layout.ICON_MARGIN })
+                    .onClick(this.clickCloseIcon.bind(this))
+                }
               }
             }
             .margin({ left: 12, right: 12 })

@@ -24,9 +24,8 @@ const TAG = 'NoticeItem-GroupItem';
 
 @Component
 export default struct GroupItem {
-  @Consume('notificationUpdate') updateFlag: number;
   @State distributedDeviceName: string = ''
-  @State @Watch('expandChange') toExpand: boolean = false;
+  @State toExpand: boolean = false;
   private groupData: any[] = []
   private mScroller: Scroller = new Scroller();
   @State mIconAlpha: number = 0;
@@ -38,10 +37,6 @@ export default struct GroupItem {
 
   aboutToDisappear() {
     Log.showInfo(TAG, `aboutToDisAppear`);
-  }
-
-  expandChange() {
-    this.updateFlag++;
   }
 
   build() {
@@ -65,7 +60,7 @@ export default struct GroupItem {
             .width(Constants.FULL_CONTAINER_WIDTH)
 
             if (this.toExpand) {
-              Row().height($r("app.float.notice_divider")).width('100%').flexShrink(0)
+              Divider().strokeWidth($r("app.float.notice_divider")).width('100%').flexShrink(0)
             }
             Column() {
               ContentList({ groupData: this.groupData, toExpand: this.toExpand })
