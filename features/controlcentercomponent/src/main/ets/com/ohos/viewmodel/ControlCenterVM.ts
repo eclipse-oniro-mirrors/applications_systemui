@@ -17,6 +17,8 @@ import Log from '../../../../../../../../common/src/main/ets/default/Log';
 import createOrGet from '../../../../../../../../common/src/main/ets/default/SingleInstanceHelper';
 import { ControlComponentData, ControlCenterConfig } from '../common/Constants';
 import ControlCenterService from '../model/ControlCenterService';
+import { PluginType, PluginComponentData
+} from '../../../../../../../../common/src/main/ets/plugindatasource/common/Constants';
 
 export const CONTROL_CENTER_COMPLEX_TOGGLE_LAYOUT_KEY = 'ControlCenterComplexToggleLayout';
 
@@ -68,9 +70,40 @@ export class ControlCenterVM {
     if (itemData) {
       AppStorage.SetOrCreate(storageKey, itemData);
     } else {
-      let deleteRs = AppStorage.Delete(storageKey);
+      let deleteRs: boolean = AppStorage.Delete(storageKey);
       Log.showDebug(TAG, `setItemData, AppStorage.Delete rs: ${deleteRs} `);
     }
+    this.setPluginData(id, itemData);
+  }
+
+
+  setPluginData(id: string, itemData: ControlComponentData): void{
+    Log.showInfo(TAG, `setPluginData, itemData: ${JSON.stringify(itemData)}`);
+    if (itemData && itemData.pluginType == PluginType.PLUGIN_COMPONENT) {
+      let data = undefined;
+      if (itemData.actionData.pluginData && itemData.actionData.pluginData.data) {
+        data = JSON.parse(JSON.stringify(itemData.actionData.pluginData.data));
+      }
+      let pluginData = this.getPluginData(id);
+      pluginData.template = itemData.actionData.pluginData.template;
+      pluginData.data = data;
+      Log.showInfo(TAG, `setPluginData, pluginData: ${JSON.stringify(pluginData)} `);
+    } else {
+      let storageKey = 'ControlCenter_PluginIcon_' + id;
+      if (AppStorage.Has(storageKey)) {
+        let deleteRs: boolean = AppStorage.Delete(storageKey);
+        Log.showInfo(TAG, `setPluginData, AppStorage.Delete rs: ${String(deleteRs)} `);
+      }
+    }
+  }
+
+  getPluginData(id: string): PluginComponentData {
+    Log.showInfo(TAG, `getPluginData, id: ${id}`);
+    let storageKey = 'ControlCenter_PluginIcon_' + id;
+    if (!AppStorage.Has(storageKey)) {
+      AppStorage.SetOrCreate(storageKey, new PluginComponentData());
+    }
+    return AppStorage.Get(storageKey);
   }
 
   getDisplayingSimpleToggles(): string[]{

@@ -33,6 +33,7 @@ export default class Constants {
   static readonly CONTROL_CENTER_TITLE_ICON_HOVER_HEIGHT = '64vp';
   static readonly CONTROL_CENTER_TITLE_ICON_HOVER_RADIUS = '16vp';
   static readonly SIMPLE_TOGGLE_EDIT_DIALOG_DIVIDER_WIDTH = '1vp';
+  static readonly PLUGIN_COMPONENT_OWNER_WANT_KEY = 'ControlCenter_PluginComponentOwnerWant';
 }
 
 export type ControlComponentData = ItemComponentData & {
