@@ -87,8 +87,14 @@ export default struct GroupItem {
       .scrollable(ScrollDirection.Horizontal)
       .scrollBar(BarState.On)
       .onScroll(() => {
-        this.mIconAlpha += 0.1;
-        this.mIconAlpha = this.mScroller.currentOffset().xOffset * 1.0 / getIconListSize();
+        let accuracy = 0.1
+        let newOpacity = this.mScroller.currentOffset().xOffset * 1.0 / getIconListSize()
+        let diffs = Math.abs(this.mIconAlpha - newOpacity)
+        if (diffs >= accuracy) {
+          let finalAlpha = newOpacity < accuracy ? 0 : newOpacity
+          finalAlpha = finalAlpha > (1 - accuracy) ? 1 : finalAlpha
+          this.mIconAlpha = finalAlpha
+        }
       })
       .onScrollEnd(() => {
         this.mEdgeEnd = (this.mEdgeEnd &&
