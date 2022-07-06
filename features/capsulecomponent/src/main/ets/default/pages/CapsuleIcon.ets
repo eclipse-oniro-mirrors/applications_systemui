@@ -42,35 +42,36 @@ export default struct CapsuleIcon {
   }
 
   build() {
-    Row() {
-      Row().width(this.styleCommon.statusBarMarginLeftRight).height('100%')
+    if (this.mCapsuleViewModel.mIsBackground) {
       Row() {
-        Row().width(this.style.greenCapsuleTextMarginLeftRight).height('100%')
-        Image($r("app.media.ic_statusbar_phone"))
-          .width(this.style.greenCapsulePhoneWidth)
-          .height(this.style.greenCapsulePhoneHeight)
-          .objectFit(ImageFit.Contain)
-        Row().width($r("app.float.green_capsule_phone_text_left")).height('100%')
-        Text(this.mCapsuleViewModel.mText)
-          .fontSize(this.styleCommon.statusBarFontSize)
-          .fontWeight(FontWeight.Regular)
-          .fontColor(this.style.greenCapsuleTextColor)
-          .maxLines(this.style.maxLines)
-          .textOverflow({ overflow: TextOverflow.Ellipsis })
-        Row().width(this.style.greenCapsuleTextMarginLeftRight).height('100%')
-      }
-      .alignItems(VerticalAlign.Center)
-      .height(this.style.greenCapsuleHeight)
-      .backgroundColor(this.style.greenCapsuleBackgroundColor)
-      .borderRadius(this.style.greenCapsuleRadius)
-      .onTouch(this.touchEvent.bind(this))
+        Row().width(this.styleCommon.statusBarMarginLeftRight).height('100%')
+        Row() {
+          Row().width(this.style.greenCapsuleTextMarginLeftRight).height('100%')
+          Image($r("app.media.ic_statusbar_phone"))
+            .width(this.style.greenCapsulePhoneWidth)
+            .height(this.style.greenCapsulePhoneHeight)
+            .objectFit(ImageFit.Contain)
+          Row().width($r("app.float.green_capsule_phone_text_left")).height('100%')
+          Text(this.mCapsuleViewModel.mText)
+            .fontSize(this.styleCommon.statusBarFontSize)
+            .fontWeight(FontWeight.Regular)
+            .fontColor(this.style.greenCapsuleTextColor)
+            .maxLines(this.style.maxLines)
+            .textOverflow({ overflow: TextOverflow.Ellipsis })
+          Row().width(this.style.greenCapsuleTextMarginLeftRight).height('100%')
+        }
+        .alignItems(VerticalAlign.Center)
+        .height(this.style.greenCapsuleHeight)
+        .backgroundColor(this.style.greenCapsuleBackgroundColor)
+        .borderRadius(this.style.greenCapsuleRadius)
+        .onTouch(this.touchEvent.bind(this))
 
-      Row().width(this.styleCommon.statusBarMarginLeftRight).height('100%')
-    }.margin({
-      left: $r("app.float.green_capsule_phone_margin_left"),
-      right: $r("app.float.green_capsule_phone_margin_left")
-    })
-    .visibility(this.mCapsuleViewModel.mIsBackground ? Visibility.Visible : Visibility.None)
+        Row().width(this.styleCommon.statusBarMarginLeftRight).height('100%')
+      }.margin({
+        left: $r("app.float.green_capsule_phone_margin_left"),
+        right: $r("app.float.green_capsule_phone_margin_left")
+      })
+    }
   }
 
   touchEvent(event: TouchEvent) {

@@ -36,20 +36,20 @@ export default struct AppItemComponent {
   build() {
     Flex({ justifyContent: FlexAlign.SpaceBetween }) {
       Row() {
-        if (this.appSwitch === 2 || this.appSwitch === 3) {
-          Image(this.appIcon)
-            .width($r('app.float.appitem_notice_info_icon_width_l'))
-            .height($r('app.float.appitem_notice_info_icon_height_l'))
-            .margin({ right: $r('app.float.appitem_icon_info_margin_r') })
-            .visibility('' === this.appIcon ? Visibility.None : Visibility.Visible)
-            .objectFit(ImageFit.Contain);
-        } else {
-          Image(this.appIcon)
-            .width($r('app.float.appitem_notice_info_icon_width'))
-            .height($r('app.float.appitem_notice_info_icon_height'))
-            .margin({ right: $r('app.float.appitem_icon_info_list_margin_r') })
-            .visibility('' === this.appIcon ? Visibility.None : Visibility.Visible)
-            .objectFit(ImageFit.Contain);
+        if ('' !== this.appIcon) {
+          if (this.appSwitch === 2 || this.appSwitch === 3) {
+            Image(this.appIcon)
+              .width($r('app.float.appitem_notice_info_icon_width_l'))
+              .height($r('app.float.appitem_notice_info_icon_height_l'))
+              .margin({ right: $r('app.float.appitem_icon_info_margin_r') })
+              .objectFit(ImageFit.Contain);
+          } else {
+            Image(this.appIcon)
+              .width($r('app.float.appitem_notice_info_icon_width'))
+              .height($r('app.float.appitem_notice_info_icon_height'))
+              .margin({ right: $r('app.float.appitem_icon_info_list_margin_r') })
+              .objectFit(ImageFit.Contain);
+          }
         }
         Column() {
           Text(this.appTitle)

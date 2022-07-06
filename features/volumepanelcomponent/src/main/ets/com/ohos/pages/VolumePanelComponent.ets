@@ -149,7 +149,7 @@ export default struct VolumePanelComponent {
 
   onMuteBtnClick(event: ClickEvent) {
     Log.showInfo(TAG, `onMuteBtnClick`);
-    ViewModel.mute(true);
+    ViewModel.mute();
   }
 
   onSettingsBtnClick(event: ClickEvent) {

@@ -74,17 +74,10 @@ export default struct TitleItem {
 
       Blank()
       if (this.needExpand) {
-        if (this.isExpand) {
-          Image($r('app.media.ic_notification_up'))
-            .objectFit(ImageFit.Contain)
-            .width(Layout.TITLE_IMAGE_SIZE)
-            .height(Layout.TITLE_IMAGE_SIZE)
-        } else {
-          Image($r('app.media.ic_notification_down'))
-            .objectFit(ImageFit.Contain)
-            .width(Layout.TITLE_IMAGE_SIZE)
-            .height(Layout.TITLE_IMAGE_SIZE)
-        }
+        Image(this.isExpand ? $r('app.media.ic_notification_up') : $r('app.media.ic_notification_down'))
+          .objectFit(ImageFit.Contain)
+          .width(Layout.TITLE_IMAGE_SIZE)
+          .height(Layout.TITLE_IMAGE_SIZE)
       }
     }
     .margin({ left: 12, right: 12 })

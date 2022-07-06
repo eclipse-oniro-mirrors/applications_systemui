@@ -28,18 +28,13 @@ const TAG = 'NoticeItem-GeneralItem';
 
 @Component
 export default struct GeneralItem {
-  @Consume('notificationUpdate') updateFlag: number;
   @State hasPicture: boolean = false
-  @State @Watch('expandChange') isExpand: boolean = false
+  @State isExpand: boolean = false
   @State needExpand: boolean = true
   @State distributedDeviceName: string = ''
   private itemData: any = {}
   private clickAction: () => void
   private isSubItem: boolean= false;
-
-  expandChange() {
-    this.updateFlag++;
-  }
 
   aboutToAppear() {
     Log.showInfo(TAG, `aboutToAppear Start`);
@@ -87,8 +82,7 @@ export default struct GeneralItem {
       if (this.isExpand && this.itemData.actionButtons.length) {
         ActionComponent({ itemData: this.itemData })
       } else {
-        Blank()
-          .height(Layout.ITEM_MARGIN)
+        Blank().height(Layout.ITEM_MARGIN)
       }
     }.onClick(() => {
       this.clickAction();
@@ -112,20 +106,17 @@ struct ContentComponent {
           basicItem({
             itemData: this.itemData
           });
-        }
-        if (this.itemData.contentType === Constants.NOTIFICATION_TYPE_LONG) {
+        } else if (this.itemData.contentType === Constants.NOTIFICATION_TYPE_LONG) {
           longItem({
             itemData: this.itemData,
             isExpand: this.isExpand
           });
-        }
-        if (this.itemData.contentType === Constants.NOTIFICATION_TYPE_MULTILINE) {
+        } else if (this.itemData.contentType === Constants.NOTIFICATION_TYPE_MULTILINE) {
           multiItem({
             itemData: this.itemData,
             isExpand: this.isExpand
           });
-        }
-        if (this.itemData.contentType === Constants.NOTIFICATION_TYPE_PICTURE) {
+        } else if (this.itemData.contentType === Constants.NOTIFICATION_TYPE_PICTURE) {
           pictureItem({
             itemData: this.itemData,
             isExpand: this.isExpand
