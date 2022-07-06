@@ -60,7 +60,7 @@ export default struct GroupItem {
             .width(Constants.FULL_CONTAINER_WIDTH)
 
             if (this.toExpand) {
-              Divider().strokeWidth($r("app.float.notice_divider")).width('100%').flexShrink(0)
+              Row().height($r("app.float.notice_divider")).width('100%').flexShrink(0)
             }
             Column() {
               ContentList({ groupData: this.groupData, toExpand: this.toExpand })
@@ -71,14 +71,9 @@ export default struct GroupItem {
           }
           .borderRadius($r("sys.float.ohos_id_corner_radius_default_l"))
           .clip(true)
-
-          Row() {
-            IconListComponent({ iconAlpha: this.mIconAlpha, itemData: this.groupData[0], isGroup: true })
-          }.width(getIconListSize())
-        }.alignItems(VerticalAlign.Top)
+          IconListComponent({ iconAlpha: this.mIconAlpha, itemData: this.groupData[0], isGroup: true })
+        }
       }
-      .borderRadius($r("sys.float.ohos_id_corner_radius_default_l"))
-      .clip(true)
       .scrollable(ScrollDirection.Horizontal)
       .scrollBar(BarState.On)
       .onScroll(() => {
@@ -99,6 +94,8 @@ export default struct GroupItem {
       })
     }
     .width(Constants.FULL_CONTAINER_WIDTH)
+    .borderRadius($r("sys.float.ohos_id_corner_radius_default_l"))
+    .clip(true)
   }
 
   scrollEdge() {

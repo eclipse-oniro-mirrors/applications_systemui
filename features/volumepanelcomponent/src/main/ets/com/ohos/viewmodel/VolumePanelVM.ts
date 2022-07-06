@@ -17,8 +17,6 @@ import Log from '../../../../../../../../common/src/main/ets/default/Log';
 import Constants from '../common/Constants';
 import { AudioVolumeType, VolumeInfo } from '../common/Constants';
 import VolumePanelService from '../model/VolumePanelService';
-import RingModeService from '../../../../../../../ringmodecomponent/src/main/ets/com/ohos/model/RingModeService';
-import { AudioRingMode } from '../../../../../../../ringmodecomponent/src/main/ets/com/ohos/common/Constants';
 import VolumeWindowController from '../common/VolumeWindowController';
 
 export const VOLUME_PANEL_MAX_VOLUME_KEY = 'VolumePanelMaxVolume';
@@ -67,8 +65,6 @@ export class VolumePanelVM {
     });
     VolumePanelService.startService();
     VolumePanelService.registerListener(this);
-    RingModeService.startService();
-    RingModeService.registerListener(this);
     this.mAllVolumeTypes.forEach((volumeType: AudioVolumeType) => {
       VolumePanelService.getMaxVolume(volumeType, (volumeType: AudioVolumeType, value: number) => this.updateMaxVolume(volumeType, value));
       VolumePanelService.getMinVolume(volumeType, (volumeType: AudioVolumeType, value: number) => this.updateMinVolume(volumeType, value));
@@ -135,21 +131,10 @@ export class VolumePanelVM {
     this.mVolumeBeforeMute = minVolume;
     if (volumeInfo.isMute != this.mIsMute.get()) {
       this.mIsMute.set(volumeInfo.isMute);
-      RingModeService.setRingerMode(volumeInfo.isMute ? AudioRingMode.RINGER_MODE_SILENT : AudioRingMode.RINGER_MODE_NORMAL);
     }
     Log.showInfo(TAG, `updateVolumeInfo, mIsMute: ${this.mIsMute.get()} `);
 
     this.updateDisplayVolume(volumeInfo.isMute ? minVolume : volumeInfo.volume, maxVolume, minVolume);
-  }
-
-  updateRingerMode(mode: AudioRingMode): void {
-    Log.showInfo(TAG, `updateRingerMode, mode: ${JSON.stringify(mode)} `);
-    let needMute = mode == AudioRingMode.RINGER_MODE_SILENT;
-    if (needMute == this.mIsMute.get()) {
-      Log.showInfo(TAG, `mute is: ${needMute}, No need change`);
-      return;
-    }
-    this.mute(false);
   }
 
   updateDisplayVolume(volume: number, maxVolume: number, minVolume: number): void{
@@ -180,14 +165,11 @@ export class VolumePanelVM {
     VolumeWindowController.getInstance().updateVolumeInfo(null);
   }
 
-  mute(needSetRingMode: boolean): void {
+  mute(): void {
     Log.showInfo(TAG, `mute, isMute: ${this.mIsMute.get()} mCurrentAudioVolume: ${this.mCurrentAudioVolume}`);
     this.mUpdatingAudioVolume = undefined;
     let isMute: boolean = this.mIsMute.get();
     isMute = !isMute;
-    if (needSetRingMode) {
-      RingModeService.setRingerMode(isMute ? AudioRingMode.RINGER_MODE_SILENT : AudioRingMode.RINGER_MODE_NORMAL);
-    }
     let maxVolume: number = this.mMaxVolume.get();
     let minVolume: number = this.mMinVolume.get();
     let volume = isMute ? minVolume : (minVolume == this.mVolumeBeforeMute ? (minVolume + 1) : this.mVolumeBeforeMute);
@@ -199,9 +181,7 @@ export class VolumePanelVM {
         this.mVolumeBeforeMute = currentAudioVolume;
       }
     });
-    if (needSetRingMode) {
-      VolumeWindowController.getInstance().updateVolumeInfo(null);
-    }
+    VolumeWindowController.getInstance().updateVolumeInfo(null);
   }
 }
 
