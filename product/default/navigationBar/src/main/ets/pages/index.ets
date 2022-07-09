@@ -42,7 +42,7 @@ struct Index {
   aboutToAppear() {
     Log.showInfo(TAG, `aboutToAppear Start`)
     let configInfo = AbilityManager.getAbilityData(AbilityManager.ABILITY_NAME_NAVIGATION_BAR, 'config')
-    AppStorage.SetAndLink("showNavHorizontal", configInfo.showNavHorizontal)
+    AppStorage.SetOrCreate("showNavHorizontal", configInfo.showNavHorizontal)
     mConfigManager.initConfig()
 
     setAppBgColor('#00000000')
