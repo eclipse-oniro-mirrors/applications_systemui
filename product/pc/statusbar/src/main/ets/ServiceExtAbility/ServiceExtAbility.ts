@@ -30,13 +30,21 @@ class ServiceExtAbility extends ServiceExtension {
     globalThis[StatusBarConstants.PLUGIN_COMPONENT_OWNER_WANT_KEY] = want;
     let configInfo = await StatusBarConfiguration.getConfiguration();
     if (configInfo.showHorizontal) {
-      configInfo.realHeight = (configInfo.realHeight * configInfo.maxWidth) / 1280;
+      if (configInfo.realHeight == 0) {
+        Log.showInfo(TAG, `hide statusbar`);
+      } else {
+        configInfo.realHeight = (configInfo.realHeight * configInfo.maxWidth) / 1280;
+      }
       configInfo.minHeight = configInfo.realHeight;
       if (configInfo.yCoordinate > 0) {
         configInfo.yCoordinate = configInfo.maxHeight - configInfo.realHeight;
       }
     } else {
-      configInfo.realWidth = (configInfo.realWidth * configInfo.maxWidth) / 1280;
+      if (configInfo.realWidth == 0) {
+        Log.showInfo(TAG, `hide statusbar`);
+      } else {
+        configInfo.realWidth = (configInfo.realWidth * configInfo.maxWidth) / 1280;
+      }
       configInfo.minHeight = configInfo.realWidth;
       if (configInfo.xCoordinate > 0) {
         configInfo.xCoordinate = configInfo.maxWidth - configInfo.realWidth;
