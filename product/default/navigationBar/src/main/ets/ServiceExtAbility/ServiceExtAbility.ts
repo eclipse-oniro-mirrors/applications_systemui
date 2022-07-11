@@ -35,7 +35,9 @@ class ServiceExtAbility extends ServiceExtension {
 
     let configInfo = await NavBarConfiguration.getConfiguration();
     if (configInfo.showNavHorizontal) {
-      if (configInfo.maxWidth > configInfo.maxHeight) { // Pad、PC Mode
+      if (configInfo.realHeight == 0) {
+        Log.showInfo(TAG, `hide navbar`);
+      } else if (configInfo.maxWidth > configInfo.maxHeight) { // Pad、PC Mode
         configInfo.realHeight = 44 * configInfo.maxWidth / 1280;
       } else { // Phone Mode
         configInfo.realHeight = 36 * configInfo.maxWidth / 360;
@@ -45,7 +47,9 @@ class ServiceExtAbility extends ServiceExtension {
         configInfo.yCoordinate = configInfo.maxHeight - configInfo.realHeight;
       }
     } else {
-      if (configInfo.maxWidth > configInfo.maxHeight) { // Pad、PC Mode
+      if (configInfo.realWidth == 0) {
+        Log.showInfo(TAG, `hide navbar`);
+      } else if (configInfo.maxWidth > configInfo.maxHeight) { // Pad、PC Mode
         configInfo.realWidth = 44 * configInfo.maxWidth / 1280;
       } else { // Phone Mode
         configInfo.realWidth = 36 * configInfo.maxWidth / 360;
