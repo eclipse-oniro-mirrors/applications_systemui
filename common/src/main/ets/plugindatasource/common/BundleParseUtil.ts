@@ -43,7 +43,6 @@ export enum BundleEventType {
 const TAG = 'SourceLoader-BundleParseUtil';
 const DEFAULT_BUNDLE_FLAG =
   bundleManager.BundleFlag.GET_ABILITY_INFO_WITH_METADATA | bundleManager.BundleFlag.GET_ABILITY_INFO_WITH_PERMISSION;
-const EXTENSIONTYPE = 20;
 
 const BUNDLE_SUBSCRIBE_INFO = {
   events: [
@@ -84,7 +83,7 @@ async function queryAbilityWithBundleName(action: string, userId: number, bundle
         action: action,
         bundleName: bundleName,
       },
-      EXTENSIONTYPE,
+      bundleManager.ExtensionAbilityType.UNSPECIFIED,
       DEFAULT_BUNDLE_FLAG,
       userId
     );
@@ -109,7 +108,7 @@ async function queryAbilityWithoutBundleName(action: string, userId: number): Pr
   try {
     extensionAbilitys = await bundleManager.queryExtensionAbilityInfos({
       action: action
-    }, EXTENSIONTYPE, DEFAULT_BUNDLE_FLAG, userId);
+    }, bundleManager.ExtensionAbilityType.UNSPECIFIED, DEFAULT_BUNDLE_FLAG, userId);
   } catch (error) {
     Log.showError(TAG, `queryAbilityWithoutBundleName, queryExtensionAbilityInfos error: ${JSON.stringify(error)}`);
   }
