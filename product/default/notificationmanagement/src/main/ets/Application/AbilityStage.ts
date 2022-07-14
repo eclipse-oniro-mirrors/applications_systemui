@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 import AbilityStage from '@ohos.application.AbilityStage';
-import Log from '../../../../../../../common/src/main/ets/default/log';
+import Log from '../../../../../../../common/src/main/ets/default/Log';
 
 const TAG = 'NotificationManagement_AbilityStage';
 export default class MainAbilityStage extends AbilityStage {

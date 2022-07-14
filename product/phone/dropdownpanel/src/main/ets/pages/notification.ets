@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-import Log from '../../../../../../../common/src/main/ets/default/log'
+import Log from '../../../../../../../common/src/main/ets/default/Log'
 import EventManager, { unsubscribe }  from "../../../../../../../common/src/main/ets/default/event/eventmanager"
 import { obtainStartAbility } from "../../../../../../../common/src/main/ets/default/event/eventutil"
 import Constants from './common/constants'
@@ -26,7 +26,7 @@ import LocationIcon from '../../../../../../../features/locationcomponent/src/ma
 import RingModeIcon from '../../../../../../../features/ringmodecomponent/src/main/ets/com/ohos/pages/statusbariconitemringmodecomponent'
 import NotificationListComponent from '../../../../../../../features/noticeitem/src/main/ets/com/ohos/noticeitem/view/notificationlistcomponent'
 import ViewModel from '../../../../../../../features/noticeitem/src/main/ets/com/ohos/noticeitem/viewmodel/viewmodel'
-import ResourceUtil from '../../../../../../../common/src/main/ets/default/resourceutil'
+import ResourceUtil from '../../../../../../../common/src/main/ets/default/ResourceUtil'
 import TimeManager, { TimeEventArgs, TIME_CHANGE_EVENT
 } from '../../../../../../../common/src/main/ets/default/timemanager'
 

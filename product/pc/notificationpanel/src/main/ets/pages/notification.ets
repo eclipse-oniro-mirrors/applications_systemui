@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-import Log from '../../../../../../../common/src/main/ets/default/log'
+import Log from '../../../../../../../common/src/main/ets/default/Log'
 import EventManager from "../../../../../../../common/src/main/ets/default/event/eventmanager"
 import {obtainStartAbility} from "../../../../../../../common/src/main/ets/default/event/eventutil"
 import NotificationListComponent from '../../../../../../../features/noticeitem/src/main/ets/com/ohos/noticeitem/view/notificationlistcomponent'

@@ -27,6 +27,8 @@ type NotificationLayoutConfig = {
 
 @Component
 export default struct NotificationListComponent {
+  // 当长通知消息展开时，这里用于重新刷新item布局，扩展高度
+  @Provide('notificationUpdate') update: number = 0;
   @StorageLink('notificationList') notificationList: any[] = []
   private config: NotificationLayoutConfig = {
     itemMargin: Layout.ITEM_MARGIN
@@ -42,6 +44,10 @@ export default struct NotificationListComponent {
 
   build() {
     List({ space: this.config.itemMargin }) {
+      if (this.update && false) {
+        ListItem() {
+        }
+      }
       ForEach(this.notificationList, (item: any) => {
         ListItem() {
           if (item.length > 1) {

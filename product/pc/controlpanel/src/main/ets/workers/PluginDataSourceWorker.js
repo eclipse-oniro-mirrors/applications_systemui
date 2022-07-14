@@ -14,7 +14,7 @@
  */
 
 import worker from '@ohos.worker';
-import Log from '../../../../../../../common/src/main/ets/default/log';
+import Log from '../../../../../../../common/src/main/ets/default/Log';
 import PluginDataSourceManager from '../../../../../../../common/src/main/ets/plugindatasource/plugindatasourcemanager';
 import Constants, { obtainMsg } from '../../../../../../../common/src/main/ets/plugindatasource/common/constants';
 

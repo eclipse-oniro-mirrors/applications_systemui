@@ -24,12 +24,17 @@ const TAG = 'NoticeItem-GroupItem';
 
 @Component
 export default struct GroupItem {
+  @Consume('notificationUpdate') updateFlag: number;
   @State distributedDeviceName: string = ''
-  @State toExpand: boolean = false;
+  @State @Watch('expandChange') toExpand: boolean = false;
   private groupData: any[] = []
   private mScroller: Scroller = new Scroller();
   @State mIconAlpha: number = 0;
   @State @Watch('scrollEdge') mEdgeEnd: boolean = false;
+
+  expandChange() {
+    this.updateFlag++;
+  }
 
   aboutToAppear() {
     Log.showInfo(TAG, `aboutToAppear`);

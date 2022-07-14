@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-import Log from '../../../../../../../common/src/main/ets/default/log';
+import Log from '../../../../../../../common/src/main/ets/default/Log';
 import AbilityManager from '../../../../../../../common/src/main/ets/default/abilitymanager/abilitymanager';
 import BundleResourceModel from '../../../../../../../features/managementcomponent/src/main/ets/com/ohos/model/bundleresourcemodel';
 import display from '@ohos.display';

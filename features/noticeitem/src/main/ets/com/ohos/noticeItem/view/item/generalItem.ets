@@ -28,13 +28,18 @@ const TAG = 'NoticeItem-GeneralItem';
 
 @Component
 export default struct GeneralItem {
+  @Consume('notificationUpdate') updateFlag: number;
   @State hasPicture: boolean = false
-  @State isExpand: boolean = false
+  @State @Watch('expandChange') isExpand: boolean = false
   @State needExpand: boolean = true
   @State distributedDeviceName: string = ''
   private itemData: any = {}
   private clickAction: () => void
   private isSubItem: boolean= false;
+
+  expandChange() {
+    this.updateFlag++;
+  }
 
   aboutToAppear() {
     Log.showInfo(TAG, `aboutToAppear Start`);

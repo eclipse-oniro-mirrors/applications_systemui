@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 import Fileio from '@ohos.fileio';
-import Log from '../../../../../../../../common/src/main/ets/default/log'
+import Log from '../../../../../../../../common/src/main/ets/default/Log'
 
 const DEFAULT_LAYOUT_INFO_FILE_PATH = "/data/accounts/account_0/applications/com.ohos.systemui/" +
   "com.ohos.systemui.navigationbar/assets/default_navigationBar/resources/rawfile/navigationBarLayoutConfig.json";

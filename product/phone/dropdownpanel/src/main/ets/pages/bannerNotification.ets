@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-import Log from '../../../../../../../common/src/main/ets/default/log'
+import Log from '../../../../../../../common/src/main/ets/default/Log'
 import AbilityManager from '../../../../../../../common/src/main/ets/default/abilitymanager/abilitymanager'
 import WindowManager, { WindowType } from '../../../../../../../common/src/main/ets/default/windowmanager'
 import EventManager, {unsubscribe} from "../../../../../../../common/src/main/ets/default/event/eventmanager"
