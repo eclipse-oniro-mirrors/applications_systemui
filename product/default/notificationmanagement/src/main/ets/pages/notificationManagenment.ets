@@ -15,7 +15,7 @@
 
 //import Window from '@ohos.window';
 
-import Log from '../../../../../../../common/src/main/ets/default/log';
+import Log from '../../../../../../../common/src/main/ets/default/Log';
 import HeadComponent from '../../../../../../../features/managementcomponent/src/main/ets/com/ohos/view/component/headcomponent';
 import NoDisturbComponent from '../../../../../../../features/managementcomponent/src/main/ets/com/ohos/view/component/nodisturbcomponent';
 import ItemComponent from '../../../../../../../features/managementcomponent/src/main/ets/com/ohos/view/component/itemcomponent';

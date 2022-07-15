@@ -14,7 +14,7 @@
  */
 
 import ConfigData from '../common/constants';
-import Log from '../../../../../../../common/src/main/ets/default/log';
+import Log from '../../../../../../../common/src/main/ets/default/Log';
 import NoDisturbingModel from '../../../../../../../features/managementcomponent/src/main/ets/com/ohos/model/nodisturbingmodel';
 import NoDisturbComponentViewModel from '../../../../../../../features/managementcomponent/src/main/ets/com/ohos/vm/nodisturbcomponentviewmodel';
 import FeaturesConfigData, {DoNotDisturbType} from '../../../../../../../features/managementcomponent/src/main/ets/com/ohos/common/constants';

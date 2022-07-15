@@ -15,7 +15,7 @@
 
 import keyButton from './keybutton';
 import Constants from '../common/constants'
-import Log from '../../../../../../../common/src/main/ets/default/log';
+import Log from '../../../../../../../common/src/main/ets/default/Log';
 const TAG = 'NavigationBar-OneLayout';
 
 let KeyCodeArr: any[] = [

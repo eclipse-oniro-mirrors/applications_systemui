@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-import Log from '../../../../../../../../common/src/main/ets/default/log';
+import Log from '../../../../../../../../common/src/main/ets/default/Log';
 import AbilityManager from '../../../../../../../../common/src/main/ets/default/abilitymanager/abilitymanager';
 import CommonStyleConfiguration from '../../../../../../../../common/src/main/ets/default/styleconfiguration';
 import StatusBarStyleConfiguration from '../../../../../../../../features/statusbarcomponent/src/main/ets/com/ohos/common/styleconfiguration';

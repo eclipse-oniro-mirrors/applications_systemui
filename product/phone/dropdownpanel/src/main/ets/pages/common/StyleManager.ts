@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-import Log from '../../../../../../../../common/src/main/ets/default/log';
+import Log from '../../../../../../../../common/src/main/ets/default/Log';
 import AbilityManager from '../../../../../../../../common/src/main/ets/default/abilitymanager/abilitymanager';
 import CommonTemplateStyleConfiguration from '../../../../../../../../common/src/main/ets/template/common/styleconfiguration';
 import ControlCenterStyleConfiguration from '../../../../../../../../features/controlcentercomponent/src/main/ets/com/ohos/common/styleconfiguration';

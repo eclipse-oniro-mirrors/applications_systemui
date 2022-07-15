@@ -14,7 +14,7 @@
  */
 
 import commonEvent from '@ohos.commonEvent';
-import Log from '../../../../../../../../common/src/main/ets/default/log';
+import Log from '../../../../../../../../common/src/main/ets/default/Log';
 
 const TAG = 'navigationEvent';
 
