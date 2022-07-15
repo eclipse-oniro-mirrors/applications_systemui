@@ -20,11 +20,10 @@ import Router from '@system.router'
 
 const TAG = 'ManagementComponent-SlotLstComponent';
 
-
 @Component
 export default struct SlotLstComponent {
   private appInfo: any= null;
-  @State slotLst: any[] = [];
+  @Link slotLst: any[];
 
   build() {
     Flex({ justifyContent: FlexAlign.SpaceBetween }) {
@@ -75,13 +74,6 @@ export default struct SlotLstComponent {
 
   aboutToAppear(): void{
     Log.showInfo(TAG, `aboutToAppear Notification.getSlotsByBundle  bundle:` + 'bundle:' + this.appInfo.appBundleName + 'uid' + this.appInfo.appUid);
-    Notification.getSlotsByBundle({ bundle: this.appInfo.appBundleName, uid: this.appInfo.appUid }, (err, data) => {
-      Log.showInfo(TAG, `aboutToAppear Notification.getSlotsByBundle  data:` + JSON.stringify(data));
-      data.forEach((val, idx, array) => {
-        Log.showInfo(TAG, `aboutToAppear Notification.getSlotsByBundle  data.forEach:` + JSON.stringify(val));
-        this.slotLst.push(val);
-      })
-    })
   }
 
   onBackPress() {

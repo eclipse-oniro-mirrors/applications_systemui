@@ -13,20 +13,20 @@
  * limitations under the License.
  */
 
-import Log from '../../../../../../../common/src/main/ets/default/Log';
+import Log from '../../../../../../../common/src/main/ets/default/log';
 import HeadComponent from '../../../../../../../features/managementcomponent/src/main/ets/com/ohos/view/component/headcomponent';
 import AppItemComponent from '../../../../../../../features/managementcomponent/src/main/ets/com/ohos/view/component/appitemcomponent';
 import SwitchComponent from '../../../../../../../features/managementcomponent/src/main/ets/com/ohos/view/component/switchcomponent';
 import ConfigData from '../common/constants';
 import NotificationConfigData from '../../../../../../../features/managementcomponent/src/main/ets/com/ohos/common/constants';
 import Router from '@system.router'
-import Notification from '../../../../../../../features/managementcomponent/src/main/ets/com/ohos/model/notificationlistener';
+import NotificationListener from '../../../../../../../features/managementcomponent/src/main/ets/com/ohos/model/notificationlistener';
 import notification from '@ohos.notification';
 
 const TAG = 'NotificationManagement-SlotSetting';
 const DEFAULT_SOUND = 'file://system/etc/Light.ogg';
 
-let params;
+let slotParams;
 
 @Entry
 @Component
@@ -37,6 +37,7 @@ export default struct SlotSetting {
   @State allowNotice: Resource = $r('app.string.allowNotification')
   @State noticeStyleBanner: Resource = $r('app.string.notificationStyle_banner')
   @State noticeSound: Resource = $r('app.string.notificationSound')
+  @State initState: boolean = false;
 
   build() {
     Flex({ justifyContent: FlexAlign.SpaceBetween }) {
@@ -73,12 +74,8 @@ export default struct SlotSetting {
               Row() {
                 SwitchComponent({
                   title: $allowNotice,
-                  initializationAction: () => this.notificationEnableInit(),
-                  settingAction: (params) => this.notificationEnableSet(params),
-                  register: (listener) => Notification.register({
-                    bundle: this.appInfo.appBundleName,
-                    onEnableChanged: listener
-                  })
+                  initializationAction: () => this.notificationSlotEnableInit(),
+                  settingAction: (params) => this.notificationSlotEnableSet(params)
                 })
               }
               .margin({ top: $r('app.float.page_notice_title_margin_t') })
@@ -102,7 +99,8 @@ export default struct SlotSetting {
                 right: $r('sys.float.ohos_id_max_padding_end')
               })
               .margin({ top: $r('app.float.page_notice_part_margin_t')})
-              .align(Alignment.Start);
+              .align(Alignment.Start)
+              .visibility(this.initState ? Visibility.Visible : Visibility.Hidden);
 
               Row() {
                 SwitchComponent({
@@ -117,6 +115,7 @@ export default struct SlotSetting {
               })
               .margin({ top: $r('app.float.page_notice_title_margin_t')})
               .height($r('app.float.notice_row_height'))
+              .visibility(this.initState ? Visibility.Visible : Visibility.Hidden);
 
               Row() {
                 SwitchComponent({
@@ -131,6 +130,7 @@ export default struct SlotSetting {
               })
               .margin({ top: $r('app.float.page_notice_row_margin_t') })
               .height($r('app.float.notice_row_height'))
+              .visibility(this.initState ? Visibility.Visible : Visibility.Hidden);
             }
             .width(ConfigData.WH_100_100)
             .height(ConfigData.WH_100_100)
@@ -151,24 +151,32 @@ export default struct SlotSetting {
   }
 
   aboutToAppear(): void{
-    Log.showInfo(TAG, `aboutToAppear`)
-    params = Router.getParams();
-    this.appInfo = params.appInfo;
-    this.slotInfo = params.slotInfo
+    slotParams = Router.getParams();
+    this.appInfo = slotParams.appInfo;
+    this.slotInfo = slotParams.slotInfo
+    Log.showDebug(TAG, `aboutToAppear  ${JSON.stringify(this.slotInfo)}`)
   }
 
   onBackPress() {
     Log.showInfo(TAG, `onBackPress`)
   }
 
-  notificationEnableInit() {
-    Log.showDebug(TAG, `notificationEnableInit`)
-    return Notification.isNotificationEnabled({ bundle: this.appInfo.appBundleName, uid: this.appInfo.appUid })
+  notificationSlotEnableInit() {
+    Log.showDebug(TAG, `notificationSlotEnableInit`)
+    return NotificationListener.isNotificationSlotEnabled({
+      bundle: this.appInfo.appBundleName,
+      uid: this.appInfo.appUid
+    }, this.slotInfo.type,
+      (data) => {
+        Log.showInfo(TAG, 'notificationSlotEnableInit callback' + data);
+        this.initState = data;
+      });
   }
 
-  notificationEnableSet(data) {
+  notificationSlotEnableSet(data) {
     Log.showDebug(TAG, `notificationEnableSet data:${JSON.stringify(data)}`)
-    Notification.enableNotification({ bundle: this.appInfo.appBundleName, uid: this.appInfo.appUid }, data);
+    this.initState = data;
+    NotificationListener.enableNotificationSlot({ bundle: this.appInfo.appBundleName, uid: this.appInfo.appUid }, this.slotInfo.type, data);
   }
 
   soundEnableInit() {
@@ -225,6 +233,6 @@ export default struct SlotSetting {
 
   notificationSlotSet() {
     Log.showDebug(TAG, `notificationSlotSet slotInfo:${JSON.stringify(this.slotInfo)}`)
-    Notification.notificationSlotSet({ bundle: this.appInfo.appBundleName, uid: this.appInfo.appUid }, this.slotInfo);
+    NotificationListener.notificationSlotSet({ bundle: this.appInfo.appBundleName, uid: this.appInfo.appUid }, this.slotInfo);
   }
 }
