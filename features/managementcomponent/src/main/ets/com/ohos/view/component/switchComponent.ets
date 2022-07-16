@@ -74,13 +74,6 @@ export default struct SwitchComponent {
 
   aboutToAppear(): void{
     Log.showInfo(TAG, `aboutToAppear`);
-    if (this.register) {
-      Log.showInfo(TAG, `aboutToAppear register listener`);
-      this.register((stateValue: boolean) => {
-        Log.showInfo(TAG, `aboutToAppear listener call`);
-        this.initState = stateValue;
-      });
-    }
     this.initializationAction().then((data) => {
       Log.showInfo(TAG, `initializationAction:${data}`);
       this.initState = data;

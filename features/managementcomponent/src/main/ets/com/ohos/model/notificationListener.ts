@@ -19,7 +19,6 @@ import { NotificationSlot } from 'notification/notificationSlot';
 
 const TAG = 'NotificationManagenment-NotificationListener';
 
-
 interface EnableListener {
   bundle: string;
   onEnableChanged: {(value: boolean): void};
@@ -31,7 +30,7 @@ export interface BundleOption {
 }
 
 export class NotificationListener {
-  private readonly listeners= new Set<EnableListener>();
+  private readonly listeners = new Set<EnableListener>();
 
   subscribeEnableChanged(): void {
     Log.showInfo(TAG, 'subscribeEnableChanged');
@@ -78,12 +77,15 @@ export class NotificationListener {
     Log.showInfo(TAG, 'unRegisterAll finished');
   }
 
-  async isNotificationEnabled(bundleOption: BundleOption): Promise<boolean> {
+  async isNotificationEnabled(bundleOption: BundleOption, callback?: (data) => void): Promise<boolean> {
     Log.showDebug(TAG, `isNotificationEnabled bundleOption:${JSON.stringify(bundleOption)} `);
     return new Promise((resolve, reject) => {
       Notification.isNotificationEnabled(bundleOption, (err, data) => {
         Log.showInfo(TAG, `isNotificationEnabled callback data:${JSON.stringify(data)} err:${JSON.stringify(err)}`);
         if (!!data) {
+          if (callback) {
+            callback(data);
+          }
           resolve(data);
         } else {
           reject(err);
@@ -97,6 +99,31 @@ export class NotificationListener {
     let enableValue: boolean = data ? true : false;
     Notification.enableNotification(bundleOption, enableValue, (err, result) => {
       Log.showInfo(TAG, `enableNotification err:${JSON.stringify(err)} result:${JSON.stringify(result)}`);
+    });
+  }
+
+  async isNotificationSlotEnabled(bundleOption: BundleOption, slotType: Notification.SlotType, callback?: (data) => void): Promise<boolean> {
+    Log.showDebug(TAG, `isNotificationSlotEnabled bundleOption:${JSON.stringify(bundleOption)} `);
+    return new Promise((resolve, reject) => {
+      Notification.isNotificationSlotEnabled(bundleOption, slotType, (err, data) => {
+        Log.showInfo(TAG, `isNotificationSlotEnabled callback data:${JSON.stringify(data)} err:${JSON.stringify(err)}`);
+         if (!!data) {
+           if (callback) {
+             callback(data);
+           }
+           resolve(data);
+        } else {
+          reject(err);
+        }
+      });
+    });
+  }
+
+  enableNotificationSlot(bundleOption: BundleOption, slotType: Notification.SlotType, data: boolean): void {
+    Log.showDebug(TAG, `enableNotificationSlot bundleOption:${JSON.stringify(bundleOption)} data:${JSON.stringify(data)}`);
+      let enableValue: boolean = data ? true : false;
+      Notification.enableNotificationSlot(bundleOption, slotType, enableValue, (err, result) => {
+        Log.showInfo(TAG, `enableNotificationSlot err:${JSON.stringify(err)} result:${JSON.stringify(result)}`);
     });
   }
 
@@ -132,4 +159,3 @@ export class NotificationListener {
 let notificationListener = new NotificationListener();
 
 export default notificationListener ;
-

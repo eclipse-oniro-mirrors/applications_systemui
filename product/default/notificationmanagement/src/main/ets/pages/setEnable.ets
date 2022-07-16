@@ -21,7 +21,8 @@ import SwitchComponent from '../../../../../../../features/managementcomponent/s
 import SlotLstComponent from '../../../../../../../features/managementcomponent/src/main/ets/com/ohos/view/component/slotlstcomponent';
 import ConfigData from '../common/constants';
 import Router from '@system.router'
-import Notification from '../../../../../../../features/managementcomponent/src/main/ets/com/ohos/model/notificationlistener';
+import notificationListener from '../../../../../../../features/managementcomponent/src/main/ets/com/ohos/model/notificationlistener';
+import Notification from '@ohos.notification';
 
 const TAG = 'NotificationManagement-SetEnable';
 
@@ -30,9 +31,11 @@ let appInfo;
 @Entry
 @Component
 export default struct SetEnable {
-  private listeners: any[] = []
-  @State headName:Resource = $r('app.string.notificationManagement')
-  @State allowNotice:Resource = $r('app.string.allowNotification')
+  private listeners: any[] = [];
+  @State headName:Resource = $r('app.string.notificationManagement');
+  @State allowNotice:Resource = $r('app.string.allowNotification');
+  @State slotLst: any[] = [];
+  @State initState: boolean = false;
   build() {
     Flex({ justifyContent: FlexAlign.SpaceBetween }) {
       Column() {
@@ -63,7 +66,7 @@ export default struct SetEnable {
                   title: $allowNotice,
                   initializationAction: () => this.switchComponentInit(),
                   settingAction: (params) => this.switchComponentSet(params),
-                  register: (listener) => Notification.register({bundle:appInfo.appBundleName,onEnableChanged:listener})
+                  register: (listener) => notificationListener.register({bundle:appInfo.appBundleName,onEnableChanged:listener})
                 })
               }
               .margin({ top: $r('app.float.page_notice_title_margin_t')})
@@ -71,9 +74,10 @@ export default struct SetEnable {
               .height($r('app.float.notice_row_height'))
 
               Row() {
-                SlotLstComponent({ appInfo: appInfo })
+                SlotLstComponent({ appInfo: appInfo ,slotLst: $slotLst})
               }
               .align(Alignment.Start)
+              .visibility(this.initState ? Visibility.Visible : Visibility.Hidden);
             }
             .width(ConfigData.WH_100_100)
             .height(ConfigData.WH_100_100)
@@ -97,13 +101,24 @@ export default struct SetEnable {
     Log.showInfo(TAG, `aboutToAppear`)
     appInfo = Router.getParams();
     appInfo.slotSettingUrl = 'pages/slotSetting'
-    Notification.subscribeEnableChanged();
-    Log.showInfo(TAG, `aboutToAppear end`)
+    notificationListener.subscribeEnableChanged();
+    Log.showInfo(TAG, `aboutToAppear end`);
+  }
+
+  onPageShow (): void{
+    Log.showInfo(TAG, `onPageShow`);
+    Notification.getSlotsByBundle({ bundle: appInfo.appBundleName, uid: appInfo.appUid }, (err, data) => {
+      this.slotLst  = [];
+      data.forEach((val, idx, array) => {
+        this.slotLst.push(val);
+      })
+    })
   }
 
   aboutToDisappear(): void{
     Log.showInfo(TAG, `aboutToDisappear`)
-    Notification.unsubscribeEnableChanged();
+    this.slotLst  = [];
+    notificationListener.unsubscribeEnableChanged();
   }
 
   onBackPress() {
@@ -112,11 +127,15 @@ export default struct SetEnable {
 
   switchComponentInit() {
     Log.showDebug(TAG, `switchComponentInit`)
-    return Notification.isNotificationEnabled({ bundle: appInfo.appBundleName, uid: appInfo.appUid })
+    return notificationListener.isNotificationEnabled({ bundle: appInfo.appBundleName, uid: appInfo.appUid }, (data) => {
+      Log.showDebug(TAG, 'switchComponentInit callback' + data);
+      this.initState = data;
+    });
   }
 
   switchComponentSet(params) {
     Log.showDebug(TAG, `switchComponentSet`)
-    Notification.enableNotification({ bundle: appInfo.appBundleName, uid: appInfo.appUid }, params);
+    this.initState = params;
+    notificationListener.enableNotification({ bundle: appInfo.appBundleName, uid: appInfo.appUid }, params);
   }
 }
