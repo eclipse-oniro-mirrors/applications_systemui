@@ -27,7 +27,7 @@ type NotificationLayoutConfig = {
 
 @Component
 export default struct NotificationListComponent {
-  // µ±³¤Í¨ÖªÏûÏ¢Õ¹¿ªÊ±£¬ÕâÀïÓÃÓÚÖØĞÂË¢ĞÂitem²¼¾Ö£¬À©Õ¹¸ß¶È
+  // å½“é•¿é€šçŸ¥æ¶ˆæ¯å±•å¼€æ—¶ï¼Œè¿™é‡Œç”¨äºé‡æ–°åˆ·æ–°itemå¸ƒå±€ï¼Œæ‰©å±•é«˜åº¦
   @Provide('notificationUpdate') update: number = 0;
   @StorageLink('notificationList') notificationList: any[] = []
   private config: NotificationLayoutConfig = {

@@ -71,6 +71,38 @@
     {
       "name": "control_center_complex_toggle_ring_mode_title_vibration",
       "value": "Vibration"
+    },
+    {
+      "name": "status_bar_position_landscape",
+      "value": "2"
+    },
+    {
+      "name": "nav_bar_position_landscape",
+      "value": "4"
+    },
+    {
+      "name": "status_bar_size_landscape",
+      "value": "48"
+    },
+    {
+      "name": "nav_bar_size_landscape",
+      "value": "72"
+    },
+    {
+      "name": "status_bar_position_portrait",
+      "value": "1"
+    },
+    {
+      "name": "nav_bar_position_portrait",
+      "value": "1"
+    },
+    {
+      "name": "status_bar_size_portrait",
+      "value": "48"
+    },
+    {
+      "name": "nav_bar_size_portrait",
+      "value": "72"
     }
   ]
 }

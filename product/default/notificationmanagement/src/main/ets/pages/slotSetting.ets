@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-import Log from '../../../../../../../common/src/main/ets/default/log';
+import Log from '../../../../../../../common/src/main/ets/default/Log';
 import HeadComponent from '../../../../../../../features/managementcomponent/src/main/ets/com/ohos/view/component/headcomponent';
 import AppItemComponent from '../../../../../../../features/managementcomponent/src/main/ets/com/ohos/view/component/appitemcomponent';
 import SwitchComponent from '../../../../../../../features/managementcomponent/src/main/ets/com/ohos/view/component/switchcomponent';

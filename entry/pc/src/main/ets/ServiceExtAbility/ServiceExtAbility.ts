@@ -20,41 +20,11 @@ import initSystemUi from '../../../../../../common/src/main/ets/default/InitSyst
 
 const TAG = 'SystemUI_ServiceExtAbility';
 
-var statusBarWant = {
-  'bundleName': 'com.ohos.systemui',
-  'abilityName': 'com.ohos.systemui.statusbar.ServiceExtAbility'
-};
-
-var navigationBarWant = {
-  'bundleName': 'com.ohos.systemui',
-  'abilityName': 'com.ohos.systemui.navigationbar.ServiceExtAbility'
-};
-
-var volumePanelWant = {
-  'bundleName': 'com.ohos.systemui',
-  'abilityName': 'com.ohos.systemui.volumepanel.ServiceExtAbility'
-};
-
-var controlPanelWant = {
-  'bundleName': 'com.ohos.systemui',
-  'abilityName': 'com.ohos.systemui.controlpanel.ServiceExtAbility'
-};
-
-var notificationPanelWant = {
-  'bundleName': 'com.ohos.systemui',
-  'abilityName': 'com.ohos.systemui.notificationpanel.ServiceExtAbility'
-};
-
 class ServiceExtAbility extends ServiceExtension {
   onCreate(want: Want): void {
     Log.showInfo(TAG, `onCreate, want: ${JSON.stringify(want)}`);
     initSystemUi(this.context);
     AbilityManager.setContext(AbilityManager.ABILITY_NAME_ENTRY, this.context);
-    AbilityManager.startAbility(statusBarWant);
-    AbilityManager.startAbility(navigationBarWant);
-    AbilityManager.startAbility(volumePanelWant);
-    AbilityManager.startAbility(controlPanelWant);
-    AbilityManager.startAbility(notificationPanelWant);
   }
 
   onDestroy(): void {
