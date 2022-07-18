@@ -13,13 +13,13 @@
  * limitations under the License.
  */
 
-import Log from '../../../../../../../common/src/main/ets/default/log';
+import Log from '../../../../../../../common/src/main/ets/default/Log';
 import HeadComponent from '../../../../../../../features/managementcomponent/src/main/ets/com/ohos/view/component/headcomponent';
 import AppItemComponent from '../../../../../../../features/managementcomponent/src/main/ets/com/ohos/view/component/appitemcomponent';
 import SwitchComponent from '../../../../../../../features/managementcomponent/src/main/ets/com/ohos/view/component/switchcomponent';
 import ConfigData from '../common/constants';
 import NotificationConfigData from '../../../../../../../features/managementcomponent/src/main/ets/com/ohos/common/constants';
-import Router from '@system.router'
+import Router from '@system.router';
 import NotificationListener from '../../../../../../../features/managementcomponent/src/main/ets/com/ohos/model/notificationlistener';
 import notification from '@ohos.notification';
 
@@ -195,7 +195,9 @@ export default struct SlotSetting {
     Log.showDebug(TAG, `soundEnableSet params:${JSON.stringify(params)}`)
     if (params == 0) {
       this.slotInfo.sound = '';
-      this.slotInfo.level = notification.SlotLevel.LEVEL_LOW
+      if (this.slotInfo.level != notification.SlotLevel.LEVEL_HIGH) {
+        this.slotInfo.level = notification.SlotLevel.LEVEL_LOW;
+      }
     } else if (params == 1) {
       this.slotInfo.sound = DEFAULT_SOUND;
       if (this.slotInfo.level < notification.SlotLevel.LEVEL_DEFAULT) {
