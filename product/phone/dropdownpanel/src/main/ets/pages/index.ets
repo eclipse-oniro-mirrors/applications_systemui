@@ -43,7 +43,6 @@ import featureAbility from '@ohos.ability.featureAbility';
 import settings from '@ohos.settings';
 import CommonConstants from "../../../../../../../common/src/main/ets/default/Constants";
 
-
 const TAG = 'DropdownPanel-Index'
 
 let mHeightConfigUtils
