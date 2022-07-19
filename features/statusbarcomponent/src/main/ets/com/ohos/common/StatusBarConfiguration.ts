@@ -13,6 +13,7 @@
  * limitations under the License.
  */
 
+import AbilityManager from '../../../../../../../../common/src/main/ets/default/abilitymanager/abilityManager';
 import display from '@ohos.display'
 import Log from '../../../../../../../../common/src/main/ets/default/Log'
 import ResourceUtil from '../../../../../../../../common/src/main/ets/default/ResourceUtil'
@@ -62,6 +63,7 @@ class StatusBarConfiguration {
 
   async getDirectionAndPosition() {
     Log.showInfo(TAG, 'getDirectionAndPosition');
+    await ResourceUtil.initResourceManager(AbilityManager.ABILITY_NAME_STATUS_BAR);
     directionStatus = await ResourceUtil.getConfiguration();
     let style: any = CommonStyleConfiguration.getCommonStyle()
     let deviceTypeInfo = style.deviceTypeInfo

@@ -54,7 +54,7 @@ export default class BundleResourceModel {
     let label = '';
     let that = this;
     try {
-      let bundleContext = await AbilityManager.getContext().createBundleContext(data[index].name);
+      let bundleContext = await AbilityManager.getAbilityContext(AbilityManager.ABILITY_NAME_NOTIFICATION_MANAGEMENT).createBundleContext(data[index].name);
       let bundleResourceManager = await bundleContext.resourceManager;
       let appInfo = data[index].appInfo;
       if (parseInt(appInfo.labelId) > 0) {

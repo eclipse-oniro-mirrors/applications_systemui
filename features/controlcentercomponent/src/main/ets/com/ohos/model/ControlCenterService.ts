@@ -85,8 +85,9 @@ export class ControlCenterService {
 
     SwitchUserManager.getInstance().registerListener(this);
     CONTROLCENTER_SOURCE_CONFIG.filterDatas = config.MetaToggles;
-    this.mAdapter = new PluginDataSourceAdapter(TAG, AbilityManager.getContext(), this, moduleName);
-    this.mAdapter.setWant(globalThis[Constants.PLUGIN_COMPONENT_OWNER_WANT_KEY]);//xuchanghzou
+    let contextName = AbilityManager.getContextName(AbilityManager.ABILITY_NAME_CONTROL_PANEL);
+    this.mAdapter = new PluginDataSourceAdapter(TAG, AbilityManager.getContext(contextName), this, moduleName);
+    this.mAdapter.setWant(globalThis[Constants.PLUGIN_COMPONENT_OWNER_WANT_KEY]);
     this.mAdapter.initDataSource(CONTROLCENTER_SOURCE_CONFIG);
   }
 

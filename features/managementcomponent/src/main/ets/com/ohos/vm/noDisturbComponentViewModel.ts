@@ -13,6 +13,7 @@
  * limitations under the License.
  */
 
+import AbilityManager from '../../../../../../../../common/src/main/ets/default/abilitymanager/abilityManager';
 import Log from '../../../../../../../../common/src/main/ets/default/Log';
 import ResourceUtil from '../../../../../../../../common/src/main/ets/default/ResourceUtil';
 import NoDisturbingModel from '../model/noDisturbingModel';
@@ -180,6 +181,7 @@ export default class NoDisturbComponentViewModel {
     return result;
   }
   async getNextDayLabel(): Promise<void> {
+    await ResourceUtil.initResourceManager(AbilityManager.ABILITY_NAME_NOTIFICATION_MANAGEMENT);
     this.nextDayLabel = await ResourceUtil.getString($r('app.string.noDisturb_nextDay'));
   }
 }

@@ -13,6 +13,7 @@
  * limitations under the License.
  */
 
+import AbilityManager from '../../../../../../../common/src/main/ets/default/abilitymanager/abilityManager';
 import Log from '../../../../../../../common/src/main/ets/default/Log'
 import EventManager, { unsubscribe }  from "../../../../../../../common/src/main/ets/default/event/eventmanager"
 import { obtainStartAbility } from "../../../../../../../common/src/main/ets/default/event/eventutil"
@@ -49,7 +50,8 @@ export default struct Notification {
   @StorageLink('notificationList') notificationList: any[] = []
 
   aboutToAppear() {
-    Log.showInfo(TAG, `aboutToAppear Start`)
+    Log.showInfo(TAG, `aboutToAppear Start`);
+    AbilityManager.setContextName(AbilityManager.ABILITY_NAME_NOTIFICATION_PANEL,AbilityManager.ABILITY_NAME_DROPDOWN_PANEL);
   }
 
   build() {
@@ -249,6 +251,7 @@ struct CenterTitle {
   async updateTimeString(date: Date) {
     this.mTime = TimeManager.formatTime(date);
     Log.showDebug(TAG, ` month is ${date.getMonth() + 1} , day is ${date.getDate()} , week is ${Constants.WEEKDAY_LIST[date.getDay() - 1]}`);
+    await ResourceUtil.initResourceManager(AbilityManager.ABILITY_NAME_DROPDOWN_PANEL);
     let timeString = (date.getMonth() + 1) + (await ResourceUtil.getString($r('app.string.month')));
     timeString += date.getDate() + (await ResourceUtil.getString($r('app.string.day')));
     timeString += await ResourceUtil.getString(Constants.WEEKDAY_LIST[date.getDay()]);

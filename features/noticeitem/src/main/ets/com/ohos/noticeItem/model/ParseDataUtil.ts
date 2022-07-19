@@ -105,7 +105,8 @@ export default class ParseDataUtil {
     let data = await BundleManager.getBundleInfo(TAG, bundleName, 0, userId);
     let labelId = data?.appInfo?.labelId;
     let iconId = data?.appInfo?.iconId;
-    let item = await BundleManager.getResourceManager(TAG, AbilityManager.getContext(), bundleName);
+    let contextName = AbilityManager.getContextName(AbilityManager.ABILITY_NAME_NOTIFICATION_PANEL);
+    let item = await BundleManager.getResourceManager(TAG, AbilityManager.getContext(contextName), bundleName);
     let appMessage = {
       appName: await item.getString(parseInt(labelId)),
       icon: await item.getMediaBase64(parseInt(iconId))

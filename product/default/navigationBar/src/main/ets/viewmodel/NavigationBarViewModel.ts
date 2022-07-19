@@ -52,12 +52,12 @@ export default class NavigationBarViewModel {
     this.mNavigationBarComponentData =
     AppStorage.SetAndLink(NAVIGATION_BAR_COMPONENT_DATA_KEY, this.mNavigationBarComponentData).get()
     this.urivar = settings.getUriSync(this.settingDataKey);
-    if (AbilityManager.getContext() == null) {
+    if (AbilityManager.getContext(AbilityManager.ABILITY_NAME_NAVIGATION_BAR) == null) {
       Log.showError(TAG, 'AbilityManager.getContext() is null');
     } else {
-      Log.showInfo(TAG, 'context: ' + AbilityManager.getContext());
+      Log.showInfo(TAG, 'context: ' + AbilityManager.getContext(AbilityManager.ABILITY_NAME_NAVIGATION_BAR));
     }
-    this.helper = featureAbility.acquireDataAbilityHelper(AbilityManager.getContext(), CommonConstants.URI_VAR);
+    this.helper = featureAbility.acquireDataAbilityHelper(AbilityManager.getContext(AbilityManager.ABILITY_NAME_NAVIGATION_BAR), CommonConstants.URI_VAR);
     this.initNavigationBarStatus();
   }
 

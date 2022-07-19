@@ -24,6 +24,7 @@ const TAG = 'NotificationManagement-MainAbility';
 export default class MainAbility extends Ability {
   onCreate(want: Want, launchParam: AbilityConstant.LaunchParam): void {
     Log.showInfo(TAG, 'MainAbility onCreate');
+    AbilityManager.setAbilityContext(AbilityManager.ABILITY_NAME_NOTIFICATION_MANAGEMENT, this.context);
     globalThis[AbilityManager.ABILITY_NAME_NOTIFICATION_MANAGEMENT + '_want'] = want;
   }
 

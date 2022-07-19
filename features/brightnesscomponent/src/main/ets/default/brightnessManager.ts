@@ -36,7 +36,8 @@ export class brightnessManager {
     Log.showInfo(TAG, 'init');
     this.uri = settings.getUriSync(SYSTEMUI_BRIGHTNESS);
     Log.showInfo(TAG, 'settings geturi of brightness is ' + this.uri);
-    this.helper = featureAbility.acquireDataAbilityHelper(AbilityManager.getContext(), CommonConstants.URI_VAR);
+    let contextName = AbilityManager.getContextName(AbilityManager.ABILITY_NAME_CONTROL_PANEL);
+    this.helper = featureAbility.acquireDataAbilityHelper(AbilityManager.getContext(contextName), CommonConstants.URI_VAR);
     this.getValue();
   }
 

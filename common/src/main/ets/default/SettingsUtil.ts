@@ -30,7 +30,7 @@ export class SettingsUtil {
   constructor() {
     Log.showDebug(TAG, 'constructor');
     try {
-      this.helper = featureAbility.acquireDataAbilityHelper(AbilityManager.getContext(), Constants.URI_VAR);
+      this.helper = featureAbility.acquireDataAbilityHelper(AbilityManager.getContext(this.context), Constants.URI_VAR);
     } catch (e) {
       Log.showError(TAG, `constructor, acquire helper error: ${JSON.stringify(e)}`);
     }
