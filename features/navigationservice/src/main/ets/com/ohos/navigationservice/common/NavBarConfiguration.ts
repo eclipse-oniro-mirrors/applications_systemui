@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-import AbilityManager from '../../../../../../../common/src/main/ets/default/abilitymanager/abilityManager';
+import AbilityManager from '../../../../../../../../../common/src/main/ets/default/abilitymanager/abilityManager';
 import display from '@ohos.display';
 import Log from '../../../../../../../../../common/src/main/ets/default/Log';
 import ResourceUtil from '../../../../../../../../../common/src/main/ets/default/ResourceUtil';
