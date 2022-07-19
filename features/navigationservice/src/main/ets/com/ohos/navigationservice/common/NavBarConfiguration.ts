@@ -15,8 +15,8 @@
 
 import AbilityManager from '../../../../../../../common/src/main/ets/default/abilitymanager/abilityManager';
 import display from '@ohos.display';
-import Log from '../../../../../../../common/src/main/ets/default/log';
-import ResourceUtil from '../../../../../../../common/src/main/ets/default/resourceutil';
+import Log from '../../../../../../../../../common/src/main/ets/default/Log';
+import ResourceUtil from '../../../../../../../../../common/src/main/ets/default/ResourceUtil';
 
 const TAG = 'NavBarConfiguration';
 var directionNav;
@@ -88,7 +88,7 @@ class NavBarConfiguration {
     Log.showDebug(TAG, 'statusShortSideLength = ' + statusShortSideLength + 'navShortSideLength = ' + navShortSideLength + 'directionnav = ' + directionNav.direction + 'statusbarPosition = ' + statusbarPosition + 'NavbarPosition = ' + navbarPosition);
   }
 
-/**
+  /**
    * Get nav bar configuration
    */
   public async getConfiguration() {
@@ -148,6 +148,38 @@ class NavBarConfiguration {
       yCoordinate: yCoordinate
     }
     return configuration;
+  }
+
+  /**
+   * set nav bar custom configuration
+   */
+  public setCustomConfiguration(configInfo) {
+    if (configInfo.showNavHorizontal) {
+      if (configInfo.realHeight == 0) {
+        Log.showInfo(TAG, `hide navbar`);
+      } else if (configInfo.maxWidth > configInfo.maxHeight) { // Pad、PC Mode
+        configInfo.realHeight = 44 * configInfo.maxWidth / 1280;
+      } else { // Phone Mode
+        configInfo.realHeight = 36 * configInfo.maxWidth / 360;
+      }
+      configInfo.minHeight = configInfo.realHeight;
+      if (configInfo.yCoordinate > 0) {
+        configInfo.yCoordinate = configInfo.maxHeight - configInfo.realHeight;
+      }
+    } else {
+      if (configInfo.realWidth == 0) {
+        Log.showInfo(TAG, `hide navbar`);
+      } else if (configInfo.maxWidth > configInfo.maxHeight) { // Pad、PC Mode
+        configInfo.realWidth = 44 * configInfo.maxWidth / 1280;
+      } else { // Phone Mode
+        configInfo.realWidth = 36 * configInfo.maxWidth / 360;
+      }
+      configInfo.minHeight = configInfo.realWidth;
+      if (configInfo.xCoordinate > 0) {
+        configInfo.xCoordinate = configInfo.maxWidth - configInfo.realWidth;
+      }
+    }
+    return configInfo;
   }
 }
 

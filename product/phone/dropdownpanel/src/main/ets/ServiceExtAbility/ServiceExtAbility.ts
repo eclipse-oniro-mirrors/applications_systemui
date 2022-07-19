@@ -18,6 +18,7 @@ import display from '@ohos.display';
 import Log from '../../../../../../../common/src/main/ets/default/Log';
 import WindowManager, { WindowType } from '../../../../../../../common/src/main/ets/default/WindowManager';
 import AbilityManager from '../../../../../../../common/src/main/ets/default/abilitymanager/abilityManager';
+import NavBarConfiguration from '../../../../../../../features/navigationservice/src/main/ets/com/ohos/navigationservice/common/NavBarConfiguration';
 import { Want } from 'ability/want';
 
 
@@ -27,6 +28,10 @@ class ServiceExtAbility extends ServiceExtension {
   async onCreate(want: Want): Promise<void> {
     Log.showInfo(TAG, `onCreate, want: ${JSON.stringify(want)}`);
     AbilityManager.setContext(AbilityManager.ABILITY_NAME_DROPDOWN_PANEL, this.context);
+    let defaultConfigInfo = await NavBarConfiguration.getConfiguration();
+    let configInfo = NavBarConfiguration.setCustomConfiguration(defaultConfigInfo);
+    AbilityManager.setAbilityData(AbilityManager.ABILITY_NAME_NAVIGATION_BAR, 'config', configInfo);
+    Log.showDebug(TAG, `onCreate, configInfo: ${JSON.stringify(configInfo)}`);
     globalThis[AbilityManager.ABILITY_NAME_OWNER_WANT] = want;
 
     display.getDefaultDisplay().then((dis) => {

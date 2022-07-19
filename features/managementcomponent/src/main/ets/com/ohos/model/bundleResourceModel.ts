@@ -90,6 +90,8 @@ export default class BundleResourceModel {
         }
         this.nextIconItem(index, count, data, this.mBundleInfoList, that);
       });
+
+      bundleContext = null;
     } catch (error) {
       Log.showError(TAG, `getIconItem catch error: ${JSON.stringify(error)}`);
     }
