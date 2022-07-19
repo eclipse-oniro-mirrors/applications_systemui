@@ -13,20 +13,20 @@
  * limitations under the License.
  */
 
-import Log from '../../../../../../../common/src/main/ets/default/log';
+import Log from '../../../../../../../common/src/main/ets/default/Log';
 import HeadComponent from '../../../../../../../features/managementcomponent/src/main/ets/com/ohos/view/component/headcomponent';
 import AppItemComponent from '../../../../../../../features/managementcomponent/src/main/ets/com/ohos/view/component/appitemcomponent';
 import SwitchComponent from '../../../../../../../features/managementcomponent/src/main/ets/com/ohos/view/component/switchcomponent';
 import ConfigData from '../common/constants';
 import NotificationConfigData from '../../../../../../../features/managementcomponent/src/main/ets/com/ohos/common/constants';
-import Router from '@system.router'
-import Notification from '../../../../../../../features/managementcomponent/src/main/ets/com/ohos/model/notificationlistener';
-import {SlotLevel} from '@ohos.notification';
+import Router from '@system.router';
+import NotificationListener from '../../../../../../../features/managementcomponent/src/main/ets/com/ohos/model/notificationlistener';
+import notification from '@ohos.notification';
 
 const TAG = 'NotificationManagement-SlotSetting';
 const DEFAULT_SOUND = 'file://system/etc/Light.ogg';
 
-let params;
+let slotParams;
 
 @Entry
 @Component
@@ -61,8 +61,7 @@ export default struct SlotSetting {
                   appUri: this.appInfo.appUri,
                   appBundleName: this.appInfo.appBundleName,
                   appUid: this.appInfo.appUid,
-                  appSwitch: 3,
-                  isCanChange: !this.appInfo.systemApp
+                  appSwitch: 3
                 });
               }
               .margin({ top: $r('app.float.page_notice_part_margin_t') })
@@ -74,13 +73,12 @@ export default struct SlotSetting {
               Row() {
                 SwitchComponent({
                   title: $allowNotice,
-                  initializationAction: () => this.notificationEnableInit(),
-                  settingAction: (params) => this.notificationEnableSet(params),
-                  register: (listener) => Notification.register({
+                  initializationAction: () => this.notificationSlotEnableInit(),
+                  settingAction: (params) => this.notificationSlotEnableSet(params),
+                  register: (listener) => NotificationListener.register({
                     bundle: this.appInfo.appBundleName,
                     onEnableChanged: listener
                   }),
-                  isCanChange: false //TODO: There is no service, so it cannot be modified
                 })
               }
               .margin({ top: $r('app.float.page_notice_title_margin_t') })
@@ -153,29 +151,31 @@ export default struct SlotSetting {
   }
 
   aboutToAppear(): void{
-    Log.showInfo(TAG, `aboutToAppear`)
-    params = Router.getParams();
-    this.appInfo = params.appInfo;
-    this.slotInfo = params.slotInfo
+    slotParams = Router.getParams();
+    this.appInfo = slotParams.appInfo;
+    this.slotInfo = slotParams.slotInfo
+    Log.showDebug(TAG, `aboutToAppear  ${JSON.stringify(this.slotInfo)}`)
   }
 
   onBackPress() {
     Log.showInfo(TAG, `onBackPress`)
-    Router.back();
   }
 
-  notificationEnableInit() {
-    Log.showInfo(TAG, `notificationEnableInit`)
-    return Notification.isNotificationEnabled({ bundle: this.appInfo.appBundleName, uid: this.appInfo.appUid })
+  notificationSlotEnableInit() {
+    Log.showDebug(TAG, `notificationSlotEnableInit`)
+    return NotificationListener.isNotificationEnabled({
+      bundle: this.appInfo.appBundleName,
+      uid: this.appInfo.appUid
+    });
   }
 
-  notificationEnableSet(data) {
-    Log.showInfo(TAG, `notificationEnableSet data:${JSON.stringify(data)}`)
-    Notification.enableNotification({ bundle: this.appInfo.appBundleName, uid: this.appInfo.appUid }, data);
+  notificationSlotEnableSet(data) {
+    Log.showDebug(TAG, `notificationEnableSet data:${JSON.stringify(data)}`)
+    NotificationListener.enableNotification({ bundle: this.appInfo.appBundleName, uid: this.appInfo.appUid }, data);
   }
 
   soundEnableInit() {
-    Log.showInfo(TAG, `soundEnableInit`)
+    Log.showDebug(TAG, `soundEnableInit`)
     return new Promise((resolve, reject) => {
       let result: boolean = false;
       if (!!this.slotInfo.sound) {
@@ -187,24 +187,26 @@ export default struct SlotSetting {
   }
 
   soundEnableSet(params) {
-    Log.showInfo(TAG, `soundEnableSet params:${JSON.stringify(params)}`)
+    Log.showDebug(TAG, `soundEnableSet params:${JSON.stringify(params)}`)
     if (params == 0) {
       this.slotInfo.sound = '';
-      this.slotInfo.level = SlotLevel.LEVEL_LOW
+      if (this.slotInfo.level != notification.SlotLevel.LEVEL_HIGH) {
+        this.slotInfo.level = notification.SlotLevel.LEVEL_LOW;
+      }
     } else if (params == 1) {
       this.slotInfo.sound = DEFAULT_SOUND;
-      if (this.slotInfo.level < SlotLevel.LEVEL_DEFAULT) {
-        this.slotInfo.level = SlotLevel.LEVEL_DEFAULT
+      if (this.slotInfo.level < notification.SlotLevel.LEVEL_DEFAULT) {
+        this.slotInfo.level = notification.SlotLevel.LEVEL_DEFAULT
       }
     }
     this.notificationSlotSet();
   }
 
   bannerEnableInit() {
-    Log.showInfo(TAG, `bannerEnableInit`)
+    Log.showDebug(TAG, `bannerEnableInit`)
     return new Promise((resolve, reject) => {
       let result: boolean = false;
-      if (this.slotInfo.level == SlotLevel.LEVEL_HIGH) {
+      if (this.slotInfo.level == notification.SlotLevel.LEVEL_HIGH) {
         result = true;
       }
       Log.showInfo(TAG, `bannerEnableInit state:${result}`)
@@ -213,21 +215,21 @@ export default struct SlotSetting {
   }
 
   bannerEnableSet(params) {
-    Log.showInfo(TAG, `bannerEnableSet params:${JSON.stringify(params)}`)
+    Log.showDebug(TAG, `bannerEnableSet params:${JSON.stringify(params)}`)
     if (params == 0) {
       if (this.slotInfo.sound) {
-        this.slotInfo.level = SlotLevel.LEVEL_DEFAULT;
+        this.slotInfo.level = notification.SlotLevel.LEVEL_DEFAULT;
       } else {
-        this.slotInfo.level = SlotLevel.LEVEL_LOW;
+        this.slotInfo.level = notification.SlotLevel.LEVEL_LOW;
       }
     } else if (params == 1) {
-      this.slotInfo.level = SlotLevel.LEVEL_HIGH;
+      this.slotInfo.level = notification.SlotLevel.LEVEL_HIGH;
     }
     this.notificationSlotSet();
   }
 
   notificationSlotSet() {
-    Log.showInfo(TAG, `notificationSlotSet slotInfo:${JSON.stringify(this.slotInfo)}`)
-    Notification.notificationSlotSet({ bundle: this.appInfo.appBundleName, uid: this.appInfo.appUid }, this.slotInfo);
+    Log.showDebug(TAG, `notificationSlotSet slotInfo:${JSON.stringify(this.slotInfo)}`)
+    NotificationListener.notificationSlotSet({ bundle: this.appInfo.appBundleName, uid: this.appInfo.appUid }, this.slotInfo);
   }
 }

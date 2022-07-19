@@ -49,8 +49,7 @@ export default struct BatchSetEnable {
                   appUri: '',
                   appBundleName:item.appBundleName,
                   appUid:item.appUid,
-                  appSwitch:1,
-                  isCanChange: !item.systemApp
+                  appSwitch:1
                 });
               }
               .height($r('app.float.appitem_item_height'));

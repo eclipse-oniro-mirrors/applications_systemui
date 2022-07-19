@@ -14,7 +14,7 @@
  */
 import ConfigData from '../../common/constants';
 import Log from '../../../../../../../../../common/src/main/ets/default/Log';
-import Notification from '../../model/notificationListener';
+import NotificationListener from '../../model/notificationListener';
 import Router from '@system.router'
 
 const TAG = 'ManagementComponent-AppItemComponent';
@@ -32,25 +32,24 @@ export default struct AppItemComponent {
   @Prop appSwitch: number;
   @Prop appBundleName: string;
   @Prop appUid: number;
-  @State isCanChange: boolean = true
 
   build() {
     Flex({ justifyContent: FlexAlign.SpaceBetween }) {
       Row() {
-        if (this.appSwitch === 2 || this.appSwitch === 3) {
-          Image(this.appIcon)
-            .width($r('app.float.appitem_notice_info_icon_width_l'))
-            .height($r('app.float.appitem_notice_info_icon_height_l'))
-            .margin({ right: $r('app.float.appitem_icon_info_margin_r') })
-            .visibility('' === this.appIcon ? Visibility.None : Visibility.Visible)
-            .objectFit(ImageFit.Contain);
-        } else {
-          Image(this.appIcon)
-            .width($r('app.float.appitem_notice_info_icon_width'))
-            .height($r('app.float.appitem_notice_info_icon_height'))
-            .margin({ right: $r('app.float.appitem_icon_info_list_margin_r') })
-            .visibility('' === this.appIcon ? Visibility.None : Visibility.Visible)
-            .objectFit(ImageFit.Contain);
+        if ('' !== this.appIcon) {
+          if (this.appSwitch === 2 || this.appSwitch === 3) {
+            Image(this.appIcon)
+              .width($r('app.float.appitem_notice_info_icon_width_l'))
+              .height($r('app.float.appitem_notice_info_icon_height_l'))
+              .margin({ right: $r('app.float.appitem_icon_info_margin_r') })
+              .objectFit(ImageFit.Contain);
+          } else {
+            Image(this.appIcon)
+              .width($r('app.float.appitem_notice_info_icon_width'))
+              .height($r('app.float.appitem_notice_info_icon_height'))
+              .margin({ right: $r('app.float.appitem_icon_info_list_margin_r') })
+              .objectFit(ImageFit.Contain);
+          }
         }
         Column() {
           Text(this.appTitle)
@@ -182,10 +181,9 @@ export default struct AppItemComponent {
             .align(Alignment.End)
             .width($r('app.float.toggle_comp_width'))
             .height($r('app.float.toggle_comp_height'))
-            .enabled(this.isCanChange)
             .onChange((flag) => {
               Log.showInfo(TAG, `Toggle onChange param: data:${flag} `);
-              Notification.enableNotification({ bundle: this.appBundleName, uid: this.appUid }, flag);
+              NotificationListener.enableNotification({ bundle: this.appBundleName, uid: this.appUid }, flag);
             })
         }
       }
@@ -198,35 +196,35 @@ export default struct AppItemComponent {
   }
 
   aboutToAppear(): void{
-    Log.showInfo(TAG, `aboutToAppear`)
+    Log.showInfo(TAG, `aboutToAppear`);
     if (this.appSwitch === 1) {
-      Notification.subscribeEnableChanged();
-      Notification.register({ bundle: this.appBundleName,
+      NotificationListener.subscribeEnableChanged();
+      NotificationListener.register({ bundle: this.appBundleName,
         onEnableChanged: (stateValue: boolean) => {
-          Log.showInfo(TAG, `aboutToAppear listener call`)
+          Log.showDebug(TAG, `aboutToAppear listener call`);
           this.canNotice = stateValue;
         } });
 
-      Notification.isNotificationEnabled({ bundle: this.appBundleName, uid: this.appUid })
+      NotificationListener.isNotificationEnabled({ bundle: this.appBundleName, uid: this.appUid })
         .then((stateValue) => {
-          Log.showInfo(TAG, `Notification.isNotificationEnabled data:${JSON.stringify(stateValue)}`)
+          Log.showInfo(TAG, `NotificationListener.isNotificationEnabled data:${JSON.stringify(stateValue)}`);
           this.canNotice = stateValue;
         })
         .catch((error) => {
-          Log.showInfo(TAG, `Notification.isNotificationEnabled error:${JSON.stringify(error)}`)
+          Log.showError(TAG, `NotificationListener.isNotificationEnabled error:${JSON.stringify(error)}`);
         });
     }
   }
 
   aboutToDisappear(): void{
-    Log.showInfo(TAG, `aboutToDisappear`)
+    Log.showInfo(TAG, `aboutToDisappear`);
     if (this.appSwitch === 1) {
-      Notification.unsubscribeEnableChanged();
+      NotificationListener.unsubscribeEnableChanged();
     }
   }
 
   onBackPress() {
-    Log.showInfo(TAG, `onBackPress`)
+    Log.showDebug(TAG, `onBackPress`);
     Router.back();
   }
 }

@@ -114,8 +114,7 @@ export default struct notificationManagenment {
                     title: $allowDistribut,
                     describe: this.allowDistributDescribe,
                     initializationAction: () => this.switchComponentInit(),
-                    settingAction: (params) => this.switchComponentSet(params),
-                    isCanChange: true
+                    settingAction: (params) => this.switchComponentSet(params)
                   })
                 }
               }.margin({ bottom: $r('app.float.noDisturb_margin_lf') })
