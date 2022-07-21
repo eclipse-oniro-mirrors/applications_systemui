@@ -12,6 +12,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+import AbilityManager from '../../../../../../../common/src/main/ets/default/abilitymanager/abilityManager';
 import ControlCenterComponent from '../../../../../../../features/controlcentercomponent/src/main/ets/com/ohos/pages/ControlCenterComponent'
 import Log from '../../../../../../../common/src/main/ets/default/Log'
 import Constants from './common/constants'
@@ -25,6 +27,7 @@ export default struct Control {
 
   aboutToAppear() {
     Log.showInfo(TAG, `aboutToAppear Start`)
+    AbilityManager.setContextName(AbilityManager.ABILITY_NAME_CONTROL_PANEL,AbilityManager.ABILITY_NAME_CONTROL_PANEL);
   }
 
   aboutToDisappear() {

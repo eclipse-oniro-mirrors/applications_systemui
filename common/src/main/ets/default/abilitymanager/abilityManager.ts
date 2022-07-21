@@ -14,6 +14,7 @@
  */
 
 import { BusinessError } from 'basic';
+import AbilityContext from 'application/AbilityContext';
 import ServiceExtensionContext from 'application/ServiceExtensionContext';
 import Want from '@ohos.application.Want';
 import Log from '../Log';
@@ -46,6 +47,19 @@ export default class AbilityManager {
     return globalThis[abilityName + '_Context'];
   }
 
+  static setAbilityContext(abilityName: string, context: AbilityContext): void {
+    Log.showDebug(TAG, `setContext, abilityName: ${abilityName}`);
+    globalThis[abilityName + '_Context'] = context;
+  }
+
+  static getAbilityContext(abilityName?: string): AbilityContext {
+    Log.showDebug(TAG, `getContext, abilityName: ${abilityName}`);
+    if (!abilityName) {
+      abilityName = AbilityManager.ABILITY_NAME_ENTRY;
+    }
+    return globalThis[abilityName + '_Context'];
+  }
+
   static setAbilityData(abilityName: string, key: string, data: any): void {
     Log.showDebug(TAG, `setAbilityData, abilityName: ${abilityName} key: ${key} data: ${JSON.stringify(data)}`);
     globalThis[abilityName + '_data_' + key] = data;
@@ -54,6 +68,19 @@ export default class AbilityManager {
   static getAbilityData(abilityName: string, key: string): any {
     Log.showDebug(TAG, `getAbilityData, abilityName: ${abilityName} key: ${key} `);
     return globalThis[abilityName + '_data_' + key];
+  }
+
+  static setContextName(abilityName: string, contextName: string): void {
+    Log.showDebug(TAG, `setContextName, abilityName: ${abilityName}`);
+    globalThis[abilityName + '_ContextName'] = contextName;
+  }
+
+  static getContextName(abilityName?: string): string {
+    Log.showDebug(TAG, `setContextName, abilityName: ${abilityName}`);
+    if (!abilityName) {
+      abilityName = AbilityManager.ABILITY_NAME_ENTRY;
+    }
+    return globalThis[abilityName + '_ContextName'];
   }
 
   static startAbility(want: Want, callback?: (error?: BusinessError) => void): void {

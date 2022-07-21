@@ -38,7 +38,8 @@ struct Index {
   mDefaultBannerRect: any;
 
   aboutToAppear() {
-    Log.showInfo(TAG, `aboutToAppear Start`)
+    Log.showInfo(TAG, `aboutToAppear Start`);
+    AbilityManager.setContextName(AbilityManager.ABILITY_NAME_NOTIFICATION_PANEL,AbilityManager.ABILITY_NAME_NOTIFICATION_PANEL);
     setAppBgColor('#00000000')
     this.mClearCallbacks = []
     this.mClearCallbacks.push(EventManager.subscribe('onBannerNoticeShow', () => this.onBannerNoticeShow()))

@@ -48,7 +48,6 @@ class ServiceExtAbility extends ServiceExtension {
       }).catch((err) => {
       });
 
-      AbilityManager.setContext(AbilityManager.ABILITY_NAME_BANNER_NOTICE, this.context);
       let bannerRect = {
         left: 0,
         top: dis.height / 5,

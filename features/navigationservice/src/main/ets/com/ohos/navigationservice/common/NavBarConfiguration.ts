@@ -13,6 +13,7 @@
  * limitations under the License.
  */
 
+import AbilityManager from '../../../../../../../../../common/src/main/ets/default/abilitymanager/abilityManager';
 import display from '@ohos.display';
 import Log from '../../../../../../../../../common/src/main/ets/default/Log';
 import ResourceUtil from '../../../../../../../../../common/src/main/ets/default/ResourceUtil';
@@ -61,6 +62,7 @@ class NavBarConfiguration {
   }
 
   async getDirectionAndPosition() {
+    await ResourceUtil.initResourceManager(AbilityManager.ABILITY_NAME_NAVIGATION_BAR);
     directionNav = await ResourceUtil.getConfiguration();
     if (directionNav.direction == -1) {
       statusbarPosition = await ResourceUtil.getString($r("app.string.status_bar_position_landscape"))

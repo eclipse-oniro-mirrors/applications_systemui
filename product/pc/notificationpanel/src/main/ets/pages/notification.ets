@@ -13,6 +13,7 @@
  * limitations under the License.
  */
 
+import AbilityManager from '../../../../../../../common/src/main/ets/default/abilitymanager/abilityManager';
 import Log from '../../../../../../../common/src/main/ets/default/Log'
 import EventManager from "../../../../../../../common/src/main/ets/default/event/eventmanager"
 import {obtainStartAbility} from "../../../../../../../common/src/main/ets/default/event/eventutil"
@@ -34,7 +35,8 @@ export default struct Notification {
   @StorageLink('notificationList') notificationList: any[] = []
 
   aboutToAppear() {
-    Log.showInfo(TAG, `aboutToAppear Start`)
+    Log.showInfo(TAG, `aboutToAppear Start`);
+    AbilityManager.setContextName(AbilityManager.ABILITY_NAME_NOTIFICATION_PANEL,AbilityManager.ABILITY_NAME_NOTIFICATION_PANEL);
   }
 
   build() {

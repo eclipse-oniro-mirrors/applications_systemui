@@ -48,7 +48,6 @@ class ServiceExtAbility extends ServiceExtension {
       Log.showError(TAG, `Can't create window, err:${JSON.stringify(err)}`);
     });
 
-    AbilityManager.setContext(AbilityManager.ABILITY_NAME_BANNER_NOTICE, this.context);
     let bannerRect = {
       left: 872 * dis.width / 1280,
       top: 44 * dis.width / 1280,

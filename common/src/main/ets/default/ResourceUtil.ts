@@ -23,9 +23,15 @@ export class ResourceUtil {
   /**
    * Initialize ResourceManager
    */
-  async initResourceManager(): Promise<void> {
+  async initResourceManager(abilityName?: string): Promise<void> {
     if (!this.resMgr) {
-      let context = AbilityManager.getContext();
+
+      let context;
+      if(abilityName === AbilityManager.ABILITY_NAME_NOTIFICATION_MANAGEMENT) {
+        context = AbilityManager.getAbilityContext(abilityName);
+      } else {
+        context = AbilityManager.getContext(abilityName);
+      }
       this.resMgr = await context.resourceManager;
     }
     return this.resMgr;
@@ -37,7 +43,6 @@ export class ResourceUtil {
    * @param resource - NormalResource instance
    */
   async getString(resource): Promise<string> {
-    await this.initResourceManager();
     return await this.resMgr.getString(resource.id);
   }
 
@@ -47,7 +52,6 @@ export class ResourceUtil {
    * @param resource - NormalResource instance
    */
   async getConfiguration(): Promise<string> {
-    await this.initResourceManager();
     return await this.resMgr.getConfiguration();
   }
 }

@@ -68,6 +68,7 @@ export default class CapsuleViewModel {
     this.mIsBackground = data.isBackground;
     this.mWantBundleName = data.wantBundleName;
     this.mWantAbilityName = data.wantAbilityName;
+    await ResourceUtil.initResourceManager(AbilityManager.ABILITY_NAME_STATUS_BAR);
     if (data.callState == CallState.CALL_INCOMING || data.callState == CallState.CALL_WAITING) {
       this.mStartTime = 0;
       this.mText  =await ResourceUtil.getString($r("app.string.incoming_call"));
