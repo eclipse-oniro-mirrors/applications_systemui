@@ -14,14 +14,15 @@
  */
 
 //import Window from '@ohos.window';
-import Log from '../../../../../../../common/src/main/ets/default/log';
+import Log from '../../../../../../../common/src/main/ets/default/Log';
 import HeadComponent from '../../../../../../../features/managementcomponent/src/main/ets/com/ohos/view/component/headcomponent';
 import AppItemComponent from '../../../../../../../features/managementcomponent/src/main/ets/com/ohos/view/component/appitemcomponent';
 import SwitchComponent from '../../../../../../../features/managementcomponent/src/main/ets/com/ohos/view/component/switchcomponent';
 import SlotLstComponent from '../../../../../../../features/managementcomponent/src/main/ets/com/ohos/view/component/slotlstcomponent';
 import ConfigData from '../common/constants';
 import Router from '@system.router'
-import Notification from '../../../../../../../features/managementcomponent/src/main/ets/com/ohos/model/notificationlistener';
+import notificationListener from '../../../../../../../features/managementcomponent/src/main/ets/com/ohos/model/notificationlistener';
+import Notification from '@ohos.notification';
 
 const TAG = 'NotificationManagement-SetEnable';
 
@@ -30,9 +31,10 @@ let appInfo;
 @Entry
 @Component
 export default struct SetEnable {
-  private listeners: any[] = []
-  @State headName:Resource = $r('app.string.notificationManagement')
-  @State allowNotice:Resource = $r('app.string.allowNotification')
+  private listeners: any[] = [];
+  @State headName:Resource = $r('app.string.notificationManagement');
+  @State allowNotice:Resource = $r('app.string.allowNotification');
+  @State slotLst: any[] = [];
   build() {
     Flex({ justifyContent: FlexAlign.SpaceBetween }) {
       Column() {
@@ -63,8 +65,7 @@ export default struct SetEnable {
                   title: $allowNotice,
                   initializationAction: () => this.switchComponentInit(),
                   settingAction: (params) => this.switchComponentSet(params),
-                  register: (listener) => Notification.register({bundle:appInfo.appBundleName,onEnableChanged:listener}),
-                  isCanChange: !appInfo.systemApp
+                  register: (listener) => notificationListener.register({bundle:appInfo.appBundleName,onEnableChanged:listener})
                 })
               }
               .margin({ top: $r('app.float.page_notice_title_margin_t')})
@@ -72,7 +73,7 @@ export default struct SetEnable {
               .height($r('app.float.notice_row_height'))
 
               Row() {
-                SlotLstComponent({ appInfo: appInfo })
+                SlotLstComponent({ appInfo: appInfo ,slotLst: $slotLst})
               }
               .align(Alignment.Start)
             }
@@ -98,27 +99,37 @@ export default struct SetEnable {
     Log.showInfo(TAG, `aboutToAppear`)
     appInfo = Router.getParams();
     appInfo.slotSettingUrl = 'pages/slotSetting'
-    Notification.subscribeEnableChanged();
-    Log.showInfo(TAG, `aboutToAppear end`)
+    notificationListener.subscribeEnableChanged();
+    Log.showInfo(TAG, `aboutToAppear end`);
+  }
+
+  onPageShow (): void{
+    Log.showInfo(TAG, `onPageShow`);
+    Notification.getSlotsByBundle({ bundle: appInfo.appBundleName, uid: appInfo.appUid }, (err, data) => {
+      this.slotLst  = [];
+      data.forEach((val, idx, array) => {
+        this.slotLst.push(val);
+      })
+    })
   }
 
   aboutToDisappear(): void{
     Log.showInfo(TAG, `aboutToDisappear`)
-    Notification.unsubscribeEnableChanged();
+    this.slotLst  = [];
+    notificationListener.unsubscribeEnableChanged();
   }
 
   onBackPress() {
     Log.showInfo(TAG, `onBackPress`)
-    Router.back();
   }
 
   switchComponentInit() {
-    Log.showInfo(TAG, `switchComponentInit`)
-    return Notification.isNotificationEnabled({ bundle: appInfo.appBundleName, uid: appInfo.appUid })
+    Log.showDebug(TAG, `switchComponentInit`)
+    return notificationListener.isNotificationEnabled({ bundle: appInfo.appBundleName, uid: appInfo.appUid });
   }
 
   switchComponentSet(params) {
-    Log.showInfo(TAG, `switchComponentSet`)
-    Notification.enableNotification({ bundle: appInfo.appBundleName, uid: appInfo.appUid }, params);
+    Log.showDebug(TAG, `switchComponentSet`)
+    notificationListener.enableNotification({ bundle: appInfo.appBundleName, uid: appInfo.appUid }, params);
   }
 }

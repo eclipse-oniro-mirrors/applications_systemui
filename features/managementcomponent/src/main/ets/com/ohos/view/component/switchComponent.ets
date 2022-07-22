@@ -24,7 +24,6 @@ export default struct SwitchComponent {
   private initializationAction: (params?) => Promise<any>
   private settingAction: (params?) => void
   private register?: (listener) => void
-  @State isCanChange: boolean = true
   @State initState: boolean= false
 
   build() {
@@ -34,7 +33,7 @@ export default struct SwitchComponent {
           Text(this.title)
             .fontColor($r('sys.color.ohos_id_color_text_primary'))
             .fontSize($r('sys.float.ohos_id_text_size_body1'))
-            .fontWeight(FontWeight.Bold)
+            .fontWeight(FontWeight.Medium)
             .align(Alignment.Start)
           Text(this.describe)
             .fontColor($r('sys.color.ohos_id_color_text_primary'))
@@ -55,7 +54,6 @@ export default struct SwitchComponent {
           .align(Alignment.End)
           .width($r('app.float.toggle_comp_width'))
           .height($r('app.float.toggle_comp_height'))
-          .enabled(this.isCanChange)
           .onChange((data) => {
             Log.showInfo(TAG, `Toggle onChange data:${data}`);
             this.initState = data ? true : false;
@@ -66,14 +64,14 @@ export default struct SwitchComponent {
       .align(Alignment.End)
       .padding({ right: $r('app.float.switchComp_padding_r') })
     }.width(ConfigData.WH_100_100)
-    .height($r('app.float.switchComp_height') )
+    .height($r('app.float.switchComp_height'))
     .border({ width: $r('app.float.border_width'), color: Color.White,
       radius: $r('app.float.border_radius') })
     .backgroundColor(Color.White)
   }
 
   aboutToAppear(): void{
-    Log.showInfo(TAG, `aboutToAppear`)
+    Log.showInfo(TAG, `aboutToAppear`);
     if (this.register) {
       Log.showInfo(TAG, `aboutToAppear register listener`)
       this.register((stateValue: boolean) => {
@@ -82,7 +80,7 @@ export default struct SwitchComponent {
       });
     }
     this.initializationAction().then((data) => {
-      Log.showInfo(TAG, `initializationAction:${data}`)
+      Log.showInfo(TAG, `initializationAction:${data}`);
       this.initState = data;
     })
   }

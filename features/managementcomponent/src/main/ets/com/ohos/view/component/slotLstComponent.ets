@@ -20,11 +20,10 @@ import Router from '@system.router'
 
 const TAG = 'ManagementComponent-SlotLstComponent';
 
-
 @Component
 export default struct SlotLstComponent {
   private appInfo: any= null;
-  @State slotLst: any[] = [];
+  @Link slotLst: any[];
 
   build() {
     Flex({ justifyContent: FlexAlign.SpaceBetween }) {
@@ -33,7 +32,7 @@ export default struct SlotLstComponent {
           Text($r('app.string.slotType'))
             .fontColor($r('sys.color.ohos_id_color_text_secondary'))
             .fontSize($r('sys.float.ohos_id_text_size_body2'))
-            .fontWeight(FontWeight.Bold)
+            .fontWeight(FontWeight.Medium)
             .width(ConfigData.WH_100_100)
             .maxLines(ConfigData.MAX_LINES_1)
             .textOverflow({ overflow: TextOverflow.Ellipsis })
@@ -48,7 +47,7 @@ export default struct SlotLstComponent {
                 SlotItemComponent({ slotType: item.type })
               }
               .onClick(() => {
-                Log.showInfo(TAG, `onClick`)
+                Log.showInfo(TAG, `onClick`);
                 Router.push({ uri: this.appInfo.slotSettingUrl, params: {appInfo:this.appInfo,slotInfo:item} });
               })
             });
@@ -74,18 +73,11 @@ export default struct SlotLstComponent {
   }
 
   aboutToAppear(): void{
-    Log.showInfo(TAG, `aboutToAppear Notification.getSlotsByBundle  bundle:` + 'bundle:' + this.appInfo.appBundleName + 'uid' + this.appInfo.appUid)
-    Notification.getSlotsByBundle({ bundle: this.appInfo.appBundleName, uid: this.appInfo.appUid }, (err, data) => {
-      Log.showInfo(TAG, `aboutToAppear Notification.getSlotsByBundle  data:` + JSON.stringify(data))
-      data.forEach((val, idx, array) => {
-        Log.showInfo(TAG, `aboutToAppear Notification.getSlotsByBundle  data.forEach:` + JSON.stringify(val))
-        this.slotLst.push(val);
-      })
-    })
+    Log.showInfo(TAG, `aboutToAppear Notification.getSlotsByBundle  bundle:` + 'bundle:' + this.appInfo.appBundleName + 'uid' + this.appInfo.appUid);
   }
 
   onBackPress() {
-    Log.showInfo(TAG, `onBackPress`)
+    Log.showDebug(TAG, `onBackPress`);
     Router.back();
   }
 }
