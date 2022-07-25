@@ -48,21 +48,21 @@ export class PluginIconItemComponentStyle {
 export default class StyleConfiguration {
   static getVerticalStatusBarItemLoadComponentStyle(): VerticalStatusBarItemLoadComponentStyle {
     const key: string = TAG + '-VerticalStatusBarItemLoadComponent';
-    return StyleManager.getStyle(key, new VerticalStatusBarItemLoadComponentStyle());
+    return StyleManager.getStyle(key, VerticalStatusBarItemLoadComponentStyle);
   }
 
   static getStatusBarNotificationIconStyle(): StatusBarNotificationIconStyle {
     const key: string = TAG + '-StatusBarNotificationIcon';
-    return StyleManager.getStyle(key, new StatusBarNotificationIconStyle());
+    return StyleManager.getStyle(key, StatusBarNotificationIconStyle);
   }
 
   static getIconItemComponentStyle(): IconItemComponentStyle {
     const key: string = TAG + '-IconItemComponent';
-    return StyleManager.getStyle(key, new IconItemComponentStyle());
+    return StyleManager.getStyle(key, IconItemComponentStyle);
   }
 
   static getPluginIconItemComponentStyle(): PluginIconItemComponentStyle {
     const key: string = TAG + '-PluginIconItemComponent';
-    return StyleManager.getStyle(key, new PluginIconItemComponentStyle());
+    return StyleManager.getStyle(key, PluginIconItemComponentStyle);
   }
 }

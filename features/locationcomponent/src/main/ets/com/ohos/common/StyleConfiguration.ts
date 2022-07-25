@@ -25,6 +25,6 @@ export class StartsBarLocationComponentStyle {
 export default class StyleConfiguration {
   static getStartsBarLocationComponentStyle(): StartsBarLocationComponentStyle {
     const key: string = TAG + '-startsBarLocation';
-    return StyleManager.getStyle(key, new StartsBarLocationComponentStyle());
+    return StyleManager.getStyle(key, StartsBarLocationComponentStyle);
   }
 }

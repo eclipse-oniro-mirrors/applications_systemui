@@ -72,16 +72,16 @@ export class SimpleToggleBaseStyle {
 export default class StyleConfiguration {
   static getIconTitleBaseStyle(): IconTitleBaseStyle {
     const key: string = TAG + '-IconTitleBase';
-    return StyleManager.getStyle(key, new IconTitleBaseStyle());
+    return StyleManager.getStyle(key, IconTitleBaseStyle);
   }
 
   static getIconComponentStyle(): IconComponentStyle {
     const key: string = TAG + '-IconComponent';
-    return StyleManager.getStyle(key, new IconComponentStyle());
+    return StyleManager.getStyle(key, IconComponentStyle);
   }
 
   static getSimpleToggleBaseStyle(): SimpleToggleBaseStyle {
     const key: string = TAG + '-SimpleToggleBase';
-    return StyleManager.getStyle(key, new SimpleToggleBaseStyle());
+    return StyleManager.getStyle(key, SimpleToggleBaseStyle);
   }
 }

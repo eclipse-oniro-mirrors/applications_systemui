@@ -30,6 +30,6 @@ export class CommonStyle {
 export default class StyleConfiguration {
   static getCommonStyle(): CommonStyle {
     const key: string = TAG + '-Common';
-    return StyleManager.getStyle(key, new CommonStyle());
+    return StyleManager.getStyle(key, CommonStyle);
   }
 }

@@ -28,6 +28,6 @@ export class KeyButtonStyle {
 export default class StyleConfiguration {
   static getKeyButtonStyle(): KeyButtonStyle {
     const key: string = TAG + '-KeyButton';
-    return StyleManager.getStyle(key, new KeyButtonStyle());
+    return StyleManager.getStyle(key, KeyButtonStyle);
   }
 }

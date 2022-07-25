@@ -44,6 +44,6 @@ export class VolumePanelComponentStyle {
 export default class StyleConfiguration {
   static getVolumePanelComponentStyle(): VolumePanelComponentStyle {
     const key: string = TAG + '-VolumePanelComponent';
-    return StyleManager.getStyle(key, new VolumePanelComponentStyle());
+    return StyleManager.getStyle(key, VolumePanelComponentStyle);
   }
 }

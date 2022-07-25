@@ -29,6 +29,6 @@ export class SignalComponentStyle {
 export default class StyleConfiguration {
   static getSignalComponentStyle(): SignalComponentStyle {
     const key: string = TAG + '-SignalComponent';
-    return StyleManager.getStyle(key, new SignalComponentStyle());
+    return StyleManager.getStyle(key, SignalComponentStyle);
   }
 }

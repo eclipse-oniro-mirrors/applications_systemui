@@ -134,46 +134,46 @@ export class ControlEditDialogStyle {
 export default class StyleConfiguration {
   static getControlCenterComponentStyle(): ControlCenterComponentStyle {
     const key: string = TAG + '-ControlCenterComponent';
-    return StyleManager.getStyle(key, new ControlCenterComponentStyle());
+    return StyleManager.getStyle(key, ControlCenterComponentStyle);
   }
 
   static getControlCenterUpTitleStyle(): ControlCenterUpTitleStyle {
     const key: string = TAG + '-ControlCenterUpTitle';
-    return StyleManager.getStyle(key, new ControlCenterUpTitleStyle());
+    return StyleManager.getStyle(key, ControlCenterUpTitleStyle);
   }
 
   static getControlCenterComplexToggleLayoutStyle(): ControlCenterComplexToggleLayoutStyle {
     const key: string = TAG + '-ControlCenterComplexToggleLayout';
-    return StyleManager.getStyle(key, new ControlCenterComplexToggleLayoutStyle());
+    return StyleManager.getStyle(key, ControlCenterComplexToggleLayoutStyle);
   }
 
   static getControlCenterSimpleToggleLayoutStyle(): ControlCenterSimpleToggleLayoutStyle {
     const key: string = TAG + '-ControlCenterSimpleToggleLayout';
-    return StyleManager.getStyle(key, new ControlCenterSimpleToggleLayoutStyle());
+    return StyleManager.getStyle(key, ControlCenterSimpleToggleLayoutStyle);
   }
 
   static getSimpleToggleLayoutEditComponentStyle(): SimpleToggleLayoutEditComponentStyle {
     const key: string = TAG + '-SimpleToggleLayoutEditComponent';
-    return StyleManager.getStyle(key, new SimpleToggleLayoutEditComponentStyle());
+    return StyleManager.getStyle(key, SimpleToggleLayoutEditComponentStyle);
   }
 
   static getSimpleToggleLayoutEditUpTitleStyle(): SimpleToggleLayoutEditUpTitleStyle {
     const key: string = TAG + '-SimpleToggleLayoutEditUpTitle';
-    return StyleManager.getStyle(key, new SimpleToggleLayoutEditUpTitleStyle());
+    return StyleManager.getStyle(key, SimpleToggleLayoutEditUpTitleStyle);
   }
 
   static getSimpleToggleLayoutEditOptMsgStyle(): SimpleToggleLayoutEditOptMsgStyle {
     const key: string = TAG + '-SimpleToggleLayoutEditOptMsg';
-    return StyleManager.getStyle(key, new SimpleToggleLayoutEditOptMsgStyle());
+    return StyleManager.getStyle(key, SimpleToggleLayoutEditOptMsgStyle);
   }
 
   static getSimpleToggleLayoutEditGridStyle(): SimpleToggleLayoutEditGridStyle {
     const key: string = TAG + '-SimpleToggleLayoutEditGrid';
-    return StyleManager.getStyle(key, new SimpleToggleLayoutEditGridStyle());
+    return StyleManager.getStyle(key, SimpleToggleLayoutEditGridStyle);
   }
 
   static getControlEditDialogStyle(): ControlEditDialogStyle {
     const key: string = TAG + '-ControlEditDialog';
-    return StyleManager.getStyle(key, new ControlEditDialogStyle());
+    return StyleManager.getStyle(key, ControlEditDialogStyle);
   }
 }
