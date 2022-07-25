@@ -37,6 +37,3 @@ export default class CommonUtil {
     return (0 <= notificationUser && notificationUser < 100) || notificationUser == currentUser;
   }
 }
-
-
-

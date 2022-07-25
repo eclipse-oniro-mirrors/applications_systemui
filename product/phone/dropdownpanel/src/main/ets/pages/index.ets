@@ -30,7 +30,6 @@ import WindowManager, { WindowType, WINDOW_SHOW_HIDE_EVENT
 } from '../../../../../../../common/src/main/ets/default/WindowManager'
 import EventManager, { unsubscribe } from "../../../../../../../common/src/main/ets/default/event/EventManager"
 import { START_ABILITY_EVENT } from "../../../../../../../common/src/main/ets/default/event/EventUtil"
-import CommonStyleManager from '../../../../../../../common/src/main/ets/default/StyleManager'
 import MultimodalInputManager from '../../../../../../../common/src/main/ets/default/MultimodalInputManager'
 import AbilityManager from '../../../../../../../common/src/main/ets/default/abilitymanager/abilityManager'
 import HeightConfigUtils from '../../../../../../../common/src/main/ets/default/heightcofigUtils/HeightConfigUtils'
@@ -91,35 +90,34 @@ struct Index {
   }
 
   aboutToAppear() {
-    Log.showInfo(TAG, `aboutToAppear, start`)
+    Log.showInfo(TAG, `aboutToAppear, start`);
 
-    setAppBgColor('#00000000')
-    CommonStyleManager.setAbilityPageName(TAG)
-    StyleManager.setStyle()
+    setAppBgColor('#00000000');
+    StyleManager.setStyle();
 
-    let dropdownRect = AbilityManager.getAbilityData(AbilityManager.ABILITY_NAME_DROPDOWN_PANEL, 'rect')
-    let navigationBarRect = AbilityManager.getAbilityData(AbilityManager.ABILITY_NAME_NAVIGATION_BAR, 'config')
+    let dropdownRect = AbilityManager.getAbilityData(AbilityManager.ABILITY_NAME_DROPDOWN_PANEL, 'rect');
+    let navigationBarRect = AbilityManager.getAbilityData(AbilityManager.ABILITY_NAME_NAVIGATION_BAR, 'config');
     this.urivar = settings.getUriSync(this.settingDataKey);
     this.helper = featureAbility.acquireDataAbilityHelper(AbilityManager.getContext(AbilityManager.ABILITY_NAME_DROPDOWN_PANEL), CommonConstants.URI_VAR);
     this.resizeDropdownPanelAndNavigationBar(dropdownRect, navigationBarRect);
-    Log.showDebug(TAG, `getValueSync componentOptAreaHeightPX: ${this.componentOptAreaHeightPX}`)
+    Log.showDebug(TAG, `getValueSync componentOptAreaHeightPX: ${this.componentOptAreaHeightPX}`);
     this.helper.on("dataChange", this.urivar, (data) => {
       if (data.code !== 0) {
         Log.showError(TAG, `dataChangesCallback failed, because ${data.message}`);
         return;
       } else {
         this.resizeDropdownPanelAndNavigationBar(dropdownRect, navigationBarRect);
-        Log.showInfo(TAG, `NavigationBar status change, componentOptAreaHeightPX: ${this.componentOptAreaHeightPX}`)
+        Log.showInfo(TAG, `NavigationBar status change, componentOptAreaHeightPX: ${this.componentOptAreaHeightPX}`);
       }
-    })
+    });
 
-    this.componentOptAreaTranslateY = (-this.componentOptAreaHeightPX * 0.1) + 'px'
+    this.componentOptAreaTranslateY = (-this.componentOptAreaHeightPX * 0.1) + 'px';
 
-    this.mClearCallbacks = []
+    this.mClearCallbacks = [];
     this.mClearCallbacks.push(
     EventManager.subscribe('DropdownEvent', (args) => this.onDropdownEvent(args)),
     EventManager.subscribe(START_ABILITY_EVENT, (args) => this.onStartAbility(args)),
-    EventManager.subscribe('hideNotificationWindowEvent', (args) => this.onHideNotificationWindowEvent(args)))
+    EventManager.subscribe('hideNotificationWindowEvent', (args) => this.onHideNotificationWindowEvent(args)));
 
     mHeightConfigUtils = new HeightConfigUtils();
     let StatusCoefficient;
@@ -134,11 +132,11 @@ struct Index {
       "onStateChange": (data) => this.onStateChange(data),
       "onNotificationShowOrHide": (data) => this.onNotificationShowOrHide(data),
       "onControlShowOrHide": (data) => this.onControlShowOrHide(data)
-    }
+    };
     NavigationEvent.registerCallback(this.mCallback);
     MultimodalInputManager.registerControlListener(this.mCallback);
     MultimodalInputManager.registerNotificationListener(this.mCallback);
-    Log.showDebug(TAG, `aboutToAppear, end`)
+    Log.showDebug(TAG, `aboutToAppear, end`);
   }
 
   onPageShow() {

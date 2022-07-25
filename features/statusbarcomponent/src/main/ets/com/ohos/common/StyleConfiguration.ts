@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-import StyleManager from '../../../../../../../../common/src/main/ets/default/StyleManager';
+import StyleManager from '../../../../../../../../common/src/main/ets/default/CommonStyleManager';
 import Constants from './Constants';
 
 const TAG = 'statusBar-StyleConfiguration';
@@ -48,29 +48,21 @@ export class PluginIconItemComponentStyle {
 export default class StyleConfiguration {
   static getVerticalStatusBarItemLoadComponentStyle(): VerticalStatusBarItemLoadComponentStyle {
     const key: string = TAG + '-VerticalStatusBarItemLoadComponent';
-    return StyleManager.getStyle(key, () => {
-      return new VerticalStatusBarItemLoadComponentStyle();
-    });
+    return StyleManager.getStyle(key, new VerticalStatusBarItemLoadComponentStyle());
   }
 
   static getStatusBarNotificationIconStyle(): StatusBarNotificationIconStyle {
     const key: string = TAG + '-StatusBarNotificationIcon';
-    return StyleManager.getStyle(key, () => {
-      return new StatusBarNotificationIconStyle();
-    });
+    return StyleManager.getStyle(key, new StatusBarNotificationIconStyle());
   }
 
   static getIconItemComponentStyle(): IconItemComponentStyle {
     const key: string = TAG + '-IconItemComponent';
-    return StyleManager.getStyle(key, () => {
-      return new IconItemComponentStyle();
-    });
+    return StyleManager.getStyle(key, new IconItemComponentStyle());
   }
 
   static getPluginIconItemComponentStyle(): PluginIconItemComponentStyle {
     const key: string = TAG + '-PluginIconItemComponent';
-    return StyleManager.getStyle(key, () => {
-      return new PluginIconItemComponentStyle();
-    });
+    return StyleManager.getStyle(key, new PluginIconItemComponentStyle());
   }
 }

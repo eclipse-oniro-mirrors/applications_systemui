@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-import StyleManager from './StyleManager';
+import StyleManager from './CommonStyleManager';
 import deviceInfo from '@ohos.deviceInfo';
 
 const TAG = 'Common-StyleConfiguration';
@@ -30,6 +30,6 @@ export class CommonStyle {
 export default class StyleConfiguration {
   static getCommonStyle(): CommonStyle {
     const key: string = TAG + '-Common';
-    return StyleManager.getStyle(key, () => new CommonStyle());
+    return StyleManager.getStyle(key, new CommonStyle());
   }
 }

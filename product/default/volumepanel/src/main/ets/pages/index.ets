@@ -12,15 +12,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-import Constants from '../common/constants'
 import Log from '../../../../../../../common/src/main/ets/default/Log'
-import CommonStyleManager from '../../../../../../../common/src/main/ets/default/StyleManager'
 import VolumePanelComponent from '../../../../../../../features/volumepanelcomponent/src/main/ets/com/ohos/pages/VolumePanelComponent'
 import AbilityManager from '../../../../../../../common/src/main/ets/default/abilitymanager/abilityManager'
 import StyleManager from '../common/StyleManager'
 import WindowManager, { WindowType } from '../../../../../../../common/src/main/ets/default/windowmanager'
-
 
 const TAG = 'VolumePanel-Index'
 
@@ -28,8 +24,8 @@ const TAG = 'VolumePanel-Index'
 @Component
 struct Index {
   aboutToAppear() {
-    Log.showInfo(TAG, `aboutToAppear Start`)
-    let configInfo = AbilityManager.getAbilityData(AbilityManager.ABILITY_NAME_VOLUME_PANEL, 'dis')
+    Log.showInfo(TAG, `aboutToAppear Start`);
+    let configInfo = AbilityManager.getAbilityData(AbilityManager.ABILITY_NAME_VOLUME_PANEL, 'dis');
     let volumeRect;
     if (configInfo.width > configInfo.height) { // Pad、PC Mode
       const realWidth = 48;
@@ -39,7 +35,7 @@ struct Index {
         top: (configInfo.height - vp2px(realHeight) ) / 2,
         width: vp2px(realWidth) ,
         height: vp2px(realHeight)
-      }
+      };
     } else { // Phone Mode
       const realWidth = 48;
       const realHeight = 284;
@@ -48,16 +44,15 @@ struct Index {
         top: configInfo.height * 0.1,
         width: vp2px(realWidth) ,
         height: vp2px(realHeight)
-      }
+      };
     }
-    AbilityManager.setAbilityData(AbilityManager.ABILITY_NAME_VOLUME_PANEL, 'rect', volumeRect)
+    AbilityManager.setAbilityData(AbilityManager.ABILITY_NAME_VOLUME_PANEL, 'rect', volumeRect);
     WindowManager.resetSizeWindow(WindowType.VOLUME_PANEL, volumeRect);
 
-    setAppBgColor('#00000000')
-    CommonStyleManager.setAbilityPageName(TAG)
+    setAppBgColor('#00000000');
     Log.showDebug(TAG, `configInfo Start, configInfo ${JSON.stringify(configInfo)}`);
     if (configInfo.width > configInfo.height) { // Pad、PC Mode
-      StyleManager.setStyle()
+      StyleManager.setStyle();
     }
   }
 

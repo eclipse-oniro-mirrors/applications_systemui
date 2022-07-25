@@ -19,7 +19,6 @@ import WindowManager, {WindowType, WINDOW_SHOW_HIDE_EVENT
 } from '../../../../../../../common/src/main/ets/default/WindowManager'
 import EventManager, {unsubscribe} from "../../../../../../../common/src/main/ets/default/event/EventManager"
 import {obtainLocalEvent} from "../../../../../../../common/src/main/ets/default/event/EventUtil"
-import CommonStyleManager from '../../../../../../../common/src/main/ets/default/StyleManager'
 import HeightConfigUtils from '../../../../../../../common/src/main/ets/default/heightcofigUtils/HeightConfigUtils'
 import StatusBarComponent from '../../../../../../../features/statusbarcomponent/src/main/ets/com/ohos/pages/StatusBarComponent'
 import StatusBarVM from '../../../../../../../features/statusbarcomponent/src/main/ets/com/ohos/viewmodel/StatusBarVM'
@@ -53,7 +52,7 @@ struct Index {
   aboutToAppear() {
     Log.showInfo(TAG, `aboutToAppear, start`);
 
-    let configInfo = AbilityManager.getAbilityData(AbilityManager.ABILITY_NAME_STATUS_BAR, 'config')
+    let configInfo = AbilityManager.getAbilityData(AbilityManager.ABILITY_NAME_STATUS_BAR, 'config');
     let statusBarData: StatusBarData = new StatusBarData();
     statusBarData.displayWidth = configInfo.maxWidth;
     statusBarData.displayHeight = configInfo.maxHeight;
@@ -64,13 +63,12 @@ struct Index {
     statusBarData.left = configInfo.xCoordinate;
     statusBarData.top = configInfo.yCoordinate;
     StatusBarVM.updateStatusBarData(statusBarData);
-    this.mStatusBarData = StatusBarVM.getStatusBarData()
+    this.mStatusBarData = StatusBarVM.getStatusBarData();
 
-    setAppBgColor('#00000000')
-    CommonStyleManager.setAbilityPageName(TAG)
-    StyleManager.setStyle()
+    setAppBgColor('#00000000');
+    StyleManager.setStyle();
 
-    this.mClearCallback = EventManager.subscribe(WINDOW_SHOW_HIDE_EVENT, (args) => this.onWindowShowHideEvent(args))
+    this.mClearCallback = EventManager.subscribe(WINDOW_SHOW_HIDE_EVENT, (args) => this.onWindowShowHideEvent(args));
 
     mHeightConfigUtils = new HeightConfigUtils();
     let StatusMinH;

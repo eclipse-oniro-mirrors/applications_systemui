@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-import StyleManager from '../../../../../../../../common/src/main/ets/default/StyleManager';
+import StyleManager from '../../../../../../../../common/src/main/ets/default/CommonStyleManager';
 
 const TAG = 'bluetooth-StyleConfiguration';
 
@@ -25,8 +25,6 @@ export class StatusBarBluetoothComponentStyle {
 export default class StyleConfiguration {
   static getStatusBarBluetoothComponentStyle(): StatusBarBluetoothComponentStyle {
     const key: string = TAG + '-StatusBarBluetoothComponent';
-    return StyleManager.getStyle(key, () => {
-      return new StatusBarBluetoothComponentStyle();
-    });
+    return StyleManager.getStyle(key, new StatusBarBluetoothComponentStyle());
   }
 }
