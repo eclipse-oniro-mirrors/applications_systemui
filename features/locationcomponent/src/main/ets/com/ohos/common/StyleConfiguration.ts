@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-import StyleManager from '../../../../../../../../common/src/main/ets/default/StyleManager';
+import StyleManager from '../../../../../../../../common/src/main/ets/default/CommonStyleManager';
 
 const TAG = 'location-StyleConfiguration';
 
@@ -25,8 +25,6 @@ export class StartsBarLocationComponentStyle {
 export default class StyleConfiguration {
   static getStartsBarLocationComponentStyle(): StartsBarLocationComponentStyle {
     const key: string = TAG + '-startsBarLocation';
-    return StyleManager.getStyle(key, () => {
-      return new StartsBarLocationComponentStyle();
-    });
+    return StyleManager.getStyle(key, new StartsBarLocationComponentStyle());
   }
 }

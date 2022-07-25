@@ -12,10 +12,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-import image from "@ohos.multimedia.image"
 import Log from '../../../../../../../common/src/main/ets/default/Log'
-import CommonStyleManager from '../../../../../../../common/src/main/ets/default/StyleManager'
 import HeightConfigUtils from '../../../../../../../common/src/main/ets/default/heightcofigUtils/HeightConfigUtils'
 import AbilityManager from '../../../../../../../common/src/main/ets/default/abilitymanager/AbilityManager'
 import StyleConfiguration, { IndexStyle } from './common/StyleConfiguration'
@@ -30,7 +27,6 @@ import { START_ABILITY_EVENT } from "../../../../../../../common/src/main/ets/de
 import MultimodalInputManager, {
   MultiKeyCode,
 } from "../../../../../../../common/src/main/ets/default/MultimodalInputManager";
-
 
 const TAG = 'ControlPanel-Index'
 const SHOW_EVENT = "showControlCenter";
@@ -72,7 +68,6 @@ struct Index {
     Log.showInfo(TAG, `aboutToAppear, start`)
 
     setAppBgColor('#00000000')
-    CommonStyleManager.setAbilityPageName(TAG)
     this.style = StyleConfiguration.getIndexStyle()
     StyleManager.setStyle()
 

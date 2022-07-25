@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-import StyleManager from '../../../../../../../../common/src/main/ets/default/StyleManager';
+import StyleManager from '../../../../../../../../common/src/main/ets/default/CommonStyleManager';
 import Constants from './Constants';
 
 const TAG = 'volumepanel-StyleConfiguration';
@@ -44,8 +44,6 @@ export class VolumePanelComponentStyle {
 export default class StyleConfiguration {
   static getVolumePanelComponentStyle(): VolumePanelComponentStyle {
     const key: string = TAG + '-VolumePanelComponent';
-    return StyleManager.getStyle(key, () => {
-      return new VolumePanelComponentStyle();
-    });
+    return StyleManager.getStyle(key, new VolumePanelComponentStyle());
   }
 }

@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-import StyleManager from '../../../../../../../common/src/main/ets/default/StyleManager';
+import StyleManager from '../../../../../../../common/src/main/ets/default/CommonStyleManager';
 
 const TAG = 'clock-StyleConfiguration';
 
@@ -24,8 +24,6 @@ export class ClockComponentStyle {
 export default class StyleConfiguration {
   static getClockComponentStyle(): ClockComponentStyle {
     const key: string = TAG + '-ClockComponent';
-    return StyleManager.getStyle(key, () => {
-      return new ClockComponentStyle();
-    });
+    return StyleManager.getStyle(key, new ClockComponentStyle());
   }
 }

@@ -14,7 +14,6 @@
  */
 
 import Log from '../../../../../../../common/src/main/ets/default/Log'
-import CommonStyleManager from '../../../../../../../common/src/main/ets/default/StyleManager'
 import HeightConfigUtils from '../../../../../../../common/src/main/ets/default/heightcofigUtils/HeightConfigUtils'
 import StatusBarComponent from '../../../../../../../features/statusbarcomponent/src/main/ets/com/ohos/pages/StatusBarComponent'
 import StyleManager from './common/StyleManager'
@@ -52,9 +51,8 @@ struct Index {
     statusBarData.top = configInfo.yCoordinate;
     StatusBarVM.updateStatusBarData(statusBarData);
 
-    setAppBgColor('#00000000')
-    CommonStyleManager.setAbilityPageName(TAG)
-    StyleManager.setStyle()
+    setAppBgColor('#00000000');
+    StyleManager.setStyle();
 
     mHeightConfigUtils = new HeightConfigUtils();
     let StatusMinH;

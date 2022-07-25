@@ -12,66 +12,57 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 import Log from '../../../../../../../common/src/main/ets/default/Log';
+import BaseStyleManager from '../../../../../../../common/src/main/ets/default/BaseStyleManager';
 import AbilityManager from '../../../../../../../common/src/main/ets/default/abilitymanager/abilityManager';
 import StyleConfiguration from './StyleConfiguration';
 
 const TAG = 'StatusBar-StyleManager';
 
-export default class StyleManager {
-  static readonly PAD_STANDARD_DISPLAY_WIDTH = 1280;
-  static readonly PAD_STANDARD_DISPLAY_HEIGHT = 800;
-  static readonly PHONE_STANDARD_DISPLAY_WIDTH = 720;
-  static readonly PHONE_STANDARD_DISPLAY_HEIGHT = 1280;
-  static maxWidth: number = StyleManager.PAD_STANDARD_DISPLAY_WIDTH;
-  static rumMode = 'pad';
+export class StyleManager extends BaseStyleManager {
+  static readonly ABILITY_PAGE_NAME_NAVIGATION_BAR = "NavigationBar-Index";
 
-  static setPadStyle(): void {
+  constructor() {
+    super(StyleManager.ABILITY_PAGE_NAME_NAVIGATION_BAR);
+  }
+
+  setPadStyle(): void {
     Log.showDebug(TAG, 'setPadStyle');
 
     let config = AbilityManager.getAbilityData(AbilityManager.ABILITY_NAME_NAVIGATION_BAR, 'config');
-    StyleManager.maxWidth = config.maxWidth;
-    StyleManager.rumMode = 'pad';
+    this.setMaxWidth(config.maxWidth);
+    this.setStandardWidth(BaseStyleManager.STANDARD_DISPLAY_WIDTH_NORMAL);
 
     // keyButton
     {
       let style = StyleConfiguration.getKeyButtonStyle();
-      style.buttonWidth = StyleManager.calcScaleSizePx(88);
-      style.buttonHeight = StyleManager.calcScaleSizePx(44);
-      style.buttonBorderRadius = StyleManager.calcScaleSizePx(22);
-      style.buttonIconWidth = StyleManager.calcScaleSizePx(15);
-      style.buttonIconHeight = StyleManager.calcScaleSizePx(15);
+      style.buttonWidth = this.calcScaleSizePx(88);
+      style.buttonHeight = this.calcScaleSizePx(44);
+      style.buttonBorderRadius = this.calcScaleSizePx(22);
+      style.buttonIconWidth = this.calcScaleSizePx(15);
+      style.buttonIconHeight = this.calcScaleSizePx(15);
     }
   }
 
-  static setPhoneStyle(): void {
+  setPhoneStyle(): void {
     Log.showDebug(TAG, 'setPhoneStyle');
 
     let config = AbilityManager.getAbilityData(AbilityManager.ABILITY_NAME_NAVIGATION_BAR, 'config');
-    StyleManager.maxWidth = config.maxWidth;
-    StyleManager.rumMode = 'phone';
+    this.setMaxWidth(config.maxWidth);
+    this.setStandardWidth(BaseStyleManager.STANDARD_DISPLAY_WIDTH_SMALL);
 
     // keyButton
     {
       let style = StyleConfiguration.getKeyButtonStyle();
-      style.buttonWidth = StyleManager.calcScaleSizePx(144);
-      style.buttonHeight = StyleManager.calcScaleSizePx(72);
-      style.buttonBorderRadius = StyleManager.calcScaleSizePx(36);
-      style.buttonIconWidth = StyleManager.calcScaleSizePx(24);
-      style.buttonIconHeight = StyleManager.calcScaleSizePx(24);
+      style.buttonWidth = this.calcScaleSizePx(144);
+      style.buttonHeight = this.calcScaleSizePx(72);
+      style.buttonBorderRadius = this.calcScaleSizePx(36);
+      style.buttonIconWidth = this.calcScaleSizePx(24);
+      style.buttonIconHeight = this.calcScaleSizePx(24);
     }
   }
-
-  static number2px(n: number): string {
-    return n.toString() + 'px';
-  }
-
-  static calcScaleSize(n: number): number {
-    return n * StyleManager.maxWidth / (StyleManager.rumMode == 'pad' ? StyleManager.PAD_STANDARD_DISPLAY_WIDTH : StyleManager.PHONE_STANDARD_DISPLAY_WIDTH);
-  }
-
-  static calcScaleSizePx(n: number): string {
-    return StyleManager.number2px(StyleManager.calcScaleSize(n));
-  }
 }
+
+let styleManager = new StyleManager();
+
+export default styleManager;

@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-import StyleManager from '../../../../../../../common/src/main/ets/default/StyleManager';
+import StyleManager from '../../../../../../../common/src/main/ets/default/CommonStyleManager';
 
 const TAG = 'wifi-StyleConfiguration';
 
@@ -25,8 +25,6 @@ export class StartsBarWifiComponentStyle {
 export default class StyleConfiguration {
   static getStartsBarWifiComponentStyle(): StartsBarWifiComponentStyle {
     const key: string = TAG + '-startsBarWifi';
-    return StyleManager.getStyle(key, () => {
-      return new StartsBarWifiComponentStyle();
-    });
+    return StyleManager.getStyle(key, new StartsBarWifiComponentStyle());
   }
 }

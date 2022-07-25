@@ -12,17 +12,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+import BaseStyleManager from "./BaseStyleManager";
+import Log from "./Log";
 
-import StyleManager from './StyleManager';
+const TAG = "Common-StyleManager";
 
-const TAG = 'VolumePanel-StyleConfiguration';
+export class CommonStyleManager extends BaseStyleManager {
+    static readonly ABILITY_PAGE_NAME_COMMON = "Common-Index";
 
-export class IndexStyle {
+    constructor() {
+        super(CommonStyleManager.ABILITY_PAGE_NAME_COMMON);
+    }
 }
 
-export default class StyleConfiguration {
-  static getIndexStyle(): IndexStyle {
-    const key: string = TAG + '-Index';
-    return StyleManager.getStyle(key, new IndexStyle());
-  }
-}
+let commonStyleManager = new CommonStyleManager();
+
+export default commonStyleManager;

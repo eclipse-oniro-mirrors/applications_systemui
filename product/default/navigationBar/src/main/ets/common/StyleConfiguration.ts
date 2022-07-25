@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-import StyleManager from '../../../../../../../common/src/main/ets/default/StyleManager';
+import StyleManager from './StyleManager';
 
 const TAG = 'NavigationBar-StyleConfiguration';
 
@@ -28,8 +28,6 @@ export class KeyButtonStyle {
 export default class StyleConfiguration {
   static getKeyButtonStyle(): KeyButtonStyle {
     const key: string = TAG + '-KeyButton';
-    return StyleManager.getStyle(key, () => {
-      return new KeyButtonStyle();
-    });
+    return StyleManager.getStyle(key, new KeyButtonStyle());
   }
 }

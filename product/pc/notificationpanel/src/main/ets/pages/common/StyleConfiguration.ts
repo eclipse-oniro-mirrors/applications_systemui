@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-import StyleManager from '../../../../../../../../common/src/main/ets/default/stylemanager';
+import StyleManager from './StyleManager';
 
 const TAG = 'NotificationPanel-StyleConfiguration';
 
@@ -24,8 +24,6 @@ export class IndexStyle {
 export default class StyleConfiguration {
   static getIndexStyle(): IndexStyle {
     const key: string = TAG + '-Index';
-    return StyleManager.getStyle(key, () => {
-      return new IndexStyle();
-    });
+    return StyleManager.getStyle(key, new IndexStyle());
   }
 }

@@ -16,13 +16,10 @@
 import Three from './threeLayout'
 import Log from '../../../../../../../common/src/main/ets/default/Log';
 import AbilityManager from '../../../../../../../common/src/main/ets/default/abilitymanager/abilityManager'
-import CommonStyleManager from '../../../../../../../common/src/main/ets/default/StyleManager'
 import NavigationBarViewModel from '../viewmodel/NavigationBarViewModel';
 import {NavigationBarComponentData} from '../common/constants'
 import StyleManager from '../common/StyleManager'
 import configManager from '../../../../../../../features/navigationservice/src/main/ets/com/ohos/navigationservice/ConfigManager'
-
-const STORAGE_NAVIGATION_TYPE = 'navigationType'
 
 const TAG = 'NavigationBar-Index';
 let mConfigManager = configManager
@@ -41,17 +38,16 @@ struct Index {
   }
 
   aboutToAppear() {
-    Log.showInfo(TAG, `aboutToAppear Start`)
-    let configInfo = AbilityManager.getAbilityData(AbilityManager.ABILITY_NAME_NAVIGATION_BAR, 'config')
-    AppStorage.SetOrCreate("showNavHorizontal", configInfo.showNavHorizontal)
-    mConfigManager.initConfig()
+    Log.showInfo(TAG, `aboutToAppear Start`);
+    let configInfo = AbilityManager.getAbilityData(AbilityManager.ABILITY_NAME_NAVIGATION_BAR, 'config');
+    AppStorage.SetOrCreate("showNavHorizontal", configInfo.showNavHorizontal);
+    mConfigManager.initConfig();
 
-    setAppBgColor('#00000000')
-    CommonStyleManager.setAbilityPageName(TAG)
+    setAppBgColor('#00000000');
     if (configInfo.maxWidth > configInfo.maxHeight) { // Pad、PC Mode
-      StyleManager.setPadStyle()
+      StyleManager.setPadStyle();
     } else { // Phone Mode
-      StyleManager.setPhoneStyle()
+      StyleManager.setPhoneStyle();
     }
 
     let navigationBarViewModelInstance = NavigationBarViewModel.getInstance();

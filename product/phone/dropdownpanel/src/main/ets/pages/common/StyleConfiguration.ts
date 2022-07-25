@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-import StyleManager from '../../../../../../../../common/src/main/ets/default/stylemanager';
+import StyleManager from './StyleManager';
 import Constants from './constants';
 
 const TAG = 'DropdownPanel-StyleConfiguration';
@@ -53,29 +53,21 @@ export class DateItemStyle {
 export default class StyleConfiguration {
   static getControlStyle(): ControlStyle {
     const key: string = TAG + '-Control';
-    return StyleManager.getStyle(key, () => {
-      return new ControlStyle();
-    });
+    return StyleManager.getStyle(key, new ControlStyle());
   }
 
   static getNotificationStyle(): NotificationStyle {
     const key: string = TAG + '-Notification';
-    return StyleManager.getStyle(key, () => {
-      return new NotificationStyle();
-    });
+    return StyleManager.getStyle(key, new NotificationStyle());
   }
 
   static getQuicklySettingStyle(): QuicklySettingStyle {
     const key: string = TAG + '-QuicklySetting';
-    return StyleManager.getStyle(key, () => {
-      return new QuicklySettingStyle();
-    });
+    return StyleManager.getStyle(key, new QuicklySettingStyle());
   }
 
   static getDateItemStyle(): DateItemStyle {
     const key: string = TAG + '-DateItem';
-    return StyleManager.getStyle(key, () => {
-      return new DateItemStyle();
-    });
+    return StyleManager.getStyle(key, new DateItemStyle());
   }
 }

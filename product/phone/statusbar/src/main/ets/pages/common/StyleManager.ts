@@ -12,39 +12,33 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
+import BaseStyleManager from '../../../../../../../../common/src/main/ets/default/BaseStyleManager';
 import Log from '../../../../../../../../common/src/main/ets/default/Log';
 import AbilityManager from '../../../../../../../../common/src/main/ets/default/abilitymanager/abilitymanager';
-import IndexStyleConfiguration from './styleconfiguration';
 
 const TAG = 'StatusBar-StyleManager';
 
-export default class StyleManager {
-  static readonly STANDARD_DISPLAY_WIDTH = 720;
-  static readonly STANDARD_DISPLAY_HEIGHT = 1280;
-  static maxWidth: number = StyleManager.STANDARD_DISPLAY_WIDTH;
+export class StyleManager extends BaseStyleManager {
+  static readonly ABILITY_PAGE_NAME_STATUSBAR = "StatusBar-Index";
 
-  static setStyle(): void {
+  constructor() {
+    super(StyleManager.ABILITY_PAGE_NAME_STATUSBAR);
+  }
+
+  setStyle(): void {
     Log.showDebug(TAG, 'setStyle');
 
+    this.setStandardWidth(BaseStyleManager.STANDARD_DISPLAY_WIDTH_SMALL);
+
     let config = AbilityManager.getAbilityData(AbilityManager.ABILITY_NAME_STATUS_BAR, 'config');
-    StyleManager.maxWidth = config.maxWidth;
+    this.setMaxWidth(config.maxWidth);
 
     // xxx
     {
     }
-
-  }
-
-  static number2px(n: number): string {
-    return n.toString() + 'px';
-  }
-
-  static calcScaleSize(n: number): number {
-    return n * StyleManager.maxWidth / StyleManager.STANDARD_DISPLAY_WIDTH;
-  }
-
-  static calcScaleSizePx(n: number): string {
-    return StyleManager.number2px(StyleManager.calcScaleSize(n));
   }
 }
+
+let styleManager = new StyleManager();
+
+export default styleManager;
