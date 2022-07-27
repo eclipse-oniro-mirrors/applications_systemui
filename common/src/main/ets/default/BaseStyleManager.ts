@@ -46,10 +46,10 @@ export default class BaseStyleManager {
     this.standardWidth = width;
   }
 
-  getStyle<T>(key: string, defaultStyle: T): T {
+  getStyle<T>(key: string, defaultStyle: { new(): T }): T {
     let newKey = this.mAbilityPageName + "-" + key;
     if (!AppStorage.Has(newKey)) {
-      AppStorage.SetOrCreate(newKey, defaultStyle);
+      AppStorage.SetOrCreate(newKey, new defaultStyle());
       Log.showInfo(TAG, `Create storageKey of ${newKey}`);
     }
     return AppStorage.Get(newKey) as T;

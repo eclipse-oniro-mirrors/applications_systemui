@@ -53,21 +53,21 @@ export class DateItemStyle {
 export default class StyleConfiguration {
   static getControlStyle(): ControlStyle {
     const key: string = TAG + '-Control';
-    return StyleManager.getStyle(key, new ControlStyle());
+    return StyleManager.getStyle(key, ControlStyle);
   }
 
   static getNotificationStyle(): NotificationStyle {
     const key: string = TAG + '-Notification';
-    return StyleManager.getStyle(key, new NotificationStyle());
+    return StyleManager.getStyle(key, NotificationStyle);
   }
 
   static getQuicklySettingStyle(): QuicklySettingStyle {
     const key: string = TAG + '-QuicklySetting';
-    return StyleManager.getStyle(key, new QuicklySettingStyle());
+    return StyleManager.getStyle(key, QuicklySettingStyle);
   }
 
   static getDateItemStyle(): DateItemStyle {
     const key: string = TAG + '-DateItem';
-    return StyleManager.getStyle(key, new DateItemStyle());
+    return StyleManager.getStyle(key, DateItemStyle);
   }
 }

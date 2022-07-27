@@ -25,6 +25,6 @@ export class StartsBarWifiComponentStyle {
 export default class StyleConfiguration {
   static getStartsBarWifiComponentStyle(): StartsBarWifiComponentStyle {
     const key: string = TAG + '-startsBarWifi';
-    return StyleManager.getStyle(key, new StartsBarWifiComponentStyle());
+    return StyleManager.getStyle(key, StartsBarWifiComponentStyle);
   }
 }
