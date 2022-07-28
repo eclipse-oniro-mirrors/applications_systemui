@@ -25,6 +25,8 @@ export default class Constants {
   static readonly THREE_ICON_LAYOUT: number = 3;
 }
 
+export const NAVIGATIONBAR_HIDE_EVENT = 'systemui.event.NAVIGATIONBAR_HIDE';
+
 export class NavigationBarComponentData {
   isEnable = true;
   backgroundColor = '#00000000';
