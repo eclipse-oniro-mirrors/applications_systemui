@@ -19,10 +19,11 @@ import WindowManager, { WindowType } from '../../../../../../../common/src/main/
 import getSingleInstance from '../../../../../../../common/src/main/ets/default/SingleInstanceHelper';
 import TintStateManager, { TintState, TintStateListener
 } from '../../../../../../../common/src/main/ets/default/TintStateManager';
-import { NavigationBarComponentData } from '../common/constants';
+import { NavigationBarComponentData, NAVIGATIONBAR_HIDE_EVENT } from '../common/constants';
 import featureAbility from '@ohos.ability.featureAbility';
 import { DataAbilityHelper } from 'ability/dataAbilityHelper';
 import settings from '@ohos.settings';
+import commonEvent from '@ohos.commonEvent';
 import AbilityManager from '../../../../../../../common/src/main/ets/default/abilitymanager/abilityManager';
 import CommonConstants from '../../../../../../../common/src/main/ets/default/Constants';
 
@@ -162,8 +163,18 @@ export default class NavigationBarViewModel {
   private windowSwitches(navigationBarStatusValue: string): void {
     this.isDisplay = navigationBarStatusValue == '1' ? true : false;
     if (!this.isDisplay) {
+      //For gesture navigation scenarios
+      //Systemui hides the navigation bar,and then notifies the launcher that it can start moving down the dock bar.
       WindowManager.hideWindow(WindowType.NAVIGATION_BAR).then(() => {
+        commonEvent.publish(NAVIGATIONBAR_HIDE_EVENT, (err) => {
+          if (err.code) {
+            Log.showError(TAG, `systemui.event.NAVIGATIONBAR_HIDE PublishCallBack err: ${JSON.stringify(err)}`);
+          } else {
+            Log.showInfo(TAG, "systemui.event.NAVIGATIONBAR_HIDE Publish sucess");
+          }
+        })
       }).catch((err) => {
+        Log.showError(TAG, `systemui.event.NAVIGATIONBAR_HIDE Publish catch err: ${JSON.stringify(err)}`);
       });
     } else {
       WindowManager.showWindow(WindowType.NAVIGATION_BAR).then(() => {
