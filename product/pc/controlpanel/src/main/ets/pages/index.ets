@@ -56,7 +56,6 @@ struct Index {
   @StorageLink('StatusCoefficient') StatusCoefficient: number = 1.0
   @State style: IndexStyle = new IndexStyle()
   @State mBackground: PixelMap | undefined = undefined;
-  @State mBlur: number = 0;
   @State mOpacity: number = 0.0;
   @State mWidthSize: number = 0.2
   @State mHeightSize: number = 0.2
@@ -168,30 +167,16 @@ struct Index {
       return;
     }
     this.mShowAnimReady = false;
-    this._animateTo({ ...SHOW_ANIM_CONFIG, onFinish: () => {
-      Log.showInfo(TAG, `show anim finish.`);
-      this.mBlur = 20;
-    } }, () => {
-      this.mBlur = 20
-      this.mOpacity = 1.0
-      this.mWidthSize = 1.0
-      this.mHeightSize = 1.0
-    })
+    this.mOpacity = 1.0;
+    this.mWidthSize = 1.0;
+    this.mHeightSize = 1.0;
   }
 
   hideWindow() {
-    Log.showDebug(TAG, `hide anim start: ${JSON.stringify(this)}`);
-    this._animateTo({ ...HIDE_ANIM_CONFIG, onFinish: () => {
-      Log.showInfo(TAG, `anim finish, hide Notification window.`);
-      this.mBlur = 0
-      WindowManager.hideWindow(WindowType.CONTROL_PANEL);
-    }
-    }, () => {
-      this.mBlur = 0
-      this.mOpacity = 0.0
-      this.mWidthSize = 0.2
-      this.mHeightSize = 0.2
-    })
+    WindowManager.hideWindow(WindowType.CONTROL_PANEL);
+    this.mOpacity = 0.0;
+    this.mWidthSize = 0.2;
+    this.mHeightSize = 0.2;
   }
 
   onModeChange(isEdit) {
