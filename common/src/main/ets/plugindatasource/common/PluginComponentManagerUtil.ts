@@ -16,12 +16,14 @@
 
 import pluginComponentManager from '@ohos.pluginComponent';
 import { Want } from 'ability/want';
+import { ItemComponentData } from './Constants';
 import Log from '../../default/Log';
 
 const TAG = 'PluginComponentManagerUtil';
 
 export class PluginComponentInfo {
   bundleName: string;
+  moduleName: string;
   abilityName: string;
   template: string;
   componentTemplate;
@@ -36,14 +38,15 @@ export interface ListenerHandle {
   unRegister(): void;
 }
 
-export async function requestFunction(owner: Want, want: Want, name: string): Promise<PluginComponentInfo> {
+export async function requestFunction(owner: Want, itemData: ItemComponentData): Promise<PluginComponentInfo> {
   Log.showDebug(TAG, `requestFunction, owner: ${JSON.stringify(owner)}`);
-  Log.showDebug(TAG, `requestFunction, want: ${JSON.stringify(want)}`);
-  Log.showDebug(TAG, `requestFunction, name: ${JSON.stringify(name)}`);
+  Log.showDebug(TAG, `requestFunction, itemData: ${JSON.stringify(itemData)}`);
   let param = {
     owner: owner,
-    want: want,
-    name: name,
+    want: {
+      bundleName: itemData.bundleName, abilityName: itemData.abilityName
+    },
+    name: itemData.template,
     data: {}
   };
   let ret = await pluginComponentManager.request(param);
@@ -52,9 +55,10 @@ export async function requestFunction(owner: Want, want: Want, name: string): Pr
     throw new Error();
   }
   let info = new PluginComponentInfo();
-  info.bundleName = want.bundleName;
-  info.abilityName = want.abilityName;
-  info.template = name;
+  info.bundleName = itemData.bundleName;
+  info.moduleName = itemData.moduleName;
+  info.abilityName = itemData.abilityName;
+  info.template = itemData.template;
   info.componentTemplate = ret.componentTemplate;
   info.data = ret.data;
   return info;

@@ -14,21 +14,57 @@
  */
 
 import BundleMgr from "@ohos.bundle";
-import Context from "application/ServiceExtensionContext";
 import Log from "../Log";
 import SwitchUserManager from "../SwitchUserManager";
+import AbilityManager from "./abilityManager";
 
 const TAG = "BRManager";
 
+interface Resource {
+    bundleName: string;
+    moduleName: string;
+    id: number;
+}
+
 export default class BundleManager {
-    static async getResourceManager(tag: string, context: Context, bundleName: string) {
-        Log.showDebug(TAG, `getResourceManager from: ${tag}`);
-        let bundleContext = await context.createBundleContext(bundleName);
-        return await bundleContext.resourceManager;
+    static readonly RESOURCE_MANAGER = 'SystemUi_Resource_Manager';
+
+    static getResourceManager() {
+        if(!globalThis[BundleManager.RESOURCE_MANAGER]){
+            Log.showInfo(TAG, 'init resourceManager');
+            globalThis[BundleManager.RESOURCE_MANAGER] = AbilityManager.getContext().resourceManager;
+        }
+        return globalThis[BundleManager.RESOURCE_MANAGER];
     }
 
-    static async getBundleInfo(tag: string, bundleName: string, getInfo:
-    any, requestId?: number) {
+    static getString(resource: Resource, callback?: Function){
+        Log.showDebug(TAG, `getString, resource: ${JSON.stringify(resource)}`);
+        if(callback){
+            BundleManager.getResourceManager().getString(resource).then((value) => {
+                Log.showDebug(TAG, `getString, callback excute`);
+                callback(value) ;
+            })
+            return;
+        } else {
+            return BundleManager.getResourceManager().getString(resource);
+        }
+    }
+
+    static getMediaBase64(resource: Resource, callback?: Function){
+        Log.showDebug(TAG, `getMediaBase64, resource: ${JSON.stringify(resource)}`);
+        if(callback){
+            BundleManager.getResourceManager().getMediaBase64(resource).then((value) => {
+                Log.showDebug(TAG, `getMediaBase64, callback excute`);
+                callback(value) ;
+            })
+            return;
+        } else {
+            return  BundleManager.getResourceManager().getMediaBase64(resource);
+        }
+    }
+
+    static async getBundleInfo(tag: string, bundleName: string, getInfo?: any, requestId?: number) {
+        getInfo = getInfo ?? BundleMgr.BundleFlag.GET_BUNDLE_DEFAULT;
         let userInfo = {
             userId: requestId ?? (await SwitchUserManager.getInstance().getCurrentUserInfo()).userId,
         };

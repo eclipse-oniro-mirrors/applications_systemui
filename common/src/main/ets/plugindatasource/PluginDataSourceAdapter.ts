@@ -114,20 +114,16 @@ export default class PluginDataSourceAdapter {
       this.mListener.onItemAdd(itemData);
       return;
     }
-    let manager = await BundleManager.getResourceManager(TAG, this.mContext, itemData.bundleName);
-    Log.showDebug(TAG, `name: ${this.mName}, ${itemData.id} Can't find label or icon, fetch data from ${manager}`);
-    if (manager) {
-      Promise.all([
-        itemData.iconUrl ?? manager.getMediaBase64(itemData.abilityIconId),
-        itemData.label ?? manager.getString(itemData.abilityLabelId),
-      ])
-        .then(([iconValue, labelValue]) => {
-          iconValue && (itemData.iconUrl = iconValue);
-          labelValue && (itemData.label = labelValue);
-          this.mListener.onItemAdd(itemData);
-        })
-        .catch((err) => Log.showError(TAG, `name: ${this.mName}, Can't get bundle info, err: ${JSON.stringify(err)}`));
-    }
+    Promise.all([
+      itemData.iconUrl ?? BundleManager.getMediaBase64({bundleName: itemData.bundleName, moduleName: itemData.moduleName, id: itemData.abilityIconId}),
+      itemData.label ?? BundleManager.getString({bundleName: itemData.bundleName, moduleName: itemData.moduleName, id: itemData.abilityLabelId}),
+    ])
+      .then(([iconValue, labelValue]) => {
+        iconValue && (itemData.iconUrl = iconValue);
+        labelValue && (itemData.label = labelValue);
+        this.mListener.onItemAdd(itemData);
+      })
+      .catch((err) => Log.showError(TAG, `name: ${this.mName}, Can't get bundle info, err: ${JSON.stringify(err)}`));
   }
 
   onItemRemove(itemData: ItemComponentData): void {

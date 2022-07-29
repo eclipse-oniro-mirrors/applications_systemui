@@ -103,13 +103,11 @@ export default class ParseDataUtil {
       return appDataMap.get(bundleName);
     }
     let data = await BundleManager.getBundleInfo(TAG, bundleName, 0, userId);
-    let labelId = data?.appInfo?.labelId;
-    let iconId = data?.appInfo?.iconId;
-    let contextName = AbilityManager.getContextName(AbilityManager.ABILITY_NAME_NOTIFICATION_PANEL);
-    let item = await BundleManager.getResourceManager(TAG, AbilityManager.getContext(contextName), bundleName);
+    let labelResource = data?.appInfo?.labelResource;
+    let iconResource = data?.appInfo?.iconResource;
     let appMessage = {
-      appName: await item.getString(parseInt(labelId)),
-      icon: await item.getMediaBase64(parseInt(iconId))
+      appName: await BundleManager.getString(labelResource),
+      icon: await BundleManager.getMediaBase64(iconResource)
     };
     if (appMessage.icon != null && appMessage.appName) {
       appDataMap.set(bundleName, appMessage);

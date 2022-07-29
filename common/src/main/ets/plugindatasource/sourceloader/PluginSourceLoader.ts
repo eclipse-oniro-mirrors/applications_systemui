@@ -99,6 +99,7 @@ function parseData(info: AbilityInfoWithId, data: PluginData): ItemComponentData
     pluginType: PluginType.PLUGIN_COMPONENT,
     deviceId: Constants.LOCAL_DEVICE,
     bundleName: info.bundleName,
+    moduleName: info.moduleName,
     abilityName: info.name,
     abilityLabelId: info.labelId,
     abilityIconId: info.iconId,
