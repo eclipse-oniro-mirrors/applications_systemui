@@ -30,6 +30,7 @@ import ViewModel from '../../../../../../../features/noticeitem/src/main/ets/com
 import ResourceUtil from '../../../../../../../common/src/main/ets/default/ResourceUtil'
 import TimeManager, { TimeEventArgs, TIME_CHANGE_EVENT
 } from '../../../../../../../common/src/main/ets/default/timemanager'
+import deviceInfo from '@ohos.deviceInfo';
 
 const TAG = 'DropdownPanel-notification'
 const IMAGE_SIZE_L = 24;
@@ -39,6 +40,7 @@ const TIME_TEXT_MARGIN = 4;
 const CENTER_TITLE_MARGIN_TOP = 12;
 const TIME_BOTTOM_OFFSET = 7;
 const CENTER_MARGIN = 12;
+const deviceTypeInfo = deviceInfo.deviceType;
 
 @Component
 export default struct Notification {
@@ -165,7 +167,7 @@ struct statusBar {
         }
       }
     }
-    .height($r("app.float.status_bar_height"))
+    .height(deviceTypeInfo === 'phone' ? $r("app.float.phone_status_bar_height") : $r("app.float.status_bar_height"))
     .width('100%')
     .padding({
       top: $r("app.float.status_bar_padding_top_bottom"),

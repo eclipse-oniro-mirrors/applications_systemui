@@ -14,6 +14,9 @@
  */
 
 import Log from '../../../../../../../../common/src/main/ets/default/Log';
+import EventManager from '../../../../../../../../common/src/main/ets/default/event/EventManager';
+import { obtainLocalEvent } from '../../../../../../../../common/src/main/ets/default/event/EventUtil';
+import AbilityManager from '../../../../../../../../common/src/main/ets/default/abilitymanager/abilityManager';
 import createOrGet from '../../../../../../../../common/src/main/ets/default/SingleInstanceHelper';
 import WindowManager, { WindowType } from '../../../../../../../../common/src/main/ets/default/WindowManager';
 import TintStateManager, { TintState, TintContentInfo, getOrCreateTintContentInfo
@@ -25,7 +28,7 @@ import StyleConfigurationCommon from '../../../../../../../../common/src/main/et
 import { StatusBarData, StatusBarBackgroundData, StatusBarComponentGroupContentData, StatusBarComponentData,
   StatusBarConfig } from '../common/Constants';
 import StatusBarService from '../model/StatusBarService';
-
+import display from '@ohos.display';
 export const STATUS_BAR_LAYOUT_KEY = 'StatusBarLayout';
 
 export const STATUS_BAR_EMPTY_WIDTH_KEY = 'StatusBarEmptyWidth';
@@ -298,11 +301,48 @@ export class StatusBarVM {
         componentEndPos = area.top + area.height;
       }
       if (!(componentEndPos < startPos || componentStartPos > endPos)) {
+        if (id === 'systemui_controlpanel' || id === 'systemui_notificationpanel') {
+            this.resetWindow(id, area);
+        }
         this.setComponentContent(id, group.contentColor);
         break;
       }
       startPos = endPos;
     }
+  }
+
+  async resetWindow(id: string, area: Rect): Promise<void>{
+    Log.showInfo(TAG, `setComponentContent, id ${id} contentColor: ${JSON.stringify(area)}`);
+    let panelWidth;
+    let panelHeight;
+    let resetEventName;
+    let windowName;
+    if (id === 'systemui_notificationpanel') {
+      panelWidth = 804;
+      panelHeight = 762;
+      resetEventName = 'NotificationWindowResizeEvent';
+      windowName = WindowType.NOTIFICATION_PANEL;
+    } else if (id === 'systemui_controlpanel') {
+      panelWidth = 804;
+      panelHeight = 620;
+      resetEventName = 'ControlWindowResizeEvent';
+      windowName = WindowType.CONTROL_PANEL;
+    } else {
+      return;
+    }
+    let dis = await display.getDefaultDisplay();
+    let rect = {
+      left: area.left + area.width - panelWidth,
+      top: area.height,
+      width: panelWidth,
+      height: panelHeight,
+    };
+    EventManager.publish(
+      obtainLocalEvent(resetEventName, {
+        windowName: windowName,
+        rect
+      })
+    );
   }
 
   setComponentContent(id: string, contentColor: string): void{

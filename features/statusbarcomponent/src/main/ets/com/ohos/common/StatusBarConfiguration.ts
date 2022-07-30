@@ -22,8 +22,8 @@ import CommonStyleConfiguration from '../../../../../../../../common/src/main/et
 const TAG = 'StatusBarConfiguration';
 
 var statusbarPosition;
-var directionStatus;
 var shortSideLength = '0';
+var direction = -1;
 
 var maxWidth;
 var maxHeight;
@@ -64,25 +64,31 @@ class StatusBarConfiguration {
   async getDirectionAndPosition() {
     Log.showInfo(TAG, 'getDirectionAndPosition');
     await ResourceUtil.initResourceManager(AbilityManager.ABILITY_NAME_STATUS_BAR);
-    directionStatus = await ResourceUtil.getConfiguration();
+    if (maxWidth > maxHeight) {
+      direction = 1;
+    } else {
+      direction = 2;
+    }
     let style: any = CommonStyleConfiguration.getCommonStyle()
     let deviceTypeInfo = style.deviceTypeInfo
-    if (directionStatus.direction == -1) {
+    if (direction == -1) {
       Log.showInfo(TAG, 'direction is -1');
       statusbarPosition = await ResourceUtil.getString($r("app.string.status_bar_position_landscape"))
       shortSideLength = deviceTypeInfo == 'phone' ? await ResourceUtil.getString($r("app.string.phone_status_bar_size_landscape"))
                                                   : await ResourceUtil.getString($r("app.string.status_bar_size_landscape"));
-    } else if (directionStatus.direction == 1) {
+    } else if (direction == 1) {
+      Log.showInfo(TAG, 'direction is 1');
       statusbarPosition = await ResourceUtil.getString($r("app.string.status_bar_position_landscape"))
       shortSideLength = deviceTypeInfo == 'phone' ? await ResourceUtil.getString($r("app.string.phone_status_bar_size_landscape"))
                                                   : await ResourceUtil.getString($r("app.string.status_bar_size_landscape"));
     } else {
+      Log.showInfo(TAG, 'direction is 2');
       statusbarPosition = await ResourceUtil.getString($r("app.string.status_bar_position_portrait"))
       shortSideLength = deviceTypeInfo == 'phone' ? await ResourceUtil.getString($r("app.string.phone_status_bar_size_portrait"))
                                                   : await ResourceUtil.getString($r("app.string.status_bar_size_portrait"));
     }
     shortSideLength = parseInt(shortSideLength) + '';
-    Log.showInfo(TAG, 'directionStatus = ' + directionStatus.direction + 'statusbarPosition = ' + statusbarPosition +
+    Log.showInfo(TAG, 'direction = ' + direction + 'statusbarPosition = ' + statusbarPosition +
     'shortSideLength = ' + shortSideLength);
   }
 
@@ -125,6 +131,7 @@ class StatusBarConfiguration {
       minHeight: minHeight,
       showHorizontal: showHorizontal,
       ableToMaximize: ableToMaximize,
+      direction:direction,
       realWidth: realWidth,
       realHeight: realHeight,
       xCoordinate: xCoordinate,

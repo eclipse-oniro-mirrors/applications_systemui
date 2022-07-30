@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-import deviceInfo from '@ohos.deviceInfo';
+import display from '@ohos.display';
 import ServiceExtension from '@ohos.application.ServiceExtensionAbility';
 import Log from '../../../../../../../common/src/main/ets/default/Log';
 import WindowManager, { WindowType } from '../../../../../../../common/src/main/ets/default/WindowManager';
@@ -24,12 +24,41 @@ import { Want } from 'ability/want';
 const TAG = 'NavigationBar_ServiceExtAbility';
 
 class ServiceExtAbility extends ServiceExtension {
+  private direction :number;
+
   async onCreate(want: Want): Promise<void> {
     Log.showInfo(TAG, `onCreate, want: ${JSON.stringify(want)}`);
     AbilityManager.setContext(AbilityManager.ABILITY_NAME_NAVIGATION_BAR, this.context);
 
+    display.on("change", (id) => {
+      Log.showInfo(TAG, "display change, data: " + JSON.stringify(id))
+      display.getAllDisplay().then((arrayDisplay) => {
+        Log.showInfo(TAG, "getAllDisplay : " + JSON.stringify(arrayDisplay))
+        for (let display of arrayDisplay) {
+          Log.showInfo(TAG, "getAllDisplay start : " + JSON.stringify(arrayDisplay));
+          if (id == display.id) {
+            let nowDirection = -1;
+            if (display.width > display.height) {
+              nowDirection = 1;
+            } else {
+              nowDirection = 2;
+            }
+            if (nowDirection != this.direction) {
+              this.createNewWindow(false);
+            }
+          }
+        }
+      })
+    })
+    this.createNewWindow(true);
+
+
+  }
+
+  async createNewWindow (isNewWindow : boolean) {
     let defaultConfigInfo = await NavBarConfiguration.getConfiguration();
     let configInfo = NavBarConfiguration.setCustomConfiguration(defaultConfigInfo);
+    this.direction = configInfo.direction;
     AbilityManager.setAbilityData(AbilityManager.ABILITY_NAME_NAVIGATION_BAR, 'config', configInfo);
     Log.showDebug(TAG, `onCreate, configInfo: ${JSON.stringify(configInfo)}`);
     let navigationBarRect = {
@@ -38,14 +67,19 @@ class ServiceExtAbility extends ServiceExtension {
       width: configInfo.realWidth,
       height: configInfo.realHeight
     };
-    WindowManager.createWindow(this.context, WindowType.NAVIGATION_BAR, navigationBarRect, 'pages/index')
-      .then(() => {
-        Log.showInfo(TAG, 'onCreate, createWindow success.');
-        WindowManager.showWindow(WindowType.NAVIGATION_BAR).then(() => {
-        }).catch(e => {
-        });
-      })
-      .catch((err) => Log.showError(TAG, `Can't create window, err:${err}`));
+
+    if (isNewWindow) {
+      WindowManager.createWindow(this.context, WindowType.NAVIGATION_BAR, navigationBarRect, 'pages/index')
+        .then(() => {
+          Log.showInfo(TAG, 'onCreate, createWindow success.');
+          WindowManager.showWindow(WindowType.NAVIGATION_BAR).then(() => {
+          }).catch(e => {
+          });
+        })
+        .catch((err) => Log.showError(TAG, `Can't create window, err:${err}`));
+    } else {
+      WindowManager.resetSizeWindow(WindowType.NAVIGATION_BAR, navigationBarRect);
+    }
   }
 
   onDestroy(): void {

@@ -15,15 +15,16 @@
 
 import StyleManager from './StyleManager';
 import Constants from './constants';
+import deviceInfo from '@ohos.deviceInfo';
 
 const TAG = 'DropdownPanel-StyleConfiguration';
 
 export class ControlStyle {
-  statusBarHeight: Length = $r('app.float.status_bar_height');
+  statusBarHeight: Length = deviceInfo.deviceType === 'phone' ? $r("app.float.phone_status_bar_height") : $r('app.float.status_bar_height');
 }
 
 export class NotificationStyle {
-  statusBarHeight: Length = $r('app.float.status_bar_height');
+  statusBarHeight: Length = deviceInfo.deviceType === 'phone' ? $r("app.float.phone_status_bar_height") : $r('app.float.status_bar_height');
   deleteAllImageWidth: Length = $r('app.float.delete_all_image_width');
   deleteAllImageHeight: Length = $r('app.float.delete_all_image_height');
   deleteAllImageBorderRadius: Length = $r('app.float.delete_all_image_border_radius');
