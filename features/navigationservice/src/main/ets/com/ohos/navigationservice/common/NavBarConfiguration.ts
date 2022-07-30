@@ -17,6 +17,7 @@ import AbilityManager from '../../../../../../../../../common/src/main/ets/defau
 import display from '@ohos.display';
 import Log from '../../../../../../../../../common/src/main/ets/default/Log';
 import ResourceUtil from '../../../../../../../../../common/src/main/ets/default/ResourceUtil';
+import deviceInfo from '@ohos.deviceInfo';
 
 const TAG = 'NavBarConfiguration';
 var directionNav;
@@ -32,6 +33,7 @@ var realWidth;
 var realHeight;
 var xCoordinate = 0;
 var yCoordinate = 0;
+var direction = -1;
 
 enum Position {
   NOT_CONFIGURED,
@@ -63,20 +65,28 @@ class NavBarConfiguration {
 
   async getDirectionAndPosition() {
     await ResourceUtil.initResourceManager(AbilityManager.ABILITY_NAME_NAVIGATION_BAR);
-    directionNav = await ResourceUtil.getConfiguration();
-    if (directionNav.direction == -1) {
+    if (maxWidth > maxHeight) {
+      direction = 1;
+    } else {
+      direction = 2;
+    }
+
+    if (direction == -1) {
+      Log.showInfo(TAG, 'direction is -1');
       statusbarPosition = await ResourceUtil.getString($r("app.string.status_bar_position_landscape"))
       navbarPosition = await ResourceUtil.getString($r("app.string.nav_bar_position_landscape"))
 
       statusShortSideLength = await ResourceUtil.getString($r("app.string.status_bar_size_landscape"));
       navShortSideLength = await ResourceUtil.getString($r("app.string.nav_bar_size_landscape"));
-    } else if (directionNav.direction == 1) {
+    } else if (direction == 1) {
+      Log.showInfo(TAG, 'direction is 1');
       statusbarPosition = await ResourceUtil.getString($r("app.string.status_bar_position_landscape"))
       navbarPosition = await ResourceUtil.getString($r("app.string.nav_bar_position_landscape"))
 
       statusShortSideLength = await ResourceUtil.getString($r("app.string.status_bar_size_landscape"));
       navShortSideLength = await ResourceUtil.getString($r("app.string.nav_bar_size_landscape"));
     } else {
+      Log.showInfo(TAG, 'direction is 2');
       statusbarPosition = await ResourceUtil.getString($r("app.string.status_bar_position_portrait"))
       navbarPosition = await ResourceUtil.getString($r("app.string.nav_bar_position_portrait"))
 
@@ -85,7 +95,7 @@ class NavBarConfiguration {
     }
     statusShortSideLength = parseInt(statusShortSideLength) + '';
     navShortSideLength = parseInt(navShortSideLength) + '';
-    Log.showDebug(TAG, 'statusShortSideLength = ' + statusShortSideLength + 'navShortSideLength = ' + navShortSideLength + 'directionnav = ' + directionNav.direction + 'statusbarPosition = ' + statusbarPosition + 'NavbarPosition = ' + navbarPosition);
+    Log.showDebug(TAG, 'statusShortSideLength = ' + statusShortSideLength + 'navShortSideLength = ' + navShortSideLength + 'direction = ' + direction + 'statusbarPosition = ' + statusbarPosition + 'NavbarPosition = ' + navbarPosition);
   }
 
   /**
@@ -142,6 +152,7 @@ class NavBarConfiguration {
       maxHeight: maxHeight,
       minHeight: minHeight,
       showNavHorizontal: showNavHorizontal,
+      direction: direction,
       realWidth: realWidth,
       realHeight: realHeight,
       xCoordinate: xCoordinate,
@@ -154,13 +165,22 @@ class NavBarConfiguration {
    * set nav bar custom configuration
    */
   public setCustomConfiguration(configInfo) {
+    Log.showInfo(TAG, `deviceInfo.deviceType` + deviceInfo.deviceType);
+
+    let screenFactor;
+    if (deviceInfo.deviceType === 'tablet') {
+      screenFactor = configInfo.direction === 1 ? 1280 : 800;
+    } else {
+      screenFactor = 360;
+    }
+    //导航栏水平布局
     if (configInfo.showNavHorizontal) {
       if (configInfo.realHeight == 0) {
         Log.showInfo(TAG, `hide navbar`);
-      } else if (configInfo.maxWidth > configInfo.maxHeight) { // Pad、PC Mode
-        configInfo.realHeight = 44 * configInfo.maxWidth / 1280;
+      } else if (deviceInfo.deviceType === 'tablet') { // Pad、PC Mode
+        configInfo.realHeight = 44 * configInfo.maxWidth / screenFactor;
       } else { // Phone Mode
-        configInfo.realHeight = 36 * configInfo.maxWidth / 360;
+        configInfo.realHeight = (configInfo.realHeight * (configInfo.maxHeight > configInfo.maxWidth ? configInfo.maxWidth : configInfo.maxHeight)) / screenFactor;
       }
       configInfo.minHeight = configInfo.realHeight;
       if (configInfo.yCoordinate > 0) {
@@ -169,10 +189,10 @@ class NavBarConfiguration {
     } else {
       if (configInfo.realWidth == 0) {
         Log.showInfo(TAG, `hide navbar`);
-      } else if (configInfo.maxWidth > configInfo.maxHeight) { // Pad、PC Mode
-        configInfo.realWidth = 44 * configInfo.maxWidth / 1280;
+      } else if (deviceInfo.deviceType === 'tablet') { // Pad、PC Mode
+        configInfo.realWidth = 44 * configInfo.maxWidth / screenFactor;
       } else { // Phone Mode
-        configInfo.realWidth = 36 * configInfo.maxWidth / 360;
+        configInfo.realWidth = (configInfo.realWidth * (configInfo.maxHeight > configInfo.maxWidth ? configInfo.maxWidth : configInfo.maxHeight)) / screenFactor;
       }
       configInfo.minHeight = configInfo.realWidth;
       if (configInfo.xCoordinate > 0) {

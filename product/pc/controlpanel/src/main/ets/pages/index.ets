@@ -27,6 +27,7 @@ import { START_ABILITY_EVENT } from "../../../../../../../common/src/main/ets/de
 import MultimodalInputManager, {
   MultiKeyCode,
 } from "../../../../../../../common/src/main/ets/default/MultimodalInputManager";
+import display from "@ohos.display"
 
 const TAG = 'ControlPanel-Index'
 const SHOW_EVENT = "showControlCenter";
@@ -144,6 +145,20 @@ struct Index {
       Log.showInfo(TAG, `WINDOW_SHOW_HIDE_EVENT windowName: ${windowName}, isShow: ${isShow}`);
       windowName == WindowType.NOTIFICATION_PANEL && isShow && this.hideWindow();
       windowName == WindowType.CONTROL_PANEL && isShow && (this.mShowAnimReady = true);
+    }),
+    EventManager.subscribe('ControlWindowResizeEvent',async (args) => {
+      let { windowName, rect } = args;
+      let dis = await display.getDefaultDisplay();
+      Log.showInfo(TAG, `ControlWindowResizeEvent: ${windowName}, isShow: ${rect}`);
+      AbilityManager.setAbilityData(AbilityManager.ABILITY_NAME_CONTROL_PANEL, 'rect', rect);
+      AbilityManager.setAbilityData(AbilityManager.ABILITY_NAME_CONTROL_PANEL, 'dis', {
+        width: dis.width,
+        height: dis.height,
+      });
+      WindowManager.resetSizeWindow(windowName, rect).then(
+      ).then(() => {
+      }).catch((err) => {
+      });
     }),
     MultimodalInputManager.subscribeCombinationKey([MultiKeyCode.WIN, MultiKeyCode.I], (data) => {
       let windowInfo = WindowManager.getWindowInfo(WindowType.CONTROL_PANEL);

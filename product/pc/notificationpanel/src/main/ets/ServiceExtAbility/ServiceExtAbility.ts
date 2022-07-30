@@ -23,6 +23,7 @@ import AbilityManager from '../../../../../../../common/src/main/ets/default/abi
 const TAG = 'NotificationPanel_ServiceExtAbility';
 
 class ServiceExtAbility extends ServiceExtension {
+  private direction :number;
   async onCreate(want: Want): Promise<void> {
     Log.showInfo(TAG, `onCreate, want: ${JSON.stringify(want)}`);
     AbilityManager.setContext(AbilityManager.ABILITY_NAME_NOTIFICATION_PANEL, this.context);
@@ -30,12 +31,25 @@ class ServiceExtAbility extends ServiceExtension {
 
     let dis = await display.getDefaultDisplay();
     Log.showDebug(TAG, `onCreate, dis: ${JSON.stringify(dis)}`);
-    let rect = {
-      left: (834 * dis.width) / 1280,
-      top: (44 * dis.width) / 1280,
-      width: (402 * dis.width) / 1280,
-      height: (381 * dis.width) / 1280,
-    };
+    let rect;
+    if (dis.width > dis.height) { // Pad、PC Mode
+      this.direction = 1;
+      rect = {
+        left: (834 * dis.width) / 1280,
+        top: (44 * dis.width) / 1280,
+        width: (402 * dis.width) / 1280,
+        height: (381 * dis.width) / 1280,
+      };
+    } else if (dis.width < dis.height) { // Phone Mode
+      this.direction = 2;
+      rect = {
+        left: (390 * dis.width) / 1280,
+        top: (44 * dis.width) / 1280,
+        width: (402 * 2 * dis.width) / 1280,
+        height: (381 * 2* dis.width) / 1280,
+      };
+    }
+
     AbilityManager.setAbilityData(AbilityManager.ABILITY_NAME_NOTIFICATION_PANEL, 'rect', rect);
     AbilityManager.setAbilityData(AbilityManager.ABILITY_NAME_NOTIFICATION_PANEL, 'dis', {
       width: dis.width,

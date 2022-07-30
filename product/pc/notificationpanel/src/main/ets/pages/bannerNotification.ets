@@ -13,15 +13,15 @@
  * limitations under the License.
  */
 
-import Log from '../../../../../../../common/src/main/ets/default/Log'
-import AbilityManager from '../../../../../../../common/src/main/ets/default/abilitymanager/abilitymanager'
-import WindowManager, { WindowType } from '../../../../../../../common/src/main/ets/default/windowmanager'
-import EventManager, {unsubscribe} from "../../../../../../../common/src/main/ets/default/event/eventmanager"
-import BannerNotification from '../../../../../../../features/noticeitem/src/main/ets/com/ohos/noticeitem/view/item/bannernotificationitem'
-import ViewModel from '../../../../../../../features/noticeitem/src/main/ets/com/ohos/noticeitem/viewmodel/viewmodel';
+import Log from '../../../../../../../common/src/main/ets/default/Log';
+import AbilityManager from '../../../../../../../common/src/main/ets/default/abilitymanager/abilitymanager';
+import WindowManager, { WindowType } from '../../../../../../../common/src/main/ets/default/windowmanager';
+import EventManager, {unsubscribe} from "../../../../../../../common/src/main/ets/default/event/eventmanager";
+import BannerNotification from '../../../../../../../features/noticeitem/src/main/ets/com/ohos/noticeitem/view/item/bannernotificationitem';
+import NotificationViewModel from '../../../../../../../features/noticeitem/src/main/ets/com/ohos/noticeitem/viewmodel/NotificationViewModel';
 import NotificationConstants, { ScreenLockStatus } from '../../../../../../../features/noticeitem/src/main/ets/com/ohos/noticeitem/common/constants';
 
-const TAG = 'NotificationPanel-BannerNotification'
+const TAG = 'NotificationPanel-BannerNotification';
 
 
 @Entry
@@ -101,7 +101,7 @@ struct Index {
       return;
     }
     this.pageData = AbilityManager.getAbilityData(AbilityManager.ABILITY_NAME_BANNER_NOTICE, 'itemData');
-    ViewModel.getDistributedDeviceName(this.pageData).then((deviceName) => {
+    NotificationViewModel.getDistributedDeviceName(this.pageData).then((deviceName) => {
       this.distributedDeviceName = deviceName;
     })
     this.needExpand = this.checkItemNeedExpand()

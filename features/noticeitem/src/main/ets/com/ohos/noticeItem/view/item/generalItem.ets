@@ -21,7 +21,7 @@ import pictureItem from './pictureItem';
 import titleItem from './titleItem';
 import Log from '../../../../../../../../../../common/src/main/ets/default/Log';
 import CheckEmptyUtils from '../../../../../../../../../../common/src/main/ets/default/CheckEmptyUtils';
-import ViewModel from '../../viewmodel/ViewModel';
+import NotificationViewModel from '../../viewmodel/NotificationViewModel';
 import ActionComponent from './actionComponent';
 
 const TAG = 'NoticeItem-GeneralItem';
@@ -49,7 +49,7 @@ export default struct GeneralItem {
       this.hasPicture = true;
     }
     this.needExpand = this.checkItemNeedExpand();
-    ViewModel.getDistributedDeviceName(this.itemData).then((deviceName) => {
+    NotificationViewModel.getDistributedDeviceName(this.itemData).then((deviceName) => {
       this.distributedDeviceName = deviceName;
     })
   }

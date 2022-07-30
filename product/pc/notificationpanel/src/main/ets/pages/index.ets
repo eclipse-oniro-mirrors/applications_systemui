@@ -15,6 +15,7 @@
 
 import image from "@ohos.multimedia.image"
 import Log from '../../../../../../../common/src/main/ets/default/Log'
+import AbilityManager from '../../../../../../../common/src/main/ets/default/abilitymanager/abilityManager';
 import Notification from './notification'
 import WindowManager, {
   WindowType,
@@ -25,6 +26,7 @@ import {START_ABILITY_EVENT} from "../../../../../../../common/src/main/ets/defa
 import MultimodalInputManager, {
   MultiKeyCode,
 } from "../../../../../../../common/src/main/ets/default/MultimodalInputManager";
+import display from "@ohos.display"
 
 const TAG = 'NotificationPanel-Index'
 const SHOW_EVENT = "showNotificationPanel";
@@ -115,6 +117,20 @@ struct Index {
       Log.showInfo(TAG, `WINDOW_SHOW_HIDE_EVENT windowName: ${windowName}, isShow: ${isShow}`);
       windowName == WindowType.CONTROL_PANEL && isShow && this.hideWindow();
       windowName == WindowType.NOTIFICATION_PANEL && isShow && (this.mShowAnimReady = true);
+    }),
+    EventManager.subscribe('NotificationWindowResizeEvent',async (args) => {
+      let { windowName, rect } = args;
+      let dis = await display.getDefaultDisplay();
+      Log.showInfo(TAG, `NotificationWindowResizeEvent: ${windowName}, isShow: ${rect}`);
+      AbilityManager.setAbilityData(AbilityManager.ABILITY_NAME_NOTIFICATION_PANEL, 'rect', rect);
+      AbilityManager.setAbilityData(AbilityManager.ABILITY_NAME_NOTIFICATION_PANEL, 'dis', {
+        width: dis.width,
+        height: dis.height,
+      });
+      WindowManager.resetSizeWindow(windowName, rect).then(
+      ).then(() => {
+      }).catch((err) => {
+      });
     }),
     MultimodalInputManager.subscribeCombinationKey([MultiKeyCode.WIN, MultiKeyCode.N], (data) => {
       let windowInfo = WindowManager.getWindowInfo(WindowType.NOTIFICATION_PANEL);

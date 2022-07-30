@@ -2,15 +2,15 @@
   "string": [
     {
       "name": "nav_bar_size_portrait",
-      "value": "72"
+      "value": "36"
     },
     {
       "name": "nav_bar_size_landscape",
-      "value": "72"
+      "value": "36"
     },
     {
       "name": "nav_bar_position_portrait",
-      "value": "1"
+      "value": "4"
     },
     {
       "name": "nav_bar_position_landscape",
@@ -30,7 +30,7 @@
     },
     {
       "name": "status_bar_position_portrait",
-      "value": "1"
+      "value": "2"
     },
     {
       "name": "status_bar_position_landscape",

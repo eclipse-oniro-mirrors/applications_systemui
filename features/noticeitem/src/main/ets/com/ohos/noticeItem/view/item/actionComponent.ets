@@ -15,7 +15,7 @@
 
 import Log from '../../../../../../../../../../common/src/main/ets/default/Log';
 import CheckEmptyUtils from '../../../../../../../../../../common/src/main/ets/default/CheckEmptyUtils';
-import ViewModel from '../../viewmodel/ViewModel';
+import NotificationViewModel from '../../viewmodel/NotificationViewModel';
 import Constants, {InputActionButtonData, NotificationLayout as Layout} from '../../common/constants';
 
 const TAG = 'NoticeItem-ActionComponent';
@@ -46,7 +46,7 @@ export default struct ActionComponent {
             content: item.title,
             clickEvent: () => {
               if (CheckEmptyUtils.isEmpty(item.userInput)) {
-                ViewModel.clickItem(this.itemData, item.wantAgent);
+                NotificationViewModel.clickItem(this.itemData, item.wantAgent);
               } else {
                 this.inputData = { inputKey: item.userInput.inputKey, wantAgent: item.wantAgent };
               }
@@ -67,7 +67,7 @@ export default struct ActionComponent {
           .width(Layout.INPUT_IMAGE_SIZE)
           .height(Layout.INPUT_IMAGE_SIZE)
           .onClick(() => {
-            ViewModel.clickReply(this.inputData.inputKey, this.placeholder, this.inputData.wantAgent);
+            NotificationViewModel.clickReply(this.inputData.inputKey, this.placeholder, this.inputData.wantAgent);
             this.inputActionData = {
               isSending: true,
               content: this.placeholder

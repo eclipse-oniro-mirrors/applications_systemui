@@ -20,20 +20,49 @@ import AbilityManager from '../../../../../../../common/src/main/ets/default/abi
 import StatusBarConfiguration from '../../../../../../../features/statusbarcomponent/src/main/ets/com/ohos/common/StatusBarConfiguration';
 import StatusBarConstants from '../../../../../../../features/statusbarcomponent/src/main/ets/com/ohos/common/Constants';
 import { Want } from 'ability/want';
+import display from '@ohos.display';
 
 const TAG = 'StatusBar_ServiceExtAbility';
 
 class ServiceExtAbility extends ServiceExtension {
+  private direction : number;
+
   async onCreate(want: Want): Promise<void> {
     Log.showInfo(TAG, `onCreate, want: ${JSON.stringify(want)}`);
     AbilityManager.setContext(AbilityManager.ABILITY_NAME_STATUS_BAR, this.context);
     globalThis[StatusBarConstants.PLUGIN_COMPONENT_OWNER_WANT_KEY] = want;
+    display.on("change", (id) => {
+      Log.showInfo(TAG, "display change, data: " + JSON.stringify(id))
+      display.getAllDisplay().then((arrayDisplay) => {
+        Log.showInfo(TAG, "getAllDisplay : " + JSON.stringify(arrayDisplay))
+        for (let display of arrayDisplay) {
+          Log.showInfo(TAG, "getAllDisplay start : " + JSON.stringify(arrayDisplay));
+          if (id == display.id) {
+            let nowDirection = -1;
+            if (display.width > display.height) {
+              nowDirection = 1;
+            } else {
+              nowDirection = 2;
+            }
+            if (nowDirection != this.direction) {
+              this.createNewWindow(false);
+            }
+          }
+        }
+      })
+    })
+    this.createNewWindow(true);
+  }
+
+  async createNewWindow (isNewWindow : boolean) {
     let configInfo = await StatusBarConfiguration.getConfiguration();
+    this.direction = configInfo.direction;
+    let screenFactor = this.direction === 1 ? 1280 : 800;
     if (configInfo.showHorizontal) {
       if (configInfo.realHeight == 0) {
         Log.showInfo(TAG, `hide statusbar`);
       } else {
-        configInfo.realHeight = (configInfo.realHeight * configInfo.maxWidth) / 1280;
+        configInfo.realHeight = (configInfo.realHeight * configInfo.maxWidth) / screenFactor;
       }
       configInfo.minHeight = configInfo.realHeight;
       if (configInfo.yCoordinate > 0) {
@@ -43,7 +72,7 @@ class ServiceExtAbility extends ServiceExtension {
       if (configInfo.realWidth == 0) {
         Log.showInfo(TAG, `hide statusbar`);
       } else {
-        configInfo.realWidth = (configInfo.realWidth * configInfo.maxWidth) / 1280;
+        configInfo.realWidth = (configInfo.realWidth * configInfo.maxWidth) / screenFactor;
       }
       configInfo.minHeight = configInfo.realWidth;
       if (configInfo.xCoordinate > 0) {
@@ -59,11 +88,16 @@ class ServiceExtAbility extends ServiceExtension {
       width: configInfo.realWidth,
       height: configInfo.realHeight,
     };
-    WindowManager.createWindow(this.context, WindowType.STATUS_BAR, statusBarRect, 'pages/index').then(async () =>
-    WindowManager.showWindow(WindowType.STATUS_BAR)
-    ).then(() => {
-    }).catch((err) => {
-    });
+
+    if (isNewWindow) {
+      WindowManager.createWindow(this.context, WindowType.STATUS_BAR, statusBarRect, 'pages/index').then(async () =>
+      WindowManager.showWindow(WindowType.STATUS_BAR)
+      ).then(() => {
+      }).catch((err) => {
+      });
+    } else {
+      WindowManager.resetSizeWindow(WindowType.STATUS_BAR, statusBarRect);
+    }
   }
 
   onDestroy(): void {
