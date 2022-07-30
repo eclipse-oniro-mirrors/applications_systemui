@@ -118,7 +118,6 @@ struct Index {
       windowName == WindowType.CONTROL_PANEL && isShow && this.hideWindow();
       windowName == WindowType.NOTIFICATION_PANEL && isShow && (this.mShowAnimReady = true);
     }),
-
     EventManager.subscribe('NotificationWindowResizeEvent',async (args) => {
       let { windowName, rect } = args;
       let dis = await display.getDefaultDisplay();
@@ -132,9 +131,7 @@ struct Index {
       ).then(() => {
       }).catch((err) => {
       });
-    })
-
-      ,
+    }),
     MultimodalInputManager.subscribeCombinationKey([MultiKeyCode.WIN, MultiKeyCode.N], (data) => {
       let windowInfo = WindowManager.getWindowInfo(WindowType.NOTIFICATION_PANEL);
       Log.showInfo(TAG, `on CombinationKeyEvent: data: ${data}, windowInfo: ${windowInfo?.visibility}`);

@@ -18,7 +18,7 @@ import Log from '../../../../../../../common/src/main/ets/default/Log'
 import EventManager from "../../../../../../../common/src/main/ets/default/event/eventmanager"
 import {obtainStartAbility} from "../../../../../../../common/src/main/ets/default/event/eventutil"
 import NotificationListComponent from '../../../../../../../features/noticeitem/src/main/ets/com/ohos/noticeitem/view/notificationlistcomponent'
-import ViewModel from '../../../../../../../features/noticeitem/src/main/ets/com/ohos/noticeitem/viewmodel/viewmodel'
+import NotificationViewModel from '../../../../../../../features/noticeitem/src/main/ets/com/ohos/noticeitem/viewmodel/NotificationViewModel'
 
 const TAG = 'NotificationPanel-notification'
 const NO_NOTIFICATION_TOP_MARGIN = 40;
@@ -95,7 +95,7 @@ struct CenterTitle {
         .height(NOTIFICATION_ICON_SIZE)
         .margin({ right: NOTIFICATION_TITLE_MARGIN })
         .onClick(() => {
-          ViewModel.removeAllNotifications();
+          NotificationViewModel.removeAllNotifications();
         })
     }
     .height(NOTIFICATION_TITLE_HEIGHT)

@@ -14,25 +14,25 @@
  */
 
 import AbilityManager from '../../../../../../../common/src/main/ets/default/abilitymanager/abilityManager';
-import Log from '../../../../../../../common/src/main/ets/default/Log'
-import EventManager, { unsubscribe }  from "../../../../../../../common/src/main/ets/default/event/eventmanager"
-import { obtainStartAbility } from "../../../../../../../common/src/main/ets/default/event/eventutil"
-import Constants from './common/constants'
-import BatteryIcon from '../../../../../../../features/batterycomponent/src/main/ets/default/pages/batteryicon'
-import ClockIcon from '../../../../../../../features/clockcomponent/src/main/ets/default/pages/clockicon'
-import WifiIcon from '../../../../../../../features/wificomponent/src/main/ets/default/pages/wifiicon'
-import BluetoothIcon from '../../../../../../../features/bluetoothcomponent/src/main/ets/com/ohos/pages/statusbariconitembluetoothcomponent'
-import SignalIcon from '../../../../../../../features/signalcomponent/src/main/ets/default/pages/signalicon'
-import LocationIcon from '../../../../../../../features/locationcomponent/src/main/ets/com/ohos/pages/statusbariconitemlocationcomponent'
-import RingModeIcon from '../../../../../../../features/ringmodecomponent/src/main/ets/com/ohos/pages/statusbariconitemringmodecomponent'
-import NotificationListComponent from '../../../../../../../features/noticeitem/src/main/ets/com/ohos/noticeitem/view/notificationlistcomponent'
-import ViewModel from '../../../../../../../features/noticeitem/src/main/ets/com/ohos/noticeitem/viewmodel/viewmodel'
-import ResourceUtil from '../../../../../../../common/src/main/ets/default/ResourceUtil'
+import Log from '../../../../../../../common/src/main/ets/default/Log';
+import EventManager, { unsubscribe }  from "../../../../../../../common/src/main/ets/default/event/eventmanager";
+import { obtainStartAbility } from "../../../../../../../common/src/main/ets/default/event/eventutil";
+import Constants from './common/constants';
+import BatteryIcon from '../../../../../../../features/batterycomponent/src/main/ets/default/pages/batteryicon';
+import ClockIcon from '../../../../../../../features/clockcomponent/src/main/ets/default/pages/clockicon';
+import WifiIcon from '../../../../../../../features/wificomponent/src/main/ets/default/pages/wifiicon';
+import BluetoothIcon from '../../../../../../../features/bluetoothcomponent/src/main/ets/com/ohos/pages/statusbariconitembluetoothcomponent';
+import SignalIcon from '../../../../../../../features/signalcomponent/src/main/ets/default/pages/signalicon';
+import LocationIcon from '../../../../../../../features/locationcomponent/src/main/ets/com/ohos/pages/statusbariconitemlocationcomponent';
+import RingModeIcon from '../../../../../../../features/ringmodecomponent/src/main/ets/com/ohos/pages/statusbariconitemringmodecomponent';
+import NotificationListComponent from '../../../../../../../features/noticeitem/src/main/ets/com/ohos/noticeitem/view/notificationlistcomponent';
+import NotificationViewModel from '../../../../../../../features/noticeitem/src/main/ets/com/ohos/noticeitem/viewmodel/NotificationViewModel';
+import ResourceUtil from '../../../../../../../common/src/main/ets/default/ResourceUtil';
 import TimeManager, { TimeEventArgs, TIME_CHANGE_EVENT
-} from '../../../../../../../common/src/main/ets/default/timemanager'
+} from '../../../../../../../common/src/main/ets/default/timemanager';
 import deviceInfo from '@ohos.deviceInfo';
 
-const TAG = 'DropdownPanel-notification'
+const TAG = 'DropdownPanel-notification';
 const IMAGE_SIZE_L = 24;
 const BGC_SIZE_L = 40;
 const NO_NOTIFICATION_TOP_MARGIN = 40;
@@ -101,7 +101,7 @@ export default struct Notification {
         .borderRadius(BGC_SIZE_L)
         .backgroundColor($r('app.color.notification_delete_all_background'))
         .onClick(() => {
-          ViewModel.removeAllNotifications();
+          NotificationViewModel.removeAllNotifications();
         })
       }
     }.onTouch(this.touchEvent.bind(this))

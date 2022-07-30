@@ -52,18 +52,7 @@ struct Index {
   aboutToAppear() {
     Log.showInfo(TAG, `aboutToAppear, start`);
 
-    let configInfo = AbilityManager.getAbilityData(AbilityManager.ABILITY_NAME_STATUS_BAR, 'config');
-    let statusBarData: StatusBarData = new StatusBarData();
-    statusBarData.displayWidth = configInfo.maxWidth;
-    statusBarData.displayHeight = configInfo.maxHeight;
-    statusBarData.showHorizontal = configInfo.showHorizontal;
-    statusBarData.ableToMaximize = configInfo.ableToMaximize;
-    statusBarData.realWidth = configInfo.realWidth;
-    statusBarData.realHeight = configInfo.realHeight;
-    statusBarData.left = configInfo.xCoordinate;
-    statusBarData.top = configInfo.yCoordinate;
-    StatusBarVM.updateStatusBarData(statusBarData);
-    this.mStatusBarData = StatusBarVM.getStatusBarData();
+    this.updateStatusBarData();
 
     setAppBgColor('#00000000');
     StyleManager.setStyle();
@@ -108,19 +97,23 @@ struct Index {
     .constraintSize({ minHeight: this.StatusMinH })
     .onAreaChange((e, e2) => {
       Log.showInfo(TAG, `onAreaChange, e: ${JSON.stringify(e)} e2: ${JSON.stringify(e2)}`);
-      let configInfo = AbilityManager.getAbilityData(AbilityManager.ABILITY_NAME_STATUS_BAR, 'config');
-      let statusBarData: StatusBarData = new StatusBarData();
-      statusBarData.displayWidth = configInfo.maxWidth;
-      statusBarData.displayHeight = configInfo.maxHeight;
-      statusBarData.showHorizontal = configInfo.showHorizontal;
-      statusBarData.ableToMaximize = configInfo.ableToMaximize;
-      statusBarData.realWidth = configInfo.realWidth;
-      statusBarData.realHeight = configInfo.realHeight;
-      statusBarData.left = configInfo.xCoordinate;
-      statusBarData.top = configInfo.yCoordinate;
-      StatusBarVM.updateStatusBarData(statusBarData);
-      this.mStatusBarData = StatusBarVM.getStatusBarData();
+        this.updateStatusBarData();
     })
+  }
+
+  updateStatusBarData() {
+    let configInfo = AbilityManager.getAbilityData(AbilityManager.ABILITY_NAME_STATUS_BAR, 'config');
+    let statusBarData: StatusBarData = new StatusBarData();
+    statusBarData.displayWidth = configInfo.maxWidth;
+    statusBarData.displayHeight = configInfo.maxHeight;
+    statusBarData.showHorizontal = configInfo.showHorizontal;
+    statusBarData.ableToMaximize = configInfo.ableToMaximize;
+    statusBarData.realWidth = configInfo.realWidth;
+    statusBarData.realHeight = configInfo.realHeight;
+    statusBarData.left = configInfo.xCoordinate;
+    statusBarData.top = configInfo.yCoordinate;
+    StatusBarVM.updateStatusBarData(statusBarData);
+    this.mStatusBarData = StatusBarVM.getStatusBarData();
   }
 
   touchEvent(event: TouchEvent) {

@@ -25,7 +25,7 @@ import display from '@ohos.display';
 const TAG = 'StatusBar_ServiceExtAbility';
 
 class ServiceExtAbility extends ServiceExtension {
-  private direction :number;
+  private direction : number;
 
   async onCreate(want: Want): Promise<void> {
     Log.showInfo(TAG, `onCreate, want: ${JSON.stringify(want)}`);
