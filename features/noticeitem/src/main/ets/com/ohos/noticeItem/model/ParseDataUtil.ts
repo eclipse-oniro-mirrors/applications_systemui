@@ -67,7 +67,6 @@ export default class ParseDataUtil {
       want: request.wantAgent,
       bundleName: request.creatorBundleName,
       actionButtons: request.actionButtons,
-      smallIcon: NotificationConfig.USE_NOTIFICATION_ICON ? (request?.smallIcon ?? appMessage.icon) : appMessage.icon,
       largeIcon: request.largeIcon,
       slotLevel: sortingMap?.sortings[request?.hashCode]?.slot?.level,
       source: request.source,
@@ -81,6 +80,7 @@ export default class ParseDataUtil {
       distributedOption: request.distributedOption,
       deviceId: request.deviceId,
       groupName: request.groupName??request.hashcode,
+      smallIcon: NotificationConfig.USE_NOTIFICATION_ICON ? (request?.smallIcon ?? appMessage.icon) : appMessage.icon,
       tapDismissed: request.tapDismissed
     };
     Log.showInfo(TAG, `notificationItem construct over`);
