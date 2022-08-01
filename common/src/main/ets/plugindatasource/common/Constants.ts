@@ -63,6 +63,7 @@ export type ItemComponentData = {
   pluginType: number;
   deviceId: string;
   bundleName: string;
+  moduleName: string,
   abilityName: string;
   abilityLabelId: number;
   abilityIconId: number;

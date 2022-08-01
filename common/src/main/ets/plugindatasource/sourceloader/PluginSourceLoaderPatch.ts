@@ -49,11 +49,7 @@ export default class PluginSourceLoaderPatch {
 
   async requestPluginComponentData(itemData: ItemComponentData): Promise<ItemComponentData> {
     Log.showInfo(TAG, `requestPluginComponentData, itemData: ${JSON.stringify(itemData)}`);
-    let pluginWant = {
-      bundleName: itemData.bundleName, abilityName: itemData.abilityName
-    };
-    let pluginName = itemData.template;
-    let ret = await requestFunction(this.mOwnerWant, pluginWant, pluginName);
+    let ret = await requestFunction(this.mOwnerWant, itemData);
     return this.pluginComponentInfoToItemComponentData(ret);
   }
 
@@ -63,6 +59,7 @@ export default class PluginSourceLoaderPatch {
       pluginType: 3,
       deviceId: null,
       bundleName: pluginComponentInfo.bundleName,
+      moduleName: pluginComponentInfo.moduleName,
       abilityName: pluginComponentInfo.abilityName,
       abilityLabelId: null,
       abilityIconId: null,

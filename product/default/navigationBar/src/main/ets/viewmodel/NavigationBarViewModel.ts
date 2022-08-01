@@ -168,13 +168,13 @@ export default class NavigationBarViewModel {
       WindowManager.hideWindow(WindowType.NAVIGATION_BAR).then(() => {
         commonEvent.publish(NAVIGATIONBAR_HIDE_EVENT, (err) => {
           if (err.code) {
-            Log.showError(TAG, `systemui.event.NAVIGATIONBAR_HIDE PublishCallBack err: ${JSON.stringify(err)}`);
+            Log.showError(TAG, `${NAVIGATIONBAR_HIDE_EVENT} PublishCallBack err: ${JSON.stringify(err)}`);
           } else {
-            Log.showInfo(TAG, "systemui.event.NAVIGATIONBAR_HIDE Publish sucess");
+            Log.showInfo(TAG, `${NAVIGATIONBAR_HIDE_EVENT} Publish sucess`);
           }
         })
       }).catch((err) => {
-        Log.showError(TAG, `systemui.event.NAVIGATIONBAR_HIDE Publish catch err: ${JSON.stringify(err)}`);
+        Log.showError(TAG, `${NAVIGATIONBAR_HIDE_EVENT} Publish catch err: ${JSON.stringify(err)}`);
       });
     } else {
       WindowManager.showWindow(WindowType.NAVIGATION_BAR).then(() => {
