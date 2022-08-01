@@ -56,7 +56,7 @@ export default struct NotificationListComponent {
             NotificationItem({ itemData: item[0] })
           }
         }
-      }, (list: any) => JSON.stringify(list.map((item) => item.hashcode)))
+      }, (list: any) => JSON.stringify(list.map((item) => `${item.hashcode}_${item.timestamp}`)))
     }
     .align(Alignment.Top)
     .width('100%')
