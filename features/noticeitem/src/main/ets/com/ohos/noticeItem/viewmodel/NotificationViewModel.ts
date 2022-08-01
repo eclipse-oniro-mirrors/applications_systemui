@@ -18,8 +18,8 @@ import SwitchUserManager from '../../../../../../../../../common/src/main/ets/de
 import media from '@ohos.multimedia.media';
 import vibrator from '@ohos.vibrator';
 import wantAgent from '@ohos.wantAgent';
-import Notification from '@ohos.notification'
-import NotificationService from '../model/NotificationService'
+import Notification from '@ohos.notification';
+import NotificationService from '../model/NotificationService';
 import NotificationWindowManager from '../model/NotificationWindowManager';
 import NotificationConfig from '../model/NotificationConfig';
 import CheckEmptyUtils from '../../../../../../../../../common/src/main/ets/default/CheckEmptyUtils';
@@ -34,7 +34,7 @@ const TAG = 'NotificationViewModel';
 /**
  * Notification ViewModel class.
  */
-export class ViewModel {
+export class NotificationViewModel {
   audioPlayer: any;
   mNotificationList: NotificationItemData[];
   mCallback: any;
@@ -408,6 +408,6 @@ export class ViewModel {
   }
 }
 
-let viewModel = new ViewModel();
+let notificationViewModel = new NotificationViewModel();
 
-export default viewModel ;
+export default notificationViewModel ;

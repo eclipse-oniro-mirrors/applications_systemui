@@ -15,6 +15,7 @@
 
 import image from "@ohos.multimedia.image"
 import Log from '../../../../../../../common/src/main/ets/default/Log'
+import AbilityManager from '../../../../../../../common/src/main/ets/default/abilitymanager/abilityManager';
 import Notification from './notification'
 import WindowManager, {
   WindowType,
@@ -25,6 +26,7 @@ import {START_ABILITY_EVENT} from "../../../../../../../common/src/main/ets/defa
 import MultimodalInputManager, {
   MultiKeyCode,
 } from "../../../../../../../common/src/main/ets/default/MultimodalInputManager";
+import display from "@ohos.display"
 
 const TAG = 'NotificationPanel-Index'
 const SHOW_EVENT = "showNotificationPanel";
@@ -116,6 +118,20 @@ struct Index {
       windowName == WindowType.CONTROL_PANEL && isShow && this.hideWindow();
       windowName == WindowType.NOTIFICATION_PANEL && isShow && (this.mShowAnimReady = true);
     }),
+    EventManager.subscribe('NotificationWindowResizeEvent',async (args) => {
+      let { windowName, rect } = args;
+      let dis = await display.getDefaultDisplay();
+      Log.showInfo(TAG, `NotificationWindowResizeEvent: ${windowName}, isShow: ${rect}`);
+      AbilityManager.setAbilityData(AbilityManager.ABILITY_NAME_NOTIFICATION_PANEL, 'rect', rect);
+      AbilityManager.setAbilityData(AbilityManager.ABILITY_NAME_NOTIFICATION_PANEL, 'dis', {
+        width: dis.width,
+        height: dis.height,
+      });
+      WindowManager.resetSizeWindow(windowName, rect).then(
+      ).then(() => {
+      }).catch((err) => {
+      });
+    }),
     MultimodalInputManager.subscribeCombinationKey([MultiKeyCode.WIN, MultiKeyCode.N], (data) => {
       let windowInfo = WindowManager.getWindowInfo(WindowType.NOTIFICATION_PANEL);
       Log.showInfo(TAG, `on CombinationKeyEvent: data: ${data}, windowInfo: ${windowInfo?.visibility}`);
@@ -134,30 +150,21 @@ struct Index {
   }
 
   async startShowAnim() {
+    Log.showInfo(TAG, `do show window. mShowAnimReady=${this.mShowAnimReady}`);
     if (!this.mShowAnimReady) {
       return;
     }
     this.mShowAnimReady = false;
-    this._animateTo({ ...SHOW_ANIM_CONFIG, onFinish: () => {
-      Log.showInfo(TAG, `show anim finish.`);
-    } }, () => {
-      this.mOpacity = 1.0
-      this.mWidthSize = 1.0
-      this.mHeightSize = 1.0
-    })
+    this.mOpacity = 1.0;
+    this.mWidthSize = 1.0;
+    this.mHeightSize = 1.0;
   }
 
   hideWindow() {
-    Log.showDebug(TAG, `hide anim start`);
-    this._animateTo({ ...HIDE_ANIM_CONFIG, onFinish: () => {
-      Log.showInfo(TAG, `anim finish, hide Notification window, view: ${JSON.stringify(this)}`);
-      WindowManager.hideWindow(WindowType.NOTIFICATION_PANEL);
-    }
-    }, () => {
-      Log.showInfo(TAG, `do hide anim.`);
-      this.mOpacity = 0.0
-      this.mWidthSize = 0.2
-      this.mHeightSize = 0.2
-    })
+    Log.showInfo(TAG, `do hide window.`);
+    WindowManager.hideWindow(WindowType.NOTIFICATION_PANEL);
+    this.mOpacity = 0.0;
+    this.mWidthSize = 0.2;
+    this.mHeightSize = 0.2;
   }
 }

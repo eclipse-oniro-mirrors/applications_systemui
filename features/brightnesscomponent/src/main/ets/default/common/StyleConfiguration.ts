@@ -36,6 +36,6 @@ export class BrightnessComponentStyle {
 export default class StyleConfiguration {
   static getBrightnessComponentStyle(): BrightnessComponentStyle {
     const key: string = TAG + '-BrightnessComponent';
-    return StyleManager.getStyle(key, new BrightnessComponentStyle());
+    return StyleManager.getStyle(key, BrightnessComponentStyle);
   }
 }

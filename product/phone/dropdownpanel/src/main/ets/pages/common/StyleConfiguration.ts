@@ -15,15 +15,16 @@
 
 import StyleManager from './StyleManager';
 import Constants from './constants';
+import deviceInfo from '@ohos.deviceInfo';
 
 const TAG = 'DropdownPanel-StyleConfiguration';
 
 export class ControlStyle {
-  statusBarHeight: Length = $r('app.float.status_bar_height');
+  statusBarHeight: Length = deviceInfo.deviceType === 'phone' ? $r("app.float.phone_status_bar_height") : $r('app.float.status_bar_height');
 }
 
 export class NotificationStyle {
-  statusBarHeight: Length = $r('app.float.status_bar_height');
+  statusBarHeight: Length = deviceInfo.deviceType === 'phone' ? $r("app.float.phone_status_bar_height") : $r('app.float.status_bar_height');
   deleteAllImageWidth: Length = $r('app.float.delete_all_image_width');
   deleteAllImageHeight: Length = $r('app.float.delete_all_image_height');
   deleteAllImageBorderRadius: Length = $r('app.float.delete_all_image_border_radius');
@@ -53,21 +54,21 @@ export class DateItemStyle {
 export default class StyleConfiguration {
   static getControlStyle(): ControlStyle {
     const key: string = TAG + '-Control';
-    return StyleManager.getStyle(key, new ControlStyle());
+    return StyleManager.getStyle(key, ControlStyle);
   }
 
   static getNotificationStyle(): NotificationStyle {
     const key: string = TAG + '-Notification';
-    return StyleManager.getStyle(key, new NotificationStyle());
+    return StyleManager.getStyle(key, NotificationStyle);
   }
 
   static getQuicklySettingStyle(): QuicklySettingStyle {
     const key: string = TAG + '-QuicklySetting';
-    return StyleManager.getStyle(key, new QuicklySettingStyle());
+    return StyleManager.getStyle(key, QuicklySettingStyle);
   }
 
   static getDateItemStyle(): DateItemStyle {
     const key: string = TAG + '-DateItem';
-    return StyleManager.getStyle(key, new DateItemStyle());
+    return StyleManager.getStyle(key, DateItemStyle);
   }
 }

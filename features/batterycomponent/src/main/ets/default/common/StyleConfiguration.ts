@@ -38,11 +38,11 @@ export class BatteryPicStyle {
 export default class StyleConfiguration {
   static getBatteryComponentStyle(): BatteryComponentStyle {
     const key: string = TAG + '-BatteryComponent';
-    return StyleManager.getStyle(key, new BatteryComponentStyle());
+    return StyleManager.getStyle(key, BatteryComponentStyle);
   }
 
   static getBatteryPicStyle(): BatteryPicStyle {
     const key: string = TAG + '-BatteryPicComponent';
-    return StyleManager.getStyle(key, new BatteryPicStyle());
+    return StyleManager.getStyle(key, BatteryPicStyle);
   }
 }

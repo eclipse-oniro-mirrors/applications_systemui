@@ -15,7 +15,7 @@
 
 
 import Log from '../../../../../../../../../../common/src/main/ets/default/Log';
-import ViewModel from '../../viewmodel/ViewModel';
+import NotificationViewModel from '../../viewmodel/NotificationViewModel';
 import NotificationManager from '../../model/NotificationManager';
 import {NotificationLayout as Layout} from '../../common/constants';
 
@@ -32,7 +32,7 @@ export default struct CustomItem {
 
   aboutToAppear() {
     Log.showInfo(TAG, `aboutToAppear Start`);
-    this.template = ViewModel.getPluginTempLate(this.customItemData.template.name);
+    this.template = NotificationViewModel.getPluginTempLate(this.customItemData.template.name);
     this.templateData = this.customItemData.template.data;
     this.isDebugMode = NotificationManager.isDebugMode(TAG);
     Log.showInfo(TAG, `template = ${JSON.stringify(this.template)} templateData = ${JSON.stringify(this.templateData)} isDebugMode = ${this.isDebugMode}`);

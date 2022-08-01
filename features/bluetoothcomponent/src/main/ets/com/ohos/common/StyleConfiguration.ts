@@ -25,6 +25,6 @@ export class StatusBarBluetoothComponentStyle {
 export default class StyleConfiguration {
   static getStatusBarBluetoothComponentStyle(): StatusBarBluetoothComponentStyle {
     const key: string = TAG + '-StatusBarBluetoothComponent';
-    return StyleManager.getStyle(key, new StatusBarBluetoothComponentStyle());
+    return StyleManager.getStyle(key, StatusBarBluetoothComponentStyle);
   }
 }

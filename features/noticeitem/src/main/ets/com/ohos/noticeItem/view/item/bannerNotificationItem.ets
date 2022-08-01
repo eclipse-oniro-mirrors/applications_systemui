@@ -14,10 +14,10 @@
  */
 
 import Log from '../../../../../../../../../../common/src/main/ets/default/Log';
-import AbilityManager from '../../../../../../../../../../common/src/main/ets/default/abilitymanager/abilityManager'
-import WindowManager, { WindowType } from '../../../../../../../../../../common/src/main/ets/default/WindowManager'
+import AbilityManager from '../../../../../../../../../../common/src/main/ets/default/abilitymanager/abilityManager';
+import WindowManager, { WindowType } from '../../../../../../../../../../common/src/main/ets/default/WindowManager';
 import Constants, {NotificationLayout as Layout} from '../../common/constants';
-import ViewModel from '../../viewmodel/ViewModel';
+import NotificationViewModel from '../../viewmodel/NotificationViewModel';
 import CustomItem from './customItem';
 import titleItem from './titleItem';
 import basicItem from './basicItem';
@@ -28,8 +28,8 @@ import ActionComponent from './actionComponent';
 import DevicesDialog from './devicesDialog';
 import WantAgent from '@ohos.wantAgent';
 
-const TAG = 'NoticeItem-BannerNotificationItem'
-const INTERVAL = 5 * 1000
+const TAG = 'NoticeItem-BannerNotificationItem';
+const INTERVAL = 5 * 1000;
 
 
 @Component
@@ -186,7 +186,7 @@ export default struct BannerNotificationItem {
   showDevicesDialog() {
     Log.showInfo(TAG, `showDevicesDialog`);
     if (!this.want?.distributedOption?.isDistributed) {
-      ViewModel.clickItem(this.want);
+      NotificationViewModel.clickItem(this.want);
       this.onBannerNoticeHide();
       return;
     }
@@ -197,7 +197,7 @@ export default struct BannerNotificationItem {
         if (!wantData?.deviceId) {
           this.devicesDialogController.open();
         } else{
-          ViewModel.clickItem(this.want);
+          NotificationViewModel.clickItem(this.want);
         }
         this.onBannerNoticeHide();
       })
@@ -213,7 +213,7 @@ export default struct BannerNotificationItem {
       permission: '',
       extraInfo: {}
     };
-    ViewModel.clickDistributionItem(this.want, triggerInfo)
+    NotificationViewModel.clickDistributionItem(this.want, triggerInfo)
   }
 
   refreshLastActionTime() {

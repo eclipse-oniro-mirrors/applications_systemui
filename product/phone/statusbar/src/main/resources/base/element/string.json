@@ -2,19 +2,19 @@
   "string": [
     {
       "name": "status_bar_size_portrait",
-      "value": "30"
+      "value": "36"
     },
     {
       "name": "status_bar_size_landscape",
-      "value": "30"
+      "value": "36"
     },
     {
       "name": "phone_status_bar_size_portrait",
-      "value": "90"
+      "value": "54"
     },
     {
       "name": "phone_status_bar_size_landscape",
-      "value": "90"
+      "value": "54"
     },
     {
       "name": "status_bar_position_landscape",
@@ -22,7 +22,7 @@
     },
     {
       "name": "status_bar_position_portrait",
-      "value": "1"
+      "value": "2"
     },
     {
       "name": "app_name",

@@ -32,6 +32,6 @@ export class CapsuleComponentStyle {
 export default class StyleConfiguration {
   static getCapsuleComponentStyle(): CapsuleComponentStyle {
     const key: string = TAG + '-CapsuleComponent';
-    return StyleManager.getStyle(key, new CapsuleComponentStyle());
+    return StyleManager.getStyle(key, CapsuleComponentStyle);
   }
 }

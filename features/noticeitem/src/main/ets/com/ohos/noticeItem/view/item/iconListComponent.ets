@@ -17,7 +17,7 @@ import Constants, { NotificationLayout as Layout } from '../../common/constants'
 import Log from '../../../../../../../../../../common/src/main/ets/default/Log';
 import SettingDialog from './settingDialog';
 import ConfirmDialog from './confirmDialog'
-import ViewModel from '../../viewmodel/ViewModel';
+import NotificationViewModel from '../../viewmodel/NotificationViewModel';
 import deviceInfo from '@ohos.deviceInfo';
 
 const deviceTypeInfo = deviceInfo.deviceType;
@@ -57,7 +57,7 @@ export default struct IconListComponent {
     builder: ConfirmDialog({
       title: $r('app.string.closeNovice'),
       bundleName: this.itemData.name,
-      action: () => ViewModel.enableNotification(this.itemData, false)
+      action: () => NotificationViewModel.enableNotification(this.itemData, false)
     }),
     autoCancel: false,
     alignment: deviceTypeInfo === 'phone' ? DialogAlignment.Bottom : DialogAlignment.Default,
@@ -76,10 +76,10 @@ export default struct IconListComponent {
       callback: () => {
         if (!this.isGroup) {
           Log.showInfo(TAG, `click delete hashcode: ${this.itemData?.hashcode}`);
-          ViewModel.removeNotificationItem(this.itemData, true)
+          NotificationViewModel.removeNotificationItem(this.itemData, true)
         } else {
           Log.showInfo(TAG, `click delete groupName: ${this.itemData?.groupName}`);
-          ViewModel.removeGroupNotification(this.itemData, true)
+          NotificationViewModel.removeGroupNotification(this.itemData, true)
         }
       }
     }

@@ -24,6 +24,6 @@ export class ClockComponentStyle {
 export default class StyleConfiguration {
   static getClockComponentStyle(): ClockComponentStyle {
     const key: string = TAG + '-ClockComponent';
-    return StyleManager.getStyle(key, new ClockComponentStyle());
+    return StyleManager.getStyle(key, ClockComponentStyle);
   }
 }

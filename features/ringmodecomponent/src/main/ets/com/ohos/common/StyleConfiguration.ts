@@ -29,11 +29,11 @@ export class ControlCenterRingModeComponentStyle {
 export default class StyleConfiguration {
   static getStatusRingModeComponentStyle(): StatusRingModeComponentStyle {
     const key: string = TAG + '-StatusRingMode';
-    return StyleManager.getStyle(key, new StatusRingModeComponentStyle());
+    return StyleManager.getStyle(key, StatusRingModeComponentStyle);
   }
 
   static getControlCenterRingModeComponentStyle(): ControlCenterRingModeComponentStyle {
     const key: string = TAG + '-ControlCenterRingMode';
-    return StyleManager.getStyle(key, new ControlCenterRingModeComponentStyle());
+    return StyleManager.getStyle(key, ControlCenterRingModeComponentStyle);
   }
 }

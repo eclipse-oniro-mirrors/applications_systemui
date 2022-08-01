@@ -27,6 +27,7 @@ import { START_ABILITY_EVENT } from "../../../../../../../common/src/main/ets/de
 import MultimodalInputManager, {
   MultiKeyCode,
 } from "../../../../../../../common/src/main/ets/default/MultimodalInputManager";
+import display from "@ohos.display"
 
 const TAG = 'ControlPanel-Index'
 const SHOW_EVENT = "showControlCenter";
@@ -56,7 +57,6 @@ struct Index {
   @StorageLink('StatusCoefficient') StatusCoefficient: number = 1.0
   @State style: IndexStyle = new IndexStyle()
   @State mBackground: PixelMap | undefined = undefined;
-  @State mBlur: number = 0;
   @State mOpacity: number = 0.0;
   @State mWidthSize: number = 0.2
   @State mHeightSize: number = 0.2
@@ -146,6 +146,20 @@ struct Index {
       windowName == WindowType.NOTIFICATION_PANEL && isShow && this.hideWindow();
       windowName == WindowType.CONTROL_PANEL && isShow && (this.mShowAnimReady = true);
     }),
+    EventManager.subscribe('ControlWindowResizeEvent',async (args) => {
+      let { windowName, rect } = args;
+      let dis = await display.getDefaultDisplay();
+      Log.showInfo(TAG, `ControlWindowResizeEvent: ${windowName}, isShow: ${rect}`);
+      AbilityManager.setAbilityData(AbilityManager.ABILITY_NAME_CONTROL_PANEL, 'rect', rect);
+      AbilityManager.setAbilityData(AbilityManager.ABILITY_NAME_CONTROL_PANEL, 'dis', {
+        width: dis.width,
+        height: dis.height,
+      });
+      WindowManager.resetSizeWindow(windowName, rect).then(
+      ).then(() => {
+      }).catch((err) => {
+      });
+    }),
     MultimodalInputManager.subscribeCombinationKey([MultiKeyCode.WIN, MultiKeyCode.I], (data) => {
       let windowInfo = WindowManager.getWindowInfo(WindowType.CONTROL_PANEL);
       Log.showInfo(TAG, `on CombinationKeyEvent: data: ${data}, windowInfo: ${windowInfo?.visibility}`);
@@ -168,30 +182,16 @@ struct Index {
       return;
     }
     this.mShowAnimReady = false;
-    this._animateTo({ ...SHOW_ANIM_CONFIG, onFinish: () => {
-      Log.showInfo(TAG, `show anim finish.`);
-      this.mBlur = 20;
-    } }, () => {
-      this.mBlur = 20
-      this.mOpacity = 1.0
-      this.mWidthSize = 1.0
-      this.mHeightSize = 1.0
-    })
+    this.mOpacity = 1.0;
+    this.mWidthSize = 1.0;
+    this.mHeightSize = 1.0;
   }
 
   hideWindow() {
-    Log.showDebug(TAG, `hide anim start: ${JSON.stringify(this)}`);
-    this._animateTo({ ...HIDE_ANIM_CONFIG, onFinish: () => {
-      Log.showInfo(TAG, `anim finish, hide Notification window.`);
-      this.mBlur = 0
-      WindowManager.hideWindow(WindowType.CONTROL_PANEL);
-    }
-    }, () => {
-      this.mBlur = 0
-      this.mOpacity = 0.0
-      this.mWidthSize = 0.2
-      this.mHeightSize = 0.2
-    })
+    WindowManager.hideWindow(WindowType.CONTROL_PANEL);
+    this.mOpacity = 0.0;
+    this.mWidthSize = 0.2;
+    this.mHeightSize = 0.2;
   }
 
   onModeChange(isEdit) {

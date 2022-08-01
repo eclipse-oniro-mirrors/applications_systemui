@@ -2,7 +2,11 @@
   "float": [
     {
       "name": "status_bar_height",
-      "value": "30vp"
+      "value": "46vp"
+    },
+    {
+      "name": "phone_status_bar_height",
+      "value": "39vp"
     },
     {
       "name": "notification_delete_all",

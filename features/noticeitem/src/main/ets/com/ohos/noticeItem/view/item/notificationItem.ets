@@ -17,7 +17,7 @@ import Constants, {NotificationLayout as Layout} from '../../common/constants';
 import GeneralItem from './generalItem';
 import CustomItem from './customItem';
 import Log from '../../../../../../../../../../common/src/main/ets/default/Log';
-import ViewModel from '../../viewmodel/ViewModel';
+import NotificationViewModel from '../../viewmodel/NotificationViewModel';
 import DevicesDialog from './devicesDialog';
 import WantAgent from '@ohos.wantAgent';
 import IconListComponent, {getIconListSize} from './iconListComponent';
@@ -99,7 +99,7 @@ struct FrontItem {
   showDevicesDialog() {
     Log.showInfo(TAG, `showDevicesDialog isDistributed: ${this.itemData?.distributedOption?.isDistributed}`);
     if (!this.itemData?.distributedOption?.isDistributed) {
-      ViewModel.clickItem(this.itemData);
+      NotificationViewModel.clickItem(this.itemData);
       return;
     }
     let wantAgent = this.itemData?.want;
@@ -110,11 +110,11 @@ struct FrontItem {
         if (!want?.deviceId) {
           this.devicesDialogController.open()
         } else {
-          ViewModel.clickItem(this.itemData);
+          NotificationViewModel.clickItem(this.itemData);
         }
       })
     } else {
-      ViewModel.clickItem(this.itemData);
+      NotificationViewModel.clickItem(this.itemData);
     }
   }
 
@@ -127,7 +127,7 @@ struct FrontItem {
       permission: '',
       extraInfo: {}
     };
-    ViewModel.clickDistributionItem(this.itemData, triggerInfo)
+    NotificationViewModel.clickDistributionItem(this.itemData, triggerInfo)
   }
 }
 

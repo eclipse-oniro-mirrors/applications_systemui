@@ -24,7 +24,7 @@ export class IndexStyle {
 export default class StyleConfiguration {
   static getIndexStyle(): IndexStyle {
     const key: string = TAG + '-Index';
-    return StyleManager.getStyle(key, new IndexStyle());
+    return StyleManager.getStyle(key, IndexStyle);
   }
 }
 
