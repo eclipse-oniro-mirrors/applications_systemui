@@ -18,10 +18,10 @@ import { ControlCenterConfig
 
 const controlCenterConfig: ControlCenterConfig = {
   ComplexToggleLayout: [FASlotName.WIFI, FASlotName.BLUETOOTH],
-  DefaultSimpleToggleLayout: ["screenshot", FASlotName.RING_MODE, FASlotName.LOCATION, 'demosystemuicplmeta'],
+  DefaultSimpleToggleLayout: ["screenshot", FASlotName.RING_MODE, FASlotName.LOCATION, 'demosystemuicplmeta', FASlotName.NFC],
   LocalToggles: {
     ComplexToggles: [FASlotName.AIR_PLANE, FASlotName.BLUETOOTH, FASlotName.WIFI],
-    SimpleToggles: [FASlotName.LOCATION, FASlotName.RING_MODE],
+    SimpleToggles: [FASlotName.LOCATION, FASlotName.RING_MODE, FASlotName.NFC],
   },
   MetaToggles: [
     {

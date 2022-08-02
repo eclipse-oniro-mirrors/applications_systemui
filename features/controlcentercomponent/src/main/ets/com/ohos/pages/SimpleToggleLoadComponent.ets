@@ -13,10 +13,12 @@
  * limitations under the License.
  */
 
+import {isNfcAvailable} from '../../../../../../../../common/src/main/ets/default/Constants';
 import Log from '../../../../../../../../common/src/main/ets/default/Log';
 import {FASlotName} from '../../../../../../../../common/src/main/ets/default/Constants';
 import LocationComponent from '../../../../../../../locationcomponent/src/main/ets/com/ohos/pages/ControlCenterSimpleToggleLocationComponent';
 import RingModeComponent from '../../../../../../../ringmodecomponent/src/main/ets/com/ohos/pages/ControlCenterSimpleToggleRingModeComponent';
+import NFCComponent from '../../../../../../../nfccomponent/src/main/ets/com/ohos/pages/ControlCenterSimpleToggleNFComponent';
 import SimpleToggleComponent from './SimpleToggleComponent';
 
 const TAG = 'SimpleToggleLoadComponent';
@@ -45,6 +47,12 @@ export default struct SimpleToggleLoadComponent {
         })
       } else if (this.keyId == FASlotName.RING_MODE) {
         RingModeComponent({
+          keyId: this.keyId,
+          mEditMode: this.mEditMode,
+          mDragMode: this.mDragMode,
+        })
+      } else if (this.keyId == FASlotName.NFC && isNfcAvailable()) {
+        NFCComponent({
           keyId: this.keyId,
           mEditMode: this.mEditMode,
           mDragMode: this.mDragMode,

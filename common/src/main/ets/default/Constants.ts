@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 import Window from '@ohos.window';
+import parameter from '@ohos.systemparameter';
 
 export interface Rect {
   left: number;
@@ -52,4 +53,13 @@ export enum FASlotName {
   RING_MODE = 'ring_mode',
   SIGNAL = 'signal',
   WIFI = 'wifi',
+  NFC = 'nfc',
 }
+
+export function isNfcAvailable(){
+  if (parameter.getSync("const.SystemCapability.Communication.NFC.Core", "false") == "false"){
+    return false
+  } else {
+    return true
+  }
+ }

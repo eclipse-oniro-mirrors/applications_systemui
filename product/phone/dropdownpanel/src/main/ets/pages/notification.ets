@@ -13,6 +13,7 @@
  * limitations under the License.
  */
 
+import {isNfcAvailable} from '../../../../../../../common/src/main/ets/default/Constants';
 import AbilityManager from '../../../../../../../common/src/main/ets/default/abilitymanager/abilityManager';
 import Log from '../../../../../../../common/src/main/ets/default/Log';
 import EventManager, { unsubscribe }  from "../../../../../../../common/src/main/ets/default/event/eventmanager";
@@ -25,6 +26,7 @@ import BluetoothIcon from '../../../../../../../features/bluetoothcomponent/src/
 import SignalIcon from '../../../../../../../features/signalcomponent/src/main/ets/default/pages/signalicon';
 import LocationIcon from '../../../../../../../features/locationcomponent/src/main/ets/com/ohos/pages/statusbariconitemlocationcomponent';
 import RingModeIcon from '../../../../../../../features/ringmodecomponent/src/main/ets/com/ohos/pages/statusbariconitemringmodecomponent';
+import NfcIcon from '../../../../../../../features/nfccomponent/src/main/ets/com/ohos/pages/StatusBarIconItemNFComponent';
 import NotificationListComponent from '../../../../../../../features/noticeitem/src/main/ets/com/ohos/noticeitem/view/notificationlistcomponent';
 import NotificationViewModel from '../../../../../../../features/noticeitem/src/main/ets/com/ohos/noticeitem/viewmodel/NotificationViewModel';
 import ResourceUtil from '../../../../../../../common/src/main/ets/default/ResourceUtil';
@@ -161,6 +163,9 @@ struct statusBar {
             LocationIcon()
             BluetoothIcon()
             RingModeIcon()
+            if(isNfcAvailable()){
+              NfcIcon()
+            }
             BatteryIcon()
             ClockIcon()
           }

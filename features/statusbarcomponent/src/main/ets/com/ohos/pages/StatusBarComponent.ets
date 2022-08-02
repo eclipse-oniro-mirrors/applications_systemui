@@ -13,6 +13,7 @@
  * limitations under the License.
  */
 
+import {isNfcAvailable} from '../../../../../../../../common/src/main/ets/default/Constants';
 import Log from '../../../../../../../../common/src/main/ets/default/Log'
 import { StatusBarData, StatusBarBackgroundData, StatusBarConfig } from '../common/Constants'
 import { FASlotName } from '../../../../../../../../common/src/main/ets/default/Constants'
@@ -31,6 +32,7 @@ import SignalIcon from '../../../../../../../signalcomponent/src/main/ets/defaul
 import CapsuleIcon from '../../../../../../../capsulecomponent/src/main/ets/default/pages/CapsuleIcon'
 import LocationIcon from '../../../../../../../locationcomponent/src/main/ets/com/ohos/pages/StatusBarIconItemLocationComponent'
 import RingModeIcon from '../../../../../../../ringmodecomponent/src/main/ets/com/ohos/pages/StatusBarIconItemRingModeComponent'
+import NfcIcon from '../../../../../../../nfccomponent/src/main/ets/com/ohos/pages/StatusBarIconItemNFComponent'
 
 const TAG = 'StatusBarComponent'
 const TAG_StatusBarGroup = 'StatusBarGroup'
@@ -268,6 +270,8 @@ struct StatusBarItemLoadComponent {
         LocationIcon()
       } else if (this.mComponentName == FASlotName.RING_MODE) {
         RingModeIcon()
+      } else if (this.mComponentName == FASlotName.NFC && isNfcAvailable()) {
+        NfcIcon()
       } else {
         IconItemComponent({
           keyId: this.mComponentName
