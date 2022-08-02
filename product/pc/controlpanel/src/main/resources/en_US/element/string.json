@@ -31,6 +31,10 @@
     {
       "name": "control_center_complex_toggle_ring_mode_title_vibration",
       "value": "Vibration"
+    },
+    {
+      "name": "control_center_complex_toggle_nfc_mode_title",
+      "value": "NFC"
     }
   ]
 }

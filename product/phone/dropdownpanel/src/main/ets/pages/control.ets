@@ -13,6 +13,7 @@
  * limitations under the License.
  */
 
+import {isNfcAvailable} from '../../../../../../../common/src/main/ets/default/Constants';
 import AbilityManager from '../../../../../../../common/src/main/ets/default/abilitymanager/abilityManager';
 import ControlCenterComponent from '../../../../../../../features/controlcentercomponent/src/main/ets/com/ohos/pages/ControlCenterComponent'
 import BatteryIcon from '../../../../../../../features/batterycomponent/src/main/ets/default/pages/batteryIcon'
@@ -22,6 +23,7 @@ import BluetoothIcon from '../../../../../../../features/bluetoothcomponent/src/
 import SignalIcon from '../../../../../../../features/signalcomponent/src/main/ets/default/pages/signalIcon'
 import LocationIcon from '../../../../../../../features/locationcomponent/src/main/ets/com/ohos/pages/StatusBarIconItemLocationComponent'
 import RingModeIcon from '../../../../../../../features/ringmodecomponent/src/main/ets/com/ohos/pages/StatusBarIconItemRingModeComponent'
+import NfcIcon from '../../../../../../../features/nfccomponent/src/main/ets/com/ohos/pages/StatusBarIconItemNFComponent'
 import Log from '../../../../../../../common/src/main/ets/default/Log'
 import Constants from './common/constants'
 import StyleConfiguration, { ControlStyle } from './common/StyleConfiguration'
@@ -137,6 +139,9 @@ struct statusBar {
             LocationIcon()
             BluetoothIcon()
             RingModeIcon()
+            if( isNfcAvailable() ){
+              NfcIcon()
+            }
             BatteryIcon()
             ClockIcon()
           }
