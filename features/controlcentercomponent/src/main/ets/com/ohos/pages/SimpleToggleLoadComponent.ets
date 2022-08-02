@@ -51,12 +51,14 @@ export default struct SimpleToggleLoadComponent {
           mEditMode: this.mEditMode,
           mDragMode: this.mDragMode,
         })
-      } else if (this.keyId == FASlotName.NFC && isNfcAvailable()) {
-        NFCComponent({
-          keyId: this.keyId,
-          mEditMode: this.mEditMode,
-          mDragMode: this.mDragMode,
-        })
+      } else if (this.keyId == FASlotName.NFC) {
+        if (isNfcAvailable()) {
+          NFCComponent({
+            keyId: this.keyId,
+            mEditMode: this.mEditMode,
+            mDragMode: this.mDragMode,
+          })
+        }
       } else {
         SimpleToggleComponent({
           keyId: this.keyId,

@@ -270,8 +270,10 @@ struct StatusBarItemLoadComponent {
         LocationIcon()
       } else if (this.mComponentName == FASlotName.RING_MODE) {
         RingModeIcon()
-      } else if (this.mComponentName == FASlotName.NFC && isNfcAvailable()) {
-        NfcIcon()
+      } else if (this.mComponentName == FASlotName.NFC) {
+        if (isNfcAvailable()) {
+          NfcIcon()
+        }
       } else {
         IconItemComponent({
           keyId: this.mComponentName
