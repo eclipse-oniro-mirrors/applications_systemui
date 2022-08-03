@@ -85,7 +85,7 @@ struct Index {
   }
 
   onPageShow() {
-    this.startShowAnim();
+    this.showAnimation();
   }
 
   aboutToDisappear() {
@@ -95,43 +95,48 @@ struct Index {
   }
 
   build() {
-    Stack({ alignContent: Alignment.Top }) {
-      Image(this.mBackground)
-        .width('100%')
-        .height('100%')
-        .objectFit(ImageFit.Fill)
-      Column() {
-        Scroll(new Scroller()) {
-          Column() {
-            ControlCenterComponent({
-              modeChangeCallback: (isEdit) => this.onModeChange(isEdit)
+    Column(){
+      Stack({ alignContent: Alignment.Top }) {
+        Image(this.mBackground)
+          .width('100%')
+          .height('100%')
+          .objectFit(ImageFit.Fill)
+        Column() {
+          Scroll(new Scroller()) {
+            Column() {
+              ControlCenterComponent({
+                modeChangeCallback: (isEdit) => this.onModeChange(isEdit)
+              })
+            }
+            .width('100%')
+            .onAreaChange((e, e2) => {
+              Log.showInfo(TAG, `onAreaChange, e: ${JSON.stringify(e)} e2: ${JSON.stringify(e2)}`);
             })
           }
+          .scrollBarColor(Color.Gray)
+          .scrollBarWidth(10)
           .width('100%')
-          .onAreaChange((e, e2) => {
-            Log.showInfo(TAG, `onAreaChange, e: ${JSON.stringify(e)} e2: ${JSON.stringify(e2)}`);
-          })
         }
-        .scrollBarColor(Color.Gray)
-        .scrollBarWidth(10)
+        .backgroundColor($r('app.color.default_background'))
         .width('100%')
+        .height('100%')
       }
-      .backgroundColor($r('app.color.default_background'))
-      .width('100%')
-      .height('100%')
+      .scale({
+        x: this.mWidthSize,
+        y: this.mHeightSize,
+        z: 1,
+        centerX: '100%',
+        centerY: '0%'
+      })
+      .opacity(this.mOpacity)
+      .clip(true)
+      .borderRadius(this.style.borderRadius)
+      .width('97%')
+      .height(0.97 * this.mHeightPx + 'px')
     }
-    .scale({
-      x: this.mWidthSize,
-      y: this.mHeightSize,
-      z: 1,
-      centerX: '100%',
-      centerY: '0%'
-    })
-    .opacity(this.mOpacity)
-    .clip(true)
-    .borderRadius(this.style.borderRadius)
     .width('100%')
-    .height(this.mHeightPx + 'px')
+    .height('100%')
+    .alignItems(HorizontalAlign.End)
   }
 
   initWindowPolicy() {
@@ -177,21 +182,50 @@ struct Index {
     setTimeout(config.onFinish, config.duration + config.delay)
   }
 
-  async startShowAnim() {
-    if (!this.mShowAnimReady) {
-      return;
-    }
-    this.mShowAnimReady = false;
-    this.mOpacity = 1.0;
-    this.mWidthSize = 1.0;
-    this.mHeightSize = 1.0;
+  showAnimation(){
+
+    //init page state
+    this.mOpacity = 0;
+    this.mWidthSize = 0.7;
+    this.mHeightSize = 0.7;
+
+    //show animation
+    animateTo({
+      duration: 200,
+      curve: Curve.Friction,
+      onFinish: () => {
+        animateTo({
+          duration:100,
+          curve: Curve.Friction
+        }, () =>{
+          this.mWidthSize = 1;
+          this.mHeightSize = 1;
+        })
+      },
+    }, () => {
+      this.mOpacity = 1;
+      this.mWidthSize = 1.03;
+      this.mHeightSize = 1.03;
+    })
+  }
+
+  hideAnimation(){
+    //hide animation
+    animateTo({
+      duration: 100,
+      curve: Curve.Friction,
+      onFinish: () => {
+        WindowManager.hideWindow(WindowType.CONTROL_PANEL);
+      }
+    }, () => {
+      this.mWidthSize = 0.7;
+      this.mHeightSize = 0.7;
+      this.mOpacity = 0;
+    })
   }
 
   hideWindow() {
-    WindowManager.hideWindow(WindowType.CONTROL_PANEL);
-    this.mOpacity = 0.0;
-    this.mWidthSize = 0.2;
-    this.mHeightSize = 0.2;
+    this.hideAnimation();
   }
 
   onModeChange(isEdit) {
