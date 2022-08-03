@@ -27,7 +27,7 @@ export default struct ControlCenterSimpleToggleNFComponent {
   private keyId: string;
   private mEditMode: boolean = false;
   private mDragMode: boolean = false;
-  @State mIcon: Resource = $r("app.media.ic_notification_nfc");
+  @State mIcon: Resource = $r("app.media.ic_notification_nfc_filled");
   @State mLabel: Resource = $r("app.string.control_center_complex_toggle_nfc_mode_title");
   @State mDefaultChangeSwitch: boolean  = false;
   @StorageLink('NFCModeComponentMode') @Watch('onNFCModeUpdated') NFCModeComponentMode: NFCMode = NFCMode.NFC_MODE_OFF;
@@ -44,10 +44,8 @@ export default struct ControlCenterSimpleToggleNFComponent {
   onNFCModeUpdated(propName: string): void {
     Log.showInfo(TAG, `onNFCModeUpdated, propName: ${propName} NFCModeComponentMode: ${JSON.stringify(this.NFCModeComponentMode)}`);
     if (this.NFCModeComponentMode == NFCMode.NFC_MODE_OFF) {
-      this.mIcon = $r("app.media.ic_notification_nfc");
       this.mDefaultChangeSwitch = false;
     } else if (this.NFCModeComponentMode == NFCMode.NFC_MODE_ON) {
-      this.mIcon = $r("app.media.ic_notification_nfc_filled");
       this.mDefaultChangeSwitch = true;
     }
   }

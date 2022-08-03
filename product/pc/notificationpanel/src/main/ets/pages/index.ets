@@ -66,7 +66,7 @@ struct Index {
 
   onPageShow() {
     Log.showInfo(TAG, `onPageShow`)
-    this.startShowAnim();
+    this.showAnimation();
   }
 
   onPageHide() {
@@ -80,30 +80,35 @@ struct Index {
   }
 
   build() {
-    Stack() {
-      Image(this.mBackground)
+    Column(){
+      Stack() {
+        Image(this.mBackground)
+          .width('100%')
+          .height('100%')
+          .objectFit(ImageFit.Fill)
+        Column() {
+          Notification()
+        }
+        .backgroundColor($r('app.color.default_background'))
         .width('100%')
         .height('100%')
-        .objectFit(ImageFit.Fill)
-      Column() {
-        Notification()
       }
-      .backgroundColor($r('app.color.default_background'))
-      .width('100%')
-      .height('100%')
+      .width('97%')
+      .height('97%')
+      .clip(true)
+      .opacity(this.mOpacity)
+      .borderRadius($r('app.float.default_border_radius'))
+      .scale({
+        x: this.mWidthSize,
+        y: this.mHeightSize,
+        z: 1,
+        centerX: '100%',
+        centerY: '0%'
+      })
     }
     .width('100%')
     .height('100%')
-    .clip(true)
-    .opacity(this.mOpacity)
-    .borderRadius($r('app.float.default_border_radius'))
-    .scale({
-      x: this.mWidthSize,
-      y: this.mHeightSize,
-      z: 1,
-      centerX: '100%',
-      centerY: '0%'
-    })
+    .alignItems(HorizontalAlign.End)
   }
 
   initWindowPolicy() {
@@ -149,22 +154,50 @@ struct Index {
     setTimeout(config.onFinish, config.duration + config.delay)
   }
 
-  async startShowAnim() {
-    Log.showInfo(TAG, `do show window. mShowAnimReady=${this.mShowAnimReady}`);
-    if (!this.mShowAnimReady) {
-      return;
-    }
-    this.mShowAnimReady = false;
-    this.mOpacity = 1.0;
-    this.mWidthSize = 1.0;
-    this.mHeightSize = 1.0;
+  showAnimation(){
+
+    //init page state
+    this.mOpacity = 0;
+    this.mWidthSize = 0.7;
+    this.mHeightSize = 0.7;
+
+    //show animation
+    animateTo({
+      duration: 200,
+      curve: Curve.Friction,
+      onFinish: () => {
+        animateTo({
+          duration:100,
+          curve: Curve.Friction
+        }, () =>{
+          this.mWidthSize = 1;
+          this.mHeightSize = 1;
+        })
+      },
+    }, () => {
+      this.mOpacity = 1;
+      this.mWidthSize = 1.03;
+      this.mHeightSize = 1.03;
+    })
+  }
+
+  hideAnimation(){
+    //hide animation
+    animateTo({
+      duration: 100,
+      curve: Curve.Friction,
+      onFinish: () => {
+        WindowManager.hideWindow(WindowType.NOTIFICATION_PANEL);
+      }
+    }, () => {
+      this.mWidthSize = 0.7;
+      this.mHeightSize = 0.7;
+      this.mOpacity = 0;
+    })
   }
 
   hideWindow() {
     Log.showInfo(TAG, `do hide window.`);
-    WindowManager.hideWindow(WindowType.NOTIFICATION_PANEL);
-    this.mOpacity = 0.0;
-    this.mWidthSize = 0.2;
-    this.mHeightSize = 0.2;
+    this.hideAnimation();
   }
 }
