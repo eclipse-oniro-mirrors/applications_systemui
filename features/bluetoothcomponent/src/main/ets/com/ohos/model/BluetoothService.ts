@@ -49,6 +49,7 @@ export class BluetoothService {
       if (this.mIsBluetoothOpen != isOpen) {
         Log.showInfo(TAG, `state change: ${isOpen}`);
         this.mIsBluetoothOpen = isOpen;
+        bluetooth.setBluetoothScanMode(bluetooth.ScanMode.SCAN_MODE_CONNECTABLE_GENERAL_DISCOVERABLE, 0);
         this.mListener?.updateState(this.mIsBluetoothOpen);
       }
     });
