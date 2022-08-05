@@ -64,7 +64,7 @@ export class StyleManager extends BaseStyleManager {
     style.statusBarFontSize = this.calcScaleSizePx(14);
     style.statusBarIconWidth = this.calcScaleSizePx(20);
     style.statusBarIconHeight = this.calcScaleSizePx(20);
-    style.statusBarMarginLeftRight = this.calcScaleSizePx(10);
+    style.statusBarMarginLeftRight = $r("app.float.status_bar_margin_left_right");
   }
 
   // StatusBar-VerticalStatusBarItemLoadComponent

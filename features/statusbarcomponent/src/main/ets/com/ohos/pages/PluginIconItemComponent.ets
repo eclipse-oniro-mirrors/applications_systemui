@@ -72,6 +72,7 @@ export default struct PluginIconItemComponent {
   build() {
     Row() {
       if (this.mPluginData.template && this.mPluginData.data && Object.keys(this.mPluginData.data).length > 0) {
+        Row().width(this.styleCommon.statusBarMarginLeftRight).height('100%')
         PluginComponent({
           template: this.mPluginData.template,
           data: this.mPluginData.data
@@ -81,6 +82,7 @@ export default struct PluginIconItemComponent {
           Log.showInfo(TAG, `PluginComponent.Error code:${errcode} message:${msg}`)
         })
           .size({ width: px2vp(this.style.iconWidth), height: '100%' })
+        Row().width(this.styleCommon.statusBarMarginLeftRight).height('100%')
       }
     }.height('100%')
   }

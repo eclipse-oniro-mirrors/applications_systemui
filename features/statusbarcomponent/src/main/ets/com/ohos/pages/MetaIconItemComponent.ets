@@ -52,7 +52,7 @@ export default struct MetaIconItemComponent {
     Row() {
       if ((this.mItemData.get().isShowLabel && !CheckEmptyUtils.isEmpty(this.mItemData.get().label))
       || (this.mItemData.get().isShowIcon && !CheckEmptyUtils.isEmpty(this.mItemData.get().iconUrl))) {
-        Row().width(this.style.stackPadding).height('100%')
+        Row().width(this.styleCommon.statusBarMarginLeftRight).height('100%')
       }
       if (this.mItemData.get().isShowLabel && !CheckEmptyUtils.isEmpty(this.mItemData.get().label)) {
         Text(this.mItemData.get()
@@ -77,7 +77,7 @@ export default struct MetaIconItemComponent {
       }
       if ((this.mItemData.get().isShowLabel && !CheckEmptyUtils.isEmpty(this.mItemData.get().label))
       || (this.mItemData.get().isShowIcon && !CheckEmptyUtils.isEmpty(this.mItemData.get().iconUrl))) {
-        Row().width(this.style.stackPadding).height('100%')
+        Row().width(this.styleCommon.statusBarMarginLeftRight).height('100%')
       }
     }.height('100%')
   }
