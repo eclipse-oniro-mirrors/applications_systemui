@@ -50,6 +50,7 @@ export default struct StatusBarComponent {
   private moduleName: string = ''
 
   aboutToAppear() {
+    AppStorage.SetOrCreate('size', $r("app.float.status_bar_margin_left_right"));
     Log.showInfo(TAG, `aboutToAppear Start, mStatusBarComponentConfig: ${JSON.stringify(this.mStatusBarComponentConfig)}`);
     this.initViewModel(this.moduleName);
   }
@@ -239,7 +240,7 @@ struct VerticalStatusBarItemLoadComponent {
 @Component
 struct StatusBarItemLoadComponent {
   private mComponentName: string
-
+  @StorageLink('size') size: any=''
   aboutToAppear() {
     Log.showInfo(TAG_StatusBarItemLoadComponent, `aboutToAppear, mComponentName: ${this.mComponentName} `)
   }

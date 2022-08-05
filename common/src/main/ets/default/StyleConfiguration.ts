@@ -23,7 +23,7 @@ export class CommonStyle {
   statusBarFontSize: Length = deviceTypeInfo === 'phone' ? '12fp' : '16fp';
   statusBarIconWidth: Length = '24vp';
   statusBarIconHeight: Length = '24vp';
-  statusBarMarginLeftRight: Length = deviceTypeInfo === 'phone' ? '0vp' : '5vp';
+  statusBarMarginLeftRight: Length = deviceTypeInfo === 'phone' ? '0vp' : $r("app.float.status_bar_margin_left_right");
   deviceTypeInfo = deviceTypeInfo;
 }
 

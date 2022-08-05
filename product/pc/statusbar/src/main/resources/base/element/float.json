@@ -143,6 +143,10 @@
     {
       "name": "signal_component_text_margin_left",
       "value": "3vp"
+    },
+    {
+      "name": "status_bar_margin_left_right",
+      "value": "6vp"
     }
   ]
 }

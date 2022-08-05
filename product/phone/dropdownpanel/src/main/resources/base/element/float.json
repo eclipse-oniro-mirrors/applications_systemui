@@ -1,6 +1,10 @@
 {
   "float": [
     {
+      "name": "status_bar_margin_left_right",
+      "value": "5vp"
+    },
+    {
       "name": "status_bar_height",
       "value": "46vp"
     },
