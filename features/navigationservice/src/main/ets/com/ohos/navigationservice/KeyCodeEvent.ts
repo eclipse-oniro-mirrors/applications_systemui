@@ -27,24 +27,24 @@ export class KeyCodeEvent {
     Log.showInfo(TAG, `sendKeyEvent keycode: ${keyCode} type: ${eventType}`);
     switch (keyCode) {
       case Constants.KEYCODE_BACK:
-        if (eventType === Constants.KEY_DOWN) {
+        if (eventType === TouchType.Down) {
           Log.showDebug(TAG, 'sendKeyEvent : KEY_DOWN');
           this.sendBackKeyEventStart(); //down
-        } else if (eventType === Constants.KEY_UP) {
+        } else if (eventType === TouchType.Up) {
           Log.showDebug(TAG, `sendKeyEvent : KEY_UP`);
           this.sentEvnt();
           this.sendBackKeyEventEnd(); //up
         }
         break;
       case Constants.KEYCODE_HOME:
-        if (eventType === Constants.KEY_UP) {
+        if (eventType === TouchType.Up) {
           Log.showDebug(TAG, 'sendKeyEvent : KEY_UP');
           this.sentEvnt();
           this.sendHomeKeyEvent();
         }
         break;
       case Constants.KEYCODE_RECENT:
-        if (eventType === Constants.KEY_UP) {
+        if (eventType === TouchType.Up) {
           Log.showDebug(TAG, 'sendKeyEvent : KEY_UP');
           this.sentEvnt();
           this.sendRecentKeyEvent();

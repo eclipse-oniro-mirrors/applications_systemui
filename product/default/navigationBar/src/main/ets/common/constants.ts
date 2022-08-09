@@ -16,6 +16,7 @@
 export default class Constants {
   static readonly KEY_DOWN: number = 0;
   static readonly KEY_UP: number = 1;
+  static readonly KEYCODE_NONE: number = -1;
   static readonly KEYCODE_BACK: number = 1;
   static readonly KEYCODE_HOME: number = 2;
   static readonly KEYCODE_RECENT: number = 3;

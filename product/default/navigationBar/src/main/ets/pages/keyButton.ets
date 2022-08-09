@@ -26,6 +26,7 @@ const TAG = 'NavigationBar-KeyButton';
 export default struct keyButton {
   private uri: any;
   @Prop keyCode: number;
+  @Link currentTouchItem: number;
   @State backGroundColor: any = $r('app.color.button_default_background');
   @StorageLink("showNavHorizontal") showNavHorizontal: boolean = AppStorage.SetAndLink("showNavHorizontal", true).get();
   @State mNavigationBarComponentData: NavigationBarComponentData = NavigationBarViewModel.getInstance()
@@ -63,14 +64,21 @@ export default struct keyButton {
   }
 
   private onKeyTouch(event: TouchEvent) {
+    if (this.currentTouchItem != Constants.KEYCODE_NONE && this.currentTouchItem != this.keyCode) {
+      Log.showInfo(TAG, `current has item touch.`);
+      return;
+    }
     Log.showDebug(TAG, `onKeyTouch event: ${ event }`)
     let eventType = event.type;
     switch (eventType) {
-      case Constants.KEY_DOWN:
+      case TouchType.Down:
+        this.currentTouchItem = this.keyCode;
         this.backGroundColor = $r('app.color.button_click_background')
         break;
-      case Constants.KEY_UP:
+      case TouchType.Up:
+      case TouchType.Cancel:
         this.backGroundColor = $r('app.color.button_default_background')
+        this.currentTouchItem = Constants.KEYCODE_NONE;
         break;
       default:
         break;
