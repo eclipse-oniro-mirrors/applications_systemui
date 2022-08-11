@@ -58,11 +58,11 @@ export default struct iconBaseComponent {
           })
         }
         .onClick(() => {
-          console.log(`start clickEvent ${this.changeSwitch}`)
+          Log.showDebug(TAG, `start clickEvent ${this.changeSwitch}`);
           if (this.mClickEvent) {
             this.mClickEvent()
           }
-          console.log(`end clickEvent ${this.changeSwitch}`)
+          Log.showDebug(TAG, `end clickEvent ${this.changeSwitch}`);
         })
       }
       .height('100%')
