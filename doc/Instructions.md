@@ -152,7 +152,8 @@ reboot
 ### log打印
 - 在程序中添加 log
 ```JS
-console.info("SystemUI log info");
+import hilog from '@ohos.hilog';
+hilog.info(0x0001, "SystemUI", "%{public}s World %{private}d", "hello", 3);
 ```
 ### log获取及过滤
 - log获取
