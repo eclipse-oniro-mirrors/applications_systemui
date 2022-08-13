@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-import StyleManager from '../../../../../../../../common/src/main/ets/default/CommonStyleManager';
+import CommonStyleManager from '../../../../../../../../common/src/main/ets/default/CommonStyleManager';
 
 const TAG = 'capsule-StyleConfiguration';
 
@@ -29,11 +29,11 @@ export class ControlCenterRingModeComponentStyle {
 export default class StyleConfiguration {
   static getStatusRingModeComponentStyle(): StatusRingModeComponentStyle {
     const key: string = TAG + '-StatusRingMode';
-    return StyleManager.getStyle(key, StatusRingModeComponentStyle);
+    return CommonStyleManager.getStyle(key, StatusRingModeComponentStyle);
   }
 
   static getControlCenterRingModeComponentStyle(): ControlCenterRingModeComponentStyle {
     const key: string = TAG + '-ControlCenterRingMode';
-    return StyleManager.getStyle(key, ControlCenterRingModeComponentStyle);
+    return CommonStyleManager.getStyle(key, ControlCenterRingModeComponentStyle);
   }
 }

@@ -12,44 +12,40 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import BaseStyleManager from '../../../../../../../common/src/main/ets/default/BaseStyleManager';
 import Log from '../../../../../../../common/src/main/ets/default/Log';
 import AbilityManager from '../../../../../../../common/src/main/ets/default/abilitymanager/abilityManager';
 import StyleConfiguration from '../../../../../../../features/volumepanelcomponent/src/main/ets/com/ohos/common/StyleConfiguration';
 
 const TAG = 'VolumePanel-StyleManager';
 
-export class StyleManager extends BaseStyleManager {
-  static readonly ABILITY_PAGE_NAME_VOLUMEPANEL = "VolumePanel-Index";
+export default class StyleManager {
+  static readonly STANDARD_DISPLAY_WIDTH: number = 2560;
+  static readonly STANDARD_DISPLAY_HEIGHT: number = 1600;
+  static maxWidth: number = StyleManager.STANDARD_DISPLAY_WIDTH;
 
-  constructor() {
-    super(StyleManager.ABILITY_PAGE_NAME_VOLUMEPANEL);
-  }
-
-  setStyle(): void {
+  static setStyle(): void {
     Log.showDebug(TAG, 'setStyle');
 
-    this.setStandardWidth(BaseStyleManager.STANDARD_DISPLAY_WIDTH_LARGE);
     let config = AbilityManager.getAbilityData(AbilityManager.ABILITY_NAME_VOLUME_PANEL, 'dis');
-    this.setMaxWidth(config.width);
+    StyleManager.maxWidth = config.width;
 
     // Pad、PC Mode
     {
       let style = StyleConfiguration.getVolumePanelComponentStyle();
-      style.volumePanelSliderMarginTop = this.calcScaleSizePx(40);
-      style.volumePanSliderWidth = px2vp(this.calcScaleSize(8)).toString() + 'vp';
-      style.volumePanSliderHeight = this.calcScaleSizePx(320);
-      style.volumePanelSliderMarginBottom = this.calcScaleSizePx(40);
-      style.volumePanelMutBtnIconSize = this.calcScaleSizePx(48);
-      style.volumePanelMutBtnIconMarginBottom = this.calcScaleSizePx(24);
-      style.volumePanelMuteBtnHeight = this.calcScaleSizePx(72);
-      style.volumePanelSettingIconSize = this.calcScaleSizePx(48);
-      style.volumePanelSettingButtonSize = this.calcScaleSizePx(96);
+      style.volumePanelSliderMarginTop = StyleManager.calcScaleSizePx(40);
+      style.volumePanSliderWidth = px2vp(StyleManager.calcScaleSize(8)).toString() + 'vp';
+      style.volumePanSliderHeight = StyleManager.calcScaleSizePx(320);
+      style.volumePanelSliderMarginBottom = StyleManager.calcScaleSizePx(40);
+      style.volumePanelMutBtnIconSize = StyleManager.calcScaleSizePx(48);
+      style.volumePanelMutBtnIconMarginBottom = StyleManager.calcScaleSizePx(24);
+      style.volumePanelMuteBtnHeight = StyleManager.calcScaleSizePx(72);
+      style.volumePanelSettingIconSize = StyleManager.calcScaleSizePx(48);
+      style.volumePanelSettingButtonSize = StyleManager.calcScaleSizePx(96);
       style.volumePanelBackground = '#99FFFFFF';
       style.volumePanelSliderBlockColor = '#FFFFFFFF';
-      style.volumePanelDividerHeight = this.calcScaleSizePx(1);
-      style.volumePanelBorderRadius = this.calcScaleSizePx(48);
-      style.volumeDividerWidth = this.calcScaleSizePx(60);
+      style.volumePanelDividerHeight = StyleManager.calcScaleSizePx(1);
+      style.volumePanelBorderRadius = StyleManager.calcScaleSizePx(48);
+      style.volumeDividerWidth = StyleManager.calcScaleSizePx(60);
       style.volumeSliderTrackColor = '#FFAEE6E6';
       style.volumeSelectedColor = '#FF007DFF';
       style.volumeButtonBackgroundColor = '#00000000';
@@ -57,9 +53,18 @@ export class StyleManager extends BaseStyleManager {
       style.volumePanelDividerColor = '#FF9BCECE';
       style.volumePanelSettingColor = '#FF4D6666';
     }
+
+  }
+
+  static number2px(n: number): string {
+    return n.toString() + 'px';
+  }
+
+  static calcScaleSize(n: number): number {
+    return n * StyleManager.maxWidth / StyleManager.STANDARD_DISPLAY_WIDTH;
+  }
+
+  static calcScaleSizePx(n: number): string {
+    return StyleManager.number2px(StyleManager.calcScaleSize(n));
   }
 }
-
-let styleManager = new StyleManager();
-
-export default styleManager;

@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-import StyleManager from '../../../../../../../common/src/main/ets/default/CommonStyleManager';
+import CommonStyleManager from '../../../../../../../common/src/main/ets/default/CommonStyleManager';
 
 const TAG = 'battery-StyleConfiguration';
 
@@ -38,11 +38,11 @@ export class BatteryPicStyle {
 export default class StyleConfiguration {
   static getBatteryComponentStyle(): BatteryComponentStyle {
     const key: string = TAG + '-BatteryComponent';
-    return StyleManager.getStyle(key, BatteryComponentStyle);
+    return CommonStyleManager.getStyle(key, BatteryComponentStyle);
   }
 
   static getBatteryPicStyle(): BatteryPicStyle {
     const key: string = TAG + '-BatteryPicComponent';
-    return StyleManager.getStyle(key, BatteryPicStyle);
+    return CommonStyleManager.getStyle(key, BatteryPicStyle);
   }
 }

@@ -12,35 +12,40 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import BaseStyleManager from '../../../../../../../../common/src/main/ets/default/BaseStyleManager';
 import Log from '../../../../../../../../common/src/main/ets/default/Log';
 import AbilityManager from '../../../../../../../../common/src/main/ets/default/abilitymanager/abilitymanager';
 import IndexStyleConfiguration from './styleconfiguration';
 
 const TAG = 'NotificationPanel-StyleManager';
 
-export class StyleManager extends BaseStyleManager {
-  static readonly ABILITY_PAGE_NAME_NOTIFICATIONPANEL = "NotificationPanel-Index";
+export default class StyleManager {
+  static readonly STANDARD_DISPLAY_WIDTH = 1280;
+  static readonly STANDARD_DISPLAY_HEIGHT = 800;
+  static maxWidth: number = StyleManager.STANDARD_DISPLAY_WIDTH;
 
-  constructor() {
-    super(StyleManager.ABILITY_PAGE_NAME_NOTIFICATIONPANEL);
-  }
-
-  setStyle(): void {
+  static setStyle(): void {
     Log.showDebug(TAG, 'setStyle');
 
-    this.setStandardWidth(BaseStyleManager.STANDARD_DISPLAY_WIDTH_NORMAL);
     let dis = AbilityManager.getAbilityData(AbilityManager.ABILITY_NAME_NOTIFICATION_PANEL, 'dis');
-    this.setMaxWidth(dis.width);
+    StyleManager.maxWidth = dis.width;
 
     // Index
     {
       let style = IndexStyleConfiguration.getIndexStyle();
-      style.borderRadius = this.calcScaleSizePx(24);
+      style.borderRadius = StyleManager.calcScaleSizePx(24);
     }
+
+  }
+
+  static number2px(n: number): string {
+    return n.toString() + 'px';
+  }
+
+  static calcScaleSize(n: number): number {
+    return n * StyleManager.maxWidth / StyleManager.STANDARD_DISPLAY_WIDTH;
+  }
+
+  static calcScaleSizePx(n: number): string {
+    return StyleManager.number2px(StyleManager.calcScaleSize(n));
   }
 }
-
-let styleManager = new StyleManager();
-
-export default styleManager;

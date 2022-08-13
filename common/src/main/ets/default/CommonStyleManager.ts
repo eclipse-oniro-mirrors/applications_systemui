@@ -12,17 +12,26 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import BaseStyleManager from "./BaseStyleManager";
 import Log from "./Log";
 
 const TAG = "Common-StyleManager";
 
-export class CommonStyleManager extends BaseStyleManager {
-    static readonly ABILITY_PAGE_NAME_COMMON = "Common-Index";
+export class CommonStyleManager {
+  mAbilityPageName = '';
 
-    constructor() {
-        super(CommonStyleManager.ABILITY_PAGE_NAME_COMMON);
+  setAbilityPageName(name: string): void{
+    Log.showInfo(TAG, `setAbilityPageName, name: ${name}`);
+    this.mAbilityPageName = name;
+  }
+
+  getStyle<T>(key: string, defaultStyle: { new(): T }): T {
+    let newKey = this.mAbilityPageName + "-" + key;
+    if (!AppStorage.Has(newKey)) {
+      AppStorage.SetOrCreate(newKey, new defaultStyle());
+      Log.showInfo(TAG, `Create storageKey of ${newKey}`);
     }
+    return AppStorage.Get(newKey) as T;
+  }
 }
 
 let commonStyleManager = new CommonStyleManager();
