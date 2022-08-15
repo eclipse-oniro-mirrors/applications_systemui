@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-import StyleManager from '../../../../../../../common/src/main/ets/default/CommonStyleManager';
+import CommonStyleManager from '../../../../../../../common/src/main/ets/default/CommonStyleManager';
 
 const TAG = 'brightness-StyleConfiguration';
 
@@ -36,6 +36,6 @@ export class BrightnessComponentStyle {
 export default class StyleConfiguration {
   static getBrightnessComponentStyle(): BrightnessComponentStyle {
     const key: string = TAG + '-BrightnessComponent';
-    return StyleManager.getStyle(key, BrightnessComponentStyle);
+    return CommonStyleManager.getStyle(key, BrightnessComponentStyle);
   }
 }

@@ -14,6 +14,7 @@
  */
 
 import Log from '../../../../../../../common/src/main/ets/default/Log'
+import CommonStyleManager from '../../../../../../../common/src/main/ets/default/CommonStyleManager'
 import HeightConfigUtils from '../../../../../../../common/src/main/ets/default/heightcofigUtils/HeightConfigUtils'
 import StatusBarComponent from '../../../../../../../features/statusbarcomponent/src/main/ets/com/ohos/pages/StatusBarComponent'
 import StyleManager from './common/StyleManager'
@@ -52,6 +53,7 @@ struct Index {
     StatusBarVM.updateStatusBarData(statusBarData);
 
     setAppBgColor('#00000000');
+    CommonStyleManager.setAbilityPageName(TAG);
     StyleManager.setStyle();
 
     mHeightConfigUtils = new HeightConfigUtils();

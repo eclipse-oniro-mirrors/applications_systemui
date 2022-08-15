@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-import StyleManager from './StyleManager';
+import CommonStyleManager from '../../../../../../../../common/src/main/ets/default/CommonStyleManager';
 import Constants from './constants';
 import deviceInfo from '@ohos.deviceInfo';
 
@@ -54,21 +54,21 @@ export class DateItemStyle {
 export default class StyleConfiguration {
   static getControlStyle(): ControlStyle {
     const key: string = TAG + '-Control';
-    return StyleManager.getStyle(key, ControlStyle);
+    return CommonStyleManager.getStyle(key, ControlStyle);
   }
 
   static getNotificationStyle(): NotificationStyle {
     const key: string = TAG + '-Notification';
-    return StyleManager.getStyle(key, NotificationStyle);
+    return CommonStyleManager.getStyle(key, NotificationStyle);
   }
 
   static getQuicklySettingStyle(): QuicklySettingStyle {
     const key: string = TAG + '-QuicklySetting';
-    return StyleManager.getStyle(key, QuicklySettingStyle);
+    return CommonStyleManager.getStyle(key, QuicklySettingStyle);
   }
 
   static getDateItemStyle(): DateItemStyle {
     const key: string = TAG + '-DateItem';
-    return StyleManager.getStyle(key, DateItemStyle);
+    return CommonStyleManager.getStyle(key, DateItemStyle);
   }
 }

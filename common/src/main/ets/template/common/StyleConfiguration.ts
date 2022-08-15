@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-import StyleManager from '../../default/CommonStyleManager';
+import CommonStyleManager from '../../default/CommonStyleManager';
 
 const TAG = 'CommonTemplate-StyleConfiguration';
 
@@ -72,16 +72,16 @@ export class SimpleToggleBaseStyle {
 export default class StyleConfiguration {
   static getIconTitleBaseStyle(): IconTitleBaseStyle {
     const key: string = TAG + '-IconTitleBase';
-    return StyleManager.getStyle(key, IconTitleBaseStyle);
+    return CommonStyleManager.getStyle(key, IconTitleBaseStyle);
   }
 
   static getIconComponentStyle(): IconComponentStyle {
     const key: string = TAG + '-IconComponent';
-    return StyleManager.getStyle(key, IconComponentStyle);
+    return CommonStyleManager.getStyle(key, IconComponentStyle);
   }
 
   static getSimpleToggleBaseStyle(): SimpleToggleBaseStyle {
     const key: string = TAG + '-SimpleToggleBase';
-    return StyleManager.getStyle(key, SimpleToggleBaseStyle);
+    return CommonStyleManager.getStyle(key, SimpleToggleBaseStyle);
   }
 }

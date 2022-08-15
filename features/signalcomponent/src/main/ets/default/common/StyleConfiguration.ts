@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-import StyleManager from '../../../../../../../common/src/main/ets/default/CommonStyleManager';
+import CommonStyleManager from '../../../../../../../common/src/main/ets/default/CommonStyleManager';
 
 const TAG = 'signal-StyleConfiguration';
 
@@ -29,6 +29,6 @@ export class SignalComponentStyle {
 export default class StyleConfiguration {
   static getSignalComponentStyle(): SignalComponentStyle {
     const key: string = TAG + '-SignalComponent';
-    return StyleManager.getStyle(key, SignalComponentStyle);
+    return CommonStyleManager.getStyle(key, SignalComponentStyle);
   }
 }

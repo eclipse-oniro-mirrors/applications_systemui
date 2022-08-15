@@ -13,6 +13,7 @@
  * limitations under the License.
  */
 import Log from '../../../../../../../common/src/main/ets/default/Log'
+import CommonStyleManager from '../../../../../../../common/src/main/ets/default/CommonStyleManager'
 import HeightConfigUtils from '../../../../../../../common/src/main/ets/default/heightcofigUtils/HeightConfigUtils'
 import AbilityManager from '../../../../../../../common/src/main/ets/default/abilitymanager/AbilityManager'
 import StyleConfiguration, { IndexStyle } from './common/StyleConfiguration'
@@ -68,6 +69,7 @@ struct Index {
     Log.showInfo(TAG, `aboutToAppear, start`)
 
     setAppBgColor('#00000000')
+    CommonStyleManager.setAbilityPageName(TAG)
     this.style = StyleConfiguration.getIndexStyle()
     StyleManager.setStyle()
 

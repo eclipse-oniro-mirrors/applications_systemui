@@ -13,6 +13,7 @@
  * limitations under the License.
  */
 import Log from '../../../../../../../common/src/main/ets/default/Log'
+import CommonStyleManager from '../../../../../../../common/src/main/ets/default/CommonStyleManager'
 import VolumePanelComponent from '../../../../../../../features/volumepanelcomponent/src/main/ets/com/ohos/pages/VolumePanelComponent'
 import AbilityManager from '../../../../../../../common/src/main/ets/default/abilitymanager/abilityManager'
 import StyleManager from '../common/StyleManager'
@@ -50,6 +51,7 @@ struct Index {
     WindowManager.resetSizeWindow(WindowType.VOLUME_PANEL, volumeRect);
 
     setAppBgColor('#00000000');
+    CommonStyleManager.setAbilityPageName(TAG)
     Log.showDebug(TAG, `configInfo Start, configInfo ${JSON.stringify(configInfo)}`);
     if (configInfo.width > configInfo.height) { // Pad、PC Mode
       StyleManager.setStyle();

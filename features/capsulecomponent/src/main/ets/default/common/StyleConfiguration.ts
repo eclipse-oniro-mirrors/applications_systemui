@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-import StyleManager from '../../../../../../../common/src/main/ets/default/CommonStyleManager';
+import CommonStyleManager from '../../../../../../../common/src/main/ets/default/CommonStyleManager';
 import Constants from './constants';
 
 const TAG = 'capsule-StyleConfiguration';
@@ -32,6 +32,6 @@ export class CapsuleComponentStyle {
 export default class StyleConfiguration {
   static getCapsuleComponentStyle(): CapsuleComponentStyle {
     const key: string = TAG + '-CapsuleComponent';
-    return StyleManager.getStyle(key, CapsuleComponentStyle);
+    return CommonStyleManager.getStyle(key, CapsuleComponentStyle);
   }
 }
