@@ -19,31 +19,21 @@ class FocusCallback{
   static callback: () => void = null;
   static lastFocusId: string = null;
 
-  private init(): void{
-    FocusCallback.lastFocusId = null;
-    FocusCallback.callback = null;
-    return;
-  }
-
-  private setCallback(name: string, callback: () => void): void{
-    FocusCallback.callback = callback;
-    FocusCallback.lastFocusId = name;
-    return;
-  }
-
-  executeCallback(name: string, callback: () => void): void{
+  setCallback(name: string, callback: () => void): void{
     if(FocusCallback.lastFocusId != name){
       if(FocusCallback.callback != null){
         FocusCallback.callback();
       }
-      this.setCallback(name, callback);
+      FocusCallback.callback = callback;
+      FocusCallback.lastFocusId = name;
     }
     return;
   }
 
   deleteCallback(name: string): void{
     if( name == FocusCallback.lastFocusId){
-      this.init();
+      FocusCallback.lastFocusId = null;
+      FocusCallback.callback = null;
     }
     return;
   }
