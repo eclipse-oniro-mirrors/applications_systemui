@@ -191,7 +191,7 @@ export default struct SwipeLayout {
           this.angelCalFlag = true; //改变角度标志位， 表示角度已经判断过了，之后无需重复判断
 
           if (this.responseSwipeEvent){
-            FocusCallBack.executeCallback(this.id, this.loseFocusCallback.bind(this));//本控件响应回调，那么就需要将上一次滑动的控件弹回
+            FocusCallBack.setCallback(this.id, this.loseFocusCallback.bind(this));//本控件响应回调，那么就需要将上一次滑动的控件弹回
           }
         }
         if(this.responseSwipeEvent == false) {

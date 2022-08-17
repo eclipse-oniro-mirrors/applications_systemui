@@ -37,7 +37,7 @@ export default struct GroupItem {
     this.updateFlag++;
   }
 
-  aboutToAppear() {h
+  aboutToAppear() {
     Log.showInfo(TAG, `aboutToAppear`);
     this.toExpand = ExpandInfoManager.hasExpandInfo(this.groupData[0]);
   }
