@@ -20,53 +20,55 @@ import Log from '../../../../../../../../../../common/src/main/ets/default/Log';
 import NotificationViewModel from '../../viewmodel/NotificationViewModel';
 import DevicesDialog from './devicesDialog';
 import WantAgent from '@ohos.wantAgent';
-import IconListComponent, {getIconListSize} from './iconListComponent';
-import ScrollbarManager from '../../common/ScrollbarManager';
+import {BottomLeftItem} from './iconListComponent';
+import deviceInfo from '@ohos.deviceInfo';
+import SwipeLayout from './SwipeLayout';
+import {getId} from '../../model/SwipeLayoutUtils';
 
 const TAG = 'NoticeItem-NotificationItem';
+const deviceTypeInfo = deviceInfo.deviceType;
 
 @Component
 export default struct NotificationItem {
   @State mIconAlpha: number = 0;
-  @State @Watch('scrollEdge') mEdgeEnd: boolean = false;
-  @State itemWidth: string = '100%'
-  private itemData: any = {}
+  @State itemWidth: string = '100%';
+  private itemData: any = {};
   private isSubItem: boolean= false;
-  private mScroller: Scroller = new Scroller();
 
-  build() {
-    Stack() {
-      Scroll(this.mScroller) {
-        Row() {
-          FrontItem({ itemData: this.itemData, isSubItem: this.isSubItem })
-          IconListComponent({ iconAlpha: this.mIconAlpha, itemData: this.itemData })
-        }
-      }
-      .scrollable(ScrollDirection.Horizontal)
-      .scrollBar(BarState.On)
-      .onScroll(() => {
-        let accuracy = 0.1
-        let newOpacity = this.mScroller.currentOffset().xOffset * 1.0 / getIconListSize()
-        let diffs = Math.abs(this.mIconAlpha - newOpacity)
-        if (diffs >= accuracy) {
-          let finalAlpha = newOpacity < accuracy ? 0 : newOpacity
-          finalAlpha = finalAlpha > (1 - accuracy) ? 1 : finalAlpha
-          this.mIconAlpha = finalAlpha
-        }
-      })
-      .onScrollEnd(() => {
-        this.mEdgeEnd = (this.mEdgeEnd &&
-        this.mScroller.currentOffset().xOffset > (getIconListSize() - Layout.SCROLL_THRESHOLD))
-        || (!this.mEdgeEnd && this.mScroller.currentOffset().xOffset > Layout.SCROLL_THRESHOLD)
-        ScrollbarManager.restoreOtherScroll(this.mScroller);
-      })
-    }.width(this.itemWidth)
+  deleteButtonCallback(){
+    NotificationViewModel.removeNotificationItem(this.itemData, true);
+  }
+
+  @Builder SurfaceComponent() {
+    Column() {
+      FrontItem({ itemData: this.itemData, isSubItem: this.isSubItem })
+    }
+    .width(this.itemWidth)
     .borderRadius(!this.isSubItem ? $r("sys.float.ohos_id_corner_radius_default_l") : 0)
     .clip(!this.isSubItem)
   }
 
-  scrollEdge() {
-    this.mScroller.scrollEdge(this.mEdgeEnd ? Edge.End : Edge.Start)
+  @Builder BottomLeftComponent() {
+    BottomLeftItem({itemData: this.itemData, height: 92});
+  }
+
+  build() {
+    Column(){
+      SwipeLayout({
+        id: getId(this.itemData, false),
+        bottomLeftWidth: 80,
+        bottomRightWidth: 60,
+        leftThreshold: 100,
+        bottomHeight: 92,
+        deleteButtonCallback: this.deleteButtonCallback.bind(this),
+        SurfaceComponent: this.SurfaceComponent.bind(this),//bug： 此处需绑定this，否则控件无法正常显示
+        BottomLeftComponent: this.BottomLeftComponent.bind(this)
+      })
+    }
+    .width(this.itemWidth)
+    .height(92)//bug： 在子控件swipelayout中使用position属性，若此处不指定高度值，使用了position属性的swipelayout无法正常显示。
+    .borderRadius(!this.isSubItem ? $r("sys.float.ohos_id_corner_radius_default_l") : 0)
+    .clip(!this.isSubItem)
   }
 }
 
@@ -105,10 +107,10 @@ struct FrontItem {
     let wantAgent = this.itemData?.want;
     if (!!wantAgent) {
       WantAgent.getWant(wantAgent).then((want) => {
-        this.nowWant = want
+        this.nowWant = want;
         Log.showInfo(TAG, `showDevicesDialog want: ${JSON.stringify(this.nowWant)}`);
         if (!want?.deviceId) {
-          this.devicesDialogController.open()
+          this.devicesDialogController.open();
         } else {
           NotificationViewModel.clickItem(this.itemData);
         }
@@ -127,7 +129,6 @@ struct FrontItem {
       permission: '',
       extraInfo: {}
     };
-    NotificationViewModel.clickDistributionItem(this.itemData, triggerInfo)
+    NotificationViewModel.clickDistributionItem(this.itemData, triggerInfo);
   }
 }
-

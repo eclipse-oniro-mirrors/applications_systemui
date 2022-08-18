@@ -15,8 +15,9 @@
 
 import Log from '../../../../../../../../../common/src/main/ets/default/Log';
 import Constants, {NotificationLayout as Layout} from '../common/constants';
-import NotificationItem from './item/notificationItem'
-import GroupNotificationItem from './item/groupItem'
+import NotificationItem from './item/notificationItem';
+import GroupNotificationItem from './item/groupItem';
+import ExpandInfoManager from '../model/ExpandInfoManager';
 
 const TAG = 'NoticeItem-NotificationListComponent';
 
@@ -28,10 +29,10 @@ type NotificationLayoutConfig = {
 export default struct NotificationListComponent {
   // 当长通知消息展开时，这里用于重新刷新item布局，扩展高度
   @Provide('notificationUpdate') update: number = 0;
-  @StorageLink('notificationList') notificationList: any[] = []
+  @StorageLink('notificationList') notificationList: any[] = [];
   private config: NotificationLayoutConfig = {
     itemMargin: Layout.ITEM_MARGIN
-  }
+  };
 
   aboutToAppear() {
     Log.showDebug(TAG, `notificationList, aboutToAppear`);
@@ -39,6 +40,11 @@ export default struct NotificationListComponent {
 
   aboutToDisappear() {
     Log.showDebug(TAG, `aboutToDisAppear`);
+  }
+
+  deleteExpandInfo(itemData){
+    ExpandInfoManager.deleteExpandInfo(itemData);
+    return true;
   }
 
   build() {
@@ -52,12 +58,16 @@ export default struct NotificationListComponent {
           if (item.length > 1) {
             GroupNotificationItem({ groupData: item })
           } else {
-            NotificationItem({ itemData: item[0] })
+            if(this.deleteExpandInfo(item[0])){
+              //更新组展开信息
+              NotificationItem({ itemData: item[0] })
+            }
           }
         }
       }, (list: any) => JSON.stringify(list.map((item) => `${item.hashcode}_${item.timestamp}`)))
     }
     .align(Alignment.Top)
     .width('100%')
+    .height('100%')
   }
 }
