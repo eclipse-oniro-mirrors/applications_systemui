@@ -73,11 +73,12 @@ export default struct SetEnable {
               .padding({ left: $r('sys.float.ohos_id_default_padding_start'), right: $r('sys.float.ohos_id_default_padding_end')})
               .height($r('app.float.notice_row_height'))
 
-              Row() {
-                SlotLstComponent({ appInfo: appInfo ,slotLst: $slotLst})
+              if (this.initState && this.slotLst?.length > 0) {
+                Row() {
+                  SlotLstComponent({ appInfo: appInfo ,slotLst: $slotLst})
+                }
+                .align(Alignment.Start)
               }
-              .align(Alignment.Start)
-              .visibility(this.initState ? Visibility.Visible : Visibility.Hidden);
             }
             .width(ConfigData.WH_100_100)
             .height(ConfigData.WH_100_100)
