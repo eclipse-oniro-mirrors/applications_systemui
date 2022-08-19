@@ -11,6 +11,10 @@
     {
       "name": "description_mainability",
       "value": "SystemUI ServiceExtension"
+    },
+    {
+      "name": "distributed_data_sync_reason",
+      "value": "SystemUI Distributed Notification Request"
     }
   ]
 }
