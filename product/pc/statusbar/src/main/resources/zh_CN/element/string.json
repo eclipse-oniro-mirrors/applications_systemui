@@ -47,6 +47,14 @@
     {
       "name": "signal_null",
       "value": "×"
+    },
+    {
+      "name": "incoming_call",
+      "value": "来电"
+    },
+    {
+      "name": "communicate_by_phone",
+      "value": "通话"
     }
   ]
 }
