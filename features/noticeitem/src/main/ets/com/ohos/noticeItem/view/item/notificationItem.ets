@@ -34,6 +34,15 @@ export default struct NotificationItem {
   @State itemWidth: string = '100%';
   private itemData: any = {};
   private isSubItem: boolean= false;
+  registerEventCapture: (id: string) => boolean = null;
+
+  registerNotificationItemEventCapture(id: string){
+    if(this.registerEventCapture != null && this.registerEventCapture(id)){
+      return true;
+    } else {
+      return false;
+    }
+  }
 
   deleteButtonCallback(){
     NotificationViewModel.removeNotificationItem(this.itemData, true);
@@ -62,7 +71,8 @@ export default struct NotificationItem {
         bottomHeight: 92,
         deleteButtonCallback: this.deleteButtonCallback.bind(this),
         SurfaceComponent: this.SurfaceComponent.bind(this),//bug： 此处需绑定this，否则控件无法正常显示
-        BottomLeftComponent: this.BottomLeftComponent.bind(this)
+        BottomLeftComponent: this.BottomLeftComponent.bind(this),
+        registerEventCapture: this.registerNotificationItemEventCapture.bind(this)
       })
     }
     .width(this.itemWidth)
