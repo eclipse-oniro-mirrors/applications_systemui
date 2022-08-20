@@ -30,6 +30,7 @@ export default struct SwipeLayout {
   lastTouchX: number = 0;
   rateSurface: number = 1/1.3;//跟手
   rateDelete: number = 1/6;//右侧删除图标移动比例
+  eventCaptureFlag: boolean = true;//false代表控件不消费该事件，true代表所有其他情况
 
 
   //需要配置项
@@ -166,10 +167,11 @@ export default struct SwipeLayout {
     }
     .width('100%')
     .onTouch( (touchEvent: TouchEvent) => {
-      if(this.registerEventCapture != null && this.registerEventCapture(this.id)){
-        return;//表示询问过父组件后，如果该事件由父组件消费， 则本组件不会继续执行以后的逻辑。 如果上层的各级父组件都不消费，那么就由本组件消费
-      }
-      if (touchEvent.type == TouchType.Down) {
+      if (touchEvent.type == TouchType.Down) {//eventCaptureFlag
+        if(this.registerEventCapture != null && this.registerEventCapture(this.id)){
+          this.eventCaptureFlag = false;//使用标志位，实现该部分逻辑只在down中执行一次
+          return;//表示询问过父组件后，如果该事件由父组件消费， 则本组件不会继续执行以后的逻辑。 如果上层的各级父组件都不消费，那么就由本组件消费
+        }
         if(this.surfaceWidth == -1){
           this.surfaceWidth = Number(touchEvent.target.area.width)//获取父组件的宽度,然后对滑动动效中所用的尺寸数据进行初始化
           this.initState()
@@ -183,6 +185,9 @@ export default struct SwipeLayout {
           AppStorage.SetOrCreate('swipelayout', this.id);//通过加appstorage的校验，可以防止嵌套使用时父组件由于阻止冒泡事件失效而触发滑动
         }
       } else if (touchEvent.type == TouchType.Move) {
+        if(this.eventCaptureFlag == false){
+          return;//本控件不消费该事件，因此不执行move中的逻辑
+        }
         if (AppStorage.Get('swipelayout') != this.id){//只有匹配的id才允许被滑动，防止嵌套使用时父组件由于阻止冒泡事件失效而触发滑动
           return;
         }
@@ -251,6 +256,7 @@ export default struct SwipeLayout {
         this.lastTouchX = touchEvent.touches[0].screenX;
 
       } else if (touchEvent.type == TouchType.Up) {
+        this.eventCaptureFlag = true;//将标志位置为true，默认控件响应滑动
         AppStorage.Delete('swipelayout');//删除该字段,这样group会有左滑的机会
         if(this.responseSwipeEvent == false) {
           return;
