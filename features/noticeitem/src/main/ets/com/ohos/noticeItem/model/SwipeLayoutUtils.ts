@@ -37,6 +37,10 @@ class FocusCallback{
     }
     return;
   }
+
+  getLastFocusId(): string{
+    return FocusCallback.lastFocusId;
+  }
 }
 
 export function getId(itemData, isGroup): string{

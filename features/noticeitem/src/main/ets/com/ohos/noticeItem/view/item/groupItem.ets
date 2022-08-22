@@ -22,6 +22,7 @@ import deviceInfo from '@ohos.deviceInfo';
 import ExpandInfoManager from '../../model/ExpandInfoManager';
 import {getId} from '../../model/SwipeLayoutUtils';
 import {BottomLeftItem} from './iconListComponent';
+import FocusCallBack from '../../model/SwipeLayoutUtils';
 
 const TAG = 'NoticeItem-GroupItem';
 const deviceTypeInfo = deviceInfo.deviceType;
@@ -32,6 +33,18 @@ export default struct GroupItem {
   @State distributedDeviceName: string = '';
   @State @Watch('expandChange') toExpand: boolean = false;
   private groupData: any[] = [];
+
+  registerGroupItemEventCapture(id: string){
+    if(FocusCallBack.getLastFocusId() == getId(this.groupData[0], true)){
+      //如果上次滑动的是该group, 它自身允许滑动， 但它的子控件不应该滑动
+      if(id == getId(this.groupData[0], true)){
+        return false;
+      }
+      return true;
+    } else {
+      return false;
+    }
+  }
 
   expandChange() {
     this.updateFlag++;
@@ -108,7 +121,7 @@ export default struct GroupItem {
         Row().height($r("app.float.notice_divider")).width(Constants.FULL_CONTAINER_WIDTH)
       }
       Column() {
-        ContentList({ groupData: this.groupData, toExpand: this.toExpand })
+        ContentList({ groupData: this.groupData, toExpand: this.toExpand, registerEventCapture: this.registerGroupItemEventCapture.bind(this)  })
       }
       .width(Constants.FULL_CONTAINER_WIDTH)
     }
@@ -130,7 +143,8 @@ export default struct GroupItem {
         bottomHeight: 92,//可调参
         deleteButtonCallback: this.deleteButtonCallback.bind(this),
         SurfaceComponent: this.SurfaceComponent.bind(this),
-        BottomLeftComponent: this.BottomLeftComponent.bind(this)
+        BottomLeftComponent: this.BottomLeftComponent.bind(this),
+        registerEventCapture: this.registerGroupItemEventCapture.bind(this)
       })
     }
     .width(Constants.FULL_CONTAINER_WIDTH)
@@ -145,6 +159,15 @@ struct ContentList {
   @State @Watch('remainderChange') groupData: any[] = [];
   @Prop toExpand: boolean;
   @State remainderNum: number= 0;
+  registerEventCapture: (id: string) => boolean = null;
+
+  registerContentListEventCapture(id: string){
+    if(this.registerEventCapture != null && this.registerEventCapture(id)){
+      return true;
+    } else {
+      return false;
+    }
+  }
 
   aboutToAppear() {
     this.remainderNum = this.groupData.length - 2;
@@ -212,7 +235,7 @@ struct ContentList {
         List() {
           ForEach(this.groupData, (item: any) => {
             ListItem() {
-              NotificationItem({ itemData: item, isSubItem: true })
+              NotificationItem({ itemData: item, isSubItem: true, registerEventCapture: this.registerContentListEventCapture.bind(this) })
             }
           }, (item: any) => `${item.hashcode}_${item.timestamp}_subitem`)
         }
