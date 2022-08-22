@@ -67,11 +67,11 @@ const HIDE_ANIM_CONFIG = {
 @Entry
 @Component
 struct Index {
-  @State showComponentName: string = undefined
-  @State componentOptAreaHeightPX: number = 0
-  @StorageLink('StatusCoefficient') StatusCoefficient: number = 1.0
+  @State showComponentName: string = undefined;
+  @State componentOptAreaHeightPX: number = 0;
+  @StorageLink('StatusCoefficient') StatusCoefficient: number = 1.0;
   mCallback: any;
-  mClearCallbacks: unsubscribe[]
+  mClearCallbacks: unsubscribe[];
   settingDataKey = 'settings.display.navigationbar_status';
   urivar: string = null;
   helper: any = null;
@@ -79,12 +79,12 @@ struct Index {
   navigationBarWidth: number = 0;
   mNeedUpdate: boolean = false;
   mWidthPx: number = 0;
-  @State mNotificationInsert: any = {}
-  @State mNotificationDelete: any = {}
-  @State mControlCenterInsert: any = {}
-  @State mControlCenterDelete: any = {}
-  @State componentOptAreaTranslateY: string = '0px'
-  @State backgroundOpacity: number = 0
+  @State mNotificationInsert: any = {};
+  @State mNotificationDelete: any = {};
+  @State mControlCenterInsert: any = {};
+  @State mControlCenterDelete: any = {};
+  @State componentOptAreaTranslateY: string = '0px';
+  @State backgroundOpacity: number = 0;
 
   onBackPress(): boolean {
     return true
