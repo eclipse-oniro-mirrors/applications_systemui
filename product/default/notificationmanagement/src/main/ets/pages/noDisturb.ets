@@ -16,13 +16,14 @@
 import Log from '../../../../../../../common/src/main/ets/default/Log';
 import HeadComponent from '../../../../../../../features/managementcomponent/src/main/ets/com/ohos/view/component/headcomponent';
 import ConfigData from '../common/constants';
-import Router from '@system.router'
+import deviceInfo from '@ohos.deviceInfo';
 import { concatTime } from '../../../../../../../common/src/main/ets/default/timemanager';
 import ItemComponent from '../../../../../../../features/managementcomponent/src/main/ets/com/ohos/view/component/itemcomponent';
 import {DoNotDisturbType} from '../../../../../../../features/managementcomponent/src/main/ets/com/ohos/common/constants';
 import NoDisturbingModel from '../../../../../../../features/managementcomponent/src/main/ets/com/ohos/model/nodisturbingmodel';
 import ViewModel from '../vm/nodisturbviewmodel'
 
+const deviceTypeInfo = deviceInfo.deviceType
 const TAG = 'NotificationManagement-NoDisturb';
 const GROUP_REPEAT_MODE = 'repeatMode'
 
@@ -46,8 +47,11 @@ export default struct NoDisturb {
       title: $r('app.string.startDate'),
       defaultDate: this.mViewModel.defaultStartTime
     }),
+    autoCancel: false,
     cancel: ()=>this.mViewModel.onCancel(),
-    autoCancel: false
+    alignment: deviceTypeInfo === "phone" ? DialogAlignment.Bottom : DialogAlignment.Center,
+    offset: ({ dx: 0, dy: deviceTypeInfo === "phone" ? '-16dp' : 0 }),
+    customStyle: true
   });
   startTimeDialogController: CustomDialogController = new CustomDialogController({
     builder: TimeDialog({
@@ -55,8 +59,11 @@ export default struct NoDisturb {
       title: $r('app.string.startTime'),
       defaultDate: this.mViewModel.defaultStartTime
     }),
+    autoCancel: false,
     cancel: ()=>this.mViewModel.onCancel(),
-    autoCancel: false
+    alignment: deviceTypeInfo === "phone" ? DialogAlignment.Bottom : DialogAlignment.Center,
+    offset: ({ dx: 0, dy: deviceTypeInfo === "phone" ? '-16dp' : 0 }),
+    customStyle: true
   });
   endDateDialogController: CustomDialogController = new CustomDialogController({
     builder: DateDialog({
@@ -64,8 +71,11 @@ export default struct NoDisturb {
       title: $r('app.string.endDate'),
       defaultDate: this.mViewModel.defaultEndTime
     }),
+    autoCancel: false,
     cancel: ()=>this.mViewModel.onCancel(),
-    autoCancel: false
+    alignment: deviceTypeInfo === "phone" ? DialogAlignment.Bottom : DialogAlignment.Center,
+    offset: ({ dx: 0, dy: deviceTypeInfo === "phone" ? '-16dp' : 0 }),
+    customStyle: true
   });
   endTimeDialogController: CustomDialogController = new CustomDialogController({
     builder: TimeDialog({
@@ -73,17 +83,23 @@ export default struct NoDisturb {
       title: $r('app.string.endTime'),
       defaultDate: this.mViewModel.defaultEndTime
     }),
+    autoCancel: false,
     cancel: ()=>this.mViewModel.onCancel(),
-    autoCancel: false
+    alignment: deviceTypeInfo === "phone" ? DialogAlignment.Bottom : DialogAlignment.Center,
+    offset: ({ dx: 0, dy: deviceTypeInfo === "phone" ? '-16dp' : 0 }),
+    customStyle: true
   });
   repeatDialogController: CustomDialogController = new CustomDialogController({
     builder: RepeatModeDialog({
-      action:(data)=> this.setRepeatMode(data),
+      action: (data) => this.setRepeatMode(data),
       title: $r('app.string.repeat'),
       selectMode: this.mViewModel.repeatMode
     }),
-    cancel: ()=>this.mViewModel.onCancel(),
-    autoCancel: false
+    autoCancel: false,
+    cancel: () => this.mViewModel.onCancel(),
+    alignment: deviceTypeInfo === "phone" ? DialogAlignment.Bottom : DialogAlignment.Center,
+    offset: ({ dx: 0, dy: 0 }),
+    customStyle: true
   });
 
   build() {
@@ -287,57 +303,66 @@ struct DateDialog {
   build() {
     Column() {
       Column() {
-        Text(this.title)
-          .height($r('app.float.dialog_title_height'))
-          .width(ConfigData.WH_100_100)
-          .textAlign(TextAlign.Center)
-          .fontSize($r('app.float.dialog_title_font'))
-          .fontWeight(FontWeight.Medium)
-        DatePicker({ start: this.minDate, end: this.maxDate, selected: this.defaultDate })
-          .onChange((date: DatePickerResult) => {
-            let dateSource = new Date(date.year, date.month, date.day);
-            this.selectedDate = NoDisturbingModel.formatDate(dateSource);
+        Column() {
+          Text(this.title)
+            .height($r('app.float.dialog_title_height'))
+            .width(ConfigData.WH_100_100)
+            .textAlign(TextAlign.Center)
+            .fontSize($r("sys.float.ohos_id_text_size_headline8"))
+            .fontWeight(FontWeight.Medium)
+          DatePicker({ start: this.minDate, end: this.maxDate, selected: this.defaultDate })
+            .onChange((date: DatePickerResult) => {
+              let dateSource = new Date(date.year, date.month, date.day);
+              this.selectedDate = NoDisturbingModel.formatDate(dateSource);
+            })
+            .width(ConfigData.WH_100_100)
+            .height($r('app.float.timeDialog_datePicker_height'))
+        }
+
+        Row() {
+          Column() {
+            Text($r('app.string.cancel'))
+              .fontSize($r("sys.float.ohos_id_text_size_button1"))
+              .fontColor($r("app.color.font_color_007DFF"))
+              .fontWeight(FontWeight.Medium)
+
+          }.onClick(() => {
+            this.controller.close();
           })
-          .width(ConfigData.WH_100_100)
-          .height($r('app.float.timeDialog_datePicker_height'))
+          .alignItems(HorizontalAlign.Center)
+          .width(ConfigData.WH_50_100);
+          Divider()
+            .vertical(true)
+            .color($r('app.color.divider_color'))
+            .strokeWidth(1)
+            .height($r('app.float.divider_height'))
+          Column() {
+            Text($r('app.string.confirm'))
+              .fontSize($r("sys.float.ohos_id_text_size_button1"))
+              .fontColor($r("app.color.font_color_007DFF"))
+              .fontWeight(FontWeight.Medium)
+          }.onClick(() => {
+            Log.showDebug(TAG, `confirm button of DateDialog on click`)
+            this.controller.close();
+            if(this.selectedDate != '') {
+              this.action(this.selectedDate);
+            }
+          })
+          .alignItems(HorizontalAlign.Center)
+          .width(ConfigData.WH_50_100)
+        }
+        .width(ConfigData.WH_100_100)
+        .margin({top: $r("app.float.noDisturb_margin_16"), bottom: $r("app.float.noDisturb_margin_16")})
       }
-
-      Row() {
-        Column() {
-          Text($r('app.string.cancel'))
-            .fontSize($r('app.float.dialog_button_font'))
-            .fontColor(Color.Blue)
-
-        }.onClick(() => {
-          this.controller.close();
-        })
-        .alignItems(HorizontalAlign.Center)
-        .width(ConfigData.WH_50_100);
-        Divider()
-          .vertical(true)
-          .color($r('app.color.divider_color'))
-          .strokeWidth(1)
-          .height($r('app.float.divider_height'))
-        Column() {
-          Text($r('app.string.confirm'))
-            .fontSize($r('app.float.dialog_button_font'))
-            .fontColor(Color.Blue)
-
-        }.onClick(() => {
-          Log.showDebug(TAG, `confirm button of DateDialog on click`)
-          this.controller.close();
-          if(this.selectedDate != '') {
-            this.action(this.selectedDate);
-          }
-        })
-        .alignItems(HorizontalAlign.Center)
-        .width(ConfigData.WH_50_100)
-      }
-      .width(ConfigData.WH_100_100)
-      .margin({top: $r("app.float.noDisturb_margin_16"), bottom: $r("app.float.noDisturb_margin_16")})
+      .padding({
+        left: $r("app.float.repeatDialog_padding"),
+        right: $r("app.float.repeatDialog_padding")
+      })
+      .alignItems(HorizontalAlign.Center)
+      .backgroundColor($r("sys.color.ohos_id_color_dialog_bg"))
+      .borderRadius($r("app.float.border_radius"))
     }
-    .height($r('app.float.timeDialog_height'))
-    .width(ConfigData.WH_100_100)
+    .width(deviceTypeInfo === "phone" ? ConfigData.WH_100_100 : $r("app.float.repeatDialog_width"))
   }
 }
 
@@ -355,57 +380,65 @@ struct TimeDialog {
   build() {
     Column() {
       Column() {
-        Text(this.title)
-          .height($r('app.float.dialog_title_height'))
-          .width(ConfigData.WH_100_100)
-          .textAlign(TextAlign.Center)
-          .fontSize($r('app.float.dialog_title_font'))
-          .fontWeight(FontWeight.Medium)
-        TimePicker({ selected: this.defaultDate, })
-          .useMilitaryTime(false)
-          .onChange((date: TimePickerResult) => {
-            this.selectedTime = concatTime(date.hour, date.minute);
+        Column() {
+          Text(this.title)
+            .height($r('app.float.dialog_title_height'))
+            .width(ConfigData.WH_100_100)
+            .textAlign(TextAlign.Center)
+            .fontSize($r("sys.float.ohos_id_text_size_headline8"))
+            .fontWeight(FontWeight.Medium)
+          TimePicker({ selected: this.defaultDate, })
+            .useMilitaryTime(false)
+            .onChange((date: TimePickerResult) => {
+              this.selectedTime = concatTime(date.hour, date.minute);
+            })
+            .width(ConfigData.WH_100_100)
+            .height($r('app.float.timeDialog_datePicker_height'))
+        }.padding({ left: $r('sys.float.ohos_id_max_padding_start'), right: $r('sys.float.ohos_id_max_padding_end') })
+
+        Row() {
+          Column() {
+            Text($r('app.string.cancel'))
+              .fontSize($r("sys.float.ohos_id_text_size_button1"))
+              .fontColor($r("app.color.font_color_007DFF"))
+              .fontWeight(FontWeight.Medium)
+          }.onClick(() => {
+            this.controller.close();
           })
-          .width(ConfigData.WH_100_100)
-          .height($r('app.float.timeDialog_datePicker_height'))
+          .alignItems(HorizontalAlign.Center)
+          .width(ConfigData.WH_50_100);
+          Divider()
+            .vertical(true)
+            .color($r('app.color.divider_color'))
+            .strokeWidth(1)
+            .height($r('app.float.divider_height'))
+          Column() {
+            Text($r('app.string.confirm'))
+              .fontSize($r("sys.float.ohos_id_text_size_button1"))
+              .fontColor($r("app.color.font_color_007DFF"))
+              .fontWeight(FontWeight.Medium)
+          }.onClick(() => {
+            Log.showDebug(TAG, `confirm button of TimeDialog on click`)
+            this.controller.close();
+            if(this.selectedTime != '') {
+              this.action(this.selectedTime);
+            }
+          })
+          .alignItems(HorizontalAlign.Center)
+          .width(ConfigData.WH_50_100)
+        }
+        .width(ConfigData.WH_100_100)
+        .margin({ top: $r("app.float.noDisturb_margin_16"), bottom: $r("app.float.noDisturb_margin_16") })
       }
-
-      Row() {
-        Column() {
-          Text($r('app.string.cancel'))
-            .fontSize($r('app.float.dialog_button_font'))
-            .fontColor(Color.Blue)
-
-        }.onClick(() => {
-          this.controller.close();
-        })
-        .alignItems(HorizontalAlign.Center)
-        .width(ConfigData.WH_50_100);
-        Divider()
-          .vertical(true)
-          .color($r('app.color.divider_color'))
-          .strokeWidth(1)
-          .height($r('app.float.divider_height'))
-        Column() {
-          Text($r('app.string.confirm'))
-            .fontSize($r('app.float.dialog_button_font'))
-            .fontColor(Color.Blue)
-
-        }.onClick(() => {
-          Log.showDebug(TAG, `confirm button of TimeDialog on click`)
-          this.controller.close();
-          if(this.selectedTime != '') {
-            this.action(this.selectedTime);
-          }
-        })
-        .alignItems(HorizontalAlign.Center)
-        .width(ConfigData.WH_50_100)
-      }
-      .width(ConfigData.WH_100_100)
-      .margin({top: $r("app.float.noDisturb_margin_16"), bottom: $r("app.float.noDisturb_margin_16")})
+      .padding({
+        left: $r("app.float.repeatDialog_padding"),
+        right: $r("app.float.repeatDialog_padding")
+      })
+      .alignItems(HorizontalAlign.Center)
+      .backgroundColor($r("sys.color.ohos_id_color_dialog_bg"))
+      .borderRadius($r("app.float.border_radius"))
     }
-    .height($r('app.float.timeDialog_height'))
-    .width(ConfigData.WH_100_100)
+    .width(deviceTypeInfo === "phone" ? ConfigData.WH_100_100 : $r("app.float.repeatDialog_width"))
   }
 }
 
@@ -423,129 +456,134 @@ struct RepeatModeDialog {
   build() {
     Column() {
       Column() {
-        Text(this.title)
-          .height($r('app.float.dialog_title_height'))
-          .width(ConfigData.WH_100_100)
-          .textAlign(TextAlign.Center)
-          .fontSize($r('app.float.dialog_title_font'))
-          .fontWeight(FontWeight.Medium)
-        Row() {
-          Text($r('app.string.noDisturb_none'))
-            .fontSize($r('app.float.repeatDialog_cont_font'))
-            .fontColor(Color.Black)
-            .width(ConfigData.WH_70_100)
-            .textAlign(TextAlign.Start)
-            .align(Alignment.Start)
-          Radio({ value: '' + DoNotDisturbType.TYPE_NONE, group: GROUP_REPEAT_MODE })
-            .checked(this.selectMode == DoNotDisturbType.TYPE_NONE)
-            .align(Alignment.End)
-            .width($r('app.float.toggle_check_width'))
-            .height($r('app.float.toggle_check_width'))
-            .onClick(() => {
-              if (this.prevModeSetCnt == 0) {
-                this.itSelectedBefore = this.selectMode;
-              }
-              this.prevModeSetCnt++
-              this.selectMode = DoNotDisturbType.TYPE_NONE;
-            })
-        }
-        Row() {
-          Text($r('app.string.noDisturb_once'))
-            .fontSize($r('app.float.repeatDialog_cont_font'))
-            .fontColor(Color.Black)
-            .width(ConfigData.WH_70_100)
-            .textAlign(TextAlign.Start)
-            .align(Alignment.Start)
-          Radio({ value: '' + DoNotDisturbType.TYPE_ONCE, group: GROUP_REPEAT_MODE })
-            .checked(this.selectMode == DoNotDisturbType.TYPE_ONCE)
-            .align(Alignment.End)
-            .width($r('app.float.toggle_check_width'))
-            .height($r('app.float.toggle_check_width'))
-            .onClick(() => {
-              if (this.prevModeSetCnt == 0) {
-                this.itSelectedBefore = this.selectMode;
-              }
-              this.prevModeSetCnt++
-              this.selectMode = DoNotDisturbType.TYPE_ONCE;
-            })
-        }
-        Row() {
-          Text($r('app.string.noDisturb_daily'))
-            .fontSize($r('app.float.repeatDialog_cont_font'))
-            .fontColor(Color.Black)
-            .width(ConfigData.WH_70_100)
-            .textAlign(TextAlign.Start)
-            .align(Alignment.Start)
-          Radio({ value: '' + DoNotDisturbType.TYPE_DAILY, group: GROUP_REPEAT_MODE })
-            .checked(this.selectMode == DoNotDisturbType.TYPE_DAILY)
-            .align(Alignment.End)
-            .width($r('app.float.toggle_check_width'))
-            .height($r('app.float.toggle_check_width'))
-            .onClick(() => {
-              if (this.prevModeSetCnt == 0) {
-                this.itSelectedBefore = this.selectMode;
-              }
-              this.prevModeSetCnt++
-              this.selectMode = DoNotDisturbType.TYPE_DAILY;
-            })
-        }
-        Row() {
-          Text($r('app.string.noDisturb_clearly'))
-            .fontSize($r('app.float.repeatDialog_cont_font'))
-            .fontColor(Color.Black)
-            .width(ConfigData.WH_70_100)
-            .textAlign(TextAlign.Start)
-            .align(Alignment.Start)
-          Radio({ value: '' + DoNotDisturbType.TYPE_CLEARLY, group: GROUP_REPEAT_MODE })
-            .checked(this.selectMode == DoNotDisturbType.TYPE_CLEARLY)
-            .align(Alignment.End)
-            .width($r('app.float.toggle_check_width'))
-            .height($r('app.float.toggle_check_width'))
-            .onClick(() => {
-              if (this.prevModeSetCnt == 0) {
-                this.itSelectedBefore = this.selectMode;
-              }
-              this.prevModeSetCnt++
-              this.selectMode = DoNotDisturbType.TYPE_CLEARLY;
-            })
-        }
-      }
-
-      Row() {
         Column() {
-          Text($r('app.string.cancel'))
-            .fontSize($r('app.float.dialog_button_font'))
-            .fontColor($r("app.color.font_color_007DFF"))
+          Text(this.title)
+            .width(ConfigData.WH_100_100)
+            .height($r('app.float.dialog_title_height'))
+            .fontFamily("HarmonyHeiTi")
+            .textAlign(TextAlign.Center)
+            .fontSize($r("sys.float.ohos_id_text_size_headline8"))
+            .fontWeight(FontWeight.Medium)
 
-        }.onClick(() => {
-          this.controller.close();
-        })
-        .alignItems(HorizontalAlign.Center)
-        .width(ConfigData.WH_50_100);
-        Divider()
-          .vertical(true)
-          .color($r('app.color.divider_color'))
-          .strokeWidth(1)
-          .height($r('app.float.divider_height'))
-        Column() {
-          Text($r('app.string.confirm'))
-            .fontSize($r('app.float.dialog_button_font'))
-            .fontColor($r("app.color.font_color_007DFF"))
-
-        }.onClick(() => {
-          Log.showDebug(TAG, `confirm button of TimeDialog on click`)
-          this.controller.close();
-          if (this.itSelectedBefore != -1 && this.itSelectedBefore != this.selectMode){
-            this.action(this.selectMode);
+          Flex({ justifyContent: FlexAlign.SpaceBetween, alignItems: ItemAlign.Center }) {
+            Text($r('app.string.noDisturb_none'))
+              .fontFamily("HarmonyHeiTi")
+              .fontSize($r("sys.float.ohos_id_text_size_body1"))
+              .fontWeight(FontWeight.Medium)
+            Radio({ value: '' + DoNotDisturbType.TYPE_NONE, group: GROUP_REPEAT_MODE })
+              .checked(this.selectMode == DoNotDisturbType.TYPE_NONE)
+              .width($r('app.float.toggle_check_width'))
+              .height($r('app.float.toggle_check_width'))
           }
-        })
-        .alignItems(HorizontalAlign.Center)
-        .width(ConfigData.WH_50_100)
+          .height($r("app.float.appitem_icon_height"))
+          .onClick(() => {
+            if (this.prevModeSetCnt == 0) {
+              this.itSelectedBefore = this.selectMode;
+            }
+            this.prevModeSetCnt++
+            this.selectMode = DoNotDisturbType.TYPE_NONE;
+          })
+
+          Flex({ justifyContent: FlexAlign.SpaceBetween, alignItems: ItemAlign.Center }) {
+            Text($r('app.string.noDisturb_once'))
+              .fontFamily("HarmonyHeiTi")
+              .fontSize($r("sys.float.ohos_id_text_size_body1"))
+              .fontWeight(FontWeight.Medium)
+            Radio({ value: '' + DoNotDisturbType.TYPE_ONCE, group: GROUP_REPEAT_MODE })
+              .checked(this.selectMode == DoNotDisturbType.TYPE_ONCE)
+              .width($r('app.float.toggle_check_width'))
+              .height($r('app.float.toggle_check_width'))
+          }
+          .height($r("app.float.appitem_icon_height"))
+          .onClick(() => {
+            if (this.prevModeSetCnt == 0) {
+              this.itSelectedBefore = this.selectMode;
+            }
+            this.prevModeSetCnt++
+            this.selectMode = DoNotDisturbType.TYPE_ONCE;
+          })
+
+          Flex({ justifyContent: FlexAlign.SpaceBetween, alignItems: ItemAlign.Center }) {
+            Text($r('app.string.noDisturb_daily'))
+              .fontFamily("HarmonyHeiTi")
+              .fontSize($r("sys.float.ohos_id_text_size_body1"))
+              .fontWeight(FontWeight.Medium)
+            Radio({ value: '' + DoNotDisturbType.TYPE_DAILY, group: GROUP_REPEAT_MODE })
+              .checked(this.selectMode == DoNotDisturbType.TYPE_DAILY)
+              .width($r('app.float.toggle_check_width'))
+              .height($r('app.float.toggle_check_width'))
+          }
+          .height($r("app.float.appitem_icon_height"))
+          .onClick(() => {
+            if (this.prevModeSetCnt == 0) {
+              this.itSelectedBefore = this.selectMode;
+            }
+            this.prevModeSetCnt++
+            this.selectMode = DoNotDisturbType.TYPE_DAILY;
+          })
+
+          Flex({ justifyContent: FlexAlign.SpaceBetween, alignItems: ItemAlign.Center }) {
+            Text($r('app.string.noDisturb_clearly'))
+              .fontFamily("HarmonyHeiTi")
+              .fontSize($r("sys.float.ohos_id_text_size_body1"))
+              .fontWeight(FontWeight.Medium)
+            Radio({ value: '' + DoNotDisturbType.TYPE_CLEARLY, group: GROUP_REPEAT_MODE })
+              .checked(this.selectMode == DoNotDisturbType.TYPE_CLEARLY)
+              .width($r('app.float.toggle_check_width'))
+              .height($r('app.float.toggle_check_width'))
+          }
+          .height($r("app.float.appitem_icon_height"))
+          .onClick(() => {
+            if (this.prevModeSetCnt == 0) {
+              this.itSelectedBefore = this.selectMode;
+            }
+            this.prevModeSetCnt++
+            this.selectMode = DoNotDisturbType.TYPE_CLEARLY;
+          })
+        }
+
+        Row() {
+          Column() {
+            Text($r('app.string.cancel'))
+              .fontSize($r("sys.float.ohos_id_text_size_button1"))
+              .fontColor($r("sys.color.ohos_id_color_text_primary_activated"))
+              .fontWeight(FontWeight.Medium)
+          }.onClick(() => {
+            this.controller.close();
+          })
+          .alignItems(HorizontalAlign.Center)
+          .width(ConfigData.WH_50_100);
+          Divider()
+            .vertical(true)
+            .color($r('app.color.divider_color'))
+            .strokeWidth(1)
+            .height($r('app.float.divider_height'))
+          Column() {
+            Text($r('app.string.confirm'))
+              .fontSize($r("sys.float.ohos_id_text_size_button1"))
+              .fontColor($r("sys.color.ohos_id_color_text_primary_activated"))
+              .fontWeight(FontWeight.Medium)
+          }.onClick(() => {
+            Log.showDebug(TAG, `confirm button of TimeDialog on click`)
+            this.controller.close();
+            if (this.itSelectedBefore != -1 && this.itSelectedBefore != this.selectMode) {
+              this.action(this.selectMode);
+            }
+          })
+          .alignItems(HorizontalAlign.Center)
+          .width(ConfigData.WH_50_100)
+        }
+        .width(ConfigData.WH_100_100)
+        .margin({ top: $r("app.float.noDisturb_margin_16"), bottom: $r("app.float.noDisturb_margin_16") })
       }
-      .width(ConfigData.WH_100_100)
-      .margin({top: $r("app.float.noDisturb_margin_16"), bottom: $r("app.float.noDisturb_margin_16")})
+      .padding({
+        left: $r("app.float.repeatDialog_padding"),
+        right: $r("app.float.repeatDialog_padding")
+      })
+      .alignItems(HorizontalAlign.Center)
+      .backgroundColor($r("sys.color.ohos_id_color_dialog_bg"))
+      .borderRadius($r("app.float.border_radius"))
     }
-    .height($r('app.float.repeatDialog_height'))
-    .width(ConfigData.WH_100_100)
+    .width(deviceTypeInfo === "phone" ? ConfigData.WH_100_100 : $r("app.float.repeatDialog_width"))
   }
 }
