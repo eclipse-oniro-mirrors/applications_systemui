@@ -119,7 +119,7 @@ struct Index {
   }
 
   touchEvent(event: TouchEvent) {
-    Trace.start(Trace.CORE_METHOD_START_TOUCHEVENT)
+    Trace.start(Trace.CORE_METHOD_START_TOUCHEVENT);
     Log.showDebug(TAG, 'touchEvent' + event.touches)
     if (event.type == Constants.TOUCHTYPE_DOWN) { //down
       this.startX = event.touches[0].screenX

@@ -26,6 +26,7 @@ import CheckEmptyUtils from '../../../../../../../../../common/src/main/ets/defa
 import AbilityManager from '../../../../../../../../../common/src/main/ets/default/abilitymanager/abilityManager';
 import EventManager from '../../../../../../../../../common/src/main/ets/default/event/EventManager';
 import {obtainLocalEvent} from '../../../../../../../../../common/src/main/ets/default/event/EventUtil';
+import Trace from '../../../../../../../../../common/src/main/ets/default/Trace'
 import CommonUtil from '../common/CommonUtil';
 import Constants,{NotificationItemData} from '../common/constants';
 
@@ -254,6 +255,7 @@ export class NotificationViewModel {
   clickItem(itemData: NotificationItemData, want?: any): void {
     Log.showInfo(TAG, `clickItem itemId: ${itemData.id}, want: ${JSON.stringify(want)}, tapDismissed: ${itemData.tapDismissed}`);
     NotificationWindowManager.hideNotificationWindow();
+    Trace.start(Trace.CORE_METHOD_CLICK_NOTIFICATION);
     CommonUtil.startWant((want) ? want : itemData.want);
     if (itemData.tapDismissed) {
       this.removeNotificationItem(itemData, true, true);

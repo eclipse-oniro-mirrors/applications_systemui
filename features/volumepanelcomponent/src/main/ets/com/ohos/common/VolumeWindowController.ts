@@ -15,6 +15,7 @@
 
 import Log from '../../../../../../../../common/src/main/ets/default/Log';
 import getSingleInstance from '../../../../../../../../common/src/main/ets/default/SingleInstanceHelper';
+import Trace from '../../../../../../../../common/src/main/ets/default/Trace'
 import VolumePanelService from '../model/VolumePanelService';
 import { VolumeInfo } from '../common/Constants';
 
@@ -64,6 +65,9 @@ export default class VolumeWindowController {
 
   setWindowState(isShow: boolean): void {
     Log.showInfo(TAG, `setWindowState ${isShow}.`);
+    if (isShow) {
+      Trace.start(Trace.CORE_METHOD_START_VOLUMEPANEL);
+    }
     if (this.mIsWindowShown == isShow) {
       Log.showInfo(TAG, `Neen't set volueme window state.`);
       return;
@@ -72,6 +76,9 @@ export default class VolumeWindowController {
       this.mIsWindowShown = isShow;
       (isShow ? this.mWindowHandle.show() : this.mWindowHandle.hide())
         .then(() => {
+          if (isShow) {
+            Trace.end(Trace.CORE_METHOD_START_VOLUMEPANEL);
+          }
           Log.showInfo(TAG, `updateShowStatus ${isShow}.`);
         })
         .catch((err) => Log.showError(TAG, `Can't set volueme window: ${JSON.stringify(err)}.`));
