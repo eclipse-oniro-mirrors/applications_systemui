@@ -20,8 +20,11 @@ import Log from './Log';
  * Add method trace. Modify RECORD_TRACE before using.
  */
 export default class Trace {
-  static readonly CORE_METHOD_START_DROPDOWNPANEL = 'startDropdownpanel';
+  static readonly CORE_METHOD_START_DROPDOWNPANEL = 'startDropdownPanel';
   static readonly CORE_METHOD_START_TOUCHEVENT = 'startTouchEvent';
+  static readonly CORE_METHOD_CLICK_CAPSULE = 'clickCapsuleEvent';
+  static readonly CORE_METHOD_CLICK_NOTIFICATION = 'clickNotificationEvent';
+  static readonly CORE_METHOD_START_VOLUMEPANEL = 'startVolumePanel';
 
   private static readonly TRACE_TAG = 'Systemui:Trace';
   private static readonly RECORD_TRACE = true;

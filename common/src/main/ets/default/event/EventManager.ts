@@ -18,6 +18,9 @@ import Log from "../Log";
 import createOrGet from "../SingleInstanceHelper";
 import { EventParser, START_ABILITY_EVENT, Event, LocalEvent } from "./EventUtil";
 import { Callback, createEventBus, EventBus } from "./EventBus";
+import { BusinessError } from 'basic';
+import {PluginType} from "../../plugindatasource/common/Constants";
+import {writeFaultLog, FaultID} from '../SysFaultLogger';
 
 export type unsubscribe = () => void;
 export type Events = string | string[];
@@ -43,8 +46,9 @@ class EventManager {
         this.mContext = ctx;
     }
 
-    publish(event: Event): boolean {
-        return this.eventParser[event.target].call(this, event.data);
+    publish(event: Event, pluginType?: PluginType): boolean {
+        Log.showInfo(TAG, `PUBLISH : event: ${JSON.stringify(event)}`)
+        return this.eventParser[event.target].call(this, event.data, pluginType);
     }
 
     subscribe(eventType: Events, callback: Callback): unsubscribe {
@@ -64,7 +68,8 @@ class EventManager {
         return false;
     }
 
-    private startAbility(data: { [key: string]: any }): boolean {
+    private startAbility(data: { [key: string]: any }, pluginType?: PluginType): boolean {
+        Log.showInfo(TAG, `start : data: ${JSON.stringify(data)}`)
         Log.showDebug(TAG, `start Ability: ${data.abilityName}`);
         if (data.bundleName && data.abilityName && this.mContext) {
             this.mEventBus.emit(START_ABILITY_EVENT, { abilityName: data.abilityName });
@@ -72,6 +77,13 @@ class EventManager {
                 bundleName: data.bundleName,
                 abilityName: data.abilityName,
                 parameters: data.args??undefined
+            }).then(() => {
+                Log.showInfo(TAG, 'startAbility, then');
+            }).catch((error: BusinessError) => {
+                Log.showError(TAG, `startAbility, error: ${JSON.stringify(error)}`);
+                if (pluginType == PluginType.META) {
+                    writeFaultLog({TARGET_API:data.bundleName, FAULT_ID: FaultID.META_DIAGRAM_JUMP, MSG: "jump ability failure"})
+                }
             });
             return true;
         }

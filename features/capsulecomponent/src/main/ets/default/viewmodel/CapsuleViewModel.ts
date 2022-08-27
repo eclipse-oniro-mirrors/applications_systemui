@@ -17,6 +17,7 @@ import CapsuleModel from '../model/CapsuleModel';
 import Log from '../../../../../../../common/src/main/ets/default/Log';
 import AbilityManager from '../../../../../../../common/src/main/ets/default/abilitymanager/abilityManager';
 import ResourceUtil from '../../../../../../../common/src/main/ets/default/ResourceUtil';
+import Trace from '../../../../../../../common/src/main/ets/default/Trace'
 
 let sCapsuleViewModel;
 
@@ -121,6 +122,7 @@ export default class CapsuleViewModel {
   }
 
   onClickEvent() {
+    Trace.start(Trace.CORE_METHOD_CLICK_CAPSULE);
     if (this.mIsBackground) {
       this.mIsBackground = false;
     }
@@ -129,6 +131,8 @@ export default class CapsuleViewModel {
     AbilityManager.startAbility({
       bundleName: this.mWantBundleName,
       abilityName: this.mWantAbilityName
+    }, () => {
+      Trace.end(Trace.CORE_METHOD_CLICK_CAPSULE);
     });
   }
 
