@@ -21,7 +21,7 @@ import CommonUtil from '../common/CommonUtil';
 import createOrGet from '../../../../../../../../../common/src/main/ets/default/SingleInstanceHelper';
 import DistributionManager from './NotificationDistributionManager';
 import AbilityManager from '../../../../../../../../../common/src/main/ets/default/abilitymanager/abilityManager';
-import {WriteFaultLog, FaultID} from '../../../../../../../../../common/src/main/ets/default/SysFaultLogger';
+import {writeFaultLog, FaultID} from '../../../../../../../../../common/src/main/ets/default/SysFaultLogger';
 
 const TAG = 'NotificationService';
 
@@ -106,7 +106,7 @@ export class NotificationService {
         });
       });
     }).catch((errorInfo) => {
-      WriteFaultLog({CORE_SYSTEM: request.creatorBundleName, TARGET_API: "add", FAULT_ID: FaultID.META_DIAGRAM_JUMP
+      writeFaultLog({CORE_SYSTEM: request.creatorBundleName, TARGET_API: "add", FAULT_ID: FaultID.META_DIAGRAM_JUMP
       , MSG: "Failed to handle notification addition"})
       Log.showError(TAG, `error: ${JSON.stringify(errorInfo)}`)
     });

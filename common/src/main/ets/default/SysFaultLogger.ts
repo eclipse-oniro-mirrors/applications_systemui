@@ -27,7 +27,7 @@ export enum FaultID {
   NOTIFICATION_ADD = "FAILED_NOTIFICATION_ADD"
 }
 
-export function WriteFaultLog(logParam: object) {
+export function writeFaultLog(logParam: object) {
   const sysEventInfo = {
     domain: APP_DOMAIN,
     name: APP_LOG_NAME,
@@ -49,7 +49,7 @@ export function SysFaultLogger(logParam: object) {
         originalFunc.apply(this, args);
       }  catch (err: any) {
         Log.showInfo(TAG, "catch error in execute: " + propertyKey);
-        WriteFaultLog(logParam);
+        writeFaultLog(logParam);
       }
     };
   };

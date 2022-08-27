@@ -20,7 +20,7 @@ import { EventParser, START_ABILITY_EVENT, Event, LocalEvent } from "./EventUtil
 import { Callback, createEventBus, EventBus } from "./EventBus";
 import { BusinessError } from 'basic';
 import {PluginType} from "../../plugindatasource/common/Constants";
-import {WriteFaultLog, FaultID} from '../SysFaultLogger';
+import {writeFaultLog, FaultID} from '../SysFaultLogger';
 
 export type unsubscribe = () => void;
 export type Events = string | string[];
@@ -82,7 +82,7 @@ class EventManager {
             }).catch((error: BusinessError) => {
                 Log.showError(TAG, `startAbility, error: ${JSON.stringify(error)}`);
                 if (pluginType == PluginType.META) {
-                    WriteFaultLog({TARGET_API:data.bundleName, FAULT_ID: FaultID.META_DIAGRAM_JUMP, MSG: "jump ability failure"})
+                    writeFaultLog({TARGET_API:data.bundleName, FAULT_ID: FaultID.META_DIAGRAM_JUMP, MSG: "jump ability failure"})
                 }
             });
             return true;

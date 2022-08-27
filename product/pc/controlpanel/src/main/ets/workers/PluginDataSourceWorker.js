@@ -17,7 +17,7 @@ import worker from '@ohos.worker';
 import Log from '../../../../../../../common/src/main/ets/default/Log';
 import PluginDataSourceManager from '../../../../../../../common/src/main/ets/plugindatasource/plugindatasourcemanager';
 import Constants, { obtainMsg } from '../../../../../../../common/src/main/ets/plugindatasource/common/constants';
-import {WriteFaultLog, FaultID} from '../../../../../../../common/src/main/ets/default/SysFaultLogger';
+import {writeFaultLog, FaultID} from '../../../../../../../common/src/main/ets/default/SysFaultLogger';
 
 const parentPort = worker.parentPort;
 const TAG = `${parentPort.name} Worker`;
@@ -94,6 +94,6 @@ parentPort.onerror = function (data) {
   Log.showError(
     TAG, `onerror, lineno = ${data.lineno}, msg = ${data.message}, filename = ${data.filename}, col = ${data.colno}`
   );
-  WriteFaultLog({CORE_SYSTEM: "com.ohos.systemui", TARGET_API: "systemui", FAULT_ID: FaultID.WORKER_ERROR
+  writeFaultLog({CORE_SYSTEM: "com.ohos.systemui", TARGET_API: "systemui", FAULT_ID: FaultID.WORKER_ERROR
   , MSG: "Abnormal occurrence"});
 };
