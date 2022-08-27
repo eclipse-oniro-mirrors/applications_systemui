@@ -91,9 +91,9 @@ parentPort.onmessageerror = function () {
 };
 
 parentPort.onerror = function (data) {
-  WriteFaultLog({CORE_SYSTEM: "com.ohos.systemui", TARGET_API: "systemui"
-  , FAULT_ID: FaultID.WORKER_ERROR, MSG: "Abnormal occurrence"})
   Log.showError(
     TAG, `onerror, lineno = ${data.lineno}, msg = ${data.message}, filename = ${data.filename}, col = ${data.colno}`
   );
+  WriteFaultLog({CORE_SYSTEM: "com.ohos.systemui", TARGET_API: "systemui"
+  , FAULT_ID: FaultID.WORKER_ERROR, MSG: "Abnormal occurrence"});
 };
