@@ -79,7 +79,8 @@ class EventManager {
                 parameters: data.args??undefined
             }).then(() => {
                 Log.showInfo(TAG, 'startAbility, then');
-                WriteFaultLog({CORE_SYSTEM: "com.ohos.systemui", TARGET_API: "onclick", FAULT_ID: FaultID.META_DIAGRAM_JUMP, MSG: "jump ability failure"})
+                WriteFaultLog({CORE_SYSTEM: "com.ohos.systemui", TARGET_API: "onclick"
+                , FAULT_ID: FaultID.META_DIAGRAM_JUMP, MSG: "jump ability failure"})
             }).catch((error: BusinessError) => {
                 Log.showError(TAG, `startAbility, error: ${JSON.stringify(error)}`);
                 if (pluginType == PluginType.META) {
