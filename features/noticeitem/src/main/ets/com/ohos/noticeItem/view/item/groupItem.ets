@@ -136,7 +136,7 @@ export default struct GroupItem {
   build() {
     Column(){
       SwipeLayout({
-        id: getId(this.groupData[0], true),
+        swipeLayoutId: getId(this.groupData[0], true),
         bottomLeftWidth: 80,//可调参
         bottomRightWidth: 60,//可调参
         leftThreshold: 100,//可调参
