@@ -137,10 +137,10 @@ export default struct GroupItem {
     Column(){
       SwipeLayout({
         swipeLayoutId: getId(this.groupData[0], true),
-        bottomLeftWidth: 80,//可调参
-        bottomRightWidth: 60,//可调参
-        leftThreshold: 100,//可调参
-        bottomHeight: 92,//可调参
+        bottomLeftWidth: 80,
+        bottomRightWidth: 60,
+        leftThreshold: 100,
+        bottomHeight: 92,
         deleteButtonCallback: this.deleteButtonCallback.bind(this),
         SurfaceComponent: this.SurfaceComponent.bind(this),
         BottomLeftComponent: this.BottomLeftComponent.bind(this),
@@ -148,7 +148,6 @@ export default struct GroupItem {
       })
     }
     .width(Constants.FULL_CONTAINER_WIDTH)
-    .height(this.toExpand ? this.groupData.length * 93 - 1 + 42 : 92)//bug： 在swipelayout中使用position属性，若此处不指定高度值，使用了position属性的swipelayout无法正常显示。
     .borderRadius($r("sys.float.ohos_id_corner_radius_default_l"))
     .clip(true)
   }

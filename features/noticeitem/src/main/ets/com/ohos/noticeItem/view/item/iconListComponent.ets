@@ -143,7 +143,7 @@ export struct BottomLeftItem {
   });
 
   build(){
-    Flex({justifyContent: FlexAlign.SpaceEvenly, alignItems: ItemAlign.Center}) {
+    Row() {
       Button({ type: ButtonType.Circle, stateEffect: true }) {
         Image($r("app.media.ic_public_settings_filled"))
           .objectFit(ImageFit.Contain)
@@ -157,5 +157,7 @@ export struct BottomLeftItem {
       .height(Layout.BUTTON_SIZE)
     }
     .height(this.height)
+    .justifyContent(FlexAlign.SpaceEvenly)
+    .alignItems(VerticalAlign.Center)
   }
 }

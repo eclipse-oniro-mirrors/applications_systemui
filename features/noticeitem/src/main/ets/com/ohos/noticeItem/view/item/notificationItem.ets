@@ -76,7 +76,6 @@ export default struct NotificationItem {
       })
     }
     .width(this.itemWidth)
-    .height(92)//bug： 在子控件swipelayout中使用position属性，若此处不指定高度值，使用了position属性的swipelayout无法正常显示。
     .borderRadius(!this.isSubItem ? $r("sys.float.ohos_id_corner_radius_default_l") : 0)
     .clip(!this.isSubItem)
   }
