@@ -64,7 +64,7 @@ export default struct NotificationItem {
   build() {
     Column(){
       SwipeLayout({
-        id: getId(this.itemData, false),
+        swipeLayoutId: getId(this.itemData, false),
         bottomLeftWidth: 80,
         bottomRightWidth: 60,
         leftThreshold: 100,

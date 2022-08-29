@@ -34,7 +34,7 @@ export default struct SwipeLayout {
 
 
   //需要配置项
-  id: string = 'id default';//需要配置
+  swipeLayoutId: string = 'id default';//需要配置
   bottomLeftWidth: number = 0;//需要配置
   bottomRightWidth: number = 0;//需要配置
   leftThreshold: number = 0;//需要配置
@@ -50,7 +50,7 @@ export default struct SwipeLayout {
   @State bottomLeftX: number = 0;
   @State deleteCenterX: number = 0;
   @State rotateAngel: number = 0;
-  @State scale: number = 1;
+  @State deleteButtonScale: number = 1;
   @State surfaceOpacity: number = 1;
   @State bottomLeftOpacity: number = 0;//透明度默认值为0
   @State bottomRightOpacity: number = 0;//透明度默认值为0
@@ -101,7 +101,7 @@ export default struct SwipeLayout {
 
   aboutToDisappear(){
     Log.showInfo(TAG, `aboutToDisappear`);
-    FocusCallBack.deleteCallback(this.id);
+    FocusCallBack.deleteCallback(this.swipeLayoutId);
   }
 
   build(){
@@ -148,8 +148,8 @@ export default struct SwipeLayout {
           .width(Layout.BUTTON_SIZE)
           .height(Layout.BUTTON_SIZE)
           .scale({
-            x: this.scale,
-            y: this.scale,
+            x: this.deleteButtonScale,
+            y: this.deleteButtonScale,
             z: 1,
             centerX: '50%',
             centerY: '50%'
@@ -168,7 +168,7 @@ export default struct SwipeLayout {
     .width('100%')
     .onTouch( (touchEvent: TouchEvent) => {
       if (touchEvent.type == TouchType.Down) {//eventCaptureFlag
-        if(this.registerEventCapture != null && this.registerEventCapture(this.id)){
+        if(this.registerEventCapture != null && this.registerEventCapture(this.swipeLayoutId)){
           this.eventCaptureFlag = false;//使用标志位，实现该部分逻辑只在down中执行一次
           return;//表示询问过父组件后，如果该事件由父组件消费， 则本组件不会继续执行以后的逻辑。 如果上层的各级父组件都不消费，那么就由本组件消费
         }
@@ -182,13 +182,13 @@ export default struct SwipeLayout {
         this.startY = touchEvent.touches[0].screenY;
         this.lastTouchX = touchEvent.touches[0].screenX;//上一次move的坐标，用于计算增量
         if (!AppStorage.Has('swipelayout')) {
-          AppStorage.SetOrCreate('swipelayout', this.id);//通过加appstorage的校验，可以防止嵌套使用时父组件由于阻止冒泡事件失效而触发滑动
+          AppStorage.SetOrCreate('swipelayout', this.swipeLayoutId);//通过加appstorage的校验，可以防止嵌套使用时父组件由于阻止冒泡事件失效而触发滑动
         }
       } else if (touchEvent.type == TouchType.Move) {
         if(this.eventCaptureFlag == false){
           return;//本控件不消费该事件，因此不执行move中的逻辑
         }
-        if (AppStorage.Get('swipelayout') != this.id){//只有匹配的id才允许被滑动，防止嵌套使用时父组件由于阻止冒泡事件失效而触发滑动
+        if (AppStorage.Get('swipelayout') != this.swipeLayoutId){//只有匹配的id才允许被滑动，防止嵌套使用时父组件由于阻止冒泡事件失效而触发滑动
           return;
         }
         //如果有子组件被touch，那么父组件开头的就返回
@@ -196,7 +196,7 @@ export default struct SwipeLayout {
           this.responseSwipeEvent = (Math.abs(touchEvent.touches[0].screenX - this.startX) > Math.abs(touchEvent.touches[0].screenY - this.startY));//如果x方向移动较多（这里取四十五度为分界），那么就认为响应左滑
           this.angelCalFlag = true; //改变角度标志位， 表示角度已经判断过了，之后无需重复判断
 
-          FocusCallBack.setCallback(this.id, this.loseFocusCallback.bind(this));//将上一次滑动的控件弹回
+          FocusCallBack.setCallback(this.swipeLayoutId, this.loseFocusCallback.bind(this));//将上一次滑动的控件弹回
         }
         if(this.responseSwipeEvent == false) {
           return;
@@ -212,7 +212,7 @@ export default struct SwipeLayout {
         //是否整体进入屏幕
         if(this.bottomLeftX > this.rightThreshold){//1、在右侧阈值的右侧,即底层的图标尚未完全进入屏幕   ----|左侧阈值|-------|右侧阈值| --here--
           this.rotateAngel = 0;
-          this.scale = 1;
+          this.deleteButtonScale = 1;
           this.deleteCenterX = this.bottomLeftX + this.bottomLeftWidth + Layout.BUTTON_SIZE/2;
         } else if (this.bottomLeftX > this.leftThreshold && this.bottomLeftX < this.rightThreshold) {//2、在左侧和右侧阈值的内，需要对边界值做处理  ----|左侧阈值|----here---|右侧阈值| ----
           if(this.bottomLeftOpacity == 0){//如果是在左侧阈值，且向右滑动，那么就需要显示其余按钮
@@ -226,13 +226,13 @@ export default struct SwipeLayout {
               this.bottomLeftWidthMoving = (this.rightThreshold - this.bottomLeftX) * (1 - this.rateDelete) + this.bottomLeftWidth;
               this.deleteCenterX = this.bottomLeftX + this.bottomLeftWidthMoving + Layout.BUTTON_SIZE/2;
               this.rotateAngel = 12 - 12 * (this.bottomLeftX - this.leftThreshold)/(this.rightThreshold - this.leftThreshold);
-              this.scale = 1.05 - 0.05 * (this.bottomLeftX - this.leftThreshold)/(this.rightThreshold - this.leftThreshold);
+              this.deleteButtonScale = 1.05 - 0.05 * (this.bottomLeftX - this.leftThreshold)/(this.rightThreshold - this.leftThreshold);
             })
           } else {//在非突变处，那么就跟手
             this.bottomLeftWidthMoving = (this.rightThreshold - this.bottomLeftX) * (1 - this.rateDelete) + this.bottomLeftWidth;
             this.deleteCenterX = this.bottomLeftX + this.bottomLeftWidthMoving + Layout.BUTTON_SIZE/2;
             this.rotateAngel = 12 - 12 * (this.bottomLeftX - this.leftThreshold)/(this.rightThreshold - this.leftThreshold);
-            this.scale = 1.05 - 0.05 * (this.bottomLeftX - this.leftThreshold)/(this.rightThreshold - this.leftThreshold);
+            this.deleteButtonScale = 1.05 - 0.05 * (this.bottomLeftX - this.leftThreshold)/(this.rightThreshold - this.leftThreshold);
           }
 
         } else {//3. 小于最左边的阈值   --here--|左侧阈值|-------|右侧阈值| ----
@@ -246,7 +246,7 @@ export default struct SwipeLayout {
               this.bottomLeftOpacity = 0;
               this.deleteCenterX = (this.bottomLeftX + this.surfaceWidth)/2;
               this.rotateAngel = 17;
-              this.scale = 1.2;
+              this.deleteButtonScale = 1.2;
             })
           } else {
             this.deleteCenterX = (this.bottomLeftX + this.surfaceWidth)/2;
@@ -262,7 +262,7 @@ export default struct SwipeLayout {
           return;
         }
         if(this.bottomLeftX > this.rightThreshold){//在阈值2右侧,尚未完全进入屏幕
-          FocusCallBack.deleteCallback(this.id)
+          FocusCallBack.deleteCallback(this.swipeLayoutId)
           animateTo({
             duration: 200,
             curve: Curve.Friction,
