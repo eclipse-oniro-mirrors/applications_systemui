@@ -66,12 +66,7 @@ export class brightnessManager {
     let value = parseInt(callback.value);
     Log.showInfo(TAG, `setValue ${value}`);
     mBrightnessValue.set(value);
-    if(sliderChangeMode === this.SLIDER_CHANG_MODE_MOVING){
-      Brightness.setValue(callback.value);
-    }else{
-      settings.setValueSync(this.helper, SYSTEMUI_BRIGHTNESS, callback.value.toString());
-      Log.showInfo(TAG, `settings setValue ${callback.value} end`);
-    }
+    Brightness.setValue(callback.value);
   }
 
   getMin(){
