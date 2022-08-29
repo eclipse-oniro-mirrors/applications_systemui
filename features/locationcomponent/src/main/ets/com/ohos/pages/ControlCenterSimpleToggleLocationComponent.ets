@@ -29,12 +29,11 @@ export default struct ControlCenterSimpleToggleLocationComponent {
   private mDragMode: boolean = false;
   @State mIcon: Resource = $r("app.media.ic_controlcenter_gps");
   @State mLabel: Resource = $r("app.string.control_center_complex_toggle_location_title");
-  @State mLocationData: LocationData = new LocationData();
+  @StorageLink('LocationVM_LocationData') LocationStatus: boolean = false
 
   aboutToAppear() {
     Log.showInfo(TAG, 'aboutToAppear');
     ViewModel.initViewModel();
-    this.mLocationData = ViewModel.getLocationData();
   }
 
   aboutToDisappear() {
@@ -45,7 +44,7 @@ export default struct ControlCenterSimpleToggleLocationComponent {
     SimpleToggleBase({
       mToggleId: this.keyId,
       mIcon: $mIcon,
-      mChangeSwitch: this.mLocationData.isEnabled,
+      mChangeSwitch: this.LocationStatus,
       mLabel: $mLabel,
       mEditMode: this.mEditMode,
       mDragMode: this.mDragMode,
@@ -55,8 +54,8 @@ export default struct ControlCenterSimpleToggleLocationComponent {
   }
 
   mClickEvent() {
-    Log.showDebug(TAG, `mClickEvent, isEnabled: ${this.mLocationData.isEnabled}`);
-    if (this.mLocationData.isEnabled) {
+    Log.showDebug(TAG, `mClickEvent, isEnabled: ${this.LocationStatus}`);
+    if (this.LocationStatus) {
       ViewModel.disableLocation();
     } else {
       ViewModel.enableLocation();

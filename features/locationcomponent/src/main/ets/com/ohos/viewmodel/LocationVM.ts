@@ -14,6 +14,7 @@
  */
 
 import Log from '../../../../../../../../common/src/main/ets/default/Log';
+import SwitchUserManager from '../../../../../../../../common/src/main/ets/default/SwitchUserManager';
 import { FASlotName } from '../../../../../../../../common/src/main/ets/default/Constants';
 import { TintContentInfo, getOrCreateTintContentInfo
 } from '../../../../../../../../common/src/main/ets/default/TintStateManager';
@@ -28,6 +29,7 @@ export class LocationVM {
   mLocationData: LocationData = {
     ...new LocationData()
   };
+  mLocationStatus:SubscribedAbstractProperty<boolean>;
   mTintContentInfo: TintContentInfo = getOrCreateTintContentInfo(FASlotName.LOCATION);
 
   constructor() {
@@ -40,19 +42,18 @@ export class LocationVM {
     };
     Log.showInfo(TAG, 'initViewModel ');
     this.mIsStart = true;
-    this.mLocationData = AppStorage.SetAndLink(TAG + '_LocationData', this.mLocationData).get();
+    SwitchUserManager.getInstance().registerListener(this);
     LocationService.registerListener(this);
     LocationService.startService();
   }
 
-  getLocationData(): LocationData {
-    Log.showDebug(TAG, 'getLocationData');
-    return this.mLocationData;
+  userChange():void{
+    LocationService.getServiceState()
   }
 
   updateServiceState(state: boolean): void {
     Log.showInfo(TAG, `updateServiceState, state: ${state} `);
-    this.mLocationData.isEnabled = state;
+    AppStorage.SetOrCreate(TAG + '_LocationData', state)
   }
 
   enableLocation(): void {
