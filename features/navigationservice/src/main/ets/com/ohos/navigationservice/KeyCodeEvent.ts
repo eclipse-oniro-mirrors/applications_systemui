@@ -101,11 +101,6 @@ export class KeyCodeEvent {
     commonEvent.publish('CREATE_RECENT_WINDOW_EVENT', (err, data) => {
       Log.showInfo(TAG, `publish launcher err: ${JSON.stringify(err)} data: ${JSON.stringify(data)}`);
     });
-
-    AbilityManager.startAbility({
-      bundleName: Constants.RECENT_BUNDLE_NAME,
-      abilityName: Constants.RECENT_ABILITY_NAME
-    })
   }
 
   private sentEvnt() {
