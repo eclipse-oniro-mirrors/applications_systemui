@@ -20,8 +20,6 @@ export default class Constants {
   static KEY_UP: number = 1;
   static LAUNCHER_BUNDLE_NAME:string = 'com.ohos.launcher';
   static LAUNCHER_ABILITY_NAME:string = 'com.ohos.launcher.MainAbility';
-  static RECENT_BUNDLE_NAME:string = 'com.ohos.launcher';
-  static RECENT_ABILITY_NAME:string = 'com.ohos.launcher.recents.MainAbility';
   static KEYCODE_BACK: number = 1;
   static KEYCODE_HOME: number = 2;
   static KEYCODE_RECENT: number = 3;
