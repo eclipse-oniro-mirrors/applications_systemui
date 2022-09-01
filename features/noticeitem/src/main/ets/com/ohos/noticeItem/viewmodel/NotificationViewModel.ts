@@ -88,7 +88,7 @@ export class NotificationViewModel {
       return;
     }
     this.onNotificationCancel(notificationItemData.hashcode);
-    Log.showInfo(TAG, `onNotificationConsume  ${JSON.stringify(notificationItemData)}`);
+    Log.showDebug(TAG, `onNotificationConsume  ${JSON.stringify(notificationItemData)}`);
     //Verify the notifications can be displayed
     if (!this.isCanShow(notificationItemData.bundleName)) {
       //can not displayed
@@ -128,29 +128,28 @@ export class NotificationViewModel {
   }
 
   updateNotification(): void {
-    Log.showInfo(TAG, `updateNotification length: ${this.mNotificationList.length} list: ${JSON.stringify(this.mNotificationList)}`);
     this.sortNotification();
     let notificationList = this.groupByGroupName();
+    Log.showInfo(TAG, `updateNotification length: ${notificationList.length}`);
     AppStorage.SetOrCreate('notificationList', notificationList);
   }
 
   groupByGroupName(): any[]{
-    Log.showInfo(TAG, 'groupByGroupName');
     if (!this.mNotificationList || this.mNotificationList.length < 1) {
+      Log.showWarn(TAG, 'groupByGroupName, list is empty.');
       return [];
     }
     let groupArr: any[] = [];
     let groups = {};
     this.mNotificationList.forEach((item) => {
       const groupName = `${item.bundleName}_${item.groupName}`;
-      Log.showInfo(TAG, `groupByGroupName groupName:${groupName}`);
+      Log.showDebug(TAG, `groupByGroupName, groupName:${groupName}`);
       if (!groups[groupName] || groups[groupName].length < 1) {
         groups[groupName] = [];
         groupArr.push(groups[groupName]);
       }
       groups[groupName].push(item);
     });
-    Log.showInfo(TAG, `groupByGroupName groupArr:${JSON.stringify(groupArr)}`);
     return groupArr;
   }
 
@@ -319,7 +318,6 @@ export class NotificationViewModel {
   }
 
   updateFlowControlInfos(bundleName: string, plusOrMinus: boolean): void {
-    Log.showInfo(TAG, 'updateFlowControlInfos');
     if (!CheckEmptyUtils.isEmpty(this.mNotificationCtrl)) {
       if (this.mNotificationCtrl['app'].has(bundleName)) {
         let tmp = this.mNotificationCtrl['app'].get(bundleName);
@@ -337,7 +335,6 @@ export class NotificationViewModel {
         this.mNotificationCtrl['currentTotal'] -= 1;
       }
     }
-
     Log.showInfo(TAG, `updateFlowControlInfos:${JSON.stringify(this.mNotificationCtrl)}`);
   }
 

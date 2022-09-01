@@ -84,7 +84,6 @@ export default class ParseDataUtil {
       smallIcon: NotificationConfig.USE_NOTIFICATION_ICON ? (request?.smallIcon ?? appMessage.icon) : appMessage.icon,
       tapDismissed: request.tapDismissed
     };
-    Log.showInfo(TAG, `notificationItem construct over`);
     notificationItem = {
       ...notificationItem, ...ParseDataUtil.getContentByType(request?.content?.contentType, request)
     };
