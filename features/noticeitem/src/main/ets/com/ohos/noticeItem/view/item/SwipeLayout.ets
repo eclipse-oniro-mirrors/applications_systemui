@@ -126,19 +126,36 @@ export default struct SwipeLayout {
 
         Row(){
           Button({ type: ButtonType.Circle, stateEffect: true }) {
-            Image($r("app.media.ic_public_delete_filled"))
-              .objectFit(ImageFit.Contain)
-              .fillColor($r("sys.color.ohos_id_color_primary_contrary"))
-              .width(Layout.ICON_SIZE)
-              .height(Layout.ICON_SIZE)
-              .rotate({
-                x: 0,
-                y: 0,
-                z: 1,
-                centerX: '50%',
-                centerY: '50%',
-                angle: this.rotateAngel
-              })
+            Stack() {
+              Image($r("app.media.ic_public_delete_lids_filled"))
+                .objectFit(ImageFit.Contain)
+                .fillColor($r("sys.color.ohos_id_color_primary_contrary"))
+                .width(Layout.ICON_SIZE)
+                .height(Layout.ICON_SIZE)
+                .rotate({
+                  x: 0,
+                  y: 0,
+                  z: 1,
+                  centerX: '89.45%',
+                  centerY: '17.71%',
+                  angle: this.rotateAngel
+                })
+              Image($r("app.media.ic_public_delete_body_filled"))
+                .objectFit(ImageFit.Contain)
+                .fillColor($r("sys.color.ohos_id_color_primary_contrary"))
+                .width(Layout.ICON_SIZE)
+                .height(Layout.ICON_SIZE)
+                .rotate({
+                  x: 0,
+                  y: 0,
+                  z: 1,
+                  centerX: '82.94%',
+                  centerY: '29.17%',
+                  angle: -this.rotateAngel
+                })
+            }
+            .width(Layout.ICON_SIZE)
+            .height(Layout.ICON_SIZE)
           }
           .backgroundColor($r("app.color.button_background"))
           .zIndex(1)
