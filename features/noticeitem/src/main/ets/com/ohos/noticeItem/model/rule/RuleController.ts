@@ -29,18 +29,14 @@ export class RuleController {
      * @param {callback} Data of the type to show the notification
      */
   getNotificationData(notificationItemData: NotificationItemData, callback): void {
-    Log.showInfo(TAG, 'getNotificationData start');
-
     this.isAllowSendNotification(notificationItemData, (isSuccess) => {
       if (!isSuccess) {
-        Log.showInfo(TAG, 'user is not allow this to send notification');
+        Log.showWarn(TAG, 'user is not allow this to send notification');
         callback(undefined);
         return;
       }
       this.getNotificationDataByApp(notificationItemData, (originalData) => {
-        Log.showDebug(TAG, `originalData = ${JSON.stringify(originalData)}`);
         this.updateNotificationDataBySense(originalData, (finalData) => {
-          Log.showDebug(TAG, `finalData = ${JSON.stringify(finalData)}`);
           callback(finalData);
         });
       });
@@ -54,7 +50,6 @@ export class RuleController {
      * @param {callback} The user allow the app send notification or not
      */
   isAllowSendNotification(notificationItemData, callback): void {
-    Log.showInfo(TAG, 'isAllowSendNotification start');
     Notification.isNotificationEnabled({ bundle: notificationItemData.bundleName, uid: notificationItemData.uid })
       .then((flag) => {
         Log.showInfo(TAG, `Notification.isNotificationEnabled: ${flag}`);
@@ -92,7 +87,6 @@ export class RuleController {
      * @param {callback} The type to show notification
      */
   getNotificationDataByApp(notificationItemData, callback): void {
-    Log.showInfo(TAG, 'getNotificationDataByApp start');
     let mNotificationItemData : NotificationItemData = notificationItemData;
     mNotificationItemData.ruleData = {
       isAllowBanner: false,
@@ -124,7 +118,7 @@ export class RuleController {
     } else {
       mNotificationItemData.ruleData.isAllowNotificationListShow = false;
     }
-    Log.showDebug(TAG, `mNotificationItemData.ruleData = ${JSON.stringify(mNotificationItemData.ruleData)}`);
+    Log.showInfo(TAG, `mNotificationItemData.ruleData = ${JSON.stringify(mNotificationItemData.ruleData)}`);
     callback(mNotificationItemData);
   }
 
@@ -137,7 +131,6 @@ export class RuleController {
    * @param {callback} The final notification data
    */
   updateNotificationDataBySense(notificationItemData, callback): void {
-    Log.showInfo(TAG, 'updateNotificationDataBySense start');
     let mNotificationItemData = notificationItemData;
     // TODO Scenario Management
     callback(mNotificationItemData);
