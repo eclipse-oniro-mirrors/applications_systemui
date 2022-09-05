@@ -13,16 +13,15 @@
  * limitations under the License.
  */
 
-import nfcController from '@ohos.nfc.controller';
+import NfcController from '@ohos.nfc.controller';
 import { BusinessError } from 'basic';
 import Log from '../../../../../../../../common/src/main/ets/default/Log';
 import createOrGet from '../../../../../../../../common/src/main/ets/default/SingleInstanceHelper';
-import { NFCMode } from '../common/Constants';
 
 const TAG = 'NFCModel';
 
 export interface NFCModeStatusListener {
-  updateNFCMode(status: NFCMode): void;
+  updateNFCMode(status: NfcController.NfcState): void;
 }
 
 export class NFCModeService {
@@ -37,13 +36,15 @@ export class NFCModeService {
     Log.showInfo(TAG, 'startService');
     this.mIsStart = true;
 
-    this.mNFCManager = nfcController
+    this.mNFCManager = NfcController
 
     this.getNFCMode();
 
-    this.mNFCManager.on('nfcStateChange', (data: NFCMode) => {
+    this.mNFCManager.on('nfcStateChange', (data: NfcController.NfcState) => {
       Log.showInfo(TAG, `startService->nfcStateChange, data: ${JSON.stringify(data)}`);
-      this.mListeners.forEach(listener => listener.updateNFCMode(data));
+      if(data == NfcController.NfcState.STATE_OFF || data == NfcController.NfcState.STATE_ON) {
+        this.mListeners.forEach(listener => listener.updateNFCMode(data));
+      }
     });
   }
 
@@ -59,12 +60,12 @@ export class NFCModeService {
 
   registerListener(listener: NFCModeStatusListener): void {
     let res = this.mListeners.add(listener);
-    Log.showInfo(TAG, `registser nfcMode Listener ${res}`);
+    Log.showInfo(TAG, `registser NfcState Listener ${res}`);
   }
 
   unregisterListener(listener: NFCModeStatusListener): void {
     let res = this.mListeners.delete(listener);
-    Log.showInfo(TAG, `unregistser nfcMode Listener ${res}`);
+    Log.showInfo(TAG, `unregistser NfcState Listener ${res}`);
   }
 
   getNFCMode(): void {
@@ -73,16 +74,17 @@ export class NFCModeService {
       this.mListeners.forEach(listener => listener.updateNFCMode(action));
   }
 
-  setNFCMode(mode: NFCMode): void {
+  setNFCMode(mode: NfcController.NfcState): void {
     Log.showInfo(TAG, `setNFCMode, mode: ${JSON.stringify(mode)}`);
+    let isSucceed = false;
     switch (mode) {
-      case NFCMode.NFC_MODE_OFF:
-        this.mNFCManager.openNfc();
-        Log.showInfo(TAG, `openNFC`);
+      case NfcController.NfcState.STATE_OFF:
+        isSucceed = this.mNFCManager.openNfc();
+        Log.showInfo(TAG, `openNFC` + isSucceed);
         break;
-      case NFCMode.NFC_MODE_ON:
-        this.mNFCManager.closeNfc();
-        Log.showInfo(TAG, `closeNFC`);
+      case NfcController.NfcState.STATE_ON:
+        isSucceed = this.mNFCManager.closeNfc();
+        Log.showInfo(TAG, `closeNFC` + isSucceed);
         break;
       default:
         break;
