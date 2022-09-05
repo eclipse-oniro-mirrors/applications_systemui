@@ -18,14 +18,14 @@ import { TintContentInfo } from '../../../../../../../../common/src/main/ets/def
 import StyleConfigurationCommon, { CommonStyle
 } from '../../../../../../../../common/src/main/ets/default/StyleConfiguration';
 import StyleConfiguration, { StatusRingModeComponentStyle } from '../common/StyleConfiguration';
-import Constants, { NFCMode } from '../common/Constants';
+import NfcController from '@ohos.nfc.controller';
 import ViewModel from '../viewmodel/NFCModeVM';
 
 const TAG = 'nfcmode-StatusBarIconItemNFCModeComponent';
 
 @Component
 export default struct StatusBarIconItemNFCModeComponent {
-  @StorageLink('NFCModeComponentMode') NFCModeComponentMode: NFCMode = NFCMode.NFC_MODE_OFF;
+  @StorageLink('NFCModeComponentMode') NFCModeComponentMode: NfcController.NfcState = NfcController.NfcState.STATE_OFF;
   @State mTintContentInfo: TintContentInfo = ViewModel.getTintContentInfo();
   @State styleCommon: CommonStyle = StyleConfigurationCommon.getCommonStyle();
   @State style: StatusRingModeComponentStyle = StyleConfiguration.getStatusRingModeComponentStyle();
@@ -44,7 +44,7 @@ export default struct StatusBarIconItemNFCModeComponent {
 
   build() {
     Row() {
-      if (this.NFCModeComponentMode != NFCMode.NFC_MODE_OFF) {
+      if (this.NFCModeComponentMode != NfcController.NfcState.STATE_OFF) {
         Row().width(this.styleCommon.statusBarMarginLeftRight).height('100%')
         Image(this.ringModeIcons['0'])
           .objectFit(ImageFit.Contain)

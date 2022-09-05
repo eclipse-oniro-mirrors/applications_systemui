@@ -82,7 +82,7 @@ class EventManager {
             }).catch((error: BusinessError) => {
                 Log.showError(TAG, `startAbility, error: ${JSON.stringify(error)}`);
                 if (pluginType == PluginType.META) {
-                    writeFaultLog({TARGET_API:data.bundleName, FAULT_ID: FaultID.META_DIAGRAM_JUMP, MSG: "jump ability failure"})
+                    writeFaultLog({CORE_SYSTEM: "com.ohos.systemui", TARGET_API:data.bundleName, FAULT_ID: FaultID.META_DIAGRAM_JUMP, MSG: "jump ability failure"})
                 }
             });
             return true;
