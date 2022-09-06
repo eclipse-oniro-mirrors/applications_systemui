@@ -154,7 +154,7 @@ export default struct VolumePanelComponent {
 
   onSettingsBtnClick(event: ClickEvent) {
     Log.showInfo(TAG, `onSettingsBtnClick`);
-    AbilityManager.startAbility({
+    AbilityManager.startAbility(AbilityManager.getContext(AbilityManager.ABILITY_NAME_VOLUME_PANEL), {
       bundleName: 'com.ohos.settings',
       abilityName: 'com.ohos.settings.MainAbility',
     });

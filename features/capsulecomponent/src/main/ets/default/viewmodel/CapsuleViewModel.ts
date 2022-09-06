@@ -128,7 +128,7 @@ export default class CapsuleViewModel {
     }
     Log.showDebug(TAG, `onClickEvent `);
     Log.showDebug(TAG, `startAbility`);
-    AbilityManager.startAbility({
+    AbilityManager.startAbility(AbilityManager.getContext(AbilityManager.ABILITY_NAME_STATUS_BAR), {
       bundleName: this.mWantBundleName,
       abilityName: this.mWantAbilityName
     }, () => {

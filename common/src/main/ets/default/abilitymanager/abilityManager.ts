@@ -83,9 +83,11 @@ export default class AbilityManager {
     return globalThis[abilityName + '_ContextName'];
   }
 
-  static startAbility(want: Want, callback?: (error?: BusinessError) => void): void {
+  static startAbility(context: ServiceExtensionContext, want: Want, callback?: (error?: BusinessError) => void): void {
     Log.showDebug(TAG, `startAbility, want: ${JSON.stringify(want)}`);
-    let context: ServiceExtensionContext = AbilityManager.getContext();
+    if (context == null) {
+     context = AbilityManager.getContext();
+    }
     context.startAbility(want).then(() => {
       Log.showInfo(TAG, 'startAbility, then');
       if (callback) {
