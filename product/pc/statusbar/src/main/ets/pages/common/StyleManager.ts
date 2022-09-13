@@ -12,7 +12,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import BaseStyleManager from '../../../../../../../../common/src/main/ets/default/BaseStyleManager';
 import Log from '../../../../../../../../common/src/main/ets/default/Log';
 import AbilityManager from '../../../../../../../../common/src/main/ets/default/abilitymanager/abilitymanager';
 import CommonStyleConfiguration from '../../../../../../../../common/src/main/ets/default/styleconfiguration';
@@ -28,161 +27,165 @@ import RingModeStyleConfiguration from '../../../../../../../../features/ringmod
 
 const TAG = './styleconfigurationer';
 
-export class StyleManager extends BaseStyleManager {
-  static readonly ABILITY_PAGE_NAME_STATUSBAR = "StatusBar-Index";
+export default class StyleManager {
+  static readonly STANDARD_DISPLAY_WIDTH = 1280;
+  static readonly STANDARD_DISPLAY_HEIGHT = 800;
+  static maxWidth: number = StyleManager.STANDARD_DISPLAY_WIDTH;
 
-  constructor() {
-    super(StyleManager.ABILITY_PAGE_NAME_STATUSBAR);
-  }
-
-  setStyle(): void {
+  static setStyle(): void {
     Log.showDebug(TAG, 'setStyle');
 
-    this.setStandardWidth(BaseStyleManager.STANDARD_DISPLAY_WIDTH_NORMAL);
-
     let config = AbilityManager.getAbilityData(AbilityManager.ABILITY_NAME_STATUS_BAR, 'config');
-    this.setMaxWidth(config.maxWidth);
+    StyleManager.maxWidth = config.maxWidth;
 
-    this.setCommonStyle();
-    this.setVerticalStatusBarItemLoadComponentStyle();
-    this.setStatusBarNotificationIconStyle();
-    this.setIconItemComponentStyle();
-    this.setPluginIconItemComponentStyle();
-    this.setClockComponentStyle();
-    this.setBatteryComponentStyle();
-    this.setBatteryPicStyle();
-    this.setSignalComponentStyle();
-    this.setStatusBarBluetoothComponentStyle();
-    this.setStartsBarLocationComponentStyle();
-    this.setStatusRingModeComponentStyle();
-    this.setStartsBarWifiComponentStyle();
-    this.setCapsuleComponentStyle();
+    StyleManager.setCommonStyle();
+    StyleManager.setVerticalStatusBarItemLoadComponentStyle();
+    StyleManager.setStatusBarNotificationIconStyle();
+    StyleManager.setIconItemComponentStyle();
+    StyleManager.setPluginIconItemComponentStyle();
+    StyleManager.setClockComponentStyle();
+    StyleManager.setBatteryComponentStyle();
+    StyleManager.setBatteryPicStyle();
+    StyleManager.setSignalComponentStyle();
+    StyleManager.setStatusBarBluetoothComponentStyle();
+    StyleManager.setStartsBarLocationComponentStyle();
+    StyleManager.setStatusRingModeComponentStyle();
+    StyleManager.setStartsBarWifiComponentStyle();
+    StyleManager.setCapsuleComponentStyle();
   }
   // Common
-  private setCommonStyle(): void {
+  private static setCommonStyle(): void {
     let style = CommonStyleConfiguration.getCommonStyle();
-    style.statusBarFontSize = this.calcScaleSizePx(14);
-    style.statusBarIconWidth = this.calcScaleSizePx(20);
-    style.statusBarIconHeight = this.calcScaleSizePx(20);
+    style.statusBarFontSize = StyleManager.calcScaleSizePx(14);
+    style.statusBarIconWidth = StyleManager.calcScaleSizePx(20);
+    style.statusBarIconHeight = StyleManager.calcScaleSizePx(20);
     style.statusBarMarginLeftRight = $r("app.float.status_bar_margin_left_right");
   }
 
   // StatusBar-VerticalStatusBarItemLoadComponent
-  private setVerticalStatusBarItemLoadComponentStyle(): void {
+  private static setVerticalStatusBarItemLoadComponentStyle(): void {
     let style = StatusBarStyleConfiguration.getVerticalStatusBarItemLoadComponentStyle();
-    style.statusBarVerticalComponentHeight = this.calcScaleSize(64);
+    style.statusBarVerticalComponentHeight = StyleManager.calcScaleSize(64);
   }
 
   // StatusBar-NotificationIcon
-  private setStatusBarNotificationIconStyle(): void {
+  private static setStatusBarNotificationIconStyle(): void {
     let style = StatusBarStyleConfiguration.getStatusBarNotificationIconStyle();
-    style.iconWidth = this.calcScaleSizePx(16);
-    style.iconHeight = this.calcScaleSizePx(16);
-    style.iconSpace = this.calcScaleSizePx(6);
+    style.iconWidth = StyleManager.calcScaleSizePx(16);
+    style.iconHeight = StyleManager.calcScaleSizePx(16);
+    style.iconSpace = StyleManager.calcScaleSizePx(6);
   }
 
   // StatusBar-IconComponent
-  private setIconItemComponentStyle(): void {
+  private static setIconItemComponentStyle(): void {
     let style = StatusBarStyleConfiguration.getIconItemComponentStyle();
-    style.stackHeight = this.calcScaleSizePx(8 * 2 + 18);
-    style.stackPadding = this.calcScaleSizePx(8);
-    style.stackBorderRadius = this.calcScaleSizePx(8);
+    style.stackHeight = StyleManager.calcScaleSizePx(8 * 2 + 18);
+    style.stackPadding = StyleManager.calcScaleSizePx(8);
+    style.stackBorderRadius = StyleManager.calcScaleSizePx(8);
     style.stackBgColorSelected = '#33000000';
     style.stackBgColorUnSelected = '#00000000';
-    style.componentSpace = this.calcScaleSizePx(8);
-    style.iconWidth = this.calcScaleSizePx(18);
-    style.iconHeight = this.calcScaleSizePx(18);
-    style.marginLeft = this.calcScaleSizePx(4);
-    style.marginRight = this.calcScaleSizePx(4);
+    style.componentSpace = StyleManager.calcScaleSizePx(8);
+    style.iconWidth = StyleManager.calcScaleSizePx(18);
+    style.iconHeight = StyleManager.calcScaleSizePx(18);
+    style.marginLeft = StyleManager.calcScaleSizePx(4);
+    style.marginRight = StyleManager.calcScaleSizePx(4);
   }
 
   // StatusBar-PluginIconItemComponent
-  private setPluginIconItemComponentStyle(): void {
+  private static setPluginIconItemComponentStyle(): void {
     let style = StatusBarStyleConfiguration.getPluginIconItemComponentStyle();
-    style.iconWidth = this.calcScaleSize(32);
+    style.iconWidth = StyleManager.calcScaleSize(32);
   }
 
   // Clock
-  private setClockComponentStyle(): void {
+  private static setClockComponentStyle(): void {
     let style = ClockStyleConfiguration.getClockComponentStyle();
-    style.statusBarClockMaxWidth = this.calcScaleSizePx(37);
+    style.statusBarClockMaxWidth = StyleManager.calcScaleSizePx(37);
   }
 
   // Battery-Icon
-  private setBatteryComponentStyle(): void {
+  private static setBatteryComponentStyle(): void {
     let style = BatteryStyleConfiguration.getBatteryComponentStyle();
-    style.componentGap = this.calcScaleSizePx(6);
+    style.componentGap = StyleManager.calcScaleSizePx(6);
   }
 
   // Battery-Pic
-  private setBatteryPicStyle(): void {
+  private static setBatteryPicStyle(): void {
     let style = BatteryStyleConfiguration.getBatteryPicStyle();
-    style.picGap = this.calcScaleSizePx(1);
-    style.picBodyWidth = this.calcScaleSizePx(18.75);
-    style.picBodyHeight = this.calcScaleSizePx(10.83);
-    style.picBodyPadding = this.calcScaleSizePx(1);
-    style.picBodyBorderWidth = this.calcScaleSizePx(1);
-    style.picBorderRadius = this.calcScaleSizePx(2);
-    style.picHeadBorderRadius = this.calcScaleSizePx(1);
+    style.picGap = StyleManager.calcScaleSizePx(1);
+    style.picBodyWidth = StyleManager.calcScaleSizePx(18.75);
+    style.picBodyHeight = StyleManager.calcScaleSizePx(10.83);
+    style.picBodyPadding = StyleManager.calcScaleSizePx(1);
+    style.picBodyBorderWidth = StyleManager.calcScaleSizePx(1);
+    style.picBorderRadius = StyleManager.calcScaleSizePx(2);
+    style.picHeadBorderRadius = StyleManager.calcScaleSizePx(1);
     style.picChargingColor = '#00ff21';
     style.picLevelLowColor = '#ff0000';
-    style.picHeadWidth = this.calcScaleSizePx(1.5);
-    style.picHeadHeight = this.calcScaleSizePx(5);
+    style.picHeadWidth = StyleManager.calcScaleSizePx(1.5);
+    style.picHeadHeight = StyleManager.calcScaleSizePx(5);
   }
 
   // Signal-Icon
-  private setSignalComponentStyle(): void {
+  private static setSignalComponentStyle(): void {
     let style = SignalStyleConfiguration.getSignalComponentStyle();
-    style.cellularImageWidth = this.calcScaleSizePx(25);
-    style.cellularImageHeight = this.calcScaleSizePx(20);
-    style.statusBarSignalTypeFontSize = this.calcScaleSizePx(7);
-    style.statusBarSignalUnknownFontSize = this.calcScaleSizePx(12);
-    style.signalTextMaxWeight = this.calcScaleSizePx(100);
-    style.netSignalTextMaxWidth = this.calcScaleSizePx(18);
+    style.cellularImageWidth = StyleManager.calcScaleSizePx(25);
+    style.cellularImageHeight = StyleManager.calcScaleSizePx(20);
+    style.statusBarSignalTypeFontSize = StyleManager.calcScaleSizePx(7);
+    style.statusBarSignalUnknownFontSize = StyleManager.calcScaleSizePx(12);
+    style.signalTextMaxWeight = StyleManager.calcScaleSizePx(100);
+    style.netSignalTextMaxWidth = StyleManager.calcScaleSizePx(18);
   }
 
   // Bluetooth -Icon
-  private setStatusBarBluetoothComponentStyle(): void {
+  private static setStatusBarBluetoothComponentStyle(): void {
     let style = BluetoothStyleConfiguration.getStatusBarBluetoothComponentStyle();
-    style.staticBarBluetoothWidth = this.calcScaleSizePx(18);
-    style.staticBarBluetoothHeight = this.calcScaleSizePx(20);
+    style.staticBarBluetoothWidth = StyleManager.calcScaleSizePx(18);
+    style.staticBarBluetoothHeight = StyleManager.calcScaleSizePx(20);
   }
 
   // Location-Icon
-  private setStartsBarLocationComponentStyle(): void {
+  private static setStartsBarLocationComponentStyle(): void {
     let style = LocationStyleConfiguration.getStartsBarLocationComponentStyle();
-    style.statusBarLocationWidth = this.calcScaleSizePx(18);
-    style.statusBarLocationHeight = this.calcScaleSizePx(20);
+    style.statusBarLocationWidth = StyleManager.calcScaleSizePx(18);
+    style.statusBarLocationHeight = StyleManager.calcScaleSizePx(20);
   }
 
   // RingMode-Icon
-  private setStatusRingModeComponentStyle(): void {
+  private static setStatusRingModeComponentStyle(): void {
     let style = RingModeStyleConfiguration.getStatusRingModeComponentStyle();
-    style.statusBarRingModeWidth = this.calcScaleSizePx(20);
-    style.statusBarRingModeHeight = this.calcScaleSizePx(20);
+    style.statusBarRingModeWidth = StyleManager.calcScaleSizePx(20);
+    style.statusBarRingModeHeight = StyleManager.calcScaleSizePx(20);
   }
 
   // Wifi-Icon
-  private setStartsBarWifiComponentStyle(): void {
+  private static setStartsBarWifiComponentStyle(): void {
     let style = WifiStyleConfiguration.getStartsBarWifiComponentStyle();
-    style.statusBarWifiWidth = this.calcScaleSizePx(20);
-    style.statusBarWifiHeight = this.calcScaleSizePx(20);
+    style.statusBarWifiWidth = StyleManager.calcScaleSizePx(20);
+    style.statusBarWifiHeight = StyleManager.calcScaleSizePx(20);
   }
 
   // Capsule-Icon
-  private setCapsuleComponentStyle(): void {
+  private static setCapsuleComponentStyle(): void {
     let style = CapsuleStyleConfiguration.getCapsuleComponentStyle();
-    style.greenCapsulePhoneWidth = this.calcScaleSizePx(15);
-    style.greenCapsulePhoneHeight = this.calcScaleSizePx(15);
-    style.greenCapsuleHeight = this.calcScaleSizePx(30);
+    style.greenCapsulePhoneWidth = StyleManager.calcScaleSizePx(15);
+    style.greenCapsulePhoneHeight = StyleManager.calcScaleSizePx(15);
+    style.greenCapsuleHeight = StyleManager.calcScaleSizePx(30);
     style.greenCapsuleTextColor = '#CCFFFFFF';
-    style.greenCapsuleTextMarginLeftRight = this.calcScaleSizePx(10);
-    style.greenCapsuleRadius = this.calcScaleSizePx(24);
+    style.greenCapsuleTextMarginLeftRight = StyleManager.calcScaleSizePx(10);
+    style.greenCapsuleRadius = StyleManager.calcScaleSizePx(24);
     style.greenCapsuleBackgroundColor = '#64BB5C';
     style.maxLines = 1;
   }
+
+  static number2px(n: number): string {
+    return n.toString() + 'px';
+  }
+
+  static calcScaleSize(n: number): number {
+    return n * StyleManager.maxWidth / StyleManager.STANDARD_DISPLAY_WIDTH;
+  }
+
+  static calcScaleSizePx(n: number): string {
+    return StyleManager.number2px(StyleManager.calcScaleSize(n));
+  }
 }
-
-let styleManager = new StyleManager();
-
-export default styleManager;

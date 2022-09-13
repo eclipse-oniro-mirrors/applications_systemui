@@ -21,6 +21,7 @@ import CommonUtil from '../common/CommonUtil';
 import createOrGet from '../../../../../../../../../common/src/main/ets/default/SingleInstanceHelper';
 import DistributionManager from './NotificationDistributionManager';
 import AbilityManager from '../../../../../../../../../common/src/main/ets/default/abilitymanager/abilityManager';
+import {writeFaultLog, FaultID} from '../../../../../../../../../common/src/main/ets/default/SysFaultLogger';
 
 const TAG = 'NotificationService';
 
@@ -59,10 +60,10 @@ export class NotificationService {
     });
   }
 
-  remove(code: string): void {
+  remove(code: string, isClickItem?: boolean): void {
     NotificationManager.remove(TAG, code, (data) => {
       Log.showInfo(TAG, `removeNotificationItem ==> data: ${JSON.stringify(data)}`);
-    });
+    }, isClickItem);
   }
 
   loadAllNotifications(): void {
@@ -87,24 +88,27 @@ export class NotificationService {
   }
 
   handleNotificationAddAndSortMap(data): void {
-    Log.showDebug(TAG, 'handleNotificationAddAndSortMap, sortingMap' + JSON.stringify(data.sortingMap || {}));
+    Log.showInfo(TAG, 'handleNotificationAddAndSortMap');
     this.mSortingMap = { ...this.mSortingMap, ...data?.sortingMap };
     this.handleNotificationAdd(data?.request);
   }
 
   handleNotificationAdd(request): void {
     ParseDataUtil.parseData(request, this.mSortingMap).then((intermediateData) => {
-      Log.showInfo(TAG, `parseData after = ${JSON.stringify(intermediateData)}`);
+      Log.showInfo(TAG, `parseData id=${intermediateData?.id}, timestamp=${intermediateData?.timestamp}, bundleName=${intermediateData?.bundleName}`);
       RuleController.getNotificationData(intermediateData, (finalItemData) => {
-        Log.showInfo(TAG, `RuleController.getNotificationData after = ${JSON.stringify(finalItemData)}`);
         this.mListeners.forEach((listener) => {
-          Log.showInfo(TAG, `notifcationUserId: ${finalItemData.userId}, listener.userId: ${listener.userId}`);
+          Log.showInfo(TAG, `notifcationUserId: ${finalItemData?.userId}, listener.userId: ${listener?.userId}`);
           if (CommonUtil.checkVisibilityByUser(finalItemData.userId, listener.userId)) {
             listener.onNotificationConsume(finalItemData);
           }
         });
       });
-    }).catch(errorInfo => Log.showError(TAG, `error: ${JSON.stringify(errorInfo)}`));
+    }).catch((errorInfo) => {
+      writeFaultLog({CORE_SYSTEM: request.creatorBundleName, TARGET_API: "add", FAULT_ID: FaultID.META_DIAGRAM_JUMP
+      , MSG: "Failed to handle notification addition"})
+      Log.showError(TAG, `error: ${JSON.stringify(errorInfo)}`)
+    });
   }
 
   handleNotificationCancel(data): void {

@@ -26,6 +26,7 @@ import CheckEmptyUtils from '../../../../../../../../../common/src/main/ets/defa
 import AbilityManager from '../../../../../../../../../common/src/main/ets/default/abilitymanager/abilityManager';
 import EventManager from '../../../../../../../../../common/src/main/ets/default/event/EventManager';
 import {obtainLocalEvent} from '../../../../../../../../../common/src/main/ets/default/event/EventUtil';
+import Trace from '../../../../../../../../../common/src/main/ets/default/Trace'
 import CommonUtil from '../common/CommonUtil';
 import Constants,{NotificationItemData} from '../common/constants';
 
@@ -87,7 +88,7 @@ export class NotificationViewModel {
       return;
     }
     this.onNotificationCancel(notificationItemData.hashcode);
-    Log.showInfo(TAG, `onNotificationConsume  ${JSON.stringify(notificationItemData)}`);
+    Log.showDebug(TAG, `onNotificationConsume  ${JSON.stringify(notificationItemData)}`);
     //Verify the notifications can be displayed
     if (!this.isCanShow(notificationItemData.bundleName)) {
       //can not displayed
@@ -127,29 +128,28 @@ export class NotificationViewModel {
   }
 
   updateNotification(): void {
-    Log.showInfo(TAG, `updateNotification length: ${this.mNotificationList.length} list: ${JSON.stringify(this.mNotificationList)}`);
     this.sortNotification();
     let notificationList = this.groupByGroupName();
+    Log.showInfo(TAG, `updateNotification length: ${notificationList.length}`);
     AppStorage.SetOrCreate('notificationList', notificationList);
   }
 
   groupByGroupName(): any[]{
-    Log.showInfo(TAG, 'groupByGroupName');
     if (!this.mNotificationList || this.mNotificationList.length < 1) {
+      Log.showWarn(TAG, 'groupByGroupName, list is empty.');
       return [];
     }
     let groupArr: any[] = [];
     let groups = {};
     this.mNotificationList.forEach((item) => {
       const groupName = `${item.bundleName}_${item.groupName}`;
-      Log.showInfo(TAG, `groupByGroupName groupName:${groupName}`);
+      Log.showDebug(TAG, `groupByGroupName, groupName:${groupName}`);
       if (!groups[groupName] || groups[groupName].length < 1) {
         groups[groupName] = [];
         groupArr.push(groups[groupName]);
       }
       groups[groupName].push(item);
     });
-    Log.showInfo(TAG, `groupByGroupName groupArr:${JSON.stringify(groupArr)}`);
     return groupArr;
   }
 
@@ -208,7 +208,7 @@ export class NotificationViewModel {
     this.updateNotification();
   }
 
-  removeNotificationItem(itemData: NotificationItemData, isDelSysConent: boolean): void {
+  removeNotificationItem(itemData: NotificationItemData, isDelSysConent: boolean, isClickItem?: boolean): void {
     Log.showInfo(TAG, `removeNotificationItem, hashcode: ${itemData.hashcode}`);
     for (let i = 0, len = this.mNotificationList.length; i < len; i++) {
       if (this.mNotificationList[i].hashcode == itemData.hashcode) {
@@ -221,7 +221,7 @@ export class NotificationViewModel {
     }
     this.updateNotification();
     if (isDelSysConent) {
-      this.removeSysNotificationItem(itemData.hashcode);
+      this.removeSysNotificationItem(itemData.hashcode, isClickItem);
     }
     AppStorage.Delete(Constants.KEY_INPUT + itemData.id);
   }
@@ -247,16 +247,17 @@ export class NotificationViewModel {
     this.updateNotification();
   }
 
-  removeSysNotificationItem(hashcode: string): void {
-    NotificationService.remove(hashcode);
+  removeSysNotificationItem(hashcode: string, isClickItem?: boolean): void {
+    NotificationService.remove(hashcode, isClickItem);
   }
 
   clickItem(itemData: NotificationItemData, want?: any): void {
     Log.showInfo(TAG, `clickItem itemId: ${itemData.id}, want: ${JSON.stringify(want)}, tapDismissed: ${itemData.tapDismissed}`);
     NotificationWindowManager.hideNotificationWindow();
+    Trace.start(Trace.CORE_METHOD_CLICK_NOTIFICATION);
     CommonUtil.startWant((want) ? want : itemData.want);
     if (itemData.tapDismissed) {
-      this.removeNotificationItem(itemData, true);
+      this.removeNotificationItem(itemData, true, true);
     }
   }
 
@@ -317,7 +318,6 @@ export class NotificationViewModel {
   }
 
   updateFlowControlInfos(bundleName: string, plusOrMinus: boolean): void {
-    Log.showInfo(TAG, 'updateFlowControlInfos');
     if (!CheckEmptyUtils.isEmpty(this.mNotificationCtrl)) {
       if (this.mNotificationCtrl['app'].has(bundleName)) {
         let tmp = this.mNotificationCtrl['app'].get(bundleName);
@@ -335,7 +335,6 @@ export class NotificationViewModel {
         this.mNotificationCtrl['currentTotal'] -= 1;
       }
     }
-
     Log.showInfo(TAG, `updateFlowControlInfos:${JSON.stringify(this.mNotificationCtrl)}`);
   }
 

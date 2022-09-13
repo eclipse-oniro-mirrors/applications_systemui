@@ -16,6 +16,7 @@
 import Three from './threeLayout'
 import Log from '../../../../../../../common/src/main/ets/default/Log';
 import AbilityManager from '../../../../../../../common/src/main/ets/default/abilitymanager/abilityManager'
+import CommonStyleManager from '../../../../../../../common/src/main/ets/default/CommonStyleManager'
 import NavigationBarViewModel from '../viewmodel/NavigationBarViewModel';
 import {NavigationBarComponentData} from '../common/constants'
 import StyleManager from '../common/StyleManager'
@@ -44,6 +45,7 @@ struct Index {
     mConfigManager.initConfig();
 
     setAppBgColor('#00000000');
+    CommonStyleManager.setAbilityPageName(TAG)
     if (configInfo.maxWidth > configInfo.maxHeight) { // Pad、PC Mode
       StyleManager.setPadStyle();
     } else { // Phone Mode

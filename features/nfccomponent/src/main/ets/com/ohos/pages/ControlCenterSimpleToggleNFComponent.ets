@@ -16,7 +16,7 @@
 import Log from '../../../../../../../../common/src/main/ets/default/Log';
 import EventManager from "../../../../../../../../common/src/main/ets/default/event/EventManager";
 import { obtainStartAbility } from "../../../../../../../../common/src/main/ets/default/event/EventUtil";
-import { NFCMode } from '../common/Constants';
+import NfcController from '@ohos.nfc.controller';
 import ViewModel from '../viewmodel/NFCModeVM';
 import SimpleToggleBase from '../../../../../../../../common/src/main/ets/template/SimpleToggleBase';
 
@@ -30,7 +30,7 @@ export default struct ControlCenterSimpleToggleNFComponent {
   @State mIcon: Resource = $r("app.media.ic_notification_nfc_filled");
   @State mLabel: Resource = $r("app.string.control_center_complex_toggle_nfc_mode_title");
   @State mDefaultChangeSwitch: boolean  = false;
-  @StorageLink('NFCModeComponentMode') @Watch('onNFCModeUpdated') NFCModeComponentMode: NFCMode = NFCMode.NFC_MODE_OFF;
+  @StorageLink('NFCModeComponentMode') @Watch('onNFCModeUpdated') NFCModeComponentMode: NfcController.NfcState = NfcController.NfcState.STATE_OFF;
   aboutToAppear() {
     Log.showInfo(TAG, 'aboutToAppear');
     ViewModel.initViewModel();
@@ -43,9 +43,9 @@ export default struct ControlCenterSimpleToggleNFComponent {
 
   onNFCModeUpdated(propName: string): void {
     Log.showInfo(TAG, `onNFCModeUpdated, propName: ${propName} NFCModeComponentMode: ${JSON.stringify(this.NFCModeComponentMode)}`);
-    if (this.NFCModeComponentMode == NFCMode.NFC_MODE_OFF) {
+    if (this.NFCModeComponentMode == NfcController.NfcState.STATE_OFF) {
       this.mDefaultChangeSwitch = false;
-    } else if (this.NFCModeComponentMode == NFCMode.NFC_MODE_ON) {
+    } else if (this.NFCModeComponentMode == NfcController.NfcState.STATE_ON) {
       this.mDefaultChangeSwitch = true;
     }
   }
@@ -64,10 +64,10 @@ export default struct ControlCenterSimpleToggleNFComponent {
 
   mClickEvent() {
     Log.showInfo(TAG, `mClickEvent---${this.NFCModeComponentMode}`);
-    if (this.NFCModeComponentMode == NFCMode.NFC_MODE_OFF) {
-      ViewModel.setNFCMode(NFCMode.NFC_MODE_OFF)
-    } else if (this.NFCModeComponentMode == NFCMode.NFC_MODE_ON) {
-      ViewModel.setNFCMode(NFCMode.NFC_MODE_ON)
+    if (this.NFCModeComponentMode == NfcController.NfcState.STATE_OFF) {
+      ViewModel.setNFCMode(NfcController.NfcState.STATE_OFF)
+    } else if (this.NFCModeComponentMode == NfcController.NfcState.STATE_ON) {
+      ViewModel.setNFCMode(NfcController.NfcState.STATE_ON)
     }
   }
 }

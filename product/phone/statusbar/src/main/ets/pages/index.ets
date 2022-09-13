@@ -19,6 +19,7 @@ import WindowManager, {WindowType, WINDOW_SHOW_HIDE_EVENT
 } from '../../../../../../../common/src/main/ets/default/WindowManager'
 import EventManager, {unsubscribe} from "../../../../../../../common/src/main/ets/default/event/EventManager"
 import {obtainLocalEvent} from "../../../../../../../common/src/main/ets/default/event/EventUtil"
+import CommonStyleManager from '../../../../../../../common/src/main/ets/default/CommonStyleManager'
 import HeightConfigUtils from '../../../../../../../common/src/main/ets/default/heightcofigUtils/HeightConfigUtils'
 import StatusBarComponent from '../../../../../../../features/statusbarcomponent/src/main/ets/com/ohos/pages/StatusBarComponent'
 import StatusBarVM from '../../../../../../../features/statusbarcomponent/src/main/ets/com/ohos/viewmodel/StatusBarVM'
@@ -55,6 +56,7 @@ struct Index {
     this.updateStatusBarData();
 
     setAppBgColor('#00000000');
+    CommonStyleManager.setAbilityPageName(TAG);
     StyleManager.setStyle();
 
     this.mClearCallback = EventManager.subscribe(WINDOW_SHOW_HIDE_EVENT, (args) => this.onWindowShowHideEvent(args));
@@ -117,7 +119,7 @@ struct Index {
   }
 
   touchEvent(event: TouchEvent) {
-    Trace.start(Trace.CORE_METHOD_START_TOUCHEVENT)
+    Trace.start(Trace.CORE_METHOD_START_TOUCHEVENT);
     Log.showDebug(TAG, 'touchEvent' + event.touches)
     if (event.type == Constants.TOUCHTYPE_DOWN) { //down
       this.startX = event.touches[0].screenX

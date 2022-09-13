@@ -16,21 +16,35 @@
 import Log from '../../../../../../../../../../common/src/main/ets/default/Log';
 import Constants, { NotificationLayout as Layout } from '../../common/constants';
 import NotificationItem from './notificationItem'
-import titleItem from './titleItem';
-import IconListComponent, { getIconListSize } from './iconListComponent';
-import ScrollbarManager from '../../common/ScrollbarManager';
+import NotificationViewModel from '../../viewmodel/NotificationViewModel';
+import SwipeLayout from './SwipeLayout';
+import deviceInfo from '@ohos.deviceInfo';
+import ExpandInfoManager from '../../model/ExpandInfoManager';
+import {getId} from '../../model/SwipeLayoutUtils';
+import {BottomLeftItem} from './iconListComponent';
+import FocusCallBack from '../../model/SwipeLayoutUtils';
 
 const TAG = 'NoticeItem-GroupItem';
+const deviceTypeInfo = deviceInfo.deviceType;
 
 @Component
 export default struct GroupItem {
   @Consume('notificationUpdate') updateFlag: number;
-  @State distributedDeviceName: string = ''
+  @State distributedDeviceName: string = '';
   @State @Watch('expandChange') toExpand: boolean = false;
-  private groupData: any[] = []
-  private mScroller: Scroller = new Scroller();
-  @State mIconAlpha: number = 0;
-  @State @Watch('scrollEdge') mEdgeEnd: boolean = false;
+  private groupData: any[] = [];
+
+  registerGroupItemEventCapture(id: string){
+    if(FocusCallBack.getLastFocusId() == getId(this.groupData[0], true)){
+      //如果上次滑动的是该group, 它自身允许滑动， 但它的子控件不应该滑动
+      if(id == getId(this.groupData[0], true)){
+        return false;
+      }
+      return true;
+    } else {
+      return false;
+    }
+  }
 
   expandChange() {
     this.updateFlag++;
@@ -38,81 +52,121 @@ export default struct GroupItem {
 
   aboutToAppear() {
     Log.showInfo(TAG, `aboutToAppear`);
+    this.toExpand = ExpandInfoManager.hasExpandInfo(this.groupData[0]);
   }
 
   aboutToDisappear() {
     Log.showInfo(TAG, `aboutToDisAppear`);
   }
 
-  build() {
-    Stack({ alignContent: Alignment.TopEnd }) {
-      Scroll(this.mScroller) {
-        Row() {
-          Column() {
-            Row() {
-              titleItem({
-                notificationSmallIcon: this.groupData[0].smallIcon,
-                notificationName: this.groupData[0].appName,
-                notificationTime: this.groupData[0].time,
-                isExpand: $toExpand,
-                needExpand: true,
-                distributedDeviceName: this.distributedDeviceName,
-                clickTitleAction: () => null
-              })
-            }
-            .flexShrink(0)
-            .backgroundColor($r('app.color.notificationitem_background'))
-            .width(Constants.FULL_CONTAINER_WIDTH)
+  deleteButtonCallback(){
+    ExpandInfoManager.deleteExpandInfo(this.groupData[0]);
+    NotificationViewModel.removeGroupNotification(this.groupData[0], true);
+  }
 
-            if (this.toExpand) {
-              Row().height($r("app.float.notice_divider")).width('100%').flexShrink(0)
-            }
-            Column() {
-              ContentList({ groupData: this.groupData, toExpand: this.toExpand })
-            }
-            .flexShrink(1)
-            .width(Constants.FULL_CONTAINER_WIDTH)
-            .enabled(!this.mEdgeEnd)
+  @Builder SurfaceComponent() {
+    Column() {
+      Row() {
+        Flex({ alignItems: ItemAlign.Center, justifyContent: FlexAlign.Start }) {
+          Image(this.groupData[0].smallIcon)
+            .objectFit(ImageFit.Contain)
+            .width(Layout.TITLE_IMAGE_SIZE)
+            .height(Layout.TITLE_IMAGE_SIZE)
+          Row() {
+            Text(this.groupData[0].appName)
+              .fontColor($r("sys.color.ohos_fa_text_primary"))
+              .fontSize($r("sys.float.ohos_id_text_size_body3"))
+              .fontWeight(FontWeight.Regular)
+              .textOverflow({ overflow: TextOverflow.Ellipsis })
+              .maxLines(Constants.SINGLE_LINE)
+          }.margin({ left: 8 })
+          Text(this.groupData[0].time)
+            .fontColor($r("sys.color.ohos_fa_text_primary"))
+            .fontSize($r("sys.float.ohos_id_text_size_body3"))
+            .fontWeight(FontWeight.Regular)
+            .maxLines(Constants.SINGLE_LINE)
+            .flexGrow(0)
+            .margin({ left: 8, right: 8 })
+
+          Text($r('app.string.distributed_devicename', this.distributedDeviceName))
+            .fontColor($r("sys.color.ohos_fa_text_primary"))
+            .fontSize($r("sys.float.ohos_id_text_size_body3"))
+            .fontWeight(FontWeight.Regular)
+            .maxLines(Constants.SINGLE_LINE)
+            .visibility((this.distributedDeviceName ? true : false) ? Visibility.Visible : Visibility.None)
+
+          Blank()
+          Image(this.toExpand ? $r('app.media.ic_notification_up') : $r('app.media.ic_notification_down'))
+            .objectFit(ImageFit.Contain)
+            .width(Layout.TITLE_IMAGE_SIZE)
+            .height(Layout.TITLE_IMAGE_SIZE)
+        }
+        .margin({ left: 12, right: 12 })
+        .height(Layout.TITLE_HEIGHT)
+        .onClick(() => {
+          if (this.toExpand) {
+            this.toExpand = false;
+            ExpandInfoManager.deleteExpandInfo(this.groupData[0])
+          } else {
+            this.toExpand = true;
+            ExpandInfoManager.addExpandInfo(this.groupData[0])
           }
-          .borderRadius($r("sys.float.ohos_id_corner_radius_default_l"))
-          .clip(true)
-          IconListComponent({ iconAlpha: this.mIconAlpha, itemData: this.groupData[0], isGroup: true })
-        }
+        })
       }
-      .scrollable(ScrollDirection.Horizontal)
-      .scrollBar(BarState.On)
-      .onScroll(() => {
-        let accuracy = 0.1
-        let newOpacity = this.mScroller.currentOffset().xOffset * 1.0 / getIconListSize()
-        let diffs = Math.abs(this.mIconAlpha - newOpacity)
-        if (diffs >= accuracy) {
-          let finalAlpha = newOpacity < accuracy ? 0 : newOpacity
-          finalAlpha = finalAlpha > (1 - accuracy) ? 1 : finalAlpha
-          this.mIconAlpha = finalAlpha
-        }
-      })
-      .onScrollEnd(() => {
-        this.mEdgeEnd = (this.mEdgeEnd &&
-        this.mScroller.currentOffset().xOffset > (getIconListSize() - Layout.SCROLL_THRESHOLD))
-        || (!this.mEdgeEnd && this.mScroller.currentOffset().xOffset > Layout.SCROLL_THRESHOLD)
-        ScrollbarManager.restoreOtherScroll(this.mScroller);
+      .flexShrink(0)
+      .backgroundColor($r('app.color.notificationitem_background'))
+      .width(Constants.FULL_CONTAINER_WIDTH)
+
+      if (this.toExpand) {
+        Row().height($r("app.float.notice_divider")).width(Constants.FULL_CONTAINER_WIDTH)
+      }
+      Column() {
+        ContentList({ groupData: this.groupData, toExpand: this.toExpand, registerEventCapture: this.registerGroupItemEventCapture.bind(this)  })
+      }
+      .width(Constants.FULL_CONTAINER_WIDTH)
+    }
+    .borderRadius($r("sys.float.ohos_id_corner_radius_default_l"))
+    .clip(true)
+  }
+
+  @Builder BottomLeftComponent() {
+    BottomLeftItem({itemData: this.groupData[0], height: 92});
+  }
+
+  build() {
+    Column(){
+      SwipeLayout({
+        swipeLayoutId: getId(this.groupData[0], true),
+        bottomLeftWidth: 80,
+        bottomRightWidth: 60,
+        leftThreshold: 100,
+        bottomHeight: 92,
+        deleteButtonCallback: this.deleteButtonCallback.bind(this),
+        SurfaceComponent: this.SurfaceComponent.bind(this),
+        BottomLeftComponent: this.BottomLeftComponent.bind(this),
+        registerEventCapture: this.registerGroupItemEventCapture.bind(this)
       })
     }
     .width(Constants.FULL_CONTAINER_WIDTH)
     .borderRadius($r("sys.float.ohos_id_corner_radius_default_l"))
     .clip(true)
   }
-
-  scrollEdge() {
-    this.mScroller.scrollEdge(this.mEdgeEnd ? Edge.End : Edge.Start)
-  }
 }
 
 @Component
 struct ContentList {
-  @State @Watch('remainderChange') groupData: any[] = []
-  @Prop toExpand: boolean
-  @State remainderNum: number= 0
+  @State @Watch('remainderChange') groupData: any[] = [];
+  @Prop toExpand: boolean;
+  @State remainderNum: number= 0;
+  registerEventCapture: (id: string) => boolean = null;
+
+  registerContentListEventCapture(id: string){
+    if(this.registerEventCapture != null && this.registerEventCapture(id)){
+      return true;
+    } else {
+      return false;
+    }
+  }
 
   aboutToAppear() {
     this.remainderNum = this.groupData.length - 2;
@@ -180,7 +234,7 @@ struct ContentList {
         List() {
           ForEach(this.groupData, (item: any) => {
             ListItem() {
-              NotificationItem({ itemData: item, isSubItem: true })
+              NotificationItem({ itemData: item, isSubItem: true, registerEventCapture: this.registerContentListEventCapture.bind(this) })
             }
           }, (item: any) => `${item.hashcode}_${item.timestamp}_subitem`)
         }

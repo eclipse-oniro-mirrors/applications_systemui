@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-import StyleManager from './StyleManager';
+import CommonStyleManager from '../../../../../../../../common/src/main/ets/default/CommonStyleManager';
 
 const TAG = 'StatusBar-StyleConfiguration';
 
@@ -23,6 +23,6 @@ export class IndexStyle {
 export default class StyleConfiguration {
   static getIndexStyle(): IndexStyle {
     const key: string = TAG + '-Index';
-    return StyleManager.getStyle(key, IndexStyle);
+    return CommonStyleManager.getStyle(key, IndexStyle);
   }
 }

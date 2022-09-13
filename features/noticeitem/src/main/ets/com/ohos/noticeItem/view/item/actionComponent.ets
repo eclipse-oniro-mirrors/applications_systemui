@@ -81,7 +81,7 @@ export default struct ActionComponent {
 
 @Component
 struct ActionButton {
-  @State backgroundColor: Resource = $r("app.color.transparent");
+  @State isTouched: boolean = false;
   @Prop content: string;
   clickable: boolean = true;
   clickEvent: () => void = () => {
@@ -94,15 +94,15 @@ struct ActionButton {
       .borderRadius($r("sys.float.ohos_fa_corner_radius_default_s"))
       .height(Layout.ACTION_HEIGHT)
       .padding({ left: Layout.ACTION_MARGIN, right: Layout.ACTION_MARGIN })
-      .backgroundColor(this.backgroundColor)
+      .backgroundColor(this.isTouched ? $r("sys.color.ohos_fa_click_effect") : $r("app.color.transparent"))
       .onTouch((event: TouchEvent) => {
         if (!this.clickable) {
           return;
         }
         if (event.type == TouchType.Down) {
-          this.backgroundColor = $r("sys.color.ohos_fa_click_effect");
+          this.isTouched = true;
         } else if (event.type == TouchType.Up) {
-          this.backgroundColor = $r("app.color.transparent");
+          this.isTouched = false;
         }
       })
       .onClick(() => {

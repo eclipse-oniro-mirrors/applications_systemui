@@ -66,35 +66,23 @@
     },
     {
       "name": "dialog_title_height",
-      "value": "60vp"
-    },
-    {
-      "name": "dialog_title_font",
-      "value": "20fp"
+      "value": "56vp"
     },
     {
       "name": "dialog_title_margin_l",
       "value": "50"
     },
     {
-      "name": "dialog_button_font",
-      "value": "20fp"
-    },
-    {
-      "name": "timeDialog_height",
-      "value": "310vp"
-    },
-    {
       "name": "timeDialog_datePicker_height",
       "value": "200vp"
     },
     {
-      "name": "repeatDialog_cont_font",
-      "value": "16fp"
+      "name": "repeatDialog_width",
+      "value": "410vp"
     },
     {
-      "name": "repeatDialog_height",
-      "value": "320vp"
+      "name": "repeatDialog_padding",
+      "value": "24vp"
     },
     {
       "name": "border_width",
@@ -182,7 +170,7 @@
     },
     {
       "name": "toggle_check_width",
-      "value": "25"
+      "value": "24vp"
     },
     {
       "name": "divider_stroke_width",
@@ -202,7 +190,7 @@
     },
     {
       "name": "divider_height",
-      "value": "20"
+      "value": "20vp"
     },
     {
       "name": "itemComp_height",

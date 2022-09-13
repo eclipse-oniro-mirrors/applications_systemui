@@ -31,22 +31,6 @@ import display from "@ohos.display"
 const TAG = 'NotificationPanel-Index'
 const SHOW_EVENT = "showNotificationPanel";
 const HIDE_EVENT = "hideNotificationPanel";
-const SHOW_ANIM_CONFIG = {
-  duration: 300,
-  tempo: 1.0,
-  curve: Curve.Friction,
-  delay: 0,
-  iterations: 1,
-  playMode: PlayMode.Normal,
-}
-const HIDE_ANIM_CONFIG = {
-  duration: 200,
-  tempo: 1.0,
-  curve: Curve.EaseOut,
-  delay: 0,
-  iterations: 1,
-  playMode: PlayMode.Normal,
-}
 
 @Entry
 @Component
@@ -164,20 +148,19 @@ struct Index {
     //show animation
     animateTo({
       duration: 200,
-      curve: Curve.Friction,
-      onFinish: () => {
-        animateTo({
-          duration:100,
-          curve: Curve.Friction
-        }, () =>{
-          this.mWidthSize = 1;
-          this.mHeightSize = 1;
-        })
-      },
+      curve: Curve.Friction
     }, () => {
       this.mOpacity = 1;
       this.mWidthSize = 1.03;
       this.mHeightSize = 1.03;
+    })
+    animateTo({
+      duration:100,
+      curve: Curve.Friction,
+      delay: 200
+    }, () =>{
+      this.mWidthSize = 1;
+      this.mHeightSize = 1;
     })
   }
 

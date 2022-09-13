@@ -1,3 +1,4 @@
+//@ts-nocheck
 /*
  * Copyright (c) 2021-2022 Huawei Device Co., Ltd.
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -56,7 +57,7 @@ export default class BundleResourceModel {
     let that = this;
     try {
       let appInfo = data[index].appInfo;
-      if (parseInt(appInfo.labelResource.id) > 0) {
+      if (appInfo.labelResource.id > 0) {
         BundleManager.getString(appInfo.labelResource, (value) => {
           {
             if (value) {
@@ -116,7 +117,7 @@ export default class BundleResourceModel {
     }).then((data) => {
       Log.showInfo(TAG, `getBundleInfo bundleInfo:${JSON.stringify(data)}`);
       let appInfo = data.appInfo;
-      if (parseInt(appInfo.labelResource.id) > 0) {
+      if (appInfo.labelResource.id > 0) {
         BundleManager.getString(appInfo.labelResource, (value) => {
           {
             if (value) {
@@ -135,7 +136,7 @@ export default class BundleResourceModel {
       mBundleInfo.appUid = data.uid;
       mBundleInfo.systemApp = appInfo.systemApp;
       Log.showDebug(TAG, 'getBundleInfo getResourceManager label:' + label);
-      if (parseInt(appInfo.iconResource.id) > 0) {
+      if (appInfo.iconResource.id > 0) {
         BundleManager.getMediaBase64(appInfo.iconResource, (imageValue) => {
           if (!!imageValue) {
             mBundleInfo.appIcon = imageValue;

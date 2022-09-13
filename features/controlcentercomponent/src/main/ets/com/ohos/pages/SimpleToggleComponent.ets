@@ -81,7 +81,11 @@ export default struct SimpleToggleComponent {
   onIconItemClick() {
     Log.showDebug(TAG, `onIconItemClick`);
     if (this.mItemData.get()?.actionData?.clickAction) {
-      EventManager.publish(this.mItemData.get().actionData.clickAction);
+      if (this.mItemData.get().pluginType == PluginType.META) {
+        EventManager.publish(this.mItemData.get().actionData.clickAction, this.mItemData.get().pluginType);
+      } else {
+        EventManager.publish(this.mItemData.get().actionData.clickAction);
+      }
     };
   }
 

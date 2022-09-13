@@ -19,8 +19,8 @@ import { FASlotName } from '../../../../../../../../common/src/main/ets/default/
 import { TintContentInfo, getOrCreateTintContentInfo
 } from '../../../../../../../../common/src/main/ets/default/TintStateManager';
 import createOrGet from '../../../../../../../../common/src/main/ets/default/SingleInstanceHelper';
-import { NFCMode } from '../common/Constants';
 import NFCModeService from '../model/NFCModeService';
+import NfcController  from '@ohos.nfc.controller';
 
 export const NFC_MODE_COMPONENT_MODE_KEY = 'NFCModeComponentMode';
 
@@ -28,7 +28,7 @@ const TAG = 'NFCModeVM';
 
 export class NFCModeVM {
   mIsStart = false;
-  mNFCModeComponentMode: SubscribedAbstractProperty<NFCMode>;
+  mNFCModeComponentMode: SubscribedAbstractProperty<NfcController.NfcState>;
   mTintContentInfo: TintContentInfo = getOrCreateTintContentInfo(FASlotName.NFC);
 
   constructor() {
@@ -42,18 +42,18 @@ export class NFCModeVM {
     Log.showInfo(TAG, 'initViewModel ');
     this.mIsStart = true;
 
-    this.mNFCModeComponentMode = AppStorage.SetAndLink(NFC_MODE_COMPONENT_MODE_KEY, NFCMode.NFC_MODE_OFF);
+    this.mNFCModeComponentMode = AppStorage.SetAndLink(NFC_MODE_COMPONENT_MODE_KEY, NfcController.NfcState.STATE_OFF);
 
     NFCModeService.registerListener(this);
     NFCModeService.startService();
   }
 
-  updateNFCMode(mode: NFCMode): void {
+  updateNFCMode(mode: NfcController.NfcState): void {
     Log.showInfo(TAG, `updateNFCMode, mode: ${JSON.stringify(mode)} `);
     this.mNFCModeComponentMode.set(mode);
   }
 
-  setNFCMode(mode: NFCMode): void {
+  setNFCMode(mode: NfcController.NfcState): void {
     Log.showInfo(TAG, `setNFCMode, mode: ${JSON.stringify(mode)} `);
     NFCModeService.setNFCMode(mode);
   }

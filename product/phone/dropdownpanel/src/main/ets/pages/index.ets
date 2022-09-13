@@ -30,6 +30,7 @@ import WindowManager, { WindowType, WINDOW_SHOW_HIDE_EVENT
 } from '../../../../../../../common/src/main/ets/default/WindowManager'
 import EventManager, { unsubscribe } from "../../../../../../../common/src/main/ets/default/event/EventManager"
 import { START_ABILITY_EVENT } from "../../../../../../../common/src/main/ets/default/event/EventUtil"
+import CommonStyleManager from '../../../../../../../common/src/main/ets/default/CommonStyleManager'
 import MultimodalInputManager from '../../../../../../../common/src/main/ets/default/MultimodalInputManager'
 import AbilityManager from '../../../../../../../common/src/main/ets/default/abilitymanager/abilityManager'
 import HeightConfigUtils from '../../../../../../../common/src/main/ets/default/heightcofigUtils/HeightConfigUtils'
@@ -66,11 +67,11 @@ const HIDE_ANIM_CONFIG = {
 @Entry
 @Component
 struct Index {
-  @State showComponentName: string = undefined
-  @State componentOptAreaHeightPX: number = 0
-  @StorageLink('StatusCoefficient') StatusCoefficient: number = 1.0
+  @State showComponentName: string = undefined;
+  @State componentOptAreaHeightPX: number = 0;
+  @StorageLink('StatusCoefficient') StatusCoefficient: number = 1.0;
   mCallback: any;
-  mClearCallbacks: unsubscribe[]
+  mClearCallbacks: unsubscribe[];
   settingDataKey = 'settings.display.navigationbar_status';
   urivar: string = null;
   helper: any = null;
@@ -78,12 +79,12 @@ struct Index {
   navigationBarWidth: number = 0;
   mNeedUpdate: boolean = false;
   mWidthPx: number = 0;
-  @State mNotificationInsert: any = {}
-  @State mNotificationDelete: any = {}
-  @State mControlCenterInsert: any = {}
-  @State mControlCenterDelete: any = {}
-  @State componentOptAreaTranslateY: string = '0px'
-  @State backgroundOpacity: number = 0
+  @State mNotificationInsert: any = {};
+  @State mNotificationDelete: any = {};
+  @State mControlCenterInsert: any = {};
+  @State mControlCenterDelete: any = {};
+  @State componentOptAreaTranslateY: string = '0px';
+  @State backgroundOpacity: number = 0;
 
   onBackPress(): boolean {
     return true
@@ -93,6 +94,7 @@ struct Index {
     Log.showInfo(TAG, `aboutToAppear, start`);
 
     setAppBgColor('#00000000');
+    CommonStyleManager.setAbilityPageName(TAG);
     StyleManager.setStyle();
 
     let dropdownRect = AbilityManager.getAbilityData(AbilityManager.ABILITY_NAME_DROPDOWN_PANEL, 'rect');

@@ -113,3 +113,51 @@ export default struct IconListComponent {
     .margin({ left: Layout.ICON_MARGIN })
   }
 }
+
+@Component
+export struct BottomLeftItem {
+  private itemData: any = {};
+  private height: number = 92;
+
+  private settingDialogController: CustomDialogController = new CustomDialogController({
+    builder: SettingDialog({
+      itemData: this.itemData,
+      action: () => this.confirmDialogController.open()
+    }),
+    autoCancel: false,
+    alignment: deviceTypeInfo === 'phone' ? DialogAlignment.Bottom : DialogAlignment.Default,
+    offset: { dx: 0, dy: $r('app.float.setting_dialog_dy') },
+    customStyle: true
+  });
+
+  private confirmDialogController: CustomDialogController = new CustomDialogController({
+    builder: ConfirmDialog({
+      title: $r('app.string.closeNovice'),
+      bundleName: this.itemData.name,
+      action: () => NotificationViewModel.enableNotification(this.itemData, false)
+    }),
+    autoCancel: false,
+    alignment: deviceTypeInfo === 'phone' ? DialogAlignment.Bottom : DialogAlignment.Default,
+    offset: { dx: 0, dy: $r('app.float.confirm_dialog_dy') },
+    customStyle: true
+  });
+
+  build(){
+    Row() {
+      Button({ type: ButtonType.Circle, stateEffect: true }) {
+        Image($r("app.media.ic_public_settings_filled"))
+          .objectFit(ImageFit.Contain)
+          .fillColor($r("sys.color.ohos_id_color_primary_contrary"))
+          .width(Layout.ICON_SIZE)
+          .height(Layout.ICON_SIZE)
+      }
+      .backgroundColor($r("app.color.button_background"))
+      .onClick(() => this.settingDialogController.open())
+      .width(Layout.BUTTON_SIZE)
+      .height(Layout.BUTTON_SIZE)
+    }
+    .height(this.height)
+    .justifyContent(FlexAlign.SpaceEvenly)
+    .alignItems(VerticalAlign.Center)
+  }
+}

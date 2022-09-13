@@ -312,37 +312,36 @@ export class StatusBarVM {
   }
 
   async resetWindow(id: string, area: Rect): Promise<void>{
-    Log.showInfo(TAG, `setComponentContent, id ${id} contentColor: ${JSON.stringify(area)}`);
+    Log.showInfo(TAG, `resetWindow, id ${id} contentColor: ${JSON.stringify(area)}`);
     let panelWidth;
     let panelHeight;
-    let resetEventName;
+    let abilityName;
     let windowName;
     if (id === 'systemui_notificationpanel') {
-      panelWidth = 804;
-      panelHeight = 762;
-      resetEventName = 'NotificationWindowResizeEvent';
+      abilityName = AbilityManager.ABILITY_NAME_NOTIFICATION_PANEL;
+      let initRect = AbilityManager.getAbilityData(abilityName, 'rect');
+      Log.showInfo(TAG, `id ${id} initRect: ${JSON.stringify(initRect)}`);
+      panelWidth = initRect.width;
+      panelHeight = initRect.height;
       windowName = WindowType.NOTIFICATION_PANEL;
     } else if (id === 'systemui_controlpanel') {
-      panelWidth = 804;
-      panelHeight = 620;
-      resetEventName = 'ControlWindowResizeEvent';
+      abilityName = AbilityManager.ABILITY_NAME_CONTROL_PANEL;
+      let initRect = AbilityManager.getAbilityData(abilityName, 'rect');
+      Log.showInfo(TAG, `id ${id} initRect: ${JSON.stringify(initRect)}`);
+      panelWidth = initRect.width;
+      panelHeight = initRect.height;
       windowName = WindowType.CONTROL_PANEL;
     } else {
       return;
     }
-    let dis = await display.getDefaultDisplay();
     let rect = {
       left: area.left + area.width - panelWidth,
       top: area.height,
       width: panelWidth,
       height: panelHeight,
     };
-    EventManager.publish(
-      obtainLocalEvent(resetEventName, {
-        windowName: windowName,
-        rect
-      })
-    );
+    AbilityManager.setAbilityData(abilityName, 'rect', rect);
+    await WindowManager.moveTo(windowName, rect);
   }
 
   setComponentContent(id: string, contentColor: string): void{

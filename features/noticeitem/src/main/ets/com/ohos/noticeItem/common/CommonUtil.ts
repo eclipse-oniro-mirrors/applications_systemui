@@ -14,6 +14,7 @@
  */
 
 import Log from '../../../../../../../../../common/src/main/ets/default/Log';
+import Trace from '../../../../../../../../../common/src/main/ets/default/Trace'
 import WantAgent from '@ohos.wantAgent';
 
 const TAG = 'CommonUtil';
@@ -29,6 +30,7 @@ export default class CommonUtil {
     let info = (triggerInfo) ? triggerInfo : DEFAULT_INFO;
     Log.showDebug(TAG, `startWant ${JSON.stringify(want)}, info ${JSON.stringify(info)}`);
     WantAgent.trigger(want, info, ((data) => {
+      Trace.end(Trace.CORE_METHOD_CLICK_NOTIFICATION);
       Log.showInfo(TAG, `wantAgent trigger data ${JSON.stringify(data)}`);
     }));
   }

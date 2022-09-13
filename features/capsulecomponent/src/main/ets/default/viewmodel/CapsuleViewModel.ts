@@ -17,6 +17,7 @@ import CapsuleModel from '../model/CapsuleModel';
 import Log from '../../../../../../../common/src/main/ets/default/Log';
 import AbilityManager from '../../../../../../../common/src/main/ets/default/abilitymanager/abilityManager';
 import ResourceUtil from '../../../../../../../common/src/main/ets/default/ResourceUtil';
+import Trace from '../../../../../../../common/src/main/ets/default/Trace'
 
 let sCapsuleViewModel;
 
@@ -71,7 +72,7 @@ export default class CapsuleViewModel {
     await ResourceUtil.initResourceManager(AbilityManager.ABILITY_NAME_STATUS_BAR);
     if (data.callState == CallState.CALL_INCOMING || data.callState == CallState.CALL_WAITING) {
       this.mStartTime = 0;
-      this.mText  =await ResourceUtil.getString($r("app.string.incoming_call"));
+      this.mText = await ResourceUtil.getString($r("app.string.incoming_call"));
     } else if (data.callState == CallState.CALL_ACTIVE) {
       clearTimeout(this.mTimeMeter);
       if (this.mCallState != CallState.CALL_ACTIVE) {
@@ -101,7 +102,7 @@ export default class CapsuleViewModel {
       Log.showInfo(TAG, `cannot show`);
     } else {
       this.mStartTime = 0;
-      this.mText  =await ResourceUtil.getString($r("app.string.communicate_by_phone"));
+      this.mText = await ResourceUtil.getString($r("app.string.communicate_by_phone"));
     };
     this.mCallState = data.callState;
   }
@@ -121,14 +122,17 @@ export default class CapsuleViewModel {
   }
 
   onClickEvent() {
+    Trace.start(Trace.CORE_METHOD_CLICK_CAPSULE);
     if (this.mIsBackground) {
       this.mIsBackground = false;
     }
     Log.showDebug(TAG, `onClickEvent `);
     Log.showDebug(TAG, `startAbility`);
-    AbilityManager.startAbility({
+    AbilityManager.startAbility(AbilityManager.getContext(AbilityManager.ABILITY_NAME_STATUS_BAR), {
       bundleName: this.mWantBundleName,
       abilityName: this.mWantAbilityName
+    }, () => {
+      Trace.end(Trace.CORE_METHOD_CLICK_CAPSULE);
     });
   }
 

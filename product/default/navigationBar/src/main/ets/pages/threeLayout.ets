@@ -37,6 +37,7 @@ export default
 struct threeLayout {
   @StorageLink('minNavHeight') minNavHeight:number = 32
   @StorageLink("showNavHorizontal") showNavHorizontal: boolean = AppStorage.SetAndLink("showNavHorizontal", false).get();
+  @State currentTouchItem: number = Constants.KEYCODE_NONE;
   aboutToAppear() {
     Log.showDebug(TAG, `aboutToAppear Start`)
   }
@@ -51,7 +52,7 @@ struct threeLayout {
         ForEach(KeyCodeArr, (item: any) => {
           GridItem() {
             Row() {
-              keyButton({ uri: item.uri, keyCode: item.keyCode })
+              keyButton({ uri: item.uri, keyCode: item.keyCode, currentTouchItem: $currentTouchItem })
             }.height('100%')
           }
           .height('100%')
@@ -67,7 +68,7 @@ struct threeLayout {
         ForEach(KeyCodeArr, (item: any) => {
           GridItem() {
             Column() {
-              keyButton({ uri: item.uri, keyCode: item.keyCode })
+              keyButton({ uri: item.uri, keyCode: item.keyCode, currentTouchItem: $currentTouchItem })
             }.width('100%')
           }
           .width('100%')

@@ -89,6 +89,12 @@ class WindowManager {
     Log.showInfo(TAG, `resize window[${name}] success, rect: ${JSON.stringify(rect)}.`);
   }
 
+  async moveTo(name: WindowType, rect: Rect): Promise<void> {
+    Log.showInfo(TAG, `moveTo window[${name}] success, rect: ${JSON.stringify(rect)}.`);
+    let window = await Window.find(name);
+    await window.moveTo(rect.left, rect.top);
+  }
+
   async showWindow(name: WindowType): Promise<void> {
     let window = await Window.find(name);
     await window.show();

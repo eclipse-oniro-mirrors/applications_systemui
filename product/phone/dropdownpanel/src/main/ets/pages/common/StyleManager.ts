@@ -12,7 +12,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import BaseStyleManager from '../../../../../../../../common/src/main/ets/default/BaseStyleManager';
 import Log from '../../../../../../../../common/src/main/ets/default/Log';
 import AbilityManager from '../../../../../../../../common/src/main/ets/default/abilitymanager/abilitymanager';
 import CommonTemplateStyleConfiguration from '../../../../../../../../common/src/main/ets/template/common/styleconfiguration';
@@ -22,122 +21,118 @@ import RingModeStyleConfiguration from '../../../../../../../../features/ringmod
 
 const TAG = 'DropdownPanel-StyleManager';
 
-export class StyleManager extends BaseStyleManager {
-  static readonly ABILITY_PAGE_NAME_DROPDOWNPANEL = "DropdownPanel-Index";
+export default class StyleManager {
+  static readonly STANDARD_DISPLAY_WIDTH: number = 720;
+  static readonly STANDARD_DISPLAY_HEIGHT: number = 1280;
+  static maxWidth: number = StyleManager.STANDARD_DISPLAY_WIDTH;
 
-  constructor() {
-    super(StyleManager.ABILITY_PAGE_NAME_DROPDOWNPANEL);
-  }
-
-  setStyle(): void {
+  static setStyle(): void {
     Log.showDebug(TAG, 'setStyle');
 
-    this.setStandardWidth(BaseStyleManager.STANDARD_DISPLAY_WIDTH_SMALL);
-
     let rect = AbilityManager.getAbilityData(AbilityManager.ABILITY_NAME_DROPDOWN_PANEL, 'rect');
-    this.setMaxWidth(rect.width);
+    StyleManager.maxWidth = rect.width;
 
     // ControlCenter
-    this.setControlCenterComponentStyle();
+    StyleManager.setControlCenterComponentStyle();
     // ControlCenter-Title
-    this.setControlCenterUpTitleStyle();
+    StyleManager.setControlCenterUpTitleStyle();
     // ControlCenter-ComplexToggleLayout
-    this.setControlCenterComplexToggleLayoutStyle();
+    StyleManager.setControlCenterComplexToggleLayoutStyle();
     // ControlCenter-SimpleToggleLayout
-    this.setControlCenterSimpleToggleLayoutStyle();
+    StyleManager.setControlCenterSimpleToggleLayoutStyle();
     // CommonTemplate-iconTitleBase
-    this.setIconTitleBaseStyle();
+    StyleManager.setIconTitleBaseStyle();
     // CommonTemplate-iconComponent
-    this.setIconComponentStyle();
+    StyleManager.setIconComponentStyle();
     // CommonTemplate-simpleToggleBase
-    this.setSimpleToggleBaseStyle();
+    StyleManager.setSimpleToggleBaseStyle();
     // Brightness
-    this.setBrightnessComponentStyle();
+    StyleManager.setBrightnessComponentStyle();
     // RingMode
-    this.setControlCenterRingModeComponentStyle();
+    StyleManager.setControlCenterRingModeComponentStyle();
     // SimpleToggleLayoutEdit
-    this.setSimpleToggleLayoutEditComponentStyle();
+    StyleManager.setSimpleToggleLayoutEditComponentStyle();
     // SimpleToggleLayoutEdit-title
-    this.setSimpleToggleLayoutEditUpTitleStyle();
+    StyleManager.setSimpleToggleLayoutEditUpTitleStyle();
     // SimpleToggleLayoutEdit-msg
-    this.setSimpleToggleLayoutEditOptMsgStyle();
+    StyleManager.setSimpleToggleLayoutEditOptMsgStyle();
     // SimpleToggleLayoutEdit-grid
-    this.setSimpleToggleLayoutEditGridStyle();
+    StyleManager.setSimpleToggleLayoutEditGridStyle();
     // EditDialog
-    this.setControlEditDialogStyle();
+    StyleManager.setControlEditDialogStyle();
   }
   // ControlCenter
-  private setControlCenterComponentStyle(): void{
+  private static setControlCenterComponentStyle(): void{
     let style = ControlCenterStyleConfiguration.getControlCenterComponentStyle();
-    style.marginLeft = this.calcScaleSizePx(48);
-    style.marginRight = this.calcScaleSizePx(48);
-    style.marginTop = this.calcScaleSizePx(36);
-    style.upTitleHeight = this.calcScaleSizePx(127);
-    style.titleMarginBottom = this.calcScaleSizePx(0);
-    style.toggleAreaGap = this.calcScaleSizePx(24);
-    style.simpleToggleLayoutMarginTop = this.calcScaleSizePx(48);
-    style.simpleToggleLayoutMarginBottom = this.calcScaleSizePx(20);
-    style.brightnessMarginBottom = this.calcScaleSizePx(44);
-    style.componentBorderRadius = this.calcScaleSizePx(48);
+    style.marginLeft = StyleManager.calcScaleSizePx(48);
+    style.marginRight = StyleManager.calcScaleSizePx(48);
+    style.marginTop = StyleManager.calcScaleSizePx(36);
+    style.upTitleHeight = StyleManager.calcScaleSizePx(127);
+    style.titleMarginBottom = StyleManager.calcScaleSizePx(0);
+    style.toggleAreaGap = StyleManager.calcScaleSizePx(24);
+    style.simpleToggleLayoutMarginTop = StyleManager.calcScaleSizePx(48);
+    style.simpleToggleLayoutMarginBottom = StyleManager.calcScaleSizePx(20);
+    style.brightnessMarginBottom = StyleManager.calcScaleSizePx(44);
+    style.componentBorderRadius = StyleManager.calcScaleSizePx(48);
     style.componentBackgroundColor = '#99FFFFFF';
   }
   // ControlCenter-Title
-  private setControlCenterUpTitleStyle(): void{
+  private static setControlCenterUpTitleStyle(): void{
     let style = ControlCenterStyleConfiguration.getControlCenterUpTitleStyle();
-    style.marginLeft = this.calcScaleSizePx(72);
-    style.marginRight = this.calcScaleSizePx(72);
-    style.fontSize = this.calcScaleSizePx(40);
+    style.marginLeft = StyleManager.calcScaleSizePx(72);
+    style.marginRight = StyleManager.calcScaleSizePx(72);
+    style.fontSize = StyleManager.calcScaleSizePx(40);
     style.fontColor = '#FFFFFFFF';
-    style.imageWidth = this.calcScaleSizePx(48);
-    style.imageHeight = this.calcScaleSizePx(48);
-    style.imageHoverWidth = this.calcScaleSizePx(64);
-    style.imageHoverHeight = this.calcScaleSizePx(64);
-    style.imageHoverRadius = this.calcScaleSizePx(16);
+    style.imageWidth = StyleManager.calcScaleSizePx(48);
+    style.imageHeight = StyleManager.calcScaleSizePx(48);
+    style.imageHoverWidth = StyleManager.calcScaleSizePx(64);
+    style.imageHoverHeight = StyleManager.calcScaleSizePx(64);
+    style.imageHoverRadius = StyleManager.calcScaleSizePx(16);
     style.imageHoverColor = 'rgba(0, 0, 0, 0.05)';
     style.imageTransparentColor = 'rgba(255, 255, 255, 0)';
-    style.upTitleSpace = this.calcScaleSizePx(36);
+    style.upTitleSpace = StyleManager.calcScaleSizePx(36);
     style.titleImageColor = '#FFFFFFFF';
   }
   // ControlCenter-ComplexToggleLayout
-  private setControlCenterComplexToggleLayoutStyle(): void{
+  private static setControlCenterComplexToggleLayoutStyle(): void{
     let style = ControlCenterStyleConfiguration.getControlCenterComplexToggleLayoutStyle();
-    style.columnGap = this.calcScaleSizePx(24);
-    style.rowGap = this.calcScaleSize(24);
-    style.rowHeight = this.calcScaleSize(132);
+    style.columnGap = StyleManager.calcScaleSizePx(24);
+    style.rowGap = StyleManager.calcScaleSize(24);
+    style.rowHeight = StyleManager.calcScaleSize(132);
   }
   // ControlCenter-SimpleToggleLayout
-  private setControlCenterSimpleToggleLayoutStyle(): void{
+  private static setControlCenterSimpleToggleLayoutStyle(): void{
     let style = ControlCenterStyleConfiguration.getControlCenterSimpleToggleLayoutStyle();
-    style.marginLeft = this.calcScaleSizePx(22);
-    style.marginRight = this.calcScaleSizePx(22);
-    style.columnGap = this.calcScaleSizePx(0);
-    style.rowGap = this.calcScaleSize(0);
-    style.rowHeight = this.calcScaleSize(162);
+    style.marginLeft = StyleManager.calcScaleSizePx(22);
+    style.marginRight = StyleManager.calcScaleSizePx(22);
+    style.columnGap = StyleManager.calcScaleSizePx(0);
+    style.rowGap = StyleManager.calcScaleSize(0);
+    style.rowHeight = StyleManager.calcScaleSize(162);
   }
   // CommonTemplate-iconTitleBase
-  private setIconTitleBaseStyle(): void {
+  private static setIconTitleBaseStyle(): void {
     let style = CommonTemplateStyleConfiguration.getIconTitleBaseStyle();
-    style.marginLeft = this.calcScaleSizePx(24);
-    style.marginRight = this.calcScaleSizePx(16);
-    style.componentGap = this.calcScaleSizePx(8);
-    style.titleSize = this.calcScaleSizePx(24);
+    style.marginLeft = StyleManager.calcScaleSizePx(24);
+    style.marginRight = StyleManager.calcScaleSizePx(16);
+    style.componentGap = StyleManager.calcScaleSizePx(8);
+    style.titleSize = StyleManager.calcScaleSizePx(24);
     style.titleColor = $r('sys.color.ohos_id_color_text_primary');
-    style.borderRadius = this.calcScaleSizePx(48);
+    style.borderRadius = StyleManager.calcScaleSizePx(48);
     style.backgroundColor = '#99FFFFFF';
-    style.textMargin = this.calcScaleSizePx(8);
-    style.textHoverHeight = this.calcScaleSizePx(52);
-    style.textHoverWidth = this.calcScaleSizePx(136);
-    style.textHoverRadius = this.calcScaleSizePx(8);
+    style.textMargin = StyleManager.calcScaleSizePx(8);
+    style.textHoverHeight = StyleManager.calcScaleSizePx(52);
+    style.textHoverWidth = StyleManager.calcScaleSizePx(136);
+    style.textHoverRadius = StyleManager.calcScaleSizePx(8);
     style.hoverColor = 'rgba(0, 0, 0, 0.05)';
     style.transparentColor = 'rgba(255, 255, 255, 0)';
   }
   // CommonTemplate-iconComponent
-  private setIconComponentStyle(): void {
+  private static setIconComponentStyle(): void {
     let style = CommonTemplateStyleConfiguration.getIconComponentStyle();
-    style.circleWidth = this.calcScaleSizePx(96);
-    style.circleHeight = this.calcScaleSizePx(96);
-    style.iconWidth = this.calcScaleSizePx(48);
-    style.iconHeight = this.calcScaleSizePx(48);
+    style.circleWidth = StyleManager.calcScaleSizePx(96);
+    style.circleHeight = StyleManager.calcScaleSizePx(96);
+    style.iconWidth = StyleManager.calcScaleSizePx(48);
+    style.iconHeight = StyleManager.calcScaleSizePx(48);
     style.iconOffBG = '#1A182431';
     style.iconOnBG = '#FF007DFF';
     style.iconOnColor = '#FFFFFFFF';
@@ -146,128 +141,136 @@ export class StyleManager extends BaseStyleManager {
     style.transparentColor = 'rgba(255, 255, 255, 0)';
   }
   // CommonTemplate-simpleToggleBase
-  private setSimpleToggleBaseStyle(): void{
+  private static setSimpleToggleBaseStyle(): void{
     let style = CommonTemplateStyleConfiguration.getSimpleToggleBaseStyle();
-    style.circleWidth = this.calcScaleSizePx(96);
-    style.circleHeight = this.calcScaleSizePx(96);
-    style.iconWidth = this.calcScaleSizePx(48);
-    style.iconHeight = this.calcScaleSizePx(48);
-    style.dragCircleWidth = this.calcScaleSizePx(120);
-    style.dragCircleHeight = this.calcScaleSizePx(120);
-    style.dragIconWidth = this.calcScaleSizePx(72);
-    style.dragIconHeight = this.calcScaleSizePx(72);
+    style.circleWidth = StyleManager.calcScaleSizePx(96);
+    style.circleHeight = StyleManager.calcScaleSizePx(96);
+    style.iconWidth = StyleManager.calcScaleSizePx(48);
+    style.iconHeight = StyleManager.calcScaleSizePx(48);
+    style.dragCircleWidth = StyleManager.calcScaleSizePx(120);
+    style.dragCircleHeight = StyleManager.calcScaleSizePx(120);
+    style.dragIconWidth = StyleManager.calcScaleSizePx(72);
+    style.dragIconHeight = StyleManager.calcScaleSizePx(72);
     style.iconOffBG = '#1A182431';
     style.iconOnBG = '#FF007DFF';
     style.iconOnColor = '#FFFFFFFF';
     style.iconOffColor = $r('sys.color.ohos_id_color_secondary');
-    style.componentGap = this.calcScaleSizePx(10);
-    style.titleSize = this.calcScaleSizePx(24);
+    style.componentGap = StyleManager.calcScaleSizePx(10);
+    style.titleSize = StyleManager.calcScaleSizePx(24);
     style.titleColor = $r('sys.color.ohos_id_color_text_primary');
-    style.textHoverWidth = this.calcScaleSizePx(136);
-    style.textHoverHeight = this.calcScaleSizePx(36);
-    style.textHoverRadius = this.calcScaleSizePx(8);
+    style.textHoverWidth = StyleManager.calcScaleSizePx(136);
+    style.textHoverHeight = StyleManager.calcScaleSizePx(36);
+    style.textHoverRadius = StyleManager.calcScaleSizePx(8);
     style.hoverColor = 'rgba(0, 0, 0, 0.05)';
     style.transparentColor = 'rgba(255, 255, 255, 0)';
   }
   // Brightness
-  private setBrightnessComponentStyle(): void{
+  private static setBrightnessComponentStyle(): void{
     let style = BrightnessStyleConfiguration.getBrightnessComponentStyle();
-    style.marginLeft = this.calcScaleSizePx(26);
-    style.marginRight = this.calcScaleSizePx(26);
-    style.componentGap = this.calcScaleSizePx(26);
+    style.marginLeft = StyleManager.calcScaleSizePx(26);
+    style.marginRight = StyleManager.calcScaleSizePx(26);
+    style.componentGap = StyleManager.calcScaleSizePx(26);
     style.brightnessIconColor = $r('sys.color.ohos_id_color_secondary');
-    style.brightnessReduceWidth = this.calcScaleSizePx(44);
-    style.brightnessReduceHeight = this.calcScaleSizePx(44);
-    style.brightnessPlusWidth = this.calcScaleSizePx(44);
-    style.brightnessPlusHeight = this.calcScaleSizePx(44);
-    style.brightnessHeight = this.calcScaleSizePx(44);
-    style.sliderHeight = this.calcScaleSizePx(40);
+    style.brightnessReduceWidth = StyleManager.calcScaleSizePx(44);
+    style.brightnessReduceHeight = StyleManager.calcScaleSizePx(44);
+    style.brightnessPlusWidth = StyleManager.calcScaleSizePx(44);
+    style.brightnessPlusHeight = StyleManager.calcScaleSizePx(44);
+    style.brightnessHeight = StyleManager.calcScaleSizePx(44);
+    style.sliderHeight = StyleManager.calcScaleSizePx(40);
     style.sliderBlockColor = '#FFFFFFFF';
     style.sliderTrackColor = '#1A182431';
     style.sliderSelectedColor = '#FF007DFF';
   }
   // RingMode
-  private setControlCenterRingModeComponentStyle(): void{
+  private static setControlCenterRingModeComponentStyle(): void{
     let style = RingModeStyleConfiguration.getControlCenterRingModeComponentStyle();
     style.onBgColor = '#FFFF9800';
   }
   // SimpleToggleLayoutEdit
-  private setSimpleToggleLayoutEditComponentStyle(): void{
+  private static setSimpleToggleLayoutEditComponentStyle(): void{
     let style = ControlCenterStyleConfiguration.getSimpleToggleLayoutEditComponentStyle();
-    style.marginLeft = this.calcScaleSizePx(48);
-    style.marginRight = this.calcScaleSizePx(48);
-    style.marginTop = this.calcScaleSizePx(33);
-    style.titleHeight = this.calcScaleSizePx(127);
-    style.titleMarginBottom = this.calcScaleSizePx(0);
-    style.upGridMarginTop = this.calcScaleSizePx(48);
-    style.upGridMarginBottom = this.calcScaleSizePx(24);
-    style.gridMarginLeft = this.calcScaleSizePx(18.24);
-    style.gridMarginRight = this.calcScaleSizePx(18.24);
-    style.msgMarginTop = this.calcScaleSizePx(0);
-    style.msgMarginBottom = this.calcScaleSizePx(0);
-    style.btnMarginTop = this.calcScaleSizePx(24);
-    style.btnMarginBottom = this.calcScaleSizePx(32);
-    style.borderRadius = this.calcScaleSizePx(48);
+    style.marginLeft = StyleManager.calcScaleSizePx(48);
+    style.marginRight = StyleManager.calcScaleSizePx(48);
+    style.marginTop = StyleManager.calcScaleSizePx(33);
+    style.titleHeight = StyleManager.calcScaleSizePx(127);
+    style.titleMarginBottom = StyleManager.calcScaleSizePx(0);
+    style.upGridMarginTop = StyleManager.calcScaleSizePx(48);
+    style.upGridMarginBottom = StyleManager.calcScaleSizePx(24);
+    style.gridMarginLeft = StyleManager.calcScaleSizePx(18.24);
+    style.gridMarginRight = StyleManager.calcScaleSizePx(18.24);
+    style.msgMarginTop = StyleManager.calcScaleSizePx(0);
+    style.msgMarginBottom = StyleManager.calcScaleSizePx(0);
+    style.btnMarginTop = StyleManager.calcScaleSizePx(24);
+    style.btnMarginBottom = StyleManager.calcScaleSizePx(32);
+    style.borderRadius = StyleManager.calcScaleSizePx(48);
     style.upAreaBgColor = '#99FFFFFF';
     style.downAreaBgColor = '#4DFFFFFF';
     style.editBtnFontColor = '#FF007DFF';
-    style.editBtnFontSize = this.calcScaleSizePx(32);
+    style.editBtnFontSize = StyleManager.calcScaleSizePx(32);
     style.editBtnBgColor = '#0D000000';
-    style.editBtnMarginLeft = this.calcScaleSizePx(32);
-    style.editBtnMarginRight = this.calcScaleSizePx(32);
-    style.editBtnHeight = this.calcScaleSizePx(80);
-    style.editBtnSpace = this.calcScaleSizePx(32);
+    style.editBtnMarginLeft = StyleManager.calcScaleSizePx(32);
+    style.editBtnMarginRight = StyleManager.calcScaleSizePx(32);
+    style.editBtnHeight = StyleManager.calcScaleSizePx(80);
+    style.editBtnSpace = StyleManager.calcScaleSizePx(32);
   }
   // SimpleToggleLayoutEdit-title
-  private setSimpleToggleLayoutEditUpTitleStyle(): void{
+  private static setSimpleToggleLayoutEditUpTitleStyle(): void{
     let style = ControlCenterStyleConfiguration.getSimpleToggleLayoutEditUpTitleStyle();
-    style.marginLeft = this.calcScaleSizePx(72);
-    style.imageWidth = this.calcScaleSizePx(40);
-    style.imageHeight = this.calcScaleSizePx(40);
+    style.marginLeft = StyleManager.calcScaleSizePx(72);
+    style.imageWidth = StyleManager.calcScaleSizePx(40);
+    style.imageHeight = StyleManager.calcScaleSizePx(40);
     style.fontColor = '#FFFFFFFF';
-    style.editTitleSpace = this.calcScaleSizePx(36);
-    style.titleFontSize = this.calcScaleSizePx(40);
+    style.editTitleSpace = StyleManager.calcScaleSizePx(36);
+    style.titleFontSize = StyleManager.calcScaleSizePx(40);
   }
   // SimpleToggleLayoutEdit-msg
-  private setSimpleToggleLayoutEditOptMsgStyle(): void{
+  private static setSimpleToggleLayoutEditOptMsgStyle(): void{
     let style = ControlCenterStyleConfiguration.getSimpleToggleLayoutEditOptMsgStyle();
-    style.fontSize = this.calcScaleSizePx(24);
+    style.fontSize = StyleManager.calcScaleSizePx(24);
     style.fontColor = $r('sys.color.ohos_id_color_text_secondary');
-    style.height = this.calcScaleSizePx(98);
-    style.marginLeftRight = this.calcScaleSizePx(44);
+    style.height = StyleManager.calcScaleSizePx(98);
+    style.marginLeftRight = StyleManager.calcScaleSizePx(44);
   }
   // SimpleToggleLayoutEdit-grid
-  private setSimpleToggleLayoutEditGridStyle(): void{
+  private static setSimpleToggleLayoutEditGridStyle(): void{
     let style = ControlCenterStyleConfiguration.getSimpleToggleLayoutEditGridStyle();
-    style.columnGap = this.calcScaleSizePx(0);
-    style.rowGap = this.calcScaleSize(0);
-    style.rowHeight = this.calcScaleSize(162);
-    style.dragBgSize = this.calcScaleSizePx(120);
+    style.columnGap = StyleManager.calcScaleSizePx(0);
+    style.rowGap = StyleManager.calcScaleSize(0);
+    style.rowHeight = StyleManager.calcScaleSize(162);
+    style.dragBgSize = StyleManager.calcScaleSizePx(120);
   }
   // EditDialog
-  private setControlEditDialogStyle(): void {
+  private static setControlEditDialogStyle(): void {
     let style = ControlCenterStyleConfiguration.getControlEditDialogStyle();
-    style.editDialogHeight = this.calcScaleSizePx(217);
-    style.editDialogWidth = this.calcScaleSizePx(670);
-    style.editDialogFontSize = this.calcScaleSizePx(30);
-    style.editDialogBtnMarginLF = this.calcScaleSizePx(24);
-    style.editDialogFontHeight = this.calcScaleSizePx(36);
-    style.editDialogBtnMarginTop = this.calcScaleSizePx(36);
-    style.editDialogButtonSize = this.calcScaleSizePx(30);
-    style.editDialogDividerHeight = this.calcScaleSizePx(36);
-    style.editDialogButtonHeight = this.calcScaleSizePx(54);
-    style.editDialogRadius = this.calcScaleSizePx(36);
-    style.editDialogBtnWidth = this.calcScaleSizePx(311);
-    style.editDialogFontMarginTop = this.calcScaleSizePx(52);
+    style.editDialogHeight = StyleManager.calcScaleSizePx(217);
+    style.editDialogWidth = StyleManager.calcScaleSizePx(670);
+    style.editDialogFontSize = StyleManager.calcScaleSizePx(30);
+    style.editDialogBtnMarginLF = StyleManager.calcScaleSizePx(24);
+    style.editDialogFontHeight = StyleManager.calcScaleSizePx(36);
+    style.editDialogBtnMarginTop = StyleManager.calcScaleSizePx(36);
+    style.editDialogButtonSize = StyleManager.calcScaleSizePx(30);
+    style.editDialogDividerHeight = StyleManager.calcScaleSizePx(36);
+    style.editDialogButtonHeight = StyleManager.calcScaleSizePx(54);
+    style.editDialogRadius = StyleManager.calcScaleSizePx(36);
+    style.editDialogBtnWidth = StyleManager.calcScaleSizePx(311);
+    style.editDialogFontMarginTop = StyleManager.calcScaleSizePx(52);
     style.editDialogColor = '#FFFFFFFF';
     style.editDialogBtnFontColor = '#FF0000FF';
     style.editDialogBtnBgColor = '#00FFFFFF';
     style.editDialogDividerColor = $r('sys.color.ohos_id_color_secondary');
-    style.editDialogDividerWidth = this.calcScaleSizePx(1);
+    style.editDialogDividerWidth = StyleManager.calcScaleSizePx(1);
     Log.showDebug(TAG, 'getControlEditDialogStyle');
   }
+
+  static number2px(n: number): string {
+    return n.toString() + 'px';
+  }
+
+  static calcScaleSize(n: number): number {
+    return n * StyleManager.maxWidth / StyleManager.STANDARD_DISPLAY_WIDTH;
+  }
+
+  static calcScaleSizePx(n: number): string {
+    return StyleManager.number2px(StyleManager.calcScaleSize(n));
+  }
 }
-
-let styleManager = new StyleManager();
-
-export default styleManager;
