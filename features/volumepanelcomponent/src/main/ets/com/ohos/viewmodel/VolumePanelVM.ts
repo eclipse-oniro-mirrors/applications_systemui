@@ -114,7 +114,7 @@ export class VolumePanelVM {
 
   updateVolumeInfo(volumeInfo: VolumeInfo): void {
     Log.showInfo(TAG, `updateVolumeInfo, volumeInfo: ${JSON.stringify(volumeInfo)} , mCurrentAudioVolumeType: ${this.mCurrentAudioVolumeType}`);
-    if (!volumeInfo.updateUi && volumeInfo.volumeType != this.mCurrentAudioVolumeType) {
+    if (!volumeInfo.updateUi) {
       return;
     }
     let volumeType = volumeInfo.volumeType;
