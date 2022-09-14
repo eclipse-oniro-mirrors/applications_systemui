@@ -21,23 +21,23 @@ import { concatTime } from '../../../../../../../common/src/main/ets/default/tim
 import ItemComponent from '../../../../../../../features/managementcomponent/src/main/ets/com/ohos/view/component/itemcomponent';
 import {DoNotDisturbType} from '../../../../../../../features/managementcomponent/src/main/ets/com/ohos/common/constants';
 import NoDisturbingModel from '../../../../../../../features/managementcomponent/src/main/ets/com/ohos/model/nodisturbingmodel';
-import ViewModel from '../vm/nodisturbviewmodel'
+import ViewModel from '../vm/nodisturbviewmodel';
 
-const deviceTypeInfo = deviceInfo.deviceType
+const deviceTypeInfo = deviceInfo.deviceType;
 const TAG = 'NotificationManagement-NoDisturb';
-const GROUP_REPEAT_MODE = 'repeatMode'
+const GROUP_REPEAT_MODE = 'repeatMode';
 
 @Entry
 @Component
 export default struct NoDisturb {
-  @State mViewModel: ViewModel = new ViewModel()
-  @State headName:Resource =  $r('app.string.noDisturb')
-  @State repeatTitle:Resource = $r('app.string.repeat')
-  @State startDateTitle:Resource = $r('app.string.startDate')
-  @State endDateTitle:Resource = $r('app.string.endDate')
-  @State startTitle:Resource = $r('app.string.startTime')
-  @State endTitle:Resource = $r('app.string.endTime')
-  @State arrow: string | PixelMap | Resource = $r('app.media.ic_settings_arrow')
+  @State mViewModel: ViewModel = new ViewModel();
+  @State headName:Resource =  $r('app.string.noDisturb');
+  @State repeatTitle:Resource = $r('app.string.repeat');
+  @State startDateTitle:Resource = $r('app.string.startDate');
+  @State endDateTitle:Resource = $r('app.string.endDate');
+  @State startTitle:Resource = $r('app.string.startTime');
+  @State endTitle:Resource = $r('app.string.endTime');
+  @State arrow: string | PixelMap | Resource = $r('app.media.ic_settings_arrow');
   @State mRefreshCnt: number = 0;
   mPrevData: string = '';
 
@@ -472,6 +472,7 @@ struct RepeatModeDialog {
               .fontWeight(FontWeight.Medium)
             Radio({ value: '' + DoNotDisturbType.TYPE_NONE, group: GROUP_REPEAT_MODE })
               .checked(this.selectMode == DoNotDisturbType.TYPE_NONE)
+              .touchable(false)
               .width($r('app.float.toggle_check_width'))
               .height($r('app.float.toggle_check_width'))
           }
@@ -491,6 +492,7 @@ struct RepeatModeDialog {
               .fontWeight(FontWeight.Medium)
             Radio({ value: '' + DoNotDisturbType.TYPE_ONCE, group: GROUP_REPEAT_MODE })
               .checked(this.selectMode == DoNotDisturbType.TYPE_ONCE)
+              .touchable(false)
               .width($r('app.float.toggle_check_width'))
               .height($r('app.float.toggle_check_width'))
           }
@@ -510,6 +512,7 @@ struct RepeatModeDialog {
               .fontWeight(FontWeight.Medium)
             Radio({ value: '' + DoNotDisturbType.TYPE_DAILY, group: GROUP_REPEAT_MODE })
               .checked(this.selectMode == DoNotDisturbType.TYPE_DAILY)
+              .touchable(false)
               .width($r('app.float.toggle_check_width'))
               .height($r('app.float.toggle_check_width'))
           }
@@ -529,6 +532,7 @@ struct RepeatModeDialog {
               .fontWeight(FontWeight.Medium)
             Radio({ value: '' + DoNotDisturbType.TYPE_CLEARLY, group: GROUP_REPEAT_MODE })
               .checked(this.selectMode == DoNotDisturbType.TYPE_CLEARLY)
+              .touchable(false)
               .width($r('app.float.toggle_check_width'))
               .height($r('app.float.toggle_check_width'))
           }
