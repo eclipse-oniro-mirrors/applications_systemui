@@ -13,35 +13,62 @@
  * limitations under the License.
  */
 
+import commonEvent from "@ohos.commonEvent";
 import Radio from '@ohos.telephony.radio';
-import Sim from '@ohos.telephony.sim'
+import Sim from '@ohos.telephony.sim';
 import Observer from '@ohos.telephony.observer';
 import Log from "../../../../../../common/src/main/ets/default/Log";
-import CheckEmpty from '../../../../../../common/src/main/ets/default/CheckEmptyUtils';
-import Constants from './common/constants'
+import Constants from './common/constants';
 
 const TAG = 'SignalStatus-SignalModel';
-const EMPTY_LEVEL = 0;
 
-let mSignalCallback;
-let signalValue = {
-  cellularLevel: '',
-  cellularType: '',
-  networkState: ''
-};
-let isInitObserver = false
+let isInitObserver = false;
+let commonEventData = null;
 
 var mLevelLink;
 var mTypeLink;
 var mStateLink;
 
 export class SignalModel {
+  constructor() {
+    mLevelLink = AppStorage.SetAndLink("cellularLevel", Constants.CELLULAR_NO_SIM_CARD);
+    mTypeLink = AppStorage.SetAndLink("cellularType", Constants.RADIO_TECHNOLOGY_UNKNOWN);
+    mStateLink = AppStorage.SetAndLink("networkState", Constants.NET_NULL);
+    this.addSubscriberListener();
+  }
+
   initSignalModel() {
     Log.showInfo(TAG, 'initSignalModel');
-    mLevelLink = AppStorage.SetAndLink("cellularLevel", Constants.CELLULAR_NO_SIM_CARD);
-    mTypeLink = AppStorage.SetAndLink("cellularType", Constants.NETWORK_TYPE_UNKNOWN);
-    mStateLink = AppStorage.SetAndLink("networkState", Constants.NET_NULL);
     this.checkCellularStatus();
+  }
+
+  /**
+   * add mms app subscriber
+   */
+  async addSubscriberListener() {
+    let events = [Constants.COMMON_EVENT_SPN_INFO_CHANGED];
+    let commonEventSubscribeInfo = {
+      events: events
+    };
+    commonEvent.createSubscriber(commonEventSubscribeInfo, this.createSubscriberCallBack.bind(this));
+  }
+
+  createSubscriberCallBack(err, data) {
+    commonEventData = data;
+    commonEvent.subscribe(commonEventData, this.subscriberCallBack.bind(this));
+  }
+
+  subscriberCallBack(err, data) {
+    Log.showInfo(TAG, `subscriberCallBack, err: ${JSON.stringify(err.message)}, event: ${data.event}`);
+    if (data.event === Constants.COMMON_EVENT_SPN_INFO_CHANGED) {
+      Log.showInfo(TAG, `receive stateLink: ${data?.parameters?.CUR_PLMN}`);
+      if (data?.parameters?.CUR_PLMN) {
+        mStateLink.set(data.parameters.CUR_PLMN);
+      } else {
+        Log.showError(TAG, `get stateLink failed.`);
+        mStateLink.set(Constants.NET_NULL);
+      }
+    }
   }
 
   uninitSignalModel() {
@@ -53,66 +80,42 @@ export class SignalModel {
      * Check the connection type and signal level of cellular network
      */
   checkCellularStatus() {
-    let cellularStatus;
     let slotId = 0;
-
     Sim.hasSimCard(slotId, (err, value) => {
       if (value === true) {
-        //The interface of getting the cellular signal status is unavailable temporarily
-        Radio.getSignalInformation(slotId, (err, value) => {
-          if (err) {
-            // Failed to call the interface，error is not null
-            Log.showError(TAG, `failed to getSimState because ${err.message}`);
-            // When failed to call the interface, set the result as no signal
+        Radio.getNetworkState((err, value) => {
+          if (err || !value) {
+            Log.showError(TAG, `failed to getnetworkState because ${err.message}`);
+            mTypeLink.set(Constants.RADIO_TECHNOLOGY_UNKNOWN);
             mLevelLink.set(Constants.CELLULAR_NO_SIM_CARD);
-            mTypeLink.set(Constants.NETWORK_TYPE_UNKNOWN);
           } else {
-            // Call interface succeed，error is null
-            Log.showInfo(TAG, `success to getSignalInformation: ${JSON.stringify(value)}`);
-            // Since the value might be empty, set it as no signal by hand
-            if (!value || !value.length) {
-              Log.showError(TAG, 'value from api is empty, set 0');
+            Log.showInfo(TAG, `success to getnetworkState: ${JSON.stringify(value)}`);
+            // If there is no service, no signal is displayed.
+            if (value.regState != Constants.REG_STATE_IN_SERVICE) {
+              mTypeLink.set(Constants.RADIO_TECHNOLOGY_UNKNOWN);
               mLevelLink.set(Constants.CELLULAR_NO_SIM_CARD);
-              mTypeLink.set(Constants.NETWORK_TYPE_UNKNOWN);
             } else {
-              Log.showInfo(TAG, 'get signal level by value.');
-              mLevelLink.set(value[0].signalLevel);
-              mTypeLink.set(value[0].signalType);
+              mTypeLink.set(value.cfgTech);
+              Radio.getSignalInformation(slotId, (err, value) => {
+                if (err || !value || !value.length) {
+                  Log.showError(TAG, `failed to getSimState because ${err.message}`);
+                  mLevelLink.set(Constants.CELLULAR_NO_SIM_CARD);
+                } else {
+                  Log.showInfo(TAG, `success to getSignalInfo: ${JSON.stringify(value)}`);
+                  mLevelLink.set(value[0].signalLevel);
+                }
+              });
             }
           }
-
-          Log.showInfo(TAG, 'enter checknetworkState ============');
-          //The interface of getting the cellular signal status is unavailable temporarily
-          Radio.getNetworkState((err, value) => {
-            if (err) {
-              // Failed to call the interface，error is not null
-              Log.showError(TAG, `failed to getnetworkState because ${err.message}`);
-              // When failed to call the interface, set the result as no signal
-              mStateLink.set(Constants.NET_NULL);
-            } else {
-              // Call interface succeed，error is null
-              Log.showInfo(TAG, `success to getnetworkState: ${JSON.stringify(value)}`);
-              // Since the value might be empty, set it as no signal by hand
-              if (!value) {
-                Log.showError(TAG, 'value from api is empty, set 0');
-                mStateLink.set(Constants.NET_NULL);
-              } else {
-                mStateLink.set(value.longOperatorName);
-              }
-            }
-          });
         });
-        if (!isInitObserver) {
-          this.initObserver();
-        }
       } else {
         Log.showError(TAG, `hasSimCard failed to hasSimCard because`);
         mLevelLink.set(Constants.CELLULAR_NO_SIM_CARD);
-        mTypeLink.set(Constants.NETWORK_TYPE_UNKNOWN);
+        mTypeLink.set(Constants.RADIO_TECHNOLOGY_UNKNOWN);
         mStateLink.set(Constants.NET_NULL);
-        if (!isInitObserver) {
-          this.initObserver();
-        }
+      }
+      if (!isInitObserver) {
+        this.initObserver();
       }
     });
   }

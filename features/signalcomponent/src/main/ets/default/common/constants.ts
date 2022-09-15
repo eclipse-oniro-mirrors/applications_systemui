@@ -14,13 +14,24 @@
  */
 
 export default class Constants {
-  static readonly NETWORK_TYPE_UNKNOWN = 0;
-  static readonly NETWORK_TYPE_GSM = 1;
-  static readonly NETWORK_TYPE_CDMA = 2;
-  static readonly NETWORK_TYPE_W_CDMA = 3;
-  static readonly NETWORK_TYPE_TDS_CDMA = 4;
-  static readonly NETWORK_TYPE_LTE = 5;
-  static readonly NETWORK_TYPE_NR = 6;
+  static readonly RADIO_TECHNOLOGY_UNKNOWN = 0;
+  static readonly RADIO_TECHNOLOGY_GSM = 1;
+  static readonly RADIO_TECHNOLOGY_1XRTT = 2;
+  static readonly RADIO_TECHNOLOGY_WCDMA = 3;
+  static readonly RADIO_TECHNOLOGY_HSPA = 4;
+  static readonly RADIO_TECHNOLOGY_HSPAP = 5;
+  static readonly RADIO_TECHNOLOGY_TD_SCDMA = 6;
+  static readonly RADIO_TECHNOLOGY_EVDO = 7;
+  static readonly RADIO_TECHNOLOGY_EHRPD = 8;
+  static readonly RADIO_TECHNOLOGY_LTE = 9;
+  static readonly RADIO_TECHNOLOGY_LTE_CA = 10;
+  static readonly RADIO_TECHNOLOGY_IWLAN = 11;
+  static readonly RADIO_TECHNOLOGY_NR = 12;
+
+  static readonly REG_STATE_NO_SERVICE = 0;
+  static readonly REG_STATE_IN_SERVICE = 1;
+  static readonly REG_STATE_EMERGENCY_CALL_ONLY = 2;
+  static readonly REG_STATE_POWER_OFF = 3;
 
   static readonly CELLULAR_SIGNAL_NO = 0;
   static readonly CELLULAR_SIGNAL_MIN = 1;
@@ -31,4 +42,7 @@ export default class Constants {
   static readonly CELLULAR_NO_SIM_CARD = -1;
 
   static readonly NET_NULL = 'NULL';
+
+  // Events for Subscribing to Notifications
+  static readonly COMMON_EVENT_SPN_INFO_CHANGED = "usual.event.SPN_INFO_CHANGED";
 }

@@ -27,7 +27,7 @@ const TAG = 'SignalComponent-SignalIcon'
 @Component
 export default struct SignalIcon {
   @StorageLink('cellularLevel') cellularLevel: number = Constants.CELLULAR_NO_SIM_CARD
-  @StorageLink('cellularType') cellularType: number = Constants.NETWORK_TYPE_UNKNOWN
+  @StorageLink('cellularType') cellularType: number = Constants.RADIO_TECHNOLOGY_UNKNOWN
   @StorageLink('networkState') networkState: string = Constants.NET_NULL
   @StorageLink('signalObserved') signalObserved: boolean = false
   @State mTintContentInfo: TintContentInfo = ViewModel.getTintContentInfo()
@@ -62,7 +62,7 @@ export default struct SignalIcon {
 
       Stack({ alignContent: Alignment.TopStart }) {
         Text(this.updateCellularType(this.cellularType))
-          .fontSize(this.cellularType == Constants.NETWORK_TYPE_UNKNOWN ? this.style.statusBarSignalUnknownFontSize : this.style.statusBarSignalTypeFontSize)
+          .fontSize(this.cellularType == Constants.RADIO_TECHNOLOGY_UNKNOWN ? this.style.statusBarSignalUnknownFontSize : this.style.statusBarSignalTypeFontSize)
           .fontColor(this.mTintContentInfo.contentColor)
           .width(this.style.netSignalTextMaxWidth)
           .fontWeight(FontWeight.Bold)
@@ -92,23 +92,31 @@ export default struct SignalIcon {
     Log.showInfo(TAG, `updateCellularType, signalType: ${signalType}`);
     let typeString;
     switch (signalType) {
-      case Constants.NETWORK_TYPE_UNKNOWN:
+      case Constants.RADIO_TECHNOLOGY_UNKNOWN:
         typeString = $r('app.string.signal_null');
         break;
-      case Constants.NETWORK_TYPE_GSM:
-      case Constants.NETWORK_TYPE_CDMA:
+      case Constants.RADIO_TECHNOLOGY_GSM:
+      case Constants.RADIO_TECHNOLOGY_1XRTT:
         typeString = $r('app.string.2G');
         break;
-      case Constants.NETWORK_TYPE_W_CDMA:
-      case Constants.NETWORK_TYPE_TDS_CDMA:
+      case Constants.RADIO_TECHNOLOGY_WCDMA:
+      case Constants.RADIO_TECHNOLOGY_HSPA:
+      case Constants.RADIO_TECHNOLOGY_HSPAP:
+      case Constants.RADIO_TECHNOLOGY_TD_SCDMA:
+      case Constants.RADIO_TECHNOLOGY_EVDO:
+      case Constants.RADIO_TECHNOLOGY_EHRPD:
         typeString = $r('app.string.3G');
         break;
-      case Constants.NETWORK_TYPE_LTE:
+      case Constants.RADIO_TECHNOLOGY_LTE:
+      case Constants.RADIO_TECHNOLOGY_LTE_CA:
+      case Constants.RADIO_TECHNOLOGY_IWLAN:
         typeString = $r('app.string.4G');
         break;
-      case Constants.NETWORK_TYPE_NR:
-      default:
+      case Constants.RADIO_TECHNOLOGY_NR:
         typeString = $r('app.string.5G');
+        break;
+      default:
+        typeString = $r('app.string.signal_null');
         break;
     }
     return typeString;
