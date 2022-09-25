@@ -89,10 +89,6 @@ export default struct SimpleToggleLayoutEditComponent {
 
   build() {
     Column() {
-      Column()
-        .width('100%')
-        .height(this.style.marginTop)
-
       if (!this.titleDisplayInside) {
         Column() {
           SimpleToggleLayoutEditUpTitle({
@@ -101,144 +97,98 @@ export default struct SimpleToggleLayoutEditComponent {
         }
         .width('100%')
         .height(this.style.titleHeight)
-
-        Column()
-          .width('100%')
-          .height(this.style.titleMarginBottom)
+        .margin({bottom: this.style.titleMarginBottom})
       }
 
-      Row() {
-        Column().width(this.style.marginLeft).height(1).layoutWeight(0)
-        Column() {
-          if (this.titleDisplayInside) {
-            Column() {
-              SimpleToggleLayoutEditUpTitle({
-                simpleToggleLayoutEditEndCallback: () => this.onSimpleToggleLayoutEditEnd()
-              })
-            }
-            .width('100%')
-            .height(this.style.titleHeight)
-          }
+      Column() {
+        if (this.titleDisplayInside) {
           Column() {
-            Column()
-              .width('100%')
-              .height(this.style.upGridMarginTop)
-
-            Row() {
-              Column().width(this.style.gridMarginLeft).height(1).layoutWeight(0)
-              Column() {
-                SimpleToggleLayoutEditGrid({
-                  mToggles: $mNewDisplayingToggles,
-                  mMaxCount: this.mDisplayingTogglesMaxCount,
-                  mMinCount: this.mDisplayingTogglesMinCount,
-                  mColumnCount: this.mColumnCount,
-                  mGlobalDragToggleName: this.mCurrentDragToggleName,
-                  gridTag: 'displaying',
-                  onItemDragStart: (toggleName) => this.onDisplayingGridItemDragStart(toggleName),
-                  onItemDrop: (status) => this.onDisplayingGridItemDrop(status)
-                })
-              }.layoutWeight(1)
-
-              Column().width(this.style.gridMarginRight).height(1).layoutWeight(0)
-            }.width('100%')
-
-            Column()
-              .width('100%')
-              .height(this.style.upGridMarginBottom)
+            SimpleToggleLayoutEditUpTitle({
+              simpleToggleLayoutEditEndCallback: () => this.onSimpleToggleLayoutEditEnd()
+            })
           }
           .width('100%')
+          .height(this.style.titleHeight)
+        }
+        Column() {
+          SimpleToggleLayoutEditGrid({
+            mToggles: $mNewDisplayingToggles,
+            mMaxCount: this.mDisplayingTogglesMaxCount,
+            mMinCount: this.mDisplayingTogglesMinCount,
+            mColumnCount: this.mColumnCount,
+            mGlobalDragToggleName: this.mCurrentDragToggleName,
+            gridTag: 'displaying',
+            onItemDragStart: (toggleName) => this.onDisplayingGridItemDragStart(toggleName),
+            onItemDrop: (status) => this.onDisplayingGridItemDrop(status)
+          })
+        }
+        .margin({top: this.style.upGridMarginTop, bottom: this.style.upGridMarginBottom, left: this.style.gridMarginLeft, right: this.style.gridMarginRight})
 
+        Column() {
           Column() {
-            Column()
-              .width('100%')
-              .height(this.style.msgMarginTop)
-
             SimpleToggleLayoutEditOptMsg({
               mOptMsg: $mOptMsg
             })
-            Column()
-              .width('100%')
-              .height(this.style.msgMarginBottom)
+          }.margin({top: this.style.msgMarginTop})
 
-            Row() {
-              Column().width(this.style.gridMarginLeft).height(1).layoutWeight(0)
-              Column() {
-                SimpleToggleLayoutEditGrid({
-                  mToggles: $mNewHidingToggles,
-                  mMaxCount: this.mHidingTogglesMaxCount,
-                  mMinCount: this.mHidingTogglesMinCount,
-                  mColumnCount: this.mColumnCount,
-                  mGlobalDragToggleName: this.mCurrentDragToggleName,
-                  gridTag: 'hiding',
-                  onItemDragStart: (toggleName) => this.onHidingGridItemDragStart(toggleName),
-                  onItemDrop: (status) => this.onHidingGridItemDrop(status)
-                })
-              }.layoutWeight(1)
+          Column() {
+            SimpleToggleLayoutEditGrid({
+              mToggles: $mNewHidingToggles,
+              mMaxCount: this.mHidingTogglesMaxCount,
+              mMinCount: this.mHidingTogglesMinCount,
+              mColumnCount: this.mColumnCount,
+              mGlobalDragToggleName: this.mCurrentDragToggleName,
+              gridTag: 'hiding',
+              onItemDragStart: (toggleName) => this.onHidingGridItemDragStart(toggleName),
+              onItemDrop: (status) => this.onHidingGridItemDrop(status)
+            })
+          }.margin({top: this.style.msgMarginBottom, bottom: this.style.btnMarginTop, left: this.style.gridMarginLeft, right: this.style.gridMarginRight})
 
-              Column().width(this.style.gridMarginRight).height(1).layoutWeight(0)
-            }.width('100%')
-
-            Column()
-              .width('100%')
-              .height(this.style.btnMarginTop)
-
-            Row() {
-              Column().width(this.style.editBtnMarginLeft).height(1).layoutWeight(0)
-              Grid() {
-                GridItem() {
-                  Button({ type: ButtonType.Capsule, stateEffect: true }) {
-                    Text($r("app.string.control_center_simple_toggle_layout_edit_reset"))
-                      .fontColor(this.style.editBtnFontColor)
-                      .fontSize(this.style.editBtnFontSize)
-                      .fontWeight(FontWeight.Medium)
-                  }
-                  .backgroundColor(this.style.editBtnBgColor)
-                  .width('100%')
-                  .height('100%')
-                  .onClick(this.onResetBtnClick.bind(this))
-                }
-
-                GridItem() {
-                  Button({ type: ButtonType.Capsule, stateEffect: true }) {
-                    Text($r("app.string.control_center_simple_toggle_layout_edit_finish"))
-                      .fontColor(this.style.editBtnFontColor)
-                      .fontSize(this.style.editBtnFontSize)
-                      .fontWeight(FontWeight.Medium)
-                  }
-                  .backgroundColor(this.style.editBtnBgColor)
-                  .width('100%')
-                  .height('100%')
-                  .onClick(this.onFinishBtnClick.bind(this))
-                }
+          Grid() {
+            GridItem() {
+              Button({ type: ButtonType.Capsule, stateEffect: true }) {
+                Text($r("app.string.control_center_simple_toggle_layout_edit_reset"))
+                  .fontColor(this.style.editBtnFontColor)
+                  .fontSize(this.style.editBtnFontSize)
+                  .fontWeight(FontWeight.Medium)
               }
-              .layoutWeight(1)
-              .height(this.style.editBtnHeight)
-              .columnsTemplate('1fr 1fr')
-              .rowsTemplate('1fr')
-              .columnsGap(this.style.editBtnSpace)
-
-              Column().width(this.style.editBtnMarginRight).height(1).layoutWeight(0)
-            }
-            .width('100%')
-
-            Column()
+              .backgroundColor(this.style.editBtnBgColor)
               .width('100%')
-              .height(this.style.btnMarginBottom)
+              .height('100%')
+              .onClick(this.onResetBtnClick.bind(this))
+            }
+
+            GridItem() {
+              Button({ type: ButtonType.Capsule, stateEffect: true }) {
+                Text($r("app.string.control_center_simple_toggle_layout_edit_finish"))
+                  .fontColor(this.style.editBtnFontColor)
+                  .fontSize(this.style.editBtnFontSize)
+                  .fontWeight(FontWeight.Medium)
+              }
+              .backgroundColor(this.style.editBtnBgColor)
+              .width('100%')
+              .height('100%')
+              .onClick(this.onFinishBtnClick.bind(this))
+            }
           }
-          .width('100%')
-          .backgroundColor(this.style.downAreaBgColor)
-
+          .height(this.style.editBtnHeight)
+          .margin({bottom: this.style.btnMarginBottom, left: this.style.editBtnMarginLeft, right: this.style.editBtnMarginRight})
+          .columnsTemplate('1fr 1fr')
+          .rowsTemplate('1fr')
+          .columnsGap(this.style.editBtnSpace)
         }
-        .layoutWeight(1)
-        .borderRadius(this.style.borderRadius)
-        .backgroundColor(this.style.upAreaBgColor)
-        .clip(true)
+        .width('100%')
+        .backgroundColor(this.style.downAreaBgColor)
 
-        Column().width(this.style.marginRight).height(1).layoutWeight(0)
-      }.width('100%')
+      }
+      .margin({left: this.style.marginLeft, right: this.style.marginRight})
+      .borderRadius(this.style.borderRadius)
+      .backgroundColor(this.style.upAreaBgColor)
+      .clip(true)
 
     }
     .width('100%')
+    .margin({top: this.style.marginTop})
     .onTouch(this.onComponentTouch.bind(this))
   }
 
@@ -378,18 +328,13 @@ struct SimpleToggleLayoutEditUpTitle {
 
   build() {
     Row() {
-      Row()
-        .width(this.style.marginLeft)
-        .height('100%')
       Image($r('app.media.ic_public_back'))
+        .margin({left: this.style.marginLeft, right: this.style.editTitleSpace})
         .objectFit(ImageFit.Contain)
         .size({ width: this.style.imageWidth,
           height: this.style.imageHeight })
         .fillColor(this.style.fontColor)
         .onClick(this.backClick.bind(this))
-      Row()
-        .width(this.style.editTitleSpace)
-        .height('100%')
       Text($r('app.string.control_center_simple_toggle_layout_edit'))
         .fontColor(this.style.fontColor)
         .fontSize(this.style.titleFontSize)
@@ -418,17 +363,13 @@ struct SimpleToggleLayoutEditOptMsg {
   }
 
   build() {
-    Row() {
-      Column().width(this.style.marginLeftRight).height(1).layoutWeight(0)
-      Column() {
-        Text(this.mOptMsg)
-          .fontSize(this.style.fontSize)
-          .fontColor(this.style.fontColor)
-      }.layoutWeight(1)
-
-      Column().width(this.style.marginLeftRight).height(1).layoutWeight(0)
+    Column() {
+      Text(this.mOptMsg)
+        .fontSize(this.style.fontSize)
+        .fontColor(this.style.fontColor)
     }
-    .width('100%')
     .height(this.style.height)
+    .margin({left: this.style.marginLeftRight, right: this.style.marginLeftRight})
+    .justifyContent(FlexAlign.Center)
   }
 }

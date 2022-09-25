@@ -38,28 +38,26 @@ export default struct iconComponent {
   }
 
   build() {
-    Column() {
-      Stack() {
-        Flex()
-          .backgroundColor(this.changeSwitch ? this.style.iconOnBG : this.style.iconOffBG)
-          .clip(new Circle({ width: this.style.circleWidth, height: this.style.circleHeight }))
-          .width(this.style.circleWidth)
-          .height(this.style.circleHeight)
-        Flex()
-          .backgroundColor(this.mIconIsHover ? this.style.hoverColor : this.style.transparentColor)
-          .clip(new Circle({ width: this.style.circleWidth, height: this.style.circleHeight }))
-          .width(this.style.circleWidth)
-          .height(this.style.circleHeight)
-        Image(this.changeSwitch == false ? (this.useIconStr ? this.iconOffStr : this.iconOff) : (this.useIconStr ? this.iconOnStr : this.iconOn))
-          .size({ width: this.style.iconWidth, height: this.style.iconHeight })
-          .objectFit(ImageFit.Contain)
-          .fillColor(this.changeSwitch ? this.style.iconOnColor : this.style.iconOffColor)
-          .onHover((isHover) => {
-            this.mIconIsHover = isHover;
-          })
-      }
-      .width(this.style.circleWidth)
-      .height(this.style.circleHeight)
+    Stack() {
+      Flex()
+        .backgroundColor(this.changeSwitch ? this.style.iconOnBG : this.style.iconOffBG)
+        .clip(new Circle({ width: this.style.circleWidth, height: this.style.circleHeight }))
+        .width(this.style.circleWidth)
+        .height(this.style.circleHeight)
+      Flex()
+        .backgroundColor(this.mIconIsHover ? this.style.hoverColor : this.style.transparentColor)
+        .clip(new Circle({ width: this.style.circleWidth, height: this.style.circleHeight }))
+        .width(this.style.circleWidth)
+        .height(this.style.circleHeight)
+      Image(this.changeSwitch == false ? (this.useIconStr ? this.iconOffStr : this.iconOff) : (this.useIconStr ? this.iconOnStr : this.iconOn))
+        .size({ width: this.style.iconWidth, height: this.style.iconHeight })
+        .objectFit(ImageFit.Contain)
+        .fillColor(this.changeSwitch ? this.style.iconOnColor : this.style.iconOffColor)
+        .onHover((isHover) => {
+          this.mIconIsHover = isHover;
+        })
     }
+    .width(this.style.circleWidth)
+    .height(this.style.circleHeight)
   }
 }

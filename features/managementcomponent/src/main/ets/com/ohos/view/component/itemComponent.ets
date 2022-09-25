@@ -21,32 +21,31 @@ export default struct ItemComponent {
   @Link arrow: string | PixelMap | Resource;
 
   build() {
-    Flex({ direction: FlexDirection.Column, alignItems: ItemAlign.Center, justifyContent: FlexAlign.Center }) {
-      Row() {
-        Text(this.title)
-          .fontSize($r('sys.float.ohos_id_text_size_body1'))
-          .fontColor($r('app.color.itemComp_title_color'))
-          .width(ConfigData.WH_45_100)
-          .textAlign(TextAlign.Start)
-          .fontWeight(FontWeight.Medium)
-        Blank()
-        Text(this.value)
-          .fontSize($r('app.float.itemComp_value_font'))
-          .fontColor($r('app.color.itemComp_font_color'))
-        Image(this.arrow)
-          .width($r('app.float.itemComp_image_width'))
-          .height($r('app.float.itemComp_image_height'))
-          .align(Alignment.End)
-          .margin({left:$r('app.float.itemComp_image_margin_left')})
-      }
-      .width(ConfigData.WH_100_100)
-      .alignItems(VerticalAlign.Center)
-      .padding({ left: $r('sys.float.ohos_id_default_padding_start'),right: $r('sys.float.ohos_id_default_padding_end')})
+    Row() {
+      Text(this.title)
+        .fontSize($r('sys.float.ohos_id_text_size_body1'))
+        .fontColor($r('app.color.itemComp_title_color'))
+        .width(ConfigData.WH_45_100)
+        .textAlign(TextAlign.Start)
+        .fontWeight(FontWeight.Medium)
+      Blank()
+      Text(this.value)
+        .fontSize($r('app.float.itemComp_value_font'))
+        .fontColor($r('app.color.itemComp_font_color'))
+      Image(this.arrow)
+        .width($r('app.float.itemComp_image_width'))
+        .height($r('app.float.itemComp_image_height'))
+        .align(Alignment.End)
+        .margin({left:$r('app.float.itemComp_image_margin_left')})
     }
     .width(ConfigData.WH_100_100)
     .height($r('app.float.itemComp_height'))
-    .border({ width: $r('app.float.border_width'), color: Color.White,
-      radius: $r('app.float.border_radius') })
+    .alignItems(VerticalAlign.Center)
+    .padding({
+      left: $r('sys.float.ohos_id_default_padding_start'),
+      right: $r('sys.float.ohos_id_default_padding_end')
+    })
+    .border({ width: $r('app.float.border_width'), color: Color.White, radius: $r('app.float.border_radius') })
     .backgroundColor(Color.White)
   }
 }

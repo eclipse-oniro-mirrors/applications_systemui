@@ -48,53 +48,43 @@ export default struct MyBrightness {
 
   build() {
     Row() {
-      Column().width(this.style.marginLeft).height('100%').layoutWeight(0)
-      Flex({ justifyContent: FlexAlign.Center, alignItems: ItemAlign.Center }) {
-        Image($r('app.media.ic_brightness_reduce'))
-          .size({ width: this.style.brightnessReduceWidth,
-            height: this.style.brightnessReduceHeight })
-          .fillColor(this.style.brightnessIconColor)
-      }
-      .width(this.style.brightnessPlusWidth)
-      .height('100%')
-      .layoutWeight(0)
+      Image($r('app.media.ic_brightness_reduce'))
+        .width(this.style.brightnessPlusWidth)
+        .height('100%')
+        .margin({left: this.style.marginLeft, right: this.style.componentGap})
+        .size({ width: this.style.brightnessReduceWidth,
+          height: this.style.brightnessReduceHeight })
+        .fillColor(this.style.brightnessIconColor)
+        .layoutWeight(0)
 
-      Column().width(this.style.componentGap).height('100%').layoutWeight(0)
-      Row() {
-        Slider({
-          value: this.brightnessValue,
-          min: this.brightnessItem.min,
-          max: this.brightnessItem.max,
-          step: 1,
-          style: SliderStyle.InSet
+      Slider({
+        value: this.brightnessValue,
+        min: this.brightnessItem.min,
+        max: this.brightnessItem.max,
+        step: 1,
+        style: SliderStyle.InSet
 
+      })
+        .width('100%')
+        .height('100%')
+        .layoutWeight(1)
+        .trackThickness(this.style.sliderHeight)
+        .blockColor(this.style.sliderBlockColor)
+        .trackColor(this.style.sliderTrackColor)
+        .selectedColor(this.style.sliderSelectedColor)
+        .onChange((value: number, mode: SliderChangeMode) => {
+          this.brightnessItem.value = value;
+          this.setBrightness(this.brightnessItem, mode);
         })
-          .width('100%')
-          .trackThickness(this.style.sliderHeight)
-          .blockColor(this.style.sliderBlockColor)
-          .trackColor(this.style.sliderTrackColor)
-          .selectedColor(this.style.sliderSelectedColor)
-          .onChange((value: number, mode: SliderChangeMode) => {
-            this.brightnessItem.value = value;
-            this.setBrightness(this.brightnessItem, mode);
-          })
-      }
-      .height('100%')
-      .layoutWeight(1)
 
-      Column().width(this.style.componentGap).height('100%').layoutWeight(0)
-
-      Flex({ justifyContent: FlexAlign.Center, alignItems: ItemAlign.Center }) {
-        Image($r('app.media.ic_brightness_plus'))
-          .size({ width: this.style.brightnessPlusWidth,
-            height: this.style.brightnessPlusHeight })
-          .fillColor(this.style.brightnessIconColor)
-      }
-      .width(this.style.brightnessPlusWidth)
-      .height('100%')
-      .layoutWeight(0)
-
-      Column().width(this.style.marginRight).height('100%').layoutWeight(0)
+      Image($r('app.media.ic_brightness_plus'))
+        .width(this.style.brightnessPlusWidth)
+        .height('100%')
+        .margin({left: this.style.componentGap, right: this.style.marginRight})
+        .size({ width: this.style.brightnessPlusWidth,
+          height: this.style.brightnessPlusHeight })
+        .fillColor(this.style.brightnessIconColor)
+        .layoutWeight(0)
     }.width('100%')
     .height(this.style.brightnessHeight)
   }

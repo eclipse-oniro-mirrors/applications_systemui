@@ -79,9 +79,6 @@ export default struct SimpleToggleBase {
       .onClick(this.onIconItemClick.bind(this))
 
       if (!this.mDragMode) {
-        Column()
-          .width('100%')
-          .height(this.style.componentGap)
         Stack() {
           Flex()
             .backgroundColor(this.mTextIsHover ? this.style.hoverColor : this.style.transparentColor)
@@ -99,7 +96,7 @@ export default struct SimpleToggleBase {
             .onHover((isHover) => {
               this.mTextIsHover = isHover;
             })
-        }
+        }.margin({top: this.style.componentGap})
       }
     }
     .width('100%')

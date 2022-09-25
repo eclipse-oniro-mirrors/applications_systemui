@@ -42,49 +42,45 @@ export default struct AppLstComponent {
   }
 
   build() {
-    Column() {
-      List() {
-        ForEach(this.appList, (item) => {
-          ListItem() {
-            AppItemComponent({
-              appIcon: item.appIcon,
-              appTitle: item.appTitle,
-              appSummary: item.appSummary,
-              appValue: item.appValue,
-              appArrow: item.appArrow,
-              appArrowStyle: '',
-              appUri: item.appUri,
-              appBundleName: item.appBundleName,
-              appUid: item.appUid,
-              appSwitch: 0
-            })
-          }
-          .onClick(() => {
-            Log.showInfo(TAG, `onClick`);
-            Router.push({ uri: item.appUri, params: item });
+    List() {
+      ForEach(this.appList, (item) => {
+        ListItem() {
+          AppItemComponent({
+            appIcon: item.appIcon,
+            appTitle: item.appTitle,
+            appSummary: item.appSummary,
+            appValue: item.appValue,
+            appArrow: item.appArrow,
+            appArrowStyle: '',
+            appUri: item.appUri,
+            appBundleName: item.appBundleName,
+            appUid: item.appUid,
+            appSwitch: 0
           })
-          .height($r('app.float.appitem_item_height'))
-        });
-      }
-      .divider({
-        strokeWidth: 1,
-        color: $r('app.color.divider_color'),
-        startMargin: $r('app.float.divider_margin_l_info')
-      })
-      .width(ConfigData.WH_100_100)
-      .align(Alignment.Top)
-      .visibility(Visibility.Visible)
-      .zIndex(0)
-      .border({ width: $r('app.float.border_width'), color: Color.White,
-        radius: $r('app.float.border_radius') })
-      .backgroundColor(Color.White)
-      .padding({
-        left: $r('app.float.itemComp_padding_l'),
-        right: $r('app.float.itemComp_padding_r')
-      })
+        }
+        .onClick(() => {
+          Log.showInfo(TAG, `onClick`);
+          Router.push({ uri: item.appUri, params: item });
+        })
+        .height($r('app.float.appitem_item_height'))
+      });
     }
-    .align(Alignment.Center)
+    .divider({
+      strokeWidth: 1,
+      color: $r('app.color.divider_color'),
+      startMargin: $r('app.float.divider_margin_l_info')
+    })
     .width(ConfigData.WH_100_100)
+    .align(Alignment.Top)
+    .visibility(Visibility.Visible)
     .flexShrink(1)
+    .zIndex(0)
+    .border({ width: $r('app.float.border_width'), color: Color.White,
+      radius: $r('app.float.border_radius') })
+    .backgroundColor(Color.White)
+    .padding({
+      left: $r('app.float.itemComp_padding_l'),
+      right: $r('app.float.itemComp_padding_r')
+    })
   }
 }

@@ -41,81 +41,55 @@ export default struct VolumePanelComponent {
 
   build() {
     Column() {
-      Column().width('100%').height(this.style.volumePanelSliderMarginTop)
-      Column() {
-        Slider({
-          value: this.VolumePanelVolumeValue,
-          min: this.VolumePanelMinVolume,
-          max: this.VolumePanelMaxVolume,
-          step: 1,
-          style: SliderStyle.OutSet,
-          direction: Axis.Vertical,
-          reverse: true
-        })
-          .trackThickness(this.style.volumePanSliderWidth)
-          .blockColor(this.style.volumePanelSliderBlockColor)
-          .trackColor($r('sys.color.ohos_id_color_component_normal'))
-          .selectedColor(this.style.volumeSelectedColor)
-          .onChange(this.onVolumeChange.bind(this))
-      }
-      .flexGrow(1)
-      .flexShrink(1)
+      Slider({
+        value: this.VolumePanelVolumeValue,
+        min: this.VolumePanelMinVolume,
+        max: this.VolumePanelMaxVolume,
+        step: 1,
+        style: SliderStyle.OutSet,
+        direction: Axis.Vertical,
+        reverse: true
+      })
+        .margin({top: this.style.volumePanelSliderMarginTop, bottom: this.style.volumePanelSliderMarginBottom})
+        .trackThickness(this.style.volumePanSliderWidth)
+        .blockColor(this.style.volumePanelSliderBlockColor)
+        .trackColor($r('sys.color.ohos_id_color_component_normal'))
+        .selectedColor(this.style.volumeSelectedColor)
+        .onChange(this.onVolumeChange.bind(this))
+        .flexGrow(1)
+        .flexShrink(1)
 
-      Column()
-        .width('100%')
-        .height(this.style.volumePanelSliderMarginBottom)
-      Column() {
-        Button({ type: ButtonType.Normal, stateEffect: true }) {
-          Column() {
-            Image(this.getVolumeIcon(this.VolumePanelIsMute, this.VolumePanelVolumeValue, this.VolumePanelMaxVolume, this.VolumePanelMinVolume))
-              .width(this.style.volumePanelMutBtnIconSize)
-              .height(this.style.volumePanelMutBtnIconSize)
-              .fillColor($r('sys.color.ohos_id_color_activated'))
-            Column()
-              .width('100%')
-              .height(this.style.volumePanelMutBtnIconMarginBottom)
-          }
-        }
-        .width('100%')
-        .height('100%')
-        .backgroundColor(this.style.volumeButtonBackgroundColor)
-        .onClick(this.onMuteBtnClick.bind(this))
+      Button({ type: ButtonType.Normal, stateEffect: true }) {
+        Image(this.getVolumeIcon(this.VolumePanelIsMute, this.VolumePanelVolumeValue, this.VolumePanelMaxVolume, this.VolumePanelMinVolume))
+          .width(this.style.volumePanelMutBtnIconSize)
+          .height(this.style.volumePanelMutBtnIconSize)
+          .margin({bottom: this.style.volumePanelMutBtnIconMarginBottom})
+          .fillColor($r('sys.color.ohos_id_color_activated'))
       }
       .width('100%')
       .height(this.style.volumePanelMuteBtnHeight)
+      .backgroundColor(this.style.volumeButtonBackgroundColor)
+      .onClick(this.onMuteBtnClick.bind(this))
 
-      Column() {
-        Divider()
-          .vertical(false)
-          .strokeWidth(this.style.volumePanelDividerHeight)
-          .color($r('sys.color.ohos_id_color_fourth'))
-          .lineCap(LineCapStyle.Square)
-      }
-      .width(this.style.volumeDividerWidth)
-      .height(this.style.volumePanelDividerHeight)
+      Divider()
+        .width(this.style.volumeDividerWidth)
+        .height(this.style.volumePanelDividerHeight)
+        .vertical(false)
+        .strokeWidth(this.style.volumePanelDividerHeight)
+        .color($r('sys.color.ohos_id_color_fourth'))
+        .lineCap(LineCapStyle.Square)
 
-      Column() {
-        Button({ type: ButtonType.Circle, stateEffect: true }) {
-          Column() {
-            Column()
-              .width('100%')
-              .height(this.style.volumePanelMutBtnIconMarginBottom)
-            Image($r('app.media.ic_public_settings'))
-              .width(this.style.volumePanelSettingIconSize)
-              .height(this.style.volumePanelSettingIconSize)
-              .fillColor(this.style.volumePanelSettingColor)
-            Column()
-              .width('100%')
-              .height(this.style.volumePanelMutBtnIconMarginBottom)
-          }
-        }
-        .width('100%')
-        .height('100%')
-        .backgroundColor(this.style.volumeButtonBackgroundColor)
-        .onClick(this.onSettingsBtnClick.bind(this))
+      Button({ type: ButtonType.Circle, stateEffect: true }) {
+        Image($r('app.media.ic_public_settings'))
+          .width(this.style.volumePanelSettingIconSize)
+          .height(this.style.volumePanelSettingIconSize)
+          .margin({top: this.style.volumePanelMutBtnIconMarginBottom, bottom: this.style.volumePanelMutBtnIconMarginBottom})
+          .fillColor(this.style.volumePanelSettingColor)
       }
       .width('100%')
       .height(this.style.volumePanelSettingButtonSize)
+      .backgroundColor(this.style.volumeButtonBackgroundColor)
+      .onClick(this.onSettingsBtnClick.bind(this))
     }
     .width('100%')
     .height('100%')
