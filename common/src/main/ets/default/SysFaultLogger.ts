@@ -33,9 +33,9 @@ export function writeFaultLog(logParam: object) {
     eventType: hiSysEvent.EventType.FAULT,
     params: logParam
   }
-  Log.showInfo(TAG, "fault log params is : " + JSON.stringify(sysEventInfo))
+  Log.showDebug(TAG, "fault log params is : " + JSON.stringify(sysEventInfo))
   hiSysEvent.write(sysEventInfo, (err, val) => {
-    Log.showInfo(TAG, "fault log params is : " + JSON.stringify(sysEventInfo))
+    Log.showDebug(TAG, "fault log params is : " + JSON.stringify(sysEventInfo))
     Log.showInfo(TAG, `write fault log result: ${val}`)
   })
 }

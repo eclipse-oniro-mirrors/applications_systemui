@@ -98,7 +98,7 @@ export default class PluginDataSourceAdapter {
         });
         break;
       default:
-        Log.showError(TAG, `name: ${this.mName}, unknown type: ${JSON.stringify(msg)}`);
+        Log.showError(TAG, `name: ${this.mName}, unknown type: ${data.action}`);
     }
   }
 

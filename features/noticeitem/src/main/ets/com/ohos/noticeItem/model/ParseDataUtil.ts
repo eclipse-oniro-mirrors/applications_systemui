@@ -166,7 +166,7 @@ export default class ParseDataUtil {
       Log.showInfo(TAG, 'no match content type');
       break;
     }
-    Log.showInfo(TAG, `notificationType = ${notificationType}, content = ${JSON.stringify(content)}`);
+    Log.showInfo(TAG, `notificationType = ${notificationType}`);
     return content;
   }
 }

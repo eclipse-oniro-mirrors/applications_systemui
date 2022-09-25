@@ -68,7 +68,7 @@ export class NotificationService {
 
   loadAllNotifications(): void {
     NotificationManager.getAllActiveNotifications(TAG, (err, requestsArr) => {
-      Log.showInfo(TAG, `getAllActiveNotifications error:${err}}, requestsArr: ${JSON.stringify(requestsArr)}`);
+      Log.showDebug(TAG, `getAllActiveNotifications error:${err}}, requestsArr: ${JSON.stringify(requestsArr)}`);
       if (Array.isArray(requestsArr)) {
         for (let i = 0, len = requestsArr.length; i < len; i++) {
           this.handleNotificationAdd(requestsArr[i]);
@@ -124,7 +124,7 @@ export class NotificationService {
 
   subscribeNotification(subscriber): void {
     let callback = (err, data) => {
-      Log.showInfo(TAG, `subscribeCallback finished err: ${JSON.stringify(err)} data: ${JSON.stringify(data)}`);
+      Log.showInfo(TAG, `subscribeCallback finished err: ${JSON.stringify(err)}`);
     };
     NotificationManager.subscribeNotification(TAG, subscriber, callback);
   }
