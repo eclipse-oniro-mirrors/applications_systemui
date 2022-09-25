@@ -42,74 +42,64 @@ export default struct UpTitle {
   }
 
   build() {
-    Flex({ direction: FlexDirection.Row, alignItems: ItemAlign.End, justifyContent: FlexAlign.SpaceBetween }) {
-      Flex({ direction: FlexDirection.Row, alignItems: ItemAlign.Center, justifyContent: FlexAlign.Start }) {
-        Row()
-          .width(this.style.marginLeft)
-          .height('100%')
-        Text($r('app.string.control_center'))
-          .fontColor(this.style.fontColor)
-          .fontSize(this.style.fontSize)
-          .fontWeight(FontWeight.Medium)
+    Row() {
+      Text($r('app.string.control_center'))
+        .height('100%')
+        .margin({left: this.style.marginLeft})
+        .fontColor(this.style.fontColor)
+        .fontSize(this.style.fontSize)
+        .fontWeight(FontWeight.Medium)
+
+      Blank().height('100%')
+
+      Stack() {
+        Flex()
+          .backgroundColor(this.mSettingIsHover ? this.style.imageHoverColor : this.style.imageTransparentColor)
+          .clip(new Rect({
+            width: this.style.imageHoverWidth,
+            height: this.style.imageHoverHeight
+          }).radius(this.style.imageHoverRadius))
+          .width(this.style.imageHoverWidth)
+          .height(this.style.imageHoverHeight)
+        Image($r('app.media.ic_public_settings'))
+          .objectFit(ImageFit.Contain)
+          .size({ width: this.style.imageWidth,
+            height: this.style.imageHeight })
+          .fillColor(this.style.titleImageColor)
+          .onClick(this.settingClick.bind(this))
+          .onHover((isHover) => {
+            this.mSettingIsHover = isHover;
+          })
       }
-      .height('100%')
+      .width(this.style.imageHoverWidth)
+      .height(this.style.imageHoverHeight)
 
-      Flex({ direction: FlexDirection.Row, alignItems: ItemAlign.Center, justifyContent: FlexAlign.End }) {
-        Stack() {
-          Flex()
-            .backgroundColor(this.mSettingIsHover ? this.style.imageHoverColor : this.style.imageTransparentColor)
-            .clip(new Rect({
-              width: this.style.imageHoverWidth,
-              height: this.style.imageHoverHeight
-            }).radius(this.style.imageHoverRadius))
-            .width(this.style.imageHoverWidth)
-            .height(this.style.imageHoverHeight)
-          Image($r('app.media.ic_public_settings'))
-            .objectFit(ImageFit.Contain)
-            .size({ width: this.style.imageWidth,
-              height: this.style.imageHeight })
-            .fillColor(this.style.titleImageColor)
-            .onClick(this.settingClick.bind(this))
-            .onHover((isHover) => {
-              this.mSettingIsHover = isHover;
-            })
-        }
-        .width(this.style.imageHoverWidth)
-        .height(this.style.imageHoverHeight)
-
-        Row()
-          .width(this.style.upTitleSpace)
-          .height('100%')
-        Stack() {
-          Flex()
-            .backgroundColor(this.mEditIsHover ? this.style.imageHoverColor : this.style.imageTransparentColor)
-            .clip(new Rect({
-              width: this.style.imageHoverWidth,
-              height: this.style.imageHoverHeight
-            }).radius(this.style.imageHoverRadius))
-            .width(this.style.imageHoverWidth)
-            .height(this.style.imageHoverHeight)
-          Image($r('app.media.ic_public_edit'))
-            .objectFit(ImageFit.Contain)
-            .size({ width: this.style.imageWidth,
-              height: this.style.imageHeight })
-            .fillColor(this.style.titleImageColor)
-            .onClick(this.editClick.bind(this))
-            .onHover((isHover) => {
-              this.mEditIsHover = isHover;
-            })
-        }
-        .width(this.style.imageHoverWidth)
-        .height(this.style.imageHoverHeight)
-
-        Row()
-          .width(this.style.marginRight)
-          .height('100%')
+      Stack() {
+        Flex()
+          .backgroundColor(this.mEditIsHover ? this.style.imageHoverColor : this.style.imageTransparentColor)
+          .clip(new Rect({
+            width: this.style.imageHoverWidth,
+            height: this.style.imageHoverHeight
+          }).radius(this.style.imageHoverRadius))
+          .width(this.style.imageHoverWidth)
+          .height(this.style.imageHoverHeight)
+        Image($r('app.media.ic_public_edit'))
+          .objectFit(ImageFit.Contain)
+          .size({ width: this.style.imageWidth,
+            height: this.style.imageHeight })
+          .fillColor(this.style.titleImageColor)
+          .onClick(this.editClick.bind(this))
+          .onHover((isHover) => {
+            this.mEditIsHover = isHover;
+          })
       }
-      .height('100%')
+      .width(this.style.imageHoverWidth)
+      .height(this.style.imageHoverHeight)
+      .margin({left: this.style.upTitleSpace, right: this.style.marginRight})
     }
     .width('100%')
     .height('100%')
+    .alignItems(VerticalAlign.Center)
     .onTouch(this.touchEvent.bind(this))
   }
 

@@ -55,7 +55,6 @@ export default struct SimpleToggleLayoutEditGrid {
   }
 
   build() {
-
     Grid() {
       ForEach(this.mToggles, (componentName: string) => {
         GridItem() {

@@ -87,25 +87,22 @@ struct Index {
           .width('100%')
           .height('100%')
           .objectFit(ImageFit.Fill)
-        Column() {
-          Scroll(new Scroller()) {
-            Column() {
-              ControlCenterComponent({
-                modeChangeCallback: (isEdit) => this.onModeChange(isEdit)
-              })
-            }
-            .width('100%')
-            .onAreaChange((e, e2) => {
-              Log.showInfo(TAG, `onAreaChange, e: ${JSON.stringify(e)} e2: ${JSON.stringify(e2)}`);
+        Scroll(new Scroller()) {
+          Column() {
+            ControlCenterComponent({
+              modeChangeCallback: (isEdit) => this.onModeChange(isEdit)
             })
           }
-          .scrollBarColor(Color.Gray)
-          .scrollBarWidth(10)
           .width('100%')
+          .onAreaChange((e, e2) => {
+            Log.showInfo(TAG, `onAreaChange, e: ${JSON.stringify(e)} e2: ${JSON.stringify(e2)}`);
+          })
         }
-        .backgroundColor($r('app.color.default_background'))
+        .scrollBarColor(Color.Gray)
+        .scrollBarWidth(10)
         .width('100%')
         .height('100%')
+        .backgroundColor($r('app.color.default_background'))
       }
       .scale({
         x: this.mWidthSize,

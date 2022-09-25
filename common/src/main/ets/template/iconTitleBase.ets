@@ -45,54 +45,43 @@ export default struct iconBaseComponent {
 
   build() {
     Row() {
-      Column().width(this.style.marginLeft).height('100%').layoutWeight(0)
       Row() {
-        Row() {
-          iconComponent({
-            useIconStr: this.useIconStr,
-            iconOff: this.iconOff,
-            iconOn: this.iconOn,
-            iconOffStr: this.iconOffStr,
-            iconOnStr: this.iconOnStr,
-            changeSwitch: $changeSwitch,
-          })
-        }
-        .onClick(() => {
-          Log.showDebug(TAG, `start clickEvent ${this.changeSwitch}`);
-          if (this.mClickEvent) {
-            this.mClickEvent()
-          }
-          Log.showDebug(TAG, `end clickEvent ${this.changeSwitch}`);
+        iconComponent({
+          useIconStr: this.useIconStr,
+          iconOff: this.iconOff,
+          iconOn: this.iconOn,
+          iconOffStr: this.iconOffStr,
+          iconOnStr: this.iconOnStr,
+          changeSwitch: $changeSwitch,
         })
       }
       .height('100%')
-      .layoutWeight(0)
-
-      Column().width(this.style.componentGap).height('100%').layoutWeight(0)
-      Row() {
-        Row() {
-          Column().width(this.style.textMargin).height('100%').layoutWeight(0)
-          Text(this.useTitleStr ? this.mTitleStr : this.mTitle)
-            .fontSize(this.style.titleSize)
-            .fontColor(this.style.titleColor)
-            .textOverflow({ overflow: TextOverflow.Ellipsis })
-            .maxLines(2)
-            .layoutWeight(1)
-            .onHover((isHover) => {
-              this.mTextIsHover = isHover;
-            })
-          Column().width(this.style.textMargin).height('100%').layoutWeight(0)
+      .margin({left: this.style.marginLeft, right: this.style.componentGap})
+      .onClick(() => {
+        Log.showDebug(TAG, `start clickEvent ${this.changeSwitch}`);
+        if (this.mClickEvent) {
+          this.mClickEvent()
         }
-        .width('100%')
-        .height(this.style.textHoverHeight)
-        .width(this.style.textHoverWidth)
-        .backgroundColor(this.mTextIsHover ? this.style.hoverColor : this.style.transparentColor)
-        .borderRadius(this.style.textHoverRadius)
-        .clip(true)
-      }.height('100%')
-      .layoutWeight(1)
+        Log.showDebug(TAG, `end clickEvent ${this.changeSwitch}`);
+      })
 
-      Column().width(this.style.marginRight).height('100%').layoutWeight(0)
+      Row() {
+        Text(this.useTitleStr ? this.mTitleStr : this.mTitle)
+          .fontSize(this.style.titleSize)
+          .fontColor(this.style.titleColor)
+          .textOverflow({ overflow: TextOverflow.Ellipsis })
+          .maxLines(2)
+          .margin({left: this.style.textMargin, right: this.style.textMargin})
+          .onHover((isHover) => {
+            this.mTextIsHover = isHover;
+          })
+      }
+      .width(this.style.textHoverWidth)
+      .height(this.style.textHoverHeight)
+      .margin({right: this.style.marginRight})
+      .backgroundColor(this.mTextIsHover ? this.style.hoverColor : this.style.transparentColor)
+      .borderRadius(this.style.textHoverRadius)
+      .clip(true)
     }
     .borderRadius(this.style.borderRadius)
     .clip(true)

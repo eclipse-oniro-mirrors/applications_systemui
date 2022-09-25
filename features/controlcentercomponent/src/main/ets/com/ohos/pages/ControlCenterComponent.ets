@@ -98,7 +98,6 @@ export default struct ControlCenterComponent {
     Column() {
       if (!this.mIsEditSimpleToggleLayout) {
         Column() {
-          Column().width('100%').height(this.style.marginTop)
           Column() {
             UpTitle({
               touchMoveCallback: (data) => {
@@ -111,36 +110,29 @@ export default struct ControlCenterComponent {
           }
           .width('100%')
           .height(this.style.upTitleHeight)
-
-          Column().width('100%').height(this.style.titleMarginBottom)
+          .margin({top: this.style.marginTop, bottom: this.style.titleMarginBottom})
 
           Row() {
-            Column().width(this.style.marginLeft).height(1).layoutWeight(0)
-
             Column() {
               ControlCenterComplexToggleLayout()
 
-              Column().width('100%').height(this.style.toggleAreaGap)
               Column() {
-                Column().width('100%').height(this.style.simpleToggleLayoutMarginTop)
                 ControlCenterSimpleToggleLayout({
                   mColumnCount: this.mSimpleToggleColumnCount
                 })
                 Column().width('100%').height(this.style.simpleToggleLayoutMarginBottom)
-
                 MyBrightness()
-
-                Column().width('100%').height(this.style.brightnessMarginBottom)
               }
               .width('100%')
+              .margin({top: this.style.toggleAreaGap})
+              .padding({top: this.style.simpleToggleLayoutMarginTop, bottom: this.style.brightnessMarginBottom})
               .borderRadius(this.style.componentBorderRadius)
               .clip(true)
               .backgroundColor(this.style.componentBackgroundColor)
             }
-            .layoutWeight(1)
-
-            Column().width(this.style.marginRight).height(1).layoutWeight(0)
-          }.width('100%')
+            .margin({left: this.style.marginLeft, right: this.style.marginRight})
+          }
+          .width('100%')
         }
         .width('100%')
         .transition({ type: TransitionType.Insert, opacity: 0, translate: { x: (-this.mWidthPx * 0.8) + 'px' } })
@@ -187,13 +179,12 @@ struct ControlCenterComplexToggleLayout {
     Grid() {
       ForEach(this.mComplexToggleLayout, (componentName) => {
         GridItem() {
-          Column() {
-            ComplexToggleLoadComponent({
-              keyId: componentName
-            })
-          }.width('100%')
-          .height('100%')
+          ComplexToggleLoadComponent({
+            keyId: componentName
+          })
         }
+        .width('100%')
+        .height('100%')
       }, (componentName) => componentName)
     }
     .width('100%')
@@ -239,30 +230,23 @@ struct ControlCenterSimpleToggleLayout {
   }
 
   build() {
-    Row() {
-      Column().width(this.style.marginLeft).height(1).layoutWeight(0)
-      Grid() {
-        ForEach(this.mSimpleToggleLayout, (componentName) => {
-          GridItem() {
-            Column() {
-              SimpleToggleLoadComponent({
-                keyId: componentName
-              })
-            }.width('100%')
-            .height('100%')
-          }
-        }, (componentName) => componentName)
-      }
-      .layoutWeight(1)
-      .height(this.calcGridHeight(Math.ceil(this.mSimpleToggleLayout.length / this.mColumnCount), this.style.rowHeight, this.style.rowGap))
-      .columnsTemplate(this.generateColumnsTemplate(this.mColumnCount))
-      .rowsTemplate(this.generateRowsTemplate(Math.ceil(this.mSimpleToggleLayout.length / this.mColumnCount)))
-      .rowsGap(this.style.rowGap + 'px')
-      .columnsGap(this.style.columnGap)
-
-      Column().width(this.style.marginRight).height(1).layoutWeight(0)
+    Grid() {
+      ForEach(this.mSimpleToggleLayout, (componentName) => {
+        GridItem() {
+          SimpleToggleLoadComponent({
+            keyId: componentName
+          })
+        }.width('100%')
+        .height('100%')
+      }, (componentName) => componentName)
     }
     .width('100%')
+    .height(this.calcGridHeight(Math.ceil(this.mSimpleToggleLayout.length / this.mColumnCount), this.style.rowHeight, this.style.rowGap))
+    .margin({left: this.style.marginLeft, right: this.style.marginRight})
+    .columnsTemplate(this.generateColumnsTemplate(this.mColumnCount))
+    .rowsTemplate(this.generateRowsTemplate(Math.ceil(this.mSimpleToggleLayout.length / this.mColumnCount)))
+    .rowsGap(this.style.rowGap + 'px')
+    .columnsGap(this.style.columnGap)
   }
 
   calcGridHeight(rowCount, rowHeight, rowGap) {
