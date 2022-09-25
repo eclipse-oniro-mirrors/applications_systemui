@@ -68,7 +68,7 @@ export class NotificationViewModel {
   }
 
   userChange(userInfo): void {
-    Log.showInfo(TAG, `UserChange, userInfo: ${JSON.stringify(userInfo)}`);
+    Log.showInfo(TAG, `UserChange, userId: ${userInfo.userId}`);
     this.unregisterCallback();
     this.mNotificationList.length = 0;
     this.initFlowControlInfos();

@@ -32,7 +32,7 @@ export default class FeatureAbilityManager {
 
   getAbilityWant(listener) {
     FeatureAbility.getWant((err, data) => {
-      Log.showInfo(TAG, `getAbilityWant callBack err: ${JSON.stringify(err)} data: ${JSON.stringify(data)}`);
+      Log.showInfo(TAG, `getAbilityWant callBack err: ${JSON.stringify(err)}`);
       if (err.code !== 0) {
         Log.showError(TAG, `failed to getAbilityWant because ${err.message}`);
         return;

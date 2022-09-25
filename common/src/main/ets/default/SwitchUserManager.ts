@@ -98,7 +98,7 @@ export default class SwitchUserManager {
     AccountManager.getAccountManager()
       .queryOsAccountById(accountId)
       .then((accountInfo) => {
-        Log.showInfo(TAG, `userChange, accountInfo: ${JSON.stringify(accountInfo)}`);
+        Log.showInfo(TAG, `userChange, localId: ${accountInfo?.localId}`);
         this.mUserInfo = parseAccountInfo(accountInfo);
         this.notifyUserChange();
       })
