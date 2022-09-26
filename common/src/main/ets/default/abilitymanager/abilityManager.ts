@@ -100,4 +100,22 @@ export default class AbilityManager {
       }
     });
   }
+
+  static startServiceExtensionAbility(context: ServiceExtensionContext, want: Want, callback?: (error?: BusinessError) => void): void {
+    Log.showDebug(TAG, `startServiceExtensionAbility, want: ${JSON.stringify(want)}`);
+    if (context == null) {
+      context = AbilityManager.getContext();
+    }
+    context.startServiceExtensionAbility(want).then(() => {
+      Log.showInfo(TAG, 'startServiceExtensionAbility, then');
+      if (callback) {
+        callback();
+      }
+    }).catch((error: BusinessError) => {
+      Log.showError(TAG, `startServiceExtensionAbility, error: ${JSON.stringify(error)}`);
+      if (callback) {
+        callback(error);
+      }
+    });
+  }
 }

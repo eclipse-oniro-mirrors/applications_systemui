@@ -91,7 +91,7 @@ export class KeyCodeEvent {
   }
 
   private sendHomeKeyEvent() {
-    AbilityManager.startAbility(AbilityManager.getContext(AbilityManager.ABILITY_NAME_NAVIGATION_BAR), {
+    AbilityManager.startServiceExtensionAbility(AbilityManager.getContext(AbilityManager.ABILITY_NAME_NAVIGATION_BAR), {
       bundleName: Constants.LAUNCHER_BUNDLE_NAME,
       abilityName: Constants.LAUNCHER_ABILITY_NAME
     });
