@@ -117,7 +117,7 @@ export default struct IconListComponent {
 @Component
 export struct BottomLeftItem {
   private itemData: any = {};
-  private height: number = 92;
+  private bottomLeftItemHeight: number = 92;
 
   private settingDialogController: CustomDialogController = new CustomDialogController({
     builder: SettingDialog({
@@ -156,7 +156,7 @@ export struct BottomLeftItem {
       .width(Layout.BUTTON_SIZE)
       .height(Layout.BUTTON_SIZE)
     }
-    .height(this.height)
+    .height(this.bottomLeftItemHeight)
     .justifyContent(FlexAlign.SpaceEvenly)
     .alignItems(VerticalAlign.Center)
   }

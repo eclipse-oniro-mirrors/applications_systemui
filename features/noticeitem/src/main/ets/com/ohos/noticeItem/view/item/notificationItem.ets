@@ -58,7 +58,7 @@ export default struct NotificationItem {
   }
 
   @Builder BottomLeftComponent() {
-    BottomLeftItem({itemData: this.itemData, height: 92});
+    BottomLeftItem({itemData: this.itemData, bottomLeftItemHeight: 92});
   }
 
   build() {
