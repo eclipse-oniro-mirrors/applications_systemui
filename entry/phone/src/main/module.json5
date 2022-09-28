@@ -78,6 +78,9 @@
       },
       {
         "name": "ohos.permission.START_ABILITIES_FROM_BACKGROUND"
+      },
+      {
+        "name": "ohos.permission.GET_TELEPHONY_STATE"
       }
     ]
   }

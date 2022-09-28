@@ -130,7 +130,7 @@ export default struct GroupItem {
   }
 
   @Builder BottomLeftComponent() {
-    BottomLeftItem({itemData: this.groupData[0], height: 92});
+    BottomLeftItem({itemData: this.groupData[0], bottomLeftItemHeight: 92});
   }
 
   build() {

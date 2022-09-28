@@ -19,7 +19,8 @@ import Log from '../../../../../../../common/src/main/ets/default/Log';
 const TAG = 'CapsuleModel';
 
 let commonEventSubscribeInfo = {
-  events: ['CAPSULE_EVENT_CALL_UI']
+  events: ['CAPSULE_EVENT_CALL_UI'],
+  publisherPermission: "ohos.permission.GET_TELEPHONY_STATE"
 };
 let commonEventSubscriber = null;
 
