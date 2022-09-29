@@ -89,7 +89,6 @@ export default struct SignalIcon {
    * @return {string} typeString type of cellular type
    */
   private updateCellularType(signalType): string {
-    Log.showInfo(TAG, `updateCellularType, signalType: ${signalType}`);
     let typeString;
     switch (signalType) {
       case Constants.RADIO_TECHNOLOGY_UNKNOWN:
@@ -129,7 +128,6 @@ export default struct SignalIcon {
    * @return {string} cellularImage image of cellular signal
    */
   private updateCellularImage(level) {
-    Log.showInfo(TAG, `updateCellularImage, level: ${level}`);
     let cellularImage;
     switch (level) {
       case Constants.CELLULAR_SIGNAL_NO:
@@ -155,7 +153,6 @@ export default struct SignalIcon {
         cellularImage = $r('app.media.ic_statusbar_signal_no');
         break;
     }
-    Log.showInfo(TAG, 'updateCellularImage = ' + cellularImage);
     return cellularImage;
   }
 
@@ -166,7 +163,6 @@ export default struct SignalIcon {
    * @return {string} vendor's name or signal state
    */
   private updateNetworkState(netWorkState) {
-    Log.showInfo(TAG, `updateNetworkState, netWorkState: ${netWorkState}`);
     let networkStateName;
     if (netWorkState == Constants.NET_NULL) {
       networkStateName = $r('app.string.net_null');

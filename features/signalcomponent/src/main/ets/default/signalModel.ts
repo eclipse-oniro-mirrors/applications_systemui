@@ -59,10 +59,9 @@ export class SignalModel {
   }
 
   subscriberCallBack(err, data) {
-    Log.showInfo(TAG, `subscriberCallBack, err: ${JSON.stringify(err.message)}, event: ${data.event}`);
     if (data.event === Constants.COMMON_EVENT_SPN_INFO_CHANGED) {
-      Log.showInfo(TAG, `receive stateLink: ${data?.parameters?.CUR_PLMN}`);
       if (data?.parameters?.CUR_PLMN) {
+        Log.showInfo(TAG, `receive stateLink: ${data.parameters.CUR_PLMN}`);
         mStateLink.set(data.parameters.CUR_PLMN);
       } else {
         Log.showError(TAG, `get stateLink failed.`);
@@ -85,11 +84,9 @@ export class SignalModel {
       if (value === true) {
         Radio.getNetworkState((err, value) => {
           if (err || !value) {
-            Log.showError(TAG, `failed to getnetworkState because ${err.message}`);
             mTypeLink.set(Constants.RADIO_TECHNOLOGY_UNKNOWN);
             mLevelLink.set(Constants.CELLULAR_NO_SIM_CARD);
           } else {
-            Log.showInfo(TAG, `success to getnetworkState: ${JSON.stringify(value)}`);
             // If there is no service, no signal is displayed.
             if (value.regState != Constants.REG_STATE_IN_SERVICE) {
               mTypeLink.set(Constants.RADIO_TECHNOLOGY_UNKNOWN);
@@ -98,10 +95,8 @@ export class SignalModel {
               mTypeLink.set(value.cfgTech);
               Radio.getSignalInformation(slotId, (err, value) => {
                 if (err || !value || !value.length) {
-                  Log.showError(TAG, `failed to getSimState because ${err.message}`);
                   mLevelLink.set(Constants.CELLULAR_NO_SIM_CARD);
                 } else {
-                  Log.showInfo(TAG, `success to getSignalInfo: ${JSON.stringify(value)}`);
                   mLevelLink.set(value[0].signalLevel);
                 }
               });
@@ -109,7 +104,7 @@ export class SignalModel {
           }
         });
       } else {
-        Log.showError(TAG, `hasSimCard failed to hasSimCard because`);
+        Log.showWarn(TAG, `hasSimCard failed to hasSimCard because`);
         mLevelLink.set(Constants.CELLULAR_NO_SIM_CARD);
         mTypeLink.set(Constants.RADIO_TECHNOLOGY_UNKNOWN);
         mStateLink.set(Constants.NET_NULL);
@@ -127,15 +122,12 @@ export class SignalModel {
     Log.showInfo(TAG, 'initObserver');
     isInitObserver = true;
     Observer.on('signalInfoChange', (signalInfoChange) => {
-      Log.showInfo(TAG, `signalInfoChange ${JSON.stringify(signalInfoChange)}`);
       this.checkCellularStatus();
     });
     Observer.on('networkStateChange', (networkState) => {
-      Log.showInfo(TAG, `networkStateChange ${JSON.stringify(networkState)}`);
       this.checkCellularStatus();
     });
     Observer.on('simStateChange', (simStateInfo) => {
-      Log.showInfo(TAG, `simStateChange ${JSON.stringify(simStateInfo)}`);
       this.checkCellularStatus();
     });
   }
