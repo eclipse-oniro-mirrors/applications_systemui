@@ -34,12 +34,15 @@ export enum WindowType {
   NOTIFICATION_PANEL = 'SystemUi_NotificationPanel',
   CONTROL_PANEL = 'SystemUi_ControlPanel',
   VOLUME_PANEL = 'SystemUi_VolumePanel',
-  BANNER_NOTICE = 'SystemUi_BannerNotice'
+  BANNER_NOTICE = 'SystemUi_BannerNotice',
+  SPLIT_BAR = 'SystemUi_SplitBar'
 }
 
 export const WINDOW_SHOW_HIDE_EVENT = 'WindowShowHideEvent';
 
 export const WINDOW_RESIZE_EVENT = 'WindowResizeEvent';
+
+export const WINDOW_Destroy = 'WindowDestroy';
 
 const TAG = "WindowManager";
 
@@ -51,6 +54,7 @@ const SYSTEM_WINDOW_TYPE_MAP: { [key in WindowType]: Window.WindowType } = {
   SystemUi_ControlPanel: Window.WindowType.TYPE_VOLUME_OVERLAY,
   SystemUi_VolumePanel: Window.WindowType.TYPE_VOLUME_OVERLAY,
   SystemUi_BannerNotice: Window.WindowType.TYPE_VOLUME_OVERLAY,
+  SystemUi_SplitBar: 2101,
 };
 
 const DEFAULT_WINDOW_INFO: WindowInfo = {
@@ -119,6 +123,20 @@ class WindowManager {
     })
     );
     Log.showInfo(TAG, `hide window[${name}] success.`);
+  }
+
+  async destroyWindow(name: WindowType): Promise<void> {
+    let window = await Window.find(name);
+    await window.destroy()
+    this.mWindowInfos.delete(name)
+    EventManager.publish((
+    obtainLocalEvent(WINDOW_Destroy, {
+      windowName: name,
+      isDestroy: true
+    }
+
+    )
+    ))
   }
 
   getWindowInfo(name: WindowType): WindowInfo | undefined {

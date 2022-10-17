@@ -20,8 +20,15 @@ import WindowManager, { WindowType } from '../../../../../../../common/src/main/
 import AbilityManager from '../../../../../../../common/src/main/ets/default/abilitymanager/abilityManager';
 import NavBarConfiguration from '../../../../../../../features/navigationservice/src/main/ets/com/ohos/navigationservice/common/NavBarConfiguration';
 import { Want } from 'ability/want';
+import CommonEvent from '@ohos.commonEvent';
 
 const TAG = 'NavigationBar_ServiceExtAbility';
+let commonEventSubscribeInfo = {events:["common.event.SPLIT_SCREEN"]};
+const SplitBarMode = 'SplitBarComponentMode'
+const SplitScreenEventData ={
+  Show:'common.event.SPLIT_SCREEN.data.show.divider',
+  Destory:'common.event.SPLIT_SCREEN.data.destroy.divider'
+}
 
 class ServiceExtAbility extends ServiceExtension {
   private direction :number;
@@ -29,7 +36,6 @@ class ServiceExtAbility extends ServiceExtension {
   async onCreate(want: Want): Promise<void> {
     Log.showInfo(TAG, `onCreate, want: ${JSON.stringify(want)}`);
     AbilityManager.setContext(AbilityManager.ABILITY_NAME_NAVIGATION_BAR, this.context);
-
     display.on("change", (id) => {
       Log.showInfo(TAG, "display change, data: " + JSON.stringify(id))
       display.getAllDisplay().then((arrayDisplay) => {
@@ -40,8 +46,12 @@ class ServiceExtAbility extends ServiceExtension {
             let nowDirection = -1;
             if (display.width > display.height) {
               nowDirection = 1;
+              let spilitBarDirection =AppStorage.SetAndLink(SplitBarMode, true)
+              spilitBarDirection.set(true)
             } else {
               nowDirection = 2;
+              let spilitBarDirection =AppStorage.SetAndLink(SplitBarMode, false)
+              spilitBarDirection.set(false)
             }
             if (nowDirection != this.direction) {
               this.createNewWindow(false);
@@ -51,8 +61,6 @@ class ServiceExtAbility extends ServiceExtension {
       })
     })
     this.createNewWindow(true);
-
-
   }
 
   async createNewWindow (isNewWindow : boolean) {
@@ -80,6 +88,34 @@ class ServiceExtAbility extends ServiceExtension {
     } else {
       WindowManager.resetSizeWindow(WindowType.NAVIGATION_BAR, navigationBarRect);
     }
+    CommonEvent.createSubscriber(commonEventSubscribeInfo).then((subscriber) => {
+      CommonEvent.subscribe(subscriber, (err,data)=>{
+        let eventData = data.parameters.windowMode.toString()
+        if(eventData == SplitScreenEventData.Show){
+          Log.showInfo(TAG,`eventData is ${eventData}`)
+          let splitBarRect = {
+            left: configInfo.realWidth/2 - 80,
+            top: configInfo.yCoordinate,
+            width: 16,
+            height: configInfo.maxHeight,
+          };
+          WindowManager.createWindow(this.context, WindowType.SPLIT_BAR, splitBarRect, 'pages/SplitBarIndex').then(async () =>
+          WindowManager.showWindow(WindowType.SPLIT_BAR)
+          ).then(() => {
+            subscriber.finishCommonEvent();
+          }).catch((err) => {
+          });
+        }else if( eventData == SplitScreenEventData.Destory){
+          Log.showInfo(TAG,`eventData is ${eventData}`)
+          WindowManager.destroyWindow(WindowType.SPLIT_BAR).then(() => {
+            subscriber.finishCommonEvent();
+          }).catch((err) => {
+          });
+        }else{
+          Log.showInfo(TAG,`eventData is ${eventData}`)
+        }
+      })
+    })
   }
 
   onDestroy(): void {
