@@ -18,6 +18,7 @@ import Log from '../../../../../../../../common/src/main/ets/default/Log';
 import {FASlotName} from '../../../../../../../../common/src/main/ets/default/Constants';
 import LocationComponent from '../../../../../../../locationcomponent/src/main/ets/com/ohos/pages/ControlCenterSimpleToggleLocationComponent';
 import RingModeComponent from '../../../../../../../ringmodecomponent/src/main/ets/com/ohos/pages/ControlCenterSimpleToggleRingModeComponent';
+import AutoRotateComponent from '../../../../../../../autorotatecomponent/src/main/ets/com/ohos/pages/ControlCenterSimpleToggleAutoRotateComponent';
 import NFCComponent from '../../../../../../../nfccomponent/src/main/ets/com/ohos/pages/ControlCenterSimpleToggleNFComponent';
 import SimpleToggleComponent from './SimpleToggleComponent';
 
@@ -47,6 +48,12 @@ export default struct SimpleToggleLoadComponent {
         })
       } else if (this.keyId == FASlotName.RING_MODE) {
         RingModeComponent({
+          keyId: this.keyId,
+          mEditMode: this.mEditMode,
+          mDragMode: this.mDragMode,
+        })
+      } else if (this.keyId == FASlotName.AUTO_ROTATE) {
+        AutoRotateComponent({
           keyId: this.keyId,
           mEditMode: this.mEditMode,
           mDragMode: this.mDragMode,

@@ -8,6 +8,7 @@
 	},
 	"version": "1.0.0",
 	"dependencies": {
-		"@ohos/controlcentercomponent": "file:../../../features/controlcentercomponent"
+		"@ohos/controlcentercomponent": "file:../../../features/controlcentercomponent",
+		"@ohos/autorotatecomponent": "file:../../../features/autorotatecomponent"
 	}
 }

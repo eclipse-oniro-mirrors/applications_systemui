@@ -49,10 +49,7 @@ export class AutoRotateService {
 
   async asyncStartService(): Promise<void> {
     Log.showInfo(TAG, 'asyncStartService');
-    this.getOrientation().then(() => {
-    }).catch((err) => {
-    });
-    screen.on('change', this.onOrientationChange.bind(this));
+    this.updateAutoRotateSwitchStatus();
   }
 
   stopService(): void {
@@ -73,40 +70,21 @@ export class AutoRotateService {
     });
   }
 
-  onOrientationChange(value: number): void{
-    Log.showDebug(TAG, `onOrientationChange, value: ${value}`);
-    this.getOrientation().then(() => {
-    }).catch((err) => {
+  updateAutoRotateSwitchStatus() {
+    screen.isScreenRotationLocked().then((isLocked) => {
+      this.mListener?.updateAutoRotateSwitchStatus(!isLocked);
+      Log.showDebug(TAG, `getScreenLockStatus, isLocked: ${JSON.stringify(isLocked)}`);
     });
   }
 
-  async getOrientation(): Promise<void> {
-    Log.showDebug(TAG, 'getOrientation');
-    let mScreen = await this.getScreen();
-    this.updateAutoRotateSwitchStatus(mScreen.orientation);
-  }
-
   async changeSwitch(status: boolean): Promise<void> {
-    Log.showDebug(TAG, `changeSwitch, status: ${status}`);
-    let newOrientation = status ? 5 : 0;
-    let mScreen = await this.getScreen();
-    let ret = await mScreen.setOrientation(newOrientation);
-    Log.showDebug(TAG, `changeSwitch, ret: ${ret}`);
-  }
-
-  updateAutoRotateSwitchStatus(orientation: number): void{
-    Log.showInfo(TAG, `updateAutoRotateSwitchStatus, orientation: ${orientation}`);
-    if (orientation == 0) {
-      this.mListener?.updateAutoRotateSwitchStatus(false);
-    } else if (orientation == 5) {
-      this.mListener?.updateAutoRotateSwitchStatus(true);
-    }
-  }
-
-  async getScreen(): Promise<any> {
-    Log.showDebug(TAG, 'getScreen');
-    let screens = await screen.getAllScreen();
-    return screens[0];
+    screen.setScreenRotationLocked(!status).then((err, data) => {
+      if (err.code) {
+        Log.showDebug(TAG, `changeSwitch, error: ${JSON.stringify(err)}`);
+      }
+      this.updateAutoRotateSwitchStatus();
+      Log.showDebug(TAG, `changeSwitch success, isAutoRotate: ${JSON.stringify(status)}`);
+    });
   }
 }
 
