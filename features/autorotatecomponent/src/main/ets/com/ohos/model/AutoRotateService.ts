@@ -79,12 +79,14 @@ export class AutoRotateService {
 
   async changeSwitch(status: boolean): Promise<void> {
     screen.setScreenRotationLocked(!status).then((err, data) => {
+      this.updateAutoRotateSwitchStatus();
       if (err.code) {
         Log.showDebug(TAG, `changeSwitch, error: ${JSON.stringify(err)}`);
+      } else {
+        Log.showDebug(TAG, `changeSwitch success, isAutoRotate: ${JSON.stringify(status)}`);
       }
-      this.updateAutoRotateSwitchStatus();
-      Log.showDebug(TAG, `changeSwitch success, isAutoRotate: ${JSON.stringify(status)}`);
     });
+    this.updateAutoRotateSwitchStatus();
   }
 }
 
