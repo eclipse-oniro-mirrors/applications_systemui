@@ -15,33 +15,27 @@
  */
 
 import settings from '@ohos.settings';
-import { DataAbilityHelper } from 'ability/dataAbilityHelper';
-import featureAbility from '@ohos.ability.featureAbility';
 import Log from './Log';
 import Constants from './Constants';
 import createOrGet from './SingleInstanceHelper';
+import Context from 'application/ServiceExtensionContext';
 import AbilityManager from './abilitymanager/abilityManager';
 
 const TAG = 'SettingsUtil';
 
 export class SettingsUtil {
-  helper: DataAbilityHelper;
+  context: Context;
 
   constructor() {
     Log.showDebug(TAG, 'constructor');
-    try {
-      let contextName = AbilityManager.getContextName(AbilityManager.ABILITY_NAME_CONTROL_PANEL);
-      this.helper = featureAbility.acquireDataAbilityHelper(AbilityManager.getContext(contextName), Constants.URI_VAR);
-    } catch (e) {
-      Log.showError(TAG, `constructor, acquire helper error: ${JSON.stringify(e)}`);
-    }
+    this.context = AbilityManager.getContext(AbilityManager.ABILITY_NAME_CONTROL_PANEL);
   }
 
   getValue(name: string, defValue?: string): string {
     Log.showDebug(TAG, `getValue, name: ${name} defValue: ${defValue}`);
     let value: string = null;
     try {
-      value = settings.getValueSync(this.helper, name, defValue ? defValue : '');
+      value = settings.getValueSync(this.context, name, defValue ? defValue : '');
     } catch (e) {
       Log.showError(TAG, `getValue e: ${JSON.stringify(e)}`);
     }
@@ -53,7 +47,7 @@ export class SettingsUtil {
     Log.showDebug(TAG, `setValue, name: ${name} value: ${value}`);
     let result = false;
     try {
-      result = settings.setValueSync(this.helper, name, value);
+      result = settings.setValueSync(this.context, name, value);
     } catch (e) {
       Log.showError(TAG, `setValue e: ${JSON.stringify(e)}`);
     }

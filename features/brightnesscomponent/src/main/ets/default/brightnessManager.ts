@@ -19,45 +19,53 @@ import AbilityManager from '../../../../../../common/src/main/ets/default/abilit
 import commonEvent from '@ohos.commonEvent';
 import settings from '@ohos.settings';
 import systemParameter from '@ohos.systemparameter'
-import featureAbility from '@ohos.ability.featureAbility';
+import dataShare from '@ohos.data.dataShare';
 import Brightness from '@ohos.brightness';
-import CommonConstants from "../../../../../../common/src/main/ets/default/Constants";
+import Context from 'application/ServiceExtensionContext';
+import Constants from "../../../../../../common/src/main/ets/default/Constants";
+import createOrGet from '../../../../../../common/src/main/ets/default/SingleInstanceHelper';
 
-const SYSTEMUI_BRIGHTNESS = settings.display.SCREEN_BRIGHTNESS_STATUS;;
 const TAG = 'Control-brightnessManager';
 var mBrightnessValue = AppStorage.SetAndLink('BrightnessValue', 100);
 
 export class brightnessManager {
-  helper: any;
+  helper: dataShare.DataShareHelper;
   uri: string;
+  context: Context;
   SLIDER_CHANG_MODE_MOVING = 1;
 
-  init(): void{
+  constructor() {
+    this.uri = Constants.getUriSync(Constants.KEY_BRIGHTNESS_STATUS);
+    Log.showInfo(TAG, 'settings geturi of brightness is ' + Constants.URI_VAR);
+    this.context = AbilityManager.getContext(AbilityManager.getContextName(AbilityManager.ABILITY_NAME_CONTROL_PANEL));
+    this.init();
+  }
+
+  async init(): Promise<void> {
     Log.showInfo(TAG, 'init');
-    this.uri = settings.getUriSync(SYSTEMUI_BRIGHTNESS);
-    Log.showInfo(TAG, 'settings geturi of brightness is ' + this.uri);
-    let contextName = AbilityManager.getContextName(AbilityManager.ABILITY_NAME_CONTROL_PANEL);
-    this.helper = featureAbility.acquireDataAbilityHelper(AbilityManager.getContext(contextName), CommonConstants.URI_VAR);
+    this.helper = await dataShare.createDataShareHelper(this.context, this.uri);
+    Log.showInfo(TAG, `init helper ${this.helper}`);
+    this.registerBrightness();
     this.getValue();
   }
 
   registerBrightness() {
-    this.helper.on("dataChange", this.uri, (err) => {
-      let data = settings.getValueSync(this.helper, SYSTEMUI_BRIGHTNESS, JSON.stringify(this.getDefault()));
+    this.helper.on("dataChange", this.uri, () => {
+      let data = settings.getValueSync(this.context, Constants.KEY_BRIGHTNESS_STATUS, JSON.stringify(this.getDefault()));
       Log.showInfo(TAG, `after brightness datachange settings getValue ${parseInt(data)}`);
       mBrightnessValue.set(parseInt(data));
     })
   }
 
   unRegisterBrightness() {
-    this.helper.off("dataChange", this.uri, (err) => {
+    this.helper?.off("dataChange", this.uri, (err) => {
       Log.showInfo(TAG, `unregister brightness helper`);
     })
   }
 
   getValue() {
     Log.showInfo(TAG, 'getValue');
-    let data = settings.getValueSync(this.helper, SYSTEMUI_BRIGHTNESS, JSON.stringify(this.getDefault()));
+    let data = settings.getValueSync(this.context, Constants.KEY_BRIGHTNESS_STATUS, JSON.stringify(this.getDefault()));
     Log.showInfo(TAG, `settings getValue ${parseInt(data)}`);
     mBrightnessValue.set(parseInt(data));
   }
@@ -66,6 +74,8 @@ export class brightnessManager {
     let value = parseInt(callback.value);
     Log.showInfo(TAG, `setValue ${value}`);
     mBrightnessValue.set(value);
+    Log.showInfo(TAG, `setValue ${this.context}`);
+    settings.setValueSync(this.context, Constants.KEY_BRIGHTNESS_STATUS, JSON.stringify(value));
     Brightness.setValue(callback.value);
   }
 
@@ -82,7 +92,6 @@ export class brightnessManager {
   }
 }
 
-
-let mBrightnessManager = new brightnessManager();
+let mBrightnessManager = createOrGet(brightnessManager, TAG);
 
 export default mBrightnessManager as brightnessManager;
