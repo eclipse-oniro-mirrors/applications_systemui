@@ -20,7 +20,7 @@ import WantAgent from '@ohos.wantAgent';
 const TAG = 'CommonUtil';
 const DEFAULT_INFO = {
   code: 0,
-  want: '',
+  want: {},
   permission: '',
   extraInfo: {}
 };
