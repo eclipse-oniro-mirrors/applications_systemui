@@ -39,9 +39,9 @@ import NavigationEvent from './common/navigationEvent'
 import Notification from './notification'
 import ControlCenterComponent from './control'
 import StyleManager from './common/StyleManager'
-import featureAbility from '@ohos.ability.featureAbility';
+import dataShare from '@ohos.data.dataShare';
 import settings from '@ohos.settings';
-import CommonConstants from "../../../../../../../common/src/main/ets/default/Constants";
+import Constants from "../../../../../../../common/src/main/ets/default/Constants";
 
 const TAG = 'DropdownPanel-Index'
 
@@ -74,7 +74,7 @@ struct Index {
   mClearCallbacks: unsubscribe[];
   settingDataKey = 'settings.display.navigationbar_status';
   urivar: string = null;
-  helper: any = null;
+  helper: dataShare.DataShareHelper = null;
   mNavigationBarStatusDefaultValue: string = '1';
   navigationBarWidth: number = 0;
   mNeedUpdate: boolean = false;
@@ -99,11 +99,11 @@ struct Index {
 
     let dropdownRect = AbilityManager.getAbilityData(AbilityManager.ABILITY_NAME_DROPDOWN_PANEL, 'rect');
     let navigationBarRect = AbilityManager.getAbilityData(AbilityManager.ABILITY_NAME_NAVIGATION_BAR, 'config');
-    this.urivar = settings.getUriSync(this.settingDataKey);
-    this.helper = featureAbility.acquireDataAbilityHelper(AbilityManager.getContext(AbilityManager.ABILITY_NAME_DROPDOWN_PANEL), CommonConstants.URI_VAR);
+    this.urivar = Constants.getUriSync(Constants.KEY_NAVIGATIONBAR_STATUS);
+    this.initHelper();
     this.resizeDropdownPanelAndNavigationBar(dropdownRect, navigationBarRect);
     Log.showDebug(TAG, `getValueSync componentOptAreaHeightPX: ${this.componentOptAreaHeightPX}`);
-    this.helper.on("dataChange", this.urivar, (data) => {
+    this.helper?.on("dataChange", this.urivar, (data) => {
       if (data.code !== 0) {
         Log.showError(TAG, `dataChangesCallback failed, because ${data.message}`);
         return;
@@ -141,6 +141,10 @@ struct Index {
     Log.showDebug(TAG, `aboutToAppear, end`);
   }
 
+  private async initHelper(): Promise<void> {
+    this.helper = await dataShare.createDataShareHelper(AbilityManager.getContext(AbilityManager.ABILITY_NAME_DROPDOWN_PANEL), Constants.URI_VAR);
+  }
+
   onPageShow() {
     Log.showInfo(TAG, `onPageShow, start`)
     if (!this.showComponentName) {
@@ -163,7 +167,8 @@ struct Index {
 
   resizeDropdownPanelAndNavigationBar(dropdownRect, navigationBarRect) {
     Log.showDebug(TAG, `resizeDropdownPanelAndNavigationBar, dropdownRect: ${JSON.stringify(dropdownRect)} navigationBarRect: ${JSON.stringify(navigationBarRect)}`)
-    this.mNavigationBarStatusDefaultValue = settings.getValueSync(this.helper, this.settingDataKey, '1');
+    let context = AbilityManager.getContext(AbilityManager.ABILITY_NAME_DROPDOWN_PANEL);
+    this.mNavigationBarStatusDefaultValue = settings.getValueSync(context, this.settingDataKey, '1');
     this.componentOptAreaHeightPX = this.mNavigationBarStatusDefaultValue == '1' ? dropdownRect.height - navigationBarRect.realHeight : dropdownRect.height;
     this.navigationBarWidth = this.mNavigationBarStatusDefaultValue == '1' ? navigationBarRect.height : 0;
     WindowManager.resetSizeWindow(WindowType.NAVIGATION_BAR, { ...navigationBarRect, height: this.navigationBarWidth })

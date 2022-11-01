@@ -15,6 +15,8 @@
  */
 import Window from '@ohos.window';
 import parameter from '@ohos.systemparameter';
+import parameter from '@ohos.systemparameter';
+import settings from '@ohos.settings';
 
 export interface Rect {
   left: number;
@@ -37,7 +39,19 @@ export function getWindowName(windowType): WindowType {
 }
 
 export default class Constants {
-  static readonly URI_VAR = 'dataability:///com.ohos.settingsdata.DataAbility';
+  static readonly URI_VAR: string = 'datashare:///com.ohos.settingsdatas.DataAbility';
+  static readonly KEY_BRIGHTNESS_STATUS = settings.display.SCREEN_BRIGHTNESS_STATUS;
+  static readonly KEY_TIME_FORMAT = settings.date.TIME_FORMAT;
+  static readonly KEY_NAVIGATIONBAR_STATUS = settings.display.NAVIGATIONBAR_STATUS;
+
+  /**
+   * 获取拼接后的uri，适配settingsdata去常驻
+   *
+   * @param key settings key
+   */
+  static getUriSync(key: string): string {
+    return "datashare:///com.ohos.settingsdatas/entry/settingsdata/SETTINGSDATA?Proxy=true&key=" + key;
+  }
 }
 
 export enum FASlotName {
