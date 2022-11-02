@@ -51,18 +51,23 @@ export default class NavigationBarViewModel {
     Log.showInfo(TAG, 'constructor');
     this.mNavigationBarComponentData =
     AppStorage.SetAndLink(NAVIGATION_BAR_COMPONENT_DATA_KEY, this.mNavigationBarComponentData).get()
-    this.urivar = Constants.getUriSync(Constants.KEY_NAVIGATIONBAR_STATUS);
     if (AbilityManager.getContext(AbilityManager.ABILITY_NAME_NAVIGATION_BAR) == null) {
       Log.showError(TAG, 'AbilityManager.getContext() is null');
     } else {
       Log.showInfo(TAG, 'context: ' + AbilityManager.getContext(AbilityManager.ABILITY_NAME_NAVIGATION_BAR));
     }
-    this.initHelper();
     this.initNavigationBarStatus();
+    this.initHelper(this.dataChangesCallback.bind(this));
   }
 
-  private async initHelper(): Promise<void> {
+  private async initHelper(callback: () => void): Promise<void> {
+    this.urivar = Constants.getUriSync(Constants.KEY_NAVIGATIONBAR_STATUS);
     this.helper = await dataShare.createDataShareHelper(AbilityManager.getContext(AbilityManager.ABILITY_NAME_NAVIGATION_BAR), Constants.URI_VAR);
+    Log.showInfo(TAG, 'initHelper, helper: ' + this.helper + ', uri: ' + this.urivar);
+    this.helper.on('dataChange', this.urivar, () => {
+      Log.showInfo(TAG, 'onDataChange.');
+      callback();
+    });
   }
 
   install(): void {
@@ -130,12 +135,6 @@ export default class NavigationBarViewModel {
     );
   }
 
-  private registerListenForDataChanges(callback: () => void): void {
-    this.helper.on('dataChange', this.urivar, () => {
-      callback();
-    });
-  }
-
   /**
    * Initialize the NavigationBar status.
    */
@@ -144,7 +143,6 @@ export default class NavigationBarViewModel {
       let initValue = this.getValue();
       Log.showInfo(TAG, `initNavigationBarStatus initValue ${initValue}`);
       this.windowSwitches(initValue);
-      this.registerListenForDataChanges(this.dataChangesCallback.bind(this));
     } catch (e) {
       Log.showError(TAG, `initNavigationBarStatus error:  ${e.toString()}`);
     }

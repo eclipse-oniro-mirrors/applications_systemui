@@ -99,19 +99,9 @@ struct Index {
 
     let dropdownRect = AbilityManager.getAbilityData(AbilityManager.ABILITY_NAME_DROPDOWN_PANEL, 'rect');
     let navigationBarRect = AbilityManager.getAbilityData(AbilityManager.ABILITY_NAME_NAVIGATION_BAR, 'config');
-    this.urivar = Constants.getUriSync(Constants.KEY_NAVIGATIONBAR_STATUS);
-    this.initHelper();
+    this.initHelper(dropdownRect, navigationBarRect);
     this.resizeDropdownPanelAndNavigationBar(dropdownRect, navigationBarRect);
     Log.showDebug(TAG, `getValueSync componentOptAreaHeightPX: ${this.componentOptAreaHeightPX}`);
-    this.helper?.on("dataChange", this.urivar, (data) => {
-      if (data.code !== 0) {
-        Log.showError(TAG, `dataChangesCallback failed, because ${data.message}`);
-        return;
-      } else {
-        this.resizeDropdownPanelAndNavigationBar(dropdownRect, navigationBarRect);
-        Log.showInfo(TAG, `NavigationBar status change, componentOptAreaHeightPX: ${this.componentOptAreaHeightPX}`);
-      }
-    });
 
     this.componentOptAreaTranslateY = (-this.componentOptAreaHeightPX * 0.1) + 'px';
 
@@ -141,8 +131,14 @@ struct Index {
     Log.showDebug(TAG, `aboutToAppear, end`);
   }
 
-  private async initHelper(): Promise<void> {
+  private async initHelper(dropdownRect, navigationBarRect): Promise<void> {
     this.helper = await dataShare.createDataShareHelper(AbilityManager.getContext(AbilityManager.ABILITY_NAME_DROPDOWN_PANEL), Constants.URI_VAR);
+    this.urivar = Constants.getUriSync(Constants.KEY_NAVIGATIONBAR_STATUS);
+    Log.showDebug(TAG, `initHelper ${this.helper}, uri: ${JSON.stringify(this.urivar)}`);
+    this.helper?.on("dataChange", this.urivar, () => {
+      this.resizeDropdownPanelAndNavigationBar(dropdownRect, navigationBarRect);
+      Log.showInfo(TAG, `NavigationBar status change, componentOptAreaHeightPX: ${this.componentOptAreaHeightPX}`);
+    });
   }
 
   onPageShow() {

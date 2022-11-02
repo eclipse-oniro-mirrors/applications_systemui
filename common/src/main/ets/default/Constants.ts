@@ -42,7 +42,7 @@ export default class Constants {
   static readonly URI_VAR: string = 'datashare:///com.ohos.settingsdata.DataAbility';
   static readonly KEY_BRIGHTNESS_STATUS = settings.display.SCREEN_BRIGHTNESS_STATUS;
   static readonly KEY_TIME_FORMAT = settings.date.TIME_FORMAT;
-  static readonly KEY_NAVIGATIONBAR_STATUS = settings.display.NAVIGATIONBAR_STATUS;
+  static readonly KEY_NAVIGATIONBAR_STATUS = 'settings.display.navigationbar_status';
 
   /**
    * 获取拼接后的uri，适配settingsdata去常驻
