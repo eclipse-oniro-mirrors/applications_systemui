@@ -39,7 +39,7 @@ export function getWindowName(windowType): WindowType {
 }
 
 export default class Constants {
-  static readonly URI_VAR: string = 'datashare:///com.ohos.settingsdatas.DataAbility';
+  static readonly URI_VAR: string = 'datashare:///com.ohos.settingsdata.DataAbility';
   static readonly KEY_BRIGHTNESS_STATUS = settings.display.SCREEN_BRIGHTNESS_STATUS;
   static readonly KEY_TIME_FORMAT = settings.date.TIME_FORMAT;
   static readonly KEY_NAVIGATIONBAR_STATUS = settings.display.NAVIGATIONBAR_STATUS;
@@ -50,7 +50,7 @@ export default class Constants {
    * @param key settings key
    */
   static getUriSync(key: string): string {
-    return "datashare:///com.ohos.settingsdatas/entry/settingsdata/SETTINGSDATA?Proxy=true&key=" + key;
+    return "datashare:///com.ohos.settingsdata/entry/settingsdata/SETTINGSDATA?Proxy=true&key=" + key;
   }
 }
 
