@@ -3,7 +3,7 @@
     "name": "managementcomponent",
     "type": "har",
     "deviceTypes": [
-      "phone",
+      "default"
     ],
     "uiSyntax": "ets"
   }
