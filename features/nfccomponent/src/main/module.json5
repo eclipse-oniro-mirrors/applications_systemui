@@ -3,7 +3,7 @@
     "name": "nfccomponent",
     "type": "har",
     "deviceTypes": [
-      "phone",
+      "default"
     ],
     "uiSyntax": "ets"
   }

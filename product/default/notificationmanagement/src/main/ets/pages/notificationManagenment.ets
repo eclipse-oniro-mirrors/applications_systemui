@@ -35,7 +35,7 @@ export default struct notificationManagenment {
   @State mViewModel: ViewModel = new ViewModel();
   @State headName: Resource = $r('app.string.notification')
   @State title: Resource = $r('app.string.batch_Management')
-  @State arrow: string | PixelMap | Resource= $r('app.media.ic_settings_arrow')
+  @State arrow: Resource= $r('app.media.ic_settings_arrow')
   @State allowDistribut: Resource = $r('app.string.allowDistribut')
   @State allowDistributDescribe: Resource = $r('app.string.allowDistributDescribe')
 
@@ -118,7 +118,7 @@ export default struct notificationManagenment {
             Row() {
               SwitchComponent({
                 title: $allowDistribut,
-                describe: this.allowDistributDescribe,
+                describe: $allowDistributDescribe,
                 initializationAction: () => this.switchComponentInit(),
                 settingAction: (params) => this.switchComponentSet(params)
               })

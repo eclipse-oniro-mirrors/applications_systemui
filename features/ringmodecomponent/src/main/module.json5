@@ -3,7 +3,7 @@
     "name": "ringmodecomponent",
     "type": "har",
     "deviceTypes": [
-      "phone",
+      "default"
     ],
     "uiSyntax": "ets"
   }

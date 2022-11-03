@@ -1,23 +1,23 @@
 {
-	"devDependencies": {},
-	"name": "phone_dropdownpanel",
-	"ohos": {
-		"org": "huawei",
-		"directoryLevel": "module",
-		"buildTool": "hvigor"
+	"devDependencies":{},
+	"name":"phone_dropdownpanel",
+	"ohos":{
+		"org":"huawei",
+		"directoryLevel":"module",
+		"buildTool":"hvigor"
 	},
-	"version": "1.0.0",
-	"dependencies": {
-		"@ohos/statusbarcomponent": "file:../../../features/statusbarcomponent",
-		"@ohos/wificomponent": "file:../../../features/wificomponent",
-		"@ohos/bluetoothcomponent": "file:../../../features/bluetoothcomponent",
-		"@ohos/signalcomponent": "file:../../../features/signalcomponent",
-		"@ohos/clockcomponent": "file:../../../features/clockcomponent",
-		"@ohos/locationcomponent": "file:../../../features/locationcomponent",
-		"@ohos/autorotatecomponent": "file:../../../features/autorotatecomponent",
-		"@ohos/batterycomponent": "file:../../../features/batterycomponent",
-		"@ohos/controlcentercomponent": "file:../../../features/controlcentercomponent",
-		"@ohos/ringmodecomponent": "file:../../../features/ringmodecomponent",
-		"@ohos/noticeitem": "file:../../../features/noticeitem"
+	"version":"1.0.0",
+	"dependencies":{
+		"@ohos/statusbarcomponent":"file:../../../features/statusbarcomponent",
+		"@ohos/wificomponent":"file:../../../features/wificomponent",
+		"@ohos/bluetoothcomponent":"file:../../../features/bluetoothcomponent",
+		"@ohos/signalcomponent":"file:../../../features/signalcomponent",
+		"@ohos/clockcomponent":"file:../../../features/clockcomponent",
+		"@ohos/locationcomponent":"file:../../../features/locationcomponent",
+		"@ohos/batterycomponent":"file:../../../features/batterycomponent",
+		"@ohos/controlcentercomponent":"file:../../../features/controlcentercomponent",
+		"@ohos/ringmodecomponent":"file:../../../features/ringmodecomponent",
+		"@ohos/autorotatecomponent":"file:../../../features/autorotatecomponent",
+		"@ohos/noticeitem":"file:../../../features/noticeitem"
 	}
 }

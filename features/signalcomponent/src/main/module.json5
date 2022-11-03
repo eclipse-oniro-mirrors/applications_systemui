@@ -3,7 +3,7 @@
     "name": "signalcomponent",
     "type": "har",
     "deviceTypes": [
-      "phone",
+      "default"
     ],
     "uiSyntax": "ets"
   }

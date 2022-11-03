@@ -1,12 +1,12 @@
 {
-  "name": "@ohos/noticeitem",
-  "version": "1.0.0",
-  "description": "a npm package which contains noticeitem function",
-  "ohos": {
-    "org": "huawei",
-    "buildTool": "hvigor",
-    "directoryLevel": "module"
-  },
-  "dependencies": {
-  }
+	"devDependencies":{},
+	"name":"@ohos/noticeitem",
+	"description":"a npm package which contains noticeitem function",
+	"ohos":{
+		"org":"huawei",
+		"directoryLevel":"module",
+		"buildTool":"hvigor"
+	},
+	"version":"1.0.0",
+	"dependencies":{}
 }

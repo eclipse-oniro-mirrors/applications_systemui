@@ -37,7 +37,7 @@ export default struct NoDisturb {
   @State endDateTitle:Resource = $r('app.string.endDate');
   @State startTitle:Resource = $r('app.string.startTime');
   @State endTitle:Resource = $r('app.string.endTime');
-  @State arrow: string | PixelMap | Resource = $r('app.media.ic_settings_arrow');
+  @State arrow: Resource = $r('app.media.ic_settings_arrow');
   @State mRefreshCnt: number = 0;
   mPrevData: string = '';
 
