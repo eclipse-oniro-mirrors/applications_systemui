@@ -62,7 +62,7 @@ export default class NavigationBarViewModel {
 
   private async initHelper(callback: () => void): Promise<void> {
     this.urivar = Constants.getUriSync(Constants.KEY_NAVIGATIONBAR_STATUS);
-    this.helper = await dataShare.createDataShareHelper(AbilityManager.getContext(AbilityManager.ABILITY_NAME_NAVIGATION_BAR), Constants.URI_VAR);
+    this.helper = await dataShare.createDataShareHelper(AbilityManager.getContext(AbilityManager.ABILITY_NAME_NAVIGATION_BAR), this.urivar);
     Log.showInfo(TAG, 'initHelper, helper: ' + this.helper + ', uri: ' + this.urivar);
     this.helper.on('dataChange', this.urivar, () => {
       Log.showInfo(TAG, 'onDataChange.');

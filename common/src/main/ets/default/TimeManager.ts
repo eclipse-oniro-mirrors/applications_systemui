@@ -78,7 +78,8 @@ class TimeManager {
 
   private async initTimeFormat(context: any): Promise<void> {
     Log.showDebug(TAG, "initTimeFormat");
-    this.mSettingsHelper = await dataShare.createDataShareHelper(context, Constants.URI_VAR);
+    settings.getValueSync(context, TIME_FORMAT_KEY, "24");
+    this.mSettingsHelper = await dataShare.createDataShareHelper(context, Constants.getUriSync(Constants.KEY_TIME_FORMAT));
 
     const handleTimeFormatChange = () => {
       if (!this.mSettingsHelper) {

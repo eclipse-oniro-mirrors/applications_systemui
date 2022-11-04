@@ -74,6 +74,7 @@ export class brightnessManager {
     let value = parseInt(callback.value);
     Log.showInfo(TAG, `setValue ${value}`);
     mBrightnessValue.set(value);
+    settings.setValueSync(this.context, Constants.KEY_BRIGHTNESS_STATUS, JSON.stringify(value));
     Log.showInfo(TAG, `setValue ${this.context}`);
     Brightness.setValue(callback.value);
   }
