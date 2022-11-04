@@ -132,8 +132,8 @@ struct Index {
   }
 
   private async initHelper(dropdownRect, navigationBarRect): Promise<void> {
-    this.helper = await dataShare.createDataShareHelper(AbilityManager.getContext(AbilityManager.ABILITY_NAME_DROPDOWN_PANEL), Constants.URI_VAR);
     this.urivar = Constants.getUriSync(Constants.KEY_NAVIGATIONBAR_STATUS);
+    this.helper = await dataShare.createDataShareHelper(AbilityManager.getContext(AbilityManager.ABILITY_NAME_DROPDOWN_PANEL), this.urivar);
     Log.showDebug(TAG, `initHelper ${this.helper}, uri: ${JSON.stringify(this.urivar)}`);
     this.helper?.on("dataChange", this.urivar, () => {
       this.resizeDropdownPanelAndNavigationBar(dropdownRect, navigationBarRect);
