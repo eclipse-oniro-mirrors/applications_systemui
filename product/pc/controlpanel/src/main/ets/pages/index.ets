@@ -15,7 +15,7 @@
 import Log from '../../../../../../../common/src/main/ets/default/Log'
 import CommonStyleManager from '../../../../../../../common/src/main/ets/default/CommonStyleManager'
 import HeightConfigUtils from '../../../../../../../common/src/main/ets/default/heightcofigUtils/HeightConfigUtils'
-import AbilityManager from '../../../../../../../common/src/main/ets/default/abilitymanager/AbilityManager'
+import AbilityManager from '../../../../../../../common/src/main/ets/default/abilitymanager/abilityManager'
 import StyleConfiguration, { IndexStyle } from './common/StyleConfiguration'
 import StyleManager from './common/StyleManager'
 import ControlCenterComponent from './control'

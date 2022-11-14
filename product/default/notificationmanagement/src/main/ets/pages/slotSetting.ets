@@ -14,13 +14,13 @@
  */
 
 import Log from '../../../../../../../common/src/main/ets/default/Log';
-import HeadComponent from '../../../../../../../features/managementcomponent/src/main/ets/com/ohos/view/component/headcomponent';
-import AppItemComponent from '../../../../../../../features/managementcomponent/src/main/ets/com/ohos/view/component/appitemcomponent';
-import SwitchComponent from '../../../../../../../features/managementcomponent/src/main/ets/com/ohos/view/component/switchcomponent';
+import HeadComponent from '../../../../../../../features/managementcomponent/src/main/ets/com/ohos/view/component/headComponent';
+import AppItemComponent from '../../../../../../../features/managementcomponent/src/main/ets/com/ohos/view/component/appItemComponent';
+import SwitchComponent from '../../../../../../../features/managementcomponent/src/main/ets/com/ohos/view/component/switchComponent';
 import ConfigData from '../common/constants';
 import NotificationConfigData from '../../../../../../../features/managementcomponent/src/main/ets/com/ohos/common/constants';
 import Router from '@system.router';
-import NotificationListener from '../../../../../../../features/managementcomponent/src/main/ets/com/ohos/model/notificationlistener';
+import NotificationListener from '../../../../../../../features/managementcomponent/src/main/ets/com/ohos/model/notificationListener';
 import notification from '@ohos.notification';
 
 const TAG = 'NotificationManagement-SlotSetting';

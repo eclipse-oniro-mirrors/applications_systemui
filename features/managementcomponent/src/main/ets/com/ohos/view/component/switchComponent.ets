@@ -20,7 +20,7 @@ const TAG = 'ManagementComponent-SwitchComponent';
 @Component
 export default struct SwitchComponent {
   @Link title: Resource;
-  @Link describe: Resource;
+  describe: Resource;
   private initializationAction: (params?) => Promise<any>
   private settingAction: (params?) => void
   private register?: (listener) => void
