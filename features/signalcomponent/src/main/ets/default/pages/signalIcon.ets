@@ -14,7 +14,7 @@
  */
 
 import Constants from '../common/constants';
-import mSignalModel from '../SignalModel';
+import mSignalModel from '../signalModel';
 import Log from '../../../../../../../common/src/main/ets/default/Log'
 import { TintContentInfo } from '../../../../../../../common/src/main/ets/default/TintStateManager'
 import StyleConfigurationCommon, { CommonStyle

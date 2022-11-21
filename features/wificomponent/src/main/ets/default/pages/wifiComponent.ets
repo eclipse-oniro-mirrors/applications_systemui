@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-import mWifiManger from '../WifiModel'
+import mWifiManger from '../wifiModel'
 import Log from '../../../../../../../common/src/main/ets/default/Log'
 import EventManager from "../../../../../../../common/src/main/ets/default/event/EventManager"
 import {obtainStartAbility} from "../../../../../../../common/src/main/ets/default/event/EventUtil"

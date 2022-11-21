@@ -14,12 +14,12 @@
  */
 
 import Log from '../../../../../../../common/src/main/ets/default/Log';
-import AbilityManager from '../../../../../../../common/src/main/ets/default/abilitymanager/abilitymanager';
-import WindowManager, { WindowType } from '../../../../../../../common/src/main/ets/default/windowmanager';
-import EventManager, {unsubscribe} from "../../../../../../../common/src/main/ets/default/event/eventmanager";
-import BannerNotification from '../../../../../../../features/noticeitem/src/main/ets/com/ohos/noticeitem/view/item/bannernotificationitem';
-import NotificationViewModel from '../../../../../../../features/noticeitem/src/main/ets/com/ohos/noticeitem/viewmodel/NotificationViewModel';
-import NotificationConstants, { ScreenLockStatus } from '../../../../../../../features/noticeitem/src/main/ets/com/ohos/noticeitem/common/constants';
+import AbilityManager from '../../../../../../../common/src/main/ets/default/abilitymanager/abilityManager';
+import WindowManager, { WindowType } from '../../../../../../../common/src/main/ets/default/WindowManager';
+import EventManager, {unsubscribe} from "../../../../../../../common/src/main/ets/default/event/EventManager";
+import BannerNotification from '../../../../../../../features/noticeitem/src/main/ets/com/ohos/noticeItem/view/item/bannerNotificationItem';
+import NotificationViewModel from '../../../../../../../features/noticeitem/src/main/ets/com/ohos/noticeItem/viewmodel/NotificationViewModel';
+import NotificationConstants, { ScreenLockStatus } from '../../../../../../../features/noticeitem/src/main/ets/com/ohos/noticeItem/common/constants';
 
 const TAG = 'NotificationPanel-BannerNotification';
 const TRANSLATE_SIZE = '382vp';

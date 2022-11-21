@@ -14,10 +14,10 @@
  */
 
 import Log from '../../../../../../../common/src/main/ets/default/Log';
-import AbilityManager from '../../../../../../../common/src/main/ets/default/abilitymanager/abilitymanager';
-import BundleResourceModel from '../../../../../../../features/managementcomponent/src/main/ets/com/ohos/model/bundleresourcemodel';
+import AbilityManager from '../../../../../../../common/src/main/ets/default/abilitymanager/abilityManager';
+import BundleResourceModel from '../../../../../../../features/managementcomponent/src/main/ets/com/ohos/model/bundleResourceModel';
 import display from '@ohos.display';
-import NoDisturbComponentViewModel from '../../../../../../../features/managementcomponent/src/main/ets/com/ohos/vm/nodisturbcomponentviewmodel';
+import NoDisturbComponentViewModel from '../../../../../../../features/managementcomponent/src/main/ets/com/ohos/vm/noDisturbComponentViewModel';
 import Router from '@system.router';
 
 const TAG = 'NotificationManagement-NotificationManagenmentViewModel';
