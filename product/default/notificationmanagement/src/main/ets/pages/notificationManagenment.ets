@@ -22,7 +22,7 @@ import ItemComponent from '../../../../../../../features/managementcomponent/src
 import ConfigData from '../common/constants';
 import AppLstComponent from '../../../../../../../features/managementcomponent/src/main/ets/com/ohos/view/component/appLstComponent';
 import Router from '@system.router';
-import ViewModel from '../vm/notificationManagenmentViewmodel'
+import ViewModel from '../vm/notificationManagenmentViewModel'
 import Notification from '../../../../../../../features/managementcomponent/src/main/ets/com/ohos/model/notificationListener';
 import SwitchComponent from '../../../../../../../features/managementcomponent/src/main/ets/com/ohos/view/component/switchComponent';
 
