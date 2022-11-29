@@ -23,6 +23,7 @@ import StyleConfigurationCommon, { CommonStyle
 import StyleConfiguration, { StatusBarNotificationIconStyle, VerticalStatusBarItemLoadComponentStyle
 } from '../common/StyleConfiguration'
 import ViewModel from '../viewmodel/StatusBarVM'
+import { StringArray } from '../viewmodel/StatusBarVM'
 import IconItemComponent from './IconItemComponent'
 import BatteryIcon from '../../../../../../../batterycomponent/src/main/ets/default/pages/batteryIcon'
 import ClockIcon from '../../../../../../../clockcomponent/src/main/ets/default/pages/clockIcon'
@@ -45,7 +46,7 @@ const TAG_StatusBarBackground = 'StatusBarBackground'
 @Component
 export default struct StatusBarComponent {
   private mStatusBarComponentConfig: StatusBarConfig
-  @StorageLink('StatusBarLayout') mStatusBarLayout: any = [[], [], []]
+  @StorageLink('StatusBarLayout') mStatusBarLayout: StringArray[] = [new StringArray(), new StringArray(), new StringArray()]
   @State mStatusBarData: StatusBarData = ViewModel.getStatusBarData()
   private moduleName: string = ''
 
@@ -53,6 +54,7 @@ export default struct StatusBarComponent {
     AppStorage.SetOrCreate('size', $r("app.float.status_bar_margin_left_right"));
     Log.showInfo(TAG, `aboutToAppear Start, mStatusBarComponentConfig: ${JSON.stringify(this.mStatusBarComponentConfig)}`);
     this.initViewModel(this.moduleName);
+    Log.showInfo(TAG, `aboutToAppear Start, mStatusBarLayout: ${JSON.stringify(this.mStatusBarLayout)}`);
   }
 
   aboutToDisappear() {
@@ -163,10 +165,14 @@ struct StatusBarBackground {
 
 @Component
 struct StatusBarGroup {
-  @State mComponents: string[] = []
+  @State mComponents: StringArray = new StringArray()
   private mLayoutWeight: number = 1
   private mAlignItems: any = HorizontalAlign.Center;
   @State mStatusBarData: StatusBarData = ViewModel.getStatusBarData()
+
+  mComponentsChange() {
+    Log.showInfo(TAG_StatusBarGroup, `CCCC mComponentsChange, mComponents: ${JSON.stringify(this.mComponents)}`);
+  }
 
   aboutToAppear() {
     Log.showInfo(TAG_StatusBarGroup, `aboutToAppear, mLayoutWeight: ${this.mLayoutWeight} mAlignItems: ${this.mAlignItems} `);
@@ -282,6 +288,7 @@ struct StatusBarItemLoadComponent {
       }
     }.height('100%')
     .onAreaChange((e: Area, e2: Area) => {
+      Log.showInfo(TAG_StatusBarItemLoadComponent, `onAreaChange, componentName: ${this.mComponentName}}, new area: ${JSON.stringify(e2)} `)
       ViewModel.updateComponentArea(this.mComponentName, e2)
     })
   }

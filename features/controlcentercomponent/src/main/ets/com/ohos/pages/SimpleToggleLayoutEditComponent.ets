@@ -172,7 +172,8 @@ export default struct SimpleToggleLayoutEditComponent {
             }
           }
           .height(this.style.editBtnHeight)
-          .margin({bottom: this.style.btnMarginBottom, left: this.style.editBtnMarginLeft, right: this.style.editBtnMarginRight})
+          .margin({bottom: this.style.btnMarginBottom})
+          .padding({left: this.style.editBtnMarginLeft, right: this.style.editBtnMarginRight})
           .columnsTemplate('1fr 1fr')
           .rowsTemplate('1fr')
           .columnsGap(this.style.editBtnSpace)
@@ -309,7 +310,7 @@ export default struct SimpleToggleLayoutEditComponent {
 
   onComponentTouch(event: TouchEvent) {
     Log.showDebug(TAG, `onComponentTouch`);
-    event.stopPropagation();
+    //    event.stopPropagation(); TODO
   }
 }
 

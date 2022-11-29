@@ -22,16 +22,16 @@ const TAG = 'ManagementComponent-AppItemComponent';
 @Component
 export default struct AppItemComponent {
   @State canNotice: boolean= false;
-  @Prop appIcon: string;
-  @Prop appTitle: string;
-  @Prop appSummary: string;
-  @Prop appValue: string;
-  @Prop appArrow: string;
-  @Prop appArrowStyle: string;
-  @Prop appUri: string;
-  @Prop appSwitch: number;
-  @Prop appBundleName: string;
-  @Prop appUid: number;
+  @State appIcon: string ='';
+  @State appTitle: string ='';
+  @State appSummary: string ='';
+  @State appValue: string ='';
+  @State appArrow: string ='';
+  @State appArrowStyle: string ='';
+  @State appUri: string ='';
+  @State appSwitch: number = 0;
+  @State appBundleName: string ='';
+  @State appUid: number = 0;
 
   build() {
     Flex({ justifyContent: FlexAlign.SpaceBetween }) {

@@ -150,11 +150,11 @@
     },
     {
       "name": "confirm_title_fontsize",
-      "value": "40"
+      "value": "40px"
     },
     {
       "name": "confirm_cont_fontsize",
-      "value": "32"
+      "value": "32px"
     },
     {
       "name": "confirm_divider_height",

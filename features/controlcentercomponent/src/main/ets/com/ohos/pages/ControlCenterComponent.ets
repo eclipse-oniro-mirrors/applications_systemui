@@ -130,7 +130,7 @@ export default struct ControlCenterComponent {
               .clip(true)
               .backgroundColor(this.style.componentBackgroundColor)
             }
-            .margin({left: this.style.marginLeft, right: this.style.marginRight})
+            .padding({left: this.style.marginLeft, right: this.style.marginRight})
           }
           .width('100%')
         }

@@ -62,7 +62,7 @@ export default struct ControlCenterSimpleToggleRingModeComponent {
     SimpleToggleBase({
       mToggleId: this.keyId,
       mIcon: $mIcon,
-      mChangeSwitch: this.mDefaultChangeSwitch,
+      mChangeSwitch: $mDefaultChangeSwitch,
       mLabel: $mLabel,
       mIconOnBG: this.style.onBgColor,
       mEditMode: this.mEditMode,

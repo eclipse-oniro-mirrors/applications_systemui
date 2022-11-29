@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-import geolocation from '@ohos.geolocation';
+import geolocation from '@ohos.geoLocationManager';
 import Log from '../../../../../../../../common/src/main/ets/default/Log';
 import createOrGet from '../../../../../../../../common/src/main/ets/default/SingleInstanceHelper';
 

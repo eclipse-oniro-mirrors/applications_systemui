@@ -16,9 +16,9 @@
 import bundleManager from '@ohos.bundle';
 import commonEvent from '@ohos.commonEvent';
 import { AbilityInfo } from 'bundle/abilityInfo';
-import { ExtensionAbilityInfo } from 'bundle/extensionAbilityInfo';
+import { ExtensionAbilityInfo } from 'bundleManager/extensionAbilityInfo';
 import { CustomizeData } from 'bundle/customizeData';
-import { Metadata } from 'bundle/metadata';
+import { Metadata } from 'bundleManager/metadata';
 import Log from '../../default/Log';
 import switchUserManager from '../../default/SwitchUserManager';
 
