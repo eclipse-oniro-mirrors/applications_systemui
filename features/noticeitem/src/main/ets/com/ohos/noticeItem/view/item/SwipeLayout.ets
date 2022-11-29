@@ -209,10 +209,13 @@ export default struct SwipeLayout {
           return;
         }
         if(this.angelCalFlag == false){
-          this.responseSwipeEvent = (Math.abs(touchEvent.touches[0].screenX - this.startX) > Math.abs(touchEvent.touches[0].screenY - this.startY));
-          this.angelCalFlag = true;
-
-          FocusCallBack.setCallback(this.swipeLayoutId, this.loseFocusCallback.bind(this));
+          var hasChange = Math.abs(touchEvent.touches[0].screenX - this.startX) > 1e-3 ||
+            Math.abs(touchEvent.touches[0].screenY - this.startY) > 1e-3
+          if (hasChange) {
+            this.responseSwipeEvent = (Math.abs(touchEvent.touches[0].screenX - this.startX) > Math.abs(touchEvent.touches[0].screenY - this.startY));
+            this.angelCalFlag = true;
+            FocusCallBack.setCallback(this.swipeLayoutId, this.loseFocusCallback.bind(this));
+          }
         }
         if(this.responseSwipeEvent == false) {
           return;

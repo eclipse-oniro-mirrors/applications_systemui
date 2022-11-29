@@ -64,7 +64,7 @@ export default struct SimpleToggleLayoutEditGrid {
               mEditMode: true
             })
           }.width('100%')
-          .height('100%')
+          .height(80)
         }
       }, (componentName: string) => componentName)
       if (this.mToggles.length == 0) {
@@ -72,6 +72,7 @@ export default struct SimpleToggleLayoutEditGrid {
         }
       }
     }
+    .constraintSize({ minHeight: 80 })
     .width('100%')
     .columnsTemplate(this.calcColumnsTemplate(this.mColumnCount))
     .editMode(true)

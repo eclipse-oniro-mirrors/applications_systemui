@@ -27,6 +27,7 @@ export default struct ControlCenterSimpleToggleAutoRotateComponent {
   private mDragMode: boolean = false;
   @State mIcon: Resource = $r("app.media.ic_controlcenter_auto_rotate_off");
   @State mLabel: Resource = $r("app.string.control_center_complex_toggle_auto_rotate_title");
+  @State mAutoRotateSwitch : boolean = false
   @State @Watch('onAutoRotateDataChange') mAutoRotateData: AutoRotateData = ViewModel.getAutoRotateData();
 
   aboutToAppear() {
@@ -41,13 +42,14 @@ export default struct ControlCenterSimpleToggleAutoRotateComponent {
   onAutoRotateDataChange(propName: string): void {
     Log.showDebug(TAG, `onAutoRotateDataChange, propName: ${propName}`);
     this.mIcon = this.mAutoRotateData.switchStatus ? $r("app.media.ic_controlcenter_auto_rotate_on") : $r("app.media.ic_controlcenter_auto_rotate_off");
+    this.mAutoRotateSwitch = this.mAutoRotateData.switchStatus
   }
 
   build() {
     SimpleToggleBase({
       mToggleId: this.keyId,
       mIcon: $mIcon,
-      mChangeSwitch: this.mAutoRotateData.switchStatus,
+      mChangeSwitch:$mAutoRotateSwitch,
       mLabel: $mLabel,
       mEditMode: this.mEditMode,
       mDragMode: this.mDragMode,

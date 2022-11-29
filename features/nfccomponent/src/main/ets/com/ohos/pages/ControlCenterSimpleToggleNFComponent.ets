@@ -54,7 +54,7 @@ export default struct ControlCenterSimpleToggleNFComponent {
     SimpleToggleBase({
       mToggleId: this.keyId,
       mIcon: $mIcon,
-      mChangeSwitch: this.mDefaultChangeSwitch,
+      mChangeSwitch: $mDefaultChangeSwitch,
       mLabel: $mLabel,
       mEditMode: this.mEditMode,
       mDragMode: this.mDragMode,

@@ -24,7 +24,7 @@ const TAG = 'ComplexToggleLoadComponent';
 
 @Component
 export default struct ComplexToggleLoadComponent {
-  @Prop keyId: string;
+  @State keyId: string = '';
 
   aboutToAppear() {
     Log.showInfo(TAG, `aboutToAppear Start, keyId: ${this.keyId}`);

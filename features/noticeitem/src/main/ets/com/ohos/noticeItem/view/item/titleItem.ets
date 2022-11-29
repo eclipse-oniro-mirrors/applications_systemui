@@ -16,14 +16,13 @@
 import Constants, { NotificationLayout as Layout } from '../../common/constants';
 import Log from '../../../../../../../../../../common/src/main/ets/default/Log';
 import CheckEmptyUtils from '../../../../../../../../../../common/src/main/ets/default/CheckEmptyUtils';
-
 const TAG = 'NoticeItem-TitleItem';
 
 @Component
 export default struct TitleItem {
   private notificationSmallIcon: PixelMap
-  @Prop notificationName: string
-  @Prop notificationTime: string
+  @State notificationName: string = ''
+  @State notificationTime: string = ''
   @Link isExpand: boolean
   @Prop needExpand: boolean
   @State rowSpace: any = $r('app.float.titleitem_row_space')
