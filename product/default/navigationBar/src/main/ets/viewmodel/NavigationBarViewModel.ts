@@ -20,12 +20,11 @@ import getSingleInstance from '../../../../../../../common/src/main/ets/default/
 import TintStateManager, { TintState, TintStateListener
 } from '../../../../../../../common/src/main/ets/default/TintStateManager';
 import { NavigationBarComponentData, NAVIGATIONBAR_HIDE_EVENT } from '../common/constants';
-import featureAbility from '@ohos.ability.featureAbility';
-import { DataAbilityHelper } from 'ability/dataAbilityHelper';
+import dataShare from '@ohos.data.dataShare';
 import settings from '@ohos.settings';
 import commonEvent from '@ohos.commonEvent';
 import AbilityManager from '../../../../../../../common/src/main/ets/default/abilitymanager/abilityManager';
-import CommonConstants from '../../../../../../../common/src/main/ets/default/Constants';
+import Constants from '../../../../../../../common/src/main/ets/default/Constants';
 
 const TAG = 'NavigationBarViewModel';
 
@@ -36,7 +35,7 @@ const NAVIGATION_BAR_COMPONENT_DATA_KEY = 'AppStorage_NavigationBarComponentData
 export default class NavigationBarViewModel {
   private readonly settingDataKey = 'settings.display.navigationbar_status';
   private readonly urivar: string;
-  private readonly helper: DataAbilityHelper;
+  private readonly helper: dataShare.DataShareHelper;
   private readonly navigationBarStatusDefaultValue = '1';
   private isDisplay = true;
   mNavigationBarComponentData: NavigationBarComponentData  = {
@@ -52,14 +51,23 @@ export default class NavigationBarViewModel {
     Log.showInfo(TAG, 'constructor');
     this.mNavigationBarComponentData =
     AppStorage.SetAndLink(NAVIGATION_BAR_COMPONENT_DATA_KEY, this.mNavigationBarComponentData).get()
-    this.urivar = settings.getUriSync(this.settingDataKey);
     if (AbilityManager.getContext(AbilityManager.ABILITY_NAME_NAVIGATION_BAR) == null) {
       Log.showError(TAG, 'AbilityManager.getContext() is null');
     } else {
       Log.showInfo(TAG, 'context: ' + AbilityManager.getContext(AbilityManager.ABILITY_NAME_NAVIGATION_BAR));
     }
-    this.helper = featureAbility.acquireDataAbilityHelper(AbilityManager.getContext(AbilityManager.ABILITY_NAME_NAVIGATION_BAR), CommonConstants.URI_VAR);
     this.initNavigationBarStatus();
+    this.initHelper(this.dataChangesCallback.bind(this));
+  }
+
+  private async initHelper(callback: () => void): Promise<void> {
+    this.urivar = Constants.getUriSync(Constants.KEY_NAVIGATIONBAR_STATUS);
+    this.helper = await dataShare.createDataShareHelper(AbilityManager.getContext(AbilityManager.ABILITY_NAME_NAVIGATION_BAR), this.urivar);
+    Log.showInfo(TAG, 'initHelper, helper: ' + this.helper + ', uri: ' + this.urivar);
+    this.helper.on('dataChange', this.urivar, () => {
+      Log.showInfo(TAG, 'onDataChange.');
+      callback();
+    });
   }
 
   install(): void {
@@ -116,19 +124,15 @@ export default class NavigationBarViewModel {
   }
 
   private setValue(value: string): void {
-    settings.setValueSync(this.helper, this.settingDataKey, value);
+    let context = AbilityManager.getContext(AbilityManager.ABILITY_NAME_NAVIGATION_BAR);
+    settings.setValueSync(context, this.settingDataKey, value);
   }
 
   private getValue(defaultValue?: string): string {
+    let context = AbilityManager.getContext(AbilityManager.ABILITY_NAME_NAVIGATION_BAR);
     return settings.getValueSync(
-      this.helper, this.settingDataKey, defaultValue ? defaultValue : this.navigationBarStatusDefaultValue
+      context, this.settingDataKey, defaultValue ? defaultValue : this.navigationBarStatusDefaultValue
     );
-  }
-
-  private registerListenForDataChanges(callback: (data) => void): void {
-    this.helper.on('dataChange', this.urivar, (data) => {
-      callback(data);
-    });
   }
 
   /**
@@ -139,7 +143,6 @@ export default class NavigationBarViewModel {
       let initValue = this.getValue();
       Log.showInfo(TAG, `initNavigationBarStatus initValue ${initValue}`);
       this.windowSwitches(initValue);
-      this.registerListenForDataChanges(this.dataChangesCallback.bind(this));
     } catch (e) {
       Log.showError(TAG, `initNavigationBarStatus error:  ${e.toString()}`);
     }
@@ -149,15 +152,10 @@ export default class NavigationBarViewModel {
    * Get NavigationBar status data.
    * @return
    */
-  dataChangesCallback(data): void {
-    if (data.code !== 0) {
-      Log.showError(TAG, `dataChangesCallback failed, because ${data.message}`);
-      return;
-    } else {
-      let getRetValue = this.getValue();
-      Log.showInfo(TAG, `dataChangesCallback initValue ${getRetValue}`);
-      this.windowSwitches(getRetValue);
-    }
+  dataChangesCallback(): void {
+    let getRetValue = this.getValue();
+    Log.showInfo(TAG, `dataChangesCallback initValue ${getRetValue}`);
+    this.windowSwitches(getRetValue);
   }
 
   private windowSwitches(navigationBarStatusValue: string): void {

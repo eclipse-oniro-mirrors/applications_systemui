@@ -22,7 +22,7 @@ import { ItemComponentData, PluginComponentData, FilterData
 import PluginDataSourceAdapter from '../../../../../../../../common/src/main/ets/plugindatasource/PluginDataSourceAdapter';
 import AbilityManager from '../../../../../../../../common/src/main/ets/default/abilitymanager/abilityManager';
 import Constants, { StatusBarData, StatusBarComponentData, LayoutGroup, StatusBarConfig } from '../common/Constants';
-import { parseEventString } from '../../../../../../../../common/src/main/ets/default/Event/EventUtil';
+import { parseEventString } from '../../../../../../../../common/src/main/ets/default/event/EventUtil';
 
 export interface StatusBarListener {
   setStatusBarLayout(layout: string[][]): void;

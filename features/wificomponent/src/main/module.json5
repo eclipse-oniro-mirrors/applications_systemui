@@ -3,7 +3,7 @@
     "name": "wificomponent",
     "type": "har",
     "deviceTypes": [
-      "phone",
+      "default"
     ],
     "uiSyntax": "ets"
   }

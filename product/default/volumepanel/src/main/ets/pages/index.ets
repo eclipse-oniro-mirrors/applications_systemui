@@ -17,7 +17,7 @@ import CommonStyleManager from '../../../../../../../common/src/main/ets/default
 import VolumePanelComponent from '../../../../../../../features/volumepanelcomponent/src/main/ets/com/ohos/pages/VolumePanelComponent'
 import AbilityManager from '../../../../../../../common/src/main/ets/default/abilitymanager/abilityManager'
 import StyleManager from '../common/StyleManager'
-import WindowManager, { WindowType } from '../../../../../../../common/src/main/ets/default/windowmanager'
+import WindowManager, { WindowType } from '../../../../../../../common/src/main/ets/default/WindowManager'
 
 const TAG = 'VolumePanel-Index'
 

@@ -25,7 +25,7 @@ export default struct iconBaseComponent {
   private iconOff: any
   @State iconOffStr: string = ""
   @State iconOnStr: string = ""
-  @Link mTitle: string | Resource
+  @Link mTitle: Resource
   @State mTitleStr: string = ""
   private useIconStr = false
   private useTitleStr = false

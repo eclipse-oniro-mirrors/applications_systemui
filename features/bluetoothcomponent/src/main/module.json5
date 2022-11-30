@@ -3,7 +3,7 @@
     "name": "bluetoothcomponent",
     "type": "har",
     "deviceTypes": [
-      "phone",
+      "default"
     ],
     "uiSyntax": "ets"
   }

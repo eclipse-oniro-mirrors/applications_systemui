@@ -1,12 +1,12 @@
 {
-  "name": "@ohos/clockcomponent",
-  "version": "1.0.0",
-  "description": "a npm package which contains clockcomponent function",
-  "ohos": {
-    "org": "huawei",
-    "buildTool": "hvigor",
-    "directoryLevel": "module"
-  },
-  "dependencies": {
-  }
+	"devDependencies":{},
+	"name":"@ohos/clockcomponent",
+	"description":"a npm package which contains clockcomponent function",
+	"ohos":{
+		"org":"huawei",
+		"directoryLevel":"module",
+		"buildTool":"hvigor"
+	},
+	"version":"1.0.0",
+	"dependencies":{}
 }

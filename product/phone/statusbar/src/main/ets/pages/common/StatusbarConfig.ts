@@ -12,7 +12,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { FASlotName } from '../../../../../../../../common/src/main/ets/default/constants';
+import { FASlotName } from '../../../../../../../../common/src/main/ets/default/Constants';
 import { StatusBarConfig
 } from '../../../../../../../../features/statusbarcomponent/src/main/ets/com/ohos/common/Constants';
 

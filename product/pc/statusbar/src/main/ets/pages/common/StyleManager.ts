@@ -13,17 +13,17 @@
  * limitations under the License.
  */
 import Log from '../../../../../../../../common/src/main/ets/default/Log';
-import AbilityManager from '../../../../../../../../common/src/main/ets/default/abilitymanager/abilitymanager';
-import CommonStyleConfiguration from '../../../../../../../../common/src/main/ets/default/styleconfiguration';
-import StatusBarStyleConfiguration from '../../../../../../../../features/statusbarcomponent/src/main/ets/com/ohos/common/styleconfiguration';
-import BatteryStyleConfiguration from '../../../../../../../../features/batterycomponent/src/main/ets/default/common/styleconfiguration';
-import ClockStyleConfiguration from '../../../../../../../../features/clockcomponent/src/main/ets/default/common/styleconfiguration';
-import WifiStyleConfiguration from '../../../../../../../../features/wificomponent/src/main/ets/default/common/styleconfiguration';
-import BluetoothStyleConfiguration from '../../../../../../../../features/bluetoothcomponent/src/main/ets/com/ohos/common/styleconfiguration';
-import SignalStyleConfiguration from '../../../../../../../../features/signalcomponent/src/main/ets/default/common/styleconfiguration';
-import CapsuleStyleConfiguration from '../../../../../../../../features/capsulecomponent/src/main/ets/default/common/styleconfiguration';
-import LocationStyleConfiguration from '../../../../../../../../features/locationcomponent/src/main/ets/com/ohos/common/styleconfiguration';
-import RingModeStyleConfiguration from '../../../../../../../../features/ringmodecomponent/src/main/ets/com/ohos/common/styleconfiguration';
+import AbilityManager from '../../../../../../../../common/src/main/ets/default/abilitymanager/abilityManager';
+import CommonStyleConfiguration from '../../../../../../../../common/src/main/ets/default/StyleConfiguration';
+import StatusBarStyleConfiguration from '../../../../../../../../features/statusbarcomponent/src/main/ets/com/ohos/common/StyleConfiguration';
+import BatteryStyleConfiguration from '../../../../../../../../features/batterycomponent/src/main/ets/default/common/StyleConfiguration';
+import ClockStyleConfiguration from '../../../../../../../../features/clockcomponent/src/main/ets/default/common/StyleConfiguration';
+import WifiStyleConfiguration from '../../../../../../../../features/wificomponent/src/main/ets/default/common/StyleConfiguration';
+import BluetoothStyleConfiguration from '../../../../../../../../features/bluetoothcomponent/src/main/ets/com/ohos/common/StyleConfiguration';
+import SignalStyleConfiguration from '../../../../../../../../features/signalcomponent/src/main/ets/default/common/StyleConfiguration';
+import CapsuleStyleConfiguration from '../../../../../../../../features/capsulecomponent/src/main/ets/default/common/StyleConfiguration';
+import LocationStyleConfiguration from '../../../../../../../../features/locationcomponent/src/main/ets/com/ohos/common/StyleConfiguration';
+import RingModeStyleConfiguration from '../../../../../../../../features/ringmodecomponent/src/main/ets/com/ohos/common/StyleConfiguration';
 
 const TAG = './styleconfigurationer';
 

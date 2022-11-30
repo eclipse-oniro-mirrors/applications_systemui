@@ -14,7 +14,7 @@
  */
 
 import Constants from '../common/constants'
-import mWifiModel from '../WifiModel'
+import mWifiModel from '../wifiModel'
 import Log from '../../../../../../../common/src/main/ets/default/Log'
 import { TintContentInfo } from '../../../../../../../common/src/main/ets/default/TintStateManager'
 import StyleConfigurationCommon, { CommonStyle

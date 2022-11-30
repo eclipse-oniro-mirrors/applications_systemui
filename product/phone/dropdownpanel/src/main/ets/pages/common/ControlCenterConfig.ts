@@ -21,7 +21,7 @@ const controlCenterConfig: ControlCenterConfig = {
   DefaultSimpleToggleLayout: ["screenshot", FASlotName.RING_MODE, FASlotName.LOCATION, 'demosystemuicplmeta', FASlotName.NFC],
   LocalToggles: {
     ComplexToggles: [FASlotName.AIR_PLANE, FASlotName.BLUETOOTH, FASlotName.WIFI],
-    SimpleToggles: [FASlotName.LOCATION, FASlotName.RING_MODE, FASlotName.NFC],
+    SimpleToggles: [FASlotName.LOCATION, FASlotName.RING_MODE, FASlotName.NFC, FASlotName.AUTO_ROTATE],
   },
   MetaToggles: [
     {
