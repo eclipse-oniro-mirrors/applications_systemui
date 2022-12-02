@@ -154,6 +154,7 @@ export default struct ControlCenterComponent {
         .transition({ type: TransitionType.Delete, opacity: 0 })
       }
     }
+    .height('100%')
     .width('100%')
     .onAreaChange((e, e2) => {
       Log.showInfo(TAG, `onAreaChange, e: ${JSON.stringify(e)} e2: ${JSON.stringify(e2)}`);
