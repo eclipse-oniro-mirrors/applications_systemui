@@ -71,7 +71,11 @@ struct Index {
   }
 
   onPageShow() {
-    this.showAnimation();
+    Log.showInfo(TAG, `onPageShow`)
+  }
+
+  onPageHide() {
+    Log.showInfo(TAG, `onPageHide`)
   }
 
   aboutToDisappear() {
@@ -125,7 +129,7 @@ struct Index {
   initWindowPolicy() {
     Log.showDebug(TAG, `init controlcenter panel window Policy`);
     this.mClearCallbacks.push(
-    EventManager.subscribe(SHOW_EVENT, () => WindowManager.showWindow(WindowType.CONTROL_PANEL)),
+    EventManager.subscribe(SHOW_EVENT, () => this.showWindow()),
     EventManager.subscribe(HIDE_EVENT, () => this.hideWindow()),
     EventManager.subscribe(START_ABILITY_EVENT, () => this.hideWindow()),
     EventManager.subscribe(WINDOW_SHOW_HIDE_EVENT, (args) => {
@@ -136,7 +140,7 @@ struct Index {
     }),
     EventManager.subscribe('ControlWindowResizeEvent',async (args) => {
       let { windowName, rect } = args;
-      let dis = await display.getDefaultDisplay();
+      let dis = await display.getDefaultDisplaySync();
       Log.showInfo(TAG, `ControlWindowResizeEvent: ${windowName}, isShow: ${rect}`);
       AbilityManager.setAbilityData(AbilityManager.ABILITY_NAME_CONTROL_PANEL, 'rect', rect);
       AbilityManager.setAbilityData(AbilityManager.ABILITY_NAME_CONTROL_PANEL, 'dis', {
@@ -208,6 +212,11 @@ struct Index {
 
   hideWindow() {
     this.hideAnimation();
+  }
+
+  showWindow() {
+    WindowManager.showWindow(WindowType.CONTROL_PANEL)
+    this.showAnimation();
   }
 
   onModeChange(isEdit) {

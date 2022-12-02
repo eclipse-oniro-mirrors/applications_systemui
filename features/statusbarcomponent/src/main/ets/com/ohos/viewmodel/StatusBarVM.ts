@@ -41,7 +41,7 @@ export class StringArray extends Array<string> {}
 
 export class StatusBarVM {
   mIsStart = false;
-  mStatusBarLayout: StringArray[] = [new StringArray(), new StringArray(), new StringArray()];
+  mStatusBarLayout: string[][] = [[], [], []];
   mStatusBarEmptyWidth;
   mUseCount = 0;
   mStatusBarEnable = true;
@@ -109,12 +109,7 @@ export class StatusBarVM {
     Log.showInfo(TAG, `setStatusBarLayout, layout: ${JSON.stringify(layout)}`);
     for (let i = 0;i < layout.length; i++) {
       if (JSON.stringify(layout[i]) != JSON.stringify(this.mStatusBarLayout[i])) {
-        for (let j = 0; j < layout[i].length; j++) {
-          if (this.mStatusBarLayout[i].indexOf(layout[i][j]) < 0) {
-            this.mStatusBarLayout[i].push(layout[i][j])
-            Log.showInfo(TAG, `setStatusBarLayout, addItem: ${layout[i][j]}`);
-          }
-        }
+        this.mStatusBarLayout[i] = layout[i];
       }
     }
     Log.showInfo(TAG, `setStatusBarLayout, mStatusBarLayout: ${JSON.stringify(this.mStatusBarLayout)}`);

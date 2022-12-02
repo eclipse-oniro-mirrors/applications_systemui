@@ -162,15 +162,15 @@
     },
     {
       "name": "toggle_comp_width",
-      "value": "54vp"
+      "value": "40vp"
     },
     {
       "name": "toggle_comp_height",
-      "value": "36vp"
+      "value": "22vp"
     },
     {
       "name": "toggle_check_width",
-      "value": "24vp"
+      "value": "20vp"
     },
     {
       "name": "divider_stroke_width",
