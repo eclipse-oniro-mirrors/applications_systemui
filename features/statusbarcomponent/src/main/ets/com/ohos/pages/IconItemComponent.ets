@@ -133,7 +133,7 @@ export default struct IconItemComponent {
   onIconItemTouch(event: TouchEvent) {
     Log.showInfo(TAG, `onIconItemTouch, event: ${JSON.stringify(event)}`);
     if (this.mItemData.get()?.actionData?.clickAction || this.mItemData.get()?.actionData?.longClickAction) {
-      event.stopPropagation()
+      //      event.stopPropagation()
     }
   }
 }

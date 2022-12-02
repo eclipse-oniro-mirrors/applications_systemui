@@ -35,6 +35,10 @@ export const STATUS_BAR_EMPTY_WIDTH_KEY = 'StatusBarEmptyWidth';
 
 const TAG = 'StatusBarVM';
 
+// @ts-ignore
+@Observed
+export class StringArray extends Array<string> {}
+
 export class StatusBarVM {
   mIsStart = false;
   mStatusBarLayout: string[][] = [[], [], []];
@@ -57,6 +61,8 @@ export class StatusBarVM {
 
     this.mStatusBarLayout = AppStorage.SetAndLink(STATUS_BAR_LAYOUT_KEY, this.mStatusBarLayout).get();
     this.mStatusBarEmptyWidth = AppStorage.SetAndLink(STATUS_BAR_EMPTY_WIDTH_KEY, 0);
+
+    Log.showInfo(TAG, 'constructor mStatusBarLayout: ' + JSON.stringify(this.mStatusBarLayout));
 
     let defaultBackgroundDatas: StatusBarBackgroundData[] = [];
     defaultBackgroundDatas.push(new StatusBarBackgroundData());
@@ -99,13 +105,14 @@ export class StatusBarVM {
     StatusBarService.startService(config, moduleName);
   }
 
-  setStatusBarLayout(layout: string[][]): void{
+  setStatusBarLayout(layout: string[][]): void {
     Log.showInfo(TAG, `setStatusBarLayout, layout: ${JSON.stringify(layout)}`);
     for (let i = 0;i < layout.length; i++) {
       if (JSON.stringify(layout[i]) != JSON.stringify(this.mStatusBarLayout[i])) {
         this.mStatusBarLayout[i] = layout[i];
       }
     }
+    Log.showInfo(TAG, `setStatusBarLayout, mStatusBarLayout: ${JSON.stringify(this.mStatusBarLayout)}`);
   }
 
   setStatusBarEmptyWidth(width: number): void{

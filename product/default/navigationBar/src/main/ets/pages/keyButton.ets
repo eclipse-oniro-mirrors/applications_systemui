@@ -25,7 +25,7 @@ const TAG = 'NavigationBar-KeyButton';
 @Component
 export default struct keyButton {
   private uri: any;
-  @Prop keyCode: number;
+  @State keyCode: number = 0;
   @Link currentTouchItem: number;
   @State backGroundColor: any = $r('app.color.button_default_background');
   @StorageLink("showNavHorizontal") showNavHorizontal: boolean = AppStorage.SetAndLink("showNavHorizontal", true).get();

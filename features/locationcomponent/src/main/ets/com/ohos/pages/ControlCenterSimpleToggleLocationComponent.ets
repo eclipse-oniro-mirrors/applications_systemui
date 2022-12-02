@@ -44,7 +44,7 @@ export default struct ControlCenterSimpleToggleLocationComponent {
     SimpleToggleBase({
       mToggleId: this.keyId,
       mIcon: $mIcon,
-      mChangeSwitch: this.LocationStatus,
+      mChangeSwitch: $LocationStatus,
       mLabel: $mLabel,
       mEditMode: this.mEditMode,
       mDragMode: this.mDragMode,

@@ -54,7 +54,7 @@ export default struct SimpleToggleComponent {
           mIcon: $mDefaultIcon,
           mIconStr: this.mItemData.get().iconUrl,
           mUseIconStr: true,
-          mChangeSwitch: this.mDefaultChangeSwitch,
+          mChangeSwitch: $mDefaultChangeSwitch,
           mLabel: $mDefaultLabel,
           mLabelStr: this.mItemData.get().label,
           mUseLabelStr: true,

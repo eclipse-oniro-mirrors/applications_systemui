@@ -25,7 +25,7 @@ export default struct SimpleToggleBase {
   @State mIconStr: string = ''
   private mUseIconStr: boolean = false
   private mAutoIconColor: boolean = false
-  private mChangeSwitch: boolean
+  @Link mChangeSwitch: boolean
   @Link mLabel: Resource
   @State mLabelStr: string = ''
   private mUseLabelStr: boolean = false

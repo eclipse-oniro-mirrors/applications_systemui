@@ -17,7 +17,7 @@ import ConfigData from '../../common/constants';
 @Component
 export default struct ItemComponent {
   @Link title: Resource;
-  @Prop value: string
+  @State value: string = '';
   @Link arrow: Resource;
 
   build() {

@@ -110,7 +110,7 @@ export default struct ControlCenterComponent {
           }
           .width('100%')
           .height(this.style.upTitleHeight)
-          .margin({top: this.style.marginTop, bottom: this.style.titleMarginBottom})
+          .margin({top:5})
 
           Row() {
             Column() {
@@ -130,7 +130,7 @@ export default struct ControlCenterComponent {
               .clip(true)
               .backgroundColor(this.style.componentBackgroundColor)
             }
-            .margin({left: this.style.marginLeft, right: this.style.marginRight})
+            .padding({left: this.style.marginLeft, right: this.style.marginRight})
           }
           .width('100%')
         }

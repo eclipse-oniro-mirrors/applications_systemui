@@ -243,6 +243,7 @@ struct CenterTitle {
         .fontWeight(FontWeight.Medium)
         .margin({ left: TIME_TEXT_MARGIN, bottom: TIME_BOTTOM_OFFSET })
         .flexGrow(1)
+        .align(Alignment.Center)
       Image($r("app.media.ic_public_settings"))
         .objectFit(ImageFit.Contain)
         .width($r("app.float.notification_title_setting_icon_width"))
