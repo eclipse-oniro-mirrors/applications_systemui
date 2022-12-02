@@ -126,7 +126,7 @@ export default struct NoDisturbComponent {
               }
               this.mPrevGetCnt++;
             }
-            this.mViewModel.isEffective = !this.mViewModel.isEffective;
+            this.mViewModel.isEffective = data;
             this.mViewModel.repeatMode = this.mViewModel.isEffective ? this.mPrevReapMode : DoNotDisturbType.TYPE_NONE;
             if (this.mViewModel.repeatMode == DoNotDisturbType.TYPE_NONE) {
               this.mViewModel.refreshDate.bind(this.mViewModel)(this.mViewModel.repeatMode,

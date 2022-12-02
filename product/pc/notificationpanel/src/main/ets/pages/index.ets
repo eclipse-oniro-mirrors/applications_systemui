@@ -50,7 +50,6 @@ struct Index {
 
   onPageShow() {
     Log.showInfo(TAG, `onPageShow`)
-    this.showAnimation();
   }
 
   onPageHide() {
@@ -98,7 +97,7 @@ struct Index {
   initWindowPolicy() {
     Log.showDebug(TAG, `init notification panel window Policy`);
     this.mClearCallbacks.push(
-    EventManager.subscribe(SHOW_EVENT, () => WindowManager.showWindow(WindowType.NOTIFICATION_PANEL)),
+    EventManager.subscribe(SHOW_EVENT, () => this.showWindow()),
     EventManager.subscribe(HIDE_EVENT, () => this.hideWindow()),
     EventManager.subscribe(START_ABILITY_EVENT, () => this.hideWindow()),
     EventManager.subscribe(WINDOW_SHOW_HIDE_EVENT, (args) => {
@@ -109,7 +108,7 @@ struct Index {
     }),
     EventManager.subscribe('NotificationWindowResizeEvent',async (args) => {
       let { windowName, rect } = args;
-      let dis = await display.getDefaultDisplay();
+      let dis = await display.getDefaultDisplaySync();
       Log.showInfo(TAG, `NotificationWindowResizeEvent: ${windowName}, isShow: ${rect}`);
       AbilityManager.setAbilityData(AbilityManager.ABILITY_NAME_NOTIFICATION_PANEL, 'rect', rect);
       AbilityManager.setAbilityData(AbilityManager.ABILITY_NAME_NOTIFICATION_PANEL, 'dis', {
@@ -182,5 +181,11 @@ struct Index {
   hideWindow() {
     Log.showInfo(TAG, `do hide window.`);
     this.hideAnimation();
+  }
+
+  showWindow() {
+    Log.showInfo(TAG, `do show window.`);
+    WindowManager.showWindow(WindowType.NOTIFICATION_PANEL)
+    this.showAnimation()
   }
 }

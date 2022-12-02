@@ -110,7 +110,7 @@ export default struct ControlCenterComponent {
           }
           .width('100%')
           .height(this.style.upTitleHeight)
-          .margin({top: this.style.marginTop, bottom: this.style.titleMarginBottom})
+          .margin({top:5})
 
           Row() {
             Column() {

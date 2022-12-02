@@ -22,6 +22,8 @@ import AbilityManager from '../../../../../../../common/src/main/ets/default/abi
 import VolumeWindowController from '../../../../../../../features/volumepanelcomponent/src/main/ets/com/ohos/common/VolumeWindowController';
 
 const TAG = 'VolumePanel_ServiceExtAbility';
+const realWidth = 48;
+const realHeight = 284;
 
 class ServiceExtAbility extends ServiceExtension {
   onCreate(want: Want): void {
@@ -39,15 +41,36 @@ class ServiceExtAbility extends ServiceExtension {
         width: dis.width,
         height: dis.height,
       });
-      WindowManager.createWindow(this.context, WindowType.VOLUME_PANEL, volumeRect, 'pages/index')
-        .then((win) => {
-          Log.showInfo(TAG, 'onCreate, createWindow callback');
-          VolumeWindowController.getInstance().setWindowHandle(win);
-        })
+      WindowManager.createWindow(this.context, WindowType.VOLUME_PANEL, volumeRect, 'pages/index').then((win) => {
+        Log.showInfo(TAG, 'onCreate, createWindow callback');
+        VolumeWindowController.getInstance().setWindowHandle(win);
+      })
         .catch((err) => Log.showError(TAG, `Can't create window, err:${JSON.stringify(err)}`));
     }).then(() => {
     }).catch((err) => {
     });
+
+    display.on("change", (id) => {
+      let volumeRect
+      Log.showInfo(TAG, "display change, data: " + JSON.stringify(id))
+      display.getDefaultDisplay().then((configInfo) => {
+        volumeRect = {
+          left: configInfo.width - vp2px(16) - vp2px(realWidth),
+          top: (configInfo.height - vp2px(realHeight) ) / 2,
+          width: vp2px(realWidth) ,
+          height: vp2px(realHeight)
+        };
+        AbilityManager.setAbilityData(AbilityManager.ABILITY_NAME_VOLUME_PANEL, 'rect', volumeRect);
+        AbilityManager.setAbilityData(AbilityManager.ABILITY_NAME_VOLUME_PANEL, 'dis', {
+          width: configInfo.width,
+          height: configInfo.height,
+        });
+      }).then(() => {
+        WindowManager.resetSizeWindow(WindowType.VOLUME_PANEL, volumeRect);
+      }).catch((err) => {
+      });
+    })
+
   }
 
   onDestroy(): void {

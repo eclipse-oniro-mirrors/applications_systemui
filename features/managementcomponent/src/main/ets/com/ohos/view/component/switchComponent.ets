@@ -24,7 +24,7 @@ export default struct SwitchComponent {
   private initializationAction: (params?) => Promise<any>
   private settingAction: (params?) => void
   private register?: (listener) => void
-  @State initState: boolean= false
+  @State initState: boolean = false
 
   build() {
     Flex({ justifyContent: FlexAlign.SpaceBetween }) {
@@ -62,6 +62,7 @@ export default struct SwitchComponent {
             this.settingAction(data);
           })
       }
+      .height($r('app.float.switchComp_height'))
       .alignItems(VerticalAlign.Center)
       .align(Alignment.End)
       .padding({ right: $r('app.float.switchComp_padding_r') })

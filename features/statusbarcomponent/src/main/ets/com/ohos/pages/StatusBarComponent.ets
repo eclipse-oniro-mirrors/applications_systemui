@@ -46,7 +46,6 @@ const TAG_StatusBarBackground = 'StatusBarBackground'
 @Component
 export default struct StatusBarComponent {
   private mStatusBarComponentConfig: StatusBarConfig
-  @StorageLink('StatusBarLayout') mStatusBarLayout: StringArray[] = [new StringArray(), new StringArray(), new StringArray()]
   @State mStatusBarData: StatusBarData = ViewModel.getStatusBarData()
   private moduleName: string = ''
 
@@ -54,7 +53,6 @@ export default struct StatusBarComponent {
     AppStorage.SetOrCreate('size', $r("app.float.status_bar_margin_left_right"));
     Log.showInfo(TAG, `aboutToAppear Start, mStatusBarComponentConfig: ${JSON.stringify(this.mStatusBarComponentConfig)}`);
     this.initViewModel(this.moduleName);
-    Log.showInfo(TAG, `aboutToAppear Start, mStatusBarLayout: ${JSON.stringify(this.mStatusBarLayout)}`);
   }
 
   aboutToDisappear() {
@@ -72,17 +70,17 @@ export default struct StatusBarComponent {
       if (this.mStatusBarData.showHorizontal) {
         Row() {
           StatusBarGroup({
-            mComponents: this.mStatusBarLayout[0],
+            index: 0,
             mLayoutWeight: 1,
             mAlignItems: HorizontalAlign.Start
           })
           StatusBarGroup({
-            mComponents: this.mStatusBarLayout[1],
+            index: 1,
             mLayoutWeight: 0,
             mAlignItems: HorizontalAlign.Center
           })
           StatusBarGroup({
-            mComponents: this.mStatusBarLayout[2],
+            index: 2,
             mLayoutWeight: 1,
             mAlignItems: HorizontalAlign.End
           })
@@ -93,17 +91,17 @@ export default struct StatusBarComponent {
       } else {
         Column() {
           StatusBarGroup({
-            mComponents: this.mStatusBarLayout[0],
+            index: 0,
             mLayoutWeight: 1,
             mAlignItems: VerticalAlign.Center
           })
           StatusBarGroup({
-            mComponents: this.mStatusBarLayout[1],
+            index: 1,
             mLayoutWeight: 0,
             mAlignItems: VerticalAlign.Center
           })
           StatusBarGroup({
-            mComponents: this.mStatusBarLayout[2],
+            index: 2,
             mLayoutWeight: 1,
             mAlignItems: VerticalAlign.Center
           })
@@ -165,14 +163,11 @@ struct StatusBarBackground {
 
 @Component
 struct StatusBarGroup {
-  @State mComponents: StringArray = new StringArray()
+  @StorageLink('StatusBarLayout') mStatusBarLayout: string[][] = [[], [], []]
   private mLayoutWeight: number = 1
   private mAlignItems: any = HorizontalAlign.Center;
+  private index: number = -1;
   @State mStatusBarData: StatusBarData = ViewModel.getStatusBarData()
-
-  mComponentsChange() {
-    Log.showInfo(TAG_StatusBarGroup, `CCCC mComponentsChange, mComponents: ${JSON.stringify(this.mComponents)}`);
-  }
 
   aboutToAppear() {
     Log.showInfo(TAG_StatusBarGroup, `aboutToAppear, mLayoutWeight: ${this.mLayoutWeight} mAlignItems: ${this.mAlignItems} `);
@@ -186,7 +181,7 @@ struct StatusBarGroup {
     if (this.mStatusBarData.showHorizontal) {
       Column() {
         Row() {
-          ForEach(this.mComponents, (componentName: string) => {
+          ForEach(this.mStatusBarLayout[this.index], (componentName: string) => {
             StatusBarItemLoadComponent({
               mComponentName: componentName
             })
@@ -199,7 +194,7 @@ struct StatusBarGroup {
     } else {
       Row() {
         Column() {
-          ForEach(this.mComponents, (componentName: string) => {
+          ForEach(this.mStatusBarLayout[this.index], (componentName: string) => {
             VerticalStatusBarItemLoadComponent({
               mComponentName: componentName
             })
