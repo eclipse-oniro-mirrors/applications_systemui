@@ -35,7 +35,7 @@ class ServiceExtAbility extends ServiceExtension {
       left: (872 * dis.width) / 1280,
       top: (44 * dis.width) / 1280,
       width: (402 * dis.width) / 1280,
-      height: (310 * dis.width) / 1280,
+      height: (346 * dis.width) / 1280,
     };
 
     AbilityManager.setAbilityData(AbilityManager.ABILITY_NAME_CONTROL_PANEL, 'rect', rect);
