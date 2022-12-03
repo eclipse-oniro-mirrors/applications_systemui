@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-import geolocation from '@ohos.geoLocationManager';
+import geolocation from '@ohos.geolocation';
 import Log from '../../../../../../../../common/src/main/ets/default/Log';
 import createOrGet from '../../../../../../../../common/src/main/ets/default/SingleInstanceHelper';
 
@@ -34,7 +34,7 @@ export class LocationService {
     Log.showInfo(TAG, 'startService');
     this.mIsStart = true;
     this.getServiceState();
-    geolocation.on('locationEnabledChange', (state: boolean) => {
+    geolocation.on('locationServiceState', (state: boolean) => {
       Log.showInfo(TAG, `startService locationChange, state: ${JSON.stringify(state)}`);
       this.getServiceState();
     });
@@ -46,7 +46,7 @@ export class LocationService {
     };
     Log.showInfo(TAG, 'stopService');
     this.mIsStart = false;
-    geolocation.off('locationEnabledChange', (state: boolean) => {
+    geolocation.off('locationServiceState', (state: boolean) => {
       Log.showInfo(TAG, `stopService locationChange, state: ${JSON.stringify(state)}`)
     });
   }
@@ -58,9 +58,12 @@ export class LocationService {
 
   getServiceState(): void {
     Log.showDebug(TAG, 'getServiceState');
-    let data = geolocation.isLocationEnabled()
-    Log.showInfo(TAG, `getServiceState isLocationEnabled, data: ${JSON.stringify(data)}`);
-    this.mListener?.updateServiceState(data);
+    geolocation.isLocationEnabled().then((data) => {
+      Log.showInfo(TAG, `getServiceState isLocationEnabled, data: ${JSON.stringify(data)}`);
+      this.mListener?.updateServiceState(data);
+    }).then(() => {
+    }).catch((err) => {
+    });
   }
 
   enableLocation(): void {
@@ -75,6 +78,9 @@ export class LocationService {
   disableLocation(): void {
     Log.showInfo(TAG, 'disableLocation');
     geolocation.disableLocation()
+      .then((res) => Log.showInfo(TAG, `disableLocation, result: ${JSON.stringify(res)}`)).then(() => {
+    }).catch((err) => {
+    });
   }
 }
 
