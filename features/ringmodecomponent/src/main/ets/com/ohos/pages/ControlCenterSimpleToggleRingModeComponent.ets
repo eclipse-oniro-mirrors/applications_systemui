@@ -76,10 +76,8 @@ export default struct ControlCenterSimpleToggleRingModeComponent {
     Log.showInfo(TAG, `mClickEvent`);
     if (this.RingModeComponentMode == AudioRingMode.RINGER_MODE_SILENT) {
       ViewModel.setRingerMode(AudioRingMode.RINGER_MODE_NORMAL)
-    } else if (this.RingModeComponentMode == AudioRingMode.RINGER_MODE_VIBRATE) {
-      ViewModel.setRingerMode(AudioRingMode.RINGER_MODE_SILENT)
     } else if (this.RingModeComponentMode == AudioRingMode.RINGER_MODE_NORMAL) {
-      ViewModel.setRingerMode(AudioRingMode.RINGER_MODE_VIBRATE)
+      ViewModel.setRingerMode(AudioRingMode.RINGER_MODE_SILENT)
     }
   }
 
