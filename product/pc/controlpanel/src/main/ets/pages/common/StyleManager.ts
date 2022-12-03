@@ -75,7 +75,7 @@ export default class StyleManager {
     style.marginLeft = StyleManager.calcScaleSizePx(20);
     style.marginRight = StyleManager.calcScaleSizePx(20);
     style.marginTop = StyleManager.calcScaleSizePx(0);
-    style.upTitleHeight = StyleManager.calcScaleSizePx(56);
+    style.upTitleHeight = StyleManager.calcScaleSizePx(80);
     style.titleMarginBottom = StyleManager.calcScaleSizePx(0);
     style.toggleAreaGap = StyleManager.calcScaleSizePx(12);
     style.simpleToggleLayoutMarginTop = StyleManager.calcScaleSizePx(23);
