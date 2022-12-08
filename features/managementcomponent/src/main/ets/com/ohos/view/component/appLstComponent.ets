@@ -78,6 +78,7 @@ export default struct AppLstComponent {
     .border({ width: $r('app.float.border_width'), color: Color.White,
       radius: $r('app.float.border_radius') })
     .backgroundColor(Color.White)
+    .clip(true)
     .padding({
       left: $r('app.float.itemComp_padding_l'),
       right: $r('app.float.itemComp_padding_r')
