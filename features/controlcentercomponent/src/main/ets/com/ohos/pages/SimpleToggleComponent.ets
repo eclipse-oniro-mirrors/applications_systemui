@@ -48,31 +48,32 @@ export default struct SimpleToggleComponent {
 
   build() {
     Column() {
-      if (this.mItemData.get().pluginType == PluginType.META) {
-        SimpleToggleBase({
-          mToggleId: this.keyId,
-          mIcon: $mDefaultIcon,
-          mIconStr: this.mItemData.get().iconUrl,
-          mUseIconStr: true,
-          mChangeSwitch: $mDefaultChangeSwitch,
-          mLabel: $mDefaultLabel,
-          mLabelStr: this.mItemData.get().label,
-          mUseLabelStr: true,
-          mEditMode: this.mEditMode,
-          mDragMode: this.mDragMode,
-          mClickEvent: () => this.onIconItemClick(),
-          mLongClickEvent: () => this.onIconItemLongPressGesture()
-        })
-      } else if (this.mItemData.get().pluginType == PluginType.DATA_ABILITY) {
-        // TODO:
-      } else if (this.mItemData.get().pluginType == PluginType.PLUGIN_COMPONENT) {
-        PluginIconItemComponent({
-          keyId: this.keyId,
-          mEditMode: this.mEditMode,
-          mDragMode: this.mDragMode
-        })
+      if (this.keyId != ""){
+        if (this.mItemData.get().pluginType == PluginType.META) {
+          SimpleToggleBase({
+            mToggleId: this.keyId,
+            mIcon: $mDefaultIcon,
+            mIconStr: this.mItemData.get().iconUrl,
+            mUseIconStr: true,
+            mChangeSwitch: $mDefaultChangeSwitch,
+            mLabel: $mDefaultLabel,
+            mLabelStr: this.mItemData.get().label,
+            mUseLabelStr: true,
+            mEditMode: this.mEditMode,
+            mDragMode: this.mDragMode,
+            mClickEvent: () => this.onIconItemClick(),
+            mLongClickEvent: () => this.onIconItemLongPressGesture()
+          })
+        } else if (this.mItemData.get().pluginType == PluginType.DATA_ABILITY) {
+          // TODO:
+        } else if (this.mItemData.get().pluginType == PluginType.PLUGIN_COMPONENT) {
+          PluginIconItemComponent({
+            keyId: this.keyId,
+            mEditMode: this.mEditMode,
+            mDragMode: this.mDragMode
+          })
+        }
       }
-
     }
     .width('100%')
     .height('100%')

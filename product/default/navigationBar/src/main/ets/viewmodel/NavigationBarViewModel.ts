@@ -160,17 +160,19 @@ export default class NavigationBarViewModel {
 
   private windowSwitches(navigationBarStatusValue: string): void {
     this.isDisplay = navigationBarStatusValue == '1' ? true : false;
-    if (!this.isDisplay) {
+    if (!this.isDisplay || !this.mNavigationBarComponentData.isEnable) {
       //For gesture navigation scenarios
       //Systemui hides the navigation bar,and then notifies the launcher that it can start moving down the dock bar.
       WindowManager.hideWindow(WindowType.NAVIGATION_BAR).then(() => {
-        commonEvent.publish(NAVIGATIONBAR_HIDE_EVENT, (err) => {
-          if (err.code) {
-            Log.showError(TAG, `${NAVIGATIONBAR_HIDE_EVENT} PublishCallBack err: ${JSON.stringify(err)}`);
-          } else {
-            Log.showInfo(TAG, `${NAVIGATIONBAR_HIDE_EVENT} Publish sucess`);
-          }
-        })
+        if(!this.isDisplay){
+          commonEvent.publish(NAVIGATIONBAR_HIDE_EVENT, (err) => {
+            if (err.code) {
+              Log.showError(TAG, `${NAVIGATIONBAR_HIDE_EVENT} PublishCallBack err: ${JSON.stringify(err)}`);
+            } else {
+              Log.showInfo(TAG, `${NAVIGATIONBAR_HIDE_EVENT} Publish sucess`);
+            }
+          })
+        }
       }).catch((err) => {
         Log.showError(TAG, `${NAVIGATIONBAR_HIDE_EVENT} Publish catch err: ${JSON.stringify(err)}`);
       });

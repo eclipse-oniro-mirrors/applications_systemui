@@ -27,7 +27,7 @@ export default class NoDisturbComponentViewModel {
   startTime = '';
   endTime = '';
   repeatMode = 0;
-  repeatName: any = '';
+  repeatName: Resource | string = '';
   prompt = '';
   isEffective = true;
   nextDayLabel = '';

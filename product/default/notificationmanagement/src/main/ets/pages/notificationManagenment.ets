@@ -36,6 +36,7 @@ export default struct notificationManagenment {
   @State headName: Resource = $r('app.string.notification')
   @State title: Resource = $r('app.string.batch_Management')
   @State arrow: Resource= $r('app.media.ic_settings_arrow')
+  @State itemStr: string = ''
   @State allowDistribut: Resource = $r('app.string.allowDistribut')
   @State allowDistributDescribe: Resource = $r('app.string.allowDistributDescribe')
 
@@ -143,7 +144,7 @@ export default struct notificationManagenment {
             .padding({ left: $r('sys.float.ohos_id_default_padding_start') })
 
             Row() {
-              ItemComponent({ title: $title, value: '', arrow: $arrow })
+              ItemComponent({ title: $title, value: $itemStr, arrow: $arrow })
             }.onClick(() => {
               Log.showDebug(TAG, `BatchManagement on click`)
               Router.push({ uri: 'pages/batchSetEnable' });
