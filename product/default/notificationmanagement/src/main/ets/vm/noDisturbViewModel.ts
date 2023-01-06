@@ -22,6 +22,7 @@ import FeaturesConfigData, {DoNotDisturbType} from '../../../../../../../feature
 const TAG = 'NotificationManagement-NoDisturbViewModel';
 const CONST_DAY_LENGTH = 24*3600*1000;
 
+@Observed
 export default class NoDisturbViewModel extends NoDisturbComponentViewModel {
 
   startDateClue = '';

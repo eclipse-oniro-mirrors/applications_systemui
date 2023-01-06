@@ -31,14 +31,14 @@ export class RingModeService {
   mListeners = new Set<RingModeStatusListener>();
   mAudioManager: any;
 
-  startService(): void {
+  async startService(): Promise<void> {
     if (this.mIsStart) {
       return;
     }
     Log.showInfo(TAG, 'startService');
     this.mIsStart = true;
 
-    this.mAudioManager = getAudioManager();
+    this.mAudioManager = await getAudioManager().getVolumeManager().getVolumeGroupManager(audio.DEFAULT_VOLUME_GROUP_ID);
 
     this.getRingerMode();
 
