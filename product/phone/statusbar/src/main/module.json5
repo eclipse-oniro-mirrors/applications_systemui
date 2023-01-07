@@ -8,6 +8,12 @@
     "deviceTypes": [
       "default"
     ],
+    "metadata": [
+      {
+        "name": "ArkTSPartialUpdate",
+        "value": "true"
+      }
+    ],
     "deliveryWithInstall": true,
     "installationFree": false,
     "uiSyntax": "ets",

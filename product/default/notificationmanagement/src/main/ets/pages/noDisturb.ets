@@ -30,7 +30,7 @@ const GROUP_REPEAT_MODE = 'repeatMode';
 @Entry
 @Component
 export default struct NoDisturb {
-  @State mViewModel: ViewModel = new ViewModel();
+  @State@Watch("onChange") mViewModel: ViewModel = new ViewModel();
   @State headName:Resource =  $r('app.string.noDisturb');
   @State repeatTitle:Resource = $r('app.string.repeat');
   @State startDateTitle:Resource = $r('app.string.startDate');
@@ -38,9 +38,22 @@ export default struct NoDisturb {
   @State startTitle:Resource = $r('app.string.startTime');
   @State endTitle:Resource = $r('app.string.endTime');
   @State arrow: Resource = $r('app.media.ic_settings_arrow');
-  @State mRefreshCnt: number = 0;
+  @State repeatName : ResourceStr = this.mViewModel.repeatName
+  @State startDateClue : string = this.mViewModel.startDateClue
+  @State startTimeClue : string = this.mViewModel.startTimeClue
+  @State endDateClue : string = this.mViewModel.endDateClue
+  @State endTimeClue : string = this.mViewModel.endTimeClue
   mPrevData: string = '';
 
+  onChange() {
+    this.repeatName = this.mViewModel.repeatName
+    this.startDateClue = this.mViewModel.startDateClue
+    this.startTimeClue = this.mViewModel.startTimeClue
+    this.endDateClue = this.mViewModel.endDateClue
+    this.endTimeClue = this.mViewModel.endTimeClue
+    Log.showInfo(TAG, `mViewModel onChange repeatName: ${this.mViewModel.repeatName} startDateClue: ${this.mViewModel.startDateClue}
+        endDateClue: ${this.mViewModel.endDateClue} endTimeClue: ${this.mViewModel.endTimeClue}`)
+  }
   startDateDialogController: CustomDialogController = new CustomDialogController({
     builder: DateDialog({
       action:(data)=> this.setStartDate(data),
@@ -109,11 +122,10 @@ export default struct NoDisturb {
           Row() {
             Column() {
               HeadComponent({ headName: $headName, isActive: true })
-              if (this.mRefreshCnt > 0) {
                 Row() {
                   ItemComponent({
                     title: $repeatTitle,
-                    value: this.mViewModel.repeatName,
+                    value: $repeatName,
                     arrow: $arrow
                   })
                 }.onClick(() => {
@@ -126,7 +138,7 @@ export default struct NoDisturb {
                       Row() {
                         ItemComponent({
                           title: $startDateTitle,
-                          value: this.mViewModel.startDateClue,
+                          value: $startDateClue,
                           arrow: $arrow
                         })
                       }.onClick(() => {
@@ -137,7 +149,7 @@ export default struct NoDisturb {
                       Row() {
                         ItemComponent({
                           title: $startTitle,
-                          value: this.mViewModel.startTimeClue,
+                          value: $startTimeClue,
                           arrow: $arrow
                         })
                       }.onClick(() => {
@@ -162,7 +174,7 @@ export default struct NoDisturb {
                       Row() {
                         ItemComponent({
                           title: $endDateTitle,
-                          value: this.mViewModel.endDateClue,
+                          value: $endDateClue,
                           arrow: $arrow
                         })
                       }.onClick(() => {
@@ -173,7 +185,7 @@ export default struct NoDisturb {
                       Row() {
                         ItemComponent({
                           title: $endTitle,
-                          value: this.mViewModel.endTimeClue,
+                          value: $endTimeClue,
                           arrow: $arrow
                         })
                       }.onClick(() => {
@@ -197,7 +209,7 @@ export default struct NoDisturb {
                   Row() {
                     ItemComponent({
                       title: $startTitle,
-                      value: this.mViewModel.startTimeClue,
+                      value: $startTimeClue,
                       arrow: $arrow
                     })
                   }.onClick(() => {
@@ -207,7 +219,7 @@ export default struct NoDisturb {
                   Row() {
                     ItemComponent({
                       title: $endTitle,
-                      value: this.mViewModel.endTimeClue,
+                      value: $endTimeClue,
                       arrow: $arrow
                     })
                   }.onClick(() => {
@@ -215,7 +227,6 @@ export default struct NoDisturb {
                     this.endTimeDialogController.open()
                   }).margin({ bottom: $r('app.float.itemComp_margin_b')})
                 }
-              }
             }
             .width(ConfigData.WH_100_100)
             .height(ConfigData.WH_100_100)
@@ -241,12 +252,10 @@ export default struct NoDisturb {
 
   setRepeatMode(data: number) {
     this.mViewModel.onRepeatModeAccect(data);
-    this.mRefreshCnt++;
   }
   setStartDate(data: string) {
     let dataSource = this.mViewModel.setDateIntoDateTime(this.mViewModel.defaultStartTime, data);
     this.mViewModel.onStartTimeAccept(dataSource);
-    this.mRefreshCnt++;
   }
   setStartTime(data: string) {
     let dataSource = data;
@@ -256,12 +265,10 @@ export default struct NoDisturb {
       dataSource = this.mPrevData;
     }
     this.mViewModel.onStartTimeAccept(dataSource);
-    this.mRefreshCnt++;
   }
   setEndDate(data: string) {
     let dataSource = this.mViewModel.setDateIntoDateTime(this.mViewModel.defaultEndTime, data);
     this.mViewModel.onEndTimeAccept(dataSource);
-    this.mRefreshCnt++;
   }
   setEndTime(data: string) {
     let dataSource = data;
@@ -271,15 +278,12 @@ export default struct NoDisturb {
       dataSource = this.mPrevData;
     }
     this.mViewModel.onEndTimeAccept(dataSource);
-    this.mRefreshCnt++;
   }
 
 
   aboutToAppear(): void{
     Log.showInfo(TAG, `aboutToAppear`)
     this.mViewModel.viewModelInit()
-    this.mRefreshCnt++;
-
   }
 
   onBackPress() {

@@ -147,8 +147,6 @@ struct Index {
       return
     }
     StatusBarVM.setUseInWindowName(WindowType.DROPDOWN_PANEL)
-    this.componentOptAreaTranslateY = '0px'
-    this.backgroundOpacity = 1
     Trace.end(Trace.CORE_METHOD_START_DROPDOWNPANEL)
   }
 
@@ -254,6 +252,8 @@ struct Index {
     Log.showDebug(TAG, `showSelf, showComponentName: ${showComponentName}`)
     this.showComponentName = showComponentName
     WindowManager.showWindow(WindowType.DROPDOWN_PANEL)
+    this.componentOptAreaTranslateY = '0px'
+    this.backgroundOpacity = 1
     Trace.start(Trace.CORE_METHOD_START_DROPDOWNPANEL)
   }
 
