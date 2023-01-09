@@ -69,13 +69,13 @@ export default class TintStateManager {
     Log.showDebug(TAG, `unregistser ${windowType}, res: ${res}`);
   }
 
-  async onSystemBarTintChange(data): Promise<void> {
+  onSystemBarTintChange(data): Promise<void> {
     Log.showDebug(TAG, `onSystemBarTintChange, data: ${JSON.stringify(data)}`);
     if (!Array.isArray(data.regionTint)) {
       Log.showDebug(TAG, 'regionTint is not array.');
       return;
     }
-    let dis = await display.getDefaultDisplay();
+    let dis = display.getDefaultDisplaySync();
     if (dis.id != data.displayId) {
       Log.showDebug(TAG, `Needn't change, displayId: ${data.displayId}`);
       return;

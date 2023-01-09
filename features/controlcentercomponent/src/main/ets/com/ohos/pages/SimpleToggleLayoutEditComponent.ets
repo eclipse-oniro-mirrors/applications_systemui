@@ -310,7 +310,7 @@ export default struct SimpleToggleLayoutEditComponent {
 
   onComponentTouch(event: TouchEvent) {
     Log.showDebug(TAG, `onComponentTouch`);
-    //    event.stopPropagation(); TODO
+    event.stopPropagation();
   }
 }
 

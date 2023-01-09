@@ -126,7 +126,7 @@ struct Index {
       if (windowInfo) {
           windowInfo.visibility
           ? this.hideWindow()
-          : WindowManager.showWindow(WindowType.NOTIFICATION_PANEL);
+          : this.showWindow();
       }
     })
     );

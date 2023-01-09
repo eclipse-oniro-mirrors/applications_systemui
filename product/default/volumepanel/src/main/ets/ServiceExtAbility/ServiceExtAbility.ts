@@ -66,6 +66,7 @@ class ServiceExtAbility extends ServiceExtension {
           height: configInfo.height,
         });
       }).then(() => {
+        Log.showInfo(TAG, `Spike ==> ${JSON.stringify(volumeRect)}`);
         WindowManager.resetSizeWindow(WindowType.VOLUME_PANEL, volumeRect);
       }).catch((err) => {
       });
