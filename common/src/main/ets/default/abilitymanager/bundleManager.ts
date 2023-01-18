@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-import BundleMgr from "@ohos.bundle";
+import BundleMgr from "@ohos.bundle.bundleManager";
 import Log from "../Log";
 import SwitchUserManager from "../SwitchUserManager";
 import AbilityManager from "./abilityManager";
@@ -64,11 +64,11 @@ export default class BundleManager {
     }
 
     static async getBundleInfo(tag: string, bundleName: string, getInfo?: any, requestId?: number) {
-        getInfo = getInfo ?? BundleMgr.BundleFlag.GET_BUNDLE_DEFAULT;
+        getInfo = getInfo ?? BundleMgr.BundleFlag.GET_BUNDLE_INFO_DEFAULT;
         let userInfo = {
             userId: requestId ?? (await SwitchUserManager.getInstance().getCurrentUserInfo()).userId,
         };
         Log.showDebug(TAG, `getBundleInfo from: ${tag}, userId: ${userInfo.userId}`);
-        return await BundleMgr.getBundleInfo(bundleName, getInfo, userInfo);
+        return await BundleMgr.getBundleInfo(bundleName, getInfo, userInfo.userId);
     }
 }

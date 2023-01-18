@@ -25,7 +25,7 @@ const TAG = 'location-StatusBarIconItemLocationComponent';
 
 @Component
 export default struct StatusBarIconItemLocationComponent {
-  @StorageLink('LocationServiceUseStatus') LocationServiceUseStatus: boolean = false;
+  @StorageLink('LocationVM_LocationData') LocationServiceUseStatus: boolean = false;
   @State mTintContentInfo: TintContentInfo = ViewModel.getTintContentInfo();
   @State style: StartsBarLocationComponentStyle = StyleConfiguration.getStartsBarLocationComponentStyle();
   @State styleCommon: CommonStyle = StyleConfigurationCommon.getCommonStyle();
