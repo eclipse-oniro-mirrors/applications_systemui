@@ -15,6 +15,7 @@
  */
 
 import Notification from '@ohos.notification';
+import BundleMgr from "@ohos.bundle.bundleManager";
 import AccountManager from '@ohos.account.osAccount';
 import Log from '../../../../../../../../../common/src/main/ets/default/Log';
 import BundleManager from '../../../../../../../../../common/src/main/ets/default/abilitymanager/bundleManager';
@@ -103,7 +104,7 @@ export default class ParseDataUtil {
       Log.showInfo(TAG, 'getAppData success.');
       return appDataMap.get(bundleName);
     }
-    let data = await BundleManager.getBundleInfo(TAG, bundleName, 0, userId);
+    let data = await BundleManager.getBundleInfo(TAG, bundleName, BundleMgr.BundleFlag.GET_BUNDLE_INFO_WITH_APPLICATION, userId);
     let labelResource = data?.appInfo?.labelResource;
     let iconResource = data?.appInfo?.iconResource;
     let appMessage = {
