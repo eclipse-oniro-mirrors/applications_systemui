@@ -46,6 +46,14 @@ export default struct SimpleToggleComponent {
     Log.showDebug(TAG, `linkItemData, mItemData: ${this.keyId} ${this.mItemData.get().label} ${this.mItemData.get().iconUrl}`);
   }
 
+  getLabel() {
+    switch (this.keyId) {
+      case 'screenshot':
+      return $r('app.string.control_center_simple_toggle_screenshot_mode_title')
+    }
+    return this.mItemData.get().label;
+  }
+
   build() {
     Column() {
       if (this.keyId != ""){
@@ -57,7 +65,7 @@ export default struct SimpleToggleComponent {
             mUseIconStr: true,
             mChangeSwitch: $mDefaultChangeSwitch,
             mLabel: $mDefaultLabel,
-            mLabelStr: this.mItemData.get().label,
+            mLabelStr: this.getLabel(),
             mUseLabelStr: true,
             mEditMode: this.mEditMode,
             mDragMode: this.mDragMode,
