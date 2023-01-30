@@ -33,6 +33,7 @@ export class brightnessManager {
   uri: string;
   context: Context;
   SLIDER_CHANG_MODE_MOVING = 1;
+  private sliderChangeMode: number;
 
   constructor() {
     this.uri = Constants.getUriSync(Constants.KEY_BRIGHTNESS_STATUS);
@@ -51,6 +52,9 @@ export class brightnessManager {
 
   registerBrightness() {
     this.helper.on("dataChange", this.uri, () => {
+      if (this.sliderChangeMode == 1) {
+        return;
+      }
       let data = settings.getValueSync(this.context, Constants.KEY_BRIGHTNESS_STATUS, JSON.stringify(this.getDefault()));
       Log.showInfo(TAG, `after brightness datachange settings getValue ${parseInt(data)}`);
       mBrightnessValue.set(parseInt(data));
@@ -70,13 +74,10 @@ export class brightnessManager {
     mBrightnessValue.set(parseInt(data));
   }
 
-  setValue(callback, sliderChangeMode:number) {
-    let value = parseInt(callback.value);
+  setValue(value: number, sliderChangeMode: number) {
+    this.sliderChangeMode = sliderChangeMode;
     Log.showInfo(TAG, `setValue ${value}`);
-    mBrightnessValue.set(value);
-    settings.setValueSync(this.context, Constants.KEY_BRIGHTNESS_STATUS, JSON.stringify(value));
-    Log.showInfo(TAG, `setValue ${this.context}`);
-    Brightness.setValue(callback.value);
+    Brightness.setValue(value);
   }
 
   getMin(){
