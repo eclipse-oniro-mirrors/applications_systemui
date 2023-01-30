@@ -13,9 +13,9 @@
  * limitations under the License.
  */
 
-import bundleManager from '@ohos.bundle';
+import bundleManager from '@ohos.bundle.bundleManager';
 import commonEvent from '@ohos.commonEvent';
-import { AbilityInfo } from 'bundle/abilityInfo';
+import { AbilityInfo } from 'bundleManager/abilityInfo';
 import { ExtensionAbilityInfo } from 'bundleManager/extensionAbilityInfo';
 import { CustomizeData } from 'bundle/customizeData';
 import { Metadata } from 'bundleManager/metadata';
@@ -42,7 +42,7 @@ export enum BundleEventType {
 
 const TAG = 'SourceLoader-BundleParseUtil';
 const DEFAULT_BUNDLE_FLAG =
-  bundleManager.BundleFlag.GET_ABILITY_INFO_WITH_METADATA | bundleManager.BundleFlag.GET_ABILITY_INFO_WITH_PERMISSION;
+  bundleManager.AbilityFlag.GET_ABILITY_INFO_WITH_METADATA | bundleManager.AbilityFlag.GET_ABILITY_INFO_WITH_PERMISSION;
 
 const BUNDLE_SUBSCRIBE_INFO = {
   events: [
@@ -65,7 +65,7 @@ async function queryAbilityWithBundleName(action: string, userId: number, bundle
   Log.showInfo(TAG, `queryAbilityWithBundleName, action: ${action} bundleName: ${bundleName}`);
   let abilitys: AbilityInfo[] = [];
   try {
-    abilitys = await bundleManager.queryAbilityByWant(
+    abilitys = await bundleManager.queryAbilityInfo(
       {
         action: action,
         bundleName: bundleName,
@@ -78,7 +78,7 @@ async function queryAbilityWithBundleName(action: string, userId: number, bundle
   }
   let extensionAbilitys: ExtensionAbilityInfo[] = [];
   try {
-    extensionAbilitys = await bundleManager.queryExtensionAbilityInfos(
+    extensionAbilitys = await bundleManager.queryExtensionAbilityInfo(
       {
         action: action,
         bundleName: bundleName,
@@ -88,7 +88,7 @@ async function queryAbilityWithBundleName(action: string, userId: number, bundle
       userId
     );
   } catch (error) {
-    Log.showError(TAG, `queryAbilityWithBundleName, queryExtensionAbilityInfos error: ${JSON.stringify(error)}`);
+    Log.showError(TAG, `queryAbilityWithBundleName, queryExtensionAbilityInfo error: ${JSON.stringify(error)}`);
   }
   Log.showDebug(TAG, 'queryAbilityWithBundleName, end');
   let rets = [...abilitys, ...extensionAbilitys];
@@ -100,17 +100,17 @@ async function queryAbilityWithoutBundleName(action: string, userId: number): Pr
   Log.showInfo(TAG, `queryAbilityWithoutBundleName, action: ${action}`);
   let abilitys: AbilityInfo[] = [];
   try {
-    abilitys = await bundleManager.queryAbilityByWant({ action: action }, DEFAULT_BUNDLE_FLAG, userId);
+    abilitys = await bundleManager.queryAbilityInfo({ action: action }, DEFAULT_BUNDLE_FLAG, userId);
   } catch (error) {
     Log.showError(TAG, `queryAbilityWithoutBundleName, queryAbilityByWant error: ${JSON.stringify(error)}`);
   }
   let extensionAbilitys: ExtensionAbilityInfo[] = [];
   try {
-    extensionAbilitys = await bundleManager.queryExtensionAbilityInfos({
+    extensionAbilitys = await bundleManager.queryExtensionAbilityInfo({
       action: action
     }, bundleManager.ExtensionAbilityType.UNSPECIFIED, DEFAULT_BUNDLE_FLAG, userId);
   } catch (error) {
-    Log.showError(TAG, `queryAbilityWithoutBundleName, queryExtensionAbilityInfos error: ${JSON.stringify(error)}`);
+    Log.showError(TAG, `queryAbilityWithoutBundleName, queryExtensionAbilityInfo error: ${JSON.stringify(error)}`);
   }
   Log.showDebug(TAG, 'queryAbilityWithoutBundleName, end');
   let rets = [...abilitys, ...extensionAbilitys];

@@ -38,11 +38,6 @@ export default struct MyBrightness {
     Log.showDebug(TAG, 'aboutToDisappear');
   }
 
-  setBrightness(value, sliderChangeMode: number) {
-    Log.showInfo(TAG, `setBrightness = ${value}`);
-    mBrightnessManager.setValue(value, sliderChangeMode);
-  }
-
   build() {
     Row() {
       Image($r('app.media.ic_brightness_reduce'))
@@ -70,8 +65,7 @@ export default struct MyBrightness {
         .trackColor(this.style.sliderTrackColor)
         .selectedColor(this.style.sliderSelectedColor)
         .onChange((value: number, mode: SliderChangeMode) => {
-          this.brightnessItem.value = value;
-          this.setBrightness(this.brightnessItem, mode);
+          mBrightnessManager.setValue(value, mode);
         })
 
       Image($r('app.media.ic_brightness_plus'))

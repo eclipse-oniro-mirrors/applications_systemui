@@ -55,6 +55,10 @@
     {
       "name": "control_center_simple_toggle_layout_edit_back_confirm_secondary",
       "value": "保存"
+    },
+    {
+      "name": "control_center_simple_toggle_screenshot_mode_title",
+      "value": "截屏"
     }
   ]
 }
