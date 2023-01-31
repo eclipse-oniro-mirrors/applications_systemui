@@ -1,3 +1,4 @@
+
 /*
  * Copyright (c) 2021-2022 Huawei Device Co., Ltd.
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,8 +15,7 @@
  */
 
 import { BusinessError } from 'basic';
-import AbilityContext from 'application/AbilityContext';
-import ServiceExtensionContext from 'application/ServiceExtensionContext';
+import common from '@ohos.app.ability.common'
 import Want from '@ohos.application.Want';
 import Log from '../Log';
 
@@ -34,12 +34,12 @@ export default class AbilityManager {
   static readonly ABILITY_NAME_APP_LIST = 'SystemUi_AppList';
   static readonly ABILITY_NAME_OWNER_WANT = 'Owner_Want';
 
-  static setContext(abilityName: string, context: ServiceExtensionContext): void {
+  static setContext(abilityName: string, context): void {
     Log.showDebug(TAG, `setContext, abilityName: ${abilityName}`);
     globalThis[abilityName + '_Context'] = context;
   }
 
-  static getContext(abilityName?: string): ServiceExtensionContext {
+  static getContext(abilityName?: string) {
     Log.showDebug(TAG, `getContext, abilityName: ${abilityName}`);
     if (!abilityName) {
       abilityName = AbilityManager.ABILITY_NAME_ENTRY;
@@ -47,12 +47,12 @@ export default class AbilityManager {
     return globalThis[abilityName + '_Context'];
   }
 
-  static setAbilityContext(abilityName: string, context: AbilityContext): void {
+  static setAbilityContext(abilityName: string, context: common.UIAbilityContext): void {
     Log.showDebug(TAG, `setContext, abilityName: ${abilityName}`);
     globalThis[abilityName + '_Context'] = context;
   }
 
-  static getAbilityContext(abilityName?: string): AbilityContext {
+  static getAbilityContext(abilityName?: string): common.UIAbilityContext {
     Log.showDebug(TAG, `getContext, abilityName: ${abilityName}`);
     if (!abilityName) {
       abilityName = AbilityManager.ABILITY_NAME_ENTRY;
@@ -83,7 +83,7 @@ export default class AbilityManager {
     return globalThis[abilityName + '_ContextName'];
   }
 
-  static startAbility(context: ServiceExtensionContext, want: Want, callback?: (error?: BusinessError) => void): void {
+  static startAbility(context: any, want: Want, callback?: (error?: BusinessError) => void): void {
     Log.showDebug(TAG, `startAbility, want: ${JSON.stringify(want)}`);
     if (context == null) {
      context = AbilityManager.getContext();
@@ -101,7 +101,7 @@ export default class AbilityManager {
     });
   }
 
-  static startServiceExtensionAbility(context: ServiceExtensionContext, want: Want, callback?: (error?: BusinessError) => void): void {
+  static startServiceExtensionAbility(context: any, want: Want, callback?: (error?: BusinessError) => void): void {
     Log.showDebug(TAG, `startServiceExtensionAbility, want: ${JSON.stringify(want)}`);
     if (context == null) {
       context = AbilityManager.getContext();
