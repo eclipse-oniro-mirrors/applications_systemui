@@ -14,7 +14,7 @@
  */
 
 import display from '@ohos.display';
-import ServiceExtension from '@ohos.application.ServiceExtensionAbility';
+import ServiceExtension from '@ohos.app.ability.ServiceExtensionAbility';
 import Log from '../../../../../../../common/src/main/ets/default/Log';
 import WindowManager, { WindowType } from '../../../../../../../common/src/main/ets/default/WindowManager';
 import AbilityManager from '../../../../../../../common/src/main/ets/default/abilitymanager/abilityManager';
