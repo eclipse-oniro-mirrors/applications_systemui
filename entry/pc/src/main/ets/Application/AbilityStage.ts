@@ -12,7 +12,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import AbilityStage from '@ohos.application.AbilityStage';
+import AbilityStage from '@ohos.app.ability.AbilityStage';
 import Log from '../../../../../../common/src/main/ets/default/Log';
 
 const TAG = 'SystemUI_AbilityStage';

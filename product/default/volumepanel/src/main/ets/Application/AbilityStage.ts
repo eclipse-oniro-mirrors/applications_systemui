@@ -12,7 +12,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import AbilityStage from '@ohos.application.AbilityStage';
+import AbilityStage from '@ohos.app.ability.AbilityStage';
 import Log from '../../../../../../../common/src/main/ets/default/Log';
 //import AbilityManager from '../../../../../../../common/src/main/ets/default/abilitymanager/abilitymanager'
 //import WindowManager, { WindowType } from '../../../../../../../common/src/main/ets/default/windowmanager'

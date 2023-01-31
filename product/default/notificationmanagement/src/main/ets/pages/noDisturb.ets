@@ -38,7 +38,7 @@ export default struct NoDisturb {
   @State startTitle:Resource = $r('app.string.startTime');
   @State endTitle:Resource = $r('app.string.endTime');
   @State arrow: Resource = $r('app.media.ic_settings_arrow');
-  @State repeatName : ResourceStr = this.mViewModel.repeatName
+  @State repeatName : any = this.mViewModel.repeatName
   @State startDateClue : string = this.mViewModel.startDateClue
   @State startTimeClue : string = this.mViewModel.startTimeClue
   @State endDateClue : string = this.mViewModel.endDateClue

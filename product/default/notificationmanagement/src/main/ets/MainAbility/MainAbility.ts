@@ -12,9 +12,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import Ability from '@ohos.application.Ability';
+import Ability from '@ohos.app.ability.UIAbility'
 import Want from '@ohos.application.Want';
-import AbilityConstant from "@ohos.application.AbilityConstant";
+import AbilityConstant from "@ohos.app.ability.AbilityConstant";
 import Log from '../../../../../../../common/src/main/ets/default/Log';
 import AbilityManager from '../../../../../../../common/src/main/ets/default/abilitymanager/abilityManager';
 import display from '@ohos.display';
