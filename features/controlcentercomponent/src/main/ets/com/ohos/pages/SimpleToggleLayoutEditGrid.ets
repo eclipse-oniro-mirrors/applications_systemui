@@ -64,7 +64,7 @@ export default struct SimpleToggleLayoutEditGrid {
               mEditMode: true
             })
           }.width('100%')
-          .height(80)
+          .height(108)
         }
       }, (componentName: string) => componentName)
       if (this.mToggles.length == 0) {
@@ -72,7 +72,7 @@ export default struct SimpleToggleLayoutEditGrid {
         }
       }
     }
-    .constraintSize({ minHeight: 80 })
+    .height(this.calcGridHeight(Math.ceil(this.mToggles.length / this.mColumnCount), this.style.rowHeight, this.style.rowGap))
     .width('100%')
     .columnsTemplate(this.calcColumnsTemplate(this.mColumnCount))
     .editMode(true)
@@ -91,6 +91,16 @@ export default struct SimpleToggleLayoutEditGrid {
       return this.DragComponent
     })
     .onItemDrop(this.onGridItemDrop.bind(this))
+  }
+
+  calcGridHeight(rowCount, rowHeight, rowGap) {
+    Log.showDebug(this.logTag, `calcGridHeight, rowCount: ${rowCount} rowHeight: ${rowHeight} rowGap: ${rowGap}`);
+    let height = rowCount * rowHeight + (rowCount - 1) * rowGap;
+    if (height <= 0) {
+      height = 108;
+    }
+    Log.showDebug(this.logTag, `calcGridHeight, height: ${height}`);
+    return height + 'px';
   }
 
   calcColumnsTemplate(columnCount: number): string{
