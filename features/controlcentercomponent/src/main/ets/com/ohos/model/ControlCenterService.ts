@@ -119,7 +119,7 @@ export class ControlCenterService {
     Log.showDebug(TAG, `parseConfig, mAllComplexToggles: ${JSON.stringify(this.mAllComplexToggles)}`);
     this.calcComplexToggleLayout();
     config.LocalToggles.SimpleToggles.forEach((name: string) => {
-      this.mAllSimpleToggles.push(name);
+      typeof name === 'string' && this.mAllSimpleToggles.push(name);
     });
     Log.showDebug(TAG, `parseConfig, allSimpleToggles: ${JSON.stringify(this.mAllSimpleToggles)}`);
     this.calcSimpleToggleLayout();
