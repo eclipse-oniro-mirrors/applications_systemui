@@ -15,13 +15,14 @@
 import { FASlotName } from '../../../../../../../../common/src/main/ets/default/Constants';
 import { ControlCenterConfig
 } from '../../../../../../../../features/controlcentercomponent/src/main/ets/com/ohos/common/Constants';
+import {isNfcAvailable} from '../../../../../../../../common/src/main/ets/default/Constants';
 
 const controlCenterConfig: ControlCenterConfig = {
   ComplexToggleLayout: [FASlotName.WIFI, FASlotName.BLUETOOTH],
-  DefaultSimpleToggleLayout: ["screenshot", FASlotName.RING_MODE, FASlotName.LOCATION, 'demosystemuicplmeta', FASlotName.NFC, FASlotName.AUTO_ROTATE],
+  DefaultSimpleToggleLayout: ["screenshot", FASlotName.RING_MODE, FASlotName.LOCATION, 'demosystemuicplmeta', isNfcAvailable()&&FASlotName.NFC, FASlotName.AUTO_ROTATE],
   LocalToggles: {
     ComplexToggles: [FASlotName.AIR_PLANE, FASlotName.BLUETOOTH, FASlotName.WIFI],
-    SimpleToggles: [FASlotName.LOCATION, FASlotName.RING_MODE, FASlotName.NFC, FASlotName.AUTO_ROTATE],
+    SimpleToggles: [FASlotName.LOCATION, FASlotName.RING_MODE, isNfcAvailable()&&FASlotName.NFC, FASlotName.AUTO_ROTATE],
   },
   MetaToggles: [
     {
