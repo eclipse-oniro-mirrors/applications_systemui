@@ -26,7 +26,7 @@ import {
   registerBundleListener,
 } from './common/BundleParseUtil';
 import { AbilityInfo } from 'bundle/abilityInfo';
-import { ExtensionAbilityInfo } from 'bundleManager/extensionAbilityInfo';
+import { ExtensionAbilityInfo } from 'bundleManager/ExtensionAbilityInfo';
 
 export type PluginListener = {
   onItemAdd: (itemData: ItemComponentData) => void;
