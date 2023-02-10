@@ -122,111 +122,111 @@ export default struct NoDisturb {
           Row() {
             Column() {
               HeadComponent({ headName: $headName, isActive: true })
+              Row() {
+                ItemComponent({
+                  title: $repeatTitle,
+                  value: $repeatName,
+                  arrow: $arrow
+                })
+              }.onClick(() => {
+                this.repeatDialogController.open()
+              }).margin({ bottom: $r('app.float.itemComp_margin_b') })
+
+              if (this.mViewModel.repeatMode == DoNotDisturbType.TYPE_CLEARLY) {
+                List() {
+                  ListItem() {
+                    Row() {
+                      ItemComponent({
+                        title: $startDateTitle,
+                        value: $startDateClue,
+                        arrow: $arrow
+                      })
+                    }.onClick(() => {
+                      this.startDateDialogController.open()
+                    })
+                  }
+                  ListItem() {
+                    Row() {
+                      ItemComponent({
+                        title: $startTitle,
+                        value: $startTimeClue,
+                        arrow: $arrow
+                      })
+                    }.onClick(() => {
+                      this.startTimeDialogController.open()
+                    })
+                  }
+                }.divider({
+                  strokeWidth: 1,
+                  color: $r('app.color.divider_color'),
+                  startMargin: $r('app.float.divider_margin_l'),
+                  endMargin: $r('app.float.divider_margin_r')
+                }).width(ConfigData.WH_100_100)
+                .visibility(Visibility.Visible)
+                .zIndex(0)
+                .border({ width: $r('app.float.border_width'), color: Color.White,
+                  radius: $r('app.float.border_radius') })
+                .backgroundColor(Color.White)
+                .margin({ bottom: $r('app.float.itemComp_margin_b')})
+                .flexShrink(1)
+                List() {
+                  ListItem() {
+                    Row() {
+                      ItemComponent({
+                        title: $endDateTitle,
+                        value: $endDateClue,
+                        arrow: $arrow
+                      })
+                    }.onClick(() => {
+                      this.endDateDialogController.open()
+                    })
+                  }
+                  ListItem() {
+                    Row() {
+                      ItemComponent({
+                        title: $endTitle,
+                        value: $endTimeClue,
+                        arrow: $arrow
+                      })
+                    }.onClick(() => {
+                      this.endTimeDialogController.open()
+                    })
+                  }
+                }.divider({
+                  strokeWidth: 1,
+                  color: $r('app.color.divider_color'),
+                  startMargin: $r('app.float.divider_margin_l'),
+                  endMargin: $r('app.float.divider_margin_r')
+                }).width(ConfigData.WH_100_100)
+                .visibility(Visibility.Visible)
+                .zIndex(0)
+                .border({ width: $r('app.float.border_width'), color: Color.White,
+                  radius: $r('app.float.border_radius') })
+                .backgroundColor(Color.White)
+                .margin({ bottom: $r('app.float.itemComp_margin_b')})
+                .flexShrink(1)
+              } else {
                 Row() {
                   ItemComponent({
-                    title: $repeatTitle,
-                    value: $repeatName,
+                    title: $startTitle,
+                    value: $startTimeClue,
                     arrow: $arrow
                   })
                 }.onClick(() => {
-                  this.repeatDialogController.open()
-                }).margin({ bottom: $r('app.float.itemComp_margin_b') })
-
-                if (this.mViewModel.repeatMode == DoNotDisturbType.TYPE_CLEARLY) {
-                  List() {
-                    ListItem() {
-                      Row() {
-                        ItemComponent({
-                          title: $startDateTitle,
-                          value: $startDateClue,
-                          arrow: $arrow
-                        })
-                      }.onClick(() => {
-                        this.startDateDialogController.open()
-                      })
-                    }
-                    ListItem() {
-                      Row() {
-                        ItemComponent({
-                          title: $startTitle,
-                          value: $startTimeClue,
-                          arrow: $arrow
-                        })
-                      }.onClick(() => {
-                        this.startTimeDialogController.open()
-                      })
-                    }
-                  }.divider({
-                    strokeWidth: 1,
-                    color: $r('app.color.divider_color'),
-                    startMargin: $r('app.float.divider_margin_l'),
-                    endMargin: $r('app.float.divider_margin_r')
-                  }).width(ConfigData.WH_100_100)
-                  .visibility(Visibility.Visible)
-                  .zIndex(0)
-                  .border({ width: $r('app.float.border_width'), color: Color.White,
-                    radius: $r('app.float.border_radius') })
-                  .backgroundColor(Color.White)
-                  .margin({ bottom: $r('app.float.itemComp_margin_b')})
-                  .flexShrink(1)
-                  List() {
-                    ListItem() {
-                      Row() {
-                        ItemComponent({
-                          title: $endDateTitle,
-                          value: $endDateClue,
-                          arrow: $arrow
-                        })
-                      }.onClick(() => {
-                        this.endDateDialogController.open()
-                      })
-                    }
-                    ListItem() {
-                      Row() {
-                        ItemComponent({
-                          title: $endTitle,
-                          value: $endTimeClue,
-                          arrow: $arrow
-                        })
-                      }.onClick(() => {
-                        this.endTimeDialogController.open()
-                      })
-                    }
-                  }.divider({
-                    strokeWidth: 1,
-                    color: $r('app.color.divider_color'),
-                    startMargin: $r('app.float.divider_margin_l'),
-                    endMargin: $r('app.float.divider_margin_r')
-                  }).width(ConfigData.WH_100_100)
-                  .visibility(Visibility.Visible)
-                  .zIndex(0)
-                  .border({ width: $r('app.float.border_width'), color: Color.White,
-                    radius: $r('app.float.border_radius') })
-                  .backgroundColor(Color.White)
-                  .margin({ bottom: $r('app.float.itemComp_margin_b')})
-                  .flexShrink(1)
-                } else {
-                  Row() {
-                    ItemComponent({
-                      title: $startTitle,
-                      value: $startTimeClue,
-                      arrow: $arrow
-                    })
-                  }.onClick(() => {
-                    this.mPrevData = this.mViewModel.startTime
-                    this.startTimeDialogController.open()
-                  }).margin({ bottom: $r('app.float.itemComp_margin_b')})
-                  Row() {
-                    ItemComponent({
-                      title: $endTitle,
-                      value: $endTimeClue,
-                      arrow: $arrow
-                    })
-                  }.onClick(() => {
-                    this.mPrevData = this.mViewModel.endTime
-                    this.endTimeDialogController.open()
-                  }).margin({ bottom: $r('app.float.itemComp_margin_b')})
-                }
+                  this.mPrevData = this.mViewModel.startTime
+                  this.startTimeDialogController.open()
+                }).margin({ bottom: $r('app.float.itemComp_margin_b')})
+                Row() {
+                  ItemComponent({
+                    title: $endTitle,
+                    value: $endTimeClue,
+                    arrow: $arrow
+                  })
+                }.onClick(() => {
+                  this.mPrevData = this.mViewModel.endTime
+                  this.endTimeDialogController.open()
+                }).margin({ bottom: $r('app.float.itemComp_margin_b')})
+              }
             }
             .width(ConfigData.WH_100_100)
             .height(ConfigData.WH_100_100)
@@ -479,6 +479,15 @@ struct RepeatModeDialog {
               .touchable(false)
               .width($r('app.float.toggle_check_width'))
               .height($r('app.float.toggle_check_width'))
+              .onChange((select: boolean) => {
+                if(select){
+                  if (this.prevModeSetCnt == 0) {
+                    this.itSelectedBefore = this.selectMode;
+                  }
+                  this.prevModeSetCnt++
+                  this.selectMode = DoNotDisturbType.TYPE_NONE;
+                }
+              })
           }
           .height($r("app.float.appitem_icon_height"))
           .onClick(() => {
@@ -499,6 +508,15 @@ struct RepeatModeDialog {
               .touchable(false)
               .width($r('app.float.toggle_check_width'))
               .height($r('app.float.toggle_check_width'))
+              .onChange((select: boolean) => {
+                if(select){
+                  if (this.prevModeSetCnt == 0) {
+                    this.itSelectedBefore = this.selectMode;
+                  }
+                  this.prevModeSetCnt++
+                  this.selectMode = DoNotDisturbType.TYPE_ONCE;
+                }
+              })
           }
           .height($r("app.float.appitem_icon_height"))
           .onClick(() => {
@@ -519,6 +537,15 @@ struct RepeatModeDialog {
               .touchable(false)
               .width($r('app.float.toggle_check_width'))
               .height($r('app.float.toggle_check_width'))
+              .onChange((select: boolean) => {
+                if(select){
+                  if (this.prevModeSetCnt == 0) {
+                    this.itSelectedBefore = this.selectMode;
+                  }
+                  this.prevModeSetCnt++
+                  this.selectMode = DoNotDisturbType.TYPE_DAILY;
+                }
+              })
           }
           .height($r("app.float.appitem_icon_height"))
           .onClick(() => {
@@ -539,6 +566,15 @@ struct RepeatModeDialog {
               .touchable(false)
               .width($r('app.float.toggle_check_width'))
               .height($r('app.float.toggle_check_width'))
+              .onChange((select: boolean) => {
+                if(select){
+                  if (this.prevModeSetCnt == 0) {
+                    this.itSelectedBefore = this.selectMode;
+                  }
+                  this.prevModeSetCnt++
+                  this.selectMode = DoNotDisturbType.TYPE_CLEARLY;
+                }
+              })
           }
           .height($r("app.float.appitem_icon_height"))
           .onClick(() => {
