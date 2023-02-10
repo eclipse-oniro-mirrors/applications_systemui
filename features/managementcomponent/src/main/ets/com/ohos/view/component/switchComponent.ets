@@ -42,7 +42,7 @@ export default struct SwitchComponent {
             .visibility((this.describe ? true : false) ? Visibility.Visible : Visibility.None)
         }.alignItems(HorizontalAlign.Start)
       }
-      .flexShrink(0)
+      .flexShrink(1)
       .height($r('app.float.switchComp_height'))
       .alignItems(VerticalAlign.Center)
       .align(Alignment.Start)
@@ -62,6 +62,7 @@ export default struct SwitchComponent {
             this.settingAction(data);
           })
       }
+      .flexShrink(0)
       .height($r('app.float.switchComp_height'))
       .alignItems(VerticalAlign.Center)
       .align(Alignment.End)
