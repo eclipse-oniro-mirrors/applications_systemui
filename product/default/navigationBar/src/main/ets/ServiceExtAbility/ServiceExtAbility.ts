@@ -120,6 +120,33 @@ class ServiceExtAbility extends ServiceExtension {
     } else {
       WindowManager.resetSizeWindow(WindowType.NAVIGATION_BAR, navigationBarRect);
     }
+    this.createPrivacyIndicatorWindow(isNewWindow,configInfo)
+  }
+
+  createPrivacyIndicatorWindow(isNewWindow : boolean, config : any){
+    let PrivacyIndicatorRect = {
+      left: 0,
+      top: 0,
+      width: config.realWidth,
+      height: 32
+    };
+    // 创建状态栏窗口
+    if (isNewWindow){
+      WindowManager.createWindow(this.context, WindowType.PRIVACY_INDICATOR, PrivacyIndicatorRect, "pages/PrivacyIndicatorComponent").then(() => {
+        Log.showInfo(TAG, "addPrivacyIndicator window has created");
+        WindowManager.showWindow(WindowType.PRIVACY_INDICATOR).then(() => {
+          WindowManager.setWindowBgColor(WindowType.PRIVACY_INDICATOR, "#00000000")
+          WindowManager.setWindowTouchable(WindowType.PRIVACY_INDICATOR, false)
+        })
+        // 窗口透明
+      })
+        .catch((e) => {
+          Log.showError(TAG, `addPrivacyIndicator create window error.`);
+        });
+    }else {
+      WindowManager.resetSizeWindow(WindowType.PRIVACY_INDICATOR, PrivacyIndicatorRect)
+    }
+
   }
 
   onDestroy(): void {
