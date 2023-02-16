@@ -39,6 +39,10 @@
     {
       "name": "mainability_description",
       "value": "JS_Phone_Empty Feature Ability"
+    },
+    {
+      "name": "module_desc",
+      "value": "privacy indicator"
     }
   ]
 }
