@@ -87,6 +87,9 @@
       },
       {
         "name": "ohos.permission.GET_TELEPHONY_STATE"
+      },
+      {
+        "name": "ohos.permission.PERMISSION_USED_STATS"
       }
     ]
   }
