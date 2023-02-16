@@ -35,7 +35,8 @@ export enum WindowType {
   CONTROL_PANEL = 'SystemUi_ControlPanel',
   VOLUME_PANEL = 'SystemUi_VolumePanel',
   BANNER_NOTICE = 'SystemUi_BannerNotice',
-  SPLIT_BAR = 'SystemUi_SplitBar'
+  SPLIT_BAR = 'SystemUi_SplitBar',
+  PRIVACY_INDICATOR = 'SystemUi_PrivacyIndicator'
 }
 
 export const WINDOW_SHOW_HIDE_EVENT = 'WindowShowHideEvent';
@@ -55,6 +56,7 @@ const SYSTEM_WINDOW_TYPE_MAP: { [key in WindowType]: Window.WindowType } = {
   SystemUi_VolumePanel: Window.WindowType.TYPE_VOLUME_OVERLAY,
   SystemUi_BannerNotice: Window.WindowType.TYPE_VOLUME_OVERLAY,
   SystemUi_SplitBar: 2101,
+  SystemUi_PrivacyIndicator: Window.WindowType.TYPE_VOLUME_OVERLAY
 };
 
 const DEFAULT_WINDOW_INFO: WindowInfo = {
@@ -142,6 +144,18 @@ class WindowManager {
   getWindowInfo(name: WindowType): WindowInfo | undefined {
     return this.mWindowInfos.get(name);
   }
+
+  async setWindowBgColor(name: WindowType, bgColor: string): void {
+    let window = await Window.find(name)
+    window.setWindowBackgroundColor(bgColor);
+
+  }
+
+  async setWindowTouchable(windowName: string, touchable: boolean): void {
+    let window = await Window.find(name)
+    window.setWindowTouchable(touchable);
+  }
+
 }
 
 let sWindowManager = createOrGet(WindowManager, TAG);
