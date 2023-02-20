@@ -108,6 +108,82 @@
           "name": "default"
         },
       ],
+    },
+    {
+      "name": "airplanecomponent",
+      "srcPath": "./features/airplanecomponent",
+    },
+    {
+      "name": "autorotatecomponent",
+      "srcPath": "./features/autorotatecomponent",
+    },
+    {
+      "name": "batterycomponent",
+      "srcPath": "./features/batterycomponent",
+    },
+    {
+      "name": "bluetoothcomponent",
+      "srcPath": "./features/bluetoothcomponent",
+    },
+    {
+      "name": "brightnesscomponent",
+      "srcPath": "./features/brightnesscomponent",
+    },
+    {
+      "name": "capsulecomponent",
+      "srcPath": "./features/capsulecomponent",
+    },
+    {
+      "name": "clockcomponent",
+      "srcPath": "./features/clockcomponent",
+    },
+    {
+      "name": "controlcentercomponent",
+      "srcPath": "./features/controlcentercomponent",
+    },
+    {
+      "name": "locationcomponent",
+      "srcPath": "./features/locationcomponent",
+    },
+    {
+      "name": "managementcomponent",
+      "srcPath": "./features/managementcomponent",
+    },
+    {
+      "name": "navigationservice",
+      "srcPath": "./features/navigationservice",
+    },
+    {
+      "name": "nfccomponent",
+      "srcPath": "./features/nfccomponent",
+    },
+    {
+      "name": "noticeitem",
+      "srcPath": "./features/noticeitem",
+    },
+    {
+      "name": "ringmodecomponent",
+      "srcPath": "./features/ringmodecomponent",
+    },
+    {
+      "name": "signalcomponent",
+      "srcPath": "./features/signalcomponent",
+    },
+    {
+      "name": "statusbarcomponent",
+      "srcPath": "./features/statusbarcomponent",
+    },
+    {
+      "name": "volumecomponent",
+      "srcPath": "./features/volumecomponent",
+    },
+    {
+      "name": "volumepanelcomponent",
+      "srcPath": "./features/volumepanelcomponent",
+    },
+    {
+      "name": "wificomponent",
+      "srcPath": "./features/wificomponent",
     }
   ],
 }

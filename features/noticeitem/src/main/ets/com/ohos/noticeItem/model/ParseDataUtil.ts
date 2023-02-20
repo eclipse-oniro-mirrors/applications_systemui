@@ -23,6 +23,7 @@ import DistributionManager from './NotificationDistributionManager';
 import NotificationManager from './NotificationManager';
 import Constants, {NotificationItemData} from '../common/constants';
 import {NotificationConfig} from './NotificationConfig';
+import TimeManager from '../../../../../../../../../common/src/main/ets/default/TimeManager'
 
 const TAG = 'Notification_ParseDataUtil';
 let mDate = new Date();
@@ -63,7 +64,7 @@ export default class ParseDataUtil {
       hashcode: request.hashCode,
       contentType: `${request?.content?.contentType}`,
       timestamp: request.deliveryTime,
-      time: ParseDataUtil.getStandardTime(request.deliveryTime),
+      time: TimeManager.formatTime(new Date(request.deliveryTime)),
       appName: appMessage.appName,
       want: request.wantAgent,
       bundleName: request.creatorBundleName,

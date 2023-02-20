@@ -21,12 +21,12 @@ const TAG = 'SimpleToggleBase'
 @Component
 export default struct SimpleToggleBase {
   private mToggleId: string
-  @Link mIcon: string | Resource
+  @Link mIcon: Resource
   @State mIconStr: string = ''
   private mUseIconStr: boolean = false
   private mAutoIconColor: boolean = false
   private mChangeSwitch: boolean
-  @Link mLabel: string | Resource
+  @Link mLabel: Resource
   @State mLabelStr: string = ''
   private mUseLabelStr: boolean = false
   private mIconOnBG: string | Resource

@@ -20,7 +20,7 @@ export default
 struct HeadComponent {
   private isActive: boolean= true;
   private icBackIsVisibility: boolean= true;
-  @Link headName: string | Resource;
+  @Link headName: Resource;
   @State isTouch: boolean= false;
 
   build() {

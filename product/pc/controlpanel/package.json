@@ -1,13 +1,14 @@
 {
-	"devDependencies": {},
-	"name": "pc_controlpanel",
-	"ohos": {
-		"org": "huawei",
-		"directoryLevel": "module",
-		"buildTool": "hvigor"
+	"devDependencies":{},
+	"name":"pc_controlpanel",
+	"ohos":{
+		"org":"huawei",
+		"directoryLevel":"module",
+		"buildTool":"hvigor"
 	},
-	"version": "1.0.0",
-	"dependencies": {
-		"@ohos/controlcentercomponent": "file:../../../features/controlcentercomponent"
+	"version":"1.0.0",
+	"dependencies":{
+		"@ohos/controlcentercomponent":"file:../../../features/controlcentercomponent",
+		"@ohos/autorotatecomponent":"file:../../../features/autorotatecomponent"
 	}
 }

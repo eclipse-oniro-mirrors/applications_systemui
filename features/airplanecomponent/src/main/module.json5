@@ -3,7 +3,7 @@
     "name": "airplanecomponent",
     "type": "har",
     "deviceTypes": [
-      "phone",
+      "default"
     ],
     "uiSyntax": "ets"
   }

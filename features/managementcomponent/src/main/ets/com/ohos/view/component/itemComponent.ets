@@ -16,9 +16,9 @@ import ConfigData from '../../common/constants';
 
 @Component
 export default struct ItemComponent {
-  @Link title: string | Resource;
+  @Link title: Resource;
   @Prop value: string
-  @Link arrow: string | PixelMap | Resource;
+  @Link arrow: Resource;
 
   build() {
     Row() {

@@ -14,14 +14,14 @@
  */
 
 import Log from '../../../../../../../common/src/main/ets/default/Log';
-import HeadComponent from '../../../../../../../features/managementcomponent/src/main/ets/com/ohos/view/component/headcomponent';
+import HeadComponent from '../../../../../../../features/managementcomponent/src/main/ets/com/ohos/view/component/headComponent';
 import ConfigData from '../common/constants';
 import deviceInfo from '@ohos.deviceInfo';
-import { concatTime } from '../../../../../../../common/src/main/ets/default/timemanager';
-import ItemComponent from '../../../../../../../features/managementcomponent/src/main/ets/com/ohos/view/component/itemcomponent';
+import { concatTime } from '../../../../../../../common/src/main/ets/default/TimeManager';
+import ItemComponent from '../../../../../../../features/managementcomponent/src/main/ets/com/ohos/view/component/itemComponent';
 import {DoNotDisturbType} from '../../../../../../../features/managementcomponent/src/main/ets/com/ohos/common/constants';
-import NoDisturbingModel from '../../../../../../../features/managementcomponent/src/main/ets/com/ohos/model/nodisturbingmodel';
-import ViewModel from '../vm/nodisturbviewmodel';
+import NoDisturbingModel from '../../../../../../../features/managementcomponent/src/main/ets/com/ohos/model/noDisturbingModel';
+import ViewModel from '../vm/noDisturbViewModel';
 
 const deviceTypeInfo = deviceInfo.deviceType;
 const TAG = 'NotificationManagement-NoDisturb';
@@ -37,7 +37,7 @@ export default struct NoDisturb {
   @State endDateTitle:Resource = $r('app.string.endDate');
   @State startTitle:Resource = $r('app.string.startTime');
   @State endTitle:Resource = $r('app.string.endTime');
-  @State arrow: string | PixelMap | Resource = $r('app.media.ic_settings_arrow');
+  @State arrow: Resource = $r('app.media.ic_settings_arrow');
   @State mRefreshCnt: number = 0;
   mPrevData: string = '';
 
@@ -105,132 +105,132 @@ export default struct NoDisturb {
   build() {
     Flex({ direction: FlexDirection.Column, alignItems: ItemAlign.Start, justifyContent: FlexAlign.Start }) {
       Column() {
-       GridContainer({columns:12, sizeType: SizeType.Auto, gutter: vp2px(1) === 2 ? '12vp' : '0vp', margin: vp2px(1) === 2 ? '12vp' : '0vp'}) {
-            Row() {
-              Column() {
-                HeadComponent({ headName: $headName, isActive: true })
-                if (this.mRefreshCnt > 0) {
+        GridContainer({columns:12, sizeType: SizeType.Auto, gutter: vp2px(1) === 2 ? '12vp' : '0vp', margin: vp2px(1) === 2 ? '12vp' : '0vp'}) {
+          Row() {
+            Column() {
+              HeadComponent({ headName: $headName, isActive: true })
+              if (this.mRefreshCnt > 0) {
+                Row() {
+                  ItemComponent({
+                    title: $repeatTitle,
+                    value: this.mViewModel.repeatName,
+                    arrow: $arrow
+                  })
+                }.onClick(() => {
+                  this.repeatDialogController.open()
+                }).margin({ bottom: $r('app.float.itemComp_margin_b') })
+
+                if (this.mViewModel.repeatMode == DoNotDisturbType.TYPE_CLEARLY) {
+                  List() {
+                    ListItem() {
+                      Row() {
+                        ItemComponent({
+                          title: $startDateTitle,
+                          value: this.mViewModel.startDateClue,
+                          arrow: $arrow
+                        })
+                      }.onClick(() => {
+                        this.startDateDialogController.open()
+                      })
+                    }
+                    ListItem() {
+                      Row() {
+                        ItemComponent({
+                          title: $startTitle,
+                          value: this.mViewModel.startTimeClue,
+                          arrow: $arrow
+                        })
+                      }.onClick(() => {
+                        this.startTimeDialogController.open()
+                      })
+                    }
+                  }.divider({
+                    strokeWidth: 1,
+                    color: $r('app.color.divider_color'),
+                    startMargin: $r('app.float.divider_margin_l'),
+                    endMargin: $r('app.float.divider_margin_r')
+                  }).width(ConfigData.WH_100_100)
+                  .visibility(Visibility.Visible)
+                  .zIndex(0)
+                  .border({ width: $r('app.float.border_width'), color: Color.White,
+                    radius: $r('app.float.border_radius') })
+                  .backgroundColor(Color.White)
+                  .margin({ bottom: $r('app.float.itemComp_margin_b')})
+                  .flexShrink(1)
+                  List() {
+                    ListItem() {
+                      Row() {
+                        ItemComponent({
+                          title: $endDateTitle,
+                          value: this.mViewModel.endDateClue,
+                          arrow: $arrow
+                        })
+                      }.onClick(() => {
+                        this.endDateDialogController.open()
+                      })
+                    }
+                    ListItem() {
+                      Row() {
+                        ItemComponent({
+                          title: $endTitle,
+                          value: this.mViewModel.endTimeClue,
+                          arrow: $arrow
+                        })
+                      }.onClick(() => {
+                        this.endTimeDialogController.open()
+                      })
+                    }
+                  }.divider({
+                    strokeWidth: 1,
+                    color: $r('app.color.divider_color'),
+                    startMargin: $r('app.float.divider_margin_l'),
+                    endMargin: $r('app.float.divider_margin_r')
+                  }).width(ConfigData.WH_100_100)
+                  .visibility(Visibility.Visible)
+                  .zIndex(0)
+                  .border({ width: $r('app.float.border_width'), color: Color.White,
+                    radius: $r('app.float.border_radius') })
+                  .backgroundColor(Color.White)
+                  .margin({ bottom: $r('app.float.itemComp_margin_b')})
+                  .flexShrink(1)
+                } else {
                   Row() {
                     ItemComponent({
-                      title: $repeatTitle,
-                      value: this.mViewModel.repeatName,
+                      title: $startTitle,
+                      value: this.mViewModel.startTimeClue,
                       arrow: $arrow
                     })
                   }.onClick(() => {
-                    this.repeatDialogController.open()
-                  }).margin({ bottom: $r('app.float.itemComp_margin_b') })
-
-                  if (this.mViewModel.repeatMode == DoNotDisturbType.TYPE_CLEARLY) {
-                    List() {
-                      ListItem() {
-                        Row() {
-                          ItemComponent({
-                            title: $startDateTitle,
-                            value: this.mViewModel.startDateClue,
-                            arrow: $arrow
-                          })
-                        }.onClick(() => {
-                          this.startDateDialogController.open()
-                        })
-                      }
-                      ListItem() {
-                        Row() {
-                          ItemComponent({
-                            title: $startTitle,
-                            value: this.mViewModel.startTimeClue,
-                            arrow: $arrow
-                          })
-                        }.onClick(() => {
-                          this.startTimeDialogController.open()
-                        })
-                      }
-                    }.divider({
-                      strokeWidth: 1,
-                      color: $r('app.color.divider_color'),
-                      startMargin: $r('app.float.divider_margin_l'),
-                      endMargin: $r('app.float.divider_margin_r')
-                    }).width(ConfigData.WH_100_100)
-                    .visibility(Visibility.Visible)
-                    .zIndex(0)
-                    .border({ width: $r('app.float.border_width'), color: Color.White,
-                      radius: $r('app.float.border_radius') })
-                    .backgroundColor(Color.White)
-                    .margin({ bottom: $r('app.float.itemComp_margin_b')})
-                    .flexShrink(1)
-                    List() {
-                      ListItem() {
-                        Row() {
-                          ItemComponent({
-                            title: $endDateTitle,
-                            value: this.mViewModel.endDateClue,
-                            arrow: $arrow
-                          })
-                        }.onClick(() => {
-                          this.endDateDialogController.open()
-                        })
-                      }
-                      ListItem() {
-                        Row() {
-                          ItemComponent({
-                            title: $endTitle,
-                            value: this.mViewModel.endTimeClue,
-                            arrow: $arrow
-                          })
-                        }.onClick(() => {
-                          this.endTimeDialogController.open()
-                        })
-                      }
-                    }.divider({
-                      strokeWidth: 1,
-                      color: $r('app.color.divider_color'),
-                      startMargin: $r('app.float.divider_margin_l'),
-                      endMargin: $r('app.float.divider_margin_r')
-                    }).width(ConfigData.WH_100_100)
-                    .visibility(Visibility.Visible)
-                    .zIndex(0)
-                    .border({ width: $r('app.float.border_width'), color: Color.White,
-                      radius: $r('app.float.border_radius') })
-                    .backgroundColor(Color.White)
-                    .margin({ bottom: $r('app.float.itemComp_margin_b')})
-                    .flexShrink(1)
-                  } else {
-                    Row() {
-                      ItemComponent({
-                        title: $startTitle,
-                        value: this.mViewModel.startTimeClue,
-                        arrow: $arrow
-                      })
-                    }.onClick(() => {
-                      this.mPrevData = this.mViewModel.startTime
-                      this.startTimeDialogController.open()
-                    }).margin({ bottom: $r('app.float.itemComp_margin_b')})
-                    Row() {
-                      ItemComponent({
-                        title: $endTitle,
-                        value: this.mViewModel.endTimeClue,
-                        arrow: $arrow
-                      })
-                    }.onClick(() => {
-                      this.mPrevData = this.mViewModel.endTime
-                      this.endTimeDialogController.open()
-                    }).margin({ bottom: $r('app.float.itemComp_margin_b')})
-                  }
+                    this.mPrevData = this.mViewModel.startTime
+                    this.startTimeDialogController.open()
+                  }).margin({ bottom: $r('app.float.itemComp_margin_b')})
+                  Row() {
+                    ItemComponent({
+                      title: $endTitle,
+                      value: this.mViewModel.endTimeClue,
+                      arrow: $arrow
+                    })
+                  }.onClick(() => {
+                    this.mPrevData = this.mViewModel.endTime
+                    this.endTimeDialogController.open()
+                  }).margin({ bottom: $r('app.float.itemComp_margin_b')})
                 }
               }
-              .width(ConfigData.WH_100_100)
-              .height(ConfigData.WH_100_100)
-              .padding({
-                left: $r('sys.float.ohos_id_default_padding_start'),
-                right: $r('sys.float.ohos_id_default_padding_end')
-              })
-              .useSizeType({
-                xs: { span: 12, offset: 0 }, sm: { span: 12, offset: 0 },
-                md: { span: 12, offset: 0 }, lg: { span: 8, offset: 2 }
-              })
             }
             .width(ConfigData.WH_100_100)
             .height(ConfigData.WH_100_100)
-         }
+            .padding({
+              left: $r('sys.float.ohos_id_default_padding_start'),
+              right: $r('sys.float.ohos_id_default_padding_end')
+            })
+            .useSizeType({
+              xs: { span: 12, offset: 0 }, sm: { span: 12, offset: 0 },
+              md: { span: 12, offset: 0 }, lg: { span: 8, offset: 2 }
+            })
+          }
+          .width(ConfigData.WH_100_100)
+          .height(ConfigData.WH_100_100)
+        }
       }
       .backgroundColor($r("sys.color.ohos_id_color_sub_background"))
       .width(ConfigData.WH_100_100)
