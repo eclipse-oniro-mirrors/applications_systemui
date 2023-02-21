@@ -152,7 +152,7 @@ class WindowManager {
   }
 
   async setWindowTouchable(windowName: string, touchable: boolean): void {
-    let window = await Window.find(name)
+    let window = await Window.find(windowName)
     window.setWindowTouchable(touchable);
   }
 
