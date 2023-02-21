@@ -13,12 +13,12 @@
  * limitations under the License.
  */
 import Log from '../../../../../../../../common/src/main/ets/default/Log';
-import AbilityManager from '../../../../../../../../common/src/main/ets/default/abilitymanager/abilitymanager';
-import CommonTemplateStyleConfiguration from '../../../../../../../../common/src/main/ets/template/common/styleconfiguration';
-import ControlCenterStyleConfiguration from '../../../../../../../../features/controlcentercomponent/src/main/ets/com/ohos/common/styleconfiguration';
-import BrightnessStyleConfiguration from '../../../../../../../../features/brightnesscomponent/src/main/ets/default/common/styleconfiguration';
-import RingModeStyleConfiguration from '../../../../../../../../features/ringmodecomponent/src/main/ets/com/ohos/common/styleconfiguration';
-import IndexStyleConfiguration from './styleconfiguration';
+import AbilityManager from '../../../../../../../../common/src/main/ets/default/abilitymanager/abilityManager';
+import CommonTemplateStyleConfiguration from '../../../../../../../../common/src/main/ets/template/common/StyleConfiguration';
+import ControlCenterStyleConfiguration from '../../../../../../../../features/controlcentercomponent/src/main/ets/com/ohos/common/StyleConfiguration';
+import BrightnessStyleConfiguration from '../../../../../../../../features/brightnesscomponent/src/main/ets/default/common/StyleConfiguration';
+import RingModeStyleConfiguration from '../../../../../../../../features/ringmodecomponent/src/main/ets/com/ohos/common/StyleConfiguration';
+import IndexStyleConfiguration from './StyleConfiguration';
 
 const TAG = 'ControlPanel-StyleManager';
 

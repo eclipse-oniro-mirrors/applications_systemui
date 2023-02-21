@@ -15,10 +15,10 @@
 
 import AbilityManager from '../../../../../../../common/src/main/ets/default/abilitymanager/abilityManager';
 import Log from '../../../../../../../common/src/main/ets/default/Log'
-import EventManager from "../../../../../../../common/src/main/ets/default/event/eventmanager"
-import {obtainStartAbility} from "../../../../../../../common/src/main/ets/default/event/eventutil"
-import NotificationListComponent from '../../../../../../../features/noticeitem/src/main/ets/com/ohos/noticeitem/view/notificationlistcomponent'
-import NotificationViewModel from '../../../../../../../features/noticeitem/src/main/ets/com/ohos/noticeitem/viewmodel/NotificationViewModel'
+import EventManager from "../../../../../../../common/src/main/ets/default/event/EventManager"
+import {obtainStartAbility} from "../../../../../../../common/src/main/ets/default/event/EventUtil"
+import NotificationListComponent from '../../../../../../../features/noticeitem/src/main/ets/com/ohos/noticeItem/view/NotificationListComponent'
+import NotificationViewModel from '../../../../../../../features/noticeitem/src/main/ets/com/ohos/noticeItem/viewmodel/NotificationViewModel'
 
 const TAG = 'NotificationPanel-notification'
 const NO_NOTIFICATION_TOP_MARGIN = 40;

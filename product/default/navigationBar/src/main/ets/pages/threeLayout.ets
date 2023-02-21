@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-import keyButton from './keybutton';
+import keyButton from './keyButton';
 import Constants from '../common/constants'
 import Log from '../../../../../../../common/src/main/ets/default/Log';
 const TAG = 'NavigationBar-ThreeLayout';

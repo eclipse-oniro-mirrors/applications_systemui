@@ -3,7 +3,7 @@
     "name": "capsulecomponent",
     "type": "har",
     "deviceTypes": [
-      "phone",
+      "default"
     ],
     "uiSyntax": "ets"
   }

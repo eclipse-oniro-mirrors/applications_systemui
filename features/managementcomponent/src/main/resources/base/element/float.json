@@ -2,11 +2,11 @@
   "float": [
     {
       "name": "page_margin_l",
-      "value": "12pv"
+      "value": "12vp"
     },
     {
       "name": "page_margin_r",
-      "value": "12pv"
+      "value": "12vp"
     },
     {
       "name": "page_margin_t",

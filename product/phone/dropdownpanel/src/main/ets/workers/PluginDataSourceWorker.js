@@ -15,8 +15,8 @@
 
 import worker from '@ohos.worker';
 import Log from '../../../../../../../common/src/main/ets/default/Log';
-import PluginDataSourceManager from '../../../../../../../common/src/main/ets/plugindatasource/plugindatasourcemanager';
-import Constants, { obtainMsg } from '../../../../../../../common/src/main/ets/plugindatasource/common/constants';
+import PluginDataSourceManager from '../../../../../../../common/src/main/ets/plugindatasource/PluginDataSourceManager';
+import Constants, { obtainMsg } from '../../../../../../../common/src/main/ets/plugindatasource/common/Constants';
 
 const parentPort = worker.parentPort;
 const TAG = `${parentPort.name} Worker`;

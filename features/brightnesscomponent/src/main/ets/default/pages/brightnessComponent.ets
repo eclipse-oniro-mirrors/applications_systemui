@@ -32,13 +32,10 @@ export default struct MyBrightness {
 
   aboutToAppear() {
     Log.showDebug(TAG, `Brightness  aboutToAppear ${JSON.stringify(this.brightnessItem)}`);
-    mBrightnessManager.init();
-    mBrightnessManager.registerBrightness();
   }
 
   aboutToDisappear() {
     Log.showDebug(TAG, 'aboutToDisappear');
-    mBrightnessManager.unRegisterBrightness();
   }
 
   setBrightness(value, sliderChangeMode: number) {

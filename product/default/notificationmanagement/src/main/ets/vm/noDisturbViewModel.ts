@@ -15,8 +15,8 @@
 
 import ConfigData from '../common/constants';
 import Log from '../../../../../../../common/src/main/ets/default/Log';
-import NoDisturbingModel from '../../../../../../../features/managementcomponent/src/main/ets/com/ohos/model/nodisturbingmodel';
-import NoDisturbComponentViewModel from '../../../../../../../features/managementcomponent/src/main/ets/com/ohos/vm/nodisturbcomponentviewmodel';
+import NoDisturbingModel from '../../../../../../../features/managementcomponent/src/main/ets/com/ohos/model/noDisturbingModel';
+import NoDisturbComponentViewModel from '../../../../../../../features/managementcomponent/src/main/ets/com/ohos/vm/noDisturbComponentViewModel';
 import FeaturesConfigData, {DoNotDisturbType} from '../../../../../../../features/managementcomponent/src/main/ets/com/ohos/common/constants';
 
 const TAG = 'NotificationManagement-NoDisturbViewModel';
@@ -49,8 +49,8 @@ export default class NoDisturbViewModel extends NoDisturbComponentViewModel {
   setClues(): void {
     Log.showDebug(TAG, 'setClues');
     if (this.repeatMode == DoNotDisturbType.TYPE_DAILY ||
-      this.repeatMode == DoNotDisturbType.TYPE_ONCE ||
-      this.repeatMode == DoNotDisturbType.TYPE_CLEARLY) {
+    this.repeatMode == DoNotDisturbType.TYPE_ONCE ||
+    this.repeatMode == DoNotDisturbType.TYPE_CLEARLY) {
       this.isEffective = true;
     } else {
       this.isEffective = false;
