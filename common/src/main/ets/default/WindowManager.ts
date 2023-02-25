@@ -146,8 +146,8 @@ class WindowManager {
   }
 
   async setWindowBgColor(name: WindowType, bgColor: string): void {
-    let window = await Window.find(name)
-    window.setWindowBackgroundColor(bgColor);
+      let window = await Window.find(name)
+      window.setWindowBackgroundColor(bgColor);
 
   }
 
