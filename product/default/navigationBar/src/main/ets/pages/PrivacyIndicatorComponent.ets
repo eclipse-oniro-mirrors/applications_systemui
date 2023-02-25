@@ -26,11 +26,11 @@ export default struct PrivacyIndicatorComponent {
     this.mViewModel = new ViewModel();
     this.mViewModel.setCallback((type) => {
       if (type == IndicatorType.TYPE_ORANGE) {
-        this.mBackgroundColor = $r("app.color.indicator_color_orange");
+        this.mBackgroundColor = $r("sys.color.ohos_id_color_alert");
       } else if (type == IndicatorType.TYPE_GREEN) {
-        this.mBackgroundColor = $r("app.color.indicator_color_green");
+        this.mBackgroundColor = $r("sys.color.ohos_id_color_connected");
       } else if (type == IndicatorType.TYPE_BLUE) {
-        this.mBackgroundColor = $r("app.color.indicator_color_blue");
+        this.mBackgroundColor = $r("sys.color.ohos_id_color_activated");
       } else {
         // 不显示
         this.mBackgroundColor = $r("app.color.transparent");

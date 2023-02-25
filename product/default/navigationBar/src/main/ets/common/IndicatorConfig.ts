@@ -11,17 +11,17 @@ export default class IndicatorStyle {
   /**
    * 圆点圆角半径
    */
-  static readonly indicatorBorderRadius = '11px';
+  static readonly indicatorBorderRadius = '3vp';
 
   /**
    * 圆点距离顶部尺寸
    */
-  static readonly indicatorTopMargin = '10px';
+  static readonly indicatorTopMargin = '3.5vp';
 
   /**
    * 圆点距离右侧尺寸
    */
-  static readonly indicatorRightMargin = '150px';
+  static readonly indicatorRightMargin = '37.5vp';
 }
 
 /**

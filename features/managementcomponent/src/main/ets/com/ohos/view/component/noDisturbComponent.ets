@@ -21,7 +21,7 @@ const TAG = 'ManagementComponent-NoDisturbComponent';
 @Component
 export default struct NoDisturbComponent {
   @State mViewModel: ViewModel = new ViewModel()
-  @State @Watch('onRefresh') refreshRequest: number= 0
+  @Prop @Watch('onRefresh') refreshRequest: number
   mPrevReapMode: number = 0;
   mPrevStartTime: Date= new Date()
   mPrevEndTime: Date= new Date()
@@ -36,7 +36,7 @@ export default struct NoDisturbComponent {
     this.mRefreshCnt++;
   }
 
-  onRefresh(propName: string): void {
+  onRefresh(): void {
     Log.showInfo(TAG, `onRefresh`);
     this.mViewModel.viewModelInit();
     this.mPrevGetCnt = 0;
