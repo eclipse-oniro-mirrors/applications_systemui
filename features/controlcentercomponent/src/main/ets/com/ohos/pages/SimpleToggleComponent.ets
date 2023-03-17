@@ -54,14 +54,6 @@ export default struct SimpleToggleComponent {
     return this.mItemData.label;
   }
 
-  getLabel() {
-    switch (this.keyId) {
-      case 'screenshot':
-      return $r('app.string.control_center_simple_toggle_screenshot_mode_title')
-    }
-    return this.mItemData.get().label;
-  }
-
   build() {
     Column() {
       if (this.keyId != ""){
