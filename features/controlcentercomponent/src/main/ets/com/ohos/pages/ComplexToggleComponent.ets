@@ -16,13 +16,14 @@
 import Log from '../../../../../../../../common/src/main/ets/default/Log';
 import EventManager from '../../../../../../../../common/src/main/ets/default/event/EventManager';
 import iconTitleBase from '../../../../../../../../common/src/main/ets/template/iconTitleBase';
+import { itemData } from "../../../../../../../../common/src/main/ets/plugindatasource/common/Constants"
 
 const TAG = 'ComplexToggleComponent';
 
 @Component
 export default struct ComplexToggleComponent {
   @Prop keyId: string;
-  @State mItemData: any = {};
+  @State mItemData: itemData = new itemData();
   @State mStatus: boolean = false;
   @State mDefaultTitle: string = '';
 
@@ -37,8 +38,8 @@ export default struct ComplexToggleComponent {
 
   linkItemData() {
     Log.showDebug(TAG, `linkItemData, keyId: ${this.keyId}`);
-    this.mItemData = AppStorage.Link('ControlCenter_' + this.keyId);
-    Log.showDebug(TAG, `linkItemData, mItemData: ${this.keyId} ${this.mItemData.get().label} ${this.mItemData.get().iconUrl}`);
+    this.mItemData = AppStorage.Link('ControlCenter_' + this.keyId).get();
+    Log.showDebug(TAG, `linkItemData, mItemData: ${this.keyId} ${this.mItemData.label} ${this.mItemData.iconUrl}`);
   }
 
   build() {
@@ -46,12 +47,12 @@ export default struct ComplexToggleComponent {
       iconTitleBase({
         useTitleStr: true,
         mTitle: $mDefaultTitle,
-        mTitleStr: this.mItemData.get()
+        mTitleStr: this.mItemData
         .label,
         useIconStr: true,
-        iconOffStr: this.mItemData.get()
+        iconOffStr: this.mItemData
         .iconUrl,
-        iconOnStr: this.mItemData.get()
+        iconOnStr: this.mItemData
         .iconUrl,
         changeSwitch: $mStatus,
         mClickEvent: () => this.onIconItemClick(),
@@ -63,15 +64,15 @@ export default struct ComplexToggleComponent {
 
   onIconItemClick() {
     Log.showDebug(TAG, `onIconItemClick`);
-    if (this.mItemData.get()?.actionData?.clickAction) {
-      EventManager.publish(this.mItemData.get().actionData.clickAction);
+    if (this.mItemData?.actionData?.clickAction) {
+      EventManager.publish(this.mItemData.actionData.clickAction);
     }
   }
 
   onIconItemLongPressGesture() {
     Log.showDebug(TAG, `onIconItemLongPressGesture`);
-    if (this.mItemData.get()?.actionData?.longClickAction) {
-      EventManager.publish(this.mItemData.get().actionData.longClickAction);
+    if (this.mItemData?.actionData?.longClickAction) {
+      EventManager.publish(this.mItemData.actionData.longClickAction);
     }
   }
 }

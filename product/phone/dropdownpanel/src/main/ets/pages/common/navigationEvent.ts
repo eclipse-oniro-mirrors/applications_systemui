@@ -44,7 +44,12 @@ export class navigationEvent {
     commonEvent.subscribe(data, (err, data) => {
       Log.showInfo(TAG, `subscribe err: ${JSON.stringify(err)} data: ${JSON.stringify(data)}`);
       if (err.code == 0) {
-        const processingData = JSON.parse(data.data);
+        let processingData;;
+        try{
+          processingData = JSON.parse(data.data)
+        }catch(e){
+          Log.showError(TAG, 'date.data is err');
+        }
         if (processingData) {
           Log.showInfo(TAG, `subscribe processingData: ${JSON.stringify(processingData)} `);
           this.mCallback.onStateChange(processingData);

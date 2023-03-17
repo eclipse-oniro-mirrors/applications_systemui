@@ -16,6 +16,7 @@
 import Log from '../../../../../../../../../../common/src/main/ets/default/Log';
 import AbilityManager from '../../../../../../../../../../common/src/main/ets/default/abilitymanager/abilityManager';
 import WindowManager, { WindowType } from '../../../../../../../../../../common/src/main/ets/default/WindowManager';
+import {notificationData} from '../../../../../../../../../../common/src/main/ets/plugindatasource/common/Constants'
 import Constants, {NotificationLayout as Layout} from '../../common/constants';
 import NotificationViewModel from '../../viewmodel/NotificationViewModel';
 import CustomItem from './customItem';
@@ -34,7 +35,7 @@ const INTERVAL = 5 * 1000;
 
 @Component
 export default struct BannerNotificationItem {
-  @State want : any = {};
+  @State want : notificationData = new notificationData();
   @Link distributedDeviceName: string;
   @Link mBannerNoticeCnt: number;
   @Link mLastActionTime: number;
