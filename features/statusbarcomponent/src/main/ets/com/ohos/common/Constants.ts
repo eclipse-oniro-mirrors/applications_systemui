@@ -89,11 +89,3 @@ export interface StatusBarConfig {
 export class defaultIconItemStatus {
   selected: false
 }
-
-export class defaultIconItemStatus {
-  selected: false
-}
-
-export class defaultIconItemStatus {
-  selected: false
-}
