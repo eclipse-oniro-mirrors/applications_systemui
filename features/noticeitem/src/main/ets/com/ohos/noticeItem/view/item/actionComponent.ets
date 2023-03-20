@@ -20,11 +20,16 @@ import Constants, {InputActionButtonData, NotificationLayout as Layout} from '..
 
 const TAG = 'NoticeItem-ActionComponent';
 
+class actionInputData {
+  inputKey?;
+  wantAgent?
+}
+
 @Component
 export default struct ActionComponent {
   @State showInputText: boolean = false;
   @State placeholder: string = '';
-  @State inputData: any = undefined;
+  @State inputData: actionInputData = undefined;
   @State inputActionData: InputActionButtonData = new InputActionButtonData();
   private itemData: any = undefined;
 

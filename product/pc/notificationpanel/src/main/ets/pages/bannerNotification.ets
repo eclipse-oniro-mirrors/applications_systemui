@@ -14,6 +14,7 @@
  */
 
 import Log from '../../../../../../../common/src/main/ets/default/Log';
+import {notificationData} from '../../../../../../../common/src/main/ets/plugindatasource/common/Constants'
 import AbilityManager from '../../../../../../../common/src/main/ets/default/abilitymanager/abilityManager';
 import WindowManager, { WindowType } from '../../../../../../../common/src/main/ets/default/WindowManager';
 import EventManager, {unsubscribe} from "../../../../../../../common/src/main/ets/default/event/EventManager";
@@ -56,7 +57,7 @@ struct Index {
   @State mLastActionTime: number = 0;
   @State needExpand: boolean = true
   @State isExpand: boolean = false;
-  @State pageData: any = {};
+  @State pageData: notificationData = new notificationData();
   @State mOpacity: number = 0.0;
   @State mWidthSize: number = 0.8;
   @State mTranslate: string = TRANSLATE_SIZE;

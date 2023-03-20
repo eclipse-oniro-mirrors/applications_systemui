@@ -20,11 +20,17 @@ import Log from '../../../../../../../common/src/main/ets/default/Log';
 
 const TAG = 'Control-brightnessComponent';
 
+class brightnessItemData {
+  min:number;
+  max:number;
+  value:number
+}
+
 @Component
 export default struct MyBrightness {
   @StorageLink('BrightnessValue') brightnessValue: number = 0;
   @State style: BrightnessComponentStyle = StyleConfiguration.getBrightnessComponentStyle();
-  @State brightnessItem: any = {
+  @State brightnessItem: brightnessItemData = {
     min: mBrightnessManager.getMin(),
     max: mBrightnessManager.getMax(),
     value: mBrightnessManager.getDefault()
