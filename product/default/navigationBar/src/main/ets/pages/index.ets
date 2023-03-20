@@ -28,7 +28,7 @@ let mConfigManager = configManager
 @Entry
 @Component
 struct Index {
-  @StorageLink('navigationLayoutConfig') mConfig: any = {}
+  @StorageLink('navigationLayoutConfig') mConfig: object = {}
   @StorageLink('minNavHeight') minNavHeight: number = 32
   @StorageLink("showNavHorizontal") showNavHorizontal: boolean = true
   @State mNavigationBarComponentData: NavigationBarComponentData = new NavigationBarComponentData()

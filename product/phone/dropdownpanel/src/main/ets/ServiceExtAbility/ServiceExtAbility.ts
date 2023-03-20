@@ -42,9 +42,9 @@ class ServiceExtAbility extends ServiceExtension {
         height: dis.height,
       };
       AbilityManager.setAbilityData(AbilityManager.ABILITY_NAME_DROPDOWN_PANEL, 'rect', rect);
-      WindowManager.createWindow(this.context, WindowType.DROPDOWN_PANEL, rect, 'pages/index').then(() =>
-      Log.showInfo(TAG, 'onCreate, createWindow callback')
-      ).then(() => {
+      WindowManager.createWindow(this.context, WindowType.DROPDOWN_PANEL, rect, 'pages/index').then( (win) => {
+        win.setLayoutFullScreen(true);
+        Log.showInfo(TAG, 'onCreate, createWindow callback');
       }).catch((err) => {
       });
 

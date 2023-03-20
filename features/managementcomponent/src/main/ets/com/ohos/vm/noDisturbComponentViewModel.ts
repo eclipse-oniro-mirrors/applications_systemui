@@ -27,7 +27,7 @@ export default class NoDisturbComponentViewModel {
   startTime = '';
   endTime = '';
   repeatMode = 0;
-  repeatName: Resource | string = '';
+  repeatName: Resource;
   prompt = '';
   isEffective = true;
   nextDayLabel = '';
@@ -110,8 +110,8 @@ export default class NoDisturbComponentViewModel {
     }
   }
 
-  refreshRepeatName(inputRepeatMode: number): string | Resource {
-    let result: string | Resource = '';
+  refreshRepeatName(inputRepeatMode: number):  Resource {
+    let result: Resource ;
     if (inputRepeatMode == DoNotDisturbType.TYPE_ONCE) {
       result = $r('app.string.noDisturb_once');
     } else if (inputRepeatMode == DoNotDisturbType.TYPE_DAILY) {

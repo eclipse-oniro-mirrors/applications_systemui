@@ -86,3 +86,60 @@ export class PluginComponentData {
   template;
   data;
 }
+
+export class itemData {
+  id:string;
+  pluginType:number;
+  bundleName:string;
+  moduleName:string;
+  abilityName:string;
+  abilityLabelId:number;
+  abilityIconId:number;
+  label:string;
+  iconUrl: string;
+  actionData?;
+  relationWindowId?
+  canSelect?
+  isShowLabel?
+  isShowIcon?
+}
+
+export class notificationData {
+  id: string;
+  hashcode: string;
+  userId: number;
+  uid: number;
+  contentType: string;
+  timestamp: number;
+  time: string;
+  appName: string;
+  want: any;
+  actionButtons: any[];
+  bundleName: string;
+  smallIcon?: PixelMap;
+  largeIcon?: PixelMap;
+  picture?: PixelMap;
+  title?: string;
+  text?: string;
+  additionalText?: string;
+  briefText?: string;
+  expandedTitle?: string;
+  longText?: string;
+  lines?: any[];
+  longTitle?: string;
+  slotLevel?: any;
+  source?: number;
+  versionName?: string;
+  sound?: string;
+  vibrationValues?: Array<number>;
+  notificationFlags?: any;
+  ruleData?;
+  template?: any;
+  isOngoing?: boolean;
+  isUnremovable?: boolean;
+  isRemoveAllowed?: boolean;
+  distributedOption?: any;
+  deviceId?: string;
+  groupName?: string;
+  tapDismissed?: boolean;
+}

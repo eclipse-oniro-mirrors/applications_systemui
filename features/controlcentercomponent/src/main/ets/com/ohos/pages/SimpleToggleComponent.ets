@@ -17,14 +17,14 @@ import Log from '../../../../../../../../common/src/main/ets/default/Log';
 import EventManager from '../../../../../../../../common/src/main/ets/default/event/EventManager';
 import SimpleToggleBase from '../../../../../../../../common/src/main/ets/template/SimpleToggleBase';
 import PluginIconItemComponent from './PluginIconItemComponent';
-import {PluginType} from "../../../../../../../../common/src/main/ets/plugindatasource/common/Constants"
+import {PluginType,itemData} from "../../../../../../../../common/src/main/ets/plugindatasource/common/Constants"
 
 const TAG = 'SimpleToggleComponent';
 
 @Component
 export default struct SimpleToggleComponent {
   private keyId: string;
-  @State mItemData: any = {};
+  @State mItemData: itemData = new itemData();
   private mEditMode: boolean = false;
   private mDragMode: boolean = false;
   @State mDefaultIcon: Resource = $r("app.media.icon");
@@ -42,26 +42,26 @@ export default struct SimpleToggleComponent {
 
   linkItemData() {
     Log.showDebug(TAG, `linkItemData, keyId: ${this.keyId}`);
-    this.mItemData = AppStorage.Link('ControlCenter_' + this.keyId);
-    Log.showDebug(TAG, `linkItemData, mItemData: ${this.keyId} ${this.mItemData.get().label} ${this.mItemData.get().iconUrl}`);
+    this.mItemData = AppStorage.Link('ControlCenter_' + this.keyId).get();
+    Log.showDebug(TAG, `linkItemData, mItemData: ${this.keyId} ${this.mItemData.label} ${this.mItemData.iconUrl}`);
   }
 
   getLabel() {
     switch (this.keyId) {
       case 'screenshot':
-      return $r('app.string.control_center_simple_toggle_screenshot_mode_title')
+        return $r('app.string.control_center_simple_toggle_screenshot_mode_title')
     }
-    return this.mItemData.get().label;
+    return this.mItemData.label;
   }
 
   build() {
     Column() {
       if (this.keyId != ""){
-        if (this.mItemData.get().pluginType == PluginType.META) {
+        if (this.mItemData.pluginType == PluginType.META) {
           SimpleToggleBase({
             mToggleId: this.keyId,
             mIcon: $mDefaultIcon,
-            mIconStr: this.mItemData.get().iconUrl,
+            mIconStr: this.mItemData.iconUrl,
             mUseIconStr: true,
             mChangeSwitch: $mDefaultChangeSwitch,
             mLabel: $mDefaultLabel,
@@ -72,9 +72,9 @@ export default struct SimpleToggleComponent {
             mClickEvent: () => this.onIconItemClick(),
             mLongClickEvent: () => this.onIconItemLongPressGesture()
           })
-        } else if (this.mItemData.get().pluginType == PluginType.DATA_ABILITY) {
+        } else if (this.mItemData.pluginType == PluginType.DATA_ABILITY) {
           // TODO:
-        } else if (this.mItemData.get().pluginType == PluginType.PLUGIN_COMPONENT) {
+        } else if (this.mItemData.pluginType == PluginType.PLUGIN_COMPONENT) {
           PluginIconItemComponent({
             keyId: this.keyId,
             mEditMode: this.mEditMode,
@@ -89,19 +89,19 @@ export default struct SimpleToggleComponent {
 
   onIconItemClick() {
     Log.showDebug(TAG, `onIconItemClick`);
-    if (this.mItemData.get()?.actionData?.clickAction) {
-      if (this.mItemData.get().pluginType == PluginType.META) {
-        EventManager.publish(this.mItemData.get().actionData.clickAction, this.mItemData.get().pluginType);
+    if (this.mItemData?.actionData?.clickAction) {
+      if (this.mItemData.pluginType == PluginType.META) {
+        EventManager.publish(this.mItemData.actionData.clickAction, this.mItemData.pluginType);
       } else {
-        EventManager.publish(this.mItemData.get().actionData.clickAction);
+        EventManager.publish(this.mItemData.actionData.clickAction);
       }
     };
   }
 
   onIconItemLongPressGesture() {
     Log.showDebug(TAG, `onIconItemLongPressGesture`);
-    if (this.mItemData.get()?.actionData?.longClickAction) {
-      EventManager.publish(this.mItemData.get().actionData.longClickAction);
+    if (this.mItemData?.actionData?.longClickAction) {
+      EventManager.publish(this.mItemData.actionData.longClickAction);
     };
   }
 }

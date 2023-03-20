@@ -167,10 +167,8 @@ struct Index {
     Log.showDebug(TAG, `onWindowShowHideEvent, args: ${JSON.stringify(args)}`)
     if (args.windowName == WindowType.DROPDOWN_PANEL) {
       if (args.isShow) {
-        WindowManager.hideWindow(WindowType.STATUS_BAR)
       } else {
         StatusBarVM.setUseInWindowName(WindowType.STATUS_BAR)
-        WindowManager.showWindow(WindowType.STATUS_BAR)
       }
     }
   }

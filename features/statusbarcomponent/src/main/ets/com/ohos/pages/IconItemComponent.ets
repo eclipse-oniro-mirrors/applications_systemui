@@ -17,7 +17,7 @@ import Log from '../../../../../../../../common/src/main/ets/default/Log'
 import EventManager, { unsubscribe } from '../../../../../../../../common/src/main/ets/default/event/EventManager'
 import CheckEmptyUtils from '../../../../../../../../common/src/main/ets/default/CheckEmptyUtils'
 import { WINDOW_SHOW_HIDE_EVENT } from '../../../../../../../../common/src/main/ets/default/WindowManager'
-import { PluginType } from "../../../../../../../../common/src/main/ets/plugindatasource/common/Constants"
+import { PluginType,itemData } from "../../../../../../../../common/src/main/ets/plugindatasource/common/Constants"
 import ViewModel from '../viewmodel/StatusBarVM'
 import StyleConfigurationCommon, { CommonStyle
 } from '../../../../../../../../common/src/main/ets/default/StyleConfiguration'
@@ -27,11 +27,15 @@ import PluginIconItemComponent from './PluginIconItemComponent'
 
 const TAG = 'IconItemComponent'
 
+class itemStatusData{
+  selected: boolean
+}
+
 @Component
 export default struct IconItemComponent {
   private keyId: string
-  @State mItemData: any = {}
-  @State mItemStatus: any = {
+  @State mItemData: itemData = new itemData()
+  @State mItemStatus: itemStatusData = {
     selected: false
   }
   mClearCallback: unsubscribe | undefined
@@ -42,7 +46,7 @@ export default struct IconItemComponent {
   aboutToAppear() {
     Log.showInfo(TAG, `aboutToAppear Start, keyId: ${this.keyId} `);
     this.linkItemData()
-    if (this.mItemData.get()?.relationWindowId) {
+    if (this.mItemData?.relationWindowId) {
       this.mClearCallback = EventManager.subscribe(WINDOW_SHOW_HIDE_EVENT, (args) => this.onWindowChange(args))
     }
   }
@@ -54,9 +58,9 @@ export default struct IconItemComponent {
   }
 
   linkItemData() {
-    this.mItemData = AppStorage.Link('StatusBar_' + this.keyId)
-    Log.showInfo(TAG, `linkItemData, mItemData: ${this.keyId} ${this.mItemData.get().label} ${
-    this.mItemData.get()
+    this.mItemData = AppStorage.Link('StatusBar_' + this.keyId).get()
+    Log.showInfo(TAG, `linkItemData, mItemData: ${this.keyId} ${this.mItemData.label} ${
+    this.mItemData
     .iconUrl}`)
     this.mItemStatus = AppStorage.SetAndLink('StatusBar_Status_' + this.keyId, { selected: false }).get()
   }
@@ -67,13 +71,13 @@ export default struct IconItemComponent {
         Row().width(this.style.marginLeft).height('100%')
       }
       Row() {
-        if (this.mItemData.get().pluginType == PluginType.META) {
+        if (this.mItemData.pluginType == PluginType.META) {
           MetaIconItemComponent({
             keyId: this.keyId
           })
-        } else if (this.mItemData.get().pluginType == PluginType.DATA_ABILITY) {
+        } else if (this.mItemData.pluginType == PluginType.DATA_ABILITY) {
           // TODO:
-        } else if (this.mItemData.get().pluginType == PluginType.PLUGIN_COMPONENT) {
+        } else if (this.mItemData.pluginType == PluginType.PLUGIN_COMPONENT) {
           PluginIconItemComponent({
             keyId: this.keyId
           })
@@ -96,7 +100,7 @@ export default struct IconItemComponent {
   }
 
   onWindowChange(args) {
-    if (this.mItemData.get().canSelect && args?.windowName == this.mItemData.get().relationWindowId) {
+    if (this.mItemData.canSelect && args?.windowName == this.mItemData.relationWindowId) {
       this.mItemStatus.selected = args?.isShow
     }
   }
@@ -112,27 +116,27 @@ export default struct IconItemComponent {
 
   execClickAction() {
     Log.showInfo(TAG, `execClickAction`);
-    if (this.mItemData.get()?.actionData?.clickAction) {
-      EventManager.publish(this.mItemData.get().actionData.clickAction)
+    if (this.mItemData?.actionData?.clickAction) {
+      EventManager.publish(this.mItemData.actionData.clickAction)
     }
   }
 
   execSelectedClickAction() {
-    Log.showInfo(TAG, `execSelectedClickAction ${this.mItemData.get()?.actionData?.selectedClickAction}`);
-    if (this.mItemData.get()?.actionData?.selectedClickAction) {
-      EventManager.publish(this.mItemData.get().actionData.selectedClickAction)
+    Log.showInfo(TAG, `execSelectedClickAction ${this.mItemData?.actionData?.selectedClickAction}`);
+    if (this.mItemData?.actionData?.selectedClickAction) {
+      EventManager.publish(this.mItemData.actionData.selectedClickAction)
     }
   }
 
   onIconItemLongPressGesture(event: GestureEvent) {
     Log.showInfo(TAG, `onIconItemLongPressGesture, event: ${JSON.stringify(event)}`);
-    let longClickEvent = this.mItemData.get().actionData.longClickAction;
+    let longClickEvent = this.mItemData.actionData.longClickAction;
     longClickEvent && EventManager.publish(longClickEvent);
   }
 
   onIconItemTouch(event: TouchEvent) {
     Log.showInfo(TAG, `onIconItemTouch, event: ${JSON.stringify(event)}`);
-    if (this.mItemData.get()?.actionData?.clickAction || this.mItemData.get()?.actionData?.longClickAction) {
+    if (this.mItemData?.actionData?.clickAction || this.mItemData?.actionData?.longClickAction) {
       event.stopPropagation()
     }
   }

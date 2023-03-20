@@ -64,6 +64,12 @@ const HIDE_ANIM_CONFIG = {
   playMode: PlayMode.Normal,
 }
 
+class insertTemplate{
+  type: TransitionType;
+  opacity: number;
+  scale: Object
+}
+
 @Entry
 @Component
 struct Index {
@@ -79,10 +85,10 @@ struct Index {
   navigationBarWidth: number = 0;
   mNeedUpdate: boolean = false;
   mWidthPx: number = 0;
-  @State mNotificationInsert: any = {};
-  @State mNotificationDelete: any = {};
-  @State mControlCenterInsert: any = {};
-  @State mControlCenterDelete: any = {};
+  @State mNotificationInsert: insertTemplate = new insertTemplate();
+  @State mNotificationDelete: insertTemplate = new insertTemplate();
+  @State mControlCenterInsert: insertTemplate = new insertTemplate();
+  @State mControlCenterDelete: insertTemplate = new insertTemplate();
   @State componentOptAreaTranslateY: string = '0px';
   @State backgroundOpacity: number = 0;
 

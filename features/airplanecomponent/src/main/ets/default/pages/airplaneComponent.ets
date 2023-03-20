@@ -27,7 +27,7 @@ struct airplaneComponent {
     $r('app.media.airplane_d'),
     $r('app.media.airplane'),
   ];
-  @State flyModelTitle: any = $r("app.string.airplane_mode");
+  @State flyModelTitle: Resource = $r("app.string.airplane_mode");
   @StorageLink('flyModelStatus') flyModelStatus: boolean = false;
   private mWifiOriginalStatus: boolean = false;
 
