@@ -85,3 +85,7 @@ export interface StatusBarConfig {
     control: DropdownRange
   }
 }
+
+export class defaultIconItemStatus {
+  selected: false
+}

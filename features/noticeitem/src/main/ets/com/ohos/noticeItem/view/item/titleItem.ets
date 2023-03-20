@@ -25,7 +25,7 @@ export default struct TitleItem {
   @State notificationTime: string = ''
   @Link isExpand: boolean
   @Prop needExpand: boolean
-  @State rowSpace: any = $r('app.float.titleitem_row_space')
+  @State rowSpace: Resource = $r('app.float.titleitem_row_space')
   @Prop distributedDeviceName: string
   private isSubItem: boolean= false;
   private clickTitleAction: () => void

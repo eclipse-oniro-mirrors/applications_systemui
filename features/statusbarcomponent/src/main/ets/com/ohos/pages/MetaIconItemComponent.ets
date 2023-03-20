@@ -20,13 +20,14 @@ import ViewModel from '../viewmodel/StatusBarVM'
 import StyleConfigurationCommon, { CommonStyle
 } from '../../../../../../../../common/src/main/ets/default/StyleConfiguration'
 import StyleConfiguration, { IconItemComponentStyle } from '../common/StyleConfiguration'
+import { itemData } from "../../../../../../../../common/src/main/ets/plugindatasource/common/Constants"
 
 const TAG = 'MetaIconItemComponent'
 
 @Component
 export default struct MetaIconItemComponent {
   private keyId: string
-  @State mItemData: any = {}
+  @State mItemData: itemData = new itemData()
   @State mTintContentInfo: TintContentInfo = new TintContentInfo()
   @State style: IconItemComponentStyle = StyleConfiguration.getIconItemComponentStyle()
   @State styleCommon: CommonStyle = StyleConfigurationCommon.getCommonStyle()
@@ -42,41 +43,41 @@ export default struct MetaIconItemComponent {
   }
 
   linkItemData() {
-    this.mItemData = AppStorage.Link('StatusBar_' + this.keyId);
-    Log.showInfo(TAG, `linkItemData, mItemData: ${this.keyId} ${this.mItemData.get().label} ${
-    this.mItemData.get()
+    this.mItemData = AppStorage.Link('StatusBar_' + this.keyId).get();
+    Log.showInfo(TAG, `linkItemData, mItemData: ${this.keyId} ${this.mItemData.label} ${
+    this.mItemData
     .iconUrl}`)
   }
 
   build() {
     Row() {
-      if ((this.mItemData.get().isShowLabel && !CheckEmptyUtils.isEmpty(this.mItemData.get().label))
-      || (this.mItemData.get().isShowIcon && !CheckEmptyUtils.isEmpty(this.mItemData.get().iconUrl))) {
+      if ((this.mItemData.isShowLabel && !CheckEmptyUtils.isEmpty(this.mItemData.label))
+      || (this.mItemData.isShowIcon && !CheckEmptyUtils.isEmpty(this.mItemData.iconUrl))) {
         Row().width(this.styleCommon.statusBarMarginLeftRight).height('100%')
       }
-      if (this.mItemData.get().isShowLabel && !CheckEmptyUtils.isEmpty(this.mItemData.get().label)) {
-        Text(this.mItemData.get()
+      if (this.mItemData.isShowLabel && !CheckEmptyUtils.isEmpty(this.mItemData.label)) {
+        Text(this.mItemData
         .label)
           .fontColor(this.mTintContentInfo.contentColor)
           .fontSize(this.styleCommon.statusBarFontSize)
           .textAlign(TextAlign.End)
       }
-      if (this.mItemData.get().isShowLabel && !CheckEmptyUtils.isEmpty(this.mItemData.get().label)) {
-        if (this.mItemData.get().isShowIcon && !CheckEmptyUtils.isEmpty(this.mItemData.get().iconUrl)) {
+      if (this.mItemData.isShowLabel && !CheckEmptyUtils.isEmpty(this.mItemData.label)) {
+        if (this.mItemData.isShowIcon && !CheckEmptyUtils.isEmpty(this.mItemData.iconUrl)) {
           Row() {
           }.height(1).width(this.style.componentSpace)
         }
       }
-      if (this.mItemData.get().isShowIcon && !CheckEmptyUtils.isEmpty(this.mItemData.get().iconUrl)) {
-        Image(this.mItemData.get()
+      if (this.mItemData.isShowIcon && !CheckEmptyUtils.isEmpty(this.mItemData.iconUrl)) {
+        Image(this.mItemData
         .iconUrl)
           .width(this.style.iconWidth)
           .height(this.style.iconHeight)
           .fillColor(this.mTintContentInfo.contentColor)
           .objectFit(ImageFit.Contain)
       }
-      if ((this.mItemData.get().isShowLabel && !CheckEmptyUtils.isEmpty(this.mItemData.get().label))
-      || (this.mItemData.get().isShowIcon && !CheckEmptyUtils.isEmpty(this.mItemData.get().iconUrl))) {
+      if ((this.mItemData.isShowLabel && !CheckEmptyUtils.isEmpty(this.mItemData.label))
+      || (this.mItemData.isShowIcon && !CheckEmptyUtils.isEmpty(this.mItemData.iconUrl))) {
         Row().width(this.styleCommon.statusBarMarginLeftRight).height('100%')
       }
     }.height('100%')
