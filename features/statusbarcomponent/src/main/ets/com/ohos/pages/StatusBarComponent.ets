@@ -241,7 +241,6 @@ struct VerticalStatusBarItemLoadComponent {
 @Component
 struct StatusBarItemLoadComponent {
   private mComponentName: string
-  @StorageLink('size') size: any=''
   aboutToAppear() {
     Log.showInfo(TAG_StatusBarItemLoadComponent, `aboutToAppear, mComponentName: ${this.mComponentName} `)
   }
@@ -291,7 +290,7 @@ struct StatusBarItemLoadComponent {
 
 @Component
 struct StatusBarEmptyIcon {
-  @StorageLink('StatusBarEmptyWidth') mStatusBarEmptyWidth: any = 0
+  @StorageLink('StatusBarEmptyWidth') mStatusBarEmptyWidth: number = 0
   @State mTintContentInfo: TintContentInfo = ViewModel.getEmptyTintContentInfo()
 
   aboutToAppear() {
@@ -309,7 +308,7 @@ struct StatusBarEmptyIcon {
 
 @Component
 struct StatusBarNotificationIcon {
-  @StorageLink('notificationList') notificationList: any = []
+  @StorageLink('notificationList') notificationList: Array<any> = []
   @StorageLink('StatusCoefficient') StatusCoefficient: number = 1.0
   @State mTintContentInfo: TintContentInfo = ViewModel.getNotificationTintContentInfo()
   @State styleCommon: CommonStyle = StyleConfigurationCommon.getCommonStyle()
