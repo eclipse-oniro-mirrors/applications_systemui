@@ -59,16 +59,16 @@ export function obtainMsg(action: string, data: any): {
 }
 
 export type ItemComponentData = {
-  id: string;
-  pluginType: number;
-  deviceId: string;
-  bundleName: string;
-  moduleName: string,
-  abilityName: string;
-  abilityLabelId: number;
-  abilityIconId: number;
+  id?: string;
+  pluginType?: number;
+  deviceId?: string;
+  bundleName?: string;
+  moduleName?: string,
+  abilityName?: string;
+  abilityLabelId?: number;
+  abilityIconId?: number;
   label?: string;
-  iconUrl?: Resource | string;
+  iconUrl?: string;
   template?: string;
   state?: any;
   actionData?: ActionData;
@@ -88,15 +88,15 @@ export class PluginComponentData {
 }
 
 export class itemData {
-  id:string;
-  pluginType:number;
-  bundleName:string;
-  moduleName:string;
-  abilityName:string;
-  abilityLabelId:number;
-  abilityIconId:number;
-  label:string;
-  iconUrl: string;
+  id?:string;
+  pluginType?:number;
+  bundleName?:string;
+  moduleName?:string;
+  abilityName?:string;
+  abilityLabelId?:number;
+  abilityIconId?:number;
+  label?:string;
+  iconUrl?: string;
   actionData?;
   relationWindowId?
   canSelect?

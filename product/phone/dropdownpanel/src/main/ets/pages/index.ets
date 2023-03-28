@@ -254,7 +254,6 @@ struct Index {
   }
 
   showSelf(showComponentName) {
-    Trace.end(Trace.CORE_METHOD_START_TOUCHEVENT)
     Log.showDebug(TAG, `showSelf, showComponentName: ${showComponentName}`)
     this.showComponentName = showComponentName
     WindowManager.showWindow(WindowType.DROPDOWN_PANEL)
@@ -288,7 +287,7 @@ struct Index {
         .height('100%')
         .objectFit(ImageFit.Fill)
         .blur(25)
-        .opacity(this.backgroundOpacity)
+        .opacity(1)
       Column() {
         if (this.showComponentName == 'Notification') {
           Column() {
@@ -317,7 +316,7 @@ struct Index {
     .width('100%')
     .height('100%')
     .backgroundColor($r("app.color.default_background"))
-    .opacity(this.backgroundOpacity)
+    .opacity(1)
     .onAreaChange((e, e2) => {
       Log.showInfo(TAG, `onAreaChange, e: ${JSON.stringify(e)} e2: ${JSON.stringify(e2)}`);
       this.mWidthPx = vp2px(Number(e2.width))
