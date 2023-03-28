@@ -17,14 +17,15 @@ import Log from '../../../../../../../../common/src/main/ets/default/Log';
 import EventManager from '../../../../../../../../common/src/main/ets/default/event/EventManager';
 import SimpleToggleBase from '../../../../../../../../common/src/main/ets/template/SimpleToggleBase';
 import PluginIconItemComponent from './PluginIconItemComponent';
-import {PluginType,itemData} from "../../../../../../../../common/src/main/ets/plugindatasource/common/Constants"
+import {PluginType} from "../../../../../../../../common/src/main/ets/plugindatasource/common/Constants"
+import { ControlComponentData } from '../common/Constants';
 
 const TAG = 'SimpleToggleComponent';
 
 @Component
 export default struct SimpleToggleComponent {
   private keyId: string;
-  @State mItemData: itemData = new itemData();
+  @State mItemData: ControlComponentData = {};
   private mEditMode: boolean = false;
   private mDragMode: boolean = false;
   @State mDefaultIcon: Resource = $r("app.media.icon");
