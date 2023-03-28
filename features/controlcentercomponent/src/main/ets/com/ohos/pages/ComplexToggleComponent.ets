@@ -16,14 +16,14 @@
 import Log from '../../../../../../../../common/src/main/ets/default/Log';
 import EventManager from '../../../../../../../../common/src/main/ets/default/event/EventManager';
 import iconTitleBase from '../../../../../../../../common/src/main/ets/template/iconTitleBase';
-import { itemData } from "../../../../../../../../common/src/main/ets/plugindatasource/common/Constants"
+import { ControlComponentData } from '../common/Constants';
 
 const TAG = 'ComplexToggleComponent';
 
 @Component
 export default struct ComplexToggleComponent {
   @Prop keyId: string;
-  @State mItemData: itemData = new itemData();
+  @State mItemData: ControlComponentData = { };
   @State mStatus: boolean = false;
   @State mDefaultTitle: string = '';
 

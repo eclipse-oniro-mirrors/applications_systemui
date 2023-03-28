@@ -45,7 +45,7 @@ struct Index {
   @StorageLink('StatusMinH') StatusMinH: number = 24
   @StorageLink('StatusCoefficient') StatusCoefficient: number = 1.0
   mClearCallback: unsubscribe | undefined
-
+ dropdownpanelIsOpen:boolean = false
   onBackPress(): boolean {
     return true;
   }
@@ -128,12 +128,15 @@ struct Index {
     } else if (event.type == Constants.TOUCHTYPE_MOVE) { //move
       this.moveX = event.touches[0].screenX - this.startX
       this.moveY = event.touches[0].screenY - this.startY
-    } else if (event.type == Constants.TOUCHTYPE_UP) { //up
-      Log.showInfo(TAG, `touchEnd, moveX: ${this.moveX}, moveY: ${this.moveY}`)
-      if (this.moveY > SLIDING_STATUS_BAR_DISTANCE) {
+      if (this.moveY > SLIDING_STATUS_BAR_DISTANCE && !this.dropdownpanelIsOpen) {
+        this.dropdownpanelIsOpen=true
         this.onDropdown();
         this.moveY = 0;
       }
+    } else if (event.type == Constants.TOUCHTYPE_UP) { //up
+      this.dropdownpanelIsOpen = false
+      Log.showInfo(TAG, `touchEnd, moveX: ${this.moveX}, moveY: ${this.moveY}`)
+      Trace.end(Trace.CORE_METHOD_START_TOUCHEVENT)
     }
   }
 
