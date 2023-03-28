@@ -37,7 +37,7 @@ export default class Constants {
 }
 
 export type ControlComponentData = ItemComponentData & {
-  toggleType: string;
+  toggleType?: string;
 }
 
 export interface ControlCenterConfig {

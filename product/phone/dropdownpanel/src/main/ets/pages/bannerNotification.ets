@@ -119,12 +119,13 @@ struct Index {
     let bannerDisabledFlg = false;
     let screenLockStatusInfo = AppStorage.Link('lockStatus');
     let screenLockStatus = ScreenLockStatus.Unlock;
-    if (!!screenLockStatusInfo) {
-      screenLockStatus = screenLockStatusInfo.get();
-    }
-    if (screenLockStatus == ScreenLockStatus.Locking) {
-      bannerDisabledFlg = true;
-    } else if (windowInfoDrop) {
+//    if (!!screenLockStatusInfo) {
+//      screenLockStatus = screenLockStatusInfo.get();
+//    }
+//    if (screenLockStatus == ScreenLockStatus.Locking) {
+//      bannerDisabledFlg = true;
+//    } else
+      if (windowInfoDrop) {
       if (windowInfoDrop.visibility) {
         bannerDisabledFlg = true;
       }
