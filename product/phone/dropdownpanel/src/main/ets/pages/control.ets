@@ -97,6 +97,7 @@ export default struct Control {
       if (this.moveY < -30) {
         if (this.touchMoveCallback) {
           this.touchMoveCallback({ 'direction': 'top', 'touchComponent': 'control' })
+          this.moveY = 0
         }
       }
     }
