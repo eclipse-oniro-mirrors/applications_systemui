@@ -122,6 +122,7 @@ export default struct Notification {
       if (this.moveY < -30) {
         if (this.touchMoveCallback) {
           this.touchMoveCallback({ 'direction': 'top', 'touchComponent': 'notification' })
+          this.moveY = 0
         }
       }
     }
