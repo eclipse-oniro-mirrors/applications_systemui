@@ -51,6 +51,7 @@ export default struct Notification {
   startY: number = 0
   @State moveX: number = 0
   @State moveY: number = 0
+  @State isEnd: boolean = true
   @StorageLink('notificationList') notificationList: any[] = []
 
   aboutToAppear() {
@@ -81,7 +82,7 @@ export default struct Notification {
               .alignSelf(ItemAlign.Center)
               .margin({ top: NO_NOTIFICATION_TOP_MARGIN })
           } else {
-            NotificationListComponent()
+            NotificationListComponent({listIsEnd: this.isEnd})
           }
         }.padding({
           left: $r("sys.float.ohos_id_notification_margin_start"),
@@ -119,7 +120,7 @@ export default struct Notification {
       this.moveY = event.touches[0].screenY - this.startY
     } else if (event.type == Constants.TOUCHTYPE_UP) {
       Log.showInfo(TAG, `touchEnd2, moveX: ${this.moveX}, moveY: ${this.moveY}`)
-      if (this.moveY < -30) {
+      if (this.moveY < -30 && this.isEnd) {
         if (this.touchMoveCallback) {
           this.touchMoveCallback({ 'direction': 'top', 'touchComponent': 'notification' })
           this.moveY = 0

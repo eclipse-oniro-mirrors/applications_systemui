@@ -30,6 +30,7 @@ export default struct NotificationListComponent {
   // 当长通知消息展开时，这里用于重新刷新item布局，扩展高度
   @Provide('notificationUpdate') update: number = 0;
   @StorageLink('notificationList') notificationList: any[] = [];
+  @Link listIsEnd: boolean
   private config: NotificationLayoutConfig = {
     itemMargin: Layout.ITEM_MARGIN
   };
@@ -66,6 +67,12 @@ export default struct NotificationListComponent {
         }
       }, (list: any) => JSON.stringify(list.map((item) => `${item.hashcode}_${item.timestamp}`)))
     }
+    .onReachEnd(() => {
+      this.listIsEnd = true;
+    })
+    .onScroll(() => {
+      this.listIsEnd = false;
+    })
     .align(Alignment.Top)
     .width('100%')
     .height('100%')
