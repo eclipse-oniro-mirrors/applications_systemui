@@ -19,7 +19,7 @@ import BundleManager from '../../../../../../../../common/src/main/ets/default/a
 import Bundle from '@ohos.bundle';
 import { BundleInfo } from 'bundle/bundleInfo';
 import ResMgr from '@ohos.resourceManager';
-import {BusinessError} from 'basic';
+import {BusinessError} from '@ohos.base';
 import SwitchUserManager from '../../../../../../../../common/src/main/ets/default/SwitchUserManager';
 
 const INDEX = 0;
