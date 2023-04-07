@@ -82,7 +82,7 @@ export default struct Notification {
               .alignSelf(ItemAlign.Center)
               .margin({ top: NO_NOTIFICATION_TOP_MARGIN })
           } else {
-            NotificationListComponent({listIsEnd: this.isEnd})
+            NotificationListComponent({listIsEnd:$isEnd})
           }
         }.padding({
           left: $r("sys.float.ohos_id_notification_margin_start"),
@@ -111,6 +111,9 @@ export default struct Notification {
   }
 
   touchEvent(event: TouchEvent) {
+    if (this.notificationList.length == 0) {
+      this.isEnd = true;
+    }
     if (event.type == Constants.TOUCHTYPE_DOWN) {
       this.startX = event.touches[0].screenX
       this.startY = event.touches[0].screenY
@@ -123,7 +126,8 @@ export default struct Notification {
       if (this.moveY < -30 && this.isEnd) {
         if (this.touchMoveCallback) {
           this.touchMoveCallback({ 'direction': 'top', 'touchComponent': 'notification' })
-          this.moveY = 0
+          this.moveY = 0;
+          this.isEnd = false;
         }
       }
     }
