@@ -14,7 +14,7 @@
  */
 
 import audio from '@ohos.multimedia.audio';
-import { BusinessError } from 'basic';
+import { BusinessError } from '@ohos.base';
 import Log from '../../../../../../../../common/src/main/ets/default/Log';
 import getSingleInstance, { getAudioManager
 } from '../../../../../../../../common/src/main/ets/default/SingleInstanceHelper';

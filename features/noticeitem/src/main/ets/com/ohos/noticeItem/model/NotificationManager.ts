@@ -19,7 +19,7 @@ import Notification from '@ohos.notification';
 import PluginComponentManager from '@ohos.pluginComponent';
 import Systemparameter from '@ohos.systemparameter';
 import Log from '../../../../../../../../../common/src/main/ets/default/Log';
-import {AsyncCallback} from 'basic';
+import {AsyncCallback} from '@ohos.base';
 
 const TAG = 'NotificationManager';
 // Temporary path

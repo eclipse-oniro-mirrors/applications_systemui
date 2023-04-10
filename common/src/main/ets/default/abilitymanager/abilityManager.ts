@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import { BusinessError } from 'basic';
+import { BusinessError } from '@ohos.base';
 import common from '@ohos.app.ability.common'
 import Want from '@ohos.application.Want';
 import Log from '../Log';

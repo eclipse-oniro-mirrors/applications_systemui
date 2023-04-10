@@ -18,7 +18,7 @@ import Log from "../Log";
 import createOrGet from "../SingleInstanceHelper";
 import { EventParser, START_ABILITY_EVENT, Event, LocalEvent } from "./EventUtil";
 import { Callback, createEventBus, EventBus } from "./EventBus";
-import { BusinessError } from 'basic';
+import { BusinessError } from '@ohos.base';
 import {PluginType} from "../../plugindatasource/common/Constants";
 import {writeFaultLog, FaultID} from '../SysFaultLogger';
 

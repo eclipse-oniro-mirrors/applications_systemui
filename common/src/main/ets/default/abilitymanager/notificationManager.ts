@@ -14,7 +14,7 @@
  */
 
 import Notification from '@ohos.notification';
-import { AsyncCallback } from 'basic';
+import { AsyncCallback } from '@ohos.base';
 import { NotificationSubscriber } from 'notification/notificationSubscriber';
 import { NotificationRequest } from 'notification/notificationRequest';
 import Log from '../Log';
