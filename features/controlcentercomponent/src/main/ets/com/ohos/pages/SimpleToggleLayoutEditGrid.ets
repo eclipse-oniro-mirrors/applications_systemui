@@ -72,6 +72,7 @@ export default struct SimpleToggleLayoutEditGrid {
         }
       }
     }
+    .supportAnimation(true)
     .height(this.calcGridHeight(Math.ceil(this.mToggles.length / this.mColumnCount), this.style.rowHeight, this.style.rowGap))
     .width('100%')
     .columnsTemplate(this.calcColumnsTemplate(this.mColumnCount))
