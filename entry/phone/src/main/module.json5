@@ -90,6 +90,9 @@
       },
       {
         "name": "ohos.permission.PERMISSION_USED_STATS"
+      },
+      {
+        "name": "ohos.permission.ACCESS_SERVICE_DM"
       }
     ]
   }
