@@ -1,7 +1,7 @@
 {
   "module": {
     "name": "default_notificationmanagement",
-    "type": "feature",
+    "type": "entry",
     "srcEntrance": "./ets/Application/AbilityStage.ts",
     "description": "$string:mainability_description",
     "mainElement": "com.ohos.systemui.notificationmanagement.MainAbility",
