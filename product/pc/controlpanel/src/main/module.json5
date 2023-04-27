@@ -1,7 +1,7 @@
 {
   "module": {
     "name": "pc_controlpanel",
-    "type": "entry",
+    "type": "feature",
     "srcEntrance": "./ets/Application/AbilityStage.ts",
     "description": "$string:mainability_description",
     "mainElement": "com.ohos.systemui.controlpanel.ServiceExtAbility",

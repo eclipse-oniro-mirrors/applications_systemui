@@ -1,7 +1,7 @@
 {
   "module": {
     "name": "phone_statusbar",
-    "type": "entry",
+    "type": "feature",
     "srcEntrance": "./ets/Application/AbilityStage.ts",
     "description": "$string:mainability_description",
     "mainElement": "com.ohos.systemui.statusbar.ServiceExtAbility",
