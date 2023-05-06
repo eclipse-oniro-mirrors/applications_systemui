@@ -68,6 +68,8 @@ export default struct BannerNotificationItem {
   }
 
   aboutToDisappear() {
+    delete this.devicesDialogController
+    this.devicesDialogController = undefined
     Log.showInfo(TAG, `aboutToDisAppear`);
   }
 
