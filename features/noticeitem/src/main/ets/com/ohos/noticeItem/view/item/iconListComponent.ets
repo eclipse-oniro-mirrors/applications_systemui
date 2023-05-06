@@ -90,6 +90,16 @@ export default struct IconListComponent {
     iconSize = this.iconConfigs.length;
   }
 
+  aboutToDisappear() {
+    delete this.settingDialogController
+    this.settingDialogController = undefined
+
+    delete this.confirmDialogController
+    this.confirmDialogController = undefined
+
+    Log.showInfo(TAG, 'aboutToDisappear')
+  }
+
   build() {
     Flex({ direction: FlexDirection.Row, alignItems: ItemAlign.End, justifyContent: FlexAlign.End }) {
       ForEach(this.iconConfigs, (item) => {
@@ -141,6 +151,16 @@ export struct BottomLeftItem {
     offset: { dx: 0, dy: $r('app.float.confirm_dialog_dy') },
     customStyle: true
   });
+
+  aboutToDisappear() {
+    delete this.settingDialogController
+    this.settingDialogController = undefined
+
+    delete this.confirmDialogController
+    this.confirmDialogController = undefined
+
+    Log.showInfo(TAG, 'BottomLeftItem -> aboutToDisappear')
+  }
 
   build(){
     Row() {
