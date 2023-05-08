@@ -43,7 +43,7 @@ export default struct SimpleToggleComponent {
 
   linkItemData() {
     Log.showDebug(TAG, `linkItemData, keyId: ${this.keyId}`);
-    this.mItemData = AppStorage.Link('ControlCenter_' + this.keyId).get();
+    this.mItemData = AppStorage.Get('ControlCenter_' + this.keyId);
     Log.showDebug(TAG, `linkItemData, mItemData: ${this.keyId} ${this.mItemData.label} ${this.mItemData.iconUrl}`);
   }
 

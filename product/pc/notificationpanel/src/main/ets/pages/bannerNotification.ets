@@ -117,11 +117,11 @@ struct Index {
     Log.showDebug(TAG, `onBannerNoticeShow start`);
     let winInfoNotice = WindowManager.getWindowInfo(WindowType.NOTIFICATION_PANEL);
     let bannerDisabledFlg = false;
-    let screenLockStatusInfo = AppStorage.Link('lockStatus');
-    let screenLockStatus = ScreenLockStatus.Unlock;
-    if (!!screenLockStatusInfo) {
+//    let screenLockStatusInfo = AppStorage.Link('lockStatus');
+//    let screenLockStatus = ScreenLockStatus.Unlock;
+//    if (!!screenLockStatusInfo) {
 //      screenLockStatus = screenLockStatusInfo.get();
-    }
+//    }
 //    if (screenLockStatus == ScreenLockStatus.Locking) {
 //      bannerDisabledFlg = true;
 //    } else
