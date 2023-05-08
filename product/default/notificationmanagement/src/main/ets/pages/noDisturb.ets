@@ -286,6 +286,25 @@ export default struct NoDisturb {
     this.mViewModel.viewModelInit()
   }
 
+  aboutToDisappear() {
+    delete this.startDateDialogController
+    this.startDateDialogController = undefined
+
+    delete this.startTimeDialogController
+    this.startTimeDialogController = undefined
+
+    delete this.endDateDialogController
+    this.endDateDialogController = undefined
+
+    delete this.endTimeDialogController
+    this.endTimeDialogController = undefined
+
+    delete this.repeatDialogController
+    this.repeatDialogController = undefined
+
+    Log.showInfo(TAG, `aboutToDisappear`)
+  }
+
   onBackPress() {
     Log.showInfo(TAG, `onBackPress`)
   }

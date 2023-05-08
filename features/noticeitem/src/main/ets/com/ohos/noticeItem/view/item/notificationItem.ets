@@ -94,6 +94,12 @@ struct FrontItem {
     offset: { dx: 0, dy: 200 }
   });
 
+  aboutToDisappear() {
+    delete this.devicesDialogController
+    this.devicesDialogController = undefined
+    Log.showInfo(TAG, 'FrontItem -> aboutToDisappear')
+  }
+
   build() {
     Column() {
       if (this.itemData.template?.name) {
