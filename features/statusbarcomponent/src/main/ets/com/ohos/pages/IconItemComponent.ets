@@ -58,11 +58,15 @@ export default struct IconItemComponent {
   }
 
   linkItemData() {
-    this.mItemData = AppStorage.Link('StatusBar_' + this.keyId).get()
+    this.mItemData = AppStorage.Get('StatusBar_' + this.keyId)
     Log.showInfo(TAG, `linkItemData, mItemData: ${this.keyId} ${this.mItemData.label} ${
     this.mItemData
     .iconUrl}`)
-    this.mItemStatus = AppStorage.SetAndLink('StatusBar_Status_' + this.keyId, { selected: false }).get()
+
+    const statusBarStatusKey = 'StatusBar_Status_' + this.keyId
+    AppStorage.SetOrCreate(statusBarStatusKey, { selected: false })
+    this.mItemStatus = AppStorage.Get(statusBarStatusKey)
+//    this.mItemStatus = AppStorage.SetAndLink('StatusBar_Status_' + this.keyId, { selected: false }).get()
   }
 
   build() {
