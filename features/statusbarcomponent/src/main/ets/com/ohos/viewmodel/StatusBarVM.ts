@@ -181,11 +181,13 @@ export class StatusBarVM {
     if (typeof (tintState.isEnable) == 'boolean') {
       this.setStatusBarEnable(tintState.isEnable);
     }
-    if (tintState.backgroundColor) {
-      this.changeBackground(tintState);
-    }
-    if (tintState.contentColor) {
-      this.changeContent(tintState);
+    if (tintState.isEnable) {
+      if (tintState.backgroundColor) {
+        this.changeBackground(tintState);
+      }
+      if (tintState.contentColor) {
+        this.changeContent(tintState);
+      }
     }
   }
 
