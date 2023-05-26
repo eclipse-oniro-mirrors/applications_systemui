@@ -114,7 +114,7 @@ export class VolumePanelVM {
 
   updateVolumeInfo(volumeInfo: VolumeInfo): void {
     Log.showInfo(TAG, `updateVolumeInfo, volumeInfo: ${JSON.stringify(volumeInfo)} , mCurrentAudioVolumeType: ${this.mCurrentAudioVolumeType}`);
-    if (!volumeInfo.updateUi && this.mIsMute.get() == volumeInfo.isMute) {
+    if (!(volumeInfo.updateUi || this.mIsMute.get() != volumeInfo.isMute || VolumeWindowController.getInstance().mIsWindowShown)) {
       return;
     }
     let volumeType = volumeInfo.volumeType;
