@@ -23,6 +23,7 @@ import NotificationService from '../model/NotificationService';
 import NotificationWindowManager from '../model/NotificationWindowManager';
 import NotificationConfig from '../model/NotificationConfig';
 import CheckEmptyUtils from '../../../../../../../../../common/src/main/ets/default/CheckEmptyUtils';
+import createOrGet from '../../../../../../../../../common/src/main/ets/default/SingleInstanceHelper';
 import AbilityManager from '../../../../../../../../../common/src/main/ets/default/abilitymanager/abilityManager';
 import EventManager from '../../../../../../../../../common/src/main/ets/default/event/EventManager';
 import {obtainLocalEvent} from '../../../../../../../../../common/src/main/ets/default/event/EventUtil';
@@ -407,6 +408,6 @@ export class NotificationViewModel {
   }
 }
 
-let notificationViewModel = new NotificationViewModel();
+let sNotificationViewModel = createOrGet(NotificationViewModel, TAG);
 
-export default notificationViewModel ;
+export default sNotificationViewModel ;
