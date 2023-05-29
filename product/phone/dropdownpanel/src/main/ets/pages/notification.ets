@@ -107,7 +107,10 @@ export default struct Notification {
           NotificationViewModel.removeAllNotifications();
         })
       }
-    }.onTouch(this.touchEvent.bind(this))
+    }
+    .width('100%')
+    .height('100%')
+    .onTouch(this.touchEvent.bind(this))
   }
 
   touchEvent(event: TouchEvent) {
