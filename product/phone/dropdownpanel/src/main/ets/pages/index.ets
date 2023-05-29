@@ -70,10 +70,16 @@ class insertTemplate{
   scale: Object
 }
 
+enum DropdownPanelComponentName {
+  NONE = 'None',
+  CONTROL_CENTER = 'ControlCenter',
+  NOTIFICATION = 'Notification'
+}
+
 @Entry
 @Component
 struct Index {
-  @State showComponentName: string = undefined;
+  @State showComponentName: DropdownPanelComponentName = DropdownPanelComponentName.NONE;
   @State componentOptAreaHeightPX: number = 0;
   @StorageLink('StatusCoefficient') StatusCoefficient: number = 1.0;
   mCallback: any;
@@ -149,7 +155,7 @@ struct Index {
 
   onPageShow() {
     Log.showInfo(TAG, `onPageShow, start`)
-    if (!this.showComponentName) {
+    if (this.showComponentName === DropdownPanelComponentName.NONE) {
       return
     }
     StatusBarVM.setUseInWindowName(WindowType.DROPDOWN_PANEL)
@@ -178,7 +184,7 @@ struct Index {
   onNotificationShowOrHide(data) {
     Log.showDebug(TAG, `mNotificationAsyncCallback preKeys: ${data.preKeys}, finalKey: ${data.finalKey}`);
     Log.showDebug(TAG, `this.showComponentName: ${this.showComponentName}`);
-    if (this.showComponentName == 'Notification') {
+    if (this.showComponentName === DropdownPanelComponentName.NOTIFICATION) {
       this.hideSelf();
     } else {
       this.showSelf('Notification');
@@ -189,7 +195,7 @@ struct Index {
   onControlShowOrHide(data) {
     Log.showDebug(TAG, `mControlAsyncCallback preKeys: ${data.preKeys}, finalKey: ${data.finalKey}`);
     Log.showDebug(TAG, `this.showComponentName: ${this.showComponentName}`);
-    if (this.showComponentName == 'ControlCenter') {
+    if (this.showComponentName === DropdownPanelComponentName.CONTROL_CENTER) {
       this.hideSelf();
     } else {
       this.showSelf('ControlCenter');
@@ -200,7 +206,7 @@ struct Index {
   onStateChange(data) {
     Log.showDebug(TAG, `onStateChange, data: ${JSON.stringify(data)}`)
     Log.showDebug(TAG, `onStateChange, showComponentName: ${this.showComponentName}`)
-    if (this.showComponentName) {
+    if (this.showComponentName !== DropdownPanelComponentName.NONE) {
       this.hideSelf()
     }
   }
@@ -229,9 +235,9 @@ struct Index {
     } else if (data.direction == 'right' && data.touchComponent == 'control') {
       this.switchNotificationOrControlCenter('Notification')
     } else if (data.direction == 'drop_left' && data.touchComponent == 'control') {
-      this.showComponentName = 'Notification'
+      this.showComponentName = DropdownPanelComponentName.NOTIFICATION
     } else if (data.direction == 'drop_right' && data.touchComponent == 'notification') {
-      this.showComponentName = 'ControlCenter'
+      this.showComponentName = DropdownPanelComponentName.CONTROL_CENTER
     }
   }
 
@@ -264,13 +270,13 @@ struct Index {
 
   hideSelf() {
     Log.showDebug(TAG, `hideSelf`)
-    this._animateTo({ ...SHOW_ANIM_CONFIG, onFinish: () => {
+    this._animateTo({...SHOW_ANIM_CONFIG, onFinish: () => {
       Log.showInfo(TAG, `hideSelf, hide anim finish.`);
-      this.showComponentName = undefined
       WindowManager.hideWindow(WindowType.DROPDOWN_PANEL)
-    } }, () => {
+    }}, () => {
       this.componentOptAreaTranslateY = (-this.componentOptAreaHeightPX * 0.1) + 'px'
       this.backgroundOpacity = 0
+      this.showComponentName = DropdownPanelComponentName.NONE
     })
   }
 
@@ -289,24 +295,17 @@ struct Index {
         .blur(25)
         .opacity(1)
       Column() {
-        if (this.showComponentName == 'Notification') {
-          Column() {
-            Notification({ touchMoveCallback: (data) => this.onTouchMove(data) })
-          }
-          .width('100%')
-          .height('100%')
-          .transition(this.mNotificationInsert)
-          .transition(this.mNotificationDelete)
-        } else if (this.showComponentName == 'ControlCenter') {
-          Column() {
-            ControlCenterComponent({
-              touchMoveCallback: (data) => this.onTouchMove(data)
-            })
-          }
-          .width('100%')
-          .height('100%')
-          .transition(this.mControlCenterInsert)
-          .transition(this.mControlCenterDelete)
+        if (this.showComponentName === DropdownPanelComponentName.NOTIFICATION) {
+          Notification({ touchMoveCallback: (data) => this.onTouchMove(data) })
+            .transition(this.mNotificationInsert)
+            .transition(this.mNotificationDelete)
+        }
+        if (this.showComponentName === DropdownPanelComponentName.CONTROL_CENTER) {
+          ControlCenterComponent({
+            touchMoveCallback: (data) => this.onTouchMove(data)
+          })
+            .transition(this.mControlCenterInsert)
+            .transition(this.mControlCenterDelete)
         }
       }
       .width('100%')
