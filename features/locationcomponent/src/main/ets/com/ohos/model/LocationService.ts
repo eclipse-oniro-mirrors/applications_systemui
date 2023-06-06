@@ -58,9 +58,13 @@ export class LocationService {
 
   getServiceState(): void {
     Log.showDebug(TAG, 'getServiceState');
-    let data = geolocation.isLocationEnabled()
-    Log.showInfo(TAG, `getServiceState isLocationEnabled, data: ${JSON.stringify(data)}`);
-    this.mListener?.updateServiceState(data);
+    try {
+      let data = geolocation.isLocationEnabled()
+      Log.showInfo(TAG, `getServiceState isLocationEnabled, data: ${JSON.stringify(data)}`);
+      this.mListener?.updateServiceState(data);
+    } catch(err) {
+      Log.showDebug(TAG, `getServiceState Error：${JSON.stringify(err || {})}`)
+    }
   }
 
   enableLocation(): void {
