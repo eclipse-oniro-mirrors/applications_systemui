@@ -58,23 +58,35 @@ export class LocationService {
 
   getServiceState(): void {
     Log.showDebug(TAG, 'getServiceState');
-    let data = geolocation.isLocationEnabled()
-    Log.showInfo(TAG, `getServiceState isLocationEnabled, data: ${JSON.stringify(data)}`);
-    this.mListener?.updateServiceState(data);
+    try {
+      let data = geolocation.isLocationEnabled();
+      Log.showInfo(TAG, `getServiceState isLocationEnabled, data: ${JSON.stringify(data)}`);
+      this.mListener?.updateServiceState(data);
+    } catch(err) {
+      Log.showInfo(TAG, `getServiceState Error：${JSON.stringify(err || {})}`);
+    }
   }
 
   enableLocation(): void {
     Log.showInfo(TAG, 'enableLocation');
-    geolocation.enableLocation()
-      .then((res) => Log.showInfo(TAG, `enableLocation, result: ${JSON.stringify(res)}`))
-      .then(() => {
-      }).catch((err) => {
-    });
+    try {
+      geolocation.enableLocation()
+        .then((res) => Log.showInfo(TAG, `enableLocation, result: ${JSON.stringify(res)}`))
+        .then(() => {
+        }).catch((err) => {
+      });
+    } catch (error) {
+      Log.showInfo(TAG, `enableLocation, trycatch error: ${JSON.stringify(error || {})}`);
+    }
   }
 
   disableLocation(): void {
     Log.showInfo(TAG, 'disableLocation');
-    geolocation.disableLocation()
+    try {
+      geolocation.disableLocation();
+    } catch (error) {
+      Log.showInfo(TAG, `disableLocation, trycatch error: ${JSON.stringify(error || {})}`);
+    }
   }
 }
 
