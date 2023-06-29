@@ -16,14 +16,14 @@
 import Log from '../../../../../../../../common/src/main/ets/default/Log';
 import AbilityManager from '../../../../../../../../common/src/main/ets/default/abilitymanager/abilityManager';
 import BundleManager from '../../../../../../../../common/src/main/ets/default/abilitymanager/bundleManager';
-import Bundle from '@ohos.bundle';
-import { BundleInfo } from 'bundle/bundleInfo';
+import Bundle from '@ohos.bundle.bundleManager';
+import { BundleInfo } from 'bundleManager/BundleInfo';
 import ResMgr from '@ohos.resourceManager';
 import {BusinessError} from '@ohos.base';
 import SwitchUserManager from '../../../../../../../../common/src/main/ets/default/SwitchUserManager';
 
 const INDEX = 0;
-const IS_INCLUDE_ABILITY_INFO = 0;
+const IS_INCLUDE_ABILITY_INFO = 0x00000001;
 
 const TAG = 'NotificationManagenment-BundleResourceModel';
 
@@ -59,10 +59,8 @@ export default class BundleResourceModel {
       let appInfo = data[index].appInfo;
       if (appInfo.labelResource.id > 0) {
         BundleManager.getString(appInfo.labelResource, (value) => {
-          {
-            if (value) {
-              label = value;
-            }
+          if (value) {
+            label = value;
           }
         })
       } else {
@@ -85,7 +83,7 @@ export default class BundleResourceModel {
             appBundleName: data[index].name,
             appIconId: appInfo.iconId,
             appUri: 'pages/setEnable',
-            appUid: data[index].uid,
+            appUid: appInfo.uid,
             systemApp: appInfo.systemApp
           };
           this.mBundleInfoList.push(bundleItemData);
@@ -112,17 +110,13 @@ export default class BundleResourceModel {
     let label = '';
     let userInfo = await SwitchUserManager.getInstance().getCurrentUserInfo();
 
-    await Bundle.getBundleInfo(bundleName, IS_INCLUDE_ABILITY_INFO, {
-      userId: userInfo.userId
-    }).then((data) => {
+    await Bundle.getBundleInfo(bundleName, IS_INCLUDE_ABILITY_INFO, userInfo.userId).then((data) => {
       Log.showInfo(TAG, `getBundleInfo bundleInfo:${JSON.stringify(data)}`);
       let appInfo = data.appInfo;
       if (appInfo.labelResource.id > 0) {
         BundleManager.getString(appInfo.labelResource, (value) => {
-          {
-            if (value) {
-              mBundleInfo.appTitle = value;
-            }
+          if (value) {
+            mBundleInfo.appTitle = value;
           }
         })
       }
@@ -133,7 +127,7 @@ export default class BundleResourceModel {
       mBundleInfo.appBundleName = data.name;
       mBundleInfo.appIconId = appInfo.iconId;
       mBundleInfo.appUri = '';
-      mBundleInfo.appUid = data.uid;
+      mBundleInfo.appUid = appInfo.uid;
       mBundleInfo.systemApp = appInfo.systemApp;
       Log.showDebug(TAG, 'getBundleInfo getResourceManager label:' + label);
       if (appInfo.iconResource.id > 0) {

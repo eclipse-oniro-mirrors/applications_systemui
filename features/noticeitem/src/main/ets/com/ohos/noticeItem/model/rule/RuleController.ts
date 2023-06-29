@@ -17,7 +17,6 @@ import {NotificationItemData} from '../../common/constants';
 import Log from '../../../../../../../../../../common/src/main/ets/default/Log';
 import Notification from '@ohos.notification';
 import CheckEmptyUtils from '../../../../../../../../../../common/src/main/ets/default/CheckEmptyUtils';
-import Bundle from '@ohos.bundle';
 
 const TAG = 'NotificationRuleController';
 
