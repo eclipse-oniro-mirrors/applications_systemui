@@ -1,0 +1,29 @@
+{
+  "module": {
+    "name": "default_dialog",
+    "type": "feature",
+    "srcEntrance": "./ets/Application/AbilityStage.ts",
+    "deviceTypes": [
+      "default"
+    ],
+    "metadata": [
+      {
+        "name": "ArkTSPartialUpdate",
+        "value": "true"
+      }
+    ],
+    "deliveryWithInstall": true,
+    "installationFree": false,
+    "uiSyntax": "ets",
+    "pages": "$profile:main_pages",
+    "extensionAbilities": [
+      {
+        "visible": true,
+        "srcEntrance": "./ets/ServiceExtAbility/ExtAbility.ts",
+        "name": "com.ohos.systemui.dialog",
+        "description": "$string:mainability_description",
+        "type": "service"
+      }
+    ]
+  }
+}
