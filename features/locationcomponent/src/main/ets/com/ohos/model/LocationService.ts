@@ -34,10 +34,15 @@ export class LocationService {
     Log.showInfo(TAG, 'startService');
     this.mIsStart = true;
     this.getServiceState();
-    geolocation.on('locationEnabledChange', (state: boolean) => {
-      Log.showInfo(TAG, `startService locationChange, state: ${JSON.stringify(state)}`);
-      this.getServiceState();
-    });
+
+    try {
+      geolocation.on('locationEnabledChange', (state: boolean) => {
+        Log.showInfo(TAG, `startService locationChange, state: ${JSON.stringify(state)}`);
+        this.getServiceState();
+      });
+    } catch(err) {
+      Log.showInfo(TAG, `on-locationEnabledChange Error：${JSON.stringify(err || {})}`);
+    }
   }
 
   stopService(): void {
@@ -46,9 +51,14 @@ export class LocationService {
     };
     Log.showInfo(TAG, 'stopService');
     this.mIsStart = false;
-    geolocation.off('locationEnabledChange', (state: boolean) => {
-      Log.showInfo(TAG, `stopService locationChange, state: ${JSON.stringify(state)}`)
-    });
+
+    try {
+      geolocation.off('locationEnabledChange', (state: boolean) => {
+        Log.showInfo(TAG, `stopService locationChange, state: ${JSON.stringify(state)}`)
+      });
+    } catch(err) {
+      Log.showInfo(TAG, `off-locationEnabledChange Error：${JSON.stringify(err || {})}`);
+    }
   }
 
   registerListener(listener: LocationStatrListener): void {
