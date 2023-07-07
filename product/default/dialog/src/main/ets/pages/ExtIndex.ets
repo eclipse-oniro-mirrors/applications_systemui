@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 Huawei Device Co., Ltd.
+ * Copyright (c) 2021-2023 Huawei Device Co., Ltd.
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -30,11 +30,11 @@ struct Index {
   @LocalStorageProp('parameters') parameters: IDialogParameters = undefined;
 
   aboutToAppear() {
-    Log.showDebug(TAG, `aboutToAppear r ${this.connectId} ${this.windowName} ${JSON.stringify(this.parameters)}`)
+    Log.showInfo(TAG, `aboutToAppear r ${this.connectId} ${this.windowName} ${JSON.stringify(this.parameters)}`)
   }
 
   aboutToDisappear() {
-    Log.showDebug(TAG, `aboutToDisappear ${this.connectId} ${this.windowName} ${JSON.stringify(this.parameters)}`)
+    Log.showInfo(TAG, `aboutToDisappear ${this.connectId} ${this.windowName} ${JSON.stringify(this.parameters)}`)
   }
 
   onOk() {
@@ -61,14 +61,14 @@ struct Index {
         });
     }
 
-    Log.showDebug(TAG, 'onOk end');
+    Log.showInfo(TAG, 'onOk end');
   }
 
   onClose() {
     Log.showDebug(TAG, `onClose start`);
     const controller = globalThis[Constants.SYSTEM_DIALOG_CONTROLLER];
     controller.destroyWindow(this.connectId);
-    Log.showDebug(TAG, `onClose end`);
+    Log.showInfo(TAG, `onClose end`);
   }
 
   build() {
