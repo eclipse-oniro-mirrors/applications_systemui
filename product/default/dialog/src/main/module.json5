@@ -18,7 +18,7 @@
     "pages": "$profile:main_pages",
     "extensionAbilities": [
       {
-        "visible": true,
+        "visible": false,
         "srcEntrance": "./ets/ServiceExtAbility/ExtAbility.ts",
         "name": "com.ohos.systemui.dialog",
         "description": "$string:mainability_description",
