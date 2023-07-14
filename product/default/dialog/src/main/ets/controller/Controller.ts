@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021-2022 Huawei Device Co., Ltd.
+ * Copyright (c) 2021-2023 Huawei Device Co., Ltd.
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -23,7 +23,6 @@ export interface IDialogParameters {
   bundleName?: string,
   abilityName?: string,
   parameters?: { [key: string]: any },
-//   type?: string
 }
 
 interface ISystemDialogData {
@@ -39,7 +38,7 @@ class SystemDialogController {
 
   constructor(context) {
     this.context = context;
-    Log.showDebug(TAG, `SystemDialogController constructor ${this.context}`);
+    Log.showInfo(TAG, `SystemDialogController constructor ${this.context}`);
   }
 
   getContext() {
@@ -51,7 +50,7 @@ class SystemDialogController {
   }
 
   getRemoteObject(key: string) {
-    Log.showDebug(TAG, `getRemoteObject start ${key}`);
+    Log.showInfo(TAG, `getRemoteObject start ${key}`);
     const { remoteObject } = this.data.get(key);
 
     Log.showDebug(TAG, `getRemoteObject end ${remoteObject}`);
@@ -59,18 +58,18 @@ class SystemDialogController {
   }
 
   clearRemoteObject(key: string) {
-    Log.showDebug(TAG, `clearRemoteObject start ${key}`);
+    Log.showInfo(TAG, `clearRemoteObject start ${key}`);
 
-    const now = this.data.get(key);
-    if (now) {
-      now.remoteObject = undefined;
+    const current = this.data.get(key);
+    if (current) {
+      current.remoteObject = undefined;
     }
 
     Log.showDebug(TAG, `clearRemoteObject end ${key}`);
   }
 
   addDataByKey(key: string, v: ISystemDialogData) {
-    Log.showDebug(TAG, `Controller-addDataByKey start ${key} ${v}`);
+    Log.showInfo(TAG, `Controller-addDataByKey start ${key} ${v}`);
     if (this.data.get(key)) {
       Object.assign(this.data.get(key), v);
     } else {
@@ -80,15 +79,15 @@ class SystemDialogController {
   }
 
   destroyWindow(key: string, needClear: boolean = true) {
-    const now = this.data.get(key);
+    const current = this.data.get(key);
 
-    if (!now) {
-      Log.showDebug(TAG, `destroyWindow fail. key:${key} not exist`);
+    if (!current) {
+      Log.showInfo(TAG, `destroyWindow fail. key:${key} not exist`);
       return;
     }
 
-    const { windowName } = now;
-    Log.showDebug(TAG, `destroyWindow start ${key} ${windowName}`);
+    const { windowName } = current;
+    Log.showInfo(TAG, `destroyWindow start ${key} ${windowName}`);
 
     if (windowName) {
       const win = window.findWindow(windowName);
@@ -112,7 +111,7 @@ class SystemDialogController {
   }
 
   destroyAllWindow() {
-    Log.showDebug(TAG, `destroyAllWindow start`);
+    Log.showInfo(TAG, `destroyAllWindow start`);
     this.data.forEach((v, key) => {
       this.destroyWindow(key);
     })
@@ -120,7 +119,7 @@ class SystemDialogController {
   }
 
   clear() {
-    Log.showDebug(TAG, `clear start`);
+    Log.showInfo(TAG, `clear start`);
     this.data.clear();
     this.context.terminateSelf();
     this.context = null;

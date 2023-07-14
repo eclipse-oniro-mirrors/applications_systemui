@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021-2022 Huawei Device Co., Ltd.
+ * Copyright (c) 2021-2023 Huawei Device Co., Ltd.
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -19,7 +19,7 @@ import display from '@ohos.display';
 import window from '@ohos.window';
 import rpc from '@ohos.rpc';
 import Log from '../../../../../../../common/src/main/ets/default/Log';
-import Constants from '../common/Constants';
+import Constants, { ServiceStubCode } from '../common/Constants';
 import SystemDialogController from '../controller/Controller';
 import type { IDialogParameters } from '../controller/Controller';
 
@@ -34,17 +34,17 @@ const REPLY_SUCCESS_CODE = 0;
 class Stub extends rpc.RemoteObject {
   onRemoteRequest(code: number, data, reply, option) {
     const connectId = getConnectId(rpc.IPCSkeleton.getCallingPid(), rpc.IPCSkeleton.getCallingTokenId());
-    Log.showDebug(TAG, `onRemoteRequest start ${connectId}`);
+    Log.showInfo(TAG, `onRemoteRequest start ${connectId}`);
 
-    if (code === 2) {
-      Log.showDebug(TAG, `onRemoteRequest code:2 start ${connectId}`);
+    if (code === ServiceStubCode.COMMAND_SEND_REMOTE_OBJECT) {
+      Log.showInfo(TAG, `onRemoteRequest code:${ServiceStubCode.COMMAND_SEND_REMOTE_OBJECT} start ${connectId}`);
       const controller = globalThis[Constants.SYSTEM_DIALOG_CONTROLLER];
       const remoteObject = data.readRemoteObject();
-      Log.showDebug(TAG, `onRemoteRequest code:2 ${remoteObject}`);
+      Log.showDebug(TAG, `onRemoteRequest code:${ServiceStubCode.COMMAND_SEND_REMOTE_OBJECT} ${remoteObject}`);
 
       if (remoteObject) {
         controller.addDataByKey(connectId, { remoteObject });
-        Log.showDebug(TAG, `onRemoteRequest code:2 end`);
+        Log.showDebug(TAG, `onRemoteRequest code:${ServiceStubCode.COMMAND_SEND_REMOTE_OBJECT} end`);
 
         reply.writeInt(REPLY_SUCCESS_CODE);
         return true;
@@ -53,17 +53,14 @@ class Stub extends rpc.RemoteObject {
       return false;
     }
 
-    if (code === 1) {
-      Log.showDebug(TAG, `onRemoteRequest code:1 ${connectId}`);
+    if (code === ServiceStubCode.COMMAND_START_DIALOG) {
+      Log.showInfo(TAG, `onRemoteRequest code:${ServiceStubCode.COMMAND_START_DIALOG} ${connectId}`);
       const size = data.readInt();
-      Log.showDebug(TAG, `onRemoteRequest code:1 readInt ${size}`);
       const parameters: { [key: string]: any } = {};
 
       for (let i = 0; i < size; i++) {
         const key = data.readString();
-        Log.showDebug(TAG, `onRemoteRequest code:1 readString ${key}`);
         const value = data.readString();
-        Log.showDebug(TAG, `onRemoteRequest code:1 readString ${value}`);
         parameters[key] = value;
       }
 
@@ -90,14 +87,14 @@ class Stub extends rpc.RemoteObject {
 
   async createWindow(connectId: string, parameters: IDialogParameters) {
     const controller = globalThis[Constants.SYSTEM_DIALOG_CONTROLLER];
-    const now = controller.getData().get(connectId);
-    if (now && now.windowName) {
-      Log.showDebug(TAG, `createWindow <this same> connectId:${connectId}`);
+    const current = controller.getData().get(connectId);
+    if (current && current.windowName) {
+      Log.showInfo(TAG, `createWindow <this same> connectId:${connectId}`);
       controller.destroyWindow(connectId, false);
     }
 
     const windowName = `SystemDialog${++controller.count}`;
-    Log.showDebug(TAG, `createWindow <start> windowName:${windowName} connectId:${connectId} parameters:${JSON.stringify(parameters)}`);
+    Log.showInfo(TAG, `createWindow <start> windowName:${windowName} connectId:${connectId} parameters:${JSON.stringify(parameters)}`);
 
     controller.addDataByKey(connectId, { windowName, parameters });
 
@@ -109,7 +106,7 @@ class Stub extends rpc.RemoteObject {
         height: dis.height
       };
     });
-    Log.showDebug(TAG, `createWindow <getDefaultDisplay> ${JSON.stringify(navigationBarRect)}`);
+    Log.showInfo(TAG, `createWindow <getDefaultDisplay> ${JSON.stringify(navigationBarRect)}`);
     const win = await window.createWindow({
       ctx: controller.getContext(),
       name: windowName,
@@ -131,17 +128,17 @@ class Stub extends rpc.RemoteObject {
 
 export default class DialogServiceExtAbility extends ServiceExtensionAbility {
   onCreate(want: Want) {
-    Log.showDebug(TAG, 'onCreate');
+    Log.showInfo(TAG, 'onCreate');
     globalThis[Constants.SYSTEM_DIALOG_CONTROLLER] = new SystemDialogController(this.context);
   }
 
   onConnect() {
-    Log.showDebug(TAG, 'onConnect');
+    Log.showInfo(TAG, 'onConnect');
     return new Stub('SystemDialog');
   }
 
   onDisconnect() {
-    Log.showDebug(TAG, 'onDisconnect');
+    Log.showInfo(TAG, 'onDisconnect');
   }
 
   onDestroy() {
@@ -149,6 +146,6 @@ export default class DialogServiceExtAbility extends ServiceExtensionAbility {
     controller.destroyAllWindow();
     globalThis[Constants.SYSTEM_DIALOG_CONTROLLER] = undefined;
 
-    Log.showDebug(TAG, 'onDestroy end');
+    Log.showInfo(TAG, 'onDestroy end');
   }
 }
