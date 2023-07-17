@@ -225,13 +225,6 @@ export default struct AppItemComponent {
   aboutToAppear(): void{
     Log.showInfo(TAG, `aboutToAppear`);
     if (this.appSwitch === 1) {
-      NotificationListener.subscribeEnableChanged();
-      NotificationListener.register({ bundle: this.appBundleName,
-        onEnableChanged: (stateValue: boolean) => {
-          Log.showDebug(TAG, `aboutToAppear listener call`);
-          this.canNotice = stateValue;
-        } });
-
       NotificationListener.isNotificationEnabled({ bundle: this.appBundleName, uid: this.appUid })
         .then((stateValue) => {
           Log.showInfo(TAG, `NotificationListener.isNotificationEnabled data:${JSON.stringify(stateValue)}`);
@@ -240,14 +233,17 @@ export default struct AppItemComponent {
         .catch((error) => {
           Log.showError(TAG, `NotificationListener.isNotificationEnabled error:${JSON.stringify(error)}`);
         });
+
+      NotificationListener.register({ bundle: this.appBundleName,
+        onEnableChanged: (stateValue: boolean) => {
+          Log.showDebug(TAG, `aboutToAppear listener call`);
+          this.canNotice = stateValue;
+        } });
     }
   }
 
   aboutToDisappear(): void{
     Log.showInfo(TAG, `aboutToDisappear`);
-    if (this.appSwitch === 1) {
-      NotificationListener.unsubscribeEnableChanged();
-    }
   }
 
   onBackPress() {
