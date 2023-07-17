@@ -16,12 +16,17 @@ import Log from '../../../../../../../../common/src/main/ets/default/Log';
 import Notification from '@ohos.notification';
 import NotificationManager from '@ohos.notificationManager';
 import NotificationSubscribe from '@ohos.notificationSubscribe';
+import type { NotificationSubscriber } from 'notification/notificationSubscriber';
 
 const TAG = 'NotificationManagenment-NotificationListener';
 
+interface IOnEnableChanged {
+    (value: boolean): void;
+}
+
 interface EnableListener {
     bundle: string;
-    onEnableChanged: { (value: boolean): void };
+    onEnableChanged: IOnEnableChanged;
 }
 
 export interface BundleOption {
@@ -30,51 +35,70 @@ export interface BundleOption {
 }
 
 export class NotificationListener {
-    private readonly listeners = new Set<EnableListener>();
+    private readonly listeners = new Map<string, Set<IOnEnableChanged>>();
+    private subscriber: NotificationSubscriber = {
+        onEnabledNotificationChanged: this.handleEnabledNotificationChanged.bind(this)
+    };
 
     subscribeEnableChanged(): void {
-        Log.showInfo(TAG, 'subscribeEnableChanged');
-      NotificationSubscribe.subscribe({
-            onEnabledNotificationChanged: this.handleEnabledNotificationChanged.bind(this)
-        }, () => {
-            Log.showInfo(TAG, 'subscribeEnableChanged finished');
+        Log.showDebug(TAG, `subscribeEnableChanged ${this.subscriber}`);
+
+        NotificationSubscribe.subscribe(this.subscriber, err => {
+            if (err) {
+                Log.showInfo(TAG, `subscribeEnableChanged error ${JSON.stringify(err)}`);
+            } else {
+                Log.showInfo(TAG, 'subscribeEnableChanged finished');
+            }
         });
     }
 
     unsubscribeEnableChanged(): void {
-        Log.showInfo(TAG, 'unsubscribeEnableChanged');
+        Log.showDebug(TAG, `unsubscribeEnableChanged start  ${this.subscriber}`);
         this.unRegisterAll();
-      NotificationSubscribe.unsubscribe({
-            onEnabledNotificationChanged: this.handleEnabledNotificationChanged.bind(this)
-        }, () => {
-            Log.showInfo(TAG, 'unsubscribeEnableChanged finished');
+
+        NotificationSubscribe.unsubscribe(this.subscriber, err => {
+            if (err) {
+                Log.showInfo(TAG, `unsubscribeEnableChanged error ${JSON.stringify(err)}`);
+            } else {
+                Log.showInfo(TAG, 'unsubscribeEnableChanged finished');
+            }
         });
     }
 
     handleEnabledNotificationChanged(data: NotificationSubscribe.EnabledNotificationCallbackData): void {
         Log.showDebug(TAG, `handleEnabledNotificationChanged data:${JSON.stringify(data)} `);
-        this.listeners.forEach((listener) => {
-            if (listener.bundle == data.bundle) {
-                listener.onEnableChanged(data.enable);
-            } else {
-                Log.showError(TAG, `handleEnabledNotificationChanged error`);
-            }
-        });
+
+        const callbacks = this.listeners.get(data.bundle);
+        if (callbacks && callbacks.size) {
+            callbacks.forEach(cb => cb(data.enable));
+        }
     }
 
     register(listener: EnableListener): void {
-        this.listeners.add(listener);
-        Log.showInfo(TAG, 'register finished');
+        let callbacks: Set<IOnEnableChanged> = this.listeners.get(listener.bundle);
+        if (!callbacks) {
+            callbacks = new Set();
+            this.listeners.set(listener.bundle, callbacks);
+        }
+
+        callbacks.add(listener.onEnableChanged);
+        Log.showDebug(TAG, 'register finished');
     }
 
     unRegister(listener: EnableListener): void {
-        this.listeners.delete(listener);
-        Log.showInfo(TAG, 'unRegister finished');
+        const callbacks = this.listeners.get(listener.bundle);
+        if (!callbacks) {
+            Log.showDebug(TAG, 'unRegister finished by empty');
+            return;
+        }
+
+        callbacks.delete(listener.onEnableChanged);
+        Log.showDebug(TAG, 'unRegister finished');
     }
 
     unRegisterAll(): void {
         this.listeners.clear();
-        Log.showInfo(TAG, 'unRegisterAll finished');
+        Log.showDebug(TAG, 'unRegisterAll finished');
     }
 
     async isNotificationEnabled(bundleOption: BundleOption, callback?: (data) => void): Promise<boolean> {

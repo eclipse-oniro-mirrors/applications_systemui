@@ -17,6 +17,7 @@
 import Log from '../../../../../../../common/src/main/ets/default/Log';
 import HeadComponent from '../../../../../../../features/managementcomponent/src/main/ets/com/ohos/view/component/headComponent';
 import AppItemComponent from '../../../../../../../features/managementcomponent/src/main/ets/com/ohos/view/component/appItemComponent';
+import NotificationListener from '../../../../../../../features/managementcomponent/src/main/ets/com/ohos/model/notificationListener';
 import ConfigData from '../common/constants';
 import Router from '@system.router'
 import ViewModel from '../vm/notificationManagenmentViewModel'
@@ -92,6 +93,11 @@ export default struct BatchSetEnable {
   aboutToAppear(): void{
     Log.showInfo(TAG, `aboutToAppear`)
     this.mViewModel.viewModelInit();
+    NotificationListener.subscribeEnableChanged();
+  }
+
+  aboutToDisappear(): void {
+    NotificationListener.unsubscribeEnableChanged();
   }
 
   onBackPress() {
