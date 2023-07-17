@@ -86,6 +86,10 @@ export default struct SimpleToggleLayoutEditComponent {
   aboutToDisappear() {
     delete this.backDialogController
     this.backDialogController = undefined
+
+    delete this.resetDialogController
+    this.resetDialogController = undefined
+
     Log.showInfo(TAG, 'aboutToDisappear ');
   }
 
