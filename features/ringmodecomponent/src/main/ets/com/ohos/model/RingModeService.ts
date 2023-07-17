@@ -69,7 +69,7 @@ export class RingModeService {
   }
 
   getRingerMode(): void {
-    this.mAudioManager.getRingerMode((error: BusinessError, action: AudioRingMode) => {
+    this.mAudioManager?.getRingerMode((error: BusinessError, action: AudioRingMode) => {
       Log.showInfo(TAG, `getRingerMode, error: ${JSON.stringify(error)} action: ${JSON.stringify(action)}`);
       if (error) {
         return;
@@ -80,7 +80,7 @@ export class RingModeService {
 
   setRingerMode(mode: AudioRingMode): void {
     Log.showInfo(TAG, `setRingerMode, mode: ${JSON.stringify(mode)}`);
-    this.mAudioManager.setRingerMode(mode, (err: BusinessError) => {
+    this.mAudioManager?.setRingerMode(mode, (err: BusinessError) => {
       Log.showInfo(TAG, 'mAudioManager.setRingerMode');
     });
   }
