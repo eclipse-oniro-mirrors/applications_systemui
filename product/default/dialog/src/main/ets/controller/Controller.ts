@@ -111,8 +111,9 @@ class SystemDialogController {
   }
 
   destroyAllWindow() {
-    Log.showInfo(TAG, `destroyAllWindow start`);
-    this.data.forEach((v, key) => {
+    Log.showInfo(TAG, `destroyAllWindow start ${this.data.size}`);
+    [...this.data.keys()].forEach(key => {
+      Log.showInfo(TAG, `destroyAllWindow forEach ${key}`);
       this.destroyWindow(key);
     })
     Log.showDebug(TAG, `destroyAllWindow end`);
