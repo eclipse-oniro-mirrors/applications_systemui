@@ -33,6 +33,7 @@ const NOTIFICATION_TITLE_ICON_MARGIN = 24;
 @Component
 export default struct Notification {
   @StorageLink('notificationList') notificationList: any[] = []
+  @State isEnd: boolean = false
 
   aboutToAppear() {
     Log.showInfo(TAG, `aboutToAppear Start`);
@@ -54,7 +55,10 @@ export default struct Notification {
           .margin({ top: NO_NOTIFICATION_TOP_MARGIN })
       } else {
         Column() {
-          NotificationListComponent({ config: { itemMargin: NOTIFICATION_ITEM_MARGIN } })
+          NotificationListComponent({
+            config: { itemMargin: NOTIFICATION_ITEM_MARGIN },
+            listIsEnd: $isEnd
+          })
         }
         .flexShrink(1)
       }
