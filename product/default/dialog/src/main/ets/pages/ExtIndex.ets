@@ -67,7 +67,7 @@ struct Index {
   onClose() {
     Log.showDebug(TAG, `onClose start`);
     const controller = globalThis[Constants.SYSTEM_DIALOG_CONTROLLER];
-    controller.destroyWindow(this.connectId);
+    controller?.destroyWindow(this.connectId);
     Log.showInfo(TAG, `onClose end`);
   }
 
