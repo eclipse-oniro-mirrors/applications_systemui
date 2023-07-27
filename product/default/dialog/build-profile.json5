@@ -4,5 +4,6 @@
     {
       "name": "default",
     }
-  ]
+  ],
+  "entryModules": ["pc_entry", "phone_entry"]
 }
