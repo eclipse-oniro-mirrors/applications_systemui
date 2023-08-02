@@ -52,7 +52,8 @@ export default struct SimpleToggleLayoutEditComponent {
     }),
     autoCancel: false,
     offset: { dx: 0, dy: 0 },
-    customStyle: true
+    customStyle: true,
+    alignment: DialogAlignment.Center
   });
   private resetDialogController: CustomDialogController = new CustomDialogController({
     builder: SimpleToggleLayoutEditDialogComponent({
@@ -65,7 +66,8 @@ export default struct SimpleToggleLayoutEditComponent {
     }),
     autoCancel: false,
     offset: { dx: 0, dy: 0 },
-    customStyle: true
+    customStyle: true,
+    alignment: DialogAlignment.Center
   });
 
   aboutToAppear() {
