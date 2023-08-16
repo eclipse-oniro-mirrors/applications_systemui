@@ -21,6 +21,7 @@ import { obtainStartAbility } from "../../../../../../../common/src/main/ets/def
 import Constants from './common/constants';
 import BatteryIcon from '../../../../../../../features/batterycomponent/src/main/ets/default/pages/batteryIcon';
 import ClockIcon from '../../../../../../../features/clockcomponent/src/main/ets/default/pages/clockIcon';
+import AirplaneIcon from '../../../../../../../features/airplanecomponent/src/main/ets/default/pages/StatusBarIconItemAirplaneComponent';
 import WifiIcon from '../../../../../../../features/wificomponent/src/main/ets/default/pages/wifiIcon';
 import BluetoothIcon from '../../../../../../../features/bluetoothcomponent/src/main/ets/com/ohos/pages/StatusBarIconItemBluetoothComponent';
 import SignalIcon from '../../../../../../../features/signalcomponent/src/main/ets/default/pages/signalIcon';
@@ -175,6 +176,7 @@ struct statusBar {
             if(isNfcAvailable()){
               NfcIcon()
             }
+            AirplaneIcon()
             BatteryIcon()
             ClockIcon()
           }
