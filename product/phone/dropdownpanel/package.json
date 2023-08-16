@@ -18,6 +18,7 @@
 		"@ohos/controlcentercomponent":"file:../../../features/controlcentercomponent",
 		"@ohos/ringmodecomponent":"file:../../../features/ringmodecomponent",
 		"@ohos/autorotatecomponent":"file:../../../features/autorotatecomponent",
-		"@ohos/noticeitem":"file:../../../features/noticeitem"
+		"@ohos/noticeitem":"file:../../../features/noticeitem",
+		"@ohos/airplanecomponent":"file:../../../features/airplanecomponent"
 	}
 }

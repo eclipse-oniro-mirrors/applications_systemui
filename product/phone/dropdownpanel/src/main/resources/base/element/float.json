@@ -135,6 +135,14 @@
     {
       "name": "notification_title_setting_icon_height",
       "value": "48px"
+    },
+    {
+      "name": "status_bar_airplane_width",
+      "value": "13vp"
+    },
+    {
+      "name": "status_bar_airplane_height",
+      "value": "15vp"
     }
   ]
 }

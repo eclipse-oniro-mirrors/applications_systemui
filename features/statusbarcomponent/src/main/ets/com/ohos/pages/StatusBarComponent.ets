@@ -27,6 +27,7 @@ import { StringArray } from '../viewmodel/StatusBarVM'
 import IconItemComponent from './IconItemComponent'
 import BatteryIcon from '../../../../../../../batterycomponent/src/main/ets/default/pages/batteryIcon'
 import ClockIcon from '../../../../../../../clockcomponent/src/main/ets/default/pages/clockIcon'
+import AirplaneIcon from '../../../../../../../airplanecomponent/src/main/ets/default/pages/StatusBarIconItemAirplaneComponent'
 import WifiIcon from '../../../../../../../wificomponent/src/main/ets/default/pages/wifiIcon'
 import BluetoothIcon from '../../../../../../../bluetoothcomponent/src/main/ets/com/ohos/pages/StatusBarIconItemBluetoothComponent'
 import SignalIcon from '../../../../../../../signalcomponent/src/main/ets/default/pages/signalIcon'
@@ -263,6 +264,8 @@ struct StatusBarItemLoadComponent {
         ClockIcon()
       } else if (this.mComponentName == FASlotName.BATTERY) {
         BatteryIcon()
+      } else if (this.mComponentName == FASlotName.AIR_PLANE) {
+        AirplaneIcon()
       } else if (this.mComponentName == FASlotName.CAPSULE) {
         CapsuleIcon()
       } else if (this.mComponentName == FASlotName.NOTIFICATION) {

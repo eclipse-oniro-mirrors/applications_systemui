@@ -147,6 +147,14 @@
     {
       "name": "status_bar_margin_left_right",
       "value": "5vp"
+    },
+    {
+      "name": "status_bar_airplane_width",
+      "value": "13vp"
+    },
+    {
+      "name": "status_bar_airplane_height",
+      "value": "15vp"
     }
   ]
 }
