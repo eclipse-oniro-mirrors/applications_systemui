@@ -30,6 +30,7 @@ export default struct SignalIcon {
   @StorageLink('cellularType') cellularType: number = Constants.RADIO_TECHNOLOGY_UNKNOWN
   @StorageLink('networkState') networkState: string = Constants.NET_NULL
   @StorageLink('signalObserved') signalObserved: boolean = false
+  @StorageLink('Airplane_Status') airplaneStatus: boolean = false;
   @State mTintContentInfo: TintContentInfo = ViewModel.getTintContentInfo()
   @State styleCommon: CommonStyle = StyleConfigurationCommon.getCommonStyle()
   @State style: SignalComponentStyle = StyleConfiguration.getSignalComponentStyle()
@@ -48,35 +49,37 @@ export default struct SignalIcon {
 
   build() {
     Row() {
-      Row().width(this.styleCommon.statusBarMarginLeftRight).height('100%')
-      Text(this.updateNetworkState(this.networkState))
-        .fontSize(this.styleCommon.statusBarFontSize)
-        .fontColor(this.mTintContentInfo.contentColor)
-        .textOverflow({ overflow: TextOverflow.Ellipsis })
-        .constraintSize({ maxWidth: this.style.signalTextMaxWeight })
-        .fontWeight(FontWeight.Medium)
-        .flexShrink(0)
-        .maxLines(1)
-        .textAlign(TextAlign.Center)
-      Row().width(this.styleCommon.statusBarMarginLeftRight).height('100%')
-
-      Stack({ alignContent: Alignment.TopStart }) {
-        Text(this.updateCellularType(this.cellularType))
-          .fontSize(this.cellularType == Constants.RADIO_TECHNOLOGY_UNKNOWN ? this.style.statusBarSignalUnknownFontSize : this.style.statusBarSignalTypeFontSize)
+      if (!this.airplaneStatus) {
+        Row().width(this.styleCommon.statusBarMarginLeftRight).height('100%')
+        Text(this.updateNetworkState(this.networkState))
+          .fontSize(this.styleCommon.statusBarFontSize)
           .fontColor(this.mTintContentInfo.contentColor)
-          .width(this.style.netSignalTextMaxWidth)
-          .fontWeight(FontWeight.Bold)
+          .textOverflow({ overflow: TextOverflow.Ellipsis })
+          .constraintSize({ maxWidth: this.style.signalTextMaxWeight })
+          .fontWeight(FontWeight.Medium)
+          .flexShrink(0)
+          .maxLines(1)
           .textAlign(TextAlign.Center)
-          .textAlign(TextAlign.Start)
-          .margin({left:$r("app.float.signal_component_text_margin_left")})
-        Image(this.updateCellularImage(this.cellularLevel))
-          .objectFit(ImageFit.Contain)
-          .width(this.style.cellularImageWidth)
-          .height(this.style.cellularImageHeight)
-          .fillColor(this.mTintContentInfo.contentColor)
-      }.flexShrink(1)
+        Row().width(this.styleCommon.statusBarMarginLeftRight).height('100%')
 
-      Row().width(this.styleCommon.statusBarMarginLeftRight).height('100%')
+        Stack({ alignContent: Alignment.TopStart }) {
+          Text(this.updateCellularType(this.cellularType))
+            .fontSize(this.cellularType == Constants.RADIO_TECHNOLOGY_UNKNOWN ? this.style.statusBarSignalUnknownFontSize : this.style.statusBarSignalTypeFontSize)
+            .fontColor(this.mTintContentInfo.contentColor)
+            .width(this.style.netSignalTextMaxWidth)
+            .fontWeight(FontWeight.Bold)
+            .textAlign(TextAlign.Center)
+            .textAlign(TextAlign.Start)
+            .margin({left:$r("app.float.signal_component_text_margin_left")})
+          Image(this.updateCellularImage(this.cellularLevel))
+            .objectFit(ImageFit.Contain)
+            .width(this.style.cellularImageWidth)
+            .height(this.style.cellularImageHeight)
+            .fillColor(this.mTintContentInfo.contentColor)
+        }.flexShrink(1)
+
+        Row().width(this.styleCommon.statusBarMarginLeftRight).height('100%')
+      }
     }
     .height('100%')
     .opacity($r("app.float.icon_component_opacity"))

@@ -40,6 +40,7 @@ const statusbarConfig: StatusBarConfig = {
         FASlotName.BLUETOOTH,
         FASlotName.RING_MODE,
         FASlotName.NFC,
+        FASlotName.AIR_PLANE,
         FASlotName.BATTERY,
         FASlotName.CLOCK,
       ],
@@ -56,6 +57,7 @@ const statusbarConfig: StatusBarConfig = {
     FASlotName.NFC,
     FASlotName.SIGNAL,
     FASlotName.WIFI,
+    FASlotName.AIR_PLANE
   ],
   MetaSlots: [
     {

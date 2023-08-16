@@ -19,10 +19,24 @@ import {isNfcAvailable} from '../../../../../../../../common/src/main/ets/defaul
 
 const controlCenterConfig: ControlCenterConfig = {
   ComplexToggleLayout: [FASlotName.WIFI, FASlotName.BLUETOOTH],
-  DefaultSimpleToggleLayout: ["screenshot", FASlotName.RING_MODE, FASlotName.LOCATION, 'demosystemuicplmeta', isNfcAvailable()&&FASlotName.NFC, FASlotName.AUTO_ROTATE],
+  DefaultSimpleToggleLayout: [
+    "screenshot",
+    FASlotName.RING_MODE,
+    FASlotName.LOCATION,
+    'demosystemuicplmeta',
+    isNfcAvailable()&&FASlotName.NFC,
+    FASlotName.AUTO_ROTATE,
+    FASlotName.AIR_PLANE
+  ],
   LocalToggles: {
-    ComplexToggles: [FASlotName.AIR_PLANE, FASlotName.BLUETOOTH, FASlotName.WIFI],
-    SimpleToggles: [FASlotName.LOCATION, FASlotName.RING_MODE, isNfcAvailable()&&FASlotName.NFC, FASlotName.AUTO_ROTATE],
+    ComplexToggles: [FASlotName.BLUETOOTH, FASlotName.WIFI],
+    SimpleToggles: [
+      FASlotName.LOCATION,
+      FASlotName.RING_MODE,
+      isNfcAvailable()&&FASlotName.NFC,
+      FASlotName.AUTO_ROTATE,
+      FASlotName.AIR_PLANE
+    ],
   },
   MetaToggles: [
     {
