@@ -20,6 +20,7 @@ import LocationComponent from '../../../../../../../locationcomponent/src/main/e
 import RingModeComponent from '../../../../../../../ringmodecomponent/src/main/ets/com/ohos/pages/ControlCenterSimpleToggleRingModeComponent';
 import AutoRotateComponent from '../../../../../../../autorotatecomponent/src/main/ets/com/ohos/pages/ControlCenterSimpleToggleAutoRotateComponent';
 import NFCComponent from '../../../../../../../nfccomponent/src/main/ets/com/ohos/pages/ControlCenterSimpleToggleNFComponent';
+import AirplaneComponent from '../../../../../../../airplanecomponent/src/main/ets/default/pages/ControlCenterSimpleToggleAirplaneComponent';
 import SimpleToggleComponent from './SimpleToggleComponent';
 
 const TAG = 'SimpleToggleLoadComponent';
@@ -54,6 +55,12 @@ export default struct SimpleToggleLoadComponent {
         })
       } else if (this.keyId == FASlotName.AUTO_ROTATE) {
         AutoRotateComponent({
+          keyId: this.keyId,
+          mEditMode: this.mEditMode,
+          mDragMode: this.mDragMode,
+        })
+      } else if (this.keyId == FASlotName.AIR_PLANE) {
+        AirplaneComponent({
           keyId: this.keyId,
           mEditMode: this.mEditMode,
           mDragMode: this.mDragMode,
