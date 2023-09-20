@@ -34,10 +34,14 @@ export class LocationService {
     Log.showInfo(TAG, 'startService');
     this.mIsStart = true;
     this.getServiceState();
-    geolocation.on('locationEnabledChange', (state: boolean) => {
-      Log.showInfo(TAG, `startService locationChange, state: ${JSON.stringify(state)}`);
-      this.getServiceState();
-    });
+    try {
+      geolocation.on('locationEnabledChange', (state: boolean) => {
+        Log.showInfo(TAG, `startService locationChange, state: ${JSON.stringify(state)}`);
+        this.getServiceState();
+      });
+    } catch {
+      Log.showError(TAG, 'geolocation.on try-catch error');
+    }
   }
 
   stopService(): void {
@@ -46,9 +50,13 @@ export class LocationService {
     };
     Log.showInfo(TAG, 'stopService');
     this.mIsStart = false;
-    geolocation.off('locationEnabledChange', (state: boolean) => {
-      Log.showInfo(TAG, `stopService locationChange, state: ${JSON.stringify(state)}`)
-    });
+    try {
+      geolocation.off('locationEnabledChange', (state: boolean) => {
+        Log.showInfo(TAG, `stopService locationChange, state: ${JSON.stringify(state)}`)
+      });
+    } catch {
+      Log.showError(TAG, 'geolocation.off try-catch error');
+    }
   }
 
   registerListener(listener: LocationStatrListener): void {
@@ -69,16 +77,24 @@ export class LocationService {
 
   enableLocation(): void {
     Log.showInfo(TAG, 'enableLocation');
-    geolocation.enableLocation()
-      .then((res) => Log.showInfo(TAG, `enableLocation, result: ${JSON.stringify(res)}`))
-      .then(() => {
-      }).catch((err) => {
-    });
+    try {
+      geolocation.enableLocation()
+        .then((res) => Log.showInfo(TAG, `enableLocation, result: ${JSON.stringify(res)}`))
+        .then(() => {
+        }).catch((err) => {
+      });
+    } catch {
+      Log.showError(TAG, 'geolocation.enableLocation try-catch error');
+    }
   }
 
   disableLocation(): void {
     Log.showInfo(TAG, 'disableLocation');
-    geolocation.disableLocation()
+    try {
+      geolocation.disableLocation();
+    } catch {
+      Log.showError(TAG, 'geolocation.disableLocation try-catch error');
+    }
   }
 }
 
