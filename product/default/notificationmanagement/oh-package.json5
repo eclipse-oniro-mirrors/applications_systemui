@@ -1,0 +1,9 @@
+{
+  "devDependencies": {},
+  "name": "default_notificationmanagement",
+  "description": "",
+  "version": "1.0.0",
+  "dependencies": {
+    "@ohos/managementcomponent": "file:../../../features/managementcomponent"
+  }
+}

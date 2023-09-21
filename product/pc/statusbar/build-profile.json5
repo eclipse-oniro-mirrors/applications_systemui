@@ -1,4 +1,7 @@
 {
+  "entryModules": [
+    "pc_entry"
+  ],
   "apiType": 'stageMode',
     "targets": [
     {
