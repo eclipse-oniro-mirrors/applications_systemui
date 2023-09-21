@@ -1,0 +1,7 @@
+{
+  "devDependencies": {},
+  "name": "@ohos/nfccomponent",
+  "description": "a npm package which contains nfccomponent function",
+  "version": "1.0.0",
+  "dependencies": {}
+}
