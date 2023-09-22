@@ -1,0 +1,12 @@
+{
+	"devDependencies":{},
+	"name":"@ohos/statusbarcomponent",
+	"description":"a npm package which contains statusbarcomponent function",
+	"ohos":{
+		"org":"huawei",
+		"directoryLevel":"module",
+		"buildTool":"hvigor"
+	},
+	"version":"1.0.0",
+	"dependencies":{}
+}
