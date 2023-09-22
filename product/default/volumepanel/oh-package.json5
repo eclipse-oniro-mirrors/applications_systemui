@@ -1,9 +1,0 @@
-{
-  "devDependencies": {},
-  "name": "default_volumepanel",
-  "description": "",
-  "version": "1.0.0",
-  "dependencies": {
-    "@ohos/volumepanelcomponent": "file:../../../features/volumepanelcomponent"
-  }
-}

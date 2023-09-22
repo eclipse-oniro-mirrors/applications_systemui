@@ -1,0 +1,13 @@
+{
+	"devDependencies":{},
+	"name":"default_volumepanel",
+	"ohos":{
+		"org":"huawei",
+		"directoryLevel":"module",
+		"buildTool":"hvigor"
+	},
+	"version":"1.0.0",
+	"dependencies":{
+		"@ohos/volumepanelcomponent":"file:../../../features/volumepanelcomponent"
+	}
+}
