@@ -1,0 +1,12 @@
+{
+	"devDependencies":{},
+	"name":"@ohos/controlcentercomponent",
+	"description":"a npm package which contains controlcentercomponent function",
+	"ohos":{
+		"org":"huawei",
+		"directoryLevel":"module",
+		"buildTool":"hvigor"
+	},
+	"version":"1.0.0",
+	"dependencies":{}
+}
