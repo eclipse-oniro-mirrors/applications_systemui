@@ -1,0 +1,13 @@
+{
+	"devDependencies":{},
+	"name":"pc_notificationpanel",
+	"ohos":{
+		"org":"huawei",
+		"directoryLevel":"module",
+		"buildTool":"hvigor"
+	},
+	"version":"1.0.0",
+	"dependencies":{
+		"@ohos/noticeitem":"file:../../../features/noticeitem"
+	}
+}

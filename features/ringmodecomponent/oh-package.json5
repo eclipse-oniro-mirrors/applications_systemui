@@ -1,7 +1,0 @@
-{
-  "devDependencies": {},
-  "name": "@ohos/ringmodecomponent",
-  "description": "a npm package which contains ringmodecomponent function",
-  "version": "1.0.0",
-  "dependencies": {}
-}
