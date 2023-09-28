@@ -1,0 +1,12 @@
+{
+	"devDependencies":{},
+	"name":"@ohos/capsulecomponent",
+	"description":"a npm package which contains capsulecomponent function",
+	"ohos":{
+		"org":"huawei",
+		"directoryLevel":"module",
+		"buildTool":"hvigor"
+	},
+	"version":"1.0.0",
+	"dependencies":{}
+}

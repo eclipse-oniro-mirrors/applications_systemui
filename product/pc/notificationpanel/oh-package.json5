@@ -1,9 +1,0 @@
-{
-  "devDependencies": {},
-  "name": "pc_notificationpanel",
-  "description": "",
-  "version": "1.0.0",
-  "dependencies": {
-    "@ohos/noticeitem": "file:../../../features/noticeitem"
-  }
-}

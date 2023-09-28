@@ -1,7 +1,0 @@
-{
-  "devDependencies": {},
-  "name": "@ohos/volumepanelcomponent",
-  "description": "a npm package which contains volumepanelcomponent function",
-  "version": "1.0.0",
-  "dependencies": {}
-}
