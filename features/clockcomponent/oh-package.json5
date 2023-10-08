@@ -1,0 +1,7 @@
+{
+  "devDependencies": {},
+  "name": "@ohos/clockcomponent",
+  "description": "a npm package which contains clockcomponent function",
+  "version": "1.0.0",
+  "dependencies": {}
+}
