@@ -1,0 +1,7 @@
+{
+  "devDependencies": {},
+  "name": "@ohos/controlcentercomponent",
+  "description": "a npm package which contains controlcentercomponent function",
+  "version": "1.0.0",
+  "dependencies": {}
+}
