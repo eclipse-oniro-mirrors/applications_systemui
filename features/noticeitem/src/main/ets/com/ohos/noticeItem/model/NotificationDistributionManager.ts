@@ -14,7 +14,7 @@
  */
 
 import Log from '../../../../../../../../../common/src/main/ets/default/Log';
-import DeviceManager from '@ohos.distributedHardware.deviceManager';
+import deviceManager from '@ohos.distributedDeviceManager';
 import DeviceInfo from '@ohos.deviceInfo';
 
 const TAG = 'NotificationDistributionManager';
@@ -41,12 +41,16 @@ export default class NotificationDistributionManager {
 
   initDeviceManager(): void {
     Log.showInfo(TAG, 'initDeviceManager');
-    DeviceManager.createDeviceManager('com.ohos.systemui', (err, data) => {
-      Log.showInfo(TAG, `initDeviceManager createDeviceManager err:${JSON.stringify(err)} data:${JSON.stringify(data)}`);
-      if (data) {
-        this.deviceManager = data;
+    try {
+      let dmInstance = deviceManager.createDeviceManager("com.ohos.systemui");
+      if (dmInstance) {
+        this.deviceManager = dmInstance;
+      } else {
+        Log.showDebug(TAG, 'initDeviceManager dmInstance else');
       }
-    });
+    } catch (err) {
+      Log.showError(TAG, `initDeviceManager trycatch-error ${JSON.stringify(err)}`);
+    }
   }
 
   getTrustedDeviceDeviceName(deviceId: string): string {
@@ -67,16 +71,20 @@ export default class NotificationDistributionManager {
 
   getTrustedDeviceListSync(): any[] {
     Log.showInfo(TAG, 'getTrustedDeviceListSync');
-    return this.deviceManager.getTrustedDeviceListSync();
-  }
-
-  getLocalDeviceInfoSync(): any {
-    Log.showInfo(TAG, 'getLocalDeviceInfoSync');
-    return this.deviceManager.getLocalDeviceInfoSync();
+    return this.deviceManager.getAvailableDeviceListSync();
   }
 
   release(): void {
-    this.deviceManager.release();
+    try {
+      if (this.deviceManager) {
+        deviceManager.releaseDeviceManager(this.deviceManager);
+      } else {
+        Log.showDebug(TAG, 'this.deviceManager err');
+      }
+
+    } catch (err) {
+      Log.showDebug(TAG, 'deviceManager release err');
+    }
   }
 }
 
