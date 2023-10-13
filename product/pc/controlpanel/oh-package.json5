@@ -1,0 +1,11 @@
+{
+  "devDependencies": {},
+  "name": "pc_controlpanel",
+  "description": "",
+  "version": "1.0.0",
+  "dependencies": {
+    "@ohos/controlcentercomponent": "file:../../../features/controlcentercomponent",
+    "@ohos/autorotatecomponent": "file:../../../features/autorotatecomponent",
+    "@ohos/airplanecomponent": "file:../../../features/airplanecomponent"
+  }
+}

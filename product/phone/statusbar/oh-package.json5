@@ -1,0 +1,9 @@
+{
+  "devDependencies": {},
+  "name": "phone_statusbar",
+  "description": "",
+  "version": "1.0.0",
+  "dependencies": {
+    "@ohos/statusbarcomponent": "file:../../../features/statusbarcomponent"
+  }
+}
