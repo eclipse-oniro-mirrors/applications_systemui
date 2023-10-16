@@ -1,9 +1,0 @@
-{
-  "devDependencies": {},
-  "name": "default_navigationBar",
-  "description": "",
-  "version": "1.0.0",
-  "dependencies": {
-    "@ohos/navigationservice": "file:../../../features/navigationservice"
-  }
-}

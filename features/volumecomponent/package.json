@@ -1,0 +1,12 @@
+{
+	"devDependencies":{},
+	"name":"@ohos/volumecomponent",
+	"description":"a npm package which contains volumecomponent function",
+	"ohos":{
+		"org":"huawei",
+		"directoryLevel":"module",
+		"buildTool":"hvigor"
+	},
+	"version":"1.0.0",
+	"dependencies":{}
+}
