@@ -1,7 +1,0 @@
-{
-  "devDependencies": {},
-  "name": "@ohos/airplanecomponent",
-  "description": "a npm package which contains airplanecomponent function",
-  "version": "1.0.0",
-  "dependencies": {}
-}
