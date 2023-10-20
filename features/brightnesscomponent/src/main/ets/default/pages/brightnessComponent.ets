@@ -72,6 +72,7 @@ export default struct MyBrightness {
         .selectedColor(this.style.sliderSelectedColor)
         .onChange((value: number, mode: SliderChangeMode) => {
           mBrightnessManager.setValue(value, mode);
+          this.brightnessValue = value
         })
 
       Image($r('app.media.ic_brightness_plus'))
