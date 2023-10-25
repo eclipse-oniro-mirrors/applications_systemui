@@ -30,6 +30,7 @@ export type ListenerHandle = {
   unRegister: () => void;
 };
 export type PluginData = {
+  // @ts-ignore
   [key: string | number]: any;
 };
 
