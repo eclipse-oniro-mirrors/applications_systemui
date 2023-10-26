@@ -68,7 +68,7 @@ struct Index {
   aboutToAppear() {
     Log.showInfo(TAG, `aboutToAppear Start`);
     AbilityManager.setContextName(AbilityManager.ABILITY_NAME_NOTIFICATION_PANEL,AbilityManager.ABILITY_NAME_DROPDOWN_PANEL);
-    setAppBgColor('#00000000')
+    WindowManager.setWindowBgColor(WindowType.DROPDOWN_PANEL,'#00000000')
     this.mClearCallbacks = []
     this.mClearCallbacks.push(EventManager.subscribe('onBannerNoticeShow', () => this.onBannerNoticeShow()))
     this.mClearCallbacks.push(EventManager.subscribe('onBannerNoticeHide', () => this.onBannerNoticeHide()))

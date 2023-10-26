@@ -21,7 +21,7 @@ import NavigationBarViewModel from '../viewmodel/NavigationBarViewModel';
 import {NavigationBarComponentData} from '../common/constants'
 import StyleManager from '../common/StyleManager'
 import configManager from '../../../../../../../features/navigationservice/src/main/ets/com/ohos/navigationservice/ConfigManager'
-
+import WindowManager, { WindowType } from '../../../../../../../common/src/main/ets/default/WindowManager';
 const TAG = 'NavigationBar-Index';
 let mConfigManager = configManager
 
@@ -43,8 +43,7 @@ struct Index {
     let configInfo = AbilityManager.getAbilityData(AbilityManager.ABILITY_NAME_NAVIGATION_BAR, 'config');
     AppStorage.SetOrCreate("showNavHorizontal", configInfo.showNavHorizontal);
     mConfigManager.initConfig();
-
-    setAppBgColor('#00000000');
+    WindowManager.setWindowBgColor(WindowType.NAVIGATION_BAR ,'#00000000')
     CommonStyleManager.setAbilityPageName(TAG)
     if (configInfo.maxWidth > configInfo.maxHeight) { // Pad、PC Mode
       StyleManager.setPadStyle();
