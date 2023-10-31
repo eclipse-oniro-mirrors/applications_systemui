@@ -54,8 +54,7 @@ struct Index {
     Log.showInfo(TAG, `aboutToAppear, start`);
 
     this.updateStatusBarData();
-
-    setAppBgColor('#00000000');
+    WindowManager.setWindowBgColor(WindowType.STATUS_BAR,'#00000000')
     CommonStyleManager.setAbilityPageName(TAG);
     StyleManager.setStyle();
 

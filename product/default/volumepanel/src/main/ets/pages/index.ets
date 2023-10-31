@@ -49,8 +49,7 @@ struct Index {
     }
     AbilityManager.setAbilityData(AbilityManager.ABILITY_NAME_VOLUME_PANEL, 'rect', volumeRect);
     WindowManager.resetSizeWindow(WindowType.VOLUME_PANEL, volumeRect);
-
-    setAppBgColor('#00000000');
+    WindowManager.setWindowBgColor(WindowType.VOLUME_PANEL,'#00000000')
     CommonStyleManager.setAbilityPageName(TAG)
     Log.showDebug(TAG, `configInfo Start, configInfo ${JSON.stringify(configInfo)}`);
     if (configInfo.width > configInfo.height) { // Pad、PC Mode

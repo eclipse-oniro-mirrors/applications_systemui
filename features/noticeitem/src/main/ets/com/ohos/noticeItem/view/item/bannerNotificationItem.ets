@@ -58,7 +58,7 @@ export default struct BannerNotificationItem {
 
   aboutToAppear() {
     Log.showInfo(TAG, `aboutToAppear Start`);
-    setAppBgColor('#00000000');
+    WindowManager.setWindowBgColor(WindowType.BANNER_NOTICE,'#00000000')
     this.mCloseEnableFlg = false;
     this.mDefaultBannerRect = AbilityManager.getAbilityData(AbilityManager.ABILITY_NAME_BANNER_NOTICE, 'bannerRect');
     setTimeout(() => {

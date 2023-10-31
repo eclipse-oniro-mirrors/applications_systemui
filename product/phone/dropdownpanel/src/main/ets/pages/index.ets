@@ -104,8 +104,7 @@ struct Index {
 
   aboutToAppear() {
     Log.showInfo(TAG, `aboutToAppear, start`);
-
-    setAppBgColor('#00000000');
+    WindowManager.setWindowBgColor(WindowType.DROPDOWN_PANEL,'#00000000')
     CommonStyleManager.setAbilityPageName(TAG);
     StyleManager.setStyle();
 
