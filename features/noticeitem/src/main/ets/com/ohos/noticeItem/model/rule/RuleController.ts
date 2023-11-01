@@ -94,20 +94,25 @@ export class RuleController {
       isAllowStatusBarShow : false,
       isAllowNotificationListShow : false
     };
+    
     Log.showInfo(TAG, `notificationItemData.slotLevel = ${notificationItemData.slotLevel}`);
     if (notificationItemData.slotLevel === Notification.SlotLevel.LEVEL_HIGH) {
       mNotificationItemData.ruleData.isAllowBanner = true;
       this.SoundOrVibrate(notificationItemData, (sound, vibrationValues) => {
-        mNotificationItemData.ruleData.isAllowSound = sound;
-        mNotificationItemData.ruleData.isAllowVibrationValues = vibrationValues;
+        if(mNotificationItemData.ruleData){
+          mNotificationItemData.ruleData.isAllowSound = sound;
+          mNotificationItemData.ruleData.isAllowVibrationValues = vibrationValues;
+        }
       });
       mNotificationItemData.ruleData.isAllowStatusBarShow = true;
       mNotificationItemData.ruleData.isAllowNotificationListShow = true;
 
     } else if (notificationItemData.slotLevel === Notification.SlotLevel.LEVEL_DEFAULT) {
       this.SoundOrVibrate(notificationItemData, (sound, vibrationValues) => {
-        mNotificationItemData.ruleData.isAllowSound = sound;
-        mNotificationItemData.ruleData.isAllowVibrationValues = vibrationValues;
+        if(mNotificationItemData.ruleData){
+          mNotificationItemData.ruleData.isAllowSound = sound;
+          mNotificationItemData.ruleData.isAllowVibrationValues = vibrationValues;
+        }
       });
       mNotificationItemData.ruleData.isAllowStatusBarShow = true;
       mNotificationItemData.ruleData.isAllowNotificationListShow = true;
