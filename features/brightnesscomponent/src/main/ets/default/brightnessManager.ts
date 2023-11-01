@@ -56,7 +56,7 @@ export class brightnessManager {
         return;
       }
       let data = settings.getValueSync(this.context, Constants.KEY_BRIGHTNESS_STATUS, JSON.stringify(this.getDefault()));
-      Log.showInfo(TAG, `after brightness datachange settings getValue ${parseInt(data)}`);
+      Log.showDebug(TAG, `after brightness datachange settings getValue ${parseInt(data)}`);
       mBrightnessValue.set(parseInt(data));
     })
   }
@@ -68,7 +68,7 @@ export class brightnessManager {
   }
 
   getValue() {
-    Log.showInfo(TAG, 'getValue');
+    Log.showDebug(TAG, 'getValue');
     let data = settings.getValueSync(this.context, Constants.KEY_BRIGHTNESS_STATUS, JSON.stringify(this.getDefault()));
     Log.showInfo(TAG, `settings getValue ${parseInt(data)}`);
     mBrightnessValue.set(parseInt(data));

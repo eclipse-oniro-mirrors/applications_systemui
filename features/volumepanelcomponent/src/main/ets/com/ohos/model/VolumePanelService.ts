@@ -129,10 +129,11 @@ export class VolumePanelService {
   }
 
   isActive(volumeType: AudioVolumeType, callback: (volumeType: AudioVolumeType, data: boolean) => void): void {
-    Log.showInfo(TAG, `isActive, volumeType: ${volumeType}`);
+    Log.showDebug(TAG, `isActive, volumeType: ${volumeType}`);
+
     let interfaceVolumeType = this.formatAudioVolumeTypeToInterface(volumeType);
     this.mAudioManager.isActive(interfaceVolumeType, (err: BusinessError, data: boolean) => {
-      Log.showInfo(TAG, `isActive, err: ${err} data: ${JSON.stringify(data)}`);
+      Log.showDebug(TAG, `isActive, err: ${err} data: ${JSON.stringify(data)}`);
       if (err) {
         return;
       }
@@ -141,13 +142,13 @@ export class VolumePanelService {
   }
 
   getVolume(volumeType: AudioVolumeType, callback: (volumeType: AudioVolumeType, data: number) => void): void {
-    Log.showInfo(TAG, `getVolume, volumeType: ${volumeType}`);
+    Log.showDebug(TAG, `getVolume, volumeType: ${volumeType}`);
     let interfaceVolumeType = this.formatAudioVolumeTypeToInterface(volumeType);
     this.addInterfaceCallQueue({
       interfaceName: InterfaceName.getVolume,
       params: [interfaceVolumeType],
       callbackFunction: (err: BusinessError, data: number) => {
-        Log.showInfo(TAG, `getVolume, err: ${JSON.stringify(err)} data: ${JSON.stringify(data)}`);
+        Log.showDebug(TAG, `getVolume, err: ${JSON.stringify(err)} data: ${JSON.stringify(data)}`);
         if (err) {
           return;
         }
@@ -195,13 +196,13 @@ export class VolumePanelService {
   }
 
   setVolume(volumeType: AudioVolumeType, volume: number, callback?: () => void): void {
-    Log.showInfo(TAG, `setVolume, volumeType: ${volumeType} volume: ${volume}`);
+    Log.showDebug(TAG, `setVolume, volumeType: ${volumeType} volume: ${volume}`);
     let interfaceVolumeType = this.formatAudioVolumeTypeToInterface(volumeType);
     this.addInterfaceCallQueue({
       interfaceName: InterfaceName.setVolume,
       params: [interfaceVolumeType, volume],
       callbackFunction: (err: BusinessError) => {
-        Log.showInfo(TAG, `setVolume, callback err: ${err} `);
+        Log.showDebug(TAG, `setVolume, callback err: ${err} `);
         if (err) {
           return;
         }
@@ -213,18 +214,18 @@ export class VolumePanelService {
   }
 
   setMute(volumeType: AudioVolumeType, mute: boolean, callback?: () => void): void {
-    Log.showInfo(TAG, `setMute, volumeType: ${volumeType} mute: ${mute}`);
+    Log.showDebug(TAG, `setMute, volumeType: ${volumeType} mute: ${mute}`);
     let interfaceVolumeType = this.formatAudioVolumeTypeToInterface(volumeType);
     this.addInterfaceCallQueue({
       interfaceName: InterfaceName.mute,
       params: [interfaceVolumeType, mute],
       callbackFunction: (err: BusinessError) => {
-        Log.showInfo(TAG, `setMute, err: ${JSON.stringify(err)}`);
+        Log.showDebug(TAG, `setMute, err: ${JSON.stringify(err)}`);
         if (err) {
           return;
         }
         this.getVolumeInfo(volumeType, (volumeInfo: VolumeInfo) => {
-          Log.showInfo(TAG, `setMute, volumeInfo: ${JSON.stringify(volumeInfo)}`);
+          Log.showDebug(TAG, `setMute, volumeInfo: ${JSON.stringify(volumeInfo)}`);
           if (callback) {
             callback();
           }

@@ -75,7 +75,7 @@ export class BatteryModel {
    * Get battery status and remaining power
    */
   private updateBatteryStatus() {
-    Log.showInfo(TAG, "updateBatteryStatus");
+    Log.showDebug(TAG, "updateBatteryStatus");
     let batterySoc = BatteryInfo.batterySOC ?? DEFAULT_PROGRESS;
     let batteryCharging = BatteryInfo.chargingStatus;
     if (batterySoc <= 0) {
@@ -83,7 +83,7 @@ export class BatteryModel {
       batterySoc = Math.abs(batterySoc) * Constants.PERCENT_NUMBER;
     }
 
-    Log.showInfo(TAG, "batterySoc = " + batterySoc);
+    Log.showDebug(TAG, "batterySoc = " + batterySoc);
 
     // Set the battery status as charging when there is no battery hardware
     this.mBatterySoc.set(batterySoc);
