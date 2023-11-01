@@ -96,10 +96,10 @@ export class NotificationViewModel {
       return;
     }
 
-    if (notificationItemData.ruleData.isAllowStatusBarShow) {
+    if (notificationItemData.ruleData&&notificationItemData.ruleData.isAllowStatusBarShow) {
       //TODO statusbar show
     }
-    if (notificationItemData.ruleData.isAllowNotificationListShow) {
+    if (notificationItemData.ruleData&&notificationItemData.ruleData.isAllowNotificationListShow) {
       this.mNotificationList.unshift(notificationItemData);
       Log.showInfo(TAG, 'reminder start ');
       this.reminderWay(notificationItemData);
@@ -340,14 +340,14 @@ export class NotificationViewModel {
   }
 
   reminderWay(itemData: NotificationItemData): void {
-    if (itemData.ruleData.isAllowBanner) {
+    if (itemData.ruleData&&itemData.ruleData.isAllowBanner) {
       Log.showInfo(TAG, 'banner start ');
       AbilityManager.setAbilityData(AbilityManager.ABILITY_NAME_BANNER_NOTICE, 'itemData', itemData);
       EventManager.publish(obtainLocalEvent('onBannerNoticeShow', { 'itemData': itemData }));
       Log.showInfo(TAG, 'banner end ');
     }
     if (itemData.notificationFlags?.soundEnabled != Constants.NOTIFICATION_TYPE_CLOSE) {
-      if (itemData.ruleData.isAllowSound) {
+      if (itemData.ruleData&&itemData.ruleData.isAllowSound) {
         try {
           this.audioPlayer.src = itemData.sound;
           Log.showInfo(TAG, 'sound start ');
@@ -359,7 +359,7 @@ export class NotificationViewModel {
       }
     }
     if (itemData.notificationFlags?.vibrationEnabled != Constants.NOTIFICATION_TYPE_CLOSE) {
-      if (itemData.ruleData.isAllowVibrationValues) {
+      if (itemData.ruleData&&itemData.ruleData.isAllowVibrationValues) {
         //      Log.showInfo(TAG, `vibrate start`);
         //      for (let i = 0, len = itemData.vibrationValues.length; i < len; i++) {
         //        vibrator.vibrate(itemData.vibrationValues[i], function(error){
