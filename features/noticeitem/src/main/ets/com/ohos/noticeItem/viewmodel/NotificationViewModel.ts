@@ -256,7 +256,15 @@ export class NotificationViewModel {
     Log.showInfo(TAG, `clickItem itemId: ${itemData.id}, want: ${JSON.stringify(want)}, tapDismissed: ${itemData.tapDismissed}`);
     NotificationWindowManager.hideNotificationWindow();
     Trace.start(Trace.CORE_METHOD_CLICK_NOTIFICATION);
-    CommonUtil.startWant((want) ? want : itemData.want);
+    if (itemData.bundleName == "com.ohos.callui") {
+      Log.showInfo(TAG, `start ability com.ohos.callui`);
+      AbilityManager.startAbility(AbilityManager.getContext(AbilityManager.ABILITY_NAME_STATUS_BAR), {
+        bundleName: "com.ohos.callui",
+        abilityName: "com.ohos.callui.MainAbility"
+      });
+    } else {
+      CommonUtil.startWant((want) ? want : itemData.want);
+    }
     if (itemData.tapDismissed) {
       this.removeNotificationItem(itemData, true, true);
     }
