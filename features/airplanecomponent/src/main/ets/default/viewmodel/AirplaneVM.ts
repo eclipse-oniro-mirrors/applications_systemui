@@ -42,7 +42,7 @@ class AirplaneVM implements AirplaneServiceListener {
       this.mAirplaneStatus =
         settings.getValueSync(this.context, Constants.KEY_AIRPLANE_MODE_STATUS, AIRPLANE_MODE_STATUS.OFF) === AIRPLANE_MODE_STATUS.ON
     } catch (err) {
-      log.showError(TAG, `AirplaneVM:${context},${JSON.stringify(err)}`)
+      log.showError(TAG, `AirplaneVM: ${context}, ${JSON.stringify(err)}`);
     }
     AppStorage.SetOrCreate('Airplane_Status', this.mAirplaneStatus);
   }

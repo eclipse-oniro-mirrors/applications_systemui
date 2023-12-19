@@ -178,7 +178,7 @@ struct Index {
      this.componentOptAreaHeightPX = this.mNavigationBarStatusDefaultValue == '1' ? dropdownRect.height - navigationBarRect.realHeight : dropdownRect.height;
      this.navigationBarWidth = this.mNavigationBarStatusDefaultValue == '1' ? navigationBarRect.height : 0;
    } catch(err){
-     Log.showError(TAG,`resizeDropdownPanelAndNavigationBar: ${context}, ${ISON.stringify(err)}`)
+     Log.showError(TAG,`resizeDropdownPanelAndNavigationBar: ${context}, ${ISON.stringify(err)}`);
    }
     WindowManager.resetSizeWindow(WindowType.NAVIGATION_BAR, { ...navigationBarRect, height: this.navigationBarWidth })
     WindowManager.resetSizeWindow(WindowType.DROPDOWN_PANEL, { ...dropdownRect, height: this.componentOptAreaHeightPX })
