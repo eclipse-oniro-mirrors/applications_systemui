@@ -79,7 +79,7 @@ export class brightnessManager {
       Log.showInfo(TAG, `settings getValue ${parseInt(data)}`);
       mBrightnessValue.set(parseInt(data));
     }catch(err){
-      Log.showError(TAG,`getValue: ${context}, ${ISON.stringify(err)}`);
+      Log.showError(TAG,`getValue: ${context}, ${JSON.stringify(err)}`);
     }
   }
 

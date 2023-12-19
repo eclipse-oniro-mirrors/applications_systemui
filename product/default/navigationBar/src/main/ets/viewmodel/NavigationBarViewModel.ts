@@ -128,7 +128,7 @@ export default class NavigationBarViewModel {
     try{
       settings.setValueSync(context, this.settingDataKey, value);
     }catch(err){
-      Log.showError(TAG,`setValue: ${context}, ${ISON.stringify(err)}`);
+      Log.showError(TAG,`setValue: ${context}, ${JSON.stringify(err)}`);
     }
   }
 
@@ -139,8 +139,8 @@ export default class NavigationBarViewModel {
       context, this.settingDataKey, defaultValue ? defaultValue : this.navigationBarStatusDefaultValue
     );
     }catch(err){
-      Log.showError(TAG,`getValue: ${context}, ${ISON.stringify(err)}`);
-      return null;
+      Log.showError(TAG,`getValue: ${context}, ${JSON.stringify(err)}`);
+      return defaultValue ? defaultValue : this.navigationBarStatusDefaultValue;
     }
   }
 
