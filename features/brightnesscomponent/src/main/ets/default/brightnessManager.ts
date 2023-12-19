@@ -59,8 +59,8 @@ export class brightnessManager {
         let data = settings.getValueSync(this.context, Constants.KEY_BRIGHTNESS_STATUS, JSON.stringify(this.getDefault()));
         Log.showDebug(TAG, `after brightness datachange settings getValue ${parseInt(data)}`);
         mBrightnessValue.set(parseInt(data));
-      }catch(err) {
-        Log.showError(TAG,`registerBrightness: ${context}, ${JSON.stringify(err)}`);
+      } catch (err) {
+        Log.showError(TAG, `registerBrightness: ${context}, ${JSON.stringify(err)}`);
       }
 
     })
@@ -74,12 +74,12 @@ export class brightnessManager {
 
   getValue() {
     Log.showDebug(TAG, 'getValue');
-    try{
+    try {
       let data = settings.getValueSync(this.context, Constants.KEY_BRIGHTNESS_STATUS, JSON.stringify(this.getDefault()));
       Log.showInfo(TAG, `settings getValue ${parseInt(data)}`);
       mBrightnessValue.set(parseInt(data));
-    }catch(err){
-      Log.showError(TAG,`getValue: ${context}, ${JSON.stringify(err)}`);
+    } catch (err) {
+      Log.showError(TAG, `getValue: ${context}, ${JSON.stringify(err)}`);
     }
   }
 
