@@ -55,9 +55,14 @@ export class brightnessManager {
       if (this.sliderChangeMode == 1) {
         return;
       }
-      let data = settings.getValueSync(this.context, Constants.KEY_BRIGHTNESS_STATUS, JSON.stringify(this.getDefault()));
-      Log.showDebug(TAG, `after brightness datachange settings getValue ${parseInt(data)}`);
-      mBrightnessValue.set(parseInt(data));
+      try {
+        let data = settings.getValueSync(this.context, Constants.KEY_BRIGHTNESS_STATUS, JSON.stringify(this.getDefault()));
+        Log.showDebug(TAG, `after brightness datachange settings getValue ${parseInt(data)}`);
+        mBrightnessValue.set(parseInt(data));
+      } catch (err) {
+        Log.showError(TAG, `registerBrightness: ${context}, ${JSON.stringify(err)}`);
+      }
+
     })
   }
 
@@ -69,9 +74,13 @@ export class brightnessManager {
 
   getValue() {
     Log.showDebug(TAG, 'getValue');
-    let data = settings.getValueSync(this.context, Constants.KEY_BRIGHTNESS_STATUS, JSON.stringify(this.getDefault()));
-    Log.showInfo(TAG, `settings getValue ${parseInt(data)}`);
-    mBrightnessValue.set(parseInt(data));
+    try {
+      let data = settings.getValueSync(this.context, Constants.KEY_BRIGHTNESS_STATUS, JSON.stringify(this.getDefault()));
+      Log.showInfo(TAG, `settings getValue ${parseInt(data)}`);
+      mBrightnessValue.set(parseInt(data));
+    } catch (err) {
+      Log.showError(TAG, `getValue: ${context}, ${JSON.stringify(err)}`);
+    }
   }
 
   setValue(value: number, sliderChangeMode: number) {

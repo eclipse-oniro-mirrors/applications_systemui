@@ -78,7 +78,11 @@ class TimeManager {
 
   private async initTimeFormat(context: any): Promise<void> {
     Log.showDebug(TAG, "initTimeFormat");
-    settings.getValueSync(context, TIME_FORMAT_KEY, "24");
+    try {
+      settings.getValueSync(context, TIME_FORMAT_KEY, "24");
+    } catch (err) {
+      log.showError(TAG, `initTimeFormat: ${context},${JSON.stringify(err)}`)
+    }
     this.mSettingsHelper = await dataShare.createDataShareHelper(context, Constants.getUriSync(Constants.KEY_TIME_FORMAT));
 
     const handleTimeFormatChange = () => {
@@ -86,9 +90,13 @@ class TimeManager {
         Log.showError(TAG, `Can't get dataAbility helper.`);
         return;
       }
-      let timeString = settings.getValueSync(context, TIME_FORMAT_KEY, "24");
-      Log.showDebug(TAG, `timeFormat change: ${timeString}`);
-      this.mUse24hFormat = timeString == "24";
+      try {
+        let timeString = settings.getValueSync(context, TIME_FORMAT_KEY, "24");
+        Log.showDebug(TAG, `timeFormat change: ${timeString}`);
+        this.mUse24hFormat = timeString == "24";
+      } catch (err) {
+        log.showError(TAG, `handleTimeFormatChange: ${context},${JSON.stringify(err)}`)
+      }
       this.notifyTimeChange();
     };
 
