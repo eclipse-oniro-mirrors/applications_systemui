@@ -79,7 +79,7 @@ class TimeManager {
   private async initTimeFormat(context: any): Promise<void> {
     Log.showDebug(TAG, "initTimeFormat");
     if (context == undefined | context == null) {
-      return null;
+      return;
     }
     try {
       settings.getValueSync(context, TIME_FORMAT_KEY, "24");
@@ -94,7 +94,7 @@ class TimeManager {
         return;
       }
       if (context == undefined | context == null) {
-        return null;
+        return;
       }
       try {
         let timeString = settings.getValueSync(context, TIME_FORMAT_KEY, "24");

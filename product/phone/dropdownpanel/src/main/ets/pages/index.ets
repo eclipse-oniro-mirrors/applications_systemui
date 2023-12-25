@@ -174,7 +174,7 @@ struct Index {
     Log.showDebug(TAG, `resizeDropdownPanelAndNavigationBar, dropdownRect: ${JSON.stringify(dropdownRect)} navigationBarRect: ${JSON.stringify(navigationBarRect)}`)
     let context = AbilityManager.getContext(AbilityManager.ABILITY_NAME_DROPDOWN_PANEL);
     if (context == undefined | context == null) {
-      return null;
+      return;
     }
     try {
       this.mNavigationBarStatusDefaultValue = settings.getValueSync(context, this.settingDataKey, '1');
