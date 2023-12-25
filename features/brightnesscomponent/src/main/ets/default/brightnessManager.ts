@@ -56,6 +56,7 @@ export class brightnessManager {
         return;
       }
       if (this.context == undefined | this.context == null) {
+        Log.showInfo(TAG, `registerBrightness: ${context}`);
         return;
       }
       try {
@@ -78,6 +79,7 @@ export class brightnessManager {
   getValue() {
     Log.showDebug(TAG, 'getValue');
     if (this.context == undefined | this.context == null) {
+      Log.showInfo(TAG, `getValue: ${context}`);
       return;
     }
     try {

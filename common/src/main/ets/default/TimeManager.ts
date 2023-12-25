@@ -79,6 +79,7 @@ class TimeManager {
   private async initTimeFormat(context: any): Promise<void> {
     Log.showDebug(TAG, "initTimeFormat");
     if (context == undefined | context == null) {
+      log.showInfo(TAG, `initTimeFormat: ${context}`);
       return;
     }
     try {
@@ -94,6 +95,7 @@ class TimeManager {
         return;
       }
       if (context == undefined | context == null) {
+         log.showInfo(TAG, `handleTimeFormatChange: ${context}`);
         return;
       }
       try {

@@ -126,6 +126,7 @@ export default class NavigationBarViewModel {
   private setValue(value: string): void {
     let context = AbilityManager.getContext(AbilityManager.ABILITY_NAME_NAVIGATION_BAR);
     if (context == undefined | context == null) {
+      Log.showInfo(TAG, `setValue: ${context}`);
       return;
     }
     try {
@@ -138,6 +139,7 @@ export default class NavigationBarViewModel {
   private getValue(defaultValue?: string): string {
     let context = AbilityManager.getContext(AbilityManager.ABILITY_NAME_NAVIGATION_BAR);
     if (context == undefined | context == null) {
+      Log.showInfo(TAG, `getValue: ${context}`);
       return '';
     }
     try {
