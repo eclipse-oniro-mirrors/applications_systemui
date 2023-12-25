@@ -78,6 +78,9 @@ class TimeManager {
 
   private async initTimeFormat(context: any): Promise<void> {
     Log.showDebug(TAG, "initTimeFormat");
+    if (context == undefined | context == null) {
+      return null;
+    }
     try {
       settings.getValueSync(context, TIME_FORMAT_KEY, "24");
     } catch (err) {
@@ -89,6 +92,9 @@ class TimeManager {
       if (!this.mSettingsHelper) {
         Log.showError(TAG, `Can't get dataAbility helper.`);
         return;
+      }
+      if (context == undefined | context == null) {
+        return null;
       }
       try {
         let timeString = settings.getValueSync(context, TIME_FORMAT_KEY, "24");

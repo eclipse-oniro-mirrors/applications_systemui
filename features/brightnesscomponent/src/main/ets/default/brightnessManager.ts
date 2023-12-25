@@ -55,6 +55,9 @@ export class brightnessManager {
       if (this.sliderChangeMode == 1) {
         return;
       }
+      if (this.context == undefined | this.context == null) {
+        return;
+      }
       try {
         let data = settings.getValueSync(this.context, Constants.KEY_BRIGHTNESS_STATUS, JSON.stringify(this.getDefault()));
         Log.showDebug(TAG, `after brightness datachange settings getValue ${parseInt(data)}`);
@@ -74,6 +77,9 @@ export class brightnessManager {
 
   getValue() {
     Log.showDebug(TAG, 'getValue');
+    if (this.context == undefined | this.context == null) {
+      return;
+    }
     try {
       let data = settings.getValueSync(this.context, Constants.KEY_BRIGHTNESS_STATUS, JSON.stringify(this.getDefault()));
       Log.showInfo(TAG, `settings getValue ${parseInt(data)}`);
