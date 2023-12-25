@@ -36,7 +36,7 @@ export class SettingsUtil {
     let value: string = null;
     if (this.context == undefined | this.context == null) {
       Log.showInfo(TAg,`getValue:${this.context}`);
-      return defValue;
+      return defValue ? defValue : '';
     }
     try {
       value = settings.getValueSync(this.context, name, defValue ? defValue : '');

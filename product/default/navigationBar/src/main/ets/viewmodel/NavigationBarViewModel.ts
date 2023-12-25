@@ -140,7 +140,7 @@ export default class NavigationBarViewModel {
     let context = AbilityManager.getContext(AbilityManager.ABILITY_NAME_NAVIGATION_BAR);
     if (context == undefined | context == null) {
       Log.showInfo(TAG, `getValue: ${context}`);
-      return defaultValue;
+      return defaultValue ? defaultValue : this.navigationBarStatusDefaultValue;
     }
     try {
       return settings.getValueSync(
