@@ -173,7 +173,7 @@ struct Index {
   resizeDropdownPanelAndNavigationBar(dropdownRect, navigationBarRect) {
     Log.showDebug(TAG, `resizeDropdownPanelAndNavigationBar, dropdownRect: ${JSON.stringify(dropdownRect)} navigationBarRect: ${JSON.stringify(navigationBarRect)}`)
     let context = AbilityManager.getContext(AbilityManager.ABILITY_NAME_DROPDOWN_PANEL);
-    if (context == undefined | context == null) {
+    if (context == undefined || context == null) {
       Log.showInfo(TAG, `resizeDropdownPanelAndNavigationBar: ${context}`);
       return;
     }
