@@ -34,6 +34,10 @@ export class SettingsUtil {
   getValue(name: string, defValue?: string): string {
     Log.showDebug(TAG, `getValue, name: ${name} defValue: ${defValue}`);
     let value: string = null;
+    if (this.context == undefined | this.context == null) {
+      Log.showInfo(TAg,`getValue:${this.context}`);
+      return defValue ? defValue : '';
+    }
     try {
       value = settings.getValueSync(this.context, name, defValue ? defValue : '');
     } catch (e) {
@@ -46,6 +50,10 @@ export class SettingsUtil {
   setValue(name: string, value: string): boolean {
     Log.showDebug(TAG, `setValue, name: ${name} value: ${value}`);
     let result = false;
+    if (this.context == undefined | this.context == null) {
+      Log.showInfo(TAg,`setValue:${this.context}`);
+      return false;
+    }
     try {
       result = settings.setValueSync(this.context, name, value);
     } catch (e) {
