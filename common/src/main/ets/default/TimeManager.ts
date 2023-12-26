@@ -78,6 +78,10 @@ class TimeManager {
 
   private async initTimeFormat(context: any): Promise<void> {
     Log.showDebug(TAG, "initTimeFormat");
+    if (context == undefined || context == null) {
+      log.showInfo(TAG, `initTimeFormat: ${context}`);
+      return;
+    }
     try {
       settings.getValueSync(context, TIME_FORMAT_KEY, "24");
     } catch (err) {
@@ -88,6 +92,10 @@ class TimeManager {
     const handleTimeFormatChange = () => {
       if (!this.mSettingsHelper) {
         Log.showError(TAG, `Can't get dataAbility helper.`);
+        return;
+      }
+      if (context == undefined || context == null) {
+        log.showInfo(TAG, `handleTimeFormatChange: ${context}`);
         return;
       }
       try {

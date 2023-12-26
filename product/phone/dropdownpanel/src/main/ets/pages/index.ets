@@ -173,6 +173,10 @@ struct Index {
   resizeDropdownPanelAndNavigationBar(dropdownRect, navigationBarRect) {
     Log.showDebug(TAG, `resizeDropdownPanelAndNavigationBar, dropdownRect: ${JSON.stringify(dropdownRect)} navigationBarRect: ${JSON.stringify(navigationBarRect)}`)
     let context = AbilityManager.getContext(AbilityManager.ABILITY_NAME_DROPDOWN_PANEL);
+    if (context == undefined || context == null) {
+      Log.showInfo(TAG, `resizeDropdownPanelAndNavigationBar: ${context}`);
+      return;
+    }
     try {
       this.mNavigationBarStatusDefaultValue = settings.getValueSync(context, this.settingDataKey, '1');
       this.componentOptAreaHeightPX = this.mNavigationBarStatusDefaultValue == '1' ? dropdownRect.height - navigationBarRect.realHeight : dropdownRect.height;

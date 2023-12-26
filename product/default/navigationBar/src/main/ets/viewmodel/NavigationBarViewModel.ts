@@ -125,6 +125,10 @@ export default class NavigationBarViewModel {
 
   private setValue(value: string): void {
     let context = AbilityManager.getContext(AbilityManager.ABILITY_NAME_NAVIGATION_BAR);
+    if (context == undefined || context == null) {
+      Log.showInfo(TAG, `setValue: ${context}`);
+      return;
+    }
     try {
       settings.setValueSync(context, this.settingDataKey, value);
     } catch (err) {
@@ -134,6 +138,10 @@ export default class NavigationBarViewModel {
 
   private getValue(defaultValue?: string): string {
     let context = AbilityManager.getContext(AbilityManager.ABILITY_NAME_NAVIGATION_BAR);
+    if (context == undefined || context == null) {
+      Log.showInfo(TAG, `getValue: ${context}`);
+      return defaultValue ? defaultValue : this.navigationBarStatusDefaultValue;
+    }
     try {
       return settings.getValueSync(
         context, this.settingDataKey, defaultValue ? defaultValue : this.navigationBarStatusDefaultValue
