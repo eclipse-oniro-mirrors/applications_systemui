@@ -55,7 +55,7 @@ export class brightnessManager {
       if (this.sliderChangeMode == 1) {
         return;
       }
-      if (this.context == undefined | this.context == null) {
+      if (this.context == undefined || this.context == null) {
         Log.showInfo(TAG, `registerBrightness: ${context}`);
         return;
       }
@@ -77,7 +77,7 @@ export class brightnessManager {
 
   getValue() {
     Log.showDebug(TAG, 'getValue');
-    if (this.context == undefined | this.context == null) {
+    if (this.context == undefined || this.context == null) {
       Log.showInfo(TAG, `getValue: ${context}`);
       return;
     }
