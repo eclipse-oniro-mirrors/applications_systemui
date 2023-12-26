@@ -35,7 +35,7 @@ export class SettingsUtil {
     Log.showDebug(TAG, `getValue, name: ${name} defValue: ${defValue}`);
     let value: string = null;
     if (this.context == undefined || this.context == null) {
-      Log.showInfo(TAg,`getValue:${this.context}`);
+      Log.showInfo(TAG,`getValue:${this.context}`);
       return defValue ? defValue : '';
     }
     try {
@@ -51,7 +51,7 @@ export class SettingsUtil {
     Log.showDebug(TAG, `setValue, name: ${name} value: ${value}`);
     let result = false;
     if (this.context == undefined || this.context == null) {
-      Log.showInfo(TAg,`setValue:${this.context}`);
+      Log.showInfo(TAG,`setValue:${this.context}`);
       return false;
     }
     try {
