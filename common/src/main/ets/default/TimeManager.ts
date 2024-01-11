@@ -79,13 +79,13 @@ class TimeManager {
   private async initTimeFormat(context: any): Promise<void> {
     Log.showDebug(TAG, "initTimeFormat");
     if (context == undefined || context == null) {
-      log.showInfo(TAG, `initTimeFormat: ${context}`);
+      Log.showInfo(TAG, `initTimeFormat: ${context}`);
       return;
     }
     try {
       settings.getValueSync(context, TIME_FORMAT_KEY, "24");
     } catch (err) {
-      log.showError(TAG, `initTimeFormat: ${context},${JSON.stringify(err)}`)
+      Log.showError(TAG, `initTimeFormat: ${context},${JSON.stringify(err)}`)
     }
     this.mSettingsHelper = await dataShare.createDataShareHelper(context, Constants.getUriSync(Constants.KEY_TIME_FORMAT));
 
@@ -95,7 +95,7 @@ class TimeManager {
         return;
       }
       if (context == undefined || context == null) {
-         log.showInfo(TAG, `handleTimeFormatChange: ${context}`);
+         Log.showInfo(TAG, `handleTimeFormatChange: ${context}`);
         return;
       }
       try {
@@ -103,7 +103,7 @@ class TimeManager {
         Log.showDebug(TAG, `timeFormat change: ${timeString}`);
         this.mUse24hFormat = timeString == "24";
       } catch (err) {
-        log.showError(TAG, `handleTimeFormatChange: ${context},${JSON.stringify(err)}`)
+        Log.showError(TAG, `handleTimeFormatChange: ${context},${JSON.stringify(err)}`)
       }
       this.notifyTimeChange();
     };
