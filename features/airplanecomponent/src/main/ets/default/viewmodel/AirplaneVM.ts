@@ -38,10 +38,16 @@ class AirplaneVM implements AirplaneServiceListener {
 
   constructor() {
     this.context = AbilityManager.getContext(AbilityManager.getContextName(AbilityManager.ABILITY_NAME_CONTROL_PANEL));
-
-    this.mAirplaneStatus =
-      settings.getValueSync(this.context, Constants.KEY_AIRPLANE_MODE_STATUS, AIRPLANE_MODE_STATUS.OFF) === AIRPLANE_MODE_STATUS.ON
-
+    if (this.context == undefined || this.context == null) {
+      Log.showInfo(TAG, `constructor: ${context}`);
+      return;
+    }
+    try {
+      this.mAirplaneStatus =
+        settings.getValueSync(this.context, Constants.KEY_AIRPLANE_MODE_STATUS, AIRPLANE_MODE_STATUS.OFF) === AIRPLANE_MODE_STATUS.ON
+    } catch (err) {
+      Log.showError(TAG, `AirplaneVM: ${context}, ${JSON.stringify(err)}`);
+    }
     AppStorage.SetOrCreate('Airplane_Status', this.mAirplaneStatus);
   }
 
