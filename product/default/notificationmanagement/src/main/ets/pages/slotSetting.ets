@@ -234,7 +234,12 @@ export default struct SlotSetting {
   }
 
   notificationSlotSet() {
-    Log.showDebug(TAG, `notificationSlotSet slotInfo:${JSON.stringify(this.slotInfo)}`)
+    Log.showDebug(TAG, `notificationSlotSet slotInfo:${JSON.stringify(this.slotInfo)}`);
+    if (this.appInfo.appBundleName == null || this.slotInfo == null) {
+      Log.showError(TAG, `notificationSlotSet, invalid parameter, bundle: ${this.appInfo?.appBundleName} ` +
+      `uid: ${this.appInfo?.appUid}`);
+      return;
+    }
     NotificationListener.notificationSlotSet({ bundle: this.appInfo.appBundleName, uid: this.appInfo.appUid }, this.slotInfo);
   }
 }
