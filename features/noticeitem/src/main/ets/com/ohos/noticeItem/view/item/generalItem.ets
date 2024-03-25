@@ -84,7 +84,7 @@ export default struct GeneralItem {
         itemData: this.itemData
       });
 
-      if (this.isExpand && this.itemData.actionButtons.length) {
+      if (this.isExpand && this.itemData.actionButtons?.length) {
         ActionComponent({ itemData: this.itemData })
       } else {
         Blank().height(Layout.ITEM_MARGIN)
