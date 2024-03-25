@@ -153,9 +153,13 @@ export class NotificationListener {
 
     notificationSlotSet(bundleOption: BundleOption, data: NotificationManager.NotificationSlot): void {
         Log.showDebug(TAG, `notificationSlotSet bundleOption:${JSON.stringify(bundleOption)} data:${JSON.stringify(data)}`);
-        NotificationManager.setSlotByBundle(bundleOption, data, (err, result) => {
-            Log.showInfo(TAG, `notificationSlotSet err:${JSON.stringify(err)} result:${JSON.stringify(result)}`);
-        });
+        try {
+            NotificationManager.setSlotByBundle(bundleOption, data, (err, result) => {
+                Log.showInfo(TAG, `notificationSlotSet err:${JSON.stringify(err)} result:${JSON.stringify(result)}`);
+            });
+        } catch (err) {
+            Log.showError(TAG, `notificationSlotSet error => ${JSON.stringify(err)}`);
+        }
     }
 
     async isDistributedEnabled(): Promise<boolean> {
