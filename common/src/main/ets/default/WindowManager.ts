@@ -55,7 +55,7 @@ const SYSTEM_WINDOW_TYPE_MAP: { [key in WindowType]: Window.WindowType } = {
   SystemUi_ControlPanel: Window.WindowType.TYPE_VOLUME_OVERLAY,
   SystemUi_VolumePanel: Window.WindowType.TYPE_VOLUME_OVERLAY,
   SystemUi_BannerNotice: Window.WindowType.TYPE_VOLUME_OVERLAY,
-  SystemUi_SplitBar: 2101,
+  SystemUi_SplitBar: Window.WindowType.TYPE_DIVIDER,
   SystemUi_PrivacyIndicator: Window.WindowType.TYPE_VOLUME_OVERLAY
 };
 
