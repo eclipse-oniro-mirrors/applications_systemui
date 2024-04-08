@@ -110,7 +110,7 @@ class Stub extends rpc.RemoteObject {
     const win = await window.createWindow({
       ctx: controller.getContext(),
       name: windowName,
-      windowType: window.WindowType.TYPE_FLOAT
+      windowType: parameters?.bundleName == "com.ohos.powerdialog" ? window.WindowType.TYPE_SCREENSHOT : window.WindowType.TYPE_FLOAT
     });
     Log.showDebug(TAG, 'createWindow <window.createWindow>');
 
