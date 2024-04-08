@@ -131,6 +131,9 @@ export default struct VolumePanelComponent {
     AbilityManager.startAbility(AbilityManager.getContext(AbilityManager.ABILITY_NAME_VOLUME_PANEL), {
       bundleName: 'com.ohos.settings',
       abilityName: 'com.ohos.settings.MainAbility',
+      parameters: {
+        router: 'volumeControl'
+      },
     });
     VolumeWindowController.getInstance().setWindowState(false);
   }
