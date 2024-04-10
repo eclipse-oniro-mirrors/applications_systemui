@@ -272,6 +272,7 @@ struct Index {
     Log.showDebug(TAG, `hideSelf`)
     this._animateTo({...SHOW_ANIM_CONFIG, onFinish: () => {
       Log.showInfo(TAG, `hideSelf, hide anim finish.`);
+    }, finishCallback:()=>{
       WindowManager.hideWindow(WindowType.DROPDOWN_PANEL)
     }}, () => {
       this.componentOptAreaTranslateY = (-this.componentOptAreaHeightPX * 0.1) + 'px'
@@ -283,7 +284,7 @@ struct Index {
   _animateTo(config, callback) {
     Log.showDebug(TAG, `_animateTo, config: ${JSON.stringify(config)}`)
     animateTo(config, callback)
-    setTimeout(config.onFinish, config.duration + config.delay)
+    setTimeout(config.finishCallback, config.duration + config.delay)
   }
 
   build() {
