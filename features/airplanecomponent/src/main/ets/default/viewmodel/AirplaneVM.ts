@@ -39,7 +39,7 @@ class AirplaneVM implements AirplaneServiceListener {
   constructor() {
     this.context = AbilityManager.getContext(AbilityManager.getContextName(AbilityManager.ABILITY_NAME_CONTROL_PANEL));
     if (this.context == undefined || this.context == null) {
-      Log.showInfo(TAG, `constructor: ${this.context}`);
+      Log.showInfo(TAG, `constructor, this.context is null`);
       return;
     }
     try {
