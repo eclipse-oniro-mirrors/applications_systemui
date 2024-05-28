@@ -44,10 +44,25 @@ export class brightnessManager {
 
   async init(): Promise<void> {
     Log.showInfo(TAG, 'init');
-    this.helper = await dataShare.createDataShareHelper(this.context, this.uri);
+    this.createDataShare()
     Log.showInfo(TAG, `init helper ${this.helper}`);
-    this.registerBrightness();
-    this.getValue();
+  }
+
+  public createDataShare() {
+    const UPDATE_INTERVAL = 500;
+    const timer = setInterval(() => {
+      dataShare.createDataShareHelper(this.context, this.uri)
+        .then((dataHelper) => {
+          Log.showInfo(TAG, `createDataShareHelper success.`);
+          this.helper = dataHelper;
+          this.registerBrightness();
+          this.getValue();
+          clearInterval(timer);
+        })
+        .catch((err: BusinessError) => {
+          Log.showError(TAG, `createDataShare fail. ${JSON.stringify(err)}`);
+        });
+    }, UPDATE_INTERVAL);
   }
 
   registerBrightness() {
