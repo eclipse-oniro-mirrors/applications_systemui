@@ -66,7 +66,6 @@ export default struct IconItemComponent {
     const statusBarStatusKey = 'StatusBar_Status_' + this.keyId
     AppStorage.SetOrCreate(statusBarStatusKey, { selected: false })
     this.mItemStatus = AppStorage.Get(statusBarStatusKey)
-//    this.mItemStatus = AppStorage.SetAndLink('StatusBar_Status_' + this.keyId, { selected: false }).get()
   }
 
   build() {
