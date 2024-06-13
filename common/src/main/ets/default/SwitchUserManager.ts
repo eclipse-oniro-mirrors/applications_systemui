@@ -69,7 +69,11 @@ export default class SwitchUserManager {
 
   constructor() {
     Log.showDebug(TAG, `SwitchUserManager constructor`);
-    AccountManager.getAccountManager().on(USER_CHANGE_EVENT, SUBSCRIBE_KEY, this.handleUserChange.bind(this));
+    try {
+      AccountManager.getAccountManager().on(USER_CHANGE_EVENT, SUBSCRIBE_KEY, this.handleUserChange.bind(this));
+    } catch (err) {
+      Log.showError(TAG, `AccountManager.getAccountManager().on error: ${JSON.stringify(err)}`);
+    }
   }
 
   public async getCurrentUserInfo(): Promise<UserInfo> {
