@@ -48,4 +48,8 @@ export default class MainAbility extends Ability {
   onBackground(): void {
     Log.showInfo(TAG, 'MainAbility onBackground');
   }
+
+  onMemoryLevel(level): void{
+    Log.showInfo(TAG, 'onMemoryLevel, level:' + JSON.stringify(level));
+  }
 };
