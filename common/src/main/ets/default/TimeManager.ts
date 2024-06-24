@@ -73,8 +73,8 @@ class TimeManager {
     this.mSettingsHelper?.off("dataChange", Constants.getUriSync(Constants.KEY_TIME_FORMAT));
   }
 
-  public formatTime(date: Date) {
-    this.mUse24hFormat = i18n.System.is24HourClock();
+  public formatTime(date: Date, as24Hour: boolean = false) {
+    this.mUse24hFormat = as24Hour ? true : i18n.System.is24HourClock();
     return concatTime(date.getHours() % (this.mUse24hFormat ? 24 : 12), date.getMinutes());
   }
 
