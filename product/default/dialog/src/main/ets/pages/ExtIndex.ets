@@ -82,6 +82,11 @@ struct Index {
           this.onClose();
           Log.showDebug(TAG, `onRelease${code} end`);
         })
+        .onError(code => {
+          Log.showDebug(TAG, `onError${code} start`);
+          this.onClose();
+          Log.showDebug(TAG, `onError${code} end`);
+        })
     }
     .width('100%')
     .height('100%')
