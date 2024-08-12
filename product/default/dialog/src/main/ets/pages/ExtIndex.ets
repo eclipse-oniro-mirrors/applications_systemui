@@ -17,6 +17,7 @@ import rpc from '@ohos.rpc';
 import Log from '../../../../../../../common/src/main/ets/default/Log';
 import Constants from '../common/Constants';
 import type { IDialogParameters } from '../controller/Controller';
+import inputMethod from '@ohos.inputMethod';
 
 const TAG = 'Dialog-Index';
 
@@ -28,13 +29,44 @@ struct Index {
   @LocalStorageProp('connectId') connectId: string = undefined;
   @LocalStorageProp('windowName') windowName: string = undefined;
   @LocalStorageProp('parameters') parameters: IDialogParameters = undefined;
+  @State inputMethodSetting: inputMethod.InputMethodSetting = undefined;
+  @State keyboardHeight: number = 0;
 
   aboutToAppear() {
-    Log.showInfo(TAG, `aboutToAppear r ${this.connectId} ${this.windowName} ${JSON.stringify(this.parameters)}`)
+    Log.showInfo(TAG, `aboutToAppear r ${this.connectId} ${this.windowName} ${JSON.stringify(this.parameters)}`);
+    this.initListenKeyboard();
   }
 
   aboutToDisappear() {
-    Log.showInfo(TAG, `aboutToDisappear ${this.connectId} ${this.windowName} ${JSON.stringify(this.parameters)}`)
+    Log.showInfo(TAG, `aboutToDisappear ${this.connectId} ${this.windowName} ${JSON.stringify(this.parameters)}`);
+    this.cancelListenKeyboard();
+  }
+
+  initListenKeyboard() {
+    Log.showInfo(TAG, 'initListenKeyboard in');
+    try {
+      this.inputMethodSetting = inputMethod.getSetting();
+      this.inputMethodSetting.on('imeShow', (info: inputMethod.InputWindowInfo[]) => {
+        Log.showInfo(TAG, 'Succeeded in subscribing imeShow event. height: ' + info[0].height);
+        this.keyboardHeight = info[0]?.height/2;
+      });
+      this.inputMethodSetting.on('imeHide', (info: inputMethod.InputWindowInfo[]) => {
+        Log.showInfo(TAG, 'Succeeded in subscribing imeHide event. height: 0');
+        this.keyboardHeight = 0;
+      });
+    } catch (e) {
+      Log.showError('initListenKeyboard error', e);
+    }
+  }
+
+  cancelListenKeyboard() {
+    Log.showInfo(TAG, 'cancelListenKeyboard in');
+    try {
+      this.inputMethodSetting.off('imeShow');
+      this.inputMethodSetting.off('imeHide');
+    } catch (e) {
+      Log.showError('cancelListenKeyboard error', e);
+    }
   }
 
   onOk() {
@@ -90,5 +122,6 @@ struct Index {
     }
     .width('100%')
     .height('100%')
+    .border({ width: { bottom: this.keyboardHeight }})
   }
 }
