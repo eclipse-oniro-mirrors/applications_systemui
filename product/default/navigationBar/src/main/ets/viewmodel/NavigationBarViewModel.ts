@@ -32,6 +32,10 @@ const NAVIGATION_BAE_VIEW_MODEL_KEY = 'AppStorage_NavigationBarViewModel';
 
 const NAVIGATION_BAR_COMPONENT_DATA_KEY = 'AppStorage_NavigationBarComponentData';
 
+const RETRY_INTERVAL_MS = 1500;
+
+const MAX_RETRY_TIME = 5;
+
 export default class NavigationBarViewModel {
   private readonly settingDataKey = 'settings.display.navigationbar_status';
   private readonly urivar: string;
@@ -57,17 +61,34 @@ export default class NavigationBarViewModel {
       Log.showInfo(TAG, 'context: ' + AbilityManager.getContext(AbilityManager.ABILITY_NAME_NAVIGATION_BAR));
     }
     this.initNavigationBarStatus();
-    this.initHelper(this.dataChangesCallback.bind(this));
+    this.initHelper(this.dataChangesCallback.bind(this), MAX_RETRY_TIME);
   }
 
-  private async initHelper(callback: () => void): Promise<void> {
+  private async initHelper(callback: () => void, retryTimes: number): Promise<void> {
+    if (retryTimes < 1) {
+      Log.showInfo(TAG, 'initHelper, retry too many times');
+      return;
+    }
+    Log.showInfo(TAG, 'initHelper in, retry times: %{public}d', MAX_RETRY_TIME - retryTimes + 1);
     this.urivar = Constants.getUriSync(Constants.KEY_NAVIGATIONBAR_STATUS);
-    this.helper = await dataShare.createDataShareHelper(AbilityManager.getContext(AbilityManager.ABILITY_NAME_NAVIGATION_BAR), this.urivar);
-    Log.showInfo(TAG, 'initHelper, helper: ' + this.helper + ', uri: ' + this.urivar);
-    this.helper.on('dataChange', this.urivar, () => {
-      Log.showInfo(TAG, 'onDataChange.');
-      callback();
-    });
+    try {
+      this.helper = await dataShare.createDataShareHelper(AbilityManager.getContext(AbilityManager.ABILITY_NAME_NAVIGATION_BAR), this.urivar);
+      Log.showInfo(TAG, 'initHelper, helper: ' + this.helper + ', uri: ' + this.urivar);
+      this.helper.on('dataChange', this.urivar, () => {
+        Log.showInfo(TAG, 'onDataChange.');
+        callback();
+      });
+    } catch (err) {
+      Log.showError(TAG, 'initHelper error, code: ' + err?.code + ', message: ' + err?.message);
+      await this.sleep(RETRY_INTERVAL_MS);
+      this.initHelper(this.dataChangesCallback.bind(this), retryTimes - 1);
+    }
+  }
+
+  private sleep (time: number) {
+    return new Promise(resolve => {
+      setTimeout(resolve, time);
+    })
   }
 
   install(): void {
