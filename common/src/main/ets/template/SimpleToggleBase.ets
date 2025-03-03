@@ -20,20 +20,20 @@ const TAG = 'SimpleToggleBase'
 
 @Component
 export default struct SimpleToggleBase {
-  private mToggleId: string
+  private mToggleId: string = ''
   @Link mIcon: Resource
   @State mIconStr: string = ''
   private mUseIconStr: boolean = false
   private mAutoIconColor: boolean = false
   @Link mChangeSwitch: boolean
   @Link mLabel: Resource
-  private mLabelStr: string | Resource
+  private mLabelStr: string | Resource = ''
   private mUseLabelStr: boolean = false
-  private mIconOnBG: string | Resource
+  private mIconOnBG: string | Resource = ''
   private mEditMode: boolean = false
   private mDragMode: boolean = false
-  private mClickEvent: Function
-  private mLongClickEvent: Function
+  private mClickEvent: Function = (): void => {}
+  private mLongClickEvent: Function = (): void => {}
   @State mIconIsHover: boolean = false
   @State mTextIsHover: boolean = false
   @State style: SimpleToggleBaseStyle = StyleConfiguration.getSimpleToggleBaseStyle()

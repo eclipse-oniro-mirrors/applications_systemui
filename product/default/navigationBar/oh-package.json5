@@ -4,6 +4,7 @@
   "description": "",
   "version": "1.0.0",
   "dependencies": {
-    "@ohos/navigationservice": "file:../../../features/navigationservice"
+    "@ohos/navigationservice": "file:../../../features/navigationservice",
+    "@ohos/common": "file:../../../common"
   }
 }

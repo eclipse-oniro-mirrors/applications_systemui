@@ -25,7 +25,7 @@ const TAG = 'ringmode-ControlCenterSimpleToggleRingModeComponent'
 
 @Component
 export default struct ControlCenterSimpleToggleRingModeComponent {
-  private keyId: string
+  private keyId: string = ''
   private mEditMode: boolean = false
   private mDragMode: boolean = false
   @State mIcon: Resource = $r("app.media.ic_controlcenter_ring_on_filled")
@@ -67,8 +67,8 @@ export default struct ControlCenterSimpleToggleRingModeComponent {
       mIconOnBG: this.style.onBgColor,
       mEditMode: this.mEditMode,
       mDragMode: this.mDragMode,
-      mClickEvent: () => this.mClickEvent(),
-      mLongClickEvent: () => this.mLongClickEvent()
+      mClickEvent: (): void => this.mClickEvent(),
+      mLongClickEvent: (): void => this.mLongClickEvent()
     })
   }
 

@@ -14,11 +14,11 @@
  */
 
 import keyButton from './keyButton';
-import Constants from '../common/constants'
+import Constants, { KeyCode } from '../common/constants'
 import Log from '../../../../../../../common/src/main/ets/default/Log';
 const TAG = 'NavigationBar-ThreeLayout';
 
-let KeyCodeArr: any[] = [
+let KeyCodeArr: KeyCode[] = [
   {
     "uri": $r('app.media.ic_systemui_back'),
     "keyCode": Constants.KEYCODE_BACK
@@ -49,7 +49,7 @@ struct threeLayout {
   build() {
     if (this.showNavHorizontal) {
       Grid() {
-        ForEach(KeyCodeArr, (item: any) => {
+        ForEach(KeyCodeArr, (item: KeyCode) => {
           GridItem() {
             Row() {
               keyButton({ uri: item.uri, keyCode: item.keyCode, currentTouchItem: $currentTouchItem })
@@ -65,7 +65,7 @@ struct threeLayout {
       .align(Alignment.Center);
     } else {
       Grid() {
-        ForEach(KeyCodeArr, (item: any) => {
+        ForEach(KeyCodeArr, (item: KeyCode) => {
           GridItem() {
             Column() {
               keyButton({ uri: item.uri, keyCode: item.keyCode, currentTouchItem: $currentTouchItem })

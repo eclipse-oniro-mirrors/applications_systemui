@@ -14,7 +14,7 @@
  */
 
 import Log from '../../../../../../../../../../common/src/main/ets/default/Log';
-import Constants, { NotificationLayout as Layout } from '../../common/constants';
+import Constants, { NotificationItemData, NotificationLayout as Layout } from '../../common/constants';
 import NotificationItem from './notificationItem'
 import NotificationViewModel from '../../viewmodel/NotificationViewModel';
 import SwipeLayout from './SwipeLayout';
@@ -32,7 +32,7 @@ export default struct GroupItem {
   @Consume('notificationUpdate') updateFlag: number;
   @State distributedDeviceName: string = '';
   @State @Watch('expandChange') toExpand: boolean = false;
-  private groupData: any[] = [];
+  private groupData: NotificationItemData[] = [];
 
   registerGroupItemEventCapture(id: string){
     if(FocusCallBack.getLastFocusId() == getId(this.groupData[0], true)){
@@ -59,7 +59,7 @@ export default struct GroupItem {
     Log.showInfo(TAG, `aboutToDisAppear`);
   }
 
-  deleteButtonCallback(){
+  deleteButtonCallback(): void {
     ExpandInfoManager.deleteExpandInfo(this.groupData[0]);
     NotificationViewModel.removeGroupNotification(this.groupData[0], true);
   }
@@ -155,10 +155,10 @@ export default struct GroupItem {
 
 @Component
 struct ContentList {
-  @State @Watch('remainderChange') groupData: any[] = [];
+  @State @Watch('remainderChange') groupData: NotificationItemData[] = [];
   @Prop toExpand: boolean;
   @State remainderNum: number= 0;
-  registerEventCapture: (id: string) => boolean = null;
+  registerEventCapture: (id: string) => boolean = (id) => true;
 
   registerContentListEventCapture(id: string){
     if(this.registerEventCapture != null && this.registerEventCapture(id)){
@@ -232,11 +232,11 @@ struct ContentList {
 
       } else {
         List() {
-          ForEach(this.groupData, (item: any) => {
+          ForEach(this.groupData, (item: NotificationItemData) => {
             ListItem() {
               NotificationItem({ itemData: item, isSubItem: true, registerEventCapture: this.registerContentListEventCapture.bind(this) })
             }
-          }, (item: any) => `${item.hashcode}_${item.timestamp}_subitem`)
+          }, (item: NotificationItemData) => `${item.hashcode}_${item.timestamp}_subitem`)
         }
         .divider({
           strokeWidth: 1,

@@ -19,12 +19,12 @@ import IndicatorStyle, { IndicatorType } from '../common/IndicatorConfig';
 @Entry
 @Component
 export default struct PrivacyIndicatorComponent {
-  private mViewModel: ViewModel;
+  private mViewModel: ViewModel | undefined = undefined;
   @State mBackgroundColor: Resource = $r("app.color.transparent");
 
   aboutToAppear(): void {
     this.mViewModel = new ViewModel();
-    this.mViewModel.setCallback((type) => {
+    this.mViewModel.setCallback((type: number) => {
       if (type == IndicatorType.TYPE_ORANGE) {
         this.mBackgroundColor = $r("sys.color.ohos_id_color_alert");
       } else if (type == IndicatorType.TYPE_GREEN) {

@@ -15,6 +15,7 @@
 
 import commonEvent from '@ohos.commonEvent';
 import Log from '../../../../../../../../common/src/main/ets/default/Log';
+import { inputConsumer } from '@kit.InputKit';
 
 const TAG = 'navigationEvent';
 
@@ -24,8 +25,14 @@ let commonEventSubscribeInfo = {
 
 let commonEventSubscriber = null;
 
+export interface NavigationCallBack {
+  "onStateChange": (data: string) => void;
+  "onNotificationShowOrHide": (data: inputConsumer.KeyOptions) => void;
+  "onControlShowOrHide": (data: inputConsumer.KeyOptions) => void;
+}
+
 export class navigationEvent {
-  mCallback: any;
+  mCallback: NavigationCallBack;
 
   registerCallback(callback): void {
     Log.showDebug(TAG, 'registerCallback');

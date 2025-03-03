@@ -20,7 +20,7 @@ const TAG = 'NoticeItem-TitleItem';
 
 @Component
 export default struct TitleItem {
-  private notificationSmallIcon: PixelMap
+  private notificationSmallIcon?: PixelMap
   @State notificationName: string = ''
   @State notificationTime: string = ''
   @Link isExpand: boolean
@@ -28,7 +28,7 @@ export default struct TitleItem {
   @State rowSpace: Resource = $r('app.float.titleitem_row_space')
   @Prop distributedDeviceName: string
   private isSubItem: boolean= false;
-  private clickTitleAction: () => void
+  private clickTitleAction?: () => void
 
   aboutToAppear() {
     Log.showDebug(TAG, `aboutToAppear Start`);

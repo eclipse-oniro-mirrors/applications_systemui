@@ -16,16 +16,18 @@ import ConfigData from '../../common/constants';
 import AppItemComponent from './appItemComponent';
 import Router from '@system.router';
 import Log from '../../../../../../../../../common/src/main/ets/default/Log';
-import ViewModel from '../../vm/appLstComponentViewModel'
+import ViewModel from '../../vm/appLstComponentViewModel';
+import { BundleItemData }from '../../model/bundleResourceModel';
 
 const TAG = 'ManagementComponent-AppLstComponent';
 
 @Component
 export default struct AppLstComponent {
-  @StorageLink('appManagementList') appList: any[]= [];
+  @StorageLink('appManagementList') appList: BundleItemData[]= [];
 
   aboutToAppear(): void{
     Log.showInfo(TAG, `aboutToAppear`);
+    Log.showWarn(TAG, `myTest`);
     ViewModel.viewModelInit();
   }
 
@@ -43,14 +45,14 @@ export default struct AppLstComponent {
 
   build() {
     List() {
-      ForEach(this.appList, (item) => {
+      ForEach(this.appList, (item: BundleItemData) => {
         ListItem() {
           AppItemComponent({
             appIcon: item.appIcon,
             appTitle: item.appTitle,
             appSummary: item.appSummary,
             appValue: item.appValue,
-            appArrow: item.appArrow,
+            appArrow: item.appArrow as string,
             appArrowStyle: '',
             appUri: item.appUri,
             appBundleName: item.appBundleName,

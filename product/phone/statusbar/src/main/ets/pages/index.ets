@@ -15,7 +15,7 @@
 
 import Log from '../../../../../../../common/src/main/ets/default/Log'
 import Trace from '../../../../../../../common/src/main/ets/default/Trace'
-import WindowManager, {WindowType, WINDOW_SHOW_HIDE_EVENT
+import WindowManager, {WindowType, WINDOW_SHOW_HIDE_EVENT, ArgsInfo
 } from '../../../../../../../common/src/main/ets/default/WindowManager'
 import EventManager, {unsubscribe} from "../../../../../../../common/src/main/ets/default/event/EventManager"
 import {obtainLocalEvent} from "../../../../../../../common/src/main/ets/default/event/EventUtil"
@@ -23,16 +23,19 @@ import CommonStyleManager from '../../../../../../../common/src/main/ets/default
 import HeightConfigUtils from '../../../../../../../common/src/main/ets/default/heightcofigUtils/HeightConfigUtils'
 import StatusBarComponent from '../../../../../../../features/statusbarcomponent/src/main/ets/com/ohos/pages/StatusBarComponent'
 import StatusBarVM from '../../../../../../../features/statusbarcomponent/src/main/ets/com/ohos/viewmodel/StatusBarVM'
-import {StatusBarData} from '../../../../../../../features/statusbarcomponent/src/main/ets/com/ohos/common/Constants'
+import {  StatusBarData,
+  DropdownRange
+} from '../../../../../../../features/statusbarcomponent/src/main/ets/com/ohos/common/Constants'
 import Constants from './common/constants'
 import StyleManager from './common/StyleManager'
 import StatusbarConfig from './common/StatusbarConfig'
 import AbilityManager from '../../../../../../../common/src/main/ets/default/abilitymanager/abilityManager'
+import { ConfigInfo } from '@ohos/common';
 
 const TAG = 'StatusBar-Index'
 const SLIDING_STATUS_BAR_DISTANCE = 18
 
-let mHeightConfigUtils;
+let mHeightConfigUtils = new HeightConfigUtils();
 
 @Entry
 @Component
@@ -45,7 +48,7 @@ struct Index {
   @StorageLink('StatusMinH') StatusMinH: number = 24
   @StorageLink('StatusCoefficient') StatusCoefficient: number = 1.0
   mClearCallback: unsubscribe | undefined
- dropdownpanelIsOpen:boolean = false
+  dropdownpanelIsOpen:boolean = false
   onBackPress(): boolean {
     return true;
   }
@@ -58,14 +61,11 @@ struct Index {
     CommonStyleManager.setAbilityPageName(TAG);
     StyleManager.setStyle();
 
-    this.mClearCallback = EventManager.subscribe(WINDOW_SHOW_HIDE_EVENT, (args) => this.onWindowShowHideEvent(args));
-
-    mHeightConfigUtils = new HeightConfigUtils();
-    let StatusMinH;
-    let StatusCoefficient;
-
-    StatusMinH = AppStorage.SetAndLink("StatusMinH", 24);
-    StatusCoefficient = AppStorage.SetAndLink("StatusCoefficient", 1.0);
+    this.mClearCallback = EventManager.subscribe(
+      WINDOW_SHOW_HIDE_EVENT,
+      (args: ArgsInfo) => this.onWindowShowHideEvent(args));
+    let StatusMinH = AppStorage.SetAndLink("StatusMinH", 24);
+    let StatusCoefficient = AppStorage.SetAndLink("StatusCoefficient", 1.0);
     StatusMinH.set(mHeightConfigUtils.getStatusMinH());
     StatusCoefficient.set(mHeightConfigUtils.getStatusCoefficient());
 
@@ -103,12 +103,12 @@ struct Index {
   }
 
   updateStatusBarData() {
-    let configInfo = AbilityManager.getAbilityData(AbilityManager.ABILITY_NAME_STATUS_BAR, 'config');
+    let configInfo = AbilityManager.getAbilityData(AbilityManager.ABILITY_NAME_STATUS_BAR, 'config') as ConfigInfo;
     let statusBarData: StatusBarData = new StatusBarData();
     statusBarData.displayWidth = configInfo.maxWidth;
     statusBarData.displayHeight = configInfo.maxHeight;
     statusBarData.showHorizontal = configInfo.showHorizontal;
-    statusBarData.ableToMaximize = configInfo.ableToMaximize;
+    statusBarData.ableToMaximize = configInfo.ableToMaximize??false;
     statusBarData.realWidth = configInfo.realWidth;
     statusBarData.realHeight = configInfo.realHeight;
     statusBarData.left = configInfo.xCoordinate;
@@ -146,10 +146,10 @@ struct Index {
     if (!this.mStatusBarData.showHorizontal || !this.mStatusBarData.ableToMaximize) {
       return
     }
-    let dropdownArea: string = null
-    if (this.checkDropdownShowStatus(StatusbarConfig.dropdownRanges.notification)) {
+    let dropdownArea: string = ''
+    if (this.checkDropdownShowStatus(StatusbarConfig.dropdownRanges?.notification as DropdownRange)) {
       dropdownArea = 'left'
-    } else if (this.checkDropdownShowStatus(StatusbarConfig.dropdownRanges.control)) {
+    } else if (this.checkDropdownShowStatus(StatusbarConfig.dropdownRanges?.control as DropdownRange)) {
       dropdownArea = 'right'
     }
     if (dropdownArea) {
@@ -159,13 +159,13 @@ struct Index {
     }
   }
 
-  checkDropdownShowStatus(range) {
+  checkDropdownShowStatus(range: DropdownRange) {
     let rangeStartX = this.mStatusBarData.realWidth * range.startPosition + this.mStatusBarData.left
     let rangeEndX = this.mStatusBarData.realWidth * range.endPosition + this.mStatusBarData.left
     return (vp2px(this.startX) >= rangeStartX) && (vp2px(this.startX) <= rangeEndX)
   }
 
-  onWindowShowHideEvent(args) {
+  onWindowShowHideEvent(args: ArgsInfo) {
     Log.showDebug(TAG, `onWindowShowHideEvent, args: ${JSON.stringify(args)}`)
     if (args.windowName == WindowType.DROPDOWN_PANEL) {
       if (args.isShow) {

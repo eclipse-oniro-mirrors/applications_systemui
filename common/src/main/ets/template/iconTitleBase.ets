@@ -21,16 +21,16 @@ const TAG = 'iconTitleBase'
 
 @Component
 export default struct iconBaseComponent {
-  private iconOn: any
-  private iconOff: any
+  @Prop iconOn: Resource
+  @Prop iconOff: Resource
   @State iconOffStr: string = ""
   @State iconOnStr: string = ""
   @Link mTitle: Resource
   @State mTitleStr: string = ""
   private useIconStr = false
   private useTitleStr = false
-  private mClickEvent: Function
-  private mLongClickEvent: Function
+  private mClickEvent: Function = (): void => {}
+  private mLongClickEvent: Function = (): void => {}
   @State mTextIsHover: boolean = false
   @Link changeSwitch: boolean
   @State style: IconTitleBaseStyle = StyleConfiguration.getIconTitleBaseStyle()

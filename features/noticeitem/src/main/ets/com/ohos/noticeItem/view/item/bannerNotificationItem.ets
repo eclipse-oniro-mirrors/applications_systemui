@@ -16,7 +16,8 @@
 import Log from '../../../../../../../../../../common/src/main/ets/default/Log';
 import AbilityManager from '../../../../../../../../../../common/src/main/ets/default/abilitymanager/abilityManager';
 import WindowManager, { WindowType } from '../../../../../../../../../../common/src/main/ets/default/WindowManager';
-import {notificationData} from '../../../../../../../../../../common/src/main/ets/plugindatasource/common/Constants'
+// import {notificationData} from '../../../../../../../../../../common/src/main/ets/plugindatasource/common/Constants'
+import { NotificationItemData } from '@ohos/common'
 import Constants, {NotificationLayout as Layout} from '../../common/constants';
 import NotificationViewModel from '../../viewmodel/NotificationViewModel';
 import CustomItem from './customItem';
@@ -28,32 +29,47 @@ import pictureItem from './pictureItem';
 import ActionComponent from './actionComponent';
 import DevicesDialog from './devicesDialog';
 import WantAgent from '@ohos.wantAgent';
+import { Rect } from '@ohos/common';
 
 const TAG = 'NoticeItem-BannerNotificationItem';
 const INTERVAL = 5 * 1000;
 
+class EmptyObject {}
+
+interface TriggerInfo {
+  code: number;
+  want: Want | undefined;
+  permission: string;
+  extraInfo: EmptyObject;
+}
+
 
 @Component
 export default struct BannerNotificationItem {
-  @State want : notificationData = new notificationData();
+  @State want : NotificationItemData | undefined = undefined;
   @Link distributedDeviceName: string;
   @Link mBannerNoticeCnt: number;
   @Link mLastActionTime: number;
   @Link needExpand: boolean;
   @Link isExpand: boolean;
   @State mCloseEnableFlg: boolean = false;
-  private nowWant: any;
-  private onBannerNoticeHide: () => void
-  private devicesDialogController: CustomDialogController = new CustomDialogController({
+  private nowWant: Want | undefined = undefined;
+  private onBannerNoticeHide: () => void = () => {};
+  private devicesDialogController: CustomDialogController | null = new CustomDialogController({
     builder: DevicesDialog({
-      action: (deviceID) => this.selectedDevice(deviceID)
+      action: (deviceID): void => this.selectedDevice(deviceID)
     }),
     autoCancel: false,
     offset: { dx: 0, dy: 200 }
   });
 
   mInterval: number = INTERVAL;
-  mDefaultBannerRect: any;
+  mDefaultBannerRect: Rect = {
+    left: 0,
+    top: 0,
+    width: 0,
+    height: 0
+  };
   expandPaddingBottom: number = Layout.EXPAND_PADDING_BOTTOM;
 
   aboutToAppear() {
@@ -68,29 +84,28 @@ export default struct BannerNotificationItem {
   }
 
   aboutToDisappear() {
-    delete this.devicesDialogController
-    this.devicesDialogController = undefined
+    this.devicesDialogController = null;
     Log.showInfo(TAG, `aboutToDisAppear`);
   }
 
   build() {
     Column() {
       if (this.mBannerNoticeCnt > 0) {
-        if (this.want.template) {
+        if (this.want?.template) {
           CustomItem({ customItemData: this.want, isSubItem: false })
         } else {
           Row() {
             Flex({ alignItems: ItemAlign.Center, justifyContent: FlexAlign.Start }) {
               Row() {
                 titleItem({
-                  notificationSmallIcon: this.want.smallIcon,
-                  notificationName: this.want.appName,
-                  notificationTime: this.want.time,
+                  notificationSmallIcon: this.want?.smallIcon as PixelMap,
+                  notificationName: this.want?.appName,
+                  notificationTime: this.want?.time,
                   isExpand: $isExpand,
                   needExpand: this.needExpand,
                   distributedDeviceName: this.distributedDeviceName,
                   isSubItem: false,
-                  clickTitleAction: () => this.refreshLastActionTime()
+                  clickTitleAction: (): void => this.refreshLastActionTime()
                 })
               }
 
@@ -113,7 +128,7 @@ export default struct BannerNotificationItem {
               isExpand: this.isExpand,
               itemData: this.want
             });
-            if (this.isExpand && this.want.actionButtons.length) {
+            if (this.isExpand && this.want?.actionButtons.length) {
               ActionComponent({ itemData: this.want })
             } else {
               Blank()
@@ -128,15 +143,15 @@ export default struct BannerNotificationItem {
             Log.showInfo(TAG, `onAreaChange, e: ${JSON.stringify(e)} e2: ${JSON.stringify(e2)}`);
             let heightEx = parseInt(String(e['height']));
             let heightCur = parseInt(String(e2['height']));
-            let heightWin = parseInt(this.mDefaultBannerRect['height']);
+            let heightWin = this.mDefaultBannerRect?.height;
             if (this.isExpand) {
-              heightWin = heightWin + (heightCur - heightEx) + this.expandPaddingBottom;
+              heightWin = heightWin as number + (heightCur - heightEx) + this.expandPaddingBottom;
             }
-            let bannerRect = {
-              top: this.mDefaultBannerRect['top'],
-              left: this.mDefaultBannerRect['left'],
-              width: this.mDefaultBannerRect['width'],
-              height: heightWin
+            let bannerRect: Rect = {
+              top: this.mDefaultBannerRect.top,
+              left: this.mDefaultBannerRect.left,
+              width: this.mDefaultBannerRect.width,
+              height: heightWin as number
             };
             WindowManager.resetSizeWindow(WindowType.BANNER_NOTICE, bannerRect);
             WindowManager.showWindow(WindowType.BANNER_NOTICE);
@@ -198,7 +213,7 @@ export default struct BannerNotificationItem {
       WantAgent.getWant(wantAgent).then((wantData) => {
         this.nowWant = wantData
         if (!wantData?.deviceId) {
-          this.devicesDialogController.open();
+          this.devicesDialogController?.open();
         } else{
           NotificationViewModel.clickItem(this.want);
         }
@@ -207,10 +222,12 @@ export default struct BannerNotificationItem {
     }
   }
 
-  selectedDevice(deviceID) {
+  selectedDevice(deviceID: string) {
     Log.showInfo(TAG, `selectedDevice deviceID:${deviceID}`);
-    this.nowWant.deviceId = deviceID;
-    let triggerInfo = {
+    if (this.nowWant) {
+      this.nowWant.deviceId = deviceID;
+    }
+    let triggerInfo: TriggerInfo = {
       code: 0,
       want: this.nowWant,
       permission: '',
@@ -231,7 +248,7 @@ export default struct BannerNotificationItem {
 @Component
 struct ContentComponent {
   @Prop isExpand: boolean;
-  itemData: any;
+  @Prop itemData: NotificationItemData;
 
   aboutToAppear() {
     Log.showInfo(TAG, `aboutToAppear NotificationItemData: ${JSON.stringify(this.itemData)}`);

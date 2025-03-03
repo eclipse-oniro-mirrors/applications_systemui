@@ -22,17 +22,23 @@ import NotificationConfigData from '../../../../../../../features/managementcomp
 import Router from '@system.router';
 import NotificationListener from '../../../../../../../features/managementcomponent/src/main/ets/com/ohos/model/notificationListener';
 import notification from '@ohos.notification';
+import { BundleItemData } from '@ohos/common';
+import NotificationManager from '@ohos.notificationManager';
 
 const TAG = 'NotificationManagement-SlotSetting';
 const DEFAULT_SOUND = 'file://system/etc/Light.ogg';
 
-let slotParams;
+interface ISlotParams {
+  appInfo?: BundleItemData,
+  slotInfo?: NotificationManager.NotificationSlot
+};
 
 @Entry
 @Component
 export default struct SlotSetting {
-  private appInfo: any = null;
-  private slotInfo: any = null;
+  private slotParams: ISlotParams = {};
+  private appInfo: BundleItemData = {};
+  private slotInfo: NotificationManager.NotificationSlot = {};
   @State headName: Resource = $r('app.string.notificationManagement')
   @State allowNotice: Resource = $r('app.string.allowNotification')
   @State noticeStyleBanner: Resource = $r('app.string.notificationStyle_banner')
@@ -56,8 +62,8 @@ export default struct SlotSetting {
                   appIcon: this.appInfo.appIcon,
                   appTitle: this.appInfo.appTitle,
                   appSummary: this.appInfo.appSummary,
-                  appValue: this.slotInfo.type,
-                  appArrow: this.appInfo.appArrow,
+                  appValue: this.slotInfo.type?.toString(),
+                  appArrow: this.appInfo.appArrow as string,
                   appArrowStyle: '',
                   appUri: this.appInfo.appUri,
                   appBundleName: this.appInfo.appBundleName,
@@ -74,8 +80,8 @@ export default struct SlotSetting {
               Row() {
                 SwitchComponent({
                   title: $allowNotice,
-                  initializationAction: () => this.notificationSlotEnableInit(),
-                  settingAction: (params) => this.notificationSlotEnableSet(params)
+                  initializationAction: (): Promise<boolean> => this.notificationSlotEnableInit(),
+                  settingAction: (params): void => this.notificationSlotEnableSet(params as boolean)
                 })
               }
               .margin({ top: $r('app.float.page_notice_title_margin_t') })
@@ -105,8 +111,8 @@ export default struct SlotSetting {
               Row() {
                 SwitchComponent({
                   title: $noticeStyleBanner,
-                  initializationAction: () => this.bannerEnableInit(),
-                  settingAction: (params) => this.bannerEnableSet(params)
+                  initializationAction: (): Promise<boolean> => this.bannerEnableInit(),
+                  settingAction: (params): void => this.bannerEnableSet(params as boolean)
                 })
               }
               .padding({
@@ -120,8 +126,8 @@ export default struct SlotSetting {
               Row() {
                 SwitchComponent({
                   title: $noticeSound,
-                  initializationAction: () => this.soundEnableInit(),
-                  settingAction: (params) => this.soundEnableSet(params)
+                  initializationAction: (): Promise<boolean> => this.soundEnableInit(),
+                  settingAction: (params): void => this.soundEnableSet(params as boolean)
                 })
               }
               .padding({
@@ -151,9 +157,9 @@ export default struct SlotSetting {
   }
 
   aboutToAppear(): void{
-    slotParams = Router.getParams();
-    this.appInfo = slotParams.appInfo;
-    this.slotInfo = slotParams.slotInfo
+    this.slotParams = Router.getParams();
+    this.appInfo = this.slotParams.appInfo as BundleItemData;
+    this.slotInfo = this.slotParams.slotInfo as NotificationManager.NotificationSlot;
     Log.showDebug(TAG, `aboutToAppear  ${JSON.stringify(this.slotInfo)}`)
   }
 
@@ -173,13 +179,13 @@ export default struct SlotSetting {
       });
   }
 
-  notificationSlotEnableSet(data) {
+  notificationSlotEnableSet(data: boolean) {
     Log.showDebug(TAG, `notificationEnableSet data:${JSON.stringify(data)}`)
     this.initState = data;
     NotificationListener.enableNotificationSlot({ bundle: this.appInfo.appBundleName, uid: this.appInfo.appUid }, this.slotInfo.type, data);
   }
 
-  soundEnableInit() {
+  soundEnableInit(): Promise<boolean> {
     Log.showDebug(TAG, `soundEnableInit`)
     return new Promise((resolve, reject) => {
       let result: boolean = false;
@@ -191,23 +197,23 @@ export default struct SlotSetting {
     });
   }
 
-  soundEnableSet(params) {
+  soundEnableSet(params: boolean) {
     Log.showDebug(TAG, `soundEnableSet params:${JSON.stringify(params)}`)
-    if (params == 0) {
+    if (!params) {
       this.slotInfo.sound = '';
       if (this.slotInfo.level != notification.SlotLevel.LEVEL_HIGH) {
         this.slotInfo.level = notification.SlotLevel.LEVEL_LOW;
       }
-    } else if (params == 1) {
+    } else if (params) {
       this.slotInfo.sound = DEFAULT_SOUND;
-      if (this.slotInfo.level < notification.SlotLevel.LEVEL_DEFAULT) {
+      if (this.slotInfo.level && this.slotInfo.level < notification.SlotLevel.LEVEL_DEFAULT) {
         this.slotInfo.level = notification.SlotLevel.LEVEL_DEFAULT
       }
     }
     this.notificationSlotSet();
   }
 
-  bannerEnableInit() {
+  bannerEnableInit(): Promise<boolean> {
     Log.showDebug(TAG, `bannerEnableInit`)
     return new Promise((resolve, reject) => {
       let result: boolean = false;
@@ -219,15 +225,15 @@ export default struct SlotSetting {
     });
   }
 
-  bannerEnableSet(params) {
+  bannerEnableSet(params: boolean) {
     Log.showDebug(TAG, `bannerEnableSet params:${JSON.stringify(params)}`)
-    if (params == 0) {
+    if (!params) {
       if (this.slotInfo.sound) {
         this.slotInfo.level = notification.SlotLevel.LEVEL_DEFAULT;
       } else {
         this.slotInfo.level = notification.SlotLevel.LEVEL_LOW;
       }
-    } else if (params == 1) {
+    } else if (params) {
       this.slotInfo.level = notification.SlotLevel.LEVEL_HIGH;
     }
     this.notificationSlotSet();

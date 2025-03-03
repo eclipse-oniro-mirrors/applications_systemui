@@ -20,7 +20,7 @@ import WindowManager, { WindowType } from '../../../../../../../common/src/main/
 import AbilityManager from '../../../../../../../common/src/main/ets/default/abilitymanager/abilityManager';
 import StatusBarConfiguration from '../../../../../../../features/statusbarcomponent/src/main/ets/com/ohos/common/StatusBarConfiguration';
 import StatusBarConstants from '../../../../../../../features/statusbarcomponent/src/main/ets/com/ohos/common/Constants';
-import { Want } from 'ability/want';
+import Want from '@ohos.application.Want';
 import deviceInfo from '@ohos.deviceInfo';
 
 const TAG = 'StatusBar_ServiceExtAbility';

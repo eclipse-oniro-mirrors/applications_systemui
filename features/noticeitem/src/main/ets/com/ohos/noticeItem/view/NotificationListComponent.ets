@@ -14,14 +14,14 @@
  */
 
 import Log from '../../../../../../../../../common/src/main/ets/default/Log';
-import Constants, {NotificationLayout as Layout} from '../common/constants';
+import Constants, {NotificationLayout as Layout, NotificationItemData} from '../common/constants';
 import NotificationItem from './item/notificationItem';
 import GroupNotificationItem from './item/groupItem';
 import ExpandInfoManager from '../model/ExpandInfoManager';
 
 const TAG = 'NoticeItem-NotificationListComponent';
 
-type NotificationLayoutConfig = {
+interface  NotificationLayoutConfig {
   itemMargin: number;
 }
 
@@ -29,7 +29,7 @@ type NotificationLayoutConfig = {
 export default struct NotificationListComponent {
   // 当长通知消息展开时，这里用于重新刷新item布局，扩展高度
   @Provide('notificationUpdate') update: number = 0;
-  @StorageLink('notificationList') notificationList: any[] = [];
+  @StorageLink('notificationList') notificationList:  NotificationItemData[][] = [];
   @Link listIsEnd: boolean
   private config: NotificationLayoutConfig = {
     itemMargin: Layout.ITEM_MARGIN
@@ -43,7 +43,7 @@ export default struct NotificationListComponent {
     Log.showDebug(TAG, `aboutToDisAppear`);
   }
 
-  deleteExpandInfo(itemData){
+  deleteExpandInfo(itemData: NotificationItemData){
     ExpandInfoManager.deleteExpandInfo(itemData);
     return true;
   }
@@ -54,7 +54,7 @@ export default struct NotificationListComponent {
         ListItem() {
         }
       }
-      ForEach(this.notificationList, (item: any) => {
+      ForEach(this.notificationList, (item: NotificationItemData[]) => {
         ListItem() {
           if (item.length > 1) {
             GroupNotificationItem({ groupData: item })
@@ -65,7 +65,7 @@ export default struct NotificationListComponent {
             }
           }
         }
-      }, (list: any) => JSON.stringify(list.map((item) => `${item.hashcode}_${item.timestamp}`)))
+      }, (list: NotificationItemData[]) => JSON.stringify(list.map((item) => `${item.hashcode}_${item.timestamp}`)))
     }
     .onReachEnd(() => {
       this.listIsEnd = true;

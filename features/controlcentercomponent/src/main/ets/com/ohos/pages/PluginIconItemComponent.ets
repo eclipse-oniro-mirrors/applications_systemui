@@ -23,7 +23,7 @@ const TAG = 'PluginIconItemComponent';
 
 @Component
 export default struct PluginIconItemComponent {
-  private keyId: string;
+  private keyId: string = '';
   private mEditMode: boolean = false;
   private mDragMode: boolean = false;
   @State @Watch('onPluginDataChange') mPluginData: PluginComponentData = new PluginComponentData();
@@ -55,8 +55,8 @@ export default struct PluginIconItemComponent {
           data: this.mPluginData.data
         }).onComplete(() => {
           Log.showInfo(TAG, `PluginComponent.Complete`)
-        }).onError(({errcode, msg}) => {
-          Log.showInfo(TAG, `PluginComponent.Error code:${errcode} message:${msg}`)
+        }).onError((error) => {
+          Log.showInfo(TAG, `PluginComponent.Error code:${error.errcode} message:${error.msg}`)
         })
           .size({ width: '100%', height: '100%' })
       }

@@ -28,14 +28,16 @@ const TAG = 'Control-ControlCenter';
 const TAG_ControlCenterComplexToggleLayout = 'Control-ControlCenterComplexToggleLayout';
 const TAG_ControlCenterSimpleToggleLayout = 'Control-ControlCenterSimpleToggleLayout';
 
-var mUniform;
+interface IDirection {
+  direction: string
+}
 
 @Component
 export default struct ControlCenterComponent {
-  private touchMoveCallback: Function;
-  private modeChangeCallback: Function;
+  private touchMoveCallback: Function = () => {};
+  private modeChangeCallback: Function = () => {};
   @State mSimpleToggleColumnCount: number = Constants.DEFAULT_SIMPLE_TOGGLE_COLUMN_COUNT;
-  private mControlCenterComponentConfig: ControlCenterConfig;
+  private mControlCenterComponentConfig: ControlCenterConfig | undefined = undefined;
   @State mIsEditSimpleToggleLayout: boolean = false;
   @State style: ControlCenterComponentStyle = StyleConfiguration.getControlCenterComponentStyle();
   private mWidthPx: number = 0;
@@ -100,12 +102,12 @@ export default struct ControlCenterComponent {
         Column() {
           Column() {
             UpTitle({
-              touchMoveCallback: (data) => {
+              touchMoveCallback: (data: IDirection) => {
                 if (this.touchMoveCallback) {
                   this.touchMoveCallback(data)
                 }
               },
-              simpleToggleLayoutEditStartCallback: () => this.onSimpleToggleLayoutEditStart()
+              simpleToggleLayoutEditStartCallback: ():void => this.onSimpleToggleLayoutEditStart()
             })
           }
           .width('100%')
@@ -143,7 +145,7 @@ export default struct ControlCenterComponent {
             mDisplayingToggles: this.mDisplayingSimpleToggles,
             mHidingToggles: this.mHidingSimpleToggles,
             mDefaultDisplayToggles: this.mDefaultDisplaySimpleToggles,
-            simpleToggleLayoutEditEndCallback: () => this.onSimpleToggleLayoutEditEnd(),
+            simpleToggleLayoutEditEndCallback: (): void => this.onSimpleToggleLayoutEditEnd(),
             onSaveDisplayingToggles: (toggles: string[]) => this.onSaveDisplayingToggles(toggles),
             mColumnCount: this.mSimpleToggleColumnCount,
             titleDisplayInside: this.titleDisplayInside
@@ -178,7 +180,7 @@ struct ControlCenterComplexToggleLayout {
 
   build() {
     Grid() {
-      ForEach(this.mComplexToggleLayout, (componentName) => {
+      ForEach(this.mComplexToggleLayout, (componentName: string) => {
         GridItem() {
           ComplexToggleLoadComponent({
             keyId: componentName
@@ -186,17 +188,20 @@ struct ControlCenterComplexToggleLayout {
         }
         .width('100%')
         .height('100%')
-      }, (componentName) => componentName)
+      }, (componentName: string) => componentName)
     }
     .width('100%')
-    .height(this.calcGridHeight(Math.ceil(this.mComplexToggleLayout.length / 2), this.style.rowHeight, this.style.rowGap))
+    .height(this.calcGridHeight(
+      Math.ceil(this.mComplexToggleLayout.length / 2),
+      this.style.rowHeight as number,
+      this.style.rowGap as number))
     .columnsTemplate('1fr 1fr')
     .rowsTemplate(this.generateRowsTemplate(Math.ceil(this.mComplexToggleLayout.length / 2)))
     .rowsGap(this.style.rowGap + 'px')
     .columnsGap(this.style.columnGap)
   }
 
-  calcGridHeight(rowCount, rowHeight, rowGap) {
+  calcGridHeight(rowCount: number, rowHeight: number, rowGap: number) {
     Log.showDebug(TAG_ControlCenterComplexToggleLayout, `calcGridHeight, rowCount: ${rowCount} rowHeight: ${rowHeight} rowGap: ${rowGap}`);
     let height = rowCount * rowHeight + (rowCount - 1) * rowGap;
     if (height < 0) {
@@ -206,7 +211,7 @@ struct ControlCenterComplexToggleLayout {
     return height + 'px';
   }
 
-  generateRowsTemplate(rowCount) {
+  generateRowsTemplate(rowCount: number) {
     Log.showDebug(TAG_ControlCenterComplexToggleLayout, `generateRowsTemplate, rowCount: ${rowCount}`);
     let rowsTemplate = '1fr';
     for (let i = 1;i < rowCount; i++) {
@@ -232,17 +237,21 @@ struct ControlCenterSimpleToggleLayout {
 
   build() {
     Grid() {
-      ForEach(this.mSimpleToggleLayout, (componentName) => {
+      ForEach(this.mSimpleToggleLayout, (componentName: string) => {
         GridItem() {
           SimpleToggleLoadComponent({
             keyId: componentName
           })
         }.width('100%')
         .height('100%')
-      }, (componentName) => componentName)
+      }, (componentName: string) => componentName)
     }
     .width('100%')
-    .height(this.calcGridHeight(Math.ceil(this.mSimpleToggleLayout.length / this.mColumnCount), this.style.rowHeight, this.style.rowGap))
+    .height(this.calcGridHeight(
+      Math.ceil(
+        this.mSimpleToggleLayout.length / this.mColumnCount),
+        this.style.rowHeight as number,
+        this.style.rowGap as number))
     .margin({left: this.style.marginLeft, right: this.style.marginRight})
     .columnsTemplate(this.generateColumnsTemplate(this.mColumnCount))
     .rowsTemplate(this.generateRowsTemplate(Math.ceil(this.mSimpleToggleLayout.length / this.mColumnCount)))
@@ -250,7 +259,7 @@ struct ControlCenterSimpleToggleLayout {
     .columnsGap(this.style.columnGap)
   }
 
-  calcGridHeight(rowCount, rowHeight, rowGap) {
+  calcGridHeight(rowCount: number, rowHeight: number, rowGap: number) {
     Log.showDebug(TAG_ControlCenterSimpleToggleLayout, `calcGridHeight, rowCount: ${rowCount} rowHeight: ${rowHeight} rowGap: ${rowGap}`);
     let height = rowCount * rowHeight + (rowCount - 1) * rowGap;
     if (height < 0) {
@@ -260,7 +269,7 @@ struct ControlCenterSimpleToggleLayout {
     return height + 'px';
   }
 
-  generateColumnsTemplate(columnCount) {
+  generateColumnsTemplate(columnCount: number) {
     Log.showDebug(TAG_ControlCenterSimpleToggleLayout, `generateColumnsTemplate, columnCount: ${columnCount}`);
     let columnsTemplate = '1fr';
     for (let i = 1;i < columnCount; i++) {
@@ -269,7 +278,7 @@ struct ControlCenterSimpleToggleLayout {
     return columnsTemplate;
   }
 
-  generateRowsTemplate(rowCount) {
+  generateRowsTemplate(rowCount: number) {
     Log.showDebug(TAG_ControlCenterSimpleToggleLayout, `generateRowsTemplate, rowCount: ${rowCount}`);
     let rowsTemplate = '1fr';
     for (let i = 1;i < rowCount; i++) {

@@ -97,9 +97,9 @@ export default struct VolumePanelComponent {
     .backgroundColor(this.style.volumePanelBackground)
   }
 
-  getVolumeIcon(isMute, volume, maxVolume, minVolume) {
+  getVolumeIcon(isMute: boolean, volume: number, maxVolume: number, minVolume: number) {
     Log.showInfo(TAG, `getVolumeIcon, isMute: ${isMute} volume: ${volume} maxVolume: ${maxVolume} minVolume: ${minVolume}`);
-    let icon
+    let icon: Resource
     if (isMute) {
       icon = $r('app.media.ic_public_mute')
     } else {

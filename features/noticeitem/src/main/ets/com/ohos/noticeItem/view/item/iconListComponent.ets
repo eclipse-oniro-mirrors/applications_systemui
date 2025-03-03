@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-import Constants, { NotificationLayout as Layout } from '../../common/constants';
+import Constants, { NotificationItemData, NotificationLayout as Layout } from '../../common/constants';
 import Log from '../../../../../../../../../../common/src/main/ets/default/Log';
 import SettingDialog from './settingDialog';
 import ConfirmDialog from './confirmDialog'
@@ -24,12 +24,12 @@ const deviceTypeInfo = deviceInfo.deviceType;
 const TAG = 'NoticeItem-IconListComponent';
 let iconSize: number = 0;
 
-type IconData = {
+interface IconData {
   src?: Resource;
   callback?: () => void
 }
 
-export type NotificationUiConfig = {
+export interface NotificationUiConfig {
   iconSize: number;
 }
 
@@ -40,23 +40,23 @@ export function getIconListSize(list?: IconData[]) {
 
 @Component
 export default struct IconListComponent {
-  private itemData: any = {}
+  private itemData: NotificationItemData | undefined = undefined
   private isGroup: boolean= false;
   @Prop iconAlpha: number
-  private settingDialogController: CustomDialogController = new CustomDialogController({
+  private settingDialogController: CustomDialogController | null = new CustomDialogController({
     builder: SettingDialog({
       itemData: this.itemData,
-      action: () => this.confirmDialogController.open()
+      action: (): void => this.confirmDialogController?.open()
     }),
     autoCancel: false,
     alignment: deviceTypeInfo === 'phone' ? DialogAlignment.Bottom : DialogAlignment.Default,
     offset: { dx: 0, dy: $r('app.float.setting_dialog_dy') },
     customStyle: true
   });
-  private confirmDialogController: CustomDialogController = new CustomDialogController({
+  private confirmDialogController: CustomDialogController | null = new CustomDialogController({
     builder: ConfirmDialog({
       title: $r('app.string.closeNovice'),
-      bundleName: this.itemData.name,
+      bundleName: this.itemData?.appName,
       action: () => NotificationViewModel.enableNotification(this.itemData, false)
     }),
     autoCancel: false,
@@ -69,7 +69,7 @@ export default struct IconListComponent {
       src: $r("app.media.ic_public_settings_filled"),
       callback: () => {
         Log.showInfo(TAG, `click settings hashcode: ${this.itemData?.hashcode}`);
-        this.settingDialogController.open()
+        this.settingDialogController?.open()
       }
     }, {
       src: $r("app.media.ic_public_delete_filled"),
@@ -91,18 +91,14 @@ export default struct IconListComponent {
   }
 
   aboutToDisappear() {
-    delete this.settingDialogController
-    this.settingDialogController = undefined
-
-    delete this.confirmDialogController
-    this.confirmDialogController = undefined
-
+    this.settingDialogController = null
+    this.confirmDialogController = null
     Log.showInfo(TAG, 'aboutToDisappear')
   }
 
   build() {
     Flex({ direction: FlexDirection.Row, alignItems: ItemAlign.End, justifyContent: FlexAlign.End }) {
-      ForEach(this.iconConfigs, (item) => {
+      ForEach(this.iconConfigs, (item: IconData) => {
         Button({ type: ButtonType.Circle, stateEffect: true }) {
           if (item.src) {
             Image(item.src)
@@ -126,13 +122,13 @@ export default struct IconListComponent {
 
 @Component
 export struct BottomLeftItem {
-  private itemData: any = {};
+  private itemData: NotificationItemData | undefined = undefined;
   private bottomLeftItemHeight: number = 92;
 
-  private settingDialogController: CustomDialogController = new CustomDialogController({
+  private settingDialogController: CustomDialogController | null = new CustomDialogController({
     builder: SettingDialog({
       itemData: this.itemData,
-      action: () => this.confirmDialogController.open()
+      action: (): void => this.confirmDialogController?.open()
     }),
     autoCancel: false,
     alignment: deviceTypeInfo === 'phone' ? DialogAlignment.Bottom : DialogAlignment.Default,
@@ -140,10 +136,10 @@ export struct BottomLeftItem {
     customStyle: true
   });
 
-  private confirmDialogController: CustomDialogController = new CustomDialogController({
+  private confirmDialogController: CustomDialogController | null = new CustomDialogController({
     builder: ConfirmDialog({
       title: $r('app.string.closeNovice'),
-      bundleName: this.itemData.name,
+      bundleName: this.itemData?.appName,
       action: () => NotificationViewModel.enableNotification(this.itemData, false)
     }),
     autoCancel: false,
@@ -153,12 +149,8 @@ export struct BottomLeftItem {
   });
 
   aboutToDisappear() {
-    delete this.settingDialogController
-    this.settingDialogController = undefined
-
-    delete this.confirmDialogController
-    this.confirmDialogController = undefined
-
+    this.settingDialogController = null
+    this.confirmDialogController = null
     Log.showInfo(TAG, 'BottomLeftItem -> aboutToDisappear')
   }
 
@@ -172,7 +164,7 @@ export struct BottomLeftItem {
           .height(Layout.ICON_SIZE)
       }
       .backgroundColor($r("app.color.button_background"))
-      .onClick(() => this.settingDialogController.open())
+      .onClick(() => this.settingDialogController?.open())
       .width(Layout.BUTTON_SIZE)
       .height(Layout.BUTTON_SIZE)
     }

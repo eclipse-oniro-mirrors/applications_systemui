@@ -29,12 +29,13 @@ import Log from '../../../../../../../common/src/main/ets/default/Log'
 import Constants from './common/constants'
 import StyleConfiguration, { ControlStyle } from './common/StyleConfiguration'
 import ControlCenterConfig from './common/ControlCenterConfig';
+import { TouchMoveData } from '@ohos/common';
 
 const TAG = 'DropdownPanel-Control';
 
 @Component
 export default struct Control {
-  private touchMoveCallback: Function
+  private touchMoveCallback: Function = () => {}
   startX: number = 0
   startY: number = 0
   @State moveX: number = 0
@@ -53,7 +54,7 @@ export default struct Control {
   build() {
     Column() {
       Column() {
-        statusBar({ touchMoveCallback: (data) => this.touchMoveCallback(data) })
+        statusBar({ touchMoveCallback: (data: TouchMoveData): void => this.touchMoveCallback(data) })
       }
       .width('100%')
       .height(this.style.statusBarHeight)
@@ -68,7 +69,7 @@ export default struct Control {
       Scroll(new Scroller()) {
         Column() {
           ControlCenterComponent({
-            touchMoveCallback: (data) => this.controlCenterTouchMoveCallback(data),
+            touchMoveCallback: (data: TouchMoveData): void => this.controlCenterTouchMoveCallback(data),
             mControlCenterComponentConfig: ControlCenterConfig,
             moduleName: 'phone_dropdownpanel',
           })
@@ -104,9 +105,9 @@ export default struct Control {
     }
   }
 
-  controlCenterTouchMoveCallback(data) {
+  controlCenterTouchMoveCallback(data: TouchMoveData) {
     Log.showDebug(TAG, `controlCenterTouchMoveCallback data: ${JSON.stringify(data)}`)
-    data['touchComponent'] = 'control'
+    data.touchComponent = 'control'
     if (this.touchMoveCallback) {
       this.touchMoveCallback(data)
     }
@@ -116,7 +117,7 @@ export default struct Control {
 @Component
 struct statusBar {
   @StorageLink('StatusCoefficient') StatusCoefficient: number = 1.0
-  private touchMoveCallback: Function
+  private touchMoveCallback: Function = () => {}
   startX: number = 0
   startY: number = 0
   @State moveX: number = 0

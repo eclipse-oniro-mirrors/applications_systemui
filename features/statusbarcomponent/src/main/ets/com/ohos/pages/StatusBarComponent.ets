@@ -35,6 +35,7 @@ import CapsuleIcon from '../../../../../../../capsulecomponent/src/main/ets/defa
 import LocationIcon from '../../../../../../../locationcomponent/src/main/ets/com/ohos/pages/StatusBarIconItemLocationComponent'
 import RingModeIcon from '../../../../../../../ringmodecomponent/src/main/ets/com/ohos/pages/StatusBarIconItemRingModeComponent'
 import NfcIcon from '../../../../../../../nfccomponent/src/main/ets/com/ohos/pages/StatusBarIconItemNFComponent'
+import { NotificationItemData } from '@ohos/common';
 
 const TAG = 'StatusBarComponent'
 const TAG_StatusBarGroup = 'StatusBarGroup'
@@ -44,9 +45,14 @@ const TAG_StatusBarEmptyIcon = 'StatusBarEmptyIcon'
 const TAG_StatusBarNotificationIcon = 'StatusBarNotificationIcon'
 const TAG_StatusBarBackground = 'StatusBarBackground'
 
+interface Item {
+  index: number;
+  data: NotificationItemData[];
+}
+
 @Component
 export default struct StatusBarComponent {
-  private mStatusBarComponentConfig: StatusBarConfig
+  private mStatusBarComponentConfig: StatusBarConfig | undefined = undefined
   @State mStatusBarData: StatusBarData = ViewModel.getStatusBarData()
   private moduleName: string = ''
 
@@ -166,7 +172,7 @@ struct StatusBarBackground {
 struct StatusBarGroup {
   @StorageLink('StatusBarLayout') mStatusBarLayout: string[][] = [[], [], []]
   private mLayoutWeight: number = 1
-  private mAlignItems: any = HorizontalAlign.Center;
+  private mAlignItems: number = HorizontalAlign.Center;
   private index: number = -1;
   @State mStatusBarData: StatusBarData = ViewModel.getStatusBarData()
 
@@ -212,7 +218,7 @@ struct StatusBarGroup {
 
 @Component
 struct VerticalStatusBarItemLoadComponent {
-  private mComponentName: string
+  private mComponentName: string = ''
   @State mComponentHeight: number = 0
   @State style: VerticalStatusBarItemLoadComponentStyle = StyleConfiguration.getVerticalStatusBarItemLoadComponentStyle()
 
@@ -241,7 +247,7 @@ struct VerticalStatusBarItemLoadComponent {
 
 @Component
 struct StatusBarItemLoadComponent {
-  private mComponentName: string
+  private mComponentName: string = ''
   aboutToAppear() {
     Log.showInfo(TAG_StatusBarItemLoadComponent, `aboutToAppear, mComponentName: ${this.mComponentName} `)
   }
@@ -311,7 +317,7 @@ struct StatusBarEmptyIcon {
 
 @Component
 struct StatusBarNotificationIcon {
-  @StorageLink('notificationList') notificationList: Array<any> = []
+  @StorageLink('notificationList') notificationList: NotificationItemData[][] = []
   @StorageLink('StatusCoefficient') StatusCoefficient: number = 1.0
   @State mTintContentInfo: TintContentInfo = ViewModel.getNotificationTintContentInfo()
   @State styleCommon: CommonStyle = StyleConfigurationCommon.getCommonStyle()
@@ -331,7 +337,7 @@ struct StatusBarNotificationIcon {
         Row().height(1).width(this.styleCommon.statusBarMarginLeftRight)
       }
       if (this.notificationList.length > 3) {
-        ForEach(this.notificationList.slice(0, 3), (item: any) => {
+        ForEach(this.notificationList.slice(0, 3), (item: NotificationItemData[]) => {
           Image(item[0].smallIcon)
             .objectFit(ImageFit.ScaleDown)
             .height(this.style.iconHeight)
@@ -346,12 +352,13 @@ struct StatusBarNotificationIcon {
         }
       } else {
         ForEach(this.notificationList.map((item, index1) => {
-          return { i: index1, data: item }
-        }), (item) => {
-          if (item.i > 0) {
+          let res: Item = { index: index1, data: item }
+          return res
+        }), (res: Item) => {
+          if (res.index > 0) {
             Row().height(1).width(this.style.iconSpace)
           }
-          Image(item.data[0].smallIcon)
+          Image(res.data[0].smallIcon)
             .objectFit(ImageFit.ScaleDown)
             .height(this.style.iconHeight)
             .width(this.style.iconWidth)

@@ -121,8 +121,8 @@ export default struct notificationManagenment {
                 SwitchComponent({
                   title: $allowDistribut,
                   describe: this.allowDistributDescribe,
-                  initializationAction: () => this.switchComponentInit(),
-                  settingAction: (params) => this.switchComponentSet(params)
+                  initializationAction: (): Promise<boolean> => this.switchComponentInit(),
+                  settingAction: (params): void => this.switchComponentSet(params)
                 })
               }.margin({ bottom: $r('app.float.noDisturb_margin_lf') })
             }
@@ -202,7 +202,7 @@ export default struct notificationManagenment {
     return Notification.isDistributedEnabled();
   }
 
-  switchComponentSet(params) {
+  switchComponentSet(params?: boolean) {
     Log.showDebug(TAG, `switchComponentSet`)
     Notification.enableDistributed(params);
   }

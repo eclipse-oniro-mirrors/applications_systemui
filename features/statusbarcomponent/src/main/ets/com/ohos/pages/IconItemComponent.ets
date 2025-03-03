@@ -16,7 +16,7 @@
 import Log from '../../../../../../../../common/src/main/ets/default/Log'
 import EventManager, { unsubscribe } from '../../../../../../../../common/src/main/ets/default/event/EventManager'
 import CheckEmptyUtils from '../../../../../../../../common/src/main/ets/default/CheckEmptyUtils'
-import { WINDOW_SHOW_HIDE_EVENT } from '../../../../../../../../common/src/main/ets/default/WindowManager'
+import { WINDOW_SHOW_HIDE_EVENT, ArgsInfo } from '../../../../../../../../common/src/main/ets/default/WindowManager'
 import { PluginType,itemData } from "../../../../../../../../common/src/main/ets/plugindatasource/common/Constants"
 import ViewModel from '../viewmodel/StatusBarVM'
 import StyleConfigurationCommon, { CommonStyle
@@ -24,16 +24,17 @@ import StyleConfigurationCommon, { CommonStyle
 import StyleConfiguration, { IconItemComponentStyle } from '../common/StyleConfiguration'
 import MetaIconItemComponent from './MetaIconItemComponent'
 import PluginIconItemComponent from './PluginIconItemComponent'
+import { Event } from '@ohos/common'
 
 const TAG = 'IconItemComponent'
 
-class itemStatusData{
+interface itemStatusData{
   selected: boolean
 }
 
 @Component
 export default struct IconItemComponent {
-  private keyId: string
+  @Prop keyId: string
   @State mItemData: itemData = new itemData()
   @State mItemStatus: itemStatusData = {
     selected: false
@@ -47,7 +48,9 @@ export default struct IconItemComponent {
     Log.showInfo(TAG, `aboutToAppear Start, keyId: ${this.keyId} `);
     this.linkItemData()
     if (this.mItemData?.relationWindowId) {
-      this.mClearCallback = EventManager.subscribe(WINDOW_SHOW_HIDE_EVENT, (args) => this.onWindowChange(args))
+      this.mClearCallback = EventManager.subscribe(
+        WINDOW_SHOW_HIDE_EVENT,
+        (args: ArgsInfo) => this.onWindowChange(args));
     }
   }
 
@@ -58,14 +61,14 @@ export default struct IconItemComponent {
   }
 
   linkItemData() {
-    this.mItemData = AppStorage.Get('StatusBar_' + this.keyId)
+    this.mItemData = AppStorage.Get('StatusBar_' + this.keyId) as itemData
     Log.showInfo(TAG, `linkItemData, mItemData: ${this.keyId} ${this.mItemData.label} ${
     this.mItemData
     .iconUrl}`)
 
     const statusBarStatusKey = 'StatusBar_Status_' + this.keyId
     AppStorage.SetOrCreate(statusBarStatusKey, { selected: false })
-    this.mItemStatus = AppStorage.Get(statusBarStatusKey)
+    this.mItemStatus = AppStorage.Get(statusBarStatusKey) as itemStatusData
   }
 
   build() {
@@ -102,9 +105,9 @@ export default struct IconItemComponent {
     }.height('100%')
   }
 
-  onWindowChange(args) {
+  onWindowChange(args: ArgsInfo) {
     if (this.mItemData.canSelect && args?.windowName == this.mItemData.relationWindowId) {
-      this.mItemStatus.selected = args?.isShow
+      this.mItemStatus.selected = args?.isShow as boolean
     }
   }
 
@@ -133,7 +136,7 @@ export default struct IconItemComponent {
 
   onIconItemLongPressGesture(event: GestureEvent) {
     Log.showInfo(TAG, `onIconItemLongPressGesture, event: ${JSON.stringify(event)}`);
-    let longClickEvent = this.mItemData.actionData.longClickAction;
+    let longClickEvent = this.mItemData.actionData?.longClickAction as Event;
     longClickEvent && EventManager.publish(longClickEvent);
   }
 

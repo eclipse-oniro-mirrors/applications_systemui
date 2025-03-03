@@ -3,5 +3,6 @@
   "name": "@ohos/common",
   "description": "a npm package which contains common function",
   "version": "1.0.0",
+  "main": "index.ets",
   "dependencies": {}
 }

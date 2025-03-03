@@ -37,10 +37,10 @@ export default struct SwipeLayout {
   bottomRightWidth: number = 0;
   leftThreshold: number = 0;
   bottomHeight: number = 92;
-  deleteButtonCallback: any;
-  @BuilderParam SurfaceComponent?: () => void;
-  @BuilderParam BottomLeftComponent?: () => void;
-  registerEventCapture: (id: string) => boolean = null;
+  deleteButtonCallback: () => void = () => {};
+  @BuilderParam SurfaceComponent: () => void;
+  @BuilderParam BottomLeftComponent: () => void;
+  registerEventCapture: (id: string) => boolean = (id) => true;
 
   // Page offset, opacity, width height status variable.
   @State overallX: number = 0;
@@ -209,7 +209,7 @@ export default struct SwipeLayout {
           return;
         }
         if(this.angelCalFlag == false){
-          var hasChange = Math.abs(touchEvent.touches[0].screenX - this.startX) > 1e-3 ||
+          let hasChange = Math.abs(touchEvent.touches[0].screenX - this.startX) > 1e-3 ||
             Math.abs(touchEvent.touches[0].screenY - this.startY) > 1e-3
           if (hasChange) {
             this.responseSwipeEvent = (Math.abs(touchEvent.touches[0].screenX - this.startX) > Math.abs(touchEvent.touches[0].screenY - this.startY));

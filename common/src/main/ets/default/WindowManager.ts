@@ -39,6 +39,17 @@ export enum WindowType {
   PRIVACY_INDICATOR = 'SystemUi_PrivacyIndicator'
 }
 
+export interface ArgsInfo {
+  windowName: WindowType;
+  isShow?: boolean;
+  isDestroy?: boolean;
+  rect?: Rect;
+  left?: number;
+  top?: number;
+  width?: number;
+  height?: number;
+}
+
 export const WINDOW_SHOW_HIDE_EVENT = 'WindowShowHideEvent';
 
 export const WINDOW_RESIZE_EVENT = 'WindowResizeEvent';

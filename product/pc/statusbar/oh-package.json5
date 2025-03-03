@@ -13,6 +13,7 @@
     "@ohos/batterycomponent": "file:../../../features/batterycomponent",
     "@ohos/ringmodecomponent": "file:../../../features/ringmodecomponent",
     "@ohos/capsulecomponent": "file:../../../features/capsulecomponent",
-    "@ohos/airplanecomponent": "file:../../../features/airplanecomponent"
+    "@ohos/airplanecomponent": "file:../../../features/airplanecomponent",
+    "@ohos/common": "file:../../../common"
   }
 }

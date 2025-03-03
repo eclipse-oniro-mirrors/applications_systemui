@@ -22,7 +22,7 @@ const TAG = 'autorotate-ControlCenterSimpleToggleAutoRotateComponent';
 
 @Component
 export default struct ControlCenterSimpleToggleAutoRotateComponent {
-  private keyId: string;
+  private keyId: string = '';
   private mEditMode: boolean = false;
   private mDragMode: boolean = false;
   @State mIcon: Resource = $r("app.media.ic_controlcenter_auto_rotate_off");
@@ -53,7 +53,7 @@ export default struct ControlCenterSimpleToggleAutoRotateComponent {
       mLabel: $mLabel,
       mEditMode: this.mEditMode,
       mDragMode: this.mDragMode,
-      mClickEvent: () => this.mClickEvent()
+      mClickEvent: (): void => this.mClickEvent()
     })
   }
 

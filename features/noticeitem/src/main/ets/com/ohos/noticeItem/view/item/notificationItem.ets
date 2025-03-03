@@ -24,17 +24,27 @@ import {BottomLeftItem} from './iconListComponent';
 import deviceInfo from '@ohos.deviceInfo';
 import SwipeLayout from './SwipeLayout';
 import {getId} from '../../model/SwipeLayoutUtils';
+import { NotificationItemData } from '../../common/constants'
 
 const TAG = 'NoticeItem-NotificationItem';
 const deviceTypeInfo = deviceInfo.deviceType;
+
+class EmptyObject {}
+
+interface TriggerInfo {
+  code: number;
+  want: Want | undefined;
+  permission: string;
+  extraInfo: EmptyObject;
+}
 
 @Component
 export default struct NotificationItem {
   @State mIconAlpha: number = 0;
   @State itemWidth: string = '100%';
-  private itemData: any = {};
+  @Prop itemData: NotificationItemData;
   private isSubItem: boolean= false;
-  registerEventCapture: (id: string) => boolean = null;
+  registerEventCapture: (id: string) => boolean = (id) => true;
 
   registerNotificationItemEventCapture(id: string){
     if(this.registerEventCapture != null && this.registerEventCapture(id)){
@@ -83,29 +93,28 @@ export default struct NotificationItem {
 
 @Component
 struct FrontItem {
-  private itemData: any = {}
-  private nowWant: any;
+  @Prop itemData: NotificationItemData
+  private nowWant: Want | undefined = undefined;
   private isSubItem: boolean= false;
-  private devicesDialogController: CustomDialogController = new CustomDialogController({
+  private devicesDialogController: CustomDialogController | null = new CustomDialogController({
     builder: DevicesDialog({
-      action: (deviceID) => this.selectedDevice(deviceID)
+      action: (deviceID): void => this.selectedDevice(deviceID)
     }),
     autoCancel: false,
     offset: { dx: 0, dy: 200 }
   });
 
   aboutToDisappear() {
-    delete this.devicesDialogController
-    this.devicesDialogController = undefined
+    this.devicesDialogController = null
     Log.showInfo(TAG, 'FrontItem -> aboutToDisappear')
   }
 
   build() {
     Column() {
       if (this.itemData.template?.name) {
-        CustomItem({ customItemData: this.itemData, clickAction: () => this.showDevicesDialog(), isSubItem: this.isSubItem })
+        CustomItem({ customItemData: this.itemData, clickAction: (): void => this.showDevicesDialog(), isSubItem: this.isSubItem })
       } else {
-        GeneralItem({ itemData: this.itemData, clickAction: () => this.showDevicesDialog(), isSubItem: this.isSubItem })
+        GeneralItem({ itemData: this.itemData, clickAction: (): void => this.showDevicesDialog(), isSubItem: this.isSubItem })
       }
     }
     .width('100%')
@@ -125,7 +134,7 @@ struct FrontItem {
         this.nowWant = want;
         Log.showInfo(TAG, `showDevicesDialog want: ${JSON.stringify(this.nowWant)}`);
         if (!want?.deviceId) {
-          this.devicesDialogController.open();
+          this.devicesDialogController?.open();
         } else {
           NotificationViewModel.clickItem(this.itemData);
         }
@@ -135,10 +144,12 @@ struct FrontItem {
     }
   }
 
-  selectedDevice(deviceID) {
+  selectedDevice(deviceID: string): void {
     Log.showInfo(TAG, `selectedDevice deviceID:${deviceID}`);
-    this.nowWant.deviceId = deviceID;
-    let triggerInfo = {
+    if(this.nowWant) {
+      this.nowWant.deviceId = deviceID;
+    }
+    let triggerInfo: TriggerInfo = {
       code: 0,
       want: this.nowWant,
       permission: '',

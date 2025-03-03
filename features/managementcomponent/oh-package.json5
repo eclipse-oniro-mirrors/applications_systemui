@@ -3,5 +3,7 @@
   "name": "@ohos/managementcomponent",
   "description": "a npm package which contains managementcomponent function",
   "version": "1.0.0",
-  "dependencies": {}
+  "dependencies": {
+    "@ohos/common": "file:../../common"
+  }
 }

@@ -18,22 +18,24 @@ import Log from '../../../../../../../../../../common/src/main/ets/default/Log';
 import NotificationViewModel from '../../viewmodel/NotificationViewModel';
 import NotificationManager from '../../model/NotificationManager';
 import {NotificationLayout as Layout} from '../../common/constants';
+import { NotificationItemData } from '@ohos/common'
+import NtfMgr from '@ohos.notificationManager';
 
 const TAG = 'NoticeItem-CustomItem';
 
 @Component
 export default struct CustomItem {
-  private customItemData: any = {};
-  private template: any = {};
-  private templateData: any = {};
+  private customItemData: NotificationItemData | undefined = undefined;
+  private template: PluginComponentTemplate | undefined = undefined;
+  private templateData: Record<string, Object> = {};
   private isSubItem: boolean= false;
   private isDebugMode: boolean = false;
-  private clickAction: () => void
+  private clickAction: () => void = () => {}
 
   aboutToAppear() {
     Log.showInfo(TAG, `aboutToAppear Start`);
-    this.template = NotificationViewModel.getPluginTempLate(this.customItemData.template.name);
-    this.templateData = this.customItemData.template.data;
+    this.template = NotificationViewModel.getPluginTempLate(this.customItemData?.template?.name);
+    this.templateData = this.customItemData?.template?.data as Record<string, Object>;
     this.isDebugMode = NotificationManager.isDebugMode(TAG);
     Log.showInfo(TAG, `template = ${JSON.stringify(this.template)} templateData = ${JSON.stringify(this.templateData)} isDebugMode = ${this.isDebugMode}`);
   }
@@ -46,8 +48,8 @@ export default struct CustomItem {
           data: this.templateData
         }).onComplete(() => {
           Log.showInfo(TAG, `Complete`);
-        }).onError(({errcode, msg}) => {
-          Log.showInfo(TAG, `Error code:${errcode} message:${msg}`);
+        }).onError((error) => {
+          Log.showInfo(TAG, `Error code:${error.errcode} message:${error.msg}`);
         })
           .size({ width: '100%', height: 110 })
       }

@@ -21,6 +21,7 @@
     "pages": "$profile:main_pages",
     "abilities": [
       {
+        "srcEntry": "./ets/MainAbility/MainAbility.ts",
         "visible": true,
         "srcEntrance": "./ets/MainAbility/MainAbility.ts",
         "name": "com.ohos.systemui.notificationmanagement.MainAbility",

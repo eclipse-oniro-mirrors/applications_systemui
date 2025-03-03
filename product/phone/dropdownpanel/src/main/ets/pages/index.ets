@@ -1,4 +1,3 @@
-//@ts-nocheck
 /*
  * Copyright (c) 2021-2022 Huawei Device Co., Ltd.
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -32,22 +31,28 @@ import EventManager, { unsubscribe } from "../../../../../../../common/src/main/
 import { START_ABILITY_EVENT } from "../../../../../../../common/src/main/ets/default/event/EventUtil"
 import CommonStyleManager from '../../../../../../../common/src/main/ets/default/CommonStyleManager'
 import MultimodalInputManager from '../../../../../../../common/src/main/ets/default/MultimodalInputManager'
-import AbilityManager from '../../../../../../../common/src/main/ets/default/abilitymanager/abilityManager'
 import HeightConfigUtils from '../../../../../../../common/src/main/ets/default/heightcofigUtils/HeightConfigUtils'
 import StatusBarVM from '../../../../../../../features/statusbarcomponent/src/main/ets/com/ohos/viewmodel/StatusBarVM'
-import NavigationEvent from './common/navigationEvent'
+import NavigationEvent, { NavigationCallBack } from './common/navigationEvent'
 import Notification from './notification'
 import ControlCenterComponent from './control'
 import StyleManager from './common/StyleManager'
 import dataShare from '@ohos.data.dataShare';
 import settings from '@ohos.settings';
 import Constants from "../../../../../../../common/src/main/ets/default/Constants";
+import { TouchMoveData, Rect, ConfigInfo } from '@ohos/common';
+import { Context } from '@kit.AbilityKit';
+import { inputConsumer } from '@kit.InputKit';
 
 const TAG = 'DropdownPanel-Index'
 
-let mHeightConfigUtils
+interface IArg {
+  dropdownArea?: string
+}
 
-const SHOW_ANIM_CONFIG = {
+let mHeightConfigUtils: HeightConfigUtils
+
+const SHOW_ANIM_CONFIG: AnimateParam = {
   duration: 300,
   tempo: 1.0,
   curve: Curve.Friction,
@@ -55,20 +60,6 @@ const SHOW_ANIM_CONFIG = {
   iterations: 1,
   playMode: PlayMode.Normal
 };
-const HIDE_ANIM_CONFIG = {
-  duration: 200,
-  tempo: 1.0,
-  curve: Curve.EaseOut,
-  delay: 0,
-  iterations: 1,
-  playMode: PlayMode.Normal,
-}
-
-class insertTemplate{
-  type: TransitionType;
-  opacity: number;
-  scale: Object
-}
 
 enum DropdownPanelComponentName {
   NONE = 'None',
@@ -82,19 +73,19 @@ struct Index {
   @State showComponentName: DropdownPanelComponentName = DropdownPanelComponentName.NONE;
   @State componentOptAreaHeightPX: number = 0;
   @StorageLink('StatusCoefficient') StatusCoefficient: number = 1.0;
-  mCallback: any;
-  mClearCallbacks: unsubscribe[];
+  private mCallback?: NavigationCallBack;
+  private mClearCallbacks?: unsubscribe[];
   settingDataKey = 'settings.display.navigationbar_status';
-  urivar: string = null;
-  helper: dataShare.DataShareHelper = null;
+  private urivar?: string;
+  private helper?: dataShare.DataShareHelper;
   mNavigationBarStatusDefaultValue: string = '1';
   navigationBarWidth: number = 0;
   mNeedUpdate: boolean = false;
-  mWidthPx: number = 0;
-  @State mNotificationInsert: insertTemplate = new insertTemplate();
-  @State mNotificationDelete: insertTemplate = new insertTemplate();
-  @State mControlCenterInsert: insertTemplate = new insertTemplate();
-  @State mControlCenterDelete: insertTemplate = new insertTemplate();
+  @State mWidthPx: number = 0;
+  @State mNotificationInsert: TransitionOptions = {};
+  @State mNotificationDelete: TransitionOptions = {};
+  @State mControlCenterInsert: TransitionOptions = {};
+  @State mControlCenterDelete: TransitionOptions = {};
   @State componentOptAreaTranslateY: string = '0px';
   @State backgroundOpacity: number = 0;
 
@@ -108,8 +99,8 @@ struct Index {
     CommonStyleManager.setAbilityPageName(TAG);
     StyleManager.setStyle();
 
-    let dropdownRect = AbilityManager.getAbilityData(AbilityManager.ABILITY_NAME_DROPDOWN_PANEL, 'rect');
-    let navigationBarRect = AbilityManager.getAbilityData(AbilityManager.ABILITY_NAME_NAVIGATION_BAR, 'config');
+    let dropdownRect: Rect = AbilityManager.getAbilityData(AbilityManager.ABILITY_NAME_DROPDOWN_PANEL, 'rect');
+    let navigationBarRect: ConfigInfo = AbilityManager.getAbilityData(AbilityManager.ABILITY_NAME_NAVIGATION_BAR, 'config');
     this.initHelper(dropdownRect, navigationBarRect);
     this.resizeDropdownPanelAndNavigationBar(dropdownRect, navigationBarRect);
     Log.showDebug(TAG, `getValueSync componentOptAreaHeightPX: ${this.componentOptAreaHeightPX}`);
@@ -118,14 +109,13 @@ struct Index {
 
     this.mClearCallbacks = [];
     this.mClearCallbacks.push(
-    EventManager.subscribe('DropdownEvent', (args) => this.onDropdownEvent(args)),
-    EventManager.subscribe(START_ABILITY_EVENT, (args) => this.onStartAbility(args)),
-    EventManager.subscribe('hideNotificationWindowEvent', (args) => this.onHideNotificationWindowEvent(args)));
+    EventManager.subscribe('DropdownEvent', (args: IArg) => this.onDropdownEvent(args)),
+    EventManager.subscribe(START_ABILITY_EVENT, (args: IArg) => this.onStartAbility(args)),
+    EventManager.subscribe('hideNotificationWindowEvent', (args: IArg) => this.onHideNotificationWindowEvent(args)));
 
     mHeightConfigUtils = new HeightConfigUtils();
-    let StatusCoefficient;
 
-    StatusCoefficient = AppStorage.SetAndLink("StatusCoefficient", 1.0);
+    let StatusCoefficient = AppStorage.SetAndLink("StatusCoefficient", 1.0);
     StatusCoefficient.set(mHeightConfigUtils.getStatusCoefficient());
 
     let signalObserved = AppStorage.SetAndLink("signalObserved", false);
@@ -142,7 +132,7 @@ struct Index {
     Log.showDebug(TAG, `aboutToAppear, end`);
   }
 
-  private async initHelper(dropdownRect, navigationBarRect): Promise<void> {
+  private async initHelper(dropdownRect: Rect, navigationBarRect: ConfigInfo): Promise<void> {
     this.urivar = Constants.getUriSync(Constants.KEY_NAVIGATIONBAR_STATUS);
     this.helper = await dataShare.createDataShareHelper(AbilityManager.getContext(AbilityManager.ABILITY_NAME_DROPDOWN_PANEL), this.urivar);
     Log.showDebug(TAG, `initHelper ${this.helper}, uri: ${JSON.stringify(this.urivar)}`);
@@ -163,16 +153,16 @@ struct Index {
 
   aboutToDisappear() {
     Log.showInfo(TAG, `aboutToDisappear`)
-    this.mClearCallbacks.forEach((mClearCallback: Function) => {
-      mClearCallback()
+    this.mClearCallbacks&&this.mClearCallbacks.forEach((mClearCallback: Function | undefined) => {
+      mClearCallback&&mClearCallback()
       mClearCallback = undefined
     })
     this.mClearCallbacks = undefined
   }
 
-  resizeDropdownPanelAndNavigationBar(dropdownRect, navigationBarRect) {
+  resizeDropdownPanelAndNavigationBar(dropdownRect: Rect, navigationBarRect: ConfigInfo) {
     Log.showDebug(TAG, `resizeDropdownPanelAndNavigationBar, dropdownRect: ${JSON.stringify(dropdownRect)} navigationBarRect: ${JSON.stringify(navigationBarRect)}`)
-    let context = AbilityManager.getContext(AbilityManager.ABILITY_NAME_DROPDOWN_PANEL);
+    let context: Context = AbilityManager.getContext(AbilityManager.ABILITY_NAME_DROPDOWN_PANEL);
     if (context == undefined || context == null) {
       Log.showInfo(TAG, `resizeDropdownPanelAndNavigationBar: ${context}`);
       return;
@@ -180,37 +170,44 @@ struct Index {
     try {
       this.mNavigationBarStatusDefaultValue = settings.getValueSync(context, this.settingDataKey, '1');
       this.componentOptAreaHeightPX = this.mNavigationBarStatusDefaultValue == '1' ? dropdownRect.height - navigationBarRect.realHeight : dropdownRect.height;
-      this.navigationBarWidth = this.mNavigationBarStatusDefaultValue == '1' ? navigationBarRect.height : 0;
+      this.navigationBarWidth = this.mNavigationBarStatusDefaultValue == '1' ? navigationBarRect.realHeight : 0;
     } catch (err) {
       Log.showError(TAG, `resizeDropdownPanelAndNavigationBar: ${context}, ${JSON.stringify(err)}`);
     }
-    WindowManager.resetSizeWindow(WindowType.NAVIGATION_BAR, { ...navigationBarRect, height: this.navigationBarWidth })
-    WindowManager.resetSizeWindow(WindowType.DROPDOWN_PANEL, { ...dropdownRect, height: this.componentOptAreaHeightPX })
+    const currRect: Rect = {
+      left: 0,
+      top: 0,
+      width: 0,
+      height: this.navigationBarWidth
+    };
+    dropdownRect.height = this.componentOptAreaHeightPX;
+    WindowManager.resetSizeWindow(WindowType.NAVIGATION_BAR, currRect);
+    WindowManager.resetSizeWindow(WindowType.DROPDOWN_PANEL, dropdownRect );
   }
 
-  onNotificationShowOrHide(data) {
+  onNotificationShowOrHide(data: inputConsumer.KeyOptions) {
     Log.showDebug(TAG, `mNotificationAsyncCallback preKeys: ${data.preKeys}, finalKey: ${data.finalKey}`);
     Log.showDebug(TAG, `this.showComponentName: ${this.showComponentName}`);
     if (this.showComponentName === DropdownPanelComponentName.NOTIFICATION) {
       this.hideSelf();
     } else {
-      this.showSelf('Notification');
+      this.showSelf(DropdownPanelComponentName.NOTIFICATION);
     }
     Log.showDebug(TAG, `mNotificationAsyncCallback end`);
   }
 
-  onControlShowOrHide(data) {
+  onControlShowOrHide(data: inputConsumer.KeyOptions) {
     Log.showDebug(TAG, `mControlAsyncCallback preKeys: ${data.preKeys}, finalKey: ${data.finalKey}`);
     Log.showDebug(TAG, `this.showComponentName: ${this.showComponentName}`);
     if (this.showComponentName === DropdownPanelComponentName.CONTROL_CENTER) {
       this.hideSelf();
     } else {
-      this.showSelf('ControlCenter');
+      this.showSelf(DropdownPanelComponentName.CONTROL_CENTER);
     }
     Log.showDebug(TAG, `mControlAsyncCallback end`);
   }
 
-  onStateChange(data) {
+  onStateChange(data: string) {
     Log.showDebug(TAG, `onStateChange, data: ${JSON.stringify(data)}`)
     Log.showDebug(TAG, `onStateChange, showComponentName: ${this.showComponentName}`)
     if (this.showComponentName !== DropdownPanelComponentName.NONE) {
@@ -218,29 +215,29 @@ struct Index {
     }
   }
 
-  onDropdownEvent(args) {
+  onDropdownEvent(args: IArg) {
     Log.showDebug(TAG, `onDropdownEvent, args: ${JSON.stringify(args)}`)
-    this.showSelf(args.dropdownArea == 'left' ? 'Notification' : 'ControlCenter')
+    this.showSelf(args.dropdownArea == 'left' ? DropdownPanelComponentName.NOTIFICATION : DropdownPanelComponentName.CONTROL_CENTER)
   }
 
-  onStartAbility(args) {
+  onStartAbility(args: IArg) {
     Log.showDebug(TAG, `onStartAbility, args: ${args}`)
     this.hideSelf()
   }
 
-  onHideNotificationWindowEvent(args) {
+  onHideNotificationWindowEvent(args: IArg) {
     Log.showDebug(TAG, `onHideNotificationWindowEvent, args: ${args}`)
     this.hideSelf()
   }
 
-  onTouchMove(data) {
+  onTouchMove(data: TouchMoveData) {
     Log.showDebug(TAG, `onTouchMove, data: ${JSON.stringify(data)}`)
     if (data.direction == 'top') {
       this.hideSelf()
     } else if (data.direction == 'left' && data.touchComponent == 'notification') {
-      this.switchNotificationOrControlCenter('ControlCenter')
+      this.switchNotificationOrControlCenter(DropdownPanelComponentName.CONTROL_CENTER)
     } else if (data.direction == 'right' && data.touchComponent == 'control') {
-      this.switchNotificationOrControlCenter('Notification')
+      this.switchNotificationOrControlCenter(DropdownPanelComponentName.NOTIFICATION)
     } else if (data.direction == 'drop_left' && data.touchComponent == 'control') {
       this.showComponentName = DropdownPanelComponentName.NOTIFICATION
     } else if (data.direction == 'drop_right' && data.touchComponent == 'notification') {
@@ -248,25 +245,26 @@ struct Index {
     }
   }
 
-  switchNotificationOrControlCenter(showComponentName) {
+  switchNotificationOrControlCenter(showComponentName: DropdownPanelComponentName) {
     Log.showDebug(TAG, `switchNotificationOrControlCenter, showComponentName: ${showComponentName}`)
     this.mNotificationInsert = { type: TransitionType.Insert, opacity: 0, translate: { x: (-this.mWidthPx) + 'px' } }
     this.mControlCenterInsert = { type: TransitionType.Insert, opacity: 0, translate: { x: (this.mWidthPx) + 'px' } }
-    let transitionDelete = {
+    let transitionDelete: TransitionOptions = {
       type: TransitionType.Delete,
       opacity: 0,
       scale: { x: 0.8, y: 0.8, centerX: '50%', centerY: '50%' }
     }
     this.mNotificationDelete = transitionDelete
     this.mControlCenterDelete = transitionDelete
-    this._animateTo({ ...SHOW_ANIM_CONFIG, onFinish: () => {
+    SHOW_ANIM_CONFIG.onFinish = () => {
       Log.showInfo(TAG, `switchNotificationOrControlCenter, show anim finish.`);
-    } }, () => {
+    }
+    this._animateTo(SHOW_ANIM_CONFIG, () => {
       this.showComponentName = showComponentName
     })
   }
 
-  showSelf(showComponentName) {
+  showSelf(showComponentName: DropdownPanelComponentName) {
     Log.showDebug(TAG, `showSelf, showComponentName: ${showComponentName}`)
     this.showComponentName = showComponentName
     WindowManager.showWindow(WindowType.DROPDOWN_PANEL)
@@ -277,21 +275,23 @@ struct Index {
 
   hideSelf() {
     Log.showDebug(TAG, `hideSelf`)
-    this._animateTo({...SHOW_ANIM_CONFIG, onFinish: () => {
+    SHOW_ANIM_CONFIG.onFinish = () => {
       Log.showInfo(TAG, `hideSelf, hide anim finish.`);
-    }, finishCallback:()=>{
-      WindowManager.hideWindow(WindowType.DROPDOWN_PANEL)
-    }}, () => {
+    };
+    this._animateTo(SHOW_ANIM_CONFIG, () => {
       this.componentOptAreaTranslateY = (-this.componentOptAreaHeightPX * 0.1) + 'px'
       this.backgroundOpacity = 0
       this.showComponentName = DropdownPanelComponentName.NONE
-    })
+    }, true)
   }
 
-  _animateTo(config, callback) {
+  _animateTo(config: AnimateParam, callback: () => void, ishideWindow: boolean = false) {
     Log.showDebug(TAG, `_animateTo, config: ${JSON.stringify(config)}`)
     animateTo(config, callback)
-    setTimeout(config.finishCallback, config.duration + config.delay)
+    if (ishideWindow) {
+      const delay = Number(config.duration) + Number(config.delay)
+      setTimeout(() => WindowManager.hideWindow(WindowType.DROPDOWN_PANEL), delay)
+    }
   }
 
   build() {
@@ -304,13 +304,13 @@ struct Index {
         .opacity(1)
       Column() {
         if (this.showComponentName === DropdownPanelComponentName.NOTIFICATION) {
-          Notification({ touchMoveCallback: (data) => this.onTouchMove(data) })
+          Notification({ touchMoveCallback: (data: TouchMoveData): void => this.onTouchMove(data) })
             .transition(this.mNotificationInsert)
             .transition(this.mNotificationDelete)
         }
         if (this.showComponentName === DropdownPanelComponentName.CONTROL_CENTER) {
           ControlCenterComponent({
-            touchMoveCallback: (data) => this.onTouchMove(data)
+            touchMoveCallback: (data: TouchMoveData): void => this.onTouchMove(data)
           })
             .transition(this.mControlCenterInsert)
             .transition(this.mControlCenterDelete)

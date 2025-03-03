@@ -35,7 +35,13 @@
       },
       {
         "name": "ohos.permission.GET_INSTALLED_BUNDLE_LIST",
-        "reason": "$string:get_installed_bundle_list_reason"
+        "reason": "$string:get_installed_bundle_list_reason",
+        "usedScene": {
+          "abilities": [
+            "MainAbility"
+          ],
+          "when": "always"
+        }
       },
       {
         "name": "ohos.permission.MANAGE_LOCAL_ACCOUNTS"
@@ -81,7 +87,13 @@
       },
       {
         "name": "ohos.permission.DISTRIBUTED_DATASYNC",
-        "reason": "$string:distributed_data_sync_reason"
+        "reason": "$string:distributed_data_sync_reason",
+        "usedScene": {
+          "abilities": [
+            "MainAbility"
+          ],
+          "when": "always"
+        }
       },
       {
         "name": "ohos.permission.START_INVISIBLE_ABILITY"

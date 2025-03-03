@@ -24,7 +24,7 @@ const TAG = 'location-ControlCenterSimpleToggleLocationComponent';
 
 @Component
 export default struct ControlCenterSimpleToggleLocationComponent {
-  private keyId: string;
+  private keyId: string = '';
   private mEditMode: boolean = false;
   private mDragMode: boolean = false;
   @State mIcon: Resource = $r("app.media.ic_controlcenter_gps");
@@ -48,8 +48,8 @@ export default struct ControlCenterSimpleToggleLocationComponent {
       mLabel: $mLabel,
       mEditMode: this.mEditMode,
       mDragMode: this.mDragMode,
-      mClickEvent: () => this.mClickEvent(),
-      mLongClickEvent: () => this.mLongClickEvent()
+      mClickEvent: (): void => this.mClickEvent(),
+      mLongClickEvent: (): void => this.mLongClickEvent()
     })
   }
 

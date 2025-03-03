@@ -4,6 +4,7 @@
   "description": "",
   "version": "1.0.0",
   "dependencies": {
-    "@ohos/noticeitem": "file:../../../features/noticeitem"
+    "@ohos/noticeitem": "file:../../../features/noticeitem",
+    "@ohos/common": "file:../../../common"
   }
 }
