@@ -23,18 +23,19 @@ import ConfigData from '../common/constants';
 import Router from '@system.router'
 import notificationListener from '../../../../../../../features/managementcomponent/src/main/ets/com/ohos/model/notificationListener';
 import Notification from '@ohos.notification';
+import NotificationManager from '@ohos.notificationManager';
+import { BundleItemData } from '@ohos/common';
 
 const TAG = 'NotificationManagement-SetEnable';
 
-let appInfo;
+let appInfo: BundleItemData;
 
 @Entry
 @Component
 export default struct SetEnable {
-  private listeners: any[] = [];
   @State headName:Resource = $r('app.string.notificationManagement');
   @State allowNotice:Resource = $r('app.string.allowNotification');
-  @State slotLst: any[] = [];
+  @State slotLst: NotificationManager.NotificationSlot[] = [];
   @State initState: boolean = false;
   build() {
     Flex({ justifyContent: FlexAlign.SpaceBetween }) {
@@ -49,7 +50,7 @@ export default struct SetEnable {
                   appTitle: appInfo.appTitle,
                   appSummary: appInfo.appSummary,
                   appValue: '',
-                  appArrow: appInfo.appArrow,
+                  appArrow: appInfo.appArrow as string,
                   appArrowStyle: '',
                   appUri: appInfo.appUri,
                   appBundleName: appInfo.appBundleName,
@@ -64,8 +65,8 @@ export default struct SetEnable {
               Row() {
                 SwitchComponent({
                   title: $allowNotice,
-                  initializationAction: () => this.switchComponentInit(),
-                  settingAction: (params) => this.switchComponentSet(params),
+                  initializationAction: (): Promise<boolean> => this.switchComponentInit(),
+                  settingAction: (params?: boolean): void => this.switchComponentSet(params),
                   register: (listener) => notificationListener.register({bundle:appInfo.appBundleName,onEnableChanged:listener})
                 })
               }
@@ -128,15 +129,15 @@ export default struct SetEnable {
 
   switchComponentInit() {
     Log.showDebug(TAG, `switchComponentInit`)
-    return notificationListener.isNotificationEnabled({ bundle: appInfo.appBundleName, uid: appInfo.appUid }, (data) => {
+    return notificationListener.isNotificationEnabled({ bundle: appInfo.appBundleName, uid: appInfo.appUid }, (data: boolean) => {
       Log.showDebug(TAG, 'switchComponentInit callback' + data);
       this.initState = data;
     });
   }
 
-  switchComponentSet(params) {
+  switchComponentSet(params?: boolean) {
     Log.showDebug(TAG, `switchComponentSet`)
-    this.initState = params;
+    this.initState = params as boolean;
     notificationListener.enableNotification({ bundle: appInfo.appBundleName, uid: appInfo.appUid }, params);
   }
 }

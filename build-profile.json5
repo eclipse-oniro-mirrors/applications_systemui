@@ -4,8 +4,22 @@
       {
         "name": "default",
         "signingConfig": "release",
-        "compileSdkVersion": 10,
-        "compatibleSdkVersion": 9
+        "compileSdkVersion": 12,
+        "compatibleSdkVersion": 12,
+      }
+    ],
+    "signingConfigs": [
+      {
+        "name": "default",
+        "material": {
+          "certpath": "C:/Users/wanghuan/.ohos/config/openharmony/default_applications_systemui_zBXUo9gni2fBvC-EjMlkQtKNasCWggA51ALU78m_VWw=.cer",
+          "storePassword": "0000001BA46E9456DA9E08ACF2A2BFF895A59A4F04F108BD52CED4DAE31B1534C59A5EEEE14B8200ACB885",
+          "keyAlias": "debugKey",
+          "keyPassword": "0000001B90751837A5A320E7821C1065CA3C5C38034D3AD64C3E7FD4B7EAE5A5027537CAB7DC32A5230894",
+          "profile": "C:/Users/wanghuan/.ohos/config/openharmony/default_applications_systemui_zBXUo9gni2fBvC-EjMlkQtKNasCWggA51ALU78m_VWw=.p7b",
+          "signAlg": "SHA256withECDSA",
+          "storeFile": "C:/Users/wanghuan/.ohos/config/openharmony/default_applications_systemui_zBXUo9gni2fBvC-EjMlkQtKNasCWggA51ALU78m_VWw=.p12"
+        }
       }
     ]
   },

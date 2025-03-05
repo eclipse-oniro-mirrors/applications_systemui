@@ -3,5 +3,7 @@
   "name": "@ohos/noticeitem",
   "description": "a npm package which contains noticeitem function",
   "version": "1.0.0",
-  "dependencies": {}
+  "dependencies": {
+    "@ohos/common": "file:../../common"
+  }
 }

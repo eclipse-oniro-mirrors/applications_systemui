@@ -23,7 +23,7 @@ const TAG = 'bluetooth-ControlCenterComplexToggleBluetoothComponent';
 
 @Component
 export default struct ControlCenterComplexToggleBluetoothComponent {
-  private IconInfo: any[] = [
+  private IconInfo: Resource[] = [
     $r("app.media.ic_controlcenter_bt_d"),
     $r("app.media.ic_controlcenter_bt"),
   ];
@@ -46,8 +46,8 @@ export default struct ControlCenterComplexToggleBluetoothComponent {
         iconOn: this.IconInfo[1],
         mTitle: $mTitle,
         changeSwitch: $BluetoothOpenStatus,
-        mClickEvent: () => this.mClickEvent(),
-        mLongClickEvent: () => this.mLongClickEvent()
+        mClickEvent: (): void => this.mClickEvent(),
+        mLongClickEvent: (): void => this.mLongClickEvent()
       })
     }.width('100%')
     .height('100%')

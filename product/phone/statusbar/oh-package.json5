@@ -4,6 +4,7 @@
   "description": "",
   "version": "1.0.0",
   "dependencies": {
-    "@ohos/statusbarcomponent": "file:../../../features/statusbarcomponent"
+    "@ohos/statusbarcomponent": "file:../../../features/statusbarcomponent",
+    "@ohos/common": "file:../../../common"
   }
 }

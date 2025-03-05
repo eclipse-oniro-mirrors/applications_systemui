@@ -38,7 +38,7 @@ class Stub extends rpc.RemoteObject {
 
     if (code === ServiceStubCode.COMMAND_SEND_REMOTE_OBJECT) {
       Log.showInfo(TAG, `onRemoteRequest code:${ServiceStubCode.COMMAND_SEND_REMOTE_OBJECT} start ${connectId}`);
-      const controller = globalThis[Constants.SYSTEM_DIALOG_CONTROLLER];
+      const controller = globalThis.SystemDialog_Controller;
       const remoteObject = data.readRemoteObject();
       Log.showDebug(TAG, `onRemoteRequest code:${ServiceStubCode.COMMAND_SEND_REMOTE_OBJECT} ${remoteObject}`);
 
@@ -86,7 +86,7 @@ class Stub extends rpc.RemoteObject {
   }
 
   async createWindow(connectId: string, parameters: IDialogParameters) {
-    const controller = globalThis[Constants.SYSTEM_DIALOG_CONTROLLER];
+    const controller = globalThis.SystemDialog_Controller;
     const current = controller.getData().get(connectId);
     if (current && current.windowName) {
       Log.showInfo(TAG, `createWindow <this same> connectId:${connectId}`);
@@ -129,7 +129,7 @@ class Stub extends rpc.RemoteObject {
 export default class DialogServiceExtAbility extends ServiceExtensionAbility {
   onCreate(want: Want) {
     Log.showInfo(TAG, 'onCreate');
-    globalThis[Constants.SYSTEM_DIALOG_CONTROLLER] = new SystemDialogController(this.context);
+    globalThis.SystemDialog_Controller = new SystemDialogController(this.context);
   }
 
   onConnect() {
@@ -142,9 +142,9 @@ export default class DialogServiceExtAbility extends ServiceExtensionAbility {
   }
 
   onDestroy() {
-    const controller = globalThis[Constants.SYSTEM_DIALOG_CONTROLLER];
+    const controller = globalThis.SystemDialog_Controller;
     controller.destroyAllWindow();
-    globalThis[Constants.SYSTEM_DIALOG_CONTROLLER] = undefined;
+    globalThis.SystemDialog_Controller = undefined;
 
     Log.showInfo(TAG, 'onDestroy end');
   }

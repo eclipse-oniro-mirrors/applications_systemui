@@ -14,6 +14,11 @@
  */
 
 import { Event } from '../../default/event/EventUtil';
+import notificationManager from '@ohos.notificationManager';
+import image from '@ohos.multimedia.image';
+import resourceManager from '@ohos.resourceManager';
+import { WantAgent } from '@ohos.wantAgent';
+import NtfMgr from '@ohos.notificationManager';
 
 export default class Constants {
   static readonly INIT_CONFIG = 'initConfig';
@@ -104,7 +109,7 @@ export class itemData {
   isShowIcon?
 }
 
-export class notificationData {
+export interface NotificationItemData {
   id: string;
   hashcode: string;
   userId: number;
@@ -113,12 +118,12 @@ export class notificationData {
   timestamp: number;
   time: string;
   appName: string;
-  want: any;
-  actionButtons: any[];
+  want: WantAgent;
+  actionButtons: notificationManager.ButtonOptions[];
   bundleName: string;
-  smallIcon?: PixelMap;
-  largeIcon?: PixelMap;
-  picture?: PixelMap;
+  smallIcon?: image.PixelMap | string;
+  largeIcon?: image.PixelMap | string;
+  picture?: image.PixelMap;
   title?: string;
   text?: string;
   additionalText?: string;
@@ -133,7 +138,7 @@ export class notificationData {
   sound?: string;
   vibrationValues?: Array<number>;
   notificationFlags?: any;
-  ruleData?;
+  ruleData?: RuleData;
   template?: any;
   isOngoing?: boolean;
   isUnremovable?: boolean;
@@ -142,4 +147,45 @@ export class notificationData {
   deviceId?: string;
   groupName?: string;
   tapDismissed?: boolean;
+}
+
+export interface RuleData {
+  isAllowBanner?: boolean;
+  isAllowSound?: boolean;
+  isAllowVibrationValues?: boolean;
+  isAllowStatusBarShow?: boolean;
+  isAllowNotificationListShow?: boolean;
+}
+
+export interface ConfigInfo {
+  maxWidth: number;
+  maxHeight: number;
+  minHeight: number;
+  showHorizontal: boolean;
+  direction: number;
+  realWidth: number;
+  realHeight: number;
+  xCoordinate: number;
+  yCoordinate: number;
+  ableToMaximize?: boolean;
+  showNavHorizontal?: boolean;
+}
+
+export interface BundleItemData {
+  appIcon?: string;
+  appTitle?: string;
+  appValue?: string;
+  appArrow?: string | resourceManager.Resource;
+  appSummary?: string;
+  appBundleName?: string;
+  appIconId?: string;
+  appUri?: string;
+  appUid?: number;
+  systemApp?: boolean;
+  slotSettingUrl?: string
+}
+
+export interface TouchMoveData {
+  direction: string,
+  touchComponent: string
 }

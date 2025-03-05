@@ -12,6 +12,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+import resourceManager from '@ohos.resourceManager';
 
 export default class Constants {
   static readonly KEY_DOWN: number = 0;
@@ -32,4 +33,9 @@ export class NavigationBarComponentData {
   isEnable = true;
   backgroundColor = '#00000000';
   contentColor = '#FFFFFFFF';
+}
+
+export interface KeyCode {
+  uri: resourceManager.Resource,
+  keyCode: number
 }

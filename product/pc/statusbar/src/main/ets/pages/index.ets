@@ -22,16 +22,16 @@ import StatusbarConfig from './common/StatusbarConfig'
 import AbilityManager from '../../../../../../../common/src/main/ets/default/abilitymanager/abilityManager'
 import StatusBarVM from '../../../../../../../features/statusbarcomponent/src/main/ets/com/ohos/viewmodel/StatusBarVM'
 import {StatusBarData} from '../../../../../../../features/statusbarcomponent/src/main/ets/com/ohos/common/Constants'
+import { ConfigInfo } from '@ohos/common';
 
 const TAG = 'StatusBar-Index'
-
-let mHeightConfigUtils;
 
 @Entry
 @Component
 struct Index {
   @StorageLink('StatusMinH') StatusMinH: number = 24
   @StorageLink('StatusCoefficient') StatusCoefficient: number = 1.0
+  private mHeightConfigUtils: HeightConfigUtils = new HeightConfigUtils
 
   onBackPress(): boolean {
     return true;
@@ -40,30 +40,24 @@ struct Index {
   aboutToAppear() {
     Log.showInfo(TAG, `aboutToAppear, start`);
 
-    let configInfo = AbilityManager.getAbilityData(AbilityManager.ABILITY_NAME_STATUS_BAR, 'config')
+    let configInfo = AbilityManager.getAbilityData(AbilityManager.ABILITY_NAME_STATUS_BAR, 'config') as ConfigInfo
     let statusBarData: StatusBarData = new StatusBarData();
     statusBarData.displayWidth = configInfo.maxWidth;
     statusBarData.displayHeight = configInfo.maxHeight;
     statusBarData.showHorizontal = configInfo.showHorizontal;
-    statusBarData.ableToMaximize = configInfo.ableToMaximize;
+    statusBarData.ableToMaximize = configInfo.ableToMaximize as boolean;
     statusBarData.realWidth = configInfo.realWidth;
     statusBarData.realHeight = configInfo.realHeight;
     statusBarData.left = configInfo.xCoordinate;
     statusBarData.top = configInfo.yCoordinate;
     StatusBarVM.updateStatusBarData(statusBarData);
-
-    setAppBgColor('#00000000');
     CommonStyleManager.setAbilityPageName(TAG);
     StyleManager.setStyle();
 
-    mHeightConfigUtils = new HeightConfigUtils();
-    let StatusMinH;
-    let StatusCoefficient;
-
-    StatusMinH = AppStorage.SetAndLink("StatusMinH", 24);
-    StatusCoefficient = AppStorage.SetAndLink("StatusCoefficient", 1.0);
-    StatusMinH.set(mHeightConfigUtils.getStatusMinH());
-    StatusCoefficient.set(mHeightConfigUtils.getStatusCoefficient());
+    let StatusMinH = AppStorage.SetAndLink("StatusMinH", 24);
+    let StatusCoefficient = AppStorage.SetAndLink("StatusCoefficient", 1.0);
+    StatusMinH.set(this.mHeightConfigUtils.getStatusMinH());
+    StatusCoefficient.set(this.mHeightConfigUtils.getStatusCoefficient());
 
     let signalObserved = AppStorage.SetAndLink("signalObserved", false);
     signalObserved.set(false);

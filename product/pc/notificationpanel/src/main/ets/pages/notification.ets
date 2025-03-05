@@ -19,6 +19,7 @@ import EventManager from "../../../../../../../common/src/main/ets/default/event
 import {obtainStartAbility} from "../../../../../../../common/src/main/ets/default/event/EventUtil"
 import NotificationListComponent from '../../../../../../../features/noticeitem/src/main/ets/com/ohos/noticeItem/view/NotificationListComponent'
 import NotificationViewModel from '../../../../../../../features/noticeitem/src/main/ets/com/ohos/noticeItem/viewmodel/NotificationViewModel'
+import { NotificationItemData } from '@ohos/common'
 
 const TAG = 'NotificationPanel-notification'
 const NO_NOTIFICATION_TOP_MARGIN = 40;
@@ -32,7 +33,7 @@ const NOTIFICATION_TITLE_ICON_MARGIN = 24;
 
 @Component
 export default struct Notification {
-  @StorageLink('notificationList') notificationList: any[] = []
+  @StorageLink('notificationList') notificationList: NotificationItemData[][] = []
   @State isEnd: boolean = false
 
   aboutToAppear() {

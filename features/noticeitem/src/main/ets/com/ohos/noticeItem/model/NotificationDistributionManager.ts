@@ -15,7 +15,6 @@
 
 import Log from '../../../../../../../../../common/src/main/ets/default/Log';
 import deviceManager from '@ohos.distributedDeviceManager';
-import DeviceInfo from '@ohos.deviceInfo';
 
 const TAG = 'NotificationDistributionManager';
 
@@ -56,7 +55,7 @@ export default class NotificationDistributionManager {
   getTrustedDeviceDeviceName(deviceId: string): string {
     Log.showInfo(TAG, `getTrustedDeviceDeviceName deviceId:${deviceId}`);
     let deviceName = '';
-    let deviceArr: any[] = this.getTrustedDeviceListSync();
+    let deviceArr: deviceManager.DeviceBasicInfo[] = this.getTrustedDeviceListSync();
     Log.showDebug(TAG, `getTrustedDeviceDeviceName deviceArr:${JSON.stringify(deviceArr)}`);
     if (deviceArr.length > 0) {
       for (let item of deviceArr) {
@@ -69,7 +68,7 @@ export default class NotificationDistributionManager {
     return deviceName;
   }
 
-  getTrustedDeviceListSync(): any[] {
+  getTrustedDeviceListSync(): deviceManager.DeviceBasicInfo[] {
     Log.showInfo(TAG, 'getTrustedDeviceListSync');
     return this.deviceManager.getAvailableDeviceListSync();
   }

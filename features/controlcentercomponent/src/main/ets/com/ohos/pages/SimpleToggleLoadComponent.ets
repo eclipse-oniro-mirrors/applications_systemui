@@ -27,7 +27,7 @@ const TAG = 'SimpleToggleLoadComponent';
 
 @Component
 export default struct SimpleToggleLoadComponent {
-  private keyId: string
+  private keyId: string = ''
   private mEditMode: boolean = false
   private mDragMode: boolean = false
 

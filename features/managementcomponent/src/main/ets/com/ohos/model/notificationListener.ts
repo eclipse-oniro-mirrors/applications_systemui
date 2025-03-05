@@ -16,11 +16,10 @@ import Log from '../../../../../../../../common/src/main/ets/default/Log';
 import Notification from '@ohos.notification';
 import NotificationManager from '@ohos.notificationManager';
 import NotificationSubscribe from '@ohos.notificationSubscribe';
-import type { NotificationSubscriber } from 'notification/notificationSubscriber';
 
 const TAG = 'NotificationManagenment-NotificationListener';
 
-interface IOnEnableChanged {
+export interface IOnEnableChanged {
     (value: boolean): void;
 }
 
@@ -36,7 +35,7 @@ export interface BundleOption {
 
 export class NotificationListener {
     private readonly listeners = new Map<string, Set<IOnEnableChanged>>();
-    private subscriber: NotificationSubscriber = {
+    private subscriber: NotificationSubscribe.NotificationSubscriber = {
         onEnabledNotificationChanged: this.handleEnabledNotificationChanged.bind(this)
     };
 
@@ -126,7 +125,7 @@ export class NotificationListener {
         });
     }
 
-    async isNotificationSlotEnabled(bundleOption: BundleOption, slotType: Notification.SlotType, callback?: (data) => void): Promise<boolean> {
+    async isNotificationSlotEnabled(bundleOption: BundleOption, slotType: Notification.SlotType, callback?: (data: boolean) => void): Promise<boolean> {
         Log.showDebug(TAG, `isNotificationSlotEnabled bundleOption:${JSON.stringify(bundleOption)} `);
         return new Promise((resolve, reject) => {
             NotificationManager.isNotificationSlotEnabled(bundleOption, slotType, (err, data) => {
@@ -175,7 +174,7 @@ export class NotificationListener {
         });
     }
 
-    enableDistributed(data: boolean): void {
+    enableDistributed(data?: boolean): void {
         Log.showDebug(TAG, `enableDistributed data:${JSON.stringify(data)}`);
         let enableValue: boolean = data ? true : false;
         NotificationManager.setDistributedEnable(enableValue, (err, result) => {

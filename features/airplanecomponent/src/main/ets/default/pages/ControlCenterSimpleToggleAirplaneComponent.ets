@@ -21,7 +21,7 @@ const TAG = 'airplane-ControlCenterSimpleToggleAirplaneComponent';
 
 @Component
 export default struct ControlCenterSimpleToggleAirplaneComponent {
-  private keyId: string;
+  private keyId: string = '';
   private mEditMode: boolean = false;
   private mDragMode: boolean = false;
   @State mIcon: Resource = $r("app.media.airplane");
@@ -46,7 +46,7 @@ export default struct ControlCenterSimpleToggleAirplaneComponent {
       mLabel: $mLabel,
       mEditMode: this.mEditMode,
       mDragMode: this.mDragMode,
-      mClickEvent: () => this.mClickEvent()
+      mClickEvent: (): void => this.mClickEvent()
     })
   }
 

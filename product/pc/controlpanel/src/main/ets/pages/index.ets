@@ -22,19 +22,24 @@ import ControlCenterComponent from './control'
 import WindowManager, {
   WindowType,
   WINDOW_SHOW_HIDE_EVENT,
+  ArgsInfo,
 } from "../../../../../../../common/src/main/ets/default/WindowManager";
 import EventManager, { unsubscribe } from "../../../../../../../common/src/main/ets/default/event/EventManager";
 import { START_ABILITY_EVENT } from "../../../../../../../common/src/main/ets/default/event/EventUtil";
 import MultimodalInputManager, {
   MultiKeyCode,
 } from "../../../../../../../common/src/main/ets/default/MultimodalInputManager";
+import { Rect } from '@ohos/common'
 import display from "@ohos.display"
 
 const TAG = 'ControlPanel-Index'
 const SHOW_EVENT = "showControlCenter";
 const HIDE_EVENT = "hideControlCenter";
 
-let mHeightConfigUtils
+interface DisplayInfo {
+  width: number;
+  height: number;
+}
 
 @Entry
 @Component
@@ -46,25 +51,24 @@ struct Index {
   @State mWidthSize: number = 0.2
   @State mHeightSize: number = 0.2
   @State mHeightPx: number = 0
+  @State mHeightConfigUtils: HeightConfigUtils | undefined = undefined;
   mClearCallbacks: Array<unsubscribe> = [];
   mShowAnimReady: boolean = false;
 
   aboutToAppear() {
     Log.showInfo(TAG, `aboutToAppear, start`)
 
-    setAppBgColor('#00000000')
     CommonStyleManager.setAbilityPageName(TAG)
     this.style = StyleConfiguration.getIndexStyle()
     StyleManager.setStyle()
 
-    let rect = AbilityManager.getAbilityData(AbilityManager.ABILITY_NAME_CONTROL_PANEL, 'rect')
+    let rect: Rect = AbilityManager.getAbilityData(AbilityManager.ABILITY_NAME_CONTROL_PANEL, 'rect')
     this.mHeightPx = rect.height
 
-    mHeightConfigUtils = new HeightConfigUtils();
-    let StatusCoefficient;
+    this.mHeightConfigUtils = new HeightConfigUtils();
 
-    StatusCoefficient = AppStorage.SetAndLink("StatusCoefficient", 1.0);
-    StatusCoefficient.set(mHeightConfigUtils.getStatusCoefficient());
+    let StatusCoefficient = AppStorage.SetAndLink("StatusCoefficient", 1.0);
+    StatusCoefficient.set(this.mHeightConfigUtils.getStatusCoefficient());
 
     this.initWindowPolicy();
     Log.showDebug(TAG, `aboutToAppear, end`)
@@ -94,7 +98,7 @@ struct Index {
         Scroll(new Scroller()) {
           Column() {
             ControlCenterComponent({
-              modeChangeCallback: (isEdit) => this.onModeChange(isEdit)
+              modeChangeCallback: (isEdit: boolean): void => this.onModeChange(isEdit)
             })
           }
           .width('100%')
@@ -132,14 +136,16 @@ struct Index {
     EventManager.subscribe(SHOW_EVENT, () => this.showWindow()),
     EventManager.subscribe(HIDE_EVENT, () => this.hideWindow()),
     EventManager.subscribe(START_ABILITY_EVENT, () => this.hideWindow()),
-    EventManager.subscribe(WINDOW_SHOW_HIDE_EVENT, (args) => {
-      let { windowName, isShow } = args;
+    EventManager.subscribe(WINDOW_SHOW_HIDE_EVENT, (args: ArgsInfo) => {
+      let windowName = args.windowName;
+      let isShow = args?.isShow;
       Log.showInfo(TAG, `WINDOW_SHOW_HIDE_EVENT windowName: ${windowName}, isShow: ${isShow}`);
       windowName == WindowType.NOTIFICATION_PANEL && isShow && this.hideWindow();
       windowName == WindowType.CONTROL_PANEL && isShow && (this.mShowAnimReady = true);
     }),
-    EventManager.subscribe('ControlWindowResizeEvent',async (args) => {
-      let { windowName, rect } = args;
+    EventManager.subscribe('ControlWindowResizeEvent',async (args: ArgsInfo) => {
+      let windowName = args.windowName;
+      let rect = args?.rect;
       let dis = await display.getDefaultDisplaySync();
       Log.showInfo(TAG, `ControlWindowResizeEvent: ${windowName}, isShow: ${rect}`);
       AbilityManager.setAbilityData(AbilityManager.ABILITY_NAME_CONTROL_PANEL, 'rect', rect);
@@ -149,7 +155,7 @@ struct Index {
       });
       WindowManager.resetSizeWindow(windowName, rect).then(
       ).then(() => {
-      }).catch((err) => {
+      }).catch((err: Error) => {
       });
     }),
     MultimodalInputManager.subscribeCombinationKey([MultiKeyCode.WIN, MultiKeyCode.I], (data) => {
@@ -164,9 +170,9 @@ struct Index {
     );
   }
 
-  _animateTo(config, callback) {
+  _animateTo(config: AnimateParam, callback: () => void) {
     animateTo(config, callback)
-    setTimeout(config.onFinish, config.duration + config.delay)
+    setTimeout(config.onFinish, config.duration as number + Number(config.delay))
   }
 
   showAnimation(){
@@ -219,13 +225,13 @@ struct Index {
     this.showAnimation();
   }
 
-  onModeChange(isEdit) {
+  onModeChange(isEdit: boolean): void {
     Log.showDebug(TAG, `onModeChange, isEdit: ${isEdit}`)
-    let initRect = AbilityManager.getAbilityData(AbilityManager.ABILITY_NAME_CONTROL_PANEL, 'rect')
-    let newRect = initRect
+    let initRect = AbilityManager.getAbilityData(AbilityManager.ABILITY_NAME_CONTROL_PANEL, 'rect') as ArgsInfo
+    let newRect = initRect as Rect
     if (isEdit) {
-      let dis = AbilityManager.getAbilityData(AbilityManager.ABILITY_NAME_CONTROL_PANEL, 'dis')
-      newRect = { ...initRect, height: StyleManager.calcScaleSize(346) }
+      let dis = AbilityManager.getAbilityData(AbilityManager.ABILITY_NAME_CONTROL_PANEL, 'dis') as DisplayInfo
+      newRect.height = StyleManager.calcScaleSize(346)
     }
     Log.showDebug(TAG, `onModeChange, newRect: ${JSON.stringify(newRect)}`)
     this._animateTo({
@@ -237,13 +243,13 @@ struct Index {
       playMode: PlayMode.Normal,
       onFinish: () => {
         Log.showInfo(TAG, `onModeChange, show anim finish.`)
-        if (newRect.height <= initRect.height) {
+        if (initRect.height && newRect.height <= initRect.height) {
           WindowManager.resetSizeWindow(WindowType.CONTROL_PANEL, newRect)
         }
       }
     }, () => {
       Log.showInfo(TAG, `onModeChange, animateTo`)
-      if (newRect.height > initRect.height) {
+      if (initRect.height && newRect.height > initRect.height) {
         WindowManager.resetSizeWindow(WindowType.CONTROL_PANEL, newRect)
       }
       this.mHeightPx = newRect.height

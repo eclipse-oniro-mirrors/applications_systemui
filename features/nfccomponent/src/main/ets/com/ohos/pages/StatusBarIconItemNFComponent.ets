@@ -29,12 +29,11 @@ export default struct StatusBarIconItemNFCModeComponent {
   @State mTintContentInfo: TintContentInfo = ViewModel.getTintContentInfo();
   @State styleCommon: CommonStyle = StyleConfigurationCommon.getCommonStyle();
   @State style: StatusRingModeComponentStyle = StyleConfiguration.getStatusRingModeComponentStyle();
-  private ringModeIcons: any;
+  private ringModeIcons: Resource[] = [];
 
   aboutToAppear() {
     Log.showInfo(TAG, 'aboutToAppear');
-    this.ringModeIcons = {};
-    this.ringModeIcons['0'] = $r("app.media.ic_statusbar_nfc");
+    this.ringModeIcons[0] = $r("app.media.ic_statusbar_nfc");
     ViewModel.initViewModel();
   }
 
@@ -46,7 +45,7 @@ export default struct StatusBarIconItemNFCModeComponent {
     Row() {
       if (this.NFCModeComponentMode != NfcController.NfcState.STATE_OFF) {
         Row().width(this.styleCommon.statusBarMarginLeftRight).height('100%')
-        Image(this.ringModeIcons['0'])
+        Image(this.ringModeIcons[0])
           .objectFit(ImageFit.Contain)
           .width(this.style.statusBarRingModeWidth)
           .height(this.style.statusBarRingModeHeight)

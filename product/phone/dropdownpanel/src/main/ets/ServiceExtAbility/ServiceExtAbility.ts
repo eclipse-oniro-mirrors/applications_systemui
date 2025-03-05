@@ -19,7 +19,7 @@ import Log from '../../../../../../../common/src/main/ets/default/Log';
 import WindowManager, { WindowType } from '../../../../../../../common/src/main/ets/default/WindowManager';
 import AbilityManager from '../../../../../../../common/src/main/ets/default/abilitymanager/abilityManager';
 import NavBarConfiguration from '../../../../../../../features/navigationservice/src/main/ets/com/ohos/navigationservice/common/NavBarConfiguration';
-import { Want } from 'ability/want';
+import { Want } from '@kit.AbilityKit';
 
 
 const TAG = 'DropdownPanel_ServiceExtAbility';

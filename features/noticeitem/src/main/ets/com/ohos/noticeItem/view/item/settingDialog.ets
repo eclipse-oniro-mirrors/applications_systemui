@@ -30,9 +30,9 @@ const TAG = 'NoticeItem-Setting';
  */
 @CustomDialog
 export default struct SettingDialog {
-  private itemData: NotificationItemData
+  @Prop itemData: NotificationItemData
   public controller: CustomDialogController
-  public action: () => void
+  public action: () => void = () => {}
 
   build() {
     Column() {

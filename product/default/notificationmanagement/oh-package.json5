@@ -4,6 +4,7 @@
   "description": "",
   "version": "1.0.0",
   "dependencies": {
-    "@ohos/managementcomponent": "file:../../../features/managementcomponent"
+    "@ohos/managementcomponent": "file:../../../features/managementcomponent",
+    "@ohos/common": "file:../../../common"
   }
 }

@@ -28,8 +28,8 @@ export default struct SimpleToggleLayoutEditGrid {
   @Prop mGlobalDragToggleName: string;
   private gridTag: string  = '';
   private logTag: string = '';
-  private onItemDragStart: (toggleName: string) => void;
-  private onItemDrop: (status: string) => void;
+  private onItemDragStart: (toggleName: string) => void = () => {};
+  private onItemDrop: (status: string) => void = () => {};
   @State style: SimpleToggleLayoutEditGridStyle = StyleConfiguration.getSimpleToggleLayoutEditGridStyle();
   private mCurrentDragToggleName: string = '';
 
@@ -94,7 +94,7 @@ export default struct SimpleToggleLayoutEditGrid {
     .onItemDrop(this.onGridItemDrop.bind(this))
   }
 
-  calcGridHeight(rowCount, rowHeight, rowGap) {
+  calcGridHeight(rowCount: number, rowHeight: number, rowGap: number) {
     Log.showDebug(this.logTag, `calcGridHeight, rowCount: ${rowCount} rowHeight: ${rowHeight} rowGap: ${rowGap}`);
     let height = rowCount * rowHeight + (rowCount - 1) * rowGap;
     if (height <= 0) {
@@ -134,19 +134,19 @@ export default struct SimpleToggleLayoutEditGrid {
     return minRowCount;
   }
 
-  onItemDragEnter(event) {
+  onItemDragEnter(event: ItemDragInfo) {
     Log.showDebug(this.logTag, `onItemDragEnter, event: ${JSON.stringify(event)}`);
   }
 
-  onItemDragMove(event, itemIndex, insertIndex) {
+  onItemDragMove(event: ItemDragInfo, itemIndex: number, insertIndex: number) {
     Log.showDebug(this.logTag, `onItemDragMove, itemIndex: ${itemIndex} insertIndex: ${insertIndex} event: ${JSON.stringify(event)}`);
   }
 
-  onItemDragLeave(event, itemIndex) {
+  onItemDragLeave(event: ItemDragInfo, itemIndex: number) {
     Log.showDebug(this.logTag, `onItemDragLeave, itemIndex: ${itemIndex} event: ${JSON.stringify(event)}`);
   }
 
-  onGridItemDragStart(event, itemIndex) {
+  onGridItemDragStart(event: ItemDragInfo, itemIndex: number) {
     Log.showDebug(this.logTag, `onGridItemDragStart, itemIndex: ${itemIndex} event: ${JSON.stringify(event)}`);
     this.mCurrentDragToggleName = this.mToggles[itemIndex];
     if (this.onItemDragStart) {
@@ -155,7 +155,7 @@ export default struct SimpleToggleLayoutEditGrid {
     Log.showDebug(this.logTag, `onGridItemDragStart, mCurrentDragToggleName: ${this.mCurrentDragToggleName}`);
   }
 
-  onGridItemDrop(event, itemIndex, insertIndex, isSuccess) {
+  onGridItemDrop(event: ItemDragInfo, itemIndex: number, insertIndex: number, isSuccess: boolean) {
     Log.showDebug(this.logTag, `onGridItemDrop, itemIndex: ${itemIndex} insertIndex: ${insertIndex} isSuccess: ${isSuccess} event: ${JSON.stringify(event)}`);
     if (!isSuccess) {
       this.callOnItemDrop('fail');

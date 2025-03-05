@@ -26,7 +26,7 @@ const TAG = 'MetaIconItemComponent'
 
 @Component
 export default struct MetaIconItemComponent {
-  private keyId: string
+  @Prop keyId: string
   @State mItemData: itemData = new itemData()
   @State mTintContentInfo: TintContentInfo = new TintContentInfo()
   @State style: IconItemComponentStyle = StyleConfiguration.getIconItemComponentStyle()
@@ -43,7 +43,7 @@ export default struct MetaIconItemComponent {
   }
 
   linkItemData() {
-    this.mItemData = AppStorage.Get('StatusBar_' + this.keyId);
+    this.mItemData = AppStorage.Get('StatusBar_' + this.keyId) as itemData;
     Log.showInfo(TAG, `linkItemData, mItemData: ${this.keyId} ${this.mItemData.label} ${
     this.mItemData
     .iconUrl}`)

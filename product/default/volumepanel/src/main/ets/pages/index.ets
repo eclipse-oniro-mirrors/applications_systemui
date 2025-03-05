@@ -21,13 +21,25 @@ import WindowManager, { WindowType } from '../../../../../../../common/src/main/
 
 const TAG = 'VolumePanel-Index'
 
+interface DisConfigInfo {
+  width: number,
+  height: number
+}
+
+interface IvolumeRect {
+  left: number,
+  top: number,
+  width: number,
+  height: number
+}
+
 @Entry
 @Component
 struct Index {
   aboutToAppear() {
     Log.showInfo(TAG, `aboutToAppear Start`);
-    let configInfo = AbilityManager.getAbilityData(AbilityManager.ABILITY_NAME_VOLUME_PANEL, 'dis');
-    let volumeRect;
+    let configInfo: DisConfigInfo = AbilityManager.getAbilityData(AbilityManager.ABILITY_NAME_VOLUME_PANEL, 'dis');
+    let volumeRect: IvolumeRect;
     if (configInfo.width > configInfo.height) { // Pad、PC Mode
       const realWidth = 48;
       const realHeight = 284;

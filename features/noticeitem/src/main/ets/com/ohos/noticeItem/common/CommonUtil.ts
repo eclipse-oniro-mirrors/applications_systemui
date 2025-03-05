@@ -29,6 +29,9 @@ export default class CommonUtil {
   static startWant(want, triggerInfo?: any): void {
     let info = (triggerInfo) ? triggerInfo : DEFAULT_INFO;
     Log.showDebug(TAG, `startWant ${JSON.stringify(want)}, info ${JSON.stringify(info)}`);
+    if (!want) {
+      return;
+    }
     WantAgent.trigger(want, info, ((data) => {
       Trace.end(Trace.CORE_METHOD_CLICK_NOTIFICATION);
       Log.showInfo(TAG, `wantAgent trigger data ${JSON.stringify(data)}`);

@@ -25,7 +25,7 @@ const TAG = 'PluginIconItemComponent'
 
 @Component
 export default struct PluginIconItemComponent {
-  private keyId: string
+  @Prop keyId: string
   @State @Watch('onPluginDataChange') mPluginData: PluginComponentData = new PluginComponentData()
   @State @Watch('onTintContentChange') mTintContentInfo: TintContentInfo = new TintContentInfo()
   @State style: PluginIconItemComponentStyle = StyleConfiguration.getPluginIconItemComponentStyle()
@@ -78,8 +78,8 @@ export default struct PluginIconItemComponent {
           data: this.mPluginData.data
         }).onComplete(() => {
           Log.showInfo(TAG, `PluginComponent.Complete`)
-        }).onError(({errcode, msg}) => {
-          Log.showInfo(TAG, `PluginComponent.Error code:${errcode} message:${msg}`)
+        }).onError((error) => {
+          Log.showInfo(TAG, `PluginComponent.Error code:${error.errcode} message:${error.msg}`)
         })
           .size({ width: px2vp(this.style.iconWidth), height: '100%' })
         Row().width(this.styleCommon.statusBarMarginLeftRight).height('100%')
