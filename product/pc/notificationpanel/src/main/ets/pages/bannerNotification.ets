@@ -14,17 +14,17 @@
  */
 
 import Log from '../../../../../../../common/src/main/ets/default/Log';
-import {notificationData} from '../../../../../../../common/src/main/ets/plugindatasource/common/Constants'
 import AbilityManager from '../../../../../../../common/src/main/ets/default/abilitymanager/abilityManager';
 import WindowManager, { WindowType } from '../../../../../../../common/src/main/ets/default/WindowManager';
 import EventManager, {unsubscribe} from "../../../../../../../common/src/main/ets/default/event/EventManager";
 import BannerNotification from '../../../../../../../features/noticeitem/src/main/ets/com/ohos/noticeItem/view/item/bannerNotificationItem';
 import NotificationViewModel from '../../../../../../../features/noticeitem/src/main/ets/com/ohos/noticeItem/viewmodel/NotificationViewModel';
 import NotificationConstants, { ScreenLockStatus } from '../../../../../../../features/noticeitem/src/main/ets/com/ohos/noticeItem/common/constants';
+import { NotificationItemData, Rect } from '@ohos/common';
 
 const TAG = 'NotificationPanel-BannerNotification';
 const TRANSLATE_SIZE = '382vp';
-const ANIM_CONFIG = {
+const ANIM_CONFIG: AnimateParam = {
   duration: 250,
   tempo: 1.0,
   curve: Curve.Friction,
@@ -32,7 +32,7 @@ const ANIM_CONFIG = {
   iterations: 1,
   playMode: PlayMode.Normal,
 }
-const OPACITY_SHOW_ANIM_CONFIG = {
+const OPACITY_SHOW_ANIM_CONFIG: AnimateParam = {
   duration: 200,
   tempo: 1.0,
   curve: Curve.Friction,
@@ -40,7 +40,7 @@ const OPACITY_SHOW_ANIM_CONFIG = {
   iterations: 1,
   playMode: PlayMode.Normal,
 }
-const OPACITY_HIDE_ANIM_CONFIG = {
+const OPACITY_HIDE_ANIM_CONFIG: AnimateParam = {
   duration: 200,
   tempo: 1.0,
   curve: Curve.Friction,
@@ -57,18 +57,22 @@ struct Index {
   @State mLastActionTime: number = 0;
   @State needExpand: boolean = true
   @State isExpand: boolean = false;
-  @State pageData: notificationData = new notificationData();
+  @State pageData: NotificationItemData | undefined = undefined;
   @State mOpacity: number = 0.0;
   @State mWidthSize: number = 0.8;
   @State mTranslate: string = TRANSLATE_SIZE;
 
-  mClearCallbacks: unsubscribe[]
-  mDefaultBannerRect: any;
+  mClearCallbacks: unsubscribe[] = []
+  mDefaultBannerRect: Rect = {
+    left: 0,
+    top: 0,
+    width: 0,
+    height: 0
+  };
 
   aboutToAppear() {
     Log.showInfo(TAG, `aboutToAppear Start`);
     AbilityManager.setContextName(AbilityManager.ABILITY_NAME_NOTIFICATION_PANEL, AbilityManager.ABILITY_NAME_NOTIFICATION_PANEL);
-    setAppBgColor('#00000000')
     this.mClearCallbacks = []
     this.mClearCallbacks.push(EventManager.subscribe('onBannerNoticeShow', () => this.onBannerNoticeShow()))
     this.mClearCallbacks.push(EventManager.subscribe('onBannerNoticeHide', () => this.onBannerNoticeHide()))
@@ -77,11 +81,11 @@ struct Index {
 
   aboutToDisappear() {
     Log.showInfo(TAG, `aboutToDisAppear`)
-    this.mClearCallbacks.forEach((mClearCallback: Function) => {
-      mClearCallback()
-      mClearCallback = undefined
+    this.mClearCallbacks.forEach((mClearCallback: Function | null) => {
+      mClearCallback&&mClearCallback();
+      mClearCallback = null
     })
-    this.mClearCallbacks = undefined
+    this.mClearCallbacks = []
   }
 
   build() {
@@ -95,7 +99,7 @@ struct Index {
             mBannerNoticeCnt: $mBannerNoticeCnt,
             needExpand: $needExpand,
             isExpand: $isExpand,
-            onBannerNoticeHide: () => this.onBannerNoticeHide()
+            onBannerNoticeHide: ():void => this.onBannerNoticeHide()
           })
         } else {
           Blank()
@@ -149,7 +153,7 @@ struct Index {
   }
 
   checkItemNeedExpand() {
-    if (this.pageData.contentType === NotificationConstants.NOTIFICATION_TYPE_BASIC
+    if (this.pageData?.contentType === NotificationConstants.NOTIFICATION_TYPE_BASIC
     && (!(this.pageData.actionButtons?.length > 0))) {
       return false;
     } else {
@@ -157,41 +161,42 @@ struct Index {
     }
   }
 
-  _animateTo(config, callback) {
+  _animateTo(config: AnimateParam, callback: () => void) {
     animateTo(config, callback);
-    setTimeout(config.onFinish, config.duration + config.delay);
+    setTimeout(config.onFinish, Number(config.duration) + Number(config.delay));
   }
 
   showWindowAnim() {
     Log.showDebug(TAG, `show anim start`);
-    this._animateTo({ ...ANIM_CONFIG, onFinish: () => {
+    ANIM_CONFIG.onFinish = () => {
       Log.showInfo(TAG, `show anim finish`);
-    } }, () => {
+    };
+    this._animateTo(ANIM_CONFIG, () => {
       Log.showInfo(TAG, `do show anim`);
       this.mWidthSize = 1.0;
       this.mTranslate = '0vp';
     });
-    this._animateTo({ ...OPACITY_SHOW_ANIM_CONFIG, onFinish: () => {
-    } }, () => {
+    OPACITY_SHOW_ANIM_CONFIG.onFinish = () => {}
+    this._animateTo(OPACITY_SHOW_ANIM_CONFIG, () => {
       this.mOpacity = 1.0;
     });
   }
 
   hideWindowAnim() {
     Log.showDebug(TAG, `hide  anim start`);
-    this._animateTo({ ...ANIM_CONFIG, onFinish: () => {
+    ANIM_CONFIG.onFinish = () => {
       Log.showInfo(TAG, `hide anim finish`);
       this.mBannerNoticeCnt = 0;
       WindowManager.resetSizeWindow(WindowType.BANNER_NOTICE, this.mDefaultBannerRect);
       WindowManager.hideWindow(WindowType.BANNER_NOTICE);
-    }
-    }, () => {
+    };
+    this._animateTo(ANIM_CONFIG, () => {
       Log.showInfo(TAG, `do hide anim`);
       this.mWidthSize = 0.8;
       this.mTranslate = TRANSLATE_SIZE;
     });
-    this._animateTo({ ...OPACITY_HIDE_ANIM_CONFIG, onFinish: () => {}
-    }, () => {
+    OPACITY_HIDE_ANIM_CONFIG.onFinish = () => {};
+    this._animateTo(OPACITY_HIDE_ANIM_CONFIG, () => {
       this.mOpacity = 0.0;
     });
   }

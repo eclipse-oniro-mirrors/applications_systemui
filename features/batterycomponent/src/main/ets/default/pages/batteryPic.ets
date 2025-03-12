@@ -78,7 +78,7 @@ export default struct BatteryPic {
     })
   }
 
-  private getBatteryColor(val, charging) {
+  private getBatteryColor(val: number, charging: boolean) {
     Log.showInfo(TAG, `getBatteryColor, val: ${val}  charging: ${charging} `);
     if (charging) {
       return this.style.picChargingColor;

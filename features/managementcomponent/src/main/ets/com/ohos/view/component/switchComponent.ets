@@ -14,16 +14,17 @@
  */
 import ConfigData from '../../common/constants';
 import Log from '../../../../../../../../../common/src/main/ets/default/Log';
+import { IOnEnableChanged } from '../../model/notificationListener';
 
 const TAG = 'ManagementComponent-SwitchComponent';
 
 @Component
 export default struct SwitchComponent {
   @Link title: Resource;
-  describe: Resource;
-  private initializationAction: (params?) => Promise<any>
-  private settingAction: (params?) => void
-  private register?: (listener) => void
+  @Prop describe: Resource;
+  private initializationAction?: (params?: boolean) => Promise<boolean>
+  private settingAction?: (params?: boolean) => void
+  private register?: (listener: IOnEnableChanged) => void
   @State initState: boolean = false
 
   build() {
@@ -59,7 +60,7 @@ export default struct SwitchComponent {
           .onChange((data) => {
             Log.showInfo(TAG, `Toggle onChange data:${data}`);
             this.initState = data ? true : false;
-            this.settingAction(data);
+            this.settingAction && this.settingAction(data);
           })
       }
       .flexShrink(0)
@@ -76,9 +77,11 @@ export default struct SwitchComponent {
 
   aboutToAppear(): void{
     Log.showInfo(TAG, `aboutToAppear`);
-    this.initializationAction().then((data) => {
-      Log.showInfo(TAG, `initializationAction:${data}`);
-      this.initState = data;
-    })
+    if (this.initializationAction) {
+      this.initializationAction().then((data) => {
+        Log.showInfo(TAG, `initializationAction:${data}`);
+        this.initState = data;
+      })
+    }
   }
 }

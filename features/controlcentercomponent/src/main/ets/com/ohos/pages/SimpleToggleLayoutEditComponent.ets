@@ -30,8 +30,8 @@ export default struct SimpleToggleLayoutEditComponent {
   private mHidingToggles: string[] = [];
   private mDefaultDisplayToggles: string[] = [];
   @Prop mColumnCount: number;
-  private simpleToggleLayoutEditEndCallback: () => void;
-  private onSaveDisplayingToggles: (toggles: string[]) => void;
+  private simpleToggleLayoutEditEndCallback: () => void = () => {};
+  private onSaveDisplayingToggles: (toggles: string[]) => void = (toggles) => {};
   @State mNewDisplayingToggles: string[] = [];
   @State mNewHidingToggles: string[] = [];
   @State style: SimpleToggleLayoutEditComponentStyle = StyleConfiguration.getSimpleToggleLayoutEditComponentStyle();
@@ -42,27 +42,27 @@ export default struct SimpleToggleLayoutEditComponent {
   private mHidingTogglesMinCount: number = 0;
   @State mCurrentDragToggleName: string = '';
   private titleDisplayInside: boolean = false;
-  private backDialogController: CustomDialogController = new CustomDialogController({
+  private backDialogController: CustomDialogController | null = new CustomDialogController({
     builder: SimpleToggleLayoutEditDialogComponent({
       title: $r("app.string.control_center_simple_toggle_layout_edit_back_confirm"),
       leftButton: $r("app.string.control_center_simple_toggle_layout_edit_back_confirm_primary"),
       rightButton: $r("app.string.control_center_simple_toggle_layout_edit_back_confirm_secondary"),
-      leftAction: () => this.callSimpleToggleLayoutEditEnd(),
-      rightAction: () => this.onFinishBtnClick(null),
+      leftAction: (): void => this.callSimpleToggleLayoutEditEnd(),
+      rightAction: (): void => this.onFinishBtnClick(),
     }),
     autoCancel: false,
     offset: { dx: 0, dy: 0 },
     customStyle: true,
     alignment: DialogAlignment.Center
   });
-  private resetDialogController: CustomDialogController = new CustomDialogController({
+  private resetDialogController: CustomDialogController | null = new CustomDialogController({
     builder: SimpleToggleLayoutEditDialogComponent({
       title: $r("app.string.control_center_simple_toggle_layout_edit_reset_confirm"),
       leftButton: $r("app.string.control_center_simple_toggle_layout_edit_reset_confirm_primary"),
       rightButton: $r("app.string.control_center_simple_toggle_layout_edit_reset_confirm_secondary"),
       leftAction: () => {
       },
-      rightAction: () => this.editResetConfirm(),
+      rightAction: (): void => this.editResetConfirm(),
     }),
     autoCancel: false,
     offset: { dx: 0, dy: 0 },
@@ -86,11 +86,8 @@ export default struct SimpleToggleLayoutEditComponent {
   }
 
   aboutToDisappear() {
-    delete this.backDialogController
-    this.backDialogController = undefined
-
-    delete this.resetDialogController
-    this.resetDialogController = undefined
+    this.backDialogController = null
+    this.resetDialogController = null
 
     Log.showInfo(TAG, 'aboutToDisappear ');
   }
@@ -100,7 +97,7 @@ export default struct SimpleToggleLayoutEditComponent {
       if (!this.titleDisplayInside) {
         Column() {
           SimpleToggleLayoutEditUpTitle({
-            simpleToggleLayoutEditEndCallback: () => this.onSimpleToggleLayoutEditEnd()
+            simpleToggleLayoutEditEndCallback: (): void => this.onSimpleToggleLayoutEditEnd()
           })
         }
         .width('100%')
@@ -112,7 +109,7 @@ export default struct SimpleToggleLayoutEditComponent {
         if (this.titleDisplayInside) {
           Column() {
             SimpleToggleLayoutEditUpTitle({
-              simpleToggleLayoutEditEndCallback: () => this.onSimpleToggleLayoutEditEnd()
+              simpleToggleLayoutEditEndCallback: (): void => this.onSimpleToggleLayoutEditEnd()
             })
           }
           .width('100%')
@@ -206,7 +203,7 @@ export default struct SimpleToggleLayoutEditComponent {
     let changed = JSON.stringify(this.mDisplayingToggles) != JSON.stringify(this.mNewDisplayingToggles);
     Log.showDebug(TAG, `onSimpleToggleLayoutEditEnd, changed: ${changed}`);
     if (changed) {
-      this.backDialogController.open();
+      this.backDialogController?.open();
     } else {
       this.callSimpleToggleLayoutEditEnd();
     };
@@ -224,7 +221,7 @@ export default struct SimpleToggleLayoutEditComponent {
     let equalDefault = JSON.stringify(this.mDefaultDisplayToggles) == JSON.stringify(this.mNewDisplayingToggles);
     Log.showDebug(TAG, `onResetBtnClick, equalDefault: ${equalDefault}`);
     if (!equalDefault) {
-      this.resetDialogController.open();
+      this.resetDialogController?.open();
     };
   }
 
@@ -256,7 +253,7 @@ export default struct SimpleToggleLayoutEditComponent {
     Log.showDebug(TAG, `resetData, mNewHidingToggles: ${JSON.stringify(this.mNewHidingToggles)}`);
   }
 
-  onFinishBtnClick(event: ClickEvent) {
+  onFinishBtnClick() {
     Log.showDebug(TAG, `onFinishBtnClick`);
     let changed = JSON.stringify(this.mDisplayingToggles) != JSON.stringify(this.mNewDisplayingToggles);
     Log.showDebug(TAG, `onFinishBtnClick, changed: ${changed}`);
@@ -281,7 +278,7 @@ export default struct SimpleToggleLayoutEditComponent {
 
   async onDisplayingGridItemDrop(status: string): Promise<void> {
     Log.showDebug(TAG, `onDisplayingGridItemDrop, status: ${status}`);
-    this.setOptMsg(null);
+    this.setOptMsg('');
   }
 
   async onHidingGridItemDragStart(toggleName: string): Promise<void> {
@@ -292,7 +289,7 @@ export default struct SimpleToggleLayoutEditComponent {
 
   async onHidingGridItemDrop(status: string): Promise<void> {
     Log.showDebug(TAG, `onHidingGridItemDrop, status: ${status}`);
-    this.setOptMsg(null);
+    this.setOptMsg('');
   }
 
   setOptMsg(toggleName: string): void {
@@ -324,7 +321,7 @@ export default struct SimpleToggleLayoutEditComponent {
 
 @Component
 struct SimpleToggleLayoutEditUpTitle {
-  private simpleToggleLayoutEditEndCallback: Function;
+  private simpleToggleLayoutEditEndCallback: Function = () => {};
   @State style: SimpleToggleLayoutEditUpTitleStyle = StyleConfiguration.getSimpleToggleLayoutEditUpTitleStyle();
 
   aboutToAppear() {

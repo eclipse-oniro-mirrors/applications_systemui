@@ -51,6 +51,10 @@
     {
       "name": "status_bar_padding_end",
       "value": "0vp"
+    },
+    {
+      "name": "status_bar_margin_left_right",
+      "value": "3vp"
     }
   ]
 }

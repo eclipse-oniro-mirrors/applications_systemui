@@ -20,12 +20,12 @@ const TAG = 'Control-SimpleToggleLayoutEditDialogComponent';
 
 @CustomDialog
 export default struct SimpleToggleLayoutEditDialogComponent {
-  private title: Resource;
-  private leftButton: Resource;
-  private rightButton: Resource;
+  private title: Resource | undefined = undefined;
+  private leftButton: Resource| undefined = undefined;
+  private rightButton: Resource| undefined = undefined;
   private controller: CustomDialogController;
-  private leftAction: () => void;
-  private rightAction: () => void;
+  private leftAction: () => void = () => {};
+  private rightAction: () => void = () =>{};
   @State style: ControlEditDialogStyle = StyleConfiguration.getControlEditDialogStyle();
 
   aboutToAppear() {

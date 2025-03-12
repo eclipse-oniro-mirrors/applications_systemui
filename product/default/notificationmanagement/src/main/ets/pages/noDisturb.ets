@@ -22,6 +22,7 @@ import ItemComponent from '../../../../../../../features/managementcomponent/src
 import {DoNotDisturbType} from '../../../../../../../features/managementcomponent/src/main/ets/com/ohos/common/constants';
 import NoDisturbingModel from '../../../../../../../features/managementcomponent/src/main/ets/com/ohos/model/noDisturbingModel';
 import ViewModel from '../vm/noDisturbViewModel';
+import { data } from '@kit.TelephonyKit';
 
 const deviceTypeInfo = deviceInfo.deviceType;
 const TAG = 'NotificationManagement-NoDisturb';
@@ -54,9 +55,9 @@ export default struct NoDisturb {
     Log.showInfo(TAG, `mViewModel onChange repeatName: ${this.mViewModel.repeatName} startDateClue: ${this.mViewModel.startDateClue}
         endDateClue: ${this.mViewModel.endDateClue} endTimeClue: ${this.mViewModel.endTimeClue}`)
   }
-  startDateDialogController: CustomDialogController = new CustomDialogController({
+  startDateDialogController: CustomDialogController | null  = new CustomDialogController({
     builder: DateDialog({
-      action:(data)=> this.setStartDate(data),
+      action:(data: string): void => this.setStartDate(data),
       title: $r('app.string.startDate'),
       defaultDate: this.mViewModel.defaultStartTime
     }),
@@ -66,9 +67,9 @@ export default struct NoDisturb {
     offset: ({ dx: 0, dy: deviceTypeInfo === "phone" ? '-16dp' : 0 }),
     customStyle: true
   });
-  startTimeDialogController: CustomDialogController = new CustomDialogController({
+  startTimeDialogController: CustomDialogController | null = new CustomDialogController({
     builder: TimeDialog({
-      action:(data)=> this.setStartTime(data),
+      action:(data: string): void=> this.setStartTime(data),
       title: $r('app.string.startTime'),
       defaultDate: this.mViewModel.defaultStartTime
     }),
@@ -78,9 +79,9 @@ export default struct NoDisturb {
     offset: ({ dx: 0, dy: deviceTypeInfo === "phone" ? '-16dp' : 0 }),
     customStyle: true
   });
-  endDateDialogController: CustomDialogController = new CustomDialogController({
+  endDateDialogController: CustomDialogController | null = new CustomDialogController({
     builder: DateDialog({
-      action:(data)=> this.setEndDate(data),
+      action:(data: string): void => this.setEndDate(data),
       title: $r('app.string.endDate'),
       defaultDate: this.mViewModel.defaultEndTime
     }),
@@ -90,9 +91,9 @@ export default struct NoDisturb {
     offset: ({ dx: 0, dy: deviceTypeInfo === "phone" ? '-16dp' : 0 }),
     customStyle: true
   });
-  endTimeDialogController: CustomDialogController = new CustomDialogController({
+  endTimeDialogController: CustomDialogController | null = new CustomDialogController({
     builder: TimeDialog({
-      action:(data)=> this.setEndTime(data),
+      action:(data: string): void => this.setEndTime(data),
       title: $r('app.string.endTime'),
       defaultDate: this.mViewModel.defaultEndTime
     }),
@@ -102,9 +103,9 @@ export default struct NoDisturb {
     offset: ({ dx: 0, dy: deviceTypeInfo === "phone" ? '-16dp' : 0 }),
     customStyle: true
   });
-  repeatDialogController: CustomDialogController = new CustomDialogController({
+  repeatDialogController: CustomDialogController | null = new CustomDialogController({
     builder: RepeatModeDialog({
-      action: (data) => this.setRepeatMode(data),
+      action: (data: number): void => this.setRepeatMode(data),
       title: $r('app.string.repeat'),
       selectMode: this.mViewModel.repeatMode
     }),
@@ -129,7 +130,7 @@ export default struct NoDisturb {
                   arrow: $arrow
                 })
               }.onClick(() => {
-                this.repeatDialogController.open()
+                this.repeatDialogController?.open()
               }).margin({ bottom: $r('app.float.itemComp_margin_b') })
 
               if (this.mViewModel.repeatMode == DoNotDisturbType.TYPE_CLEARLY) {
@@ -142,7 +143,7 @@ export default struct NoDisturb {
                         arrow: $arrow
                       })
                     }.onClick(() => {
-                      this.startDateDialogController.open()
+                      this.startDateDialogController?.open()
                     })
                   }
                   ListItem() {
@@ -153,7 +154,7 @@ export default struct NoDisturb {
                         arrow: $arrow
                       })
                     }.onClick(() => {
-                      this.startTimeDialogController.open()
+                      this.startTimeDialogController?.open()
                     })
                   }
                 }.divider({
@@ -178,7 +179,7 @@ export default struct NoDisturb {
                         arrow: $arrow
                       })
                     }.onClick(() => {
-                      this.endDateDialogController.open()
+                      this.endDateDialogController?.open()
                     })
                   }
                   ListItem() {
@@ -189,7 +190,7 @@ export default struct NoDisturb {
                         arrow: $arrow
                       })
                     }.onClick(() => {
-                      this.endTimeDialogController.open()
+                      this.endTimeDialogController?.open()
                     })
                   }
                 }.divider({
@@ -214,7 +215,7 @@ export default struct NoDisturb {
                   })
                 }.onClick(() => {
                   this.mPrevData = this.mViewModel.startTime
-                  this.startTimeDialogController.open()
+                  this.startTimeDialogController?.open()
                 }).margin({ bottom: $r('app.float.itemComp_margin_b')})
                 Row() {
                   ItemComponent({
@@ -224,7 +225,7 @@ export default struct NoDisturb {
                   })
                 }.onClick(() => {
                   this.mPrevData = this.mViewModel.endTime
-                  this.endTimeDialogController.open()
+                  this.endTimeDialogController?.open()
                 }).margin({ bottom: $r('app.float.itemComp_margin_b')})
               }
             }
@@ -287,20 +288,11 @@ export default struct NoDisturb {
   }
 
   aboutToDisappear() {
-    delete this.startDateDialogController
-    this.startDateDialogController = undefined
-
-    delete this.startTimeDialogController
-    this.startTimeDialogController = undefined
-
-    delete this.endDateDialogController
-    this.endDateDialogController = undefined
-
-    delete this.endTimeDialogController
-    this.endTimeDialogController = undefined
-
-    delete this.repeatDialogController
-    this.repeatDialogController = undefined
+    this.startDateDialogController = null
+    this.startTimeDialogController = null
+    this.endDateDialogController = null
+    this.endTimeDialogController = null
+    this.repeatDialogController = null
 
     Log.showInfo(TAG, `aboutToDisappear`)
   }
@@ -316,7 +308,7 @@ export default struct NoDisturb {
 @CustomDialog
 struct DateDialog {
   public controller: CustomDialogController
-  public action: (data) => void
+  public action: (data: string) => void = data => {}
   private selectedDate: string = ''
   private title: string | Resource = ''
   private defaultDate: Date = new Date()
@@ -335,7 +327,7 @@ struct DateDialog {
             .fontWeight(FontWeight.Medium)
           DatePicker({ start: this.minDate, end: this.maxDate, selected: this.defaultDate })
             .onChange((date: DatePickerResult) => {
-              let dateSource = new Date(date.year, date.month, date.day);
+              let dateSource = new Date(date.year as number, date.month as number, date.day);
               this.selectedDate = NoDisturbingModel.formatDate(dateSource);
             })
             .width(ConfigData.WH_100_100)
@@ -395,7 +387,7 @@ struct DateDialog {
 @CustomDialog
 struct TimeDialog {
   public controller: CustomDialogController
-  public action: (data) => void
+  public action: (data: string) => void = data => {}
   private selectedTime: string = ''
   private title: string | Resource = ''
   private defaultDate: Date = new Date()
@@ -471,7 +463,7 @@ struct TimeDialog {
 @CustomDialog
 struct RepeatModeDialog {
   public controller: CustomDialogController
-  public action: (data) => void
+  public action: (data: number) => void = data => {}
   private title: string | Resource = ''
   private prevModeSetCnt: number = 0
   @State selectMode: number = DoNotDisturbType.TYPE_NONE

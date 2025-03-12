@@ -15,6 +15,7 @@
 
 import Log from '../../../../../../../common/src/main/ets/default/Log'
 import AbilityManager from '../../../../../../../common/src/main/ets/default/abilitymanager/abilityManager'
+import { ConfigInfo } from '@ohos/common'
 
 const TAG = 'Navigation-SplitBar'
 
@@ -35,7 +36,7 @@ struct Index {
 
   aboutToAppear() {
     Log.showInfo(TAG, `aboutToAppear, start`);
-    let configInfo = AbilityManager.getAbilityData(AbilityManager.ABILITY_NAME_NAVIGATION_BAR, 'config');
+    let configInfo = AbilityManager.getAbilityData(AbilityManager.ABILITY_NAME_NAVIGATION_BAR, 'config') as ConfigInfo;
     if (configInfo.maxWidth > configInfo.maxHeight) {
       this.mHorizontalScreen = true;
     } else {

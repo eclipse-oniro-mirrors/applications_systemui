@@ -24,7 +24,7 @@ const TAG = 'SimpleToggleComponent';
 
 @Component
 export default struct SimpleToggleComponent {
-  private keyId: string;
+  @Prop keyId: string;
   @State mItemData: ControlComponentData = {};
   private mEditMode: boolean = false;
   private mDragMode: boolean = false;
@@ -43,7 +43,7 @@ export default struct SimpleToggleComponent {
 
   linkItemData() {
     Log.showDebug(TAG, `linkItemData, keyId: ${this.keyId}`);
-    this.mItemData = AppStorage.Get('ControlCenter_' + this.keyId);
+    this.mItemData = AppStorage.Get('ControlCenter_' + this.keyId) as ControlComponentData;
     Log.showDebug(TAG, `linkItemData, mItemData: ${this.keyId} ${this.mItemData.label} ${this.mItemData.iconUrl}`);
   }
 
@@ -70,8 +70,8 @@ export default struct SimpleToggleComponent {
             mUseLabelStr: true,
             mEditMode: this.mEditMode,
             mDragMode: this.mDragMode,
-            mClickEvent: () => this.onIconItemClick(),
-            mLongClickEvent: () => this.onIconItemLongPressGesture()
+            mClickEvent: (): void => this.onIconItemClick(),
+            mLongClickEvent: (): void => this.onIconItemLongPressGesture()
           })
         } else if (this.mItemData.pluginType == PluginType.DATA_ABILITY) {
           // TODO:

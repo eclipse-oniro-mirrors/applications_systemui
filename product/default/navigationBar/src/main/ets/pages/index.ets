@@ -22,25 +22,25 @@ import {NavigationBarComponentData} from '../common/constants'
 import StyleManager from '../common/StyleManager'
 import configManager from '../../../../../../../features/navigationservice/src/main/ets/com/ohos/navigationservice/ConfigManager'
 import WindowManager, { WindowType } from '../../../../../../../common/src/main/ets/default/WindowManager';
+import { ConfigInfo } from '@ohos/common'
 const TAG = 'NavigationBar-Index';
 let mConfigManager = configManager
 
 @Entry
 @Component
 struct Index {
-  @StorageLink('navigationLayoutConfig') mConfig: object = {}
+  // @StorageLink('navigationLayoutConfig') mConfig: object = {}
   @StorageLink('minNavHeight') minNavHeight: number = 32
   @StorageLink("showNavHorizontal") showNavHorizontal: boolean = true
   @State mNavigationBarComponentData: NavigationBarComponentData = new NavigationBarComponentData()
 
   onBackPress(): boolean {
-
     return true;
   }
 
   aboutToAppear() {
     Log.showInfo(TAG, `aboutToAppear Start`);
-    let configInfo = AbilityManager.getAbilityData(AbilityManager.ABILITY_NAME_NAVIGATION_BAR, 'config');
+    let configInfo = AbilityManager.getAbilityData(AbilityManager.ABILITY_NAME_NAVIGATION_BAR, 'config') as ConfigInfo;
     AppStorage.SetOrCreate("showNavHorizontal", configInfo.showNavHorizontal);
     mConfigManager.initConfig();
     WindowManager.setWindowBgColor(WindowType.NAVIGATION_BAR ,'#00000000')

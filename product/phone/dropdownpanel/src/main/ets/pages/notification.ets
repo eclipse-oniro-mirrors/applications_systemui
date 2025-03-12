@@ -34,6 +34,7 @@ import ResourceUtil from '../../../../../../../common/src/main/ets/default/Resou
 import TimeManager, { TimeEventArgs, TIME_CHANGE_EVENT
 } from '../../../../../../../common/src/main/ets/default/TimeManager';
 import deviceInfo from '@ohos.deviceInfo';
+import { NotificationItemData, TouchMoveData } from '@ohos/common';
 
 const TAG = 'DropdownPanel-notification';
 const IMAGE_SIZE_L = 24;
@@ -47,13 +48,13 @@ const deviceTypeInfo = deviceInfo.deviceType;
 
 @Component
 export default struct Notification {
-  private touchMoveCallback: Function
+  private touchMoveCallback: Function = () => {}
   startX: number = 0
   startY: number = 0
   @State moveX: number = 0
   @State moveY: number = 0
   @State isEnd: boolean = true
-  @StorageLink('notificationList') notificationList: any[] = []
+  @StorageLink('notificationList') notificationList: NotificationItemData[][] = []
 
   aboutToAppear() {
     Log.showInfo(TAG, `aboutToAppear Start`);
@@ -71,9 +72,9 @@ export default struct Notification {
 
       Flex({ direction: FlexDirection.Row, alignItems: ItemAlign.Center, justifyContent: FlexAlign.Center }) {
         Flex({ direction: FlexDirection.Column, alignItems: ItemAlign.Start, justifyContent: FlexAlign.Start }) {
-          statusBar({ touchMoveCallback: (data) => this.touchMoveCallback(data) })
+          statusBar({ touchMoveCallback: (data: TouchMoveData): void => this.touchMoveCallback(data) })
           CenterTitle({
-            touchMoveCallback: (data) => this.CenterTitleTouchMoveCallback(data)
+            touchMoveCallback: (data: TouchMoveData):void => this.CenterTitleTouchMoveCallback(data)
           })
           if (this.notificationList.length == 0) {
             Text($r("app.string.no_notification"))
@@ -137,9 +138,9 @@ export default struct Notification {
     }
   }
 
-  CenterTitleTouchMoveCallback(data) {
+  CenterTitleTouchMoveCallback(data: TouchMoveData) {
     Log.showDebug(TAG, `CenterTitleTouchMoveCallback, data: ${JSON.stringify(data)}`)
-    data['touchComponent'] = 'notification'
+    data.touchComponent = 'notification'
     if (this.touchMoveCallback) {
       this.touchMoveCallback(data)
     }
@@ -149,7 +150,7 @@ export default struct Notification {
 @Component
 struct statusBar {
   @StorageLink('StatusCoefficient') StatusCoefficient: number = 1.0
-  private touchMoveCallback: Function
+  private touchMoveCallback: Function = () => {}
   startX: number = 0
   startY: number = 0
   @State moveX: number = 0
@@ -218,11 +219,11 @@ struct statusBar {
 
 @Component
 struct CenterTitle {
-  private touchMoveCallback: Function
-  startX: number = 0
-  startY: number = 0
-  @State moveX: number = 0
-  @State moveY: number = 0
+  private touchMoveCallback: Function = () => {};
+  startX: number = 0;
+  startY: number = 0;
+  @State moveX: number = 0;
+  @State moveY: number = 0;
   @State mTimeString: string = '';
   @State mTime: string = '01:01'
   unSubscriber?: unsubscribe;

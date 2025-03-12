@@ -20,6 +20,7 @@ import Notification from './notification'
 import WindowManager, {
   WindowType,
   WINDOW_SHOW_HIDE_EVENT,
+  ArgsInfo,
 } from "../../../../../../../common/src/main/ets/default/WindowManager";
 import EventManager, {unsubscribe} from "../../../../../../../common/src/main/ets/default/event/EventManager";
 import {START_ABILITY_EVENT} from "../../../../../../../common/src/main/ets/default/event/EventUtil";
@@ -44,7 +45,6 @@ struct Index {
 
   aboutToAppear() {
     Log.showInfo(TAG, `aboutToAppear, start`)
-    setAppBgColor('#00000000')
     this.initWindowPolicy();
   }
 
@@ -100,14 +100,16 @@ struct Index {
     EventManager.subscribe(SHOW_EVENT, () => this.showWindow()),
     EventManager.subscribe(HIDE_EVENT, () => this.hideWindow()),
     EventManager.subscribe(START_ABILITY_EVENT, () => this.hideWindow()),
-    EventManager.subscribe(WINDOW_SHOW_HIDE_EVENT, (args) => {
-      let { windowName, isShow } = args;
+    EventManager.subscribe(WINDOW_SHOW_HIDE_EVENT, (args: ArgsInfo) => {
+      let windowName = args.windowName;
+      let isShow = args?.isShow;
       Log.showInfo(TAG, `WINDOW_SHOW_HIDE_EVENT windowName: ${windowName}, isShow: ${isShow}`);
       windowName == WindowType.CONTROL_PANEL && isShow && this.hideWindow();
       windowName == WindowType.NOTIFICATION_PANEL && isShow && (this.mShowAnimReady = true);
     }),
-    EventManager.subscribe('NotificationWindowResizeEvent',async (args) => {
-      let { windowName, rect } = args;
+    EventManager.subscribe('NotificationWindowResizeEvent',async (args: ArgsInfo) => {
+      let windowName = args.windowName;
+      let rect = args?.rect;
       let dis = await display.getDefaultDisplaySync();
       Log.showInfo(TAG, `NotificationWindowResizeEvent: ${windowName}, isShow: ${rect}`);
       AbilityManager.setAbilityData(AbilityManager.ABILITY_NAME_NOTIFICATION_PANEL, 'rect', rect);
@@ -117,7 +119,7 @@ struct Index {
       });
       WindowManager.resetSizeWindow(windowName, rect).then(
       ).then(() => {
-      }).catch((err) => {
+      }).catch((error: Error) => {
       });
     }),
     MultimodalInputManager.subscribeCombinationKey([MultiKeyCode.WIN, MultiKeyCode.N], (data) => {
@@ -132,9 +134,9 @@ struct Index {
     );
   }
 
-  _animateTo(config, callback) {
+  _animateTo(config: AnimateParam, callback: () => void) {
     animateTo(config, callback)
-    setTimeout(config.onFinish, config.duration + config.delay)
+    setTimeout(config.onFinish, Number(config.duration) + Number(config.delay))
   }
 
   showAnimation(){

@@ -23,7 +23,7 @@ const TAG = 'ControlPanel-Control';
 
 @Component
 export default struct Control {
-  private modeChangeCallback: Function
+  private modeChangeCallback: Function = () => {}
 
   aboutToAppear() {
     Log.showInfo(TAG, `aboutToAppear Start`)
@@ -39,7 +39,7 @@ export default struct Control {
       ControlCenterComponent({
         mControlCenterComponentConfig: ControlCenterConfig,
         mSimpleToggleColumnCount: Constants.DEFAULT_SIMPLE_TOGGLE_COLUMN_COUNT,
-        modeChangeCallback: (isEdit) => this.modeChangeCallback(isEdit),
+        modeChangeCallback: (isEdit: boolean): void => this.modeChangeCallback(isEdit),
         titleDisplayInside: true,
         moduleName: 'pc_controlpanel',
       })

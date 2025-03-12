@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-import Constants, { NotificationLayout as Layout } from '../../common/constants';
+import Constants, { NotificationItemData, NotificationLayout as Layout } from '../../common/constants';
 import basicItem from './basicItem';
 import longItem from './longItem';
 import multiItem from './multiItem';
@@ -33,8 +33,8 @@ export default struct GeneralItem {
   @State @Watch('expandChange') isExpand: boolean = false
   @State needExpand: boolean = true
   @State distributedDeviceName: string = ''
-  private itemData: any = {}
-  private clickAction: () => void
+  @Prop itemData: NotificationItemData
+  private clickAction: () => void = () => {}
   private isSubItem: boolean= false;
 
   expandChange() {
@@ -70,7 +70,7 @@ export default struct GeneralItem {
   build() {
     Column() {
       titleItem({
-        notificationSmallIcon: this.itemData.smallIcon,
+        notificationSmallIcon: this.itemData.smallIcon as PixelMap,
         notificationName: this.itemData.appName,
         notificationTime: this.itemData.time,
         isExpand: $isExpand,
@@ -98,7 +98,7 @@ export default struct GeneralItem {
 @Component
 struct ContentComponent {
   @Prop isExpand: boolean;
-  itemData: any;
+  @Prop itemData: NotificationItemData;
 
   aboutToAppear() {
     Log.showInfo(TAG, `aboutToAppear pict: ${this.itemData.picture}`);

@@ -18,7 +18,7 @@ import CheckEmptyUtils from '../../../../../../../../../../common/src/main/ets/d
 
 @Component
 export default struct PictureItem {
-  @State itemData: NotificationItemData= undefined
+  @Prop itemData: NotificationItemData
   @Prop isExpand: boolean
 
   build() {

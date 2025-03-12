@@ -16,6 +16,7 @@
 import Constants from '../../common/constants';
 import Log from '../../../../../../../../../../common/src/main/ets/default/Log';
 import DistributionManager from '../../model/NotificationDistributionManager';
+import deviceManager from '@ohos.distributedDeviceManager'
 
 const TAG = 'NoticeItem-DevicesDialog';
 
@@ -25,9 +26,9 @@ const TAG = 'NoticeItem-DevicesDialog';
  */
 @CustomDialog
 export default struct DevicesDialog {
-  private deviceInfoList: Array<any>;
+  private deviceInfoList: Array<deviceManager.DeviceBasicInfo> = [];
   public controller: CustomDialogController
-  public action: (deviceID) => void
+  public action: (deviceID: string) => void = (deviceID) => {}
 
   build() {
     Column({ space: 30 }) {
@@ -40,7 +41,7 @@ export default struct DevicesDialog {
 
       Column() {
         List() {
-          ForEach(this.deviceInfoList, (item) => {
+          ForEach(this.deviceInfoList, (item: deviceManager.DeviceBasicInfo) => {
             ListItem() {
               Row() {
                 Column() {

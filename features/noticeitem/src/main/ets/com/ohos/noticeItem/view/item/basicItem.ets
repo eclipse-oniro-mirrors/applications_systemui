@@ -16,7 +16,7 @@
 import Constants, {NotificationItemData, NotificationLayout as Layout} from '../../common/constants';
 @Component
 export default struct BasicItem {
-  @State itemData: NotificationItemData = undefined
+  @Prop itemData: NotificationItemData
 
   build() {
     Column() {

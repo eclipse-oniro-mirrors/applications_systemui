@@ -18,7 +18,7 @@ import Constants, {NotificationItemData, NotificationLayout as Layout} from '../
 @Component
 export default
 struct LongItem {
-  @State itemData: NotificationItemData= undefined
+  @Prop itemData: NotificationItemData
   @Prop isExpand: boolean
 
   build() {

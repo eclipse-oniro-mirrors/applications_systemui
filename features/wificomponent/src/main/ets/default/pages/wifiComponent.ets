@@ -24,7 +24,7 @@ const TAG = 'Control-wifiComponent'
 
 @Component
 export default struct WifiComponent {
-  private IconInfo: any[] = [
+  private IconInfo: Resource[] = [
     $r('app.media.wifi_d'),
     $r('app.media.wifi'),
   ]
@@ -64,8 +64,8 @@ export default struct WifiComponent {
         iconOn: this.IconInfo[1],
         mTitle: $wifiName,
         changeSwitch: $wifiOpenStatus,
-        mClickEvent: () => this.mClickEvent(),
-        mLongClickEvent: () => this.mLongClickEvent()
+        mClickEvent: (): void => this.mClickEvent(),
+        mLongClickEvent: (): void => this.mLongClickEvent()
       })
     }.width('100%')
     .height('100%')

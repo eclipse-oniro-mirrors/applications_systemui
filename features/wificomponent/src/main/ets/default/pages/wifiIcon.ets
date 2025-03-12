@@ -59,7 +59,7 @@ export default struct WifiIcon {
 
   private getImage(wifiInfo: number) {
     Log.showInfo(TAG, `getImage`);
-    let wifiImage;
+    let wifiImage: Resource;
     switch (wifiInfo) {
       case Constants.WIFI_SIGNAL_NO:
         wifiImage = $r('app.media.ic_statusbar_wifi_no');

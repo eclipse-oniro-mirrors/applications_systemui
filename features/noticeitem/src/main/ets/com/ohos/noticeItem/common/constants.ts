@@ -12,6 +12,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+import notificationManager from '@ohos.notificationManager';
+import image from '@ohos.multimedia.image';
+import { WantAgent } from '@ohos.wantAgent';
 
 export default class Constants {
   static readonly NOTIFICATION_TYPE_BASIC = '0';
@@ -90,12 +93,12 @@ export interface NotificationItemData {
   timestamp: number;
   time: string;
   appName: string;
-  want: any;
-  actionButtons: any[];
+  want: WantAgent;
+  actionButtons: notificationManager.ButtonOptions[];
   bundleName: string;
-  smallIcon?: PixelMap | string;
-  largeIcon?: PixelMap | string;
-  picture?: PixelMap;
+  smallIcon?: image.PixelMap | string;
+  largeIcon?: image.PixelMap | string;
+  picture?: image.PixelMap;
   title?: string;
   text?: string;
   additionalText?: string;

@@ -32,7 +32,7 @@ export type TimeEventArgs = {
   timeFormat: boolean;
 };
 
-const TAG = "TimeManager";
+const TAG = "TimeManager_SysUI";
 const TIME_FORMAT_KEY = settings.date.TIME_FORMAT;
 const TIME_SUBSCRIBE_INFO = {
   events: [
@@ -74,8 +74,9 @@ class TimeManager {
   }
 
   public formatTime(date: Date, as24Hour: boolean = false) {
-    this.mUse24hFormat = as24Hour ? true : i18n.System.is24HourClock();
-    return concatTime(date.getHours() % (this.mUse24hFormat ? 24 : 12), date.getMinutes());
+    this.mUse24hFormat = i18n.System.is24HourClock();
+    let format = as24Hour ? 24 : this.mUse24hFormat;
+    return concatTime(date.getHours() % (format ? 24 : 12), date.getMinutes());
   }
 
   private async initTimeFormat(context: any): Promise<void> {

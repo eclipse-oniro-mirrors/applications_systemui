@@ -38,7 +38,7 @@ export default struct ComplexToggleComponent {
 
   linkItemData() {
     Log.showDebug(TAG, `linkItemData, keyId: ${this.keyId}`);
-    this.mItemData = AppStorage.Get('ControlCenter_' + this.keyId);
+    this.mItemData = AppStorage.Get('ControlCenter_' + this.keyId) as ControlComponentData;
     Log.showDebug(TAG, `linkItemData, mItemData: ${this.keyId} ${this.mItemData.label} ${this.mItemData.iconUrl}`);
   }
 
@@ -55,8 +55,8 @@ export default struct ComplexToggleComponent {
         iconOnStr: this.mItemData
         .iconUrl,
         changeSwitch: $mStatus,
-        mClickEvent: () => this.onIconItemClick(),
-        mLongClickEvent: () => this.onIconItemLongPressGesture()
+        mClickEvent: (): void => this.onIconItemClick(),
+        mLongClickEvent: (): void => this.onIconItemLongPressGesture()
       })
     }.width('100%')
     .height('100%')

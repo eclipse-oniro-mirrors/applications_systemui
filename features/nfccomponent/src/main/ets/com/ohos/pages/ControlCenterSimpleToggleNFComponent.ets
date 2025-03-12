@@ -16,7 +16,7 @@
 import Log from '../../../../../../../../common/src/main/ets/default/Log';
 import EventManager from "../../../../../../../../common/src/main/ets/default/event/EventManager";
 import { obtainStartAbility } from "../../../../../../../../common/src/main/ets/default/event/EventUtil";
-import NfcController from '@ohos.nfc.controller';
+import { nfcController } from '@kit.ConnectivityKit';
 import ViewModel from '../viewmodel/NFCModeVM';
 import SimpleToggleBase from '../../../../../../../../common/src/main/ets/template/SimpleToggleBase';
 
@@ -24,13 +24,13 @@ const TAG = 'nfcmode-ControlCenterSimpleToggleNFComponent';
 
 @Component
 export default struct ControlCenterSimpleToggleNFComponent {
-  private keyId: string;
+  private keyId: string = '';
   private mEditMode: boolean = false;
   private mDragMode: boolean = false;
   @State mIcon: Resource = $r("app.media.ic_notification_nfc_filled");
   @State mLabel: Resource = $r("app.string.control_center_complex_toggle_nfc_mode_title");
   @State mDefaultChangeSwitch: boolean  = false;
-  @StorageLink('NFCModeComponentMode') @Watch('onNFCModeUpdated') NFCModeComponentMode: NfcController.NfcState = NfcController.NfcState.STATE_OFF;
+  @StorageLink('NFCModeComponentMode') @Watch('onNFCModeUpdated') NFCModeComponentMode: nfcController.NfcState = nfcController.NfcState.STATE_OFF;
   aboutToAppear() {
     Log.showInfo(TAG, 'aboutToAppear');
     ViewModel.initViewModel();
@@ -43,9 +43,9 @@ export default struct ControlCenterSimpleToggleNFComponent {
 
   onNFCModeUpdated(propName: string): void {
     Log.showInfo(TAG, `onNFCModeUpdated, propName: ${propName} NFCModeComponentMode: ${JSON.stringify(this.NFCModeComponentMode)}`);
-    if (this.NFCModeComponentMode == NfcController.NfcState.STATE_OFF) {
+    if (this.NFCModeComponentMode == nfcController.NfcState.STATE_OFF) {
       this.mDefaultChangeSwitch = false;
-    } else if (this.NFCModeComponentMode == NfcController.NfcState.STATE_ON) {
+    } else if (this.NFCModeComponentMode == nfcController.NfcState.STATE_ON) {
       this.mDefaultChangeSwitch = true;
     }
   }
@@ -58,16 +58,16 @@ export default struct ControlCenterSimpleToggleNFComponent {
       mLabel: $mLabel,
       mEditMode: this.mEditMode,
       mDragMode: this.mDragMode,
-      mClickEvent: () => this.mClickEvent()
+      mClickEvent: (): void => this.mClickEvent()
     })
   }
 
   mClickEvent() {
     Log.showInfo(TAG, `mClickEvent---${this.NFCModeComponentMode}`);
-    if (this.NFCModeComponentMode == NfcController.NfcState.STATE_OFF) {
-      ViewModel.setNFCMode(NfcController.NfcState.STATE_OFF)
-    } else if (this.NFCModeComponentMode == NfcController.NfcState.STATE_ON) {
-      ViewModel.setNFCMode(NfcController.NfcState.STATE_ON)
+    if (this.NFCModeComponentMode == nfcController.NfcState.STATE_OFF) {
+      ViewModel.setNFCMode(nfcController.NfcState.STATE_OFF)
+    } else if (this.NFCModeComponentMode == nfcController.NfcState.STATE_ON) {
+      ViewModel.setNFCMode(nfcController.NfcState.STATE_ON)
     }
   }
 }

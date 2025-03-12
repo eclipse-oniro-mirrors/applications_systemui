@@ -15,6 +15,7 @@
     "@ohos/ringmodecomponent": "file:../../../features/ringmodecomponent",
     "@ohos/autorotatecomponent": "file:../../../features/autorotatecomponent",
     "@ohos/noticeitem": "file:../../../features/noticeitem",
-    "@ohos/airplanecomponent": "file:../../../features/airplanecomponent"
+    "@ohos/airplanecomponent": "file:../../../features/airplanecomponent",
+    "@ohos/common": "file:../../../common"
   }
 }

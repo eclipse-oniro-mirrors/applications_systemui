@@ -17,6 +17,8 @@ import rpc from '@ohos.rpc';
 import Log from '../../../../../../../common/src/main/ets/default/Log';
 import Constants from '../common/Constants';
 import type { IDialogParameters } from '../controller/Controller';
+import inputMethod from '@ohos.inputMethod';
+import SystemDialogController from '../controller/Controller';
 
 const TAG = 'Dialog-Index';
 
@@ -25,23 +27,54 @@ const storage = LocalStorage.GetShared();
 @Entry(storage)
 @Component
 struct Index {
-  @LocalStorageProp('connectId') connectId: string = undefined;
-  @LocalStorageProp('windowName') windowName: string = undefined;
-  @LocalStorageProp('parameters') parameters: IDialogParameters = undefined;
+  @LocalStorageProp('connectId') connectId: string = '';
+  @LocalStorageProp('windowName') windowName: string = '';
+  @LocalStorageProp('parameters') parameters: IDialogParameters = {};
+  @State inputMethodSetting: inputMethod.InputMethodSetting | undefined = undefined;
+  @State keyboardHeight: number = 0;
 
   aboutToAppear() {
-    Log.showInfo(TAG, `aboutToAppear r ${this.connectId} ${this.windowName} ${JSON.stringify(this.parameters)}`)
+    Log.showInfo(TAG, `aboutToAppear r ${this.connectId} ${this.windowName} ${JSON.stringify(this.parameters)}`);
+    this.initListenKeyboard();
   }
 
   aboutToDisappear() {
-    Log.showInfo(TAG, `aboutToDisappear ${this.connectId} ${this.windowName} ${JSON.stringify(this.parameters)}`)
+    Log.showInfo(TAG, `aboutToDisappear ${this.connectId} ${this.windowName} ${JSON.stringify(this.parameters)}`);
+    this.cancelListenKeyboard();
+  }
+
+  initListenKeyboard() {
+    Log.showInfo(TAG, 'initListenKeyboard in');
+    try {
+      this.inputMethodSetting = inputMethod.getSetting();
+      this.inputMethodSetting.on('imeShow', (info: inputMethod.InputWindowInfo[]) => {
+        Log.showInfo(TAG, 'Succeeded in subscribing imeShow event. height: ' + info[0].height);
+        this.keyboardHeight = info[0]?.height/2;
+      });
+      this.inputMethodSetting.on('imeHide', (info: inputMethod.InputWindowInfo[]) => {
+        Log.showInfo(TAG, 'Succeeded in subscribing imeHide event. height: 0');
+        this.keyboardHeight = 0;
+      });
+    } catch (e) {
+      Log.showError('initListenKeyboard error', e);
+    }
+  }
+
+  cancelListenKeyboard() {
+    Log.showInfo(TAG, 'cancelListenKeyboard in');
+    try {
+      this.inputMethodSetting?.off('imeShow');
+      this.inputMethodSetting?.off('imeHide');
+    } catch (e) {
+      Log.showError('cancelListenKeyboard error', e);
+    }
   }
 
   onOk() {
     Log.showDebug(TAG, `onOk start`);
 
-    const controller = globalThis[Constants.SYSTEM_DIALOG_CONTROLLER];
-    const { remoteObject } = controller.getData().get(this.connectId);
+    const controller = globalThis.SystemDialog_Controller as SystemDialogController;
+    const remoteObject = controller.getData().get(this.connectId)?.remoteObject;
     if (remoteObject) {
       Log.showDebug(TAG, `onOk ${remoteObject}`);
 
@@ -50,8 +83,8 @@ struct Index {
       let option = new rpc.MessageOption();
       remoteObject.sendMessageRequest(1, data, reply, option)
         .then(
-          (result) => Log.showDebug(TAG, `onOk success ${JSON.stringify(result)}`),
-          (error) => {
+          (result: rpc.RequestResult): void => Log.showDebug(TAG, `onOk success ${JSON.stringify(result)}`),
+          (error: Error) => {
             Log.showDebug(TAG, `onOk error ${JSON.stringify(error)}`);
             this.onClose();
           }
@@ -66,7 +99,7 @@ struct Index {
 
   onClose() {
     Log.showDebug(TAG, `onClose start`);
-    const controller = globalThis[Constants.SYSTEM_DIALOG_CONTROLLER];
+    const controller = globalThis.SystemDialog_Controller as SystemDialogController;
     controller?.destroyWindow(this.connectId);
     Log.showInfo(TAG, `onClose end`);
   }
@@ -90,5 +123,6 @@ struct Index {
     }
     .width('100%')
     .height('100%')
+    .border({ width: { bottom: this.keyboardHeight }})
   }
 }

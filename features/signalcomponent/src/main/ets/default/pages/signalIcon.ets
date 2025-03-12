@@ -91,8 +91,8 @@ export default struct SignalIcon {
    * @param {number} type - number of cellular type
    * @return {string} typeString type of cellular type
    */
-  private updateCellularType(signalType): string {
-    let typeString;
+  private updateCellularType(signalType: number): Resource {
+    let typeString: Resource;
     switch (signalType) {
       case Constants.RADIO_TECHNOLOGY_UNKNOWN:
         typeString = $r('app.string.signal_null');
@@ -130,8 +130,8 @@ export default struct SignalIcon {
    * @param {number} level - signal level from signalModel
    * @return {string} cellularImage image of cellular signal
    */
-  private updateCellularImage(level) {
-    let cellularImage;
+  private updateCellularImage(level: number) {
+    let cellularImage: Resource;
     switch (level) {
       case Constants.CELLULAR_SIGNAL_NO:
         cellularImage = $r('app.media.ic_statusbar_signal_no');
@@ -165,8 +165,8 @@ export default struct SignalIcon {
    * @param {string} netWorkState - network state from signal model
    * @return {string} vendor's name or signal state
    */
-  private updateNetworkState(netWorkState) {
-    let networkStateName;
+  private updateNetworkState(netWorkState: string) {
+    let networkStateName: string | Resource;
     if (netWorkState == Constants.NET_NULL) {
       networkStateName = $r('app.string.net_null');
     } else {

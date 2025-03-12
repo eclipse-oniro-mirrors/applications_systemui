@@ -29,13 +29,13 @@ export default struct StatusBarIconItemRingModeComponent {
   @State mTintContentInfo: TintContentInfo = ViewModel.getTintContentInfo()
   @State styleCommon: CommonStyle = StyleConfigurationCommon.getCommonStyle()
   @State style: StatusRingModeComponentStyle = StyleConfiguration.getStatusRingModeComponentStyle()
-  private ringModeIcons: any
+  private ringModeIcons: Resource[] = []
 
   aboutToAppear() {
     Log.showInfo(TAG, 'aboutToAppear');
-    this.ringModeIcons = {};
-    this.ringModeIcons[AudioRingMode.RINGER_MODE_SILENT.toString()] = $r("app.media.ic_statusbar_ring_off_filled");
-    this.ringModeIcons[AudioRingMode.RINGER_MODE_VIBRATE.toString()] = $r("app.media.ic_statusbar_vibration_on");
+    this.ringModeIcons = [];
+    this.ringModeIcons[AudioRingMode.RINGER_MODE_SILENT] = $r("app.media.ic_statusbar_ring_off_filled");
+    this.ringModeIcons[AudioRingMode.RINGER_MODE_VIBRATE] = $r("app.media.ic_statusbar_vibration_on");
     ViewModel.initViewModel();
   }
 
@@ -47,7 +47,7 @@ export default struct StatusBarIconItemRingModeComponent {
     Row() {
       if (this.RingModeComponentMode != AudioRingMode.RINGER_MODE_NORMAL) {
         Row().width(this.styleCommon.statusBarMarginLeftRight).height('100%')
-        Image(this.ringModeIcons[this.RingModeComponentMode.toString()])
+        Image(this.ringModeIcons[this.RingModeComponentMode])
           .objectFit(ImageFit.Contain)
           .width(this.style.statusBarRingModeWidth)
           .height(this.style.statusBarRingModeHeight)

@@ -23,7 +23,7 @@ const TAG = 'Control-airPlaneComponent';
 export default
 struct airplaneComponent {
 
-  private IconInfo: any[] = [
+  private IconInfo: Resource[] = [
     $r('app.media.airplane_d'),
     $r('app.media.airplane'),
   ];
@@ -72,7 +72,7 @@ struct airplaneComponent {
         iconOn: this.IconInfo[1],
         mTitle: $flyModelTitle,
         changeSwitch: $flyModelStatus,
-        mClickEvent: () => this.mClickEvent()
+        mClickEvent: (): void => this.mClickEvent()
       })
     }.width('100%')
     .height('100%')

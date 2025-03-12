@@ -21,10 +21,14 @@ import StyleConfiguration, { ControlCenterUpTitleStyle } from '../common/StyleCo
 
 const TAG = 'Control-UpTitle';
 
+interface IDirection {
+  direction: string
+}
+
 @Component
 export default struct UpTitle {
-  private touchMoveCallback: Function;
-  private simpleToggleLayoutEditStartCallback: Function;
+  private touchMoveCallback: Function = (data: IDirection) => {};
+  private simpleToggleLayoutEditStartCallback: Function = () => {};
   startX: number = 0;
   startY: number = 0;
   @State moveX: number = 0;

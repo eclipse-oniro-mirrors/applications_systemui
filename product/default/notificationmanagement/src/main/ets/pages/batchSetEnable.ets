@@ -24,11 +24,24 @@ import ViewModel from '../vm/notificationManagenmentViewModel'
 
 const TAG = 'NotificationManagement-BatchSetEnable';
 
+interface BundleItemData {
+  appIcon?: string;
+  appTitle?: string;
+  appValue?: string;
+  appArrow?: string|Resource;
+  appSummary?: string;
+  appBundleName?: string;
+  appIconId?: string;
+  appUri?: string;
+  appUid?: number;
+  systemApp?: boolean;
+}
+
 @Entry
 @Component
 export default struct BatchSetEnable {
   @State mViewModel: ViewModel = new ViewModel();
-  @StorageLink('appManagementList') appList: any[]= [];
+  @StorageLink('appManagementList') appList: BundleItemData[]= [];
   @State headName:Resource =  $r('app.string.batch_Management')
 
   build() {
@@ -38,14 +51,14 @@ export default struct BatchSetEnable {
           Column() {
             HeadComponent({ headName: $headName, isActive: true });
             List() {
-              ForEach(this.appList, (item) => {
+              ForEach(this.appList, (item: BundleItemData) => {
                 ListItem() {
                   AppItemComponent({
                     appIcon: item.appIcon,
                     appTitle: item.appTitle,
                     appSummary: item.appSummary,
                     appValue: item.appValue,
-                    appArrow: item.appArrow,
+                    appArrow: item.appArrow as string,
                     appArrowStyle: '',
                     appUri: '',
                     appBundleName:item.appBundleName,

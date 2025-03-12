@@ -17,13 +17,15 @@ import Log from '../../../../../../../../../common/src/main/ets/default/Log';
 import SlotItemComponent from './slotItemComponent';
 import Notification from '@ohos.notification';
 import Router from '@system.router'
+import { BundleItemData } from '@ohos/common';
+import NotificationManager from '@ohos.notificationManager';
 
 const TAG = 'ManagementComponent-SlotLstComponent';
 
 @Component
 export default struct SlotLstComponent {
-  private appInfo: any= null;
-  @Link slotLst: any[];
+  @Prop appInfo: BundleItemData;
+  @Link slotLst: NotificationManager.NotificationSlot[];
 
   build() {
     Flex({ justifyContent: FlexAlign.SpaceBetween }) {
@@ -42,13 +44,13 @@ export default struct SlotLstComponent {
         .align(Alignment.Start);
         Row() {
           List() {
-            ForEach(this.slotLst, (item) => {
+            ForEach(this.slotLst, (item: NotificationManager.NotificationSlot) => {
               ListItem() {
                 SlotItemComponent({ slotType: item.type })
               }
               .onClick(() => {
                 Log.showInfo(TAG, `onClick`);
-                Router.push({ uri: this.appInfo.slotSettingUrl, params: {appInfo:this.appInfo,slotInfo:item} });
+                Router.push({ uri: this.appInfo.slotSettingUrl, params: {appInfo:this.appInfo, slotInfo:item} });
               })
             });
           }.divider({

@@ -20,7 +20,7 @@ import Log from '../../../../../../../common/src/main/ets/default/Log';
 
 const TAG = 'Control-brightnessComponent';
 
-class brightnessItemData {
+interface  brightnessItemData {
   min:number;
   max:number;
   value:number

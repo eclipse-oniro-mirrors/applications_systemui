@@ -6,6 +6,7 @@
   "dependencies": {
     "@ohos/controlcentercomponent": "file:../../../features/controlcentercomponent",
     "@ohos/autorotatecomponent": "file:../../../features/autorotatecomponent",
-    "@ohos/airplanecomponent": "file:../../../features/airplanecomponent"
+    "@ohos/airplanecomponent": "file:../../../features/airplanecomponent",
+    "@ohos/common": "file:../../../common",
   }
 }

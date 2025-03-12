@@ -135,12 +135,12 @@ export class NotificationViewModel {
     AppStorage.SetOrCreate('notificationList', notificationList);
   }
 
-  groupByGroupName(): any[]{
+  groupByGroupName(): NotificationItemData[][]{
     if (!this.mNotificationList || this.mNotificationList.length < 1) {
       Log.showWarn(TAG, 'groupByGroupName, list is empty.');
       return [];
     }
-    let groupArr: any[] = [];
+    let groupArr: NotificationItemData[][] = [];
     let groups = {};
     this.mNotificationList.forEach((item) => {
       const groupName = `${item.bundleName}_${item.groupName}`;

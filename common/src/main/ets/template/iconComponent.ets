@@ -20,8 +20,8 @@ const TAG = 'iconComponent'
 
 @Component
 export default struct iconComponent {
-  @State iconOff: string = ""
-  @State iconOn: string = ""
+  @State iconOff: Resource | string = ""
+  @State iconOn: Resource | string = ""
   @Prop iconOffStr: string
   @Prop iconOnStr: string
   private useIconStr = false
