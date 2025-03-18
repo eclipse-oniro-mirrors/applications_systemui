@@ -82,7 +82,7 @@ export default class NoDisturbingModel {
     return result;
   }
   static formatTime (data: Date): string {
-    return TimeManager.formatTime(data);
+    return TimeManager.formatTime(data, true);
   }
 }
 
