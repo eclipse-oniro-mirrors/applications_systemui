@@ -23,6 +23,7 @@ import createOrGet from "./SingleInstanceHelper";
 import { obtainLocalEvent } from "./event/EventUtil";
 import Constants from "./Constants";
 import { CommonEventManager, getCommonEventManager, POLICY } from "./commonEvent/CommonEventManager";
+import i18n from '@ohos.i18n';
 
 export const TIME_CHANGE_EVENT = "Time_Change_Event";
 
@@ -31,7 +32,7 @@ export type TimeEventArgs = {
   timeFormat: boolean;
 };
 
-const TAG = "TimeManager";
+const TAG = "TimeManager_SysUI";
 const TIME_FORMAT_KEY = settings.date.TIME_FORMAT;
 const TIME_SUBSCRIBE_INFO = {
   events: [
@@ -57,7 +58,7 @@ class TimeManager {
   public init(context: any) {
     this.mManager = getCommonEventManager(
       TAG,
-      TIME_SUBSCRIBE_INFO, 
+      TIME_SUBSCRIBE_INFO,
       () => this.notifyTimeChange(),
       (isSubscribe) => isSubscribe && this.notifyTimeChange()
     );
@@ -72,8 +73,10 @@ class TimeManager {
     this.mSettingsHelper?.off("dataChange", Constants.getUriSync(Constants.KEY_TIME_FORMAT));
   }
 
-  public formatTime(date: Date) {
-    return concatTime(date.getHours() % (this.mUse24hFormat ? 24 : 12), date.getMinutes());
+  public formatTime(date: Date, as24Hour: boolean = false) {
+    this.mUse24hFormat = i18n.System.is24HourClock();
+    let format = as24Hour ? 24 : this.mUse24hFormat;
+    return concatTime(date.getHours() % (format ? 24 : 12), date.getMinutes());
   }
 
   private async initTimeFormat(context: any): Promise<void> {
