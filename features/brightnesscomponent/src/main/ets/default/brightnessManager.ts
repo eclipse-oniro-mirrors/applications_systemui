@@ -38,7 +38,12 @@ export class brightnessManager {
   constructor() {
     this.uri = Constants.getUriSync(Constants.KEY_BRIGHTNESS_STATUS);
     Log.showInfo(TAG, 'settings geturi of brightness is ' + Constants.URI_VAR);
-    this.context = AbilityManager.getContext(AbilityManager.getContextName(AbilityManager.ABILITY_NAME_CONTROL_PANEL));
+
+    try {
+      this.context = AbilityManager.getContext(AbilityManager.getContextName(AbilityManager.ABILITY_NAME_CONTROL_PANEL));
+    } catch (err) {
+      Log.showError(TAG, `context: ${this.context}, ${JSON.stringify(err)}`);
+    }
     this.init();
   }
 
