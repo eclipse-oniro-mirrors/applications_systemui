@@ -36,6 +36,7 @@ import LocationIcon from '../../../../../../../locationcomponent/src/main/ets/co
 import RingModeIcon from '../../../../../../../ringmodecomponent/src/main/ets/com/ohos/pages/StatusBarIconItemRingModeComponent'
 import NfcIcon from '../../../../../../../nfccomponent/src/main/ets/com/ohos/pages/StatusBarIconItemNFComponent'
 import { NotificationItemData } from '@ohos/common';
+import { BusinessError, commonEventManager } from '@kit.BasicServicesKit';
 
 const TAG = 'StatusBarComponent'
 const TAG_StatusBarGroup = 'StatusBarGroup'
@@ -116,7 +117,20 @@ export default struct StatusBarComponent {
         .width('100%')
         .height('100%')
       }
-    }
+    }.onClick(() => {
+      try {
+        commonEventManager.publish('usual.event.CLICK_STATUSBAR', (err: BusinessError) => {
+          if (err) {
+            Log.showError(TAG, `Failed to publish click event. Code is ${err.code}, message is ${err.message}`);
+          } else {
+            Log.showInfo(TAG, `Succeeded in publishing click event.`);
+          }
+        })
+      } catch (error) {
+        let err: BusinessError = error as BusinessError;
+        Log.showError(TAG, `Failed to publish click event. Code is ${err.code}, message is ${err.message}`);
+      }
+    })
     .width('100%')
     .height('100%')
   }
