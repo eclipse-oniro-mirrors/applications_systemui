@@ -38,7 +38,7 @@ export class brightnessManager {
   constructor() {
     this.uri = Constants.getUriSync(Constants.KEY_BRIGHTNESS_STATUS);
     Log.showInfo(TAG, 'settings geturi of brightness is ' + Constants.URI_VAR);
-    this.context = AbilityManager.getContext(AbilityManager.getContextName(AbilityManager.ABILITY_NAME_CONTROL_PANEL));
+    this.context = AbilityManager.getContext(AbilityManager.ABILITY_NAME_CONTROL_PANEL);
     this.init();
   }
 
@@ -49,6 +49,11 @@ export class brightnessManager {
   }
 
   public createDataShare() {
+    if (this.context == undefined || this.context == null) {
+      Log.showInfo(TAG, `constructor, this.context is null`);
+      return;
+    }
+    Log.showInfo(TAG, `createDataShare, this.context ${this.context}`);
     const UPDATE_INTERVAL = 500;
     const timer = setInterval(() => {
       dataShare.createDataShareHelper(this.context, this.uri)
