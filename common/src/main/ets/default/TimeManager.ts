@@ -75,7 +75,17 @@ class TimeManager {
 
   public formatTime(date: Date, as24Hour: boolean = false) {
     this.mUse24hFormat = as24Hour ? true : i18n.System.is24HourClock();
-    return concatTime(date.getHours() % (this.mUse24hFormat ? 24 : 12), date.getMinutes());
+    let hours = date.getHours();
+    if (this.mUse24hFormat) {
+      hours = hours % 24;
+    } else {
+      hours = hours % 12;
+      // hours should show 12, not 0.
+      if (hours == 0) {
+        hours = 12;
+      }
+    }
+    return concatTime(hours, date.getMinutes());
   }
 
   private async initTimeFormat(context: any): Promise<void> {
