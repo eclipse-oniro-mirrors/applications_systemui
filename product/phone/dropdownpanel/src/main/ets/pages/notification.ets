@@ -270,11 +270,7 @@ struct CenterTitle {
   async updateTimeString(date: Date) {
     this.mTime = TimeManager.formatTime(date);
     Log.showDebug(TAG, ` month is ${date.getMonth() + 1} , day is ${date.getDate()} , week is ${Constants.WEEKDAY_LIST[date.getDay() - 1]}`);
-    await ResourceUtil.initResourceManager(AbilityManager.ABILITY_NAME_DROPDOWN_PANEL);
-    let timeString = (date.getMonth() + 1) + (await ResourceUtil.getString($r('app.string.month')));
-    timeString += date.getDate() + (await ResourceUtil.getString($r('app.string.day')));
-    timeString += await ResourceUtil.getString(Constants.WEEKDAY_LIST[date.getDay()]);
-    this.mTimeString = timeString;
+    this.mTimeString = TimeManager.formatDate(date);
   }
 
   settingClick() {
