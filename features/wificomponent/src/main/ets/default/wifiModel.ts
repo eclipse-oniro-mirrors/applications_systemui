@@ -54,15 +54,9 @@ export class WifiModel {
     Log.showInfo(TAG, 'uninitWifiModel');
     this.mIsStart = false;
 
-    this.mListener.off('wifiRssiChange', (data: number) => {
-      Log.showInfo(TAG, `uninitWifiModel->wifiRssiChange, data: ${JSON.stringify(data)}`);
-    });
-    this.mListener.off('wifiConnectionChange', (data: number) => {
-      Log.showInfo(TAG, `uninitWifiModel->wifiConnectionChange, data: ${JSON.stringify(data)}`);
-    });
-    this.mListener.off('wifiStateChange', (data: number) => {
-      Log.showInfo(TAG, `uninitWifiModel->wifiStateChange, data: ${JSON.stringify(data)}`);
-    });
+    this.mListener.off('wifiRssiChange');
+    this.mListener.off('wifiConnectionChange');
+    this.mListener.off('wifiStateChange');
     this.mListener = null;
     mWifiOpenStatus.set(Constants.DEFAULT_WIFI_OPEN_STATUS);
     this.setDisconnectedStatus();
