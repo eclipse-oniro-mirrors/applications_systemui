@@ -51,9 +51,7 @@ export class LocationService {
     Log.showInfo(TAG, 'stopService');
     this.mIsStart = false;
     try {
-      geolocation.off('locationEnabledChange', (state: boolean) => {
-        Log.showInfo(TAG, `stopService locationChange, state: ${JSON.stringify(state)}`)
-      });
+      geolocation.off('locationEnabledChange');
     } catch {
       Log.showError(TAG, 'geolocation.off try-catch error');
     }
