@@ -50,9 +50,9 @@ class ServiceExtAbility extends ServiceExtension {
 
       let bannerRect = {
         left: 0,
-        top: dis.height / 5,
+        top: dis.height / 20,
         width: dis.width,
-        height: dis.height / 20
+        height: dis.height / 10
       };
       AbilityManager.setAbilityData(AbilityManager.ABILITY_NAME_BANNER_NOTICE, 'bannerRect', bannerRect);
       WindowManager.createWindow(this.context, WindowType.BANNER_NOTICE, bannerRect, 'pages/bannerNotification')

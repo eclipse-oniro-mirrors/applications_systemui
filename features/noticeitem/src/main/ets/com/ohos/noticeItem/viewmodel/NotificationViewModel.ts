@@ -253,24 +253,24 @@ export class NotificationViewModel {
   }
 
   clickItem(itemData: NotificationItemData, want?: any): void {
-    Log.showInfo(TAG, `clickItem itemId: ${itemData.id}, want: ${JSON.stringify(want)}, tapDismissed: ${itemData.tapDismissed}`);
+    Log.showInfo(TAG, `clickItem itemId: ${itemData.id}, want: ${want}, tapDismissed: ${itemData.tapDismissed}`);
     NotificationWindowManager.hideNotificationWindow();
     Trace.start(Trace.CORE_METHOD_CLICK_NOTIFICATION);
-    CommonUtil.startWant((want) ? want : itemData.want);
+    CommonUtil.startWant(itemData);
     if (itemData.tapDismissed) {
       this.removeNotificationItem(itemData, true, true);
     }
   }
 
-  clickReply(inputKey, content, want): void {
-    Log.showInfo(TAG, `clickReply inputKey: ${inputKey}, content: ${content}, want: ${JSON.stringify(want)}`);
+  clickReply(inputKey, content, itemData): void {
+    Log.showInfo(TAG, `clickReply inputKey: ${inputKey}, content: ${content}, want: ${JSON.stringify(itemData)}`);
     let info = {
       code: 0,
       want: { key: inputKey, data: content },
       permission: '',
       extraInfo: {}
     };
-    CommonUtil.startWant(want, info);
+    CommonUtil.startWant(itemData, info);
   }
 
   initFlowControlInfos(): void {
@@ -388,7 +388,7 @@ export class NotificationViewModel {
   clickDistributionItem(itemData: NotificationItemData, triggerInfo): void {
     Log.showInfo(TAG, `clickDistributionItem wantAgen: ${JSON.stringify(itemData.want)}, triggerInfo: ${JSON.stringify(triggerInfo)}`);
     NotificationWindowManager.hideNotificationWindow();
-    CommonUtil.startWant(itemData.want, triggerInfo);
+    CommonUtil.startWant(itemData, triggerInfo);
     this.removeNotificationItem(itemData, true);
   }
 
