@@ -16,6 +16,7 @@
 import Log from '../../../../../../../../../common/src/main/ets/default/Log';
 import Trace from '../../../../../../../../../common/src/main/ets/default/Trace'
 import WantAgent from '@ohos.wantAgent';
+import sNotificationViewModel from '../viewmodel/NotificationViewModel';
 
 const TAG = 'CommonUtil';
 const DEFAULT_INFO = {
@@ -26,9 +27,12 @@ const DEFAULT_INFO = {
 };
 
 export default class CommonUtil {
-  static startWant(want, triggerInfo?: any): void {
+  static startWant(itemData, triggerInfo?: any): void {
     let info = (triggerInfo) ? triggerInfo : DEFAULT_INFO;
-    Log.showDebug(TAG, `startWant ${JSON.stringify(want)}, info ${JSON.stringify(info)}`);
+    Log.showInfo(TAG, `CommonUtil: itemData: ${itemData.hashcode}`);
+    const want = sNotificationViewModel.mNotificationList.find((item) => {
+      return item.hashcode === itemData.hashcode;
+    })?.want;
     if (!want) {
       return;
     }
