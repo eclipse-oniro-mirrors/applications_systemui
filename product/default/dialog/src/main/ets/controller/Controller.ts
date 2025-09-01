@@ -91,7 +91,7 @@ class SystemDialogController {
 
     if (windowName) {
       const win = window.findWindow(windowName);
-      win.destroyWindow().then(() => {
+      win?.destroyWindow().then(() => {
         Log.showInfo(TAG, `destroyWindow ${key} ${windowName} succeed`);
       }).catch(err => {
         Log.showError(TAG, `destroyWindow ${key} ${windowName} failed, ${JSON.stringify(err)}`);

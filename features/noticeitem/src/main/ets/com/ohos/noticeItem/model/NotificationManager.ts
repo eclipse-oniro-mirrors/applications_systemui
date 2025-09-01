@@ -14,12 +14,12 @@
  * limitations under the License.
  */
 
-//import { NotificationSubscriber } from './notification/notificationSubscriber';
+import Ntf from '@ohos.notificationSubscribe';
+import NtfMgr from '@ohos.notificationManager';
 import Notification from '@ohos.notification';
 import PluginComponentManager from '@ohos.pluginComponent';
 import Systemparameter from '@ohos.systemparameter';
 import Log from '../../../../../../../../../common/src/main/ets/default/Log';
-import {AsyncCallback} from '@ohos.base';
 
 const TAG = 'NotificationManager';
 // Temporary path
@@ -30,41 +30,42 @@ const DEBUG_ABILITY_NAME = 'com.ohos.example.notificationtemplate.MainAbility';
 const DEBUG_TEMPLATE_NAME = 'NotificationTemplate';
 
 export default class NotificationManager {
-  static readonly TYPE_BASIC: number = Notification.ContentType.NOTIFICATION_CONTENT_BASIC_TEXT;
-  static readonly TYPE_LONG: number = Notification.ContentType.NOTIFICATION_CONTENT_LONG_TEXT;
-  static readonly TYPE_MULTI: number = Notification.ContentType.NOTIFICATION_CONTENT_MULTILINE;
-  static readonly TYPE_PICTURE: number = Notification.ContentType.NOTIFICATION_CONTENT_PICTURE;
+  static readonly TYPE_BASIC: number = NtfMgr.ContentType.NOTIFICATION_CONTENT_BASIC_TEXT;
+  static readonly TYPE_LONG: number = NtfMgr.ContentType.NOTIFICATION_CONTENT_LONG_TEXT;
+  static readonly TYPE_MULTI: number = NtfMgr.ContentType.NOTIFICATION_CONTENT_MULTILINE;
+  static readonly TYPE_PICTURE: number = NtfMgr.ContentType.NOTIFICATION_CONTENT_PICTURE;
   static notificationTemplateMap = new Map();
 
   static subscribeNotification(tag: string, subscriber, asyncCallback): void {
     Log.showInfo(TAG, `subscribeNotification from: ${tag}`);
-    Notification.subscribe(subscriber, asyncCallback);
+    Log.showWarn(TAG, `subscribeNotification: ${tag}`);
+    Ntf.subscribe(subscriber, asyncCallback);
   }
 
   static unsubscribeNotification(tag: string, subscriber): void {
     Log.showInfo(TAG, `subscribeNotification from: ${tag}`);
-    Notification.unsubscribe(subscriber);
+    Ntf.unsubscribe(subscriber);
   }
 
   static removeAll(tag: string, callback): void {
     Log.showInfo(TAG, `removeAll from: ${tag}`);
-    Notification.removeAll(callback);
+    Ntf.removeAll(callback);
   }
 
   static remove(tag: string, hashCode,callback, isClickItem?: boolean): void {
     Log.showInfo(TAG, `remove from: ${tag}`);
     var clickValue = isClickItem == true ? Notification.RemoveReason.CLICK_REASON_REMOVE : Notification.RemoveReason.CANCEL_REASON_REMOVE;
-    Notification.remove(hashCode, clickValue, callback);
+    Ntf.remove(hashCode, clickValue, callback)
   }
 
   static getAllActiveNotifications(tag: string, callback): void {
     Log.showInfo(TAG, `getAllActiveNotifications from: ${tag}`);
-    Notification.getAllActiveNotifications(callback);
+    NtfMgr.getAllActiveNotifications(callback);
   }
 
   static enableNotification(tag: string, bundleOption, data, callback): void {
     Log.showInfo(TAG, `enableNotification from: ${tag}`);
-    Notification.enableNotification(bundleOption, data, callback);
+    NtfMgr.setNotificationEnable(bundleOption, data, callback);
   }
 
   static initNotificationTemplateMap(tag: string, ownerWant): void {

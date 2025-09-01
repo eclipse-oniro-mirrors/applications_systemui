@@ -74,7 +74,7 @@ export default struct ActionComponent {
           .width(Layout.INPUT_IMAGE_SIZE)
           .height(Layout.INPUT_IMAGE_SIZE)
           .onClick(() => {
-            NotificationViewModel.clickReply(this.inputData?.inputKey, this.placeholder, this.inputData?.wantAgent);
+            NotificationViewModel.clickReply(this.inputData?.inputKey, this.placeholder, this.inputData);
             this.inputActionData = {
               isSending: true,
               content: this.placeholder

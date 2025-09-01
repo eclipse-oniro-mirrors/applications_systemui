@@ -29,7 +29,7 @@ interface  NotificationLayoutConfig {
 export default struct NotificationListComponent {
   // 当长通知消息展开时，这里用于重新刷新item布局，扩展高度
   @Provide('notificationUpdate') update: number = 0;
-  @StorageLink('notificationList') notificationList:  NotificationItemData[][] = [];
+  @StorageLink('notificationList') notificationList: NotificationItemData[][] = [];
   @Link listIsEnd: boolean
   private config: NotificationLayoutConfig = {
     itemMargin: Layout.ITEM_MARGIN
