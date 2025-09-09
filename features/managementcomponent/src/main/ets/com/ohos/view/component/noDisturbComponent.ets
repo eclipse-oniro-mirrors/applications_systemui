@@ -55,38 +55,44 @@ export default struct NoDisturbComponent {
               .fontWeight(FontWeight.Medium)
           }
 
-          Row() {
+          Flex({ alignItems: ItemAlign.Center }) {
             if (this.mRefreshCnt > 0) {
               if (this.mViewModel.repeatMode == DoNotDisturbType.TYPE_ONCE) {
                 Text($r('app.string.noDisturb_once_label'))
                   .fontSize($r('app.float.itemComp_value_font'))
                   .fontColor($r('app.color.itemComp_font_color'))
                   .textAlign(TextAlign.Start)
+                  .flexShrink(0)
                 Text(this.mViewModel.prompt)
                   .fontSize($r('app.float.itemComp_value_font'))
                   .fontColor($r('app.color.itemComp_font_color'))
                   .textAlign(TextAlign.Start)
                   .margin({ top: $r("app.float.noDisturb_text_margin_vertical") })
+                  .flexShrink(1)
               } else if (this.mViewModel.repeatMode == DoNotDisturbType.TYPE_DAILY) {
                 Text($r('app.string.noDisturb_daily_label'))
                   .fontSize($r('app.float.itemComp_value_font'))
                   .fontColor($r('app.color.itemComp_font_color'))
                   .textAlign(TextAlign.Start)
+                  .flexShrink(0)
                 Text(this.mViewModel.prompt)
                   .fontSize($r('app.float.itemComp_value_font'))
                   .fontColor($r('app.color.itemComp_font_color'))
                   .textAlign(TextAlign.Start)
                   .margin({ top: $r("app.float.noDisturb_text_margin_vertical") })
+                  .flexShrink(1)
               } else if (this.mViewModel.repeatMode == DoNotDisturbType.TYPE_CLEARLY) {
                 Text($r('app.string.noDisturb_clearly_label'))
                   .fontSize($r('app.float.itemComp_value_font'))
                   .fontColor($r('app.color.itemComp_font_color'))
                   .textAlign(TextAlign.Start)
+                  .flexShrink(0)
                 Text(this.mViewModel.prompt)
                   .fontSize($r('app.float.itemComp_value_font'))
                   .fontColor($r('app.color.itemComp_font_color'))
                   .textAlign(TextAlign.Start)
                   .margin({ top: $r("app.float.noDisturb_text_margin_vertical") })
+                  .flexShrink(1)
               } else {
                 Text($r('app.string.noDisturb_closed'))
                   .fontSize($r('app.float.itemComp_value_font'))
