@@ -24,6 +24,7 @@ import { obtainLocalEvent } from "./event/EventUtil";
 import Constants from "./Constants";
 import { CommonEventManager, getCommonEventManager, POLICY } from "./commonEvent/CommonEventManager";
 import i18n from '@ohos.i18n';
+import intl from "@ohos.intl";
 
 export const TIME_CHANGE_EVENT = "Time_Change_Event";
 
@@ -76,6 +77,12 @@ class TimeManager {
   public formatTime(date: Date, as24Hour: boolean = false) {
     this.mUse24hFormat = as24Hour ? true : i18n.System.is24HourClock();
     return concatTime(date.getHours() % (this.mUse24hFormat ? 24 : 12), date.getMinutes());
+  }
+
+  public formatDate(date: Date): string {
+    let config: intl.DateTimeOptions = { weekday: 'long', month: 'long', day: 'numeric'  };
+    let dateTimeFormat: intl.DateTimeFormat = new intl.DateTimeFormat(i18n.System.getSystemLanguage(), config);
+    return dateTimeFormat.format(date);
   }
 
   private async initTimeFormat(context: any): Promise<void> {
