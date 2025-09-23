@@ -34,11 +34,11 @@
     },
     {
       "name": "status_bar_notification_icon_width",
-      "value": "24vp"
+      "value": "12vp"
     },
     {
       "name": "status_bar_notification_icon_height",
-      "value": "24vp"
+      "value": "12vp"
     },
     {
       "name": "status_bar_notification_icon_space",
