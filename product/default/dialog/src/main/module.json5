@@ -18,11 +18,14 @@
     "pages": "$profile:main_pages",
     "extensionAbilities": [
       {
-        "visible": false,
+        "exported": true,
         "srcEntrance": "./ets/ServiceExtAbility/ExtAbility.ts",
         "name": "com.ohos.systemui.dialog",
         "description": "$string:mainability_description",
-        "type": "service"
+        "type": "service",
+        "permissions": [
+          "ohos.permission.START_SYSTEM_DIALOG"
+        ]
       }
     ]
   }
