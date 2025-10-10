@@ -44,18 +44,18 @@ export class brightnessManager {
 
   async init(): Promise<void> {
     Log.showInfo(TAG, 'init');
-    this.createDataShare(10)
+    this.createDataShare(this.retryTimes)
     Log.showInfo(TAG, `init helper ${this.helper}`);
   }
 
-  public createDataShare(retryTimes) {
+  public createDataShare(retryTimes: number) {
     clearInterval(timer);
     Log.showInfo(TAG, `createDataShare, context ${this.context},retryTimes${retryTimes}`);
     if (this.retryTimes <= 0) {
       Log.showError(TAG, `reached maximum retry attempts`);
       return;
     }
-    retryTimes = retryTimes - 1;
+    this.retryTimes = this.retryTimes - 1;
     const timer = setInterval(() => {
       if (this.context == undefined || this.context == null) {
         Log.showInfo(TAG, `constructor, context is null`);
