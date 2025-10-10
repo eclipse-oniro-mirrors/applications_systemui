@@ -38,7 +38,7 @@ export class brightnessManager {
   constructor() {
     this.uri = Constants.getUriSync(Constants.KEY_BRIGHTNESS_STATUS);
     Log.showInfo(TAG, 'settings geturi of brightness is ' + Constants.URI_VAR);
-    this.context = AbilityManager.getContext(AbilityManager.ABILITY_NAME_CONTROL_PANEL);
+    this.context = AbilityManager.getContext(AbilityManager.getContextName(AbilityManager.ABILITY_NAME_CONTROL_PANEL));
     this.init();
   }
 
@@ -49,24 +49,26 @@ export class brightnessManager {
   }
 
   public createDataShare() {
-    if (this.context == undefined || this.context == null) {
-      Log.showInfo(TAG, `constructor, this.context is null`);
-      return;
-    }
     Log.showInfo(TAG, `createDataShare, this.context ${this.context}`);
     const UPDATE_INTERVAL = 500;
     const timer = setInterval(() => {
-      dataShare.createDataShareHelper(this.context, this.uri)
-        .then((dataHelper) => {
-          Log.showInfo(TAG, `createDataShareHelper success.`);
-          this.helper = dataHelper;
-          this.registerBrightness();
-          this.getValue();
-          clearInterval(timer);
-        })
-        .catch((err: BusinessError) => {
-          Log.showError(TAG, `createDataShare fail. ${JSON.stringify(err)}`);
-        });
+      if (this.context == undefined || this.context == null) {
+        Log.showInfo(TAG, `constructor, this.context is null`);
+        this.context = AbilityManager.getContext(AbilityManager.getContextName(AbilityManager.ABILITY_NAME_CONTROL_PANEL));
+      } else {
+        Log.showInfo(TAG, `constructor, this.context ${this.context}`);
+        clearInterval(timer);
+        dataShare.createDataShareHelper(this.context, this.uri)
+          .then((dataHelper) => {
+            Log.showInfo(TAG, `createDataShareHelper success.`);
+            this.helper = dataHelper;
+            this.registerBrightness();
+            this.getValue();
+          })
+          .catch((err: BusinessError) => {
+            Log.showError(TAG, `createDataShare fail. ${JSON.stringify(err)}`);
+          });
+      }
     }, UPDATE_INTERVAL);
   }
 
