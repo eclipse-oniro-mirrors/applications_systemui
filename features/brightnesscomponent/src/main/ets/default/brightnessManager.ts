@@ -34,7 +34,7 @@ export class brightnessManager {
   context: Context;
   SLIDER_CHANG_MODE_MOVING = 1;
   private sliderChangeMode: number;
-  private retryTimes: number = 10;
+  private timer: number = -1;
   constructor() {
     this.uri = Constants.getUriSync(Constants.KEY_BRIGHTNESS_STATUS);
     Log.showInfo(TAG, 'settings geturi of brightness is ' + Constants.URI_VAR);
@@ -44,19 +44,22 @@ export class brightnessManager {
 
   async init(): Promise<void> {
     Log.showInfo(TAG, 'init');
-    this.createDataShare(this.retryTimes)
+    this.createDataShare(10)
     Log.showInfo(TAG, `init helper ${this.helper}`);
   }
 
   public createDataShare(retryTimes: number) {
-    clearInterval(timer);
+    if (this.timer !== -1) {
+      clearInterval(timer);
+      this.timer = -1;
+    }
     Log.showInfo(TAG, `createDataShare, context ${this.context},retryTimes${retryTimes}`);
-    if (this.retryTimes <= 0) {
+    if (retryTimes < 0) {
       Log.showError(TAG, `reached maximum retry attempts`);
       return;
     }
-    this.retryTimes = this.retryTimes - 1;
-    const timer = setInterval(() => {
+    retryTimes = retryTimes - 1;
+    this.timer = setInterval(() => {
       if (this.context == undefined || this.context == null) {
         Log.showInfo(TAG, `constructor, context is null`);
         this.context =
@@ -64,7 +67,10 @@ export class brightnessManager {
         this.createDataShare(retryTimes);
       } else {
         Log.showInfo(TAG, `constructor, this.context ${this.context}`);
-        clearInterval(timer);
+        if (this.timer !== -1) {
+          clearInterval(timer);
+          this.timer = -1;
+        }
         dataShare.createDataShareHelper(this.context, this.uri)
           .then((dataHelper) => {
             Log.showInfo(TAG, `createDataShareHelper success.`);
