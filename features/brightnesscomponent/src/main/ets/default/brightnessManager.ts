@@ -27,7 +27,7 @@ import createOrGet from '../../../../../../common/src/main/ets/default/SingleIns
 
 const TAG = 'Control-brightnessManager';
 var mBrightnessValue = AppStorage.SetAndLink('BrightnessValue', 100);
-
+const UPDATE_INTERVAL = 1000;
 export class brightnessManager {
   helper: dataShare.DataShareHelper;
   uri: string;
@@ -50,26 +50,33 @@ export class brightnessManager {
 
   public createDataShare() {
     Log.showInfo(TAG, `createDataShare, this.context ${this.context}`);
-    const UPDATE_INTERVAL = 500;
-    const timer = setInterval(() => {
-      if (this.context == undefined || this.context == null) {
-        Log.showInfo(TAG, `constructor, this.context is null`);
-        this.context = AbilityManager.getContext(AbilityManager.getContextName(AbilityManager.ABILITY_NAME_CONTROL_PANEL));
-      } else {
-        Log.showInfo(TAG, `constructor, this.context ${this.context}`);
-        clearInterval(timer);
-        dataShare.createDataShareHelper(this.context, this.uri)
-          .then((dataHelper) => {
-            Log.showInfo(TAG, `createDataShareHelper success.`);
-            this.helper = dataHelper;
-            this.registerBrightness();
-            this.getValue();
-          })
-          .catch((err: BusinessError) => {
-            Log.showError(TAG, `createDataShare fail. ${JSON.stringify(err)}`);
-          });
-      }
-    }, UPDATE_INTERVAL);
+    let retryTimes = 10;
+    if (this.retryTimes !== 0) {
+      this.retryTimes = this.times - 1
+      const timer = setInterval(() => {
+        if (this.context == undefined || this.context == null) {
+          Log.showInfo(TAG, `constructor, this.context is null`);
+          this.context =
+            AbilityManager.getContext(AbilityManager.getContextName(AbilityManager.ABILITY_NAME_CONTROL_PANEL));
+        } else {
+          Log.showInfo(TAG, `constructor, this.context ${this.context}`);
+          clearInterval(timer);
+          dataShare.createDataShareHelper(this.context, this.uri)
+            .then((dataHelper) => {
+              Log.showInfo(TAG, `createDataShareHelper success.`);
+              this.helper = dataHelper;
+              this.registerBrightness();
+              this.getValue();
+            })
+            .catch((err: BusinessError) => {
+              Log.showError(TAG, `createDataShare fail. ${JSON.stringify(err)}`);
+            });
+        }
+      }, UPDATE_INTERVAL);
+    } else {
+      clearInterval(timer);
+      Log.showError(TAG, `context is null`);
+    }
   }
 
   registerBrightness() {
