@@ -34,7 +34,7 @@ export class brightnessManager {
   context: Context;
   SLIDER_CHANG_MODE_MOVING = 1;
   private sliderChangeMode: number;
-
+  private retryTimes: number = 10;
   constructor() {
     this.uri = Constants.getUriSync(Constants.KEY_BRIGHTNESS_STATUS);
     Log.showInfo(TAG, 'settings geturi of brightness is ' + Constants.URI_VAR);
@@ -44,44 +44,42 @@ export class brightnessManager {
 
   async init(): Promise<void> {
     Log.showInfo(TAG, 'init');
-    this.createDataShare()
+    this.createDataShare(10)
     Log.showInfo(TAG, `init helper ${this.helper}`);
   }
 
-  public createDataShare() {
-    Log.showInfo(TAG, `createDataShare, this.context ${this.context}`);
-    let retryTimes = 10;
+  public createDataShare(retryTimes) {
+    clearInterval(timer);
+    Log.showInfo(TAG, `createDataShare, context ${this.context},retryTimes${retryTimes}`);
+    if (this.retryTimes <= 0) {
+      Log.showError(TAG, `reached maximum retry attempts`);
+      return;
+    }
+    retryTimes = retryTimes - 1;
     const timer = setInterval(() => {
-      if (this.retryTimes !== 0) {
-        this.retryTimes = this.retryTimes - 1
-        this.createContext();
+      if (this.context == undefined || this.context == null) {
+        Log.showInfo(TAG, `constructor, context is null`);
+        this.context =
+          AbilityManager.getContext(AbilityManager.getContextName(AbilityManager.ABILITY_NAME_CONTROL_PANEL));
+        this.createDataShare(retryTimes);
       } else {
+        Log.showInfo(TAG, `constructor, this.context ${this.context}`);
         clearInterval(timer);
-        Log.showError(TAG, `context is null`);
+        dataShare.createDataShareHelper(this.context, this.uri)
+          .then((dataHelper) => {
+            Log.showInfo(TAG, `createDataShareHelper success.`);
+            this.helper = dataHelper;
+            this.registerBrightness();
+            this.getValue();
+          })
+          .catch((err: BusinessError) => {
+            Log.showError(TAG, `createDataShare fail. ${JSON.stringify(err)}`);
+            this.createDataShare(retryTimes);
+          });
       }
     }, UPDATE_INTERVAL);
   }
 
-  public createContext() {
-    if (this.context == undefined || this.context == null) {
-      Log.showInfo(TAG, `constructor, this.context is null`);
-      this.context =
-        AbilityManager.getContext(AbilityManager.getContextName(AbilityManager.ABILITY_NAME_CONTROL_PANEL));
-    } else {
-      Log.showInfo(TAG, `constructor, this.context ${this.context}`);
-      clearInterval(timer);
-      dataShare.createDataShareHelper(this.context, this.uri)
-        .then((dataHelper) => {
-          Log.showInfo(TAG, `createDataShareHelper success.`);
-          this.helper = dataHelper;
-          this.registerBrightness();
-          this.getValue();
-        })
-        .catch((err: BusinessError) => {
-          Log.showError(TAG, `createDataShare fail. ${JSON.stringify(err)}`);
-        });
-    }
-  }
   registerBrightness() {
     this.helper.on("dataChange", this.uri, () => {
       if (this.sliderChangeMode == 1) {
