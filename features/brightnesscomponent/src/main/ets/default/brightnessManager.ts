@@ -52,7 +52,7 @@ export class brightnessManager {
 
   public createDataShare(retryTimes: number) {
     if (this.timer !== -1) {
-      clearInterval(timer);
+      clearTimeout(timer);
       this.timer = -1;
     }
     Log.showInfo(TAG, `createDataShare, context ${this.context},retryTimes${retryTimes}`);
@@ -61,7 +61,7 @@ export class brightnessManager {
       return;
     }
     retryTimes = retryTimes - 1;
-    this.timer = setInterval(() => {
+    this.timer = setTimeout(() => {
       if (this.context == undefined || this.context == null) {
         Log.showInfo(TAG, `constructor, context is null`);
         this.context =
@@ -69,10 +69,6 @@ export class brightnessManager {
         this.createDataShare(retryTimes);
       } else {
         Log.showInfo(TAG, `constructor, this.context ${this.context}`);
-        if (this.timer !== -1) {
-          clearInterval(timer);
-          this.timer = -1;
-        }
         dataShare.createDataShareHelper(this.context, this.uri)
           .then((dataHelper) => {
             Log.showInfo(TAG, `createDataShareHelper success.`);
