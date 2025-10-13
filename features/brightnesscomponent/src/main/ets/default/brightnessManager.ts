@@ -28,6 +28,7 @@ import createOrGet from '../../../../../../common/src/main/ets/default/SingleIns
 const TAG = 'Control-brightnessManager';
 var mBrightnessValue = AppStorage.SetAndLink('BrightnessValue', 100);
 const UPDATE_INTERVAL = 1000;
+
 export class brightnessManager {
   helper: dataShare.DataShareHelper;
   uri: string;
@@ -35,6 +36,7 @@ export class brightnessManager {
   SLIDER_CHANG_MODE_MOVING = 1;
   private sliderChangeMode: number;
   private timer: number = -1;
+
   constructor() {
     this.uri = Constants.getUriSync(Constants.KEY_BRIGHTNESS_STATUS);
     Log.showInfo(TAG, 'settings geturi of brightness is ' + Constants.URI_VAR);
@@ -44,13 +46,13 @@ export class brightnessManager {
 
   async init(): Promise<void> {
     Log.showInfo(TAG, 'init');
-    this.createDataShare(10)
+    this.createDataShare(10);
     Log.showInfo(TAG, `init helper ${this.helper}`);
   }
 
   public createDataShare(retryTimes: number) {
     if (this.timer !== -1) {
-      clearInterval(timer);
+      clearTimeout(timer);
       this.timer = -1;
     }
     Log.showInfo(TAG, `createDataShare, context ${this.context},retryTimes${retryTimes}`);
@@ -59,7 +61,7 @@ export class brightnessManager {
       return;
     }
     retryTimes = retryTimes - 1;
-    this.timer = setInterval(() => {
+    this.timer = setTimeout(() => {
       if (this.context == undefined || this.context == null) {
         Log.showInfo(TAG, `constructor, context is null`);
         this.context =
@@ -67,10 +69,6 @@ export class brightnessManager {
         this.createDataShare(retryTimes);
       } else {
         Log.showInfo(TAG, `constructor, this.context ${this.context}`);
-        if (this.timer !== -1) {
-          clearInterval(timer);
-          this.timer = -1;
-        }
         dataShare.createDataShareHelper(this.context, this.uri)
           .then((dataHelper) => {
             Log.showInfo(TAG, `createDataShareHelper success.`);
