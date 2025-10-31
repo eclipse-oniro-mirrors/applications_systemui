@@ -90,12 +90,14 @@ class SystemDialogController {
     Log.showInfo(TAG, `destroyWindow start ${key} ${windowName}`);
 
     if (windowName) {
-      const win = window.findWindow(windowName);
-      win?.destroyWindow().then(() => {
-        Log.showInfo(TAG, `destroyWindow ${key} ${windowName} succeed`);
-      }).catch(err => {
-        Log.showError(TAG, `destroyWindow ${key} ${windowName} failed, ${JSON.stringify(err)}`);
-      });
+      try {
+        const win = window.findWindow(windowName);
+        win.destroyWindow().then(() => {
+          Log.showInfo(TAG, `destroyWindow ${key} ${windowName} succeed`);
+        })
+      } catch (e) {
+        Log.showError(TAG, `destroyWindow ${key} ${windowName} failed, ${JSON.stringify(e)}`);
+      }
     }
 
     if (!needClear) {
