@@ -128,7 +128,7 @@ class SystemDialogController {
   clear() {
     Log.showInfo(TAG, `clear start`);
     this.data.clear();
-    this.context.terminateSelf();
+    this.context?.terminateSelf();
     this.context = null;
     Log.showDebug(TAG, `clear end`);
   }
