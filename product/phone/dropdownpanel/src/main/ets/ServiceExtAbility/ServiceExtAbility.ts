@@ -28,6 +28,7 @@ class ServiceExtAbility extends ServiceExtension {
   async onCreate(want: Want): Promise<void> {
     Log.showInfo(TAG, `onCreate, want: ${JSON.stringify(want)}`);
     AbilityManager.setContext(AbilityManager.ABILITY_NAME_DROPDOWN_PANEL, this.context);
+    AbilityManager.setContext(AbilityManager.ABILITY_NAME_NAVIGATION_BAR, this.context);
     let defaultConfigInfo = await NavBarConfiguration.getConfiguration();
     let configInfo = NavBarConfiguration.setCustomConfiguration(defaultConfigInfo);
     AbilityManager.setAbilityData(AbilityManager.ABILITY_NAME_NAVIGATION_BAR, 'config', configInfo);
