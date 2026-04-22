@@ -44,6 +44,9 @@
         }
       },
       {
+        "name": "ohos.permission.CONTROL_LOCATION_SWITCH"
+      },
+      {
         "name": "ohos.permission.MANAGE_LOCAL_ACCOUNTS"
       },
       {
